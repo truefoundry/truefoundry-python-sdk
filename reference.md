@@ -64,181 +64,6 @@ client.v1.apply(
 </dl>
 </details>
 
-## Deprecated
-<details><summary><code>client.deprecated.<a href="src/truefoundry/deprecated/client.py">get_search_runs_get</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry import TrueFoundry
-
-client = TrueFoundry(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.deprecated.get_search_runs_get()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**filter:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page_token:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**offset:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**run_view_type:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**max_results:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.deprecated.<a href="src/truefoundry/deprecated/client.py">get_run_by_name_get</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get Run by run name
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry import TrueFoundry
-
-client = TrueFoundry(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.deprecated.get_run_by_name_get(
-    run_name="run_name",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**run_name:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**experiment_id:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**experiment_name:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## Health
 <details><summary><code>client.health.<a href="src/truefoundry/health/client.py">serve_get</a>()</code></summary>
 <dl>
@@ -541,7 +366,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.v1.artifacts.<a href="src/truefoundry/v1/artifacts/client.py">apply</a>(...)</code></summary>
+<details><summary><code>client.v1.artifacts.<a href="src/truefoundry/v1/artifacts/client.py">create_or_update</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -564,7 +389,7 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.v1.artifacts.apply(
+client.v1.artifacts.create_or_update(
     manifest=ModelVersionManifest(
         metadata={"key": "value"},
         source=TrueFoundryManagedSource(),
@@ -804,7 +629,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.v1.agents.<a href="src/truefoundry/v1/agents/client.py">apply</a>(...)</code></summary>
+<details><summary><code>client.v1.agents.<a href="src/truefoundry/v1/agents/client.py">create_or_update</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -827,7 +652,7 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.v1.agents.apply(
+client.v1.agents.create_or_update(
     manifest=ModelVersionManifest(
         metadata={"key": "value"},
         source=TrueFoundryManagedSource(),
@@ -1067,7 +892,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.v1.prompts.<a href="src/truefoundry/v1/prompts/client.py">apply</a>(...)</code></summary>
+<details><summary><code>client.v1.prompts.<a href="src/truefoundry/v1/prompts/client.py">create_or_update</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1090,7 +915,7 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.v1.prompts.apply(
+client.v1.prompts.create_or_update(
     manifest=ModelVersionManifest(
         metadata={"key": "value"},
         source=TrueFoundryManagedSource(),
@@ -1330,7 +1155,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.v1.tools.<a href="src/truefoundry/v1/tools/client.py">apply</a>(...)</code></summary>
+<details><summary><code>client.v1.tools.<a href="src/truefoundry/v1/tools/client.py">create_or_update</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1353,7 +1178,7 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.v1.tools.apply(
+client.v1.tools.create_or_update(
     manifest=ModelVersionManifest(
         metadata={"key": "value"},
         source=TrueFoundryManagedSource(),
@@ -1601,7 +1426,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.v1.models.<a href="src/truefoundry/v1/models/client.py">apply</a>(...)</code></summary>
+<details><summary><code>client.v1.models.<a href="src/truefoundry/v1/models/client.py">create_or_update</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1624,7 +1449,7 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.v1.models.apply(
+client.v1.models.create_or_update(
     manifest=ModelVersionManifest(
         metadata={"key": "value"},
         source=TrueFoundryManagedSource(),
@@ -3558,7 +3383,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.v1.data_directories.<a href="src/truefoundry/v1/data_directories/client.py">apply</a>(...)</code></summary>
+<details><summary><code>client.v1.data_directories.<a href="src/truefoundry/v1/data_directories/client.py">create_or_update</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3581,7 +3406,7 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.v1.data_directories.apply(
+client.v1.data_directories.create_or_update(
     manifest=ModelVersionManifest(
         metadata={"key": "value"},
         source=TrueFoundryManagedSource(),
