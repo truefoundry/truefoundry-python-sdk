@@ -232,7 +232,7 @@ class ArtifactsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def apply(
+    def create_or_update(
         self, *, manifest: Manifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetArtifactVersionResponse:
         """
@@ -260,7 +260,7 @@ class ArtifactsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.v1.artifacts.apply(
+        client.v1.artifacts.create_or_update(
             manifest=ModelVersionManifest(
                 metadata={"key": "value"},
                 source=TrueFoundryManagedSource(),
@@ -535,7 +535,7 @@ class AsyncArtifactsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def apply(
+    async def create_or_update(
         self, *, manifest: Manifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetArtifactVersionResponse:
         """
@@ -568,7 +568,7 @@ class AsyncArtifactsClient:
 
 
         async def main() -> None:
-            await client.v1.artifacts.apply(
+            await client.v1.artifacts.create_or_update(
                 manifest=ModelVersionManifest(
                     metadata={"key": "value"},
                     source=TrueFoundryManagedSource(),

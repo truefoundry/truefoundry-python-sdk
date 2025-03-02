@@ -232,7 +232,7 @@ class ModelsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def apply(
+    def create_or_update(
         self, *, manifest: Manifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetModelVersionResponse:
         """
@@ -260,7 +260,7 @@ class ModelsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.v1.models.apply(
+        client.v1.models.create_or_update(
             manifest=ModelVersionManifest(
                 metadata={"key": "value"},
                 source=TrueFoundryManagedSource(),
@@ -535,7 +535,7 @@ class AsyncModelsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def apply(
+    async def create_or_update(
         self, *, manifest: Manifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetModelVersionResponse:
         """
@@ -568,7 +568,7 @@ class AsyncModelsClient:
 
 
         async def main() -> None:
-            await client.v1.models.apply(
+            await client.v1.models.create_or_update(
                 manifest=ModelVersionManifest(
                     metadata={"key": "value"},
                     source=TrueFoundryManagedSource(),

@@ -227,7 +227,7 @@ class PromptsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def apply(
+    def create_or_update(
         self, *, manifest: Manifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetPromptVersionResponse:
         """
@@ -255,7 +255,7 @@ class PromptsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.v1.prompts.apply(
+        client.v1.prompts.create_or_update(
             manifest=ModelVersionManifest(
                 metadata={"key": "value"},
                 source=TrueFoundryManagedSource(),
@@ -525,7 +525,7 @@ class AsyncPromptsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def apply(
+    async def create_or_update(
         self, *, manifest: Manifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetPromptVersionResponse:
         """
@@ -558,7 +558,7 @@ class AsyncPromptsClient:
 
 
         async def main() -> None:
-            await client.v1.prompts.apply(
+            await client.v1.prompts.create_or_update(
                 manifest=ModelVersionManifest(
                     metadata={"key": "value"},
                     source=TrueFoundryManagedSource(),

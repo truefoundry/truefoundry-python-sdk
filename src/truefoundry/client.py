@@ -5,11 +5,9 @@ import os
 import httpx
 from .core.client_wrapper import SyncClientWrapper
 from .v1.client import V1Client
-from .deprecated.client import DeprecatedClient
 from .health.client import HealthClient
 from .core.client_wrapper import AsyncClientWrapper
 from .v1.client import AsyncV1Client
-from .deprecated.client import AsyncDeprecatedClient
 from .health.client import AsyncHealthClient
 
 
@@ -63,7 +61,6 @@ class TrueFoundry:
             timeout=_defaulted_timeout,
         )
         self.v1 = V1Client(client_wrapper=self._client_wrapper)
-        self.deprecated = DeprecatedClient(client_wrapper=self._client_wrapper)
         self.health = HealthClient(client_wrapper=self._client_wrapper)
 
 
@@ -117,5 +114,4 @@ class AsyncTrueFoundry:
             timeout=_defaulted_timeout,
         )
         self.v1 = AsyncV1Client(client_wrapper=self._client_wrapper)
-        self.deprecated = AsyncDeprecatedClient(client_wrapper=self._client_wrapper)
         self.health = AsyncHealthClient(client_wrapper=self._client_wrapper)
