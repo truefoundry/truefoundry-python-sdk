@@ -2,24 +2,61 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
-from .subject import Subject
-import datetime as dt
-from .model_version import ModelVersion
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from .source import Source
+from .framework import Framework
+from .model_version_environment import ModelVersionEnvironment
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class Model(UniversalBaseModel):
-    id: str
-    ml_repo_id: str
-    type: typing.Optional[typing.Literal["model"]] = None
-    name: str
-    fqn: str
-    created_by_subject: Subject
-    created_at: typing.Optional[dt.datetime] = None
-    updated_at: typing.Optional[dt.datetime] = None
-    latest_version: typing.Optional[ModelVersion] = None
-    run_steps: typing.Optional[typing.List[int]] = None
+    """
+    Model Version artifact.
+    """
+
+    name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Name of the entity
+    """
+
+    description: typing.Optional[str] = None
+    metadata: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
+    """
+    Key value metadata. Should be valid JSON. For e.g. `{"business-unit": "sales", "quality": "good", "rating": 4.5}`
+    """
+
+    version_alias: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Version alias is alternate, ideally human readable, version string to reference an artifact version. It should start with `v` followed by alphanumeric and it can include `.` and `-` in between (e.g. `v1.0.0`, `v1-prod`, `v3-dev`, etc)
+    """
+
+    ml_repo: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Name of the ML Repo
+    """
+
+    version: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Version of the entity
+    """
+
+    type: typing.Literal["model-version"] = "model-version"
+    source: Source
+    framework: typing.Optional[Framework] = pydantic.Field(default=None)
+    """
+    Framework for the model version like Transformers, PyTorch, Sklearn, Xgboost etc with framework specific metadata. This will be used to infer model deployment configuration
+    """
+
+    environment: typing.Optional[ModelVersionEnvironment] = None
+    step: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Step/Epoch number in an iterative training loop the model version was created. Generally useful when logging a model version from a MLRepo Run
+    """
+
+    run_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    ID of the MLRepo Run that generated the model version
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

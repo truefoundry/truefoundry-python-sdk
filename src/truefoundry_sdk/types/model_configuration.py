@@ -9,39 +9,27 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 class ModelConfiguration(UniversalBaseModel):
     """
-    +label=Model Configuration
-    +icon=fa-cogs:#326ce5
-    +usage=Add a model from Gateway along with parameters to be used for chat completion
+    Add a model from Gateway along with parameters to be used for chat completion
     """
 
     provider: str = pydantic.Field()
     """
-    +sort=1000
-    +uiType=SelectModelAndProvider
-    +uiProps={"isModel": false,"providerJsonKey": "model_configuration.provider","searchable": true}
-    +label=Provider Name
-    +usage=Name of the provider, must be one of the integration providers configured for the Gateway
+    Name of the provider, must be one of the integration providers configured for the Gateway
     """
 
     model: str = pydantic.Field()
     """
-    +sort=1001
-    +uiType=SelectModelAndProvider
-    +uiProps={"isModel": true,"providerJsonKey": "model_configuration.provider","searchable": true}
-    +label=Model Name
-    +usage=Name of the model to be used for generations. This model should be available in the provider
+    Name of the model to be used for generations. This model should be available in the provider
     """
 
     parameters: typing.Optional[Parameters] = pydantic.Field(default=None)
     """
-    +label=Parameters
-    +usage=Parameters to pass to the model when generating
+    Parameters to pass to the model when generating
     """
 
     extra_parameters: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
     """
-    +label=Extra Parameters
-    +usage=Arbitrary extra parameters to pass to the model when generating
+    Arbitrary extra parameters to pass to the model when generating
     """
 
     if IS_PYDANTIC_V2:

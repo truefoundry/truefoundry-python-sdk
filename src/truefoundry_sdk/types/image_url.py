@@ -9,14 +9,12 @@ import typing
 
 class ImageUrl(UniversalBaseModel):
     """
-    +label=Image URL
-    +usage=Image URL linking to the image
+    Image URL linking to the image
     """
 
     url: Url = pydantic.Field()
     """
-    +label=URL
-    +usage=Image URL linking to the image
+    Image URL linking to the image
     """
 
     if IS_PYDANTIC_V2:

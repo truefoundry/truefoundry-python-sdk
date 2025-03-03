@@ -9,29 +9,22 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 class SystemMessage(UniversalBaseModel):
     """
-    +label=System Message
-    +usage=System message for the chat
+    System message for the chat
     """
 
     role: typing.Literal["system"] = pydantic.Field(default="system")
     """
-    +value=system
-    +label=Role
-    +usage=Role of the message
-    +uiType=Ignore
+    Role of the message
     """
 
     content: Content = pydantic.Field()
     """
-    +label=Content
-    +usage=Text content for the system message
-    +uiType=TextArea
+    Text content for the system message
     """
 
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Name
-    +usage=Name of the system
+    Name of the system
     """
 
     if IS_PYDANTIC_V2:

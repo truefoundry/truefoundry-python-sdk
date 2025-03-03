@@ -11,109 +11,68 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 class AgentOpenApiToolWithFqn(UniversalBaseModel):
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +sort=1
-    +label=Name
-    +message=The name should start with lowercase alphabets  and can contain alphanumeric and can include '-' in between
-    +usage=Name of the entity
+    Name of the entity
     """
 
-    description: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    +sort=2
-    +label=Description
-    """
-
+    description: typing.Optional[str] = None
     metadata: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
     """
-    +label=Metadata
-    +usage=Key value metadata. Should be valid JSON. For e.g. `{"business-unit": "sales", "quality": "good", "rating": 4.5}`
-    +uiType=JsonInput
-    +uiProps={"descriptionInline":true}
+    Key value metadata. Should be valid JSON. For e.g. `{"business-unit": "sales", "quality": "good", "rating": 4.5}`
     """
 
     version_alias: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Version Alias
-    +usage=Version alias is alternate, ideally human readable, version string to reference an artifact version. It should start with `v` followed by alphanumeric and it can include `.` and `-` in between (e.g. `v1.0.0`, `v1-prod`, `v3-dev`, etc)
-    +message=The version alias should start with `v` followed by alphanumeric and can include `.` and `-` in between (e.g. `v1.0.0`, `v1-prod`, `v3-dev`, etc)
-    +uiProps={"descriptionInline":true}
-    +placeholder=v1.0.0
+    Version alias is alternate, ideally human readable, version string to reference an artifact version. It should start with `v` followed by alphanumeric and it can include `.` and `-` in between (e.g. `v1.0.0`, `v1-prod`, `v3-dev`, etc)
     """
 
     ml_repo: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=ML Repo
-    +usage=Name of the ML Repo
-    +uiType=Hidden
+    Name of the ML Repo
     """
 
     version: typing.Optional[int] = pydantic.Field(default=None)
     """
-    +label=Version of the entity
-    +usage=Version of the entity
-    +uiType=Hidden
+    Version of the entity
     """
 
     type: typing.Literal["openapi-tool"] = pydantic.Field(default="openapi-tool")
     """
-    +value=openapi-tool
-    +usage=Type of the agent
+    Type of the agent
     """
 
     openapi_spec: AgentOpenApiToolWithFqnOpenapiSpec = pydantic.Field()
     """
-    +sort=20
-    +uiType=OpenapiSchema
-    +label=OpenAPI Spec
-    +usage=OpenAPI Spec for the tool describing the API, endpoints and parameters. [Sample OpenAPI Spec Link](https://assets.production.truefoundry.com/sample-openapi.json)
-    +uiProps={"descriptionInline":true}
-    +placeholder={"openapi":"3.0.0","info":{"title":"LLM Agent Tools API","version":"1.0.0"},"servers":[{"url":"https://api.example.com/v1"}],"paths":{"/weather":{"get":{"summary":"Get current weather","description":"Fetches the current weather for a given location.","parameters":[{"name":"location","in":"query","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successful response","content":{"application/json":{"schema":{"type":"object","properties":{"location":{"type":"string"},"temperature":{"type":"number"},"condition":{"type":"string"}}}}}}}}}}}
+    OpenAPI Spec for the tool describing the API, endpoints and parameters. [Sample OpenAPI Spec Link](https://assets.production.truefoundry.com/sample-openapi.json)
     """
 
     base_url: str = pydantic.Field()
     """
-    +sort=30
-    +label=Base URL
-    +usage=HTTP endpoint where the API is hosted for the tools. E.g. `https://api.example.com/v1`
-    +uiProps={"descriptionInline":true}
-    +placeholder=https://api.example.com/v1
+    HTTP endpoint where the API is hosted for the tools. E.g. `https://api.example.com/v1`
     """
 
     path: str = pydantic.Field()
     """
-    +sort=40
-    +uiType=MethodPathSelector
-    +label=API Route Path
-    +usage=API Route Path for the tool call HTTP request. E.g. `GET /weather`
-    +uiProps={"descriptionInline":true}
+    API Route Path for the tool call HTTP request. E.g. `GET /weather`
     """
 
     method: Method = pydantic.Field()
     """
-    +sort=50
-    +uiType=Hidden
-    +label=API HTTP Method
-    +usage=HTTP Method for the tool call HTTP request
+    HTTP Method for the tool call HTTP request
     """
 
     headers: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
     """
-    +sort=60
-    +uiType=KV
-    +uiProps={"allowSecrets":true,"secretConfig":{"enableNew":true,"hideOptions":true}}
-    +label=Headers
-    +usage=HTTP Headers for the tool call HTTP request. E.g. `Authorization: Bearer <token>`
-    +uiProps={"descriptionInline":true}
+    HTTP Headers for the tool call HTTP request. E.g. `Authorization: Bearer <token>`
     """
 
     id: str = pydantic.Field()
     """
-    +usage=ID of the agent tool
+    ID of the agent tool
     """
 
     fqn: str = pydantic.Field()
     """
-    +usage=FQN of the agent tool
+    FQN of the agent tool
     """
 
     if IS_PYDANTIC_V2:

@@ -7,21 +7,14 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ExternalBlobStorageSource(UniversalBaseModel):
-    """
-    +label=External Blob Storage Source
-    """
-
     type: typing.Literal["external"] = pydantic.Field(default="external")
     """
-    +label=Type
-    +usage=Type of the source
-    +value=external
+    Type of the source
     """
 
     uri: str = pydantic.Field()
     """
-    +label=URI
-    +usage=URI referencing a path in the blob storage bucket linked to the MLRepo
+    URI referencing a path in the blob storage bucket linked to the MLRepo
     """
 
     if IS_PYDANTIC_V2:

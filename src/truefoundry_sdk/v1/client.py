@@ -73,18 +73,14 @@ class V1Client:
 
         Examples
         --------
-        from truefoundry_sdk import (
-            ModelVersionManifest,
-            TrueFoundry,
-            TrueFoundryManagedSource,
-        )
+        from truefoundry_sdk import Model, TrueFoundry, TrueFoundryManagedSource
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
         client.v1.apply(
-            manifest=ModelVersionManifest(
+            manifest=Model(
                 metadata={"key": "value"},
                 source=TrueFoundryManagedSource(),
             ),
@@ -162,11 +158,7 @@ class AsyncV1Client:
         --------
         import asyncio
 
-        from truefoundry_sdk import (
-            AsyncTrueFoundry,
-            ModelVersionManifest,
-            TrueFoundryManagedSource,
-        )
+        from truefoundry_sdk import AsyncTrueFoundry, Model, TrueFoundryManagedSource
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -176,7 +168,7 @@ class AsyncV1Client:
 
         async def main() -> None:
             await client.v1.apply(
-                manifest=ModelVersionManifest(
+                manifest=Model(
                     metadata={"key": "value"},
                     source=TrueFoundryManagedSource(),
                 ),

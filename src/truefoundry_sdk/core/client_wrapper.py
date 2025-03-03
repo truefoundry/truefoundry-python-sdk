@@ -22,7 +22,7 @@ class BaseClientWrapper:
         headers: typing.Dict[str, str] = {
             "X-Fern-Language": "Python",
             "X-Fern-SDK-Name": "truefoundry-sdk",
-            "X-Fern-SDK-Version": "0.0.2",
+            "X-Fern-SDK-Version": "0.0.3",
         }
         api_key = self._get_api_key()
         if api_key is not None:

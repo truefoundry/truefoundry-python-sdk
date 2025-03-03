@@ -9,29 +9,22 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 class AssistantMessage(UniversalBaseModel):
     """
-    +label=Assistant Message
-    +usage=Assistant message turn
+    Assistant message turn
     """
 
     role: typing.Literal["assistant"] = pydantic.Field(default="assistant")
     """
-    +value=assistant
-    +label=Role
-    +usage=Role of the message
-    +uiType=Ignore
+    Role of the message
     """
 
     content: Content = pydantic.Field()
     """
-    +label=Content
-    +usage=Text content for the assistant message
-    +uiType=TextArea
+    Text content for the assistant message
     """
 
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Name
-    +usage=Name of the assistant this message is from
+    Name of the assistant this message is from
     """
 
     if IS_PYDANTIC_V2:

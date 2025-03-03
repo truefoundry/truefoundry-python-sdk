@@ -12,20 +12,17 @@ class AgentApp(UniversalBaseModel):
     type: typing.Optional[typing.Literal["agent-app"]] = None
     tools: typing.List[AgentOpenApiToolWithFqn] = pydantic.Field()
     """
-    +label=Tools
-    +usage=Tools available to the Agent app
+    Tools available to the Agent app
     """
 
     agents: typing.List[AgentWithFqn] = pydantic.Field()
     """
-    +label=Agents
-    +usage=Agents available to the Agent app
+    Agents available to the Agent app
     """
 
     root_agent: str = pydantic.Field()
     """
-    +label=Root Agent
-    +usage=Root Agent for the app. This will be the first agent invoked
+    Root Agent for the app. This will be the first agent invoked
     """
 
     if IS_PYDANTIC_V2:
