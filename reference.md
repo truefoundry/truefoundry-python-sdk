@@ -1,6 +1,6 @@
 # Reference
 ## V1
-<details><summary><code>client.v1.<a href="src/truefoundry/v1/client.py">apply</a>(...)</code></summary>
+<details><summary><code>client.v1.<a href="src/truefoundry_sdk/v1/client.py">apply</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```python
-from truefoundry import (
+from truefoundry_sdk import (
     ModelVersionManifest,
     TrueFoundry,
     TrueFoundryManagedSource,
@@ -65,7 +65,7 @@ client.v1.apply(
 </details>
 
 ## Health
-<details><summary><code>client.health.<a href="src/truefoundry/health/client.py">serve_get</a>()</code></summary>
+<details><summary><code>client.health.<a href="src/truefoundry_sdk/health/client.py">serve_get</a>()</code></summary>
 <dl>
 <dd>
 
@@ -78,7 +78,7 @@ client.v1.apply(
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -112,7 +112,7 @@ client.health.serve_get()
 </dl>
 </details>
 
-<details><summary><code>client.health.<a href="src/truefoundry/health/client.py">get</a>()</code></summary>
+<details><summary><code>client.health.<a href="src/truefoundry_sdk/health/client.py">get</a>()</code></summary>
 <dl>
 <dd>
 
@@ -125,7 +125,7 @@ client.health.serve_get()
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -160,7 +160,7 @@ client.health.get()
 </details>
 
 ## V1 Artifacts
-<details><summary><code>client.v1.artifacts.<a href="src/truefoundry/v1/artifacts/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.v1.artifacts.<a href="src/truefoundry_sdk/v1/artifacts/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -173,7 +173,7 @@ client.health.get()
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -217,7 +217,7 @@ client.v1.artifacts.get(
 </dl>
 </details>
 
-<details><summary><code>client.v1.artifacts.<a href="src/truefoundry/v1/artifacts/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.v1.artifacts.<a href="src/truefoundry_sdk/v1/artifacts/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -230,7 +230,7 @@ client.v1.artifacts.get(
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -274,7 +274,7 @@ client.v1.artifacts.delete(
 </dl>
 </details>
 
-<details><summary><code>client.v1.artifacts.<a href="src/truefoundry/v1/artifacts/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.v1.artifacts.<a href="src/truefoundry_sdk/v1/artifacts/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -287,7 +287,7 @@ client.v1.artifacts.delete(
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -366,7 +366,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.v1.artifacts.<a href="src/truefoundry/v1/artifacts/client.py">create_or_update</a>(...)</code></summary>
+<details><summary><code>client.v1.artifacts.<a href="src/truefoundry_sdk/v1/artifacts/client.py">create_or_update</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -379,7 +379,7 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry import (
+from truefoundry_sdk import (
     ModelVersionManifest,
     TrueFoundry,
     TrueFoundryManagedSource,
@@ -431,7 +431,7 @@ client.v1.artifacts.create_or_update(
 </details>
 
 ## V1 Agents
-<details><summary><code>client.v1.agents.<a href="src/truefoundry/v1/agents/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.v1.agents.<a href="src/truefoundry_sdk/v1/agents/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -444,7 +444,7 @@ client.v1.artifacts.create_or_update(
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -488,7 +488,7 @@ client.v1.agents.get(
 </dl>
 </details>
 
-<details><summary><code>client.v1.agents.<a href="src/truefoundry/v1/agents/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.v1.agents.<a href="src/truefoundry_sdk/v1/agents/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -501,7 +501,7 @@ client.v1.agents.get(
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -545,7 +545,7 @@ client.v1.agents.delete(
 </dl>
 </details>
 
-<details><summary><code>client.v1.agents.<a href="src/truefoundry/v1/agents/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.v1.agents.<a href="src/truefoundry_sdk/v1/agents/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -558,7 +558,7 @@ client.v1.agents.delete(
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -629,7 +629,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.v1.agents.<a href="src/truefoundry/v1/agents/client.py">create_or_update</a>(...)</code></summary>
+<details><summary><code>client.v1.agents.<a href="src/truefoundry_sdk/v1/agents/client.py">create_or_update</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -642,7 +642,7 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry import (
+from truefoundry_sdk import (
     ModelVersionManifest,
     TrueFoundry,
     TrueFoundryManagedSource,
@@ -694,7 +694,7 @@ client.v1.agents.create_or_update(
 </details>
 
 ## V1 Prompts
-<details><summary><code>client.v1.prompts.<a href="src/truefoundry/v1/prompts/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.v1.prompts.<a href="src/truefoundry_sdk/v1/prompts/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -707,7 +707,7 @@ client.v1.agents.create_or_update(
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -751,7 +751,7 @@ client.v1.prompts.get(
 </dl>
 </details>
 
-<details><summary><code>client.v1.prompts.<a href="src/truefoundry/v1/prompts/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.v1.prompts.<a href="src/truefoundry_sdk/v1/prompts/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -764,7 +764,7 @@ client.v1.prompts.get(
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -808,7 +808,7 @@ client.v1.prompts.delete(
 </dl>
 </details>
 
-<details><summary><code>client.v1.prompts.<a href="src/truefoundry/v1/prompts/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.v1.prompts.<a href="src/truefoundry_sdk/v1/prompts/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -821,7 +821,7 @@ client.v1.prompts.delete(
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -892,7 +892,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.v1.prompts.<a href="src/truefoundry/v1/prompts/client.py">create_or_update</a>(...)</code></summary>
+<details><summary><code>client.v1.prompts.<a href="src/truefoundry_sdk/v1/prompts/client.py">create_or_update</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -905,7 +905,7 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry import (
+from truefoundry_sdk import (
     ModelVersionManifest,
     TrueFoundry,
     TrueFoundryManagedSource,
@@ -957,7 +957,7 @@ client.v1.prompts.create_or_update(
 </details>
 
 ## V1 Tools
-<details><summary><code>client.v1.tools.<a href="src/truefoundry/v1/tools/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.v1.tools.<a href="src/truefoundry_sdk/v1/tools/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -970,7 +970,7 @@ client.v1.prompts.create_or_update(
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -1014,7 +1014,7 @@ client.v1.tools.get(
 </dl>
 </details>
 
-<details><summary><code>client.v1.tools.<a href="src/truefoundry/v1/tools/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.v1.tools.<a href="src/truefoundry_sdk/v1/tools/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1027,7 +1027,7 @@ client.v1.tools.get(
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -1071,7 +1071,7 @@ client.v1.tools.delete(
 </dl>
 </details>
 
-<details><summary><code>client.v1.tools.<a href="src/truefoundry/v1/tools/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.v1.tools.<a href="src/truefoundry_sdk/v1/tools/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1084,7 +1084,7 @@ client.v1.tools.delete(
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -1155,7 +1155,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.v1.tools.<a href="src/truefoundry/v1/tools/client.py">create_or_update</a>(...)</code></summary>
+<details><summary><code>client.v1.tools.<a href="src/truefoundry_sdk/v1/tools/client.py">create_or_update</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1168,7 +1168,7 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry import (
+from truefoundry_sdk import (
     ModelVersionManifest,
     TrueFoundry,
     TrueFoundryManagedSource,
@@ -1220,7 +1220,7 @@ client.v1.tools.create_or_update(
 </details>
 
 ## V1 Models
-<details><summary><code>client.v1.models.<a href="src/truefoundry/v1/models/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.v1.models.<a href="src/truefoundry_sdk/v1/models/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1233,7 +1233,7 @@ client.v1.tools.create_or_update(
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -1277,7 +1277,7 @@ client.v1.models.get(
 </dl>
 </details>
 
-<details><summary><code>client.v1.models.<a href="src/truefoundry/v1/models/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.v1.models.<a href="src/truefoundry_sdk/v1/models/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1290,7 +1290,7 @@ client.v1.models.get(
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -1334,7 +1334,7 @@ client.v1.models.delete(
 </dl>
 </details>
 
-<details><summary><code>client.v1.models.<a href="src/truefoundry/v1/models/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.v1.models.<a href="src/truefoundry_sdk/v1/models/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1347,7 +1347,7 @@ client.v1.models.delete(
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -1426,7 +1426,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.v1.models.<a href="src/truefoundry/v1/models/client.py">create_or_update</a>(...)</code></summary>
+<details><summary><code>client.v1.models.<a href="src/truefoundry_sdk/v1/models/client.py">create_or_update</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1439,7 +1439,7 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry import (
+from truefoundry_sdk import (
     ModelVersionManifest,
     TrueFoundry,
     TrueFoundryManagedSource,
@@ -1491,7 +1491,7 @@ client.v1.models.create_or_update(
 </details>
 
 ## V1 ArtifactVersions
-<details><summary><code>client.v1.artifact_versions.<a href="src/truefoundry/v1/artifact_versions/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.v1.artifact_versions.<a href="src/truefoundry_sdk/v1/artifact_versions/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1518,7 +1518,7 @@ Get artifact version API
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -1562,7 +1562,7 @@ client.v1.artifact_versions.get(
 </dl>
 </details>
 
-<details><summary><code>client.v1.artifact_versions.<a href="src/truefoundry/v1/artifact_versions/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.v1.artifact_versions.<a href="src/truefoundry_sdk/v1/artifact_versions/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1589,7 +1589,7 @@ Delete artifact versions API
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -1633,7 +1633,7 @@ client.v1.artifact_versions.delete(
 </dl>
 </details>
 
-<details><summary><code>client.v1.artifact_versions.<a href="src/truefoundry/v1/artifact_versions/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.v1.artifact_versions.<a href="src/truefoundry_sdk/v1/artifact_versions/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1660,7 +1660,7 @@ List artifact version API
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -1755,7 +1755,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.v1.artifact_versions.<a href="src/truefoundry/v1/artifact_versions/client.py">get_signed_urls</a>(...)</code></summary>
+<details><summary><code>client.v1.artifact_versions.<a href="src/truefoundry_sdk/v1/artifact_versions/client.py">get_signed_urls</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1768,7 +1768,7 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -1830,7 +1830,7 @@ client.v1.artifact_versions.get_signed_urls(
 </dl>
 </details>
 
-<details><summary><code>client.v1.artifact_versions.<a href="src/truefoundry/v1/artifact_versions/client.py">create_multi_part_upload</a>(...)</code></summary>
+<details><summary><code>client.v1.artifact_versions.<a href="src/truefoundry_sdk/v1/artifact_versions/client.py">create_multi_part_upload</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1843,7 +1843,7 @@ client.v1.artifact_versions.get_signed_urls(
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -1905,7 +1905,7 @@ client.v1.artifact_versions.create_multi_part_upload(
 </dl>
 </details>
 
-<details><summary><code>client.v1.artifact_versions.<a href="src/truefoundry/v1/artifact_versions/client.py">stage</a>(...)</code></summary>
+<details><summary><code>client.v1.artifact_versions.<a href="src/truefoundry_sdk/v1/artifact_versions/client.py">stage</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1918,7 +1918,7 @@ client.v1.artifact_versions.create_multi_part_upload(
 <dd>
 
 ```python
-from truefoundry import (
+from truefoundry_sdk import (
     ModelVersionManifest,
     TrueFoundry,
     TrueFoundryManagedSource,
@@ -1969,7 +1969,7 @@ client.v1.artifact_versions.stage(
 </dl>
 </details>
 
-<details><summary><code>client.v1.artifact_versions.<a href="src/truefoundry/v1/artifact_versions/client.py">list_files</a>(...)</code></summary>
+<details><summary><code>client.v1.artifact_versions.<a href="src/truefoundry_sdk/v1/artifact_versions/client.py">list_files</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1982,7 +1982,7 @@ client.v1.artifact_versions.stage(
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -2056,7 +2056,7 @@ for page in response.iter_pages():
 </details>
 
 ## V1 ModelVersions
-<details><summary><code>client.v1.model_versions.<a href="src/truefoundry/v1/model_versions/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.v1.model_versions.<a href="src/truefoundry_sdk/v1/model_versions/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2083,7 +2083,7 @@ Get model version API
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -2127,7 +2127,7 @@ client.v1.model_versions.get(
 </dl>
 </details>
 
-<details><summary><code>client.v1.model_versions.<a href="src/truefoundry/v1/model_versions/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.v1.model_versions.<a href="src/truefoundry_sdk/v1/model_versions/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2154,7 +2154,7 @@ Delete model versions API
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -2198,7 +2198,7 @@ client.v1.model_versions.delete(
 </dl>
 </details>
 
-<details><summary><code>client.v1.model_versions.<a href="src/truefoundry/v1/model_versions/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.v1.model_versions.<a href="src/truefoundry_sdk/v1/model_versions/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2225,7 +2225,7 @@ List model version API
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -2329,7 +2329,7 @@ for page in response.iter_pages():
 </details>
 
 ## V1 PromptVersions
-<details><summary><code>client.v1.prompt_versions.<a href="src/truefoundry/v1/prompt_versions/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.v1.prompt_versions.<a href="src/truefoundry_sdk/v1/prompt_versions/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2356,7 +2356,7 @@ Get prompt version API
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -2400,7 +2400,7 @@ client.v1.prompt_versions.get(
 </dl>
 </details>
 
-<details><summary><code>client.v1.prompt_versions.<a href="src/truefoundry/v1/prompt_versions/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.v1.prompt_versions.<a href="src/truefoundry_sdk/v1/prompt_versions/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2427,7 +2427,7 @@ Delete prompt versions API
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -2471,7 +2471,7 @@ client.v1.prompt_versions.delete(
 </dl>
 </details>
 
-<details><summary><code>client.v1.prompt_versions.<a href="src/truefoundry/v1/prompt_versions/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.v1.prompt_versions.<a href="src/truefoundry_sdk/v1/prompt_versions/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2498,7 +2498,7 @@ List prompt version API
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -2570,7 +2570,7 @@ for page in response.iter_pages():
 </details>
 
 ## V1 ToolVersions
-<details><summary><code>client.v1.tool_versions.<a href="src/truefoundry/v1/tool_versions/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.v1.tool_versions.<a href="src/truefoundry_sdk/v1/tool_versions/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2597,7 +2597,7 @@ Get tool version API
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -2641,7 +2641,7 @@ client.v1.tool_versions.get(
 </dl>
 </details>
 
-<details><summary><code>client.v1.tool_versions.<a href="src/truefoundry/v1/tool_versions/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.v1.tool_versions.<a href="src/truefoundry_sdk/v1/tool_versions/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2668,7 +2668,7 @@ Delete tool versions API
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -2712,7 +2712,7 @@ client.v1.tool_versions.delete(
 </dl>
 </details>
 
-<details><summary><code>client.v1.tool_versions.<a href="src/truefoundry/v1/tool_versions/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.v1.tool_versions.<a href="src/truefoundry_sdk/v1/tool_versions/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2739,7 +2739,7 @@ List tool versions API
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -2811,7 +2811,7 @@ for page in response.iter_pages():
 </details>
 
 ## V1 AgentVersions
-<details><summary><code>client.v1.agent_versions.<a href="src/truefoundry/v1/agent_versions/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.v1.agent_versions.<a href="src/truefoundry_sdk/v1/agent_versions/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2838,7 +2838,7 @@ Get agent version API
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -2882,7 +2882,7 @@ client.v1.agent_versions.get(
 </dl>
 </details>
 
-<details><summary><code>client.v1.agent_versions.<a href="src/truefoundry/v1/agent_versions/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.v1.agent_versions.<a href="src/truefoundry_sdk/v1/agent_versions/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2909,7 +2909,7 @@ Delete agent versions API
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -2953,7 +2953,7 @@ client.v1.agent_versions.delete(
 </dl>
 </details>
 
-<details><summary><code>client.v1.agent_versions.<a href="src/truefoundry/v1/agent_versions/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.v1.agent_versions.<a href="src/truefoundry_sdk/v1/agent_versions/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2980,7 +2980,7 @@ List agent versions API
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -3051,7 +3051,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.v1.agent_versions.<a href="src/truefoundry/v1/agent_versions/client.py">resolve</a>(...)</code></summary>
+<details><summary><code>client.v1.agent_versions.<a href="src/truefoundry_sdk/v1/agent_versions/client.py">resolve</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3064,7 +3064,7 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -3109,7 +3109,7 @@ client.v1.agent_versions.resolve(
 </details>
 
 ## V1 DataDirectories
-<details><summary><code>client.v1.data_directories.<a href="src/truefoundry/v1/data_directories/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.v1.data_directories.<a href="src/truefoundry_sdk/v1/data_directories/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3143,7 +3143,7 @@ Returns:
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -3187,7 +3187,7 @@ client.v1.data_directories.get(
 </dl>
 </details>
 
-<details><summary><code>client.v1.data_directories.<a href="src/truefoundry/v1/data_directories/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.v1.data_directories.<a href="src/truefoundry_sdk/v1/data_directories/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3222,7 +3222,7 @@ Returns:
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -3274,7 +3274,7 @@ client.v1.data_directories.delete(
 </dl>
 </details>
 
-<details><summary><code>client.v1.data_directories.<a href="src/truefoundry/v1/data_directories/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.v1.data_directories.<a href="src/truefoundry_sdk/v1/data_directories/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3312,7 +3312,7 @@ Returns:
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -3383,7 +3383,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.v1.data_directories.<a href="src/truefoundry/v1/data_directories/client.py">create_or_update</a>(...)</code></summary>
+<details><summary><code>client.v1.data_directories.<a href="src/truefoundry_sdk/v1/data_directories/client.py">create_or_update</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3396,7 +3396,7 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry import (
+from truefoundry_sdk import (
     ModelVersionManifest,
     TrueFoundry,
     TrueFoundryManagedSource,
@@ -3447,7 +3447,7 @@ client.v1.data_directories.create_or_update(
 </dl>
 </details>
 
-<details><summary><code>client.v1.data_directories.<a href="src/truefoundry/v1/data_directories/client.py">get_signed_urls</a>(...)</code></summary>
+<details><summary><code>client.v1.data_directories.<a href="src/truefoundry_sdk/v1/data_directories/client.py">get_signed_urls</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3481,7 +3481,7 @@ Returns:
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -3543,7 +3543,7 @@ client.v1.data_directories.get_signed_urls(
 </dl>
 </details>
 
-<details><summary><code>client.v1.data_directories.<a href="src/truefoundry/v1/data_directories/client.py">list_files</a>(...)</code></summary>
+<details><summary><code>client.v1.data_directories.<a href="src/truefoundry_sdk/v1/data_directories/client.py">list_files</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3577,7 +3577,7 @@ Returns:
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -3650,7 +3650,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.v1.data_directories.<a href="src/truefoundry/v1/data_directories/client.py">delete_files</a>(...)</code></summary>
+<details><summary><code>client.v1.data_directories.<a href="src/truefoundry_sdk/v1/data_directories/client.py">delete_files</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3684,7 +3684,7 @@ Returns:
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -3737,7 +3737,7 @@ client.v1.data_directories.delete_files(
 </dl>
 </details>
 
-<details><summary><code>client.v1.data_directories.<a href="src/truefoundry/v1/data_directories/client.py">create_multipart_upload</a>(...)</code></summary>
+<details><summary><code>client.v1.data_directories.<a href="src/truefoundry_sdk/v1/data_directories/client.py">create_multipart_upload</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3771,7 +3771,7 @@ Returns:
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -3834,7 +3834,7 @@ client.v1.data_directories.create_multipart_upload(
 </details>
 
 ## V1 MlRepos
-<details><summary><code>client.v1.ml_repos.<a href="src/truefoundry/v1/ml_repos/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.v1.ml_repos.<a href="src/truefoundry_sdk/v1/ml_repos/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3867,7 +3867,7 @@ Returns:
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -3911,7 +3911,7 @@ client.v1.ml_repos.get(
 </dl>
 </details>
 
-<details><summary><code>client.v1.ml_repos.<a href="src/truefoundry/v1/ml_repos/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.v1.ml_repos.<a href="src/truefoundry_sdk/v1/ml_repos/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3944,7 +3944,7 @@ Returns:
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -3988,7 +3988,7 @@ client.v1.ml_repos.delete(
 </dl>
 </details>
 
-<details><summary><code>client.v1.ml_repos.<a href="src/truefoundry/v1/ml_repos/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.v1.ml_repos.<a href="src/truefoundry_sdk/v1/ml_repos/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -4021,7 +4021,7 @@ Returns:
 <dd>
 
 ```python
-from truefoundry import TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
