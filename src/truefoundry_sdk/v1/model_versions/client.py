@@ -12,7 +12,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.empty_response import EmptyResponse
 from ...core.pagination import SyncPager
-from ...types.model_version import ModelVersion
+from ...types.model_version_entity import ModelVersionEntity
 from ...types.list_model_versions_response import ListModelVersionsResponse
 from ...core.client_wrapper import AsyncClientWrapper
 from ...core.pagination import AsyncPager
@@ -148,7 +148,7 @@ class ModelVersionsClient:
         include_internal_metadata: typing.Optional[bool] = None,
         include_model_versions: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[ModelVersion]:
+    ) -> SyncPager[ModelVersionEntity]:
         """
         List model version API
 
@@ -175,7 +175,7 @@ class ModelVersionsClient:
 
         Returns
         -------
-        SyncPager[ModelVersion]
+        SyncPager[ModelVersionEntity]
             Successful Response
 
         Examples
@@ -394,7 +394,7 @@ class AsyncModelVersionsClient:
         include_internal_metadata: typing.Optional[bool] = None,
         include_model_versions: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[ModelVersion]:
+    ) -> AsyncPager[ModelVersionEntity]:
         """
         List model version API
 
@@ -421,7 +421,7 @@ class AsyncModelVersionsClient:
 
         Returns
         -------
-        AsyncPager[ModelVersion]
+        AsyncPager[ModelVersionEntity]
             Successful Response
 
         Examples

@@ -2,14 +2,14 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
-from .artifact import Artifact
+from .artifact_entity import ArtifactEntity
 from .pagination import Pagination
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
 class ListArtifactsResponse(UniversalBaseModel):
-    data: typing.List[Artifact]
+    data: typing.List[ArtifactEntity]
     pagination: Pagination
 
     if IS_PYDANTIC_V2:

@@ -9,101 +9,63 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 class AgentWithFqn(UniversalBaseModel):
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +sort=1
-    +label=Name
-    +message=The name should start with lowercase alphabets  and can contain alphanumeric and can include '-' in between
-    +usage=Name of the entity
+    Name of the entity
     """
 
-    description: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    +sort=2
-    +label=Description
-    """
-
+    description: typing.Optional[str] = None
     metadata: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
     """
-    +label=Metadata
-    +usage=Key value metadata. Should be valid JSON. For e.g. `{"business-unit": "sales", "quality": "good", "rating": 4.5}`
-    +uiType=JsonInput
-    +uiProps={"descriptionInline":true}
+    Key value metadata. Should be valid JSON. For e.g. `{"business-unit": "sales", "quality": "good", "rating": 4.5}`
     """
 
     version_alias: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Version Alias
-    +usage=Version alias is alternate, ideally human readable, version string to reference an artifact version. It should start with `v` followed by alphanumeric and it can include `.` and `-` in between (e.g. `v1.0.0`, `v1-prod`, `v3-dev`, etc)
-    +message=The version alias should start with `v` followed by alphanumeric and can include `.` and `-` in between (e.g. `v1.0.0`, `v1-prod`, `v3-dev`, etc)
-    +uiProps={"descriptionInline":true}
-    +placeholder=v1.0.0
+    Version alias is alternate, ideally human readable, version string to reference an artifact version. It should start with `v` followed by alphanumeric and it can include `.` and `-` in between (e.g. `v1.0.0`, `v1-prod`, `v3-dev`, etc)
     """
 
     ml_repo: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=ML Repo
-    +usage=Name of the ML Repo
-    +uiType=Hidden
+    Name of the ML Repo
     """
 
     version: typing.Optional[int] = pydantic.Field(default=None)
     """
-    +label=Version of the entity
-    +usage=Version of the entity
-    +uiType=Hidden
+    Version of the entity
     """
 
     type: typing.Literal["agent"] = pydantic.Field(default="agent")
     """
-    +value=agent
-    +usage=Type of the entity
+    Type of the entity
     """
 
     available_tools: typing.List[str] = pydantic.Field()
     """
-    +sort=30
-    +uiType=Hidden
-    +label=Tools
-    +usage=Tools available to the agent
-    +uiProps={"descriptionInline":true}
+    Tools available to the agent
     """
 
     goal: str = pydantic.Field()
     """
-    +sort=10
-    +uiType=TextArea
-    +label=Goal
-    +usage=Short form description. Will be used as `description` when this agent is used as a tool.
-    +uiProps={"descriptionInline":true}
+    Short form description. Will be used as `description` when this agent is used as a tool.
     """
 
     instruction: str = pydantic.Field()
     """
-    `instruction` is the system prompt for now. (2.5 * 1024)
-    +sort=20
-    +uiType=AgentInstructions
-    +uiProps={"helpText":"Use the syntax ${Tool FQN} to reference a tool, and ${AGENT FQN} to reference another agent"}
-    +label=Instructions
-    +usage=Instructions for the agent to follow to achieve the goal
-    +uiProps={"descriptionInline":true}
+    Instructions for the agent to follow to achieve the goal
     """
 
     model_id: str = pydantic.Field()
     """
-    +sort=40
-    +uiType=EnabledModelSelector
-    +uiProps={"searchable":true,"modelType":"chat","providerType":"openai"}
-    +label=Model
-    +usage=Model to use when running the agent
+    Model to use when running the agent
     """
 
     id: str = pydantic.Field()
     """
-    +usage=ID of the agent
+    ID of the agent
     """
 
     fqn: str = pydantic.Field()
     """
-    +usage=FQN of the agent
+    FQN of the agent
     """
 
     if IS_PYDANTIC_V2:

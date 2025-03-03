@@ -7,16 +7,9 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class SpaCyFramework(UniversalBaseModel):
-    """
-    +label=SpaCy
-    +icon=spacy
-    """
-
     type: typing.Literal["spacy"] = pydantic.Field(default="spacy")
     """
-    +label=Type
-    +usage=Type of the framework
-    +value=spacy
+    Type of the framework
     """
 
     if IS_PYDANTIC_V2:

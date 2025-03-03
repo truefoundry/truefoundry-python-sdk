@@ -4,21 +4,21 @@ from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 from .subject import Subject
 import datetime as dt
-from .prompt_version import PromptVersion
+from .agent_version_entity import AgentVersionEntity
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
-class Prompt(UniversalBaseModel):
+class AgentEntity(UniversalBaseModel):
     id: str
     ml_repo_id: str
-    type: typing.Optional[typing.Literal["chat_prompt"]] = None
+    type: typing.Optional[typing.Literal["agent"]] = None
     name: str
     fqn: str
     created_by_subject: Subject
     created_at: typing.Optional[dt.datetime] = None
     updated_at: typing.Optional[dt.datetime] = None
-    latest_version: typing.Optional[PromptVersion] = None
+    latest_version: typing.Optional[AgentVersionEntity] = None
     run_steps: typing.Optional[typing.List[int]] = None
 
     if IS_PYDANTIC_V2:

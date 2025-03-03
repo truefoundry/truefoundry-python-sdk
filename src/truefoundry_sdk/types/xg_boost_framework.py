@@ -9,23 +9,15 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class XgBoostFramework(UniversalBaseModel):
-    """
-    +label=XGBoost
-    +icon=xgboost
-    """
-
     type: typing.Literal["xgboost"] = pydantic.Field(default="xgboost")
     """
-    +label=Type
-    +usage=Type of the framework
-    +value=xgboost
+    Type of the framework
     """
 
     serialization_format: typing.Optional[XgBoostSerializationFormat] = None
     model_filepath: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Model file path
-    +usage=Relative path to the model file in the model version contents
+    Relative path to the model file in the model version contents
     """
 
     model_schema: typing.Optional[XgBoostModelSchema] = None

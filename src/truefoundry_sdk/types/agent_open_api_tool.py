@@ -3,12 +3,14 @@
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 import pydantic
+from .agent_open_api_tool_openapi_spec import AgentOpenApiToolOpenapiSpec
+from .method import Method
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
-class Agent(UniversalBaseModel):
+class AgentOpenApiTool(UniversalBaseModel):
     """
-    Agent manifest.
+    Agent OpenAPI Tool manifest.
     """
 
     name: typing.Optional[str] = pydantic.Field(default=None)
@@ -37,25 +39,30 @@ class Agent(UniversalBaseModel):
     Version of the entity
     """
 
-    type: typing.Literal["agent"] = "agent"
-    available_tools: typing.List[str] = pydantic.Field()
+    type: typing.Literal["openapi-tool"] = "openapi-tool"
+    openapi_spec: AgentOpenApiToolOpenapiSpec = pydantic.Field()
     """
-    Tools available to the agent
-    """
-
-    goal: str = pydantic.Field()
-    """
-    Short form description. Will be used as `description` when this agent is used as a tool.
+    OpenAPI Spec for the tool describing the API, endpoints and parameters. [Sample OpenAPI Spec Link](https://assets.production.truefoundry.com/sample-openapi.json)
     """
 
-    instruction: str = pydantic.Field()
+    base_url: str = pydantic.Field()
     """
-    Instructions for the agent to follow to achieve the goal
+    HTTP endpoint where the API is hosted for the tools. E.g. `https://api.example.com/v1`
     """
 
-    model_id: str = pydantic.Field()
+    path: str = pydantic.Field()
     """
-    Model to use when running the agent
+    API Route Path for the tool call HTTP request. E.g. `GET /weather`
+    """
+
+    method: Method = pydantic.Field()
+    """
+    HTTP Method for the tool call HTTP request
+    """
+
+    headers: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
+    """
+    HTTP Headers for the tool call HTTP request. E.g. `Authorization: Bearer <token>`
     """
 
     if IS_PYDANTIC_V2:

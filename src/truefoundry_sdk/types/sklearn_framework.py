@@ -9,23 +9,14 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class SklearnFramework(UniversalBaseModel):
-    """
-    +label=Sklearn
-    +icon=sklearn
-    """
-
     type: typing.Literal["sklearn"] = pydantic.Field(default="sklearn")
     """
-    +label=Type
-    +usage=Type of the framework
-    +value=sklearn
+    Type of the framework
     """
 
     model_filepath: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Model file path
-    +usage=Relative path to the model file in the model version contents
-    +uiProps={"descriptionInline":true}
+    Relative path to the model file in the model version contents
     """
 
     serialization_format: typing.Optional[SklearnSerializationFormat] = None

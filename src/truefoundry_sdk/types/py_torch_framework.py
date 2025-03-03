@@ -7,16 +7,9 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class PyTorchFramework(UniversalBaseModel):
-    """
-    +label=PyTorch
-    +icon=pytorch
-    """
-
     type: typing.Literal["pytorch"] = pydantic.Field(default="pytorch")
     """
-    +label=Type
-    +usage=Type of the framework
-    +value=pytorch
+    Type of the framework
     """
 
     if IS_PYDANTIC_V2:

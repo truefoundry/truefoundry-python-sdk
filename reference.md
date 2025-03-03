@@ -13,18 +13,14 @@
 <dd>
 
 ```python
-from truefoundry_sdk import (
-    ModelVersionManifest,
-    TrueFoundry,
-    TrueFoundryManagedSource,
-)
+from truefoundry_sdk import Model, TrueFoundry, TrueFoundryManagedSource
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
 client.v1.apply(
-    manifest=ModelVersionManifest(
+    manifest=Model(
         metadata={"key": "value"},
         source=TrueFoundryManagedSource(),
     ),
@@ -379,18 +375,14 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry_sdk import (
-    ModelVersionManifest,
-    TrueFoundry,
-    TrueFoundryManagedSource,
-)
+from truefoundry_sdk import Model, TrueFoundry, TrueFoundryManagedSource
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
 client.v1.artifacts.create_or_update(
-    manifest=ModelVersionManifest(
+    manifest=Model(
         metadata={"key": "value"},
         source=TrueFoundryManagedSource(),
     ),
@@ -642,18 +634,14 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry_sdk import (
-    ModelVersionManifest,
-    TrueFoundry,
-    TrueFoundryManagedSource,
-)
+from truefoundry_sdk import Model, TrueFoundry, TrueFoundryManagedSource
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
 client.v1.agents.create_or_update(
-    manifest=ModelVersionManifest(
+    manifest=Model(
         metadata={"key": "value"},
         source=TrueFoundryManagedSource(),
     ),
@@ -905,18 +893,14 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry_sdk import (
-    ModelVersionManifest,
-    TrueFoundry,
-    TrueFoundryManagedSource,
-)
+from truefoundry_sdk import Model, TrueFoundry, TrueFoundryManagedSource
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
 client.v1.prompts.create_or_update(
-    manifest=ModelVersionManifest(
+    manifest=Model(
         metadata={"key": "value"},
         source=TrueFoundryManagedSource(),
     ),
@@ -1168,18 +1152,14 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry_sdk import (
-    ModelVersionManifest,
-    TrueFoundry,
-    TrueFoundryManagedSource,
-)
+from truefoundry_sdk import Model, TrueFoundry, TrueFoundryManagedSource
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
 client.v1.tools.create_or_update(
-    manifest=ModelVersionManifest(
+    manifest=Model(
         metadata={"key": "value"},
         source=TrueFoundryManagedSource(),
     ),
@@ -1439,18 +1419,14 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry_sdk import (
-    ModelVersionManifest,
-    TrueFoundry,
-    TrueFoundryManagedSource,
-)
+from truefoundry_sdk import Model, TrueFoundry, TrueFoundryManagedSource
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
 client.v1.models.create_or_update(
-    manifest=ModelVersionManifest(
+    manifest=Model(
         metadata={"key": "value"},
         source=TrueFoundryManagedSource(),
     ),
@@ -1918,18 +1894,14 @@ client.v1.artifact_versions.create_multi_part_upload(
 <dd>
 
 ```python
-from truefoundry_sdk import (
-    ModelVersionManifest,
-    TrueFoundry,
-    TrueFoundryManagedSource,
-)
+from truefoundry_sdk import Model, TrueFoundry, TrueFoundryManagedSource
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
 client.v1.artifact_versions.stage(
-    manifest=ModelVersionManifest(
+    manifest=Model(
         metadata={"key": "value"},
         source=TrueFoundryManagedSource(),
     ),
@@ -3396,18 +3368,14 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry_sdk import (
-    ModelVersionManifest,
-    TrueFoundry,
-    TrueFoundryManagedSource,
-)
+from truefoundry_sdk import Model, TrueFoundry, TrueFoundryManagedSource
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
 client.v1.data_directories.create_or_update(
-    manifest=ModelVersionManifest(
+    manifest=Model(
         metadata={"key": "value"},
         source=TrueFoundryManagedSource(),
     ),

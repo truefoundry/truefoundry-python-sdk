@@ -12,7 +12,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.empty_response import EmptyResponse
 from ...core.pagination import SyncPager
-from ...types.model import Model
+from ...types.model_entity import ModelEntity
 from ...types.list_models_response import ListModelsResponse
 from ...types.manifest import Manifest
 from ...types.get_model_version_response import GetModelVersionResponse
@@ -147,7 +147,7 @@ class ModelsClient:
         limit: typing.Optional[int] = None,
         run_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Model]:
+    ) -> SyncPager[ModelEntity]:
         """
         Parameters
         ----------
@@ -166,7 +166,7 @@ class ModelsClient:
 
         Returns
         -------
-        SyncPager[Model]
+        SyncPager[ModelEntity]
             Successful Response
 
         Examples
@@ -250,18 +250,14 @@ class ModelsClient:
 
         Examples
         --------
-        from truefoundry_sdk import (
-            ModelVersionManifest,
-            TrueFoundry,
-            TrueFoundryManagedSource,
-        )
+        from truefoundry_sdk import Model, TrueFoundry, TrueFoundryManagedSource
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
         client.v1.models.create_or_update(
-            manifest=ModelVersionManifest(
+            manifest=Model(
                 metadata={"key": "value"},
                 source=TrueFoundryManagedSource(),
             ),
@@ -442,7 +438,7 @@ class AsyncModelsClient:
         limit: typing.Optional[int] = None,
         run_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Model]:
+    ) -> AsyncPager[ModelEntity]:
         """
         Parameters
         ----------
@@ -461,7 +457,7 @@ class AsyncModelsClient:
 
         Returns
         -------
-        AsyncPager[Model]
+        AsyncPager[ModelEntity]
             Successful Response
 
         Examples
@@ -555,11 +551,7 @@ class AsyncModelsClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import (
-            AsyncTrueFoundry,
-            ModelVersionManifest,
-            TrueFoundryManagedSource,
-        )
+        from truefoundry_sdk import AsyncTrueFoundry, Model, TrueFoundryManagedSource
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -569,7 +561,7 @@ class AsyncModelsClient:
 
         async def main() -> None:
             await client.v1.models.create_or_update(
-                manifest=ModelVersionManifest(
+                manifest=Model(
                     metadata={"key": "value"},
                     source=TrueFoundryManagedSource(),
                 ),

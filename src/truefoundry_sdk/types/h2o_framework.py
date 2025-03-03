@@ -7,16 +7,9 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class H2OFramework(UniversalBaseModel):
-    """
-    +label=H2O
-    +icon=h2o
-    """
-
     type: typing.Literal["h2o"] = pydantic.Field(default="h2o")
     """
-    +label=Type
-    +usage=Type of the framework
-    +value=h2o
+    Type of the framework
     """
 
     if IS_PYDANTIC_V2:

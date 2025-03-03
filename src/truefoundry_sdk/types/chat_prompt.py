@@ -3,12 +3,14 @@
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 import pydantic
+from .chat_prompt_messages_item import ChatPromptMessagesItem
+from .model_configuration import ModelConfiguration
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
-class Agent(UniversalBaseModel):
+class ChatPrompt(UniversalBaseModel):
     """
-    Agent manifest.
+    Chat Prompt manifest.
     """
 
     name: typing.Optional[str] = pydantic.Field(default=None)
@@ -37,26 +39,18 @@ class Agent(UniversalBaseModel):
     Version of the entity
     """
 
-    type: typing.Literal["agent"] = "agent"
-    available_tools: typing.List[str] = pydantic.Field()
+    type: typing.Literal["chat_prompt"] = "chat_prompt"
+    messages: typing.List[ChatPromptMessagesItem] = pydantic.Field()
     """
-    Tools available to the agent
-    """
-
-    goal: str = pydantic.Field()
-    """
-    Short form description. Will be used as `description` when this agent is used as a tool.
+    List of messages in the chat conversation, must be non-empty
     """
 
-    instruction: str = pydantic.Field()
+    variables: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
     """
-    Instructions for the agent to follow to achieve the goal
+    Variables referenced in messages and that can be replaced when running generation
     """
 
-    model_id: str = pydantic.Field()
-    """
-    Model to use when running the agent
-    """
+    model_configuration: ModelConfiguration
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

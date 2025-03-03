@@ -12,7 +12,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.empty_response import EmptyResponse
 from ...core.pagination import SyncPager
-from ...types.agent_version import AgentVersion
+from ...types.agent_version_entity import AgentVersionEntity
 from ...types.list_agent_versions_response import ListAgentVersionsResponse
 from ...types.resolve_agent_app_response import ResolveAgentAppResponse
 from ...core.client_wrapper import AsyncClientWrapper
@@ -145,7 +145,7 @@ class AgentVersionsClient:
         offset: typing.Optional[int] = None,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[AgentVersion]:
+    ) -> SyncPager[AgentVersionEntity]:
         """
         List agent versions API
 
@@ -164,7 +164,7 @@ class AgentVersionsClient:
 
         Returns
         -------
-        SyncPager[AgentVersion]
+        SyncPager[AgentVersionEntity]
             Successful Response
 
         Examples
@@ -429,7 +429,7 @@ class AsyncAgentVersionsClient:
         offset: typing.Optional[int] = None,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[AgentVersion]:
+    ) -> AsyncPager[AgentVersionEntity]:
         """
         List agent versions API
 
@@ -448,7 +448,7 @@ class AsyncAgentVersionsClient:
 
         Returns
         -------
-        AsyncPager[AgentVersion]
+        AsyncPager[AgentVersionEntity]
             Successful Response
 
         Examples
