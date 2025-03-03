@@ -4,7 +4,7 @@
 
 import typing_extensions
 import typing_extensions
-from truefoundry.core.serialization import FieldMetadata
+from truefoundry_sdk.core.serialization import FieldMetadata
 
 
 class CircleParams(typing_extensions.TypedDict):

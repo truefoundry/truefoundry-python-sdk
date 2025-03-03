@@ -2,7 +2,7 @@
 
 from typing import List, Any
 
-from truefoundry.core.serialization import convert_and_respect_annotation_metadata
+from truefoundry_sdk.core.serialization import convert_and_respect_annotation_metadata
 from .assets.models import ShapeParams, ObjectWithOptionalFieldParams
 
 
