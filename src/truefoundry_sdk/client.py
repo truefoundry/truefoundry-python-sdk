@@ -3,12 +3,11 @@
 import typing
 import os
 import httpx
+from .core.api_error import ApiError
 from .core.client_wrapper import SyncClientWrapper
 from .v1.client import V1Client
-from .health.client import HealthClient
 from .core.client_wrapper import AsyncClientWrapper
 from .v1.client import AsyncV1Client
-from .health.client import AsyncHealthClient
 
 
 class TrueFoundry:
@@ -50,6 +49,8 @@ class TrueFoundry:
         httpx_client: typing.Optional[httpx.Client] = None,
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
+        if api_key is None:
+            raise ApiError(body="The client must be instantiated be either passing in api_key or setting TFY_API_KEY")
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
             api_key=api_key,
@@ -61,7 +62,6 @@ class TrueFoundry:
             timeout=_defaulted_timeout,
         )
         self.v1 = V1Client(client_wrapper=self._client_wrapper)
-        self.health = HealthClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncTrueFoundry:
@@ -103,6 +103,8 @@ class AsyncTrueFoundry:
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
+        if api_key is None:
+            raise ApiError(body="The client must be instantiated be either passing in api_key or setting TFY_API_KEY")
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
             api_key=api_key,
@@ -114,4 +116,3 @@ class AsyncTrueFoundry:
             timeout=_defaulted_timeout,
         )
         self.v1 = AsyncV1Client(client_wrapper=self._client_wrapper)
-        self.health = AsyncHealthClient(client_wrapper=self._client_wrapper)

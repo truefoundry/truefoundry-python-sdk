@@ -4,19 +4,20 @@ from ..core.pydantic_utilities import UniversalBaseModel
 from .subject import Subject
 import typing
 import datetime as dt
-from .agent import Agent
+from .agent_manifest import AgentManifest
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
-class AgentVersionEntity(UniversalBaseModel):
+class AgentVersion(UniversalBaseModel):
     id: str
     fqn: str
     created_by_subject: Subject
     created_at: typing.Optional[dt.datetime] = None
     updated_at: typing.Optional[dt.datetime] = None
-    manifest: Agent
+    manifest: AgentManifest
     usage_code_snippet: typing.Optional[str] = None
+    ml_repo_id: str
     agent_id: str
 
     if IS_PYDANTIC_V2:

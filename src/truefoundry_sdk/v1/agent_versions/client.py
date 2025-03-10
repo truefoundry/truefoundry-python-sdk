@@ -12,7 +12,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.empty_response import EmptyResponse
 from ...core.pagination import SyncPager
-from ...types.agent_version_entity import AgentVersionEntity
+from ...types.agent_version import AgentVersion
 from ...types.list_agent_versions_response import ListAgentVersionsResponse
 from ...types.resolve_agent_app_response import ResolveAgentAppResponse
 from ...core.client_wrapper import AsyncClientWrapper
@@ -145,7 +145,7 @@ class AgentVersionsClient:
         offset: typing.Optional[int] = None,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[AgentVersionEntity]:
+    ) -> SyncPager[AgentVersion]:
         """
         List agent versions API
 
@@ -164,7 +164,7 @@ class AgentVersionsClient:
 
         Returns
         -------
-        SyncPager[AgentVersionEntity]
+        SyncPager[AgentVersion]
             Successful Response
 
         Examples
@@ -182,7 +182,7 @@ class AgentVersionsClient:
         for page in response.iter_pages():
             yield page
         """
-        offset = offset if offset is not None else 1
+        offset = offset if offset is not None else 0
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/agent-versions",
             method="GET",
@@ -429,7 +429,7 @@ class AsyncAgentVersionsClient:
         offset: typing.Optional[int] = None,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[AgentVersionEntity]:
+    ) -> AsyncPager[AgentVersion]:
         """
         List agent versions API
 
@@ -448,7 +448,7 @@ class AsyncAgentVersionsClient:
 
         Returns
         -------
-        AsyncPager[AgentVersionEntity]
+        AsyncPager[AgentVersion]
             Successful Response
 
         Examples
@@ -474,7 +474,7 @@ class AsyncAgentVersionsClient:
 
         asyncio.run(main())
         """
-        offset = offset if offset is not None else 1
+        offset = offset if offset is not None else 0
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/agent-versions",
             method="GET",

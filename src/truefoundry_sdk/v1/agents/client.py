@@ -12,7 +12,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.empty_response import EmptyResponse
 from ...core.pagination import SyncPager
-from ...types.agent_entity import AgentEntity
+from ...types.agent import Agent
 from ...types.list_agents_response import ListAgentsResponse
 from ...types.manifest import Manifest
 from ...types.get_agent_version_response import GetAgentVersionResponse
@@ -146,7 +146,7 @@ class AgentsClient:
         offset: typing.Optional[int] = None,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[AgentEntity]:
+    ) -> SyncPager[Agent]:
         """
         Parameters
         ----------
@@ -163,7 +163,7 @@ class AgentsClient:
 
         Returns
         -------
-        SyncPager[AgentEntity]
+        SyncPager[Agent]
             Successful Response
 
         Examples
@@ -181,7 +181,7 @@ class AgentsClient:
         for page in response.iter_pages():
             yield page
         """
-        offset = offset if offset is not None else 1
+        offset = offset if offset is not None else 0
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/agents/",
             method="GET",
@@ -245,15 +245,17 @@ class AgentsClient:
 
         Examples
         --------
-        from truefoundry_sdk import Model, TrueFoundry, TrueFoundryManagedSource
+        from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
         client.v1.agents.create_or_update(
-            manifest=Model(
+            manifest=ModelManifest(
+                name="name",
                 metadata={"key": "value"},
+                ml_repo="ml_repo",
                 source=TrueFoundryManagedSource(),
             ),
         )
@@ -432,7 +434,7 @@ class AsyncAgentsClient:
         offset: typing.Optional[int] = None,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[AgentEntity]:
+    ) -> AsyncPager[Agent]:
         """
         Parameters
         ----------
@@ -449,7 +451,7 @@ class AsyncAgentsClient:
 
         Returns
         -------
-        AsyncPager[AgentEntity]
+        AsyncPager[Agent]
             Successful Response
 
         Examples
@@ -475,7 +477,7 @@ class AsyncAgentsClient:
 
         asyncio.run(main())
         """
-        offset = offset if offset is not None else 1
+        offset = offset if offset is not None else 0
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/agents/",
             method="GET",
@@ -541,7 +543,11 @@ class AsyncAgentsClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import AsyncTrueFoundry, Model, TrueFoundryManagedSource
+        from truefoundry_sdk import (
+            AsyncTrueFoundry,
+            ModelManifest,
+            TrueFoundryManagedSource,
+        )
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -551,8 +557,10 @@ class AsyncAgentsClient:
 
         async def main() -> None:
             await client.v1.agents.create_or_update(
-                manifest=Model(
+                manifest=ModelManifest(
+                    name="name",
                     metadata={"key": "value"},
+                    ml_repo="ml_repo",
                     source=TrueFoundryManagedSource(),
                 ),
             )

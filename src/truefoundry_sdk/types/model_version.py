@@ -4,20 +4,21 @@ from ..core.pydantic_utilities import UniversalBaseModel
 from .subject import Subject
 import typing
 import datetime as dt
-from .artifact import Artifact
+from .model_manifest import ModelManifest
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
-class ArtifactVersionEntity(UniversalBaseModel):
+class ModelVersion(UniversalBaseModel):
     id: str
     fqn: str
     created_by_subject: Subject
     created_at: typing.Optional[dt.datetime] = None
     updated_at: typing.Optional[dt.datetime] = None
-    manifest: Artifact
+    manifest: ModelManifest
     usage_code_snippet: typing.Optional[str] = None
-    artifact_id: str
+    ml_repo_id: str
+    model_id: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

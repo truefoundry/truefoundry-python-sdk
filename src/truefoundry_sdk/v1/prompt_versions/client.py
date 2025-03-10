@@ -12,7 +12,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.empty_response import EmptyResponse
 from ...core.pagination import SyncPager
-from ...types.prompt_version_entity import PromptVersionEntity
+from ...types.prompt_version import PromptVersion
 from ...types.list_prompt_versions_response import ListPromptVersionsResponse
 from ...core.client_wrapper import AsyncClientWrapper
 from ...core.pagination import AsyncPager
@@ -144,7 +144,7 @@ class PromptVersionsClient:
         offset: typing.Optional[int] = None,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[PromptVersionEntity]:
+    ) -> SyncPager[PromptVersion]:
         """
         List prompt version API
 
@@ -163,7 +163,7 @@ class PromptVersionsClient:
 
         Returns
         -------
-        SyncPager[PromptVersionEntity]
+        SyncPager[PromptVersion]
             Successful Response
 
         Examples
@@ -181,7 +181,7 @@ class PromptVersionsClient:
         for page in response.iter_pages():
             yield page
         """
-        offset = offset if offset is not None else 1
+        offset = offset if offset is not None else 0
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/prompt-versions",
             method="GET",
@@ -372,7 +372,7 @@ class AsyncPromptVersionsClient:
         offset: typing.Optional[int] = None,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[PromptVersionEntity]:
+    ) -> AsyncPager[PromptVersion]:
         """
         List prompt version API
 
@@ -391,7 +391,7 @@ class AsyncPromptVersionsClient:
 
         Returns
         -------
-        AsyncPager[PromptVersionEntity]
+        AsyncPager[PromptVersion]
             Successful Response
 
         Examples
@@ -417,7 +417,7 @@ class AsyncPromptVersionsClient:
 
         asyncio.run(main())
         """
-        offset = offset if offset is not None else 1
+        offset = offset if offset is not None else 0
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/prompt-versions",
             method="GET",
