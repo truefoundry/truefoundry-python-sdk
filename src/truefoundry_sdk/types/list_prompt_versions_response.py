@@ -2,14 +2,14 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
-from .prompt_version_entity import PromptVersionEntity
+from .prompt_version import PromptVersion
 from .pagination import Pagination
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
 class ListPromptVersionsResponse(UniversalBaseModel):
-    data: typing.List[PromptVersionEntity]
+    data: typing.List[PromptVersion]
     pagination: Pagination
 
     if IS_PYDANTIC_V2:

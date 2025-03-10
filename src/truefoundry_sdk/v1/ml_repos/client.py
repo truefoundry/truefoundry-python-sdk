@@ -12,7 +12,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.empty_response import EmptyResponse
 from ...core.pagination import SyncPager
-from ...types.ml_repo_entity import MlRepoEntity
+from ...types.ml_repo import MlRepo
 from ...types.list_ml_repos_response import ListMlReposResponse
 from ...core.client_wrapper import AsyncClientWrapper
 from ...core.pagination import AsyncPager
@@ -155,7 +155,7 @@ class MlReposClient:
         limit: typing.Optional[int] = None,
         offset: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[MlRepoEntity]:
+    ) -> SyncPager[MlRepo]:
         """
         List ml repos
         Args:
@@ -178,7 +178,7 @@ class MlReposClient:
 
         Returns
         -------
-        SyncPager[MlRepoEntity]
+        SyncPager[MlRepo]
             Successful Response
 
         Examples
@@ -196,7 +196,7 @@ class MlReposClient:
         for page in response.iter_pages():
             yield page
         """
-        offset = offset if offset is not None else 1
+        offset = offset if offset is not None else 0
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/ml-repos",
             method="GET",
@@ -394,7 +394,7 @@ class AsyncMlReposClient:
         limit: typing.Optional[int] = None,
         offset: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[MlRepoEntity]:
+    ) -> AsyncPager[MlRepo]:
         """
         List ml repos
         Args:
@@ -417,7 +417,7 @@ class AsyncMlReposClient:
 
         Returns
         -------
-        AsyncPager[MlRepoEntity]
+        AsyncPager[MlRepo]
             Successful Response
 
         Examples
@@ -443,7 +443,7 @@ class AsyncMlReposClient:
 
         asyncio.run(main())
         """
-        offset = offset if offset is not None else 1
+        offset = offset if offset is not None else 0
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/ml-repos",
             method="GET",

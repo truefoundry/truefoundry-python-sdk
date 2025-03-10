@@ -12,7 +12,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.empty_response import EmptyResponse
 from ...core.pagination import SyncPager
-from ...types.tool_version_entity import ToolVersionEntity
+from ...types.tool_version import ToolVersion
 from ...types.list_tool_versions_response import ListToolVersionsResponse
 from ...core.client_wrapper import AsyncClientWrapper
 from ...core.pagination import AsyncPager
@@ -144,7 +144,7 @@ class ToolVersionsClient:
         offset: typing.Optional[int] = None,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[ToolVersionEntity]:
+    ) -> SyncPager[ToolVersion]:
         """
         List tool versions API
 
@@ -163,7 +163,7 @@ class ToolVersionsClient:
 
         Returns
         -------
-        SyncPager[ToolVersionEntity]
+        SyncPager[ToolVersion]
             Successful Response
 
         Examples
@@ -181,7 +181,7 @@ class ToolVersionsClient:
         for page in response.iter_pages():
             yield page
         """
-        offset = offset if offset is not None else 1
+        offset = offset if offset is not None else 0
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/tool-versions",
             method="GET",
@@ -370,7 +370,7 @@ class AsyncToolVersionsClient:
         offset: typing.Optional[int] = None,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[ToolVersionEntity]:
+    ) -> AsyncPager[ToolVersion]:
         """
         List tool versions API
 
@@ -389,7 +389,7 @@ class AsyncToolVersionsClient:
 
         Returns
         -------
-        AsyncPager[ToolVersionEntity]
+        AsyncPager[ToolVersion]
             Successful Response
 
         Examples
@@ -415,7 +415,7 @@ class AsyncToolVersionsClient:
 
         asyncio.run(main())
         """
-        offset = offset if offset is not None else 1
+        offset = offset if offset is not None else 0
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/tool-versions",
             method="GET",

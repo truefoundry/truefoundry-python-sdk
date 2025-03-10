@@ -12,7 +12,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.empty_response import EmptyResponse
 from ...core.pagination import SyncPager
-from ...types.artifact_version_entity import ArtifactVersionEntity
+from ...types.artifact_version import ArtifactVersion
 from ...types.list_artifact_version_response import ListArtifactVersionResponse
 from ...types.operation import Operation
 from ...types.get_signed_ur_ls_response import GetSignedUrLsResponse
@@ -158,7 +158,7 @@ class ArtifactVersionsClient:
         run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         include_internal_metadata: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[ArtifactVersionEntity]:
+    ) -> SyncPager[ArtifactVersion]:
         """
         List artifact version API
 
@@ -183,7 +183,7 @@ class ArtifactVersionsClient:
 
         Returns
         -------
-        SyncPager[ArtifactVersionEntity]
+        SyncPager[ArtifactVersion]
             Successful Response
 
         Examples
@@ -201,7 +201,7 @@ class ArtifactVersionsClient:
         for page in response.iter_pages():
             yield page
         """
-        offset = offset if offset is not None else 1
+        offset = offset if offset is not None else 0
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/artifact-versions",
             method="GET",
@@ -414,15 +414,17 @@ class ArtifactVersionsClient:
 
         Examples
         --------
-        from truefoundry_sdk import Model, TrueFoundry, TrueFoundryManagedSource
+        from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
         client.v1.artifact_versions.stage(
-            manifest=Model(
+            manifest=ModelManifest(
+                name="name",
                 metadata={"key": "value"},
+                ml_repo="ml_repo",
                 source=TrueFoundryManagedSource(),
             ),
         )
@@ -708,7 +710,7 @@ class AsyncArtifactVersionsClient:
         run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         include_internal_metadata: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[ArtifactVersionEntity]:
+    ) -> AsyncPager[ArtifactVersion]:
         """
         List artifact version API
 
@@ -733,7 +735,7 @@ class AsyncArtifactVersionsClient:
 
         Returns
         -------
-        AsyncPager[ArtifactVersionEntity]
+        AsyncPager[ArtifactVersion]
             Successful Response
 
         Examples
@@ -759,7 +761,7 @@ class AsyncArtifactVersionsClient:
 
         asyncio.run(main())
         """
-        offset = offset if offset is not None else 1
+        offset = offset if offset is not None else 0
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/artifact-versions",
             method="GET",
@@ -990,7 +992,11 @@ class AsyncArtifactVersionsClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import AsyncTrueFoundry, Model, TrueFoundryManagedSource
+        from truefoundry_sdk import (
+            AsyncTrueFoundry,
+            ModelManifest,
+            TrueFoundryManagedSource,
+        )
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -1000,8 +1006,10 @@ class AsyncArtifactVersionsClient:
 
         async def main() -> None:
             await client.v1.artifact_versions.stage(
-                manifest=Model(
+                manifest=ModelManifest(
+                    name="name",
                     metadata={"key": "value"},
+                    ml_repo="ml_repo",
                     source=TrueFoundryManagedSource(),
                 ),
             )

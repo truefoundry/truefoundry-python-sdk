@@ -12,7 +12,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.empty_response import EmptyResponse
 from ...core.pagination import SyncPager
-from ...types.tool_entity import ToolEntity
+from ...types.tool import Tool
 from ...types.list_tools_response import ListToolsResponse
 from ...types.manifest import Manifest
 from ...types.get_tool_version_response import GetToolVersionResponse
@@ -146,7 +146,7 @@ class ToolsClient:
         offset: typing.Optional[int] = None,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[ToolEntity]:
+    ) -> SyncPager[Tool]:
         """
         Parameters
         ----------
@@ -163,7 +163,7 @@ class ToolsClient:
 
         Returns
         -------
-        SyncPager[ToolEntity]
+        SyncPager[Tool]
             Successful Response
 
         Examples
@@ -181,7 +181,7 @@ class ToolsClient:
         for page in response.iter_pages():
             yield page
         """
-        offset = offset if offset is not None else 1
+        offset = offset if offset is not None else 0
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/tools/",
             method="GET",
@@ -245,15 +245,17 @@ class ToolsClient:
 
         Examples
         --------
-        from truefoundry_sdk import Model, TrueFoundry, TrueFoundryManagedSource
+        from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
         client.v1.tools.create_or_update(
-            manifest=Model(
+            manifest=ModelManifest(
+                name="name",
                 metadata={"key": "value"},
+                ml_repo="ml_repo",
                 source=TrueFoundryManagedSource(),
             ),
         )
@@ -432,7 +434,7 @@ class AsyncToolsClient:
         offset: typing.Optional[int] = None,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[ToolEntity]:
+    ) -> AsyncPager[Tool]:
         """
         Parameters
         ----------
@@ -449,7 +451,7 @@ class AsyncToolsClient:
 
         Returns
         -------
-        AsyncPager[ToolEntity]
+        AsyncPager[Tool]
             Successful Response
 
         Examples
@@ -475,7 +477,7 @@ class AsyncToolsClient:
 
         asyncio.run(main())
         """
-        offset = offset if offset is not None else 1
+        offset = offset if offset is not None else 0
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/tools/",
             method="GET",
@@ -541,7 +543,11 @@ class AsyncToolsClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import AsyncTrueFoundry, Model, TrueFoundryManagedSource
+        from truefoundry_sdk import (
+            AsyncTrueFoundry,
+            ModelManifest,
+            TrueFoundryManagedSource,
+        )
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -551,8 +557,10 @@ class AsyncToolsClient:
 
         async def main() -> None:
             await client.v1.tools.create_or_update(
-                manifest=Model(
+                manifest=ModelManifest(
+                    name="name",
                     metadata={"key": "value"},
+                    ml_repo="ml_repo",
                     source=TrueFoundryManagedSource(),
                 ),
             )

@@ -2,14 +2,14 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
-from .data_directory_entity import DataDirectoryEntity
+from .data_directory import DataDirectory
 from .pagination import Pagination
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
 class ListDataDirectoriesResponse(UniversalBaseModel):
-    data: typing.Optional[typing.List[DataDirectoryEntity]] = None
+    data: typing.Optional[typing.List[DataDirectory]] = None
     pagination: Pagination
 
     if IS_PYDANTIC_V2:

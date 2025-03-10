@@ -2,32 +2,32 @@
 
 from .agent import Agent
 from .agent_app import AgentApp
-from .agent_entity import AgentEntity
-from .agent_open_api_tool import AgentOpenApiTool
-from .agent_open_api_tool_openapi_spec import AgentOpenApiToolOpenapiSpec
+from .agent_manifest import AgentManifest
+from .agent_open_api_tool_manifest import AgentOpenApiToolManifest
+from .agent_open_api_tool_manifest_openapi_spec import AgentOpenApiToolManifestOpenapiSpec
 from .agent_open_api_tool_with_fqn import AgentOpenApiToolWithFqn
 from .agent_open_api_tool_with_fqn_openapi_spec import AgentOpenApiToolWithFqnOpenapiSpec
-from .agent_version_entity import AgentVersionEntity
+from .agent_version import AgentVersion
 from .agent_with_fqn import AgentWithFqn
 from .apply_request import ApplyRequest
 from .apply_response import ApplyResponse
 from .apply_sdk_code import ApplySdkCode
 from .artifact import Artifact
-from .artifact_entity import ArtifactEntity
+from .artifact_manifest import ArtifactManifest
 from .artifact_path import ArtifactPath
 from .artifact_type import ArtifactType
-from .artifact_version_entity import ArtifactVersionEntity
+from .artifact_version import ArtifactVersion
 from .assistant_message import AssistantMessage
-from .base_artifact_version_entity import BaseArtifactVersionEntity
+from .base_artifact_version import BaseArtifactVersion
 from .blob_storage_reference import BlobStorageReference
-from .chat_prompt import ChatPrompt
-from .chat_prompt_messages_item import ChatPromptMessagesItem
+from .chat_prompt_manifest import ChatPromptManifest
+from .chat_prompt_manifest_messages_item import ChatPromptManifestMessagesItem
 from .code_file_data import CodeFileData
 from .collaborator import Collaborator
 from .content import Content
 from .create_multi_part_upload_request import CreateMultiPartUploadRequest
 from .data import Data
-from .data_directory_entity import DataDirectoryEntity
+from .data_directory import DataDirectory
 from .data_directory_manifest import DataDirectoryManifest
 from .empty_response import EmptyResponse
 from .external_blob_storage_source import ExternalBlobStorageSource
@@ -78,12 +78,12 @@ from .local_model_source import LocalModelSource
 from .manifest import Manifest
 from .method import Method
 from .mime_type import MimeType
-from .ml_repo_entity import MlRepoEntity
+from .ml_repo import MlRepo
 from .ml_repo_manifest import MlRepoManifest
 from .model import Model
 from .model_configuration import ModelConfiguration
-from .model_entity import ModelEntity
-from .model_version_entity import ModelVersionEntity
+from .model_manifest import ModelManifest
+from .model_version import ModelVersion
 from .model_version_environment import ModelVersionEnvironment
 from .multi_part_upload import MultiPartUpload
 from .multi_part_upload_response import MultiPartUploadResponse
@@ -93,8 +93,8 @@ from .operation import Operation
 from .paddle_framework import PaddleFramework
 from .pagination import Pagination
 from .parameters import Parameters
-from .prompt_entity import PromptEntity
-from .prompt_version_entity import PromptVersionEntity
+from .prompt import Prompt
+from .prompt_version import PromptVersion
 from .py_torch_framework import PyTorchFramework
 from .resolve_agent_app_response import ResolveAgentAppResponse
 from .signed_url import SignedUrl
@@ -113,8 +113,8 @@ from .tensor_flow_framework import TensorFlowFramework
 from .text import Text
 from .text_content_part import TextContentPart
 from .token_pagination import TokenPagination
-from .tool_entity import ToolEntity
-from .tool_version_entity import ToolVersionEntity
+from .tool import Tool
+from .tool_version import ToolVersion
 from .transformers_framework import TransformersFramework
 from .true_foundry_managed_source import TrueFoundryManagedSource
 from .url import Url
@@ -129,32 +129,32 @@ from .xg_boost_serialization_format import XgBoostSerializationFormat
 __all__ = [
     "Agent",
     "AgentApp",
-    "AgentEntity",
-    "AgentOpenApiTool",
-    "AgentOpenApiToolOpenapiSpec",
+    "AgentManifest",
+    "AgentOpenApiToolManifest",
+    "AgentOpenApiToolManifestOpenapiSpec",
     "AgentOpenApiToolWithFqn",
     "AgentOpenApiToolWithFqnOpenapiSpec",
-    "AgentVersionEntity",
+    "AgentVersion",
     "AgentWithFqn",
     "ApplyRequest",
     "ApplyResponse",
     "ApplySdkCode",
     "Artifact",
-    "ArtifactEntity",
+    "ArtifactManifest",
     "ArtifactPath",
     "ArtifactType",
-    "ArtifactVersionEntity",
+    "ArtifactVersion",
     "AssistantMessage",
-    "BaseArtifactVersionEntity",
+    "BaseArtifactVersion",
     "BlobStorageReference",
-    "ChatPrompt",
-    "ChatPromptMessagesItem",
+    "ChatPromptManifest",
+    "ChatPromptManifestMessagesItem",
     "CodeFileData",
     "Collaborator",
     "Content",
     "CreateMultiPartUploadRequest",
     "Data",
-    "DataDirectoryEntity",
+    "DataDirectory",
     "DataDirectoryManifest",
     "EmptyResponse",
     "ExternalBlobStorageSource",
@@ -205,12 +205,12 @@ __all__ = [
     "Manifest",
     "Method",
     "MimeType",
-    "MlRepoEntity",
+    "MlRepo",
     "MlRepoManifest",
     "Model",
     "ModelConfiguration",
-    "ModelEntity",
-    "ModelVersionEntity",
+    "ModelManifest",
+    "ModelVersion",
     "ModelVersionEnvironment",
     "MultiPartUpload",
     "MultiPartUploadResponse",
@@ -220,8 +220,8 @@ __all__ = [
     "PaddleFramework",
     "Pagination",
     "Parameters",
-    "PromptEntity",
-    "PromptVersionEntity",
+    "Prompt",
+    "PromptVersion",
     "PyTorchFramework",
     "ResolveAgentAppResponse",
     "SignedUrl",
@@ -240,8 +240,8 @@ __all__ = [
     "Text",
     "TextContentPart",
     "TokenPagination",
-    "ToolEntity",
-    "ToolVersionEntity",
+    "Tool",
+    "ToolVersion",
     "TransformersFramework",
     "TrueFoundryManagedSource",
     "Url",

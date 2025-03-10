@@ -9,7 +9,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
-class BaseArtifactVersionEntity(UniversalBaseModel):
+class BaseArtifactVersion(UniversalBaseModel):
     id: str
     fqn: str
     created_by_subject: Subject
@@ -17,6 +17,7 @@ class BaseArtifactVersionEntity(UniversalBaseModel):
     updated_at: typing.Optional[dt.datetime] = None
     manifest: typing.Optional[Manifest] = None
     usage_code_snippet: typing.Optional[str] = None
+    ml_repo_id: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

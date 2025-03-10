@@ -2,14 +2,14 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
-from .ml_repo_entity import MlRepoEntity
+from .ml_repo import MlRepo
 from .pagination import Pagination
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
 class ListMlReposResponse(UniversalBaseModel):
-    data: typing.List[MlRepoEntity]
+    data: typing.List[MlRepo]
     pagination: Pagination
 
     if IS_PYDANTIC_V2:

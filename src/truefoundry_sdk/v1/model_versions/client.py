@@ -12,7 +12,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.empty_response import EmptyResponse
 from ...core.pagination import SyncPager
-from ...types.model_version_entity import ModelVersionEntity
+from ...types.model_version import ModelVersion
 from ...types.list_model_versions_response import ListModelVersionsResponse
 from ...core.client_wrapper import AsyncClientWrapper
 from ...core.pagination import AsyncPager
@@ -148,7 +148,7 @@ class ModelVersionsClient:
         include_internal_metadata: typing.Optional[bool] = None,
         include_model_versions: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[ModelVersionEntity]:
+    ) -> SyncPager[ModelVersion]:
         """
         List model version API
 
@@ -175,7 +175,7 @@ class ModelVersionsClient:
 
         Returns
         -------
-        SyncPager[ModelVersionEntity]
+        SyncPager[ModelVersion]
             Successful Response
 
         Examples
@@ -193,7 +193,7 @@ class ModelVersionsClient:
         for page in response.iter_pages():
             yield page
         """
-        offset = offset if offset is not None else 1
+        offset = offset if offset is not None else 0
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/model-versions",
             method="GET",
@@ -394,7 +394,7 @@ class AsyncModelVersionsClient:
         include_internal_metadata: typing.Optional[bool] = None,
         include_model_versions: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[ModelVersionEntity]:
+    ) -> AsyncPager[ModelVersion]:
         """
         List model version API
 
@@ -421,7 +421,7 @@ class AsyncModelVersionsClient:
 
         Returns
         -------
-        AsyncPager[ModelVersionEntity]
+        AsyncPager[ModelVersion]
             Successful Response
 
         Examples
@@ -447,7 +447,7 @@ class AsyncModelVersionsClient:
 
         asyncio.run(main())
         """
-        offset = offset if offset is not None else 1
+        offset = offset if offset is not None else 0
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/model-versions",
             method="GET",
