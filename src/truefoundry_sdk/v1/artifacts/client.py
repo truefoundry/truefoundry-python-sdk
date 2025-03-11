@@ -259,7 +259,6 @@ class ArtifactsClient:
         client.v1.artifacts.create_or_update(
             manifest=ModelManifest(
                 name="name",
-                metadata={"key": "value"},
                 ml_repo="ml_repo",
                 source=TrueFoundryManagedSource(),
             ),
@@ -569,7 +568,6 @@ class AsyncArtifactsClient:
             await client.v1.artifacts.create_or_update(
                 manifest=ModelManifest(
                     name="name",
-                    metadata={"key": "value"},
                     ml_repo="ml_repo",
                     source=TrueFoundryManagedSource(),
                 ),

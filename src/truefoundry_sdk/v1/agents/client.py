@@ -254,7 +254,6 @@ class AgentsClient:
         client.v1.agents.create_or_update(
             manifest=ModelManifest(
                 name="name",
-                metadata={"key": "value"},
                 ml_repo="ml_repo",
                 source=TrueFoundryManagedSource(),
             ),
@@ -559,7 +558,6 @@ class AsyncAgentsClient:
             await client.v1.agents.create_or_update(
                 manifest=ModelManifest(
                     name="name",
-                    metadata={"key": "value"},
                     ml_repo="ml_repo",
                     source=TrueFoundryManagedSource(),
                 ),
