@@ -12,7 +12,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.empty_response import EmptyResponse
 from ...core.pagination import SyncPager
-from ...types.ml_repo import MlRepo
+from ...types.ml_repo_entity import MlRepoEntity
 from ...types.list_ml_repos_response import ListMlReposResponse
 from ...core.client_wrapper import AsyncClientWrapper
 from ...core.pagination import AsyncPager
@@ -155,7 +155,7 @@ class MlReposClient:
         limit: typing.Optional[int] = None,
         offset: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[MlRepo]:
+    ) -> SyncPager[MlRepoEntity]:
         """
         List ml repos
         Args:
@@ -178,7 +178,7 @@ class MlReposClient:
 
         Returns
         -------
-        SyncPager[MlRepo]
+        SyncPager[MlRepoEntity]
             Successful Response
 
         Examples
@@ -394,7 +394,7 @@ class AsyncMlReposClient:
         limit: typing.Optional[int] = None,
         offset: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[MlRepo]:
+    ) -> AsyncPager[MlRepoEntity]:
         """
         List ml repos
         Args:
@@ -417,7 +417,7 @@ class AsyncMlReposClient:
 
         Returns
         -------
-        AsyncPager[MlRepo]
+        AsyncPager[MlRepoEntity]
             Successful Response
 
         Examples

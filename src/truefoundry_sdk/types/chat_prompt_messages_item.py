@@ -5,4 +5,4 @@ from .system_message import SystemMessage
 from .assistant_message import AssistantMessage
 from .user_message import UserMessage
 
-ChatPromptManifestMessagesItem = typing.Union[SystemMessage, AssistantMessage, UserMessage]
+ChatPromptMessagesItem = typing.Union[SystemMessage, AssistantMessage, UserMessage]

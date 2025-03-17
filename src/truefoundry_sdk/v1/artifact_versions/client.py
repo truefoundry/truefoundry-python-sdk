@@ -12,7 +12,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.empty_response import EmptyResponse
 from ...core.pagination import SyncPager
-from ...types.artifact_version import ArtifactVersion
+from ...types.artifact_version_entity import ArtifactVersionEntity
 from ...types.list_artifact_version_response import ListArtifactVersionResponse
 from ...types.operation import Operation
 from ...types.get_signed_ur_ls_response import GetSignedUrLsResponse
@@ -158,7 +158,7 @@ class ArtifactVersionsClient:
         run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         include_internal_metadata: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[ArtifactVersion]:
+    ) -> SyncPager[ArtifactVersionEntity]:
         """
         List artifact version API
 
@@ -183,7 +183,7 @@ class ArtifactVersionsClient:
 
         Returns
         -------
-        SyncPager[ArtifactVersion]
+        SyncPager[ArtifactVersionEntity]
             Successful Response
 
         Examples
@@ -414,17 +414,15 @@ class ArtifactVersionsClient:
 
         Examples
         --------
-        from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
+        from truefoundry_sdk import Model, TrueFoundry, TrueFoundryManagedSource
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
         client.v1.artifact_versions.stage(
-            manifest=ModelManifest(
-                name="name",
+            manifest=Model(
                 metadata={"key": "value"},
-                ml_repo="ml_repo",
                 source=TrueFoundryManagedSource(),
             ),
         )
@@ -710,7 +708,7 @@ class AsyncArtifactVersionsClient:
         run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         include_internal_metadata: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[ArtifactVersion]:
+    ) -> AsyncPager[ArtifactVersionEntity]:
         """
         List artifact version API
 
@@ -735,7 +733,7 @@ class AsyncArtifactVersionsClient:
 
         Returns
         -------
-        AsyncPager[ArtifactVersion]
+        AsyncPager[ArtifactVersionEntity]
             Successful Response
 
         Examples
@@ -992,11 +990,7 @@ class AsyncArtifactVersionsClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import (
-            AsyncTrueFoundry,
-            ModelManifest,
-            TrueFoundryManagedSource,
-        )
+        from truefoundry_sdk import AsyncTrueFoundry, Model, TrueFoundryManagedSource
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -1006,10 +1000,8 @@ class AsyncArtifactVersionsClient:
 
         async def main() -> None:
             await client.v1.artifact_versions.stage(
-                manifest=ModelManifest(
-                    name="name",
+                manifest=Model(
                     metadata={"key": "value"},
-                    ml_repo="ml_repo",
                     source=TrueFoundryManagedSource(),
                 ),
             )

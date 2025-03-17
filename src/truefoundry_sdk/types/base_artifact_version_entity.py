@@ -9,7 +9,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
-class BaseArtifactVersion(UniversalBaseModel):
+class BaseArtifactVersionEntity(UniversalBaseModel):
     id: str
     fqn: str
     created_by_subject: Subject

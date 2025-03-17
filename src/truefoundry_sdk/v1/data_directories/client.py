@@ -12,7 +12,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.empty_response import EmptyResponse
 from ...core.pagination import SyncPager
-from ...types.data_directory import DataDirectory
+from ...types.data_directory_entity import DataDirectoryEntity
 from ...types.list_data_directories_response import ListDataDirectoriesResponse
 from ...types.manifest import Manifest
 from ...core.serialization import convert_and_respect_annotation_metadata
@@ -180,7 +180,7 @@ class DataDirectoriesClient:
         limit: typing.Optional[int] = None,
         offset: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[DataDirectory]:
+    ) -> SyncPager[DataDirectoryEntity]:
         """
         List all data directories with optional filtering and pagination.
 
@@ -210,7 +210,7 @@ class DataDirectoriesClient:
 
         Returns
         -------
-        SyncPager[DataDirectory]
+        SyncPager[DataDirectoryEntity]
             Successful Response
 
         Examples
@@ -292,17 +292,15 @@ class DataDirectoriesClient:
 
         Examples
         --------
-        from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
+        from truefoundry_sdk import Model, TrueFoundry, TrueFoundryManagedSource
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
         client.v1.data_directories.create_or_update(
-            manifest=ModelManifest(
-                name="name",
+            manifest=Model(
                 metadata={"key": "value"},
-                ml_repo="ml_repo",
                 source=TrueFoundryManagedSource(),
             ),
         )
@@ -855,7 +853,7 @@ class AsyncDataDirectoriesClient:
         limit: typing.Optional[int] = None,
         offset: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[DataDirectory]:
+    ) -> AsyncPager[DataDirectoryEntity]:
         """
         List all data directories with optional filtering and pagination.
 
@@ -885,7 +883,7 @@ class AsyncDataDirectoriesClient:
 
         Returns
         -------
-        AsyncPager[DataDirectory]
+        AsyncPager[DataDirectoryEntity]
             Successful Response
 
         Examples
@@ -977,11 +975,7 @@ class AsyncDataDirectoriesClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import (
-            AsyncTrueFoundry,
-            ModelManifest,
-            TrueFoundryManagedSource,
-        )
+        from truefoundry_sdk import AsyncTrueFoundry, Model, TrueFoundryManagedSource
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -991,10 +985,8 @@ class AsyncDataDirectoriesClient:
 
         async def main() -> None:
             await client.v1.data_directories.create_or_update(
-                manifest=ModelManifest(
-                    name="name",
+                manifest=Model(
                     metadata={"key": "value"},
-                    ml_repo="ml_repo",
                     source=TrueFoundryManagedSource(),
                 ),
             )

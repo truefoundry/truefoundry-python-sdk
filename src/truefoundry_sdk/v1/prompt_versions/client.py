@@ -12,7 +12,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.empty_response import EmptyResponse
 from ...core.pagination import SyncPager
-from ...types.prompt_version import PromptVersion
+from ...types.prompt_version_entity import PromptVersionEntity
 from ...types.list_prompt_versions_response import ListPromptVersionsResponse
 from ...core.client_wrapper import AsyncClientWrapper
 from ...core.pagination import AsyncPager
@@ -144,7 +144,7 @@ class PromptVersionsClient:
         offset: typing.Optional[int] = None,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[PromptVersion]:
+    ) -> SyncPager[PromptVersionEntity]:
         """
         List prompt version API
 
@@ -163,7 +163,7 @@ class PromptVersionsClient:
 
         Returns
         -------
-        SyncPager[PromptVersion]
+        SyncPager[PromptVersionEntity]
             Successful Response
 
         Examples
@@ -372,7 +372,7 @@ class AsyncPromptVersionsClient:
         offset: typing.Optional[int] = None,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[PromptVersion]:
+    ) -> AsyncPager[PromptVersionEntity]:
         """
         List prompt version API
 
@@ -391,7 +391,7 @@ class AsyncPromptVersionsClient:
 
         Returns
         -------
-        AsyncPager[PromptVersion]
+        AsyncPager[PromptVersionEntity]
             Successful Response
 
         Examples

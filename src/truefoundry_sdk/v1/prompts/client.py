@@ -12,7 +12,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.empty_response import EmptyResponse
 from ...core.pagination import SyncPager
-from ...types.prompt import Prompt
+from ...types.prompt_entity import PromptEntity
 from ...types.list_prompts_response import ListPromptsResponse
 from ...types.manifest import Manifest
 from ...types.get_prompt_version_response import GetPromptVersionResponse
@@ -146,7 +146,7 @@ class PromptsClient:
         offset: typing.Optional[int] = None,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Prompt]:
+    ) -> SyncPager[PromptEntity]:
         """
         Parameters
         ----------
@@ -163,7 +163,7 @@ class PromptsClient:
 
         Returns
         -------
-        SyncPager[Prompt]
+        SyncPager[PromptEntity]
             Successful Response
 
         Examples
@@ -245,17 +245,15 @@ class PromptsClient:
 
         Examples
         --------
-        from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
+        from truefoundry_sdk import Model, TrueFoundry, TrueFoundryManagedSource
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
         client.v1.prompts.create_or_update(
-            manifest=ModelManifest(
-                name="name",
+            manifest=Model(
                 metadata={"key": "value"},
-                ml_repo="ml_repo",
                 source=TrueFoundryManagedSource(),
             ),
         )
@@ -434,7 +432,7 @@ class AsyncPromptsClient:
         offset: typing.Optional[int] = None,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Prompt]:
+    ) -> AsyncPager[PromptEntity]:
         """
         Parameters
         ----------
@@ -451,7 +449,7 @@ class AsyncPromptsClient:
 
         Returns
         -------
-        AsyncPager[Prompt]
+        AsyncPager[PromptEntity]
             Successful Response
 
         Examples
@@ -543,11 +541,7 @@ class AsyncPromptsClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import (
-            AsyncTrueFoundry,
-            ModelManifest,
-            TrueFoundryManagedSource,
-        )
+        from truefoundry_sdk import AsyncTrueFoundry, Model, TrueFoundryManagedSource
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -557,10 +551,8 @@ class AsyncPromptsClient:
 
         async def main() -> None:
             await client.v1.prompts.create_or_update(
-                manifest=ModelManifest(
-                    name="name",
+                manifest=Model(
                     metadata={"key": "value"},
-                    ml_repo="ml_repo",
                     source=TrueFoundryManagedSource(),
                 ),
             )

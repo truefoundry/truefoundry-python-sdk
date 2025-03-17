@@ -12,7 +12,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.empty_response import EmptyResponse
 from ...core.pagination import SyncPager
-from ...types.artifact import Artifact
+from ...types.artifact_entity import ArtifactEntity
 from ...types.list_artifacts_response import ListArtifactsResponse
 from ...types.manifest import Manifest
 from ...types.get_artifact_version_response import GetArtifactVersionResponse
@@ -147,7 +147,7 @@ class ArtifactsClient:
         limit: typing.Optional[int] = None,
         run_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Artifact]:
+    ) -> SyncPager[ArtifactEntity]:
         """
         Parameters
         ----------
@@ -166,7 +166,7 @@ class ArtifactsClient:
 
         Returns
         -------
-        SyncPager[Artifact]
+        SyncPager[ArtifactEntity]
             Successful Response
 
         Examples
@@ -250,17 +250,15 @@ class ArtifactsClient:
 
         Examples
         --------
-        from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
+        from truefoundry_sdk import Model, TrueFoundry, TrueFoundryManagedSource
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
         client.v1.artifacts.create_or_update(
-            manifest=ModelManifest(
-                name="name",
+            manifest=Model(
                 metadata={"key": "value"},
-                ml_repo="ml_repo",
                 source=TrueFoundryManagedSource(),
             ),
         )
@@ -440,7 +438,7 @@ class AsyncArtifactsClient:
         limit: typing.Optional[int] = None,
         run_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Artifact]:
+    ) -> AsyncPager[ArtifactEntity]:
         """
         Parameters
         ----------
@@ -459,7 +457,7 @@ class AsyncArtifactsClient:
 
         Returns
         -------
-        AsyncPager[Artifact]
+        AsyncPager[ArtifactEntity]
             Successful Response
 
         Examples
@@ -553,11 +551,7 @@ class AsyncArtifactsClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import (
-            AsyncTrueFoundry,
-            ModelManifest,
-            TrueFoundryManagedSource,
-        )
+        from truefoundry_sdk import AsyncTrueFoundry, Model, TrueFoundryManagedSource
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -567,10 +561,8 @@ class AsyncArtifactsClient:
 
         async def main() -> None:
             await client.v1.artifacts.create_or_update(
-                manifest=ModelManifest(
-                    name="name",
+                manifest=Model(
                     metadata={"key": "value"},
-                    ml_repo="ml_repo",
                     source=TrueFoundryManagedSource(),
                 ),
             )

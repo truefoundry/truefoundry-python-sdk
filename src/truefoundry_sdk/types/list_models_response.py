@@ -2,14 +2,14 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
-from .model import Model
+from .model_entity import ModelEntity
 from .pagination import Pagination
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
 class ListModelsResponse(UniversalBaseModel):
-    data: typing.List[Model]
+    data: typing.List[ModelEntity]
     pagination: Pagination
 
     if IS_PYDANTIC_V2:

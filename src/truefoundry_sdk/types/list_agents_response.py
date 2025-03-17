@@ -2,14 +2,14 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
-from .agent import Agent
+from .agent_entity import AgentEntity
 from .pagination import Pagination
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
 class ListAgentsResponse(UniversalBaseModel):
-    data: typing.List[Agent]
+    data: typing.List[AgentEntity]
     pagination: Pagination
 
     if IS_PYDANTIC_V2:

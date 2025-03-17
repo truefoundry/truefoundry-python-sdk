@@ -12,7 +12,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.empty_response import EmptyResponse
 from ...core.pagination import SyncPager
-from ...types.tool_version import ToolVersion
+from ...types.tool_version_entity import ToolVersionEntity
 from ...types.list_tool_versions_response import ListToolVersionsResponse
 from ...core.client_wrapper import AsyncClientWrapper
 from ...core.pagination import AsyncPager
@@ -144,7 +144,7 @@ class ToolVersionsClient:
         offset: typing.Optional[int] = None,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[ToolVersion]:
+    ) -> SyncPager[ToolVersionEntity]:
         """
         List tool versions API
 
@@ -163,7 +163,7 @@ class ToolVersionsClient:
 
         Returns
         -------
-        SyncPager[ToolVersion]
+        SyncPager[ToolVersionEntity]
             Successful Response
 
         Examples
@@ -370,7 +370,7 @@ class AsyncToolVersionsClient:
         offset: typing.Optional[int] = None,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[ToolVersion]:
+    ) -> AsyncPager[ToolVersionEntity]:
         """
         List tool versions API
 
@@ -389,7 +389,7 @@ class AsyncToolVersionsClient:
 
         Returns
         -------
-        AsyncPager[ToolVersion]
+        AsyncPager[ToolVersionEntity]
             Successful Response
 
         Examples

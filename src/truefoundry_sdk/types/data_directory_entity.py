@@ -2,23 +2,23 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 from .subject import Subject
-import typing
 import datetime as dt
-from .artifact_manifest import ArtifactManifest
+from .data_directory_manifest import DataDirectoryManifest
+import typing
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
-class ArtifactVersion(UniversalBaseModel):
+class DataDirectoryEntity(UniversalBaseModel):
     id: str
+    ml_repo_id: str
+    name: str
     fqn: str
     created_by_subject: Subject
-    created_at: typing.Optional[dt.datetime] = None
-    updated_at: typing.Optional[dt.datetime] = None
-    manifest: ArtifactManifest
+    created_at: dt.datetime
+    updated_at: dt.datetime
+    manifest: DataDirectoryManifest
     usage_code_snippet: typing.Optional[str] = None
-    ml_repo_id: str
-    artifact_id: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
