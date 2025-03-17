@@ -2,4 +2,4 @@
 
 import typing
 
-SubjectType = typing.Union[typing.Literal["user", "serviceaccount"], typing.Any]
+SubjectType = typing.Union[typing.Literal["user", "team", "serviceaccount"], typing.Any]
