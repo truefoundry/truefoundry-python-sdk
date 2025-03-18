@@ -3,19 +3,32 @@
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing_extensions
 from ..core.serialization import FieldMetadata
-import typing
-from .subject_type import SubjectType
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from .subject_type import SubjectType
+import typing
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class Subject(UniversalBaseModel):
-    subject_id: typing_extensions.Annotated[str, FieldMetadata(alias="subjectId")]
-    subject_type: typing_extensions.Annotated[typing.Optional[SubjectType], FieldMetadata(alias="subjectType")] = None
-    subject_slug: typing_extensions.Annotated[str, FieldMetadata(alias="subjectSlug")]
+    subject_id: typing_extensions.Annotated[str, FieldMetadata(alias="subjectId")] = pydantic.Field()
+    """
+    Subject ID
+    """
+
+    subject_type: typing_extensions.Annotated[SubjectType, FieldMetadata(alias="subjectType")]
+    subject_slug: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="subjectSlug")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    Subject slug
+    """
+
     subject_display_name: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="subjectDisplayName")
-    ] = None
+    ] = pydantic.Field(default=None)
+    """
+    Subject display name
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
