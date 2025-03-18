@@ -183,7 +183,7 @@ class AgentsClient:
         """
         offset = offset if offset is not None else 0
         _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/agents/",
+            "api/ml/v1/agents",
             method="GET",
             params={
                 "ml_repo_id": ml_repo_id,
@@ -479,7 +479,7 @@ class AsyncAgentsClient:
         """
         offset = offset if offset is not None else 0
         _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/agents/",
+            "api/ml/v1/agents",
             method="GET",
             params={
                 "ml_repo_id": ml_repo_id,
