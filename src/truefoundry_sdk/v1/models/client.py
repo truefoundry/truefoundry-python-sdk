@@ -186,7 +186,7 @@ class ModelsClient:
         """
         offset = offset if offset is not None else 0
         _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/models/",
+            "api/ml/v1/models",
             method="GET",
             params={
                 "ml_repo_id": ml_repo_id,
@@ -259,7 +259,6 @@ class ModelsClient:
         client.v1.models.create_or_update(
             manifest=ModelManifest(
                 name="name",
-                metadata={"key": "value"},
                 ml_repo="ml_repo",
                 source=TrueFoundryManagedSource(),
             ),
@@ -487,7 +486,7 @@ class AsyncModelsClient:
         """
         offset = offset if offset is not None else 0
         _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/models/",
+            "api/ml/v1/models",
             method="GET",
             params={
                 "ml_repo_id": ml_repo_id,
@@ -569,7 +568,6 @@ class AsyncModelsClient:
             await client.v1.models.create_or_update(
                 manifest=ModelManifest(
                     name="name",
-                    metadata={"key": "value"},
                     ml_repo="ml_repo",
                     source=TrueFoundryManagedSource(),
                 ),

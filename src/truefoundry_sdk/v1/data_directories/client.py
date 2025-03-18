@@ -301,7 +301,6 @@ class DataDirectoriesClient:
         client.v1.data_directories.create_or_update(
             manifest=ModelManifest(
                 name="name",
-                metadata={"key": "value"},
                 ml_repo="ml_repo",
                 source=TrueFoundryManagedSource(),
             ),
@@ -993,7 +992,6 @@ class AsyncDataDirectoriesClient:
             await client.v1.data_directories.create_or_update(
                 manifest=ModelManifest(
                     name="name",
-                    metadata={"key": "value"},
                     ml_repo="ml_repo",
                     source=TrueFoundryManagedSource(),
                 ),

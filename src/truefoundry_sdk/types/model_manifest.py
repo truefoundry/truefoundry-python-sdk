@@ -20,7 +20,7 @@ class ModelManifest(UniversalBaseModel):
     """
 
     description: typing.Optional[str] = None
-    metadata: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
+    metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
     """
     Key value metadata. Should be valid JSON. For e.g. `{"business-unit": "sales", "quality": "good", "rating": 4.5}`
     """

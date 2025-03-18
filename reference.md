@@ -228,7 +228,6 @@ client = TrueFoundry(
 client.v1.artifacts.create_or_update(
     manifest=ModelManifest(
         name="name",
-        metadata={"key": "value"},
         ml_repo="ml_repo",
         source=TrueFoundryManagedSource(),
     ),
@@ -489,7 +488,6 @@ client = TrueFoundry(
 client.v1.agents.create_or_update(
     manifest=ModelManifest(
         name="name",
-        metadata={"key": "value"},
         ml_repo="ml_repo",
         source=TrueFoundryManagedSource(),
     ),
@@ -750,7 +748,6 @@ client = TrueFoundry(
 client.v1.prompts.create_or_update(
     manifest=ModelManifest(
         name="name",
-        metadata={"key": "value"},
         ml_repo="ml_repo",
         source=TrueFoundryManagedSource(),
     ),
@@ -1011,7 +1008,6 @@ client = TrueFoundry(
 client.v1.tools.create_or_update(
     manifest=ModelManifest(
         name="name",
-        metadata={"key": "value"},
         ml_repo="ml_repo",
         source=TrueFoundryManagedSource(),
     ),
@@ -1280,7 +1276,6 @@ client = TrueFoundry(
 client.v1.models.create_or_update(
     manifest=ModelManifest(
         name="name",
-        metadata={"key": "value"},
         ml_repo="ml_repo",
         source=TrueFoundryManagedSource(),
     ),
@@ -1757,7 +1752,6 @@ client = TrueFoundry(
 client.v1.artifact_versions.stage(
     manifest=ModelManifest(
         name="name",
-        metadata={"key": "value"},
         ml_repo="ml_repo",
         source=TrueFoundryManagedSource(),
     ),
@@ -3233,7 +3227,6 @@ client = TrueFoundry(
 client.v1.data_directories.create_or_update(
     manifest=ModelManifest(
         name="name",
-        metadata={"key": "value"},
         ml_repo="ml_repo",
         source=TrueFoundryManagedSource(),
     ),

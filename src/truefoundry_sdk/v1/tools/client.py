@@ -183,7 +183,7 @@ class ToolsClient:
         """
         offset = offset if offset is not None else 0
         _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/tools/",
+            "api/ml/v1/tools",
             method="GET",
             params={
                 "ml_repo_id": ml_repo_id,
@@ -254,7 +254,6 @@ class ToolsClient:
         client.v1.tools.create_or_update(
             manifest=ModelManifest(
                 name="name",
-                metadata={"key": "value"},
                 ml_repo="ml_repo",
                 source=TrueFoundryManagedSource(),
             ),
@@ -479,7 +478,7 @@ class AsyncToolsClient:
         """
         offset = offset if offset is not None else 0
         _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/tools/",
+            "api/ml/v1/tools",
             method="GET",
             params={
                 "ml_repo_id": ml_repo_id,
@@ -559,7 +558,6 @@ class AsyncToolsClient:
             await client.v1.tools.create_or_update(
                 manifest=ModelManifest(
                     name="name",
-                    metadata={"key": "value"},
                     ml_repo="ml_repo",
                     source=TrueFoundryManagedSource(),
                 ),
