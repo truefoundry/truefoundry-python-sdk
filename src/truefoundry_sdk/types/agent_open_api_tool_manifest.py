@@ -39,7 +39,6 @@ class AgentOpenApiToolManifest(UniversalBaseModel):
     Version of the entity
     """
 
-    type: typing.Literal["openapi-tool"] = "openapi-tool"
     openapi_spec: AgentOpenApiToolManifestOpenapiSpec = pydantic.Field()
     """
     OpenAPI Spec for the tool describing the API, endpoints and parameters. [Sample OpenAPI Spec Link](https://assets.production.truefoundry.com/sample-openapi.json)

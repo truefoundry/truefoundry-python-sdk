@@ -6,6 +6,7 @@ from . import (
     artifact_versions,
     artifacts,
     data_directories,
+    environments,
     ml_repos,
     model_versions,
     models,
@@ -14,15 +15,18 @@ from . import (
     tool_versions,
     tools,
 )
-from .artifact_versions import Manifest
+from .artifact_versions import Manifest, Manifest_ArtifactVersion, Manifest_ModelVersion
 
 __all__ = [
     "Manifest",
+    "Manifest_ArtifactVersion",
+    "Manifest_ModelVersion",
     "agent_versions",
     "agents",
     "artifact_versions",
     "artifacts",
     "data_directories",
+    "environments",
     "ml_repos",
     "model_versions",
     "models",

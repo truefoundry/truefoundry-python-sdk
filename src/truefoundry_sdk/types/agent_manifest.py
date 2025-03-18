@@ -37,7 +37,6 @@ class AgentManifest(UniversalBaseModel):
     Version of the entity
     """
 
-    type: typing.Literal["agent"] = "agent"
     available_tools: typing.List[str] = pydantic.Field()
     """
     Tools available to the agent

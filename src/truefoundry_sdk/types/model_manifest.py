@@ -40,7 +40,6 @@ class ModelManifest(UniversalBaseModel):
     Version of the entity
     """
 
-    type: typing.Literal["model-version"] = "model-version"
     source: Source
     framework: typing.Optional[Framework] = pydantic.Field(default=None)
     """

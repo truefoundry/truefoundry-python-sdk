@@ -7,7 +7,6 @@ from ...types.get_tool_response import GetToolResponse
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.pydantic_utilities import parse_obj_as
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
-from ...types.http_validation_error import HttpValidationError
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.empty_response import EmptyResponse
@@ -71,9 +70,9 @@ class ToolsClient:
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     typing.cast(
-                        HttpValidationError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -126,9 +125,9 @@ class ToolsClient:
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     typing.cast(
-                        HttpValidationError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -215,9 +214,9 @@ class ToolsClient:
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     typing.cast(
-                        HttpValidationError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -245,18 +244,22 @@ class ToolsClient:
 
         Examples
         --------
-        from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
+        from truefoundry_sdk import (
+            Manifest_ModelVersion,
+            Source_Truefoundry,
+            TrueFoundry,
+        )
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
         client.v1.tools.create_or_update(
-            manifest=ModelManifest(
+            manifest=Manifest_ModelVersion(
                 name="name",
                 metadata={"key": "value"},
                 ml_repo="ml_repo",
-                source=TrueFoundryManagedSource(),
+                source=Source_Truefoundry(),
             ),
         )
         """
@@ -283,9 +286,9 @@ class ToolsClient:
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     typing.cast(
-                        HttpValidationError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -351,9 +354,9 @@ class AsyncToolsClient:
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     typing.cast(
-                        HttpValidationError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -414,9 +417,9 @@ class AsyncToolsClient:
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     typing.cast(
-                        HttpValidationError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -511,9 +514,9 @@ class AsyncToolsClient:
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     typing.cast(
-                        HttpValidationError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -545,8 +548,8 @@ class AsyncToolsClient:
 
         from truefoundry_sdk import (
             AsyncTrueFoundry,
-            ModelManifest,
-            TrueFoundryManagedSource,
+            Manifest_ModelVersion,
+            Source_Truefoundry,
         )
 
         client = AsyncTrueFoundry(
@@ -557,11 +560,11 @@ class AsyncToolsClient:
 
         async def main() -> None:
             await client.v1.tools.create_or_update(
-                manifest=ModelManifest(
+                manifest=Manifest_ModelVersion(
                     name="name",
                     metadata={"key": "value"},
                     ml_repo="ml_repo",
-                    source=TrueFoundryManagedSource(),
+                    source=Source_Truefoundry(),
                 ),
             )
 
@@ -591,9 +594,9 @@ class AsyncToolsClient:
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     typing.cast(
-                        HttpValidationError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )

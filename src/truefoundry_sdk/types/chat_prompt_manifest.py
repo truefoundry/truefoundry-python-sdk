@@ -39,7 +39,6 @@ class ChatPromptManifest(UniversalBaseModel):
     Version of the entity
     """
 
-    type: typing.Literal["chat_prompt"] = "chat_prompt"
     messages: typing.List[ChatPromptManifestMessagesItem] = pydantic.Field()
     """
     List of messages in the chat conversation, must be non-empty

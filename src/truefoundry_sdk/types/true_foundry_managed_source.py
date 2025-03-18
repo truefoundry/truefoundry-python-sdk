@@ -2,16 +2,11 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
-import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
+import pydantic
 
 
 class TrueFoundryManagedSource(UniversalBaseModel):
-    type: typing.Literal["truefoundry"] = pydantic.Field(default="truefoundry")
-    """
-    Type of the source
-    """
-
     uri: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

@@ -38,7 +38,6 @@ class ArtifactManifest(UniversalBaseModel):
     Version of the entity
     """
 
-    type: typing.Literal["artifact-version"] = "artifact-version"
     source: Source
     step: typing.Optional[int] = pydantic.Field(default=None)
     """

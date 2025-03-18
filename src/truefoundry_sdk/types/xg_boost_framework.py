@@ -2,18 +2,13 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
-import pydantic
 from .xg_boost_serialization_format import XgBoostSerializationFormat
+import pydantic
 from .xg_boost_model_schema import XgBoostModelSchema
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class XgBoostFramework(UniversalBaseModel):
-    type: typing.Literal["xgboost"] = pydantic.Field(default="xgboost")
-    """
-    Type of the framework
-    """
-
     serialization_format: typing.Optional[XgBoostSerializationFormat] = None
     model_filepath: typing.Optional[str] = pydantic.Field(default=None)
     """

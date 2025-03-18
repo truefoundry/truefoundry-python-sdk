@@ -1,4 +1,311 @@
 # Reference
+## V1 Environments
+<details><summary><code>client.v1.environments.<a href="src/truefoundry_sdk/v1/environments/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List environments, if no environments are found, default environments are created and returned. Pagination is available based on query parameters
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.v1.environments.list(
+    limit=10,
+    offset=0,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[int]` — Number of items per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**offset:** `typing.Optional[int]` — Number of items to skip
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.v1.environments.<a href="src/truefoundry_sdk/v1/environments/client.py">create_or_update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a new Environment or updates an existing Environment.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import EnvironmentManifest, TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.v1.environments.create_or_update(
+    manifest=EnvironmentManifest(
+        name="name",
+        color={"key": "value"},
+        is_production=True,
+        optimize_for={"key": "value"},
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**manifest:** `EnvironmentManifest` — Environment Manifest
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dry_run:** `typing.Optional[bool]` — Dry run
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.v1.environments.<a href="src/truefoundry_sdk/v1/environments/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get Environment associated with the provided id.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.v1.environments.get(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — Environment id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.v1.environments.<a href="src/truefoundry_sdk/v1/environments/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete Environment associated with the provided id.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.v1.environments.delete(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — Environment id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## V1 Artifacts
 <details><summary><code>client.v1.artifacts.<a href="src/truefoundry_sdk/v1/artifacts/client.py">get</a>(...)</code></summary>
 <dl>
@@ -219,18 +526,22 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
+from truefoundry_sdk import (
+    Manifest_ModelVersion,
+    Source_Truefoundry,
+    TrueFoundry,
+)
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
 client.v1.artifacts.create_or_update(
-    manifest=ModelManifest(
+    manifest=Manifest_ModelVersion(
         name="name",
         metadata={"key": "value"},
         ml_repo="ml_repo",
-        source=TrueFoundryManagedSource(),
+        source=Source_Truefoundry(),
     ),
 )
 
@@ -480,18 +791,22 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
+from truefoundry_sdk import (
+    Manifest_ModelVersion,
+    Source_Truefoundry,
+    TrueFoundry,
+)
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
 client.v1.agents.create_or_update(
-    manifest=ModelManifest(
+    manifest=Manifest_ModelVersion(
         name="name",
         metadata={"key": "value"},
         ml_repo="ml_repo",
-        source=TrueFoundryManagedSource(),
+        source=Source_Truefoundry(),
     ),
 )
 
@@ -741,18 +1056,22 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
+from truefoundry_sdk import (
+    Manifest_ModelVersion,
+    Source_Truefoundry,
+    TrueFoundry,
+)
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
 client.v1.prompts.create_or_update(
-    manifest=ModelManifest(
+    manifest=Manifest_ModelVersion(
         name="name",
         metadata={"key": "value"},
         ml_repo="ml_repo",
-        source=TrueFoundryManagedSource(),
+        source=Source_Truefoundry(),
     ),
 )
 
@@ -1002,18 +1321,22 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
+from truefoundry_sdk import (
+    Manifest_ModelVersion,
+    Source_Truefoundry,
+    TrueFoundry,
+)
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
 client.v1.tools.create_or_update(
-    manifest=ModelManifest(
+    manifest=Manifest_ModelVersion(
         name="name",
         metadata={"key": "value"},
         ml_repo="ml_repo",
-        source=TrueFoundryManagedSource(),
+        source=Source_Truefoundry(),
     ),
 )
 
@@ -1271,18 +1594,22 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
+from truefoundry_sdk import (
+    Manifest_ModelVersion,
+    Source_Truefoundry,
+    TrueFoundry,
+)
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
 client.v1.models.create_or_update(
-    manifest=ModelManifest(
+    manifest=Manifest_ModelVersion(
         name="name",
         metadata={"key": "value"},
         ml_repo="ml_repo",
-        source=TrueFoundryManagedSource(),
+        source=Source_Truefoundry(),
     ),
 )
 
@@ -1748,18 +2075,19 @@ client.v1.artifact_versions.create_multi_part_upload(
 <dd>
 
 ```python
-from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
+from truefoundry_sdk import Source_Truefoundry, TrueFoundry
+from truefoundry_sdk.v1.artifact_versions import Manifest_ModelVersion
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
 client.v1.artifact_versions.stage(
-    manifest=ModelManifest(
+    manifest=Manifest_ModelVersion(
         name="name",
         metadata={"key": "value"},
         ml_repo="ml_repo",
-        source=TrueFoundryManagedSource(),
+        source=Source_Truefoundry(),
     ),
 )
 
@@ -3224,18 +3552,22 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
+from truefoundry_sdk import (
+    Manifest_ModelVersion,
+    Source_Truefoundry,
+    TrueFoundry,
+)
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
 client.v1.data_directories.create_or_update(
-    manifest=ModelManifest(
+    manifest=Manifest_ModelVersion(
         name="name",
         metadata={"key": "value"},
         ml_repo="ml_repo",
-        source=TrueFoundryManagedSource(),
+        source=Source_Truefoundry(),
     ),
 )
 
