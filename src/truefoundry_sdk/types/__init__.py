@@ -30,6 +30,11 @@ from .data import Data
 from .data_directory import DataDirectory
 from .data_directory_manifest import DataDirectoryManifest
 from .empty_response import EmptyResponse
+from .environment import Environment
+from .environment_color import EnvironmentColor
+from .environment_manifest import EnvironmentManifest
+from .environment_manifest_optimize_for import EnvironmentManifestOptimizeFor
+from .environment_optimize_for import EnvironmentOptimizeFor
 from .external_blob_storage_source import ExternalBlobStorageSource
 from .fast_ai_framework import FastAiFramework
 from .file_info import FileInfo
@@ -41,6 +46,7 @@ from .get_apply_sdk_code_response import GetApplySdkCodeResponse
 from .get_artifact_response import GetArtifactResponse
 from .get_artifact_version_response import GetArtifactVersionResponse
 from .get_data_directory_response import GetDataDirectoryResponse
+from .get_environment_response import GetEnvironmentResponse
 from .get_ml_repo_response import GetMlRepoResponse
 from .get_model_response import GetModelResponse
 from .get_model_version_response import GetModelVersionResponse
@@ -50,6 +56,7 @@ from .get_signed_ur_ls_request import GetSignedUrLsRequest
 from .get_signed_ur_ls_response import GetSignedUrLsResponse
 from .get_tool_response import GetToolResponse
 from .get_tool_version_response import GetToolVersionResponse
+from .get_workspace_response_dto import GetWorkspaceResponseDto
 from .gluon_framework import GluonFramework
 from .h2o_framework import H2OFramework
 from .http_validation_error import HttpValidationError
@@ -64,6 +71,7 @@ from .list_agents_response import ListAgentsResponse
 from .list_artifact_version_response import ListArtifactVersionResponse
 from .list_artifacts_response import ListArtifactsResponse
 from .list_data_directories_response import ListDataDirectoriesResponse
+from .list_environments_response import ListEnvironmentsResponse
 from .list_files_request import ListFilesRequest
 from .list_files_response import ListFilesResponse
 from .list_ml_repos_response import ListMlReposResponse
@@ -73,6 +81,7 @@ from .list_prompt_versions_response import ListPromptVersionsResponse
 from .list_prompts_response import ListPromptsResponse
 from .list_tool_versions_response import ListToolVersionsResponse
 from .list_tools_response import ListToolsResponse
+from .list_workspace_response import ListWorkspaceResponse
 from .local_artifact_source import LocalArtifactSource
 from .local_model_source import LocalModelSource
 from .manifest import Manifest
@@ -122,6 +131,9 @@ from .user_message import UserMessage
 from .user_message_content_item import UserMessageContentItem
 from .validation_error import ValidationError
 from .validation_error_loc_item import ValidationErrorLocItem
+from .workspace import Workspace
+from .workspace_manifest import WorkspaceManifest
+from .workspace_metadata import WorkspaceMetadata
 from .xg_boost_framework import XgBoostFramework
 from .xg_boost_model_schema import XgBoostModelSchema
 from .xg_boost_serialization_format import XgBoostSerializationFormat
@@ -157,6 +169,11 @@ __all__ = [
     "DataDirectory",
     "DataDirectoryManifest",
     "EmptyResponse",
+    "Environment",
+    "EnvironmentColor",
+    "EnvironmentManifest",
+    "EnvironmentManifestOptimizeFor",
+    "EnvironmentOptimizeFor",
     "ExternalBlobStorageSource",
     "FastAiFramework",
     "FileInfo",
@@ -168,6 +185,7 @@ __all__ = [
     "GetArtifactResponse",
     "GetArtifactVersionResponse",
     "GetDataDirectoryResponse",
+    "GetEnvironmentResponse",
     "GetMlRepoResponse",
     "GetModelResponse",
     "GetModelVersionResponse",
@@ -177,6 +195,7 @@ __all__ = [
     "GetSignedUrLsResponse",
     "GetToolResponse",
     "GetToolVersionResponse",
+    "GetWorkspaceResponseDto",
     "GluonFramework",
     "H2OFramework",
     "HttpValidationError",
@@ -191,6 +210,7 @@ __all__ = [
     "ListArtifactVersionResponse",
     "ListArtifactsResponse",
     "ListDataDirectoriesResponse",
+    "ListEnvironmentsResponse",
     "ListFilesRequest",
     "ListFilesResponse",
     "ListMlReposResponse",
@@ -200,6 +220,7 @@ __all__ = [
     "ListPromptsResponse",
     "ListToolVersionsResponse",
     "ListToolsResponse",
+    "ListWorkspaceResponse",
     "LocalArtifactSource",
     "LocalModelSource",
     "Manifest",
@@ -249,6 +270,9 @@ __all__ = [
     "UserMessageContentItem",
     "ValidationError",
     "ValidationErrorLocItem",
+    "Workspace",
+    "WorkspaceManifest",
+    "WorkspaceMetadata",
     "XgBoostFramework",
     "XgBoostModelSchema",
     "XgBoostSerializationFormat",

@@ -6,6 +6,7 @@ from . import (
     artifact_versions,
     artifacts,
     data_directories,
+    environments,
     ml_repos,
     model_versions,
     models,
@@ -13,16 +14,20 @@ from . import (
     prompts,
     tool_versions,
     tools,
+    workspaces,
 )
 from .artifact_versions import Manifest
+from .workspaces import WorkspacesDeleteResponse
 
 __all__ = [
     "Manifest",
+    "WorkspacesDeleteResponse",
     "agent_versions",
     "agents",
     "artifact_versions",
     "artifacts",
     "data_directories",
+    "environments",
     "ml_repos",
     "model_versions",
     "models",
@@ -30,4 +35,5 @@ __all__ = [
     "prompts",
     "tool_versions",
     "tools",
+    "workspaces",
 ]
