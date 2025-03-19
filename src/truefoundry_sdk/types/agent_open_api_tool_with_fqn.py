@@ -3,7 +3,9 @@
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 import pydantic
-from .agent_open_api_tool_with_fqn_openapi_spec import AgentOpenApiToolWithFqnOpenapiSpec
+from .agent_open_api_tool_with_fqn_openapi_spec import (
+    AgentOpenApiToolWithFqnOpenapiSpec,
+)
 from .method import Method
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
