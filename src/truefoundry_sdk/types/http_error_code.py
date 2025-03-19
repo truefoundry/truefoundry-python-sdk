@@ -2,4 +2,4 @@
 
 import typing
 
-HttpErrorCode = typing.Union[float, str]
+HttpErrorCode = typing.Union[int, str]

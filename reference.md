@@ -107,7 +107,7 @@ Creates a new Environment or updates an existing Environment.
 <dd>
 
 ```python
-from truefoundry_sdk import EnvironmentManifest, TrueFoundry
+from truefoundry_sdk import EnvironmentColor, EnvironmentManifest, TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -116,9 +116,9 @@ client = TrueFoundry(
 client.v1.environments.create_or_update(
     manifest=EnvironmentManifest(
         name="name",
-        color={"key": "value"},
+        color=EnvironmentColor(),
         is_production=True,
-        optimize_for={"key": "value"},
+        optimize_for="COST",
     ),
 )
 

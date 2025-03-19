@@ -3,8 +3,10 @@
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 import pydantic
+from .environment_color import EnvironmentColor
 import typing_extensions
 from ..core.serialization import FieldMetadata
+from .environment_optimize_for import EnvironmentOptimizeFor
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -21,7 +23,7 @@ class EnvironmentManifest(UniversalBaseModel):
     +usage=Environment Name
     """
 
-    color: typing.Optional[typing.Any] = None
+    color: EnvironmentColor
     is_production: typing_extensions.Annotated[bool, FieldMetadata(alias="isProduction")] = pydantic.Field()
     """
     +sort=400
@@ -31,7 +33,7 @@ class EnvironmentManifest(UniversalBaseModel):
     +uiProps={"hideRadioIcon":true}
     """
 
-    optimize_for: typing_extensions.Annotated[typing.Optional[typing.Any], FieldMetadata(alias="optimizeFor")] = None
+    optimize_for: typing_extensions.Annotated[EnvironmentOptimizeFor, FieldMetadata(alias="optimizeFor")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
