@@ -274,10 +274,7 @@ class DataDirectoriesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def create_or_update(
-        self,
-        *,
-        manifest: Manifest,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, manifest: Manifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetDataDirectoryResponse:
         """
         Parameters
@@ -532,11 +529,7 @@ class DataDirectoriesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete_files(
-        self,
-        *,
-        id: str,
-        paths: typing.Sequence[str],
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, id: str, paths: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
     ) -> EmptyResponse:
         """
         Delete files from the dataset.
@@ -613,12 +606,7 @@ class DataDirectoriesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def create_multipart_upload(
-        self,
-        *,
-        id: str,
-        path: str,
-        num_parts: int,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, id: str, path: str, num_parts: int, request_options: typing.Optional[RequestOptions] = None
     ) -> MultiPartUploadResponse:
         """
         Create a multipart upload for a dataset
@@ -969,10 +957,7 @@ class AsyncDataDirectoriesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create_or_update(
-        self,
-        *,
-        manifest: Manifest,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, manifest: Manifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetDataDirectoryResponse:
         """
         Parameters
@@ -1255,11 +1240,7 @@ class AsyncDataDirectoriesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete_files(
-        self,
-        *,
-        id: str,
-        paths: typing.Sequence[str],
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, id: str, paths: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
     ) -> EmptyResponse:
         """
         Delete files from the dataset.
@@ -1344,12 +1325,7 @@ class AsyncDataDirectoriesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create_multipart_upload(
-        self,
-        *,
-        id: str,
-        path: str,
-        num_parts: int,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, id: str, path: str, num_parts: int, request_options: typing.Optional[RequestOptions] = None
     ) -> MultiPartUploadResponse:
         """
         Create a multipart upload for a dataset

@@ -3,12 +3,5 @@
 import typing
 
 MimeType = typing.Union[
-    typing.Literal[
-        "text/plain",
-        "application/json",
-        "image/png",
-        "image/jpeg",
-        "application/x-directory",
-    ],
-    typing.Any,
+    typing.Literal["text/plain", "application/json", "image/png", "image/jpeg", "application/x-directory"], typing.Any
 ]

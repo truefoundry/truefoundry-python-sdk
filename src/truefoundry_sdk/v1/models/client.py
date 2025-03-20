@@ -232,10 +232,7 @@ class ModelsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def create_or_update(
-        self,
-        *,
-        manifest: Manifest,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, manifest: Manifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetModelVersionResponse:
         """
         Parameters
@@ -536,10 +533,7 @@ class AsyncModelsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create_or_update(
-        self,
-        *,
-        manifest: Manifest,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, manifest: Manifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetModelVersionResponse:
         """
         Parameters
