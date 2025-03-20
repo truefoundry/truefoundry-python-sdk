@@ -3,167 +3,53 @@
 import typing
 from ...core.client_wrapper import SyncClientWrapper
 from ...core.request_options import RequestOptions
-from ...types.get_tool_response import GetToolResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...types.list_environments_response import ListEnvironmentsResponse
 from ...core.pydantic_utilities import parse_obj_as
-from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
-from ...types.empty_response import EmptyResponse
-from ...core.pagination import SyncPager
-from ...types.tool import Tool
-from ...types.list_tools_response import ListToolsResponse
-from ...types.manifest import Manifest
-from ...types.get_tool_version_response import GetToolVersionResponse
+from ...types.environment_manifest import EnvironmentManifest
+from ...types.get_environment_response import GetEnvironmentResponse
 from ...core.serialization import convert_and_respect_annotation_metadata
+from ...errors.unprocessable_entity_error import UnprocessableEntityError
+from ...core.jsonable_encoder import jsonable_encoder
+from ...errors.not_found_error import NotFoundError
+from ...types.http_error import HttpError
+from ...errors.conflict_error import ConflictError
 from ...core.client_wrapper import AsyncClientWrapper
-from ...core.pagination import AsyncPager
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
 
-class ToolsClient:
+class EnvironmentsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
-
-    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetToolResponse:
-        """
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetToolResponse
-            Successful Response
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.v1.tools.get(
-            id="id",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/tools/{jsonable_encoder(id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetToolResponse,
-                    parse_obj_as(
-                        type_=GetToolResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
-        """
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        EmptyResponse
-            Successful Response
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.v1.tools.delete(
-            id="id",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/tools/{jsonable_encoder(id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    EmptyResponse,
-                    parse_obj_as(
-                        type_=EmptyResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def list(
         self,
         *,
-        ml_repo_id: typing.Optional[str] = None,
-        name: typing.Optional[str] = None,
-        offset: typing.Optional[int] = None,
         limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Tool]:
+    ) -> ListEnvironmentsResponse:
         """
+        List environments, if no environments are found, default environments are created and returned. Pagination is available based on query parameters
+
         Parameters
         ----------
-        ml_repo_id : typing.Optional[str]
-
-        name : typing.Optional[str]
+        limit : typing.Optional[int]
+            Number of items per page
 
         offset : typing.Optional[int]
-
-        limit : typing.Optional[int]
+            Number of items to skip
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        SyncPager[Tool]
-            Successful Response
+        ListEnvironmentsResponse
+            Returns a list of environment. If pagination parameters are provided, the response includes paginated data
 
         Examples
         --------
@@ -173,53 +59,28 @@ class ToolsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = client.v1.tools.list()
-        for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        for page in response.iter_pages():
-            yield page
+        client.v1.environments.list(
+            limit=10,
+            offset=0,
+        )
         """
-        offset = offset if offset is not None else 0
         _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/tools",
+            "api/svc/v1/environments",
             method="GET",
             params={
-                "ml_repo_id": ml_repo_id,
-                "name": name,
-                "offset": offset,
                 "limit": limit,
+                "offset": offset,
             },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
-                _parsed_response = typing.cast(
-                    ListToolsResponse,
+                return typing.cast(
+                    ListEnvironmentsResponse,
                     parse_obj_as(
-                        type_=ListToolsResponse,  # type: ignore
+                        type_=ListEnvironmentsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
-                )
-                _has_next = True
-                _get_next = lambda: self.list(
-                    ml_repo_id=ml_repo_id,
-                    name=name,
-                    offset=offset + 1,
-                    limit=limit,
-                    request_options=request_options,
-                )
-                _items = _parsed_response.data
-                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -227,45 +88,59 @@ class ToolsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def create_or_update(
-        self, *, manifest: Manifest, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetToolVersionResponse:
+        self,
+        *,
+        manifest: EnvironmentManifest,
+        dry_run: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetEnvironmentResponse:
         """
+        Creates a new Environment or updates an existing Environment.
+
         Parameters
         ----------
-        manifest : Manifest
+        manifest : EnvironmentManifest
+            Environment Manifest
+
+        dry_run : typing.Optional[bool]
+            Dry run
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        GetToolVersionResponse
-            Successful Response
+        GetEnvironmentResponse
+            Returns the created or updated Environment
 
         Examples
         --------
-        from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
+        from truefoundry_sdk import EnvironmentColor, EnvironmentManifest, TrueFoundry
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.v1.tools.create_or_update(
-            manifest=ModelManifest(
+        client.v1.environments.create_or_update(
+            manifest=EnvironmentManifest(
                 name="name",
-                metadata={"key": "value"},
-                ml_repo="ml_repo",
-                source=TrueFoundryManagedSource(),
+                color=EnvironmentColor(),
+                is_production=True,
+                optimize_for="COST",
             ),
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/tool-versions",
+            "api/svc/v1/environments",
             method="PUT",
             json={
                 "manifest": convert_and_respect_annotation_metadata(
-                    object_=manifest, annotation=Manifest, direction="write"
+                    object_=manifest, annotation=EnvironmentManifest, direction="write"
                 ),
+                "dryRun": dry_run,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -273,9 +148,9 @@ class ToolsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetToolVersionResponse,
+                    GetEnvironmentResponse,
                     parse_obj_as(
-                        type_=GetToolVersionResponse,  # type: ignore
+                        type_=GetEnvironmentResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -294,128 +169,113 @@ class ToolsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-
-class AsyncToolsClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
-
-    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetToolResponse:
+    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetEnvironmentResponse:
         """
+        Get Environment associated with the provided id.
+
         Parameters
         ----------
         id : str
+            Environment id
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        GetToolResponse
-            Successful Response
+        GetEnvironmentResponse
+            Returns the Environment associated with the provided id
 
         Examples
         --------
-        import asyncio
+        from truefoundry_sdk import TrueFoundry
 
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
+        client = TrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-
-
-        async def main() -> None:
-            await client.v1.tools.get(
-                id="id",
-            )
-
-
-        asyncio.run(main())
+        client.v1.environments.get(
+            id="id",
+        )
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/tools/{jsonable_encoder(id)}",
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/environments/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetToolResponse,
+                    GetEnvironmentResponse,
                     parse_obj_as(
-                        type_=GetToolResponse,  # type: ignore
+                        type_=GetEnvironmentResponse,  # type: ignore
                         object_=_response.json(),
                     ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
                 )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
+    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
+        Delete Environment associated with the provided id.
+
         Parameters
         ----------
         id : str
+            Environment id
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        EmptyResponse
-            Successful Response
+        bool
+            Returns true if the Environment is deleted successfully
 
         Examples
         --------
-        import asyncio
+        from truefoundry_sdk import TrueFoundry
 
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
+        client = TrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-
-
-        async def main() -> None:
-            await client.v1.tools.delete(
-                id="id",
-            )
-
-
-        asyncio.run(main())
+        client.v1.environments.delete(
+            id="id",
+        )
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/tools/{jsonable_encoder(id)}",
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/environments/{jsonable_encoder(id)}",
             method="DELETE",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    EmptyResponse,
+                    bool,
                     parse_obj_as(
-                        type_=EmptyResponse,  # type: ignore
+                        type_=bool,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
+                    typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -425,33 +285,36 @@ class AsyncToolsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+
+class AsyncEnvironmentsClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._client_wrapper = client_wrapper
+
     async def list(
         self,
         *,
-        ml_repo_id: typing.Optional[str] = None,
-        name: typing.Optional[str] = None,
-        offset: typing.Optional[int] = None,
         limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Tool]:
+    ) -> ListEnvironmentsResponse:
         """
+        List environments, if no environments are found, default environments are created and returned. Pagination is available based on query parameters
+
         Parameters
         ----------
-        ml_repo_id : typing.Optional[str]
-
-        name : typing.Optional[str]
+        limit : typing.Optional[int]
+            Number of items per page
 
         offset : typing.Optional[int]
-
-        limit : typing.Optional[int]
+            Number of items to skip
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncPager[Tool]
-            Successful Response
+        ListEnvironmentsResponse
+            Returns a list of environment. If pagination parameters are provided, the response includes paginated data
 
         Examples
         --------
@@ -466,56 +329,31 @@ class AsyncToolsClient:
 
 
         async def main() -> None:
-            response = await client.v1.tools.list()
-            async for item in response:
-                yield item
-            # alternatively, you can paginate page-by-page
-            async for page in response.iter_pages():
-                yield page
+            await client.v1.environments.list(
+                limit=10,
+                offset=0,
+            )
 
 
         asyncio.run(main())
         """
-        offset = offset if offset is not None else 0
         _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/tools",
+            "api/svc/v1/environments",
             method="GET",
             params={
-                "ml_repo_id": ml_repo_id,
-                "name": name,
-                "offset": offset,
                 "limit": limit,
+                "offset": offset,
             },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
-                _parsed_response = typing.cast(
-                    ListToolsResponse,
+                return typing.cast(
+                    ListEnvironmentsResponse,
                     parse_obj_as(
-                        type_=ListToolsResponse,  # type: ignore
+                        type_=ListEnvironmentsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
-                )
-                _has_next = True
-                _get_next = lambda: self.list(
-                    ml_repo_id=ml_repo_id,
-                    name=name,
-                    offset=offset + 1,
-                    limit=limit,
-                    request_options=request_options,
-                )
-                _items = _parsed_response.data
-                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -523,20 +361,30 @@ class AsyncToolsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create_or_update(
-        self, *, manifest: Manifest, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetToolVersionResponse:
+        self,
+        *,
+        manifest: EnvironmentManifest,
+        dry_run: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetEnvironmentResponse:
         """
+        Creates a new Environment or updates an existing Environment.
+
         Parameters
         ----------
-        manifest : Manifest
+        manifest : EnvironmentManifest
+            Environment Manifest
+
+        dry_run : typing.Optional[bool]
+            Dry run
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        GetToolVersionResponse
-            Successful Response
+        GetEnvironmentResponse
+            Returns the created or updated Environment
 
         Examples
         --------
@@ -544,8 +392,8 @@ class AsyncToolsClient:
 
         from truefoundry_sdk import (
             AsyncTrueFoundry,
-            ModelManifest,
-            TrueFoundryManagedSource,
+            EnvironmentColor,
+            EnvironmentManifest,
         )
 
         client = AsyncTrueFoundry(
@@ -555,12 +403,12 @@ class AsyncToolsClient:
 
 
         async def main() -> None:
-            await client.v1.tools.create_or_update(
-                manifest=ModelManifest(
+            await client.v1.environments.create_or_update(
+                manifest=EnvironmentManifest(
                     name="name",
-                    metadata={"key": "value"},
-                    ml_repo="ml_repo",
-                    source=TrueFoundryManagedSource(),
+                    color=EnvironmentColor(),
+                    is_production=True,
+                    optimize_for="COST",
                 ),
             )
 
@@ -568,12 +416,16 @@ class AsyncToolsClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/tool-versions",
+            "api/svc/v1/environments",
             method="PUT",
             json={
                 "manifest": convert_and_respect_annotation_metadata(
-                    object_=manifest, annotation=Manifest, direction="write"
+                    object_=manifest, annotation=EnvironmentManifest, direction="write"
                 ),
+                "dryRun": dry_run,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -581,9 +433,9 @@ class AsyncToolsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetToolVersionResponse,
+                    GetEnvironmentResponse,
                     parse_obj_as(
-                        type_=GetToolVersionResponse,  # type: ignore
+                        type_=GetEnvironmentResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -593,6 +445,138 @@ class AsyncToolsClient:
                         typing.Optional[typing.Any],
                         parse_obj_as(
                             type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetEnvironmentResponse:
+        """
+        Get Environment associated with the provided id.
+
+        Parameters
+        ----------
+        id : str
+            Environment id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetEnvironmentResponse
+            Returns the Environment associated with the provided id
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.v1.environments.get(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/environments/{jsonable_encoder(id)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetEnvironmentResponse,
+                    parse_obj_as(
+                        type_=GetEnvironmentResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
+        """
+        Delete Environment associated with the provided id.
+
+        Parameters
+        ----------
+        id : str
+            Environment id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        bool
+            Returns true if the Environment is deleted successfully
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.v1.environments.delete(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/environments/{jsonable_encoder(id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    bool,
+                    parse_obj_as(
+                        type_=bool,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
+                    typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )

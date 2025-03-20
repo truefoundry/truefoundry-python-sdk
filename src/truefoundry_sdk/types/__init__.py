@@ -30,6 +30,10 @@ from .data import Data
 from .data_directory import DataDirectory
 from .data_directory_manifest import DataDirectoryManifest
 from .empty_response import EmptyResponse
+from .environment import Environment
+from .environment_color import EnvironmentColor
+from .environment_manifest import EnvironmentManifest
+from .environment_optimize_for import EnvironmentOptimizeFor
 from .external_blob_storage_source import ExternalBlobStorageSource
 from .fast_ai_framework import FastAiFramework
 from .file_info import FileInfo
@@ -41,6 +45,7 @@ from .get_apply_sdk_code_response import GetApplySdkCodeResponse
 from .get_artifact_response import GetArtifactResponse
 from .get_artifact_version_response import GetArtifactVersionResponse
 from .get_data_directory_response import GetDataDirectoryResponse
+from .get_environment_response import GetEnvironmentResponse
 from .get_ml_repo_response import GetMlRepoResponse
 from .get_model_response import GetModelResponse
 from .get_model_version_response import GetModelVersionResponse
@@ -52,6 +57,8 @@ from .get_tool_response import GetToolResponse
 from .get_tool_version_response import GetToolVersionResponse
 from .gluon_framework import GluonFramework
 from .h2o_framework import H2OFramework
+from .http_error import HttpError
+from .http_error_code import HttpErrorCode
 from .http_validation_error import HttpValidationError
 from .image_content_part import ImageContentPart
 from .image_url import ImageUrl
@@ -64,6 +71,7 @@ from .list_agents_response import ListAgentsResponse
 from .list_artifact_version_response import ListArtifactVersionResponse
 from .list_artifacts_response import ListArtifactsResponse
 from .list_data_directories_response import ListDataDirectoriesResponse
+from .list_environments_response import ListEnvironmentsResponse
 from .list_files_request import ListFilesRequest
 from .list_files_response import ListFilesResponse
 from .list_ml_repos_response import ListMlReposResponse
@@ -157,6 +165,10 @@ __all__ = [
     "DataDirectory",
     "DataDirectoryManifest",
     "EmptyResponse",
+    "Environment",
+    "EnvironmentColor",
+    "EnvironmentManifest",
+    "EnvironmentOptimizeFor",
     "ExternalBlobStorageSource",
     "FastAiFramework",
     "FileInfo",
@@ -168,6 +180,7 @@ __all__ = [
     "GetArtifactResponse",
     "GetArtifactVersionResponse",
     "GetDataDirectoryResponse",
+    "GetEnvironmentResponse",
     "GetMlRepoResponse",
     "GetModelResponse",
     "GetModelVersionResponse",
@@ -179,6 +192,8 @@ __all__ = [
     "GetToolVersionResponse",
     "GluonFramework",
     "H2OFramework",
+    "HttpError",
+    "HttpErrorCode",
     "HttpValidationError",
     "ImageContentPart",
     "ImageUrl",
@@ -191,6 +206,7 @@ __all__ = [
     "ListArtifactVersionResponse",
     "ListArtifactsResponse",
     "ListDataDirectoriesResponse",
+    "ListEnvironmentsResponse",
     "ListFilesRequest",
     "ListFilesResponse",
     "ListMlReposResponse",
