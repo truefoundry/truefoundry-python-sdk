@@ -6,17 +6,19 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 
 
-class Collaborator(UniversalBaseModel):
-    subject: str = pydantic.Field()
+class SshServerConfig(UniversalBaseModel):
+    base_domain: str = pydantic.Field()
     """
-    +label=Subject FQN
-    +usage=Fully Qualified Name of the subject. eg: user:email or team:teamname
+    +label=SSH Base Domain
+    +usage=The base domain for the cluster with which you can access your SSH containers
+    +sort=1000
     """
 
-    role_id: str = pydantic.Field()
+    port: float = pydantic.Field()
     """
-    +label=Role ID
-    +usage=Role ID for the resource
+    +label=SSH Port
+    +usage=The port for the cluster with which you can access your SSH containers
+    +sort=2000
     """
 
     if IS_PYDANTIC_V2:

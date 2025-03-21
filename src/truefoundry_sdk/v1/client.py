@@ -2,6 +2,7 @@
 
 from ..core.client_wrapper import SyncClientWrapper
 from .environments.client import EnvironmentsClient
+from .workspaces.client import WorkspacesClient
 from .artifacts.client import ArtifactsClient
 from .agents.client import AgentsClient
 from .prompts.client import PromptsClient
@@ -16,6 +17,7 @@ from .data_directories.client import DataDirectoriesClient
 from .ml_repos.client import MlReposClient
 from ..core.client_wrapper import AsyncClientWrapper
 from .environments.client import AsyncEnvironmentsClient
+from .workspaces.client import AsyncWorkspacesClient
 from .artifacts.client import AsyncArtifactsClient
 from .agents.client import AsyncAgentsClient
 from .prompts.client import AsyncPromptsClient
@@ -34,6 +36,7 @@ class V1Client:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
         self.environments = EnvironmentsClient(client_wrapper=self._client_wrapper)
+        self.workspaces = WorkspacesClient(client_wrapper=self._client_wrapper)
         self.artifacts = ArtifactsClient(client_wrapper=self._client_wrapper)
         self.agents = AgentsClient(client_wrapper=self._client_wrapper)
         self.prompts = PromptsClient(client_wrapper=self._client_wrapper)
@@ -52,6 +55,7 @@ class AsyncV1Client:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
         self.environments = AsyncEnvironmentsClient(client_wrapper=self._client_wrapper)
+        self.workspaces = AsyncWorkspacesClient(client_wrapper=self._client_wrapper)
         self.artifacts = AsyncArtifactsClient(client_wrapper=self._client_wrapper)
         self.agents = AsyncAgentsClient(client_wrapper=self._client_wrapper)
         self.prompts = AsyncPromptsClient(client_wrapper=self._client_wrapper)

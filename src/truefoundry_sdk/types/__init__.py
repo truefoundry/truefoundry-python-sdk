@@ -22,6 +22,21 @@ from .base_artifact_version import BaseArtifactVersion
 from .blob_storage_reference import BlobStorageReference
 from .chat_prompt_manifest import ChatPromptManifest
 from .chat_prompt_manifest_messages_item import ChatPromptManifestMessagesItem
+from .cluster import Cluster
+from .cluster_auto_scaler_logs_metadata import ClusterAutoScalerLogsMetadata
+from .cluster_autopilot_settings import ClusterAutopilotSettings
+from .cluster_cloud_provider import ClusterCloudProvider
+from .cluster_gateway import ClusterGateway
+from .cluster_manifest import ClusterManifest
+from .cluster_manifest_cluster_type import ClusterManifestClusterType
+from .cluster_manifest_monitoring import ClusterManifestMonitoring
+from .cluster_manifest_node_label_keys import ClusterManifestNodeLabelKeys
+from .cluster_manifest_workbench_config import ClusterManifestWorkbenchConfig
+from .cluster_metadata import ClusterMetadata
+from .cluster_metadata_installed_cr_ds_meta_value import ClusterMetadataInstalledCrDsMetaValue
+from .cluster_nodepool import ClusterNodepool
+from .cluster_nodepool_capacity_type import ClusterNodepoolCapacityType
+from .cluster_recommendation_summary import ClusterRecommendationSummary
 from .code_file_data import CodeFileData
 from .collaborator import Collaborator
 from .content import Content
@@ -37,6 +52,7 @@ from .environment_optimize_for import EnvironmentOptimizeFor
 from .external_blob_storage_source import ExternalBlobStorageSource
 from .fast_ai_framework import FastAiFramework
 from .file_info import FileInfo
+from .fractional_gpu_info import FractionalGpuInfo
 from .framework import Framework
 from .get_agent_response import GetAgentResponse
 from .get_agent_version_response import GetAgentVersionResponse
@@ -55,6 +71,7 @@ from .get_signed_ur_ls_request import GetSignedUrLsRequest
 from .get_signed_ur_ls_response import GetSignedUrLsResponse
 from .get_tool_response import GetToolResponse
 from .get_tool_version_response import GetToolVersionResponse
+from .get_workspace_response_dto import GetWorkspaceResponseDto
 from .gluon_framework import GluonFramework
 from .h2o_framework import H2OFramework
 from .http_error import HttpError
@@ -63,6 +80,7 @@ from .http_validation_error import HttpValidationError
 from .image_content_part import ImageContentPart
 from .image_url import ImageUrl
 from .infer_method_name import InferMethodName
+from .instance_resources import InstanceResources
 from .keras_framework import KerasFramework
 from .library_name import LibraryName
 from .light_gbm_framework import LightGbmFramework
@@ -81,6 +99,7 @@ from .list_prompt_versions_response import ListPromptVersionsResponse
 from .list_prompts_response import ListPromptsResponse
 from .list_tool_versions_response import ListToolVersionsResponse
 from .list_tools_response import ListToolsResponse
+from .list_workspace_response import ListWorkspaceResponse
 from .local_artifact_source import LocalArtifactSource
 from .local_model_source import LocalModelSource
 from .manifest import Manifest
@@ -96,11 +115,17 @@ from .model_version_environment import ModelVersionEnvironment
 from .multi_part_upload import MultiPartUpload
 from .multi_part_upload_response import MultiPartUploadResponse
 from .multi_part_upload_storage_provider import MultiPartUploadStorageProvider
+from .nodepool import Nodepool
+from .nodepool_taints import NodepoolTaints
+from .notebook_config import NotebookConfig
+from .nvidia_mig_gpu_info import NvidiaMigGpuInfo
+from .nvidia_time_slicing_gpu_info import NvidiaTimeSlicingGpuInfo
 from .onnx_framework import OnnxFramework
 from .operation import Operation
 from .paddle_framework import PaddleFramework
 from .pagination import Pagination
 from .parameters import Parameters
+from .permissions import Permissions
 from .prompt import Prompt
 from .prompt_version import PromptVersion
 from .py_torch_framework import PyTorchFramework
@@ -111,6 +136,7 @@ from .sklearn_model_schema import SklearnModelSchema
 from .sklearn_serialization_format import SklearnSerializationFormat
 from .source import Source
 from .spa_cy_framework import SpaCyFramework
+from .ssh_server_config import SshServerConfig
 from .stage_artifact_response import StageArtifactResponse
 from .stats_models_framework import StatsModelsFramework
 from .stop import Stop
@@ -130,6 +156,9 @@ from .user_message import UserMessage
 from .user_message_content_item import UserMessageContentItem
 from .validation_error import ValidationError
 from .validation_error_loc_item import ValidationErrorLocItem
+from .workspace import Workspace
+from .workspace_manifest import WorkspaceManifest
+from .workspace_metadata import WorkspaceMetadata
 from .xg_boost_framework import XgBoostFramework
 from .xg_boost_model_schema import XgBoostModelSchema
 from .xg_boost_serialization_format import XgBoostSerializationFormat
@@ -157,6 +186,21 @@ __all__ = [
     "BlobStorageReference",
     "ChatPromptManifest",
     "ChatPromptManifestMessagesItem",
+    "Cluster",
+    "ClusterAutoScalerLogsMetadata",
+    "ClusterAutopilotSettings",
+    "ClusterCloudProvider",
+    "ClusterGateway",
+    "ClusterManifest",
+    "ClusterManifestClusterType",
+    "ClusterManifestMonitoring",
+    "ClusterManifestNodeLabelKeys",
+    "ClusterManifestWorkbenchConfig",
+    "ClusterMetadata",
+    "ClusterMetadataInstalledCrDsMetaValue",
+    "ClusterNodepool",
+    "ClusterNodepoolCapacityType",
+    "ClusterRecommendationSummary",
     "CodeFileData",
     "Collaborator",
     "Content",
@@ -172,6 +216,7 @@ __all__ = [
     "ExternalBlobStorageSource",
     "FastAiFramework",
     "FileInfo",
+    "FractionalGpuInfo",
     "Framework",
     "GetAgentResponse",
     "GetAgentVersionResponse",
@@ -190,6 +235,7 @@ __all__ = [
     "GetSignedUrLsResponse",
     "GetToolResponse",
     "GetToolVersionResponse",
+    "GetWorkspaceResponseDto",
     "GluonFramework",
     "H2OFramework",
     "HttpError",
@@ -198,6 +244,7 @@ __all__ = [
     "ImageContentPart",
     "ImageUrl",
     "InferMethodName",
+    "InstanceResources",
     "KerasFramework",
     "LibraryName",
     "LightGbmFramework",
@@ -216,6 +263,7 @@ __all__ = [
     "ListPromptsResponse",
     "ListToolVersionsResponse",
     "ListToolsResponse",
+    "ListWorkspaceResponse",
     "LocalArtifactSource",
     "LocalModelSource",
     "Manifest",
@@ -231,11 +279,17 @@ __all__ = [
     "MultiPartUpload",
     "MultiPartUploadResponse",
     "MultiPartUploadStorageProvider",
+    "Nodepool",
+    "NodepoolTaints",
+    "NotebookConfig",
+    "NvidiaMigGpuInfo",
+    "NvidiaTimeSlicingGpuInfo",
     "OnnxFramework",
     "Operation",
     "PaddleFramework",
     "Pagination",
     "Parameters",
+    "Permissions",
     "Prompt",
     "PromptVersion",
     "PyTorchFramework",
@@ -246,6 +300,7 @@ __all__ = [
     "SklearnSerializationFormat",
     "Source",
     "SpaCyFramework",
+    "SshServerConfig",
     "StageArtifactResponse",
     "StatsModelsFramework",
     "Stop",
@@ -265,6 +320,9 @@ __all__ = [
     "UserMessageContentItem",
     "ValidationError",
     "ValidationErrorLocItem",
+    "Workspace",
+    "WorkspaceManifest",
+    "WorkspaceMetadata",
     "XgBoostFramework",
     "XgBoostModelSchema",
     "XgBoostSerializationFormat",

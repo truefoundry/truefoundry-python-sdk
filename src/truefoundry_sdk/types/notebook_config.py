@@ -6,17 +6,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 
 
-class Collaborator(UniversalBaseModel):
-    subject: str = pydantic.Field()
+class NotebookConfig(UniversalBaseModel):
+    base_domain: str = pydantic.Field()
     """
-    +label=Subject FQN
-    +usage=Fully Qualified Name of the subject. eg: user:email or team:teamname
-    """
-
-    role_id: str = pydantic.Field()
-    """
-    +label=Role ID
-    +usage=Role ID for the resource
+    +label=Notebook Base Domain
+    +usage=The base domain for the cluster with which you can access your Notebooks
     """
 
     if IS_PYDANTIC_V2:
