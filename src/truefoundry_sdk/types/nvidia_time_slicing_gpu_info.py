@@ -10,9 +10,9 @@ import pydantic
 
 class NvidiaTimeSlicingGpuInfo(UniversalBaseModel):
     total_timeslices_per_gpu: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="totalTimeslicesPerGpu")
+        typing.Optional[int], FieldMetadata(alias="totalTimeslicesPerGpu")
     ] = None
-    single_gpu_memory_mb: typing_extensions.Annotated[float, FieldMetadata(alias="singleGpuMemoryMB")]
+    single_gpu_memory_mb: typing_extensions.Annotated[int, FieldMetadata(alias="singleGpuMemoryMB")]
     nvidia_device_plugin_config: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="nvidiaDevicePluginConfig")
     ] = None

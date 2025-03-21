@@ -9,12 +9,12 @@ import typing
 
 
 class ClusterRecommendationSummary(UniversalBaseModel):
-    total_upgrades: typing_extensions.Annotated[float, FieldMetadata(alias="totalUpgrades")] = pydantic.Field()
+    total_upgrades: typing_extensions.Annotated[int, FieldMetadata(alias="totalUpgrades")] = pydantic.Field()
     """
     Total number of upgrades
     """
 
-    total_recommendations: typing_extensions.Annotated[float, FieldMetadata(alias="totalRecommendations")] = (
+    total_recommendations: typing_extensions.Annotated[int, FieldMetadata(alias="totalRecommendations")] = (
         pydantic.Field()
     )
     """

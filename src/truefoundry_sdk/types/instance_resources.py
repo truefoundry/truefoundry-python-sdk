@@ -10,9 +10,9 @@ import pydantic
 
 class InstanceResources(UniversalBaseModel):
     cpu: float
-    memory_mb: typing_extensions.Annotated[float, FieldMetadata(alias="memoryMB")]
-    ephemeral_storage_mb: typing_extensions.Annotated[float, FieldMetadata(alias="ephemeralStorageMB")]
-    gpu_count: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="gpuCount")] = None
+    memory_mb: typing_extensions.Annotated[int, FieldMetadata(alias="memoryMB")]
+    ephemeral_storage_mb: typing_extensions.Annotated[int, FieldMetadata(alias="ephemeralStorageMB")]
+    gpu_count: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="gpuCount")] = None
     gpu_type: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="gpuType")] = None
 
     if IS_PYDANTIC_V2:

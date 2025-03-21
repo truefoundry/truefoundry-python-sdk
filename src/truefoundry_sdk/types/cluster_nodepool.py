@@ -4,7 +4,7 @@ from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 import typing_extensions
 from ..core.serialization import FieldMetadata
-from .cluster_nodepool_capacity_type import ClusterNodepoolCapacityType
+from .instance_capacity_type import InstanceCapacityType
 from .fractional_gpu_info import FractionalGpuInfo
 from .nodepool_taints import NodepoolTaints
 from .instance_resources import InstanceResources
@@ -19,7 +19,7 @@ class ClusterNodepool(UniversalBaseModel):
         typing.Optional[typing.List[str]], FieldMetadata(alias="instanceTypes")
     ] = None
     capacity_type: typing_extensions.Annotated[
-        typing.Optional[ClusterNodepoolCapacityType], FieldMetadata(alias="capacityType")
+        typing.Optional[InstanceCapacityType], FieldMetadata(alias="capacityType")
     ] = None
     fractional_gpu_info: typing_extensions.Annotated[
         typing.Optional[FractionalGpuInfo], FieldMetadata(alias="fractionalGpuInfo")

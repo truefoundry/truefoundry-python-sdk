@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 
 
-class GetWorkspaceResponseDto(UniversalBaseModel):
+class GetWorkspaceResponse(UniversalBaseModel):
     data: Workspace = pydantic.Field()
     """
     Workspace

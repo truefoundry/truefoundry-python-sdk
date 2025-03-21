@@ -35,7 +35,6 @@ from .cluster_manifest_workbench_config import ClusterManifestWorkbenchConfig
 from .cluster_metadata import ClusterMetadata
 from .cluster_metadata_installed_cr_ds_meta_value import ClusterMetadataInstalledCrDsMetaValue
 from .cluster_nodepool import ClusterNodepool
-from .cluster_nodepool_capacity_type import ClusterNodepoolCapacityType
 from .cluster_recommendation_summary import ClusterRecommendationSummary
 from .code_file_data import CodeFileData
 from .collaborator import Collaborator
@@ -71,7 +70,7 @@ from .get_signed_ur_ls_request import GetSignedUrLsRequest
 from .get_signed_ur_ls_response import GetSignedUrLsResponse
 from .get_tool_response import GetToolResponse
 from .get_tool_version_response import GetToolVersionResponse
-from .get_workspace_response_dto import GetWorkspaceResponseDto
+from .get_workspace_response import GetWorkspaceResponse
 from .gluon_framework import GluonFramework
 from .h2o_framework import H2OFramework
 from .http_error import HttpError
@@ -80,6 +79,7 @@ from .http_validation_error import HttpValidationError
 from .image_content_part import ImageContentPart
 from .image_url import ImageUrl
 from .infer_method_name import InferMethodName
+from .instance_capacity_type import InstanceCapacityType
 from .instance_resources import InstanceResources
 from .keras_framework import KerasFramework
 from .library_name import LibraryName
@@ -199,7 +199,6 @@ __all__ = [
     "ClusterMetadata",
     "ClusterMetadataInstalledCrDsMetaValue",
     "ClusterNodepool",
-    "ClusterNodepoolCapacityType",
     "ClusterRecommendationSummary",
     "CodeFileData",
     "Collaborator",
@@ -235,7 +234,7 @@ __all__ = [
     "GetSignedUrLsResponse",
     "GetToolResponse",
     "GetToolVersionResponse",
-    "GetWorkspaceResponseDto",
+    "GetWorkspaceResponse",
     "GluonFramework",
     "H2OFramework",
     "HttpError",
@@ -244,6 +243,7 @@ __all__ = [
     "ImageContentPart",
     "ImageUrl",
     "InferMethodName",
+    "InstanceCapacityType",
     "InstanceResources",
     "KerasFramework",
     "LibraryName",

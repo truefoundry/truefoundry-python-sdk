@@ -7,7 +7,9 @@ from ...types.list_workspace_response import ListWorkspaceResponse
 from ...core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
-from ...types.get_workspace_response_dto import GetWorkspaceResponseDto
+from ...types.workspace_manifest import WorkspaceManifest
+from ...types.get_workspace_response import GetWorkspaceResponse
+from ...core.serialization import convert_and_respect_annotation_metadata
 from ...errors.bad_request_error import BadRequestError
 from ...types.http_error import HttpError
 from ...errors.forbidden_error import ForbiddenError
@@ -29,11 +31,11 @@ class WorkspacesClient:
     def list(
         self,
         *,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
         cluster_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
-        offset: typing.Optional[float] = None,
-        limit: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListWorkspaceResponse:
         """
@@ -41,6 +43,12 @@ class WorkspacesClient:
 
         Parameters
         ----------
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
         cluster_id : typing.Optional[str]
             ClusterId of the Cluster
 
@@ -49,12 +57,6 @@ class WorkspacesClient:
 
         fqn : typing.Optional[str]
             Workspace FQN
-
-        offset : typing.Optional[float]
-            Number of Items Skipped. Defaults to 0 if not provided.
-
-        limit : typing.Optional[float]
-            The maximum number of items to return per page. Defaults to a pre-defined value if not provided.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -72,17 +74,20 @@ class WorkspacesClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.v1.workspaces.list()
+        client.v1.workspaces.list(
+            limit=10,
+            offset=0,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/svc/v1/workspaces",
             method="GET",
             params={
+                "limit": limit,
+                "offset": offset,
                 "clusterId": cluster_id,
                 "name": name,
                 "fqn": fqn,
-                "offset": offset,
-                "limit": limit,
             },
             request_options=request_options,
         )
@@ -103,16 +108,16 @@ class WorkspacesClient:
     def create_or_update(
         self,
         *,
-        manifest: typing.Dict[str, typing.Optional[typing.Any]],
+        manifest: WorkspaceManifest,
         dry_run: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetWorkspaceResponseDto:
+    ) -> GetWorkspaceResponse:
         """
         Creates a new workspace or updates an existing one based on the provided manifest.
 
         Parameters
         ----------
-        manifest : typing.Dict[str, typing.Optional[typing.Any]]
+        manifest : WorkspaceManifest
             Workspace manifest
 
         dry_run : typing.Optional[bool]
@@ -123,28 +128,33 @@ class WorkspacesClient:
 
         Returns
         -------
-        GetWorkspaceResponseDto
+        GetWorkspaceResponse
             - Creates or updates a workspace with given manifest
                 - Corresponding authorization entry with admin role is made using newly created workspace
                 - Attached with the cluster id where the workspace is created
 
         Examples
         --------
-        from truefoundry_sdk import TrueFoundry
+        from truefoundry_sdk import TrueFoundry, WorkspaceManifest
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
         client.v1.workspaces.create_or_update(
-            manifest={"key": "value"},
+            manifest=WorkspaceManifest(
+                cluster_fqn="cluster_fqn",
+                name="name",
+            ),
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/svc/v1/workspaces",
             method="PUT",
             json={
-                "manifest": manifest,
+                "manifest": convert_and_respect_annotation_metadata(
+                    object_=manifest, annotation=WorkspaceManifest, direction="write"
+                ),
                 "dryRun": dry_run,
             },
             headers={
@@ -156,9 +166,9 @@ class WorkspacesClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetWorkspaceResponseDto,
+                    GetWorkspaceResponse,
                     parse_obj_as(
-                        type_=GetWorkspaceResponseDto,  # type: ignore
+                        type_=GetWorkspaceResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -207,15 +217,13 @@ class WorkspacesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(
-        self, workspace_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetWorkspaceResponseDto:
+    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetWorkspaceResponse:
         """
         Get workspace associated with provided workspace id
 
         Parameters
         ----------
-        workspace_id : str
+        id : str
             Workspace id of the space
 
         request_options : typing.Optional[RequestOptions]
@@ -223,7 +231,7 @@ class WorkspacesClient:
 
         Returns
         -------
-        GetWorkspaceResponseDto
+        GetWorkspaceResponse
             Returns the workspaces associated with provided workspace id
 
         Examples
@@ -235,20 +243,20 @@ class WorkspacesClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.v1.workspaces.get(
-            workspace_id="workspaceId",
+            id="id",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/workspaces/{jsonable_encoder(workspace_id)}",
+            f"api/svc/v1/workspaces/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetWorkspaceResponseDto,
+                    GetWorkspaceResponse,
                     parse_obj_as(
-                        type_=GetWorkspaceResponseDto,  # type: ignore
+                        type_=GetWorkspaceResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -267,9 +275,7 @@ class WorkspacesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete(
-        self, workspace_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> WorkspacesDeleteResponse:
+    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> WorkspacesDeleteResponse:
         """
         Deletes the workspace with the given workspace ID.
             - Removes the associated namespace from the cluster.
@@ -277,7 +283,7 @@ class WorkspacesClient:
 
         Parameters
         ----------
-        workspace_id : str
+        id : str
             Workspace id of the space
 
         request_options : typing.Optional[RequestOptions]
@@ -297,11 +303,11 @@ class WorkspacesClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.v1.workspaces.delete(
-            workspace_id="workspaceId",
+            id="id",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/workspaces/{jsonable_encoder(workspace_id)}",
+            f"api/svc/v1/workspaces/{jsonable_encoder(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -347,11 +353,11 @@ class AsyncWorkspacesClient:
     async def list(
         self,
         *,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
         cluster_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
-        offset: typing.Optional[float] = None,
-        limit: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListWorkspaceResponse:
         """
@@ -359,6 +365,12 @@ class AsyncWorkspacesClient:
 
         Parameters
         ----------
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
         cluster_id : typing.Optional[str]
             ClusterId of the Cluster
 
@@ -367,12 +379,6 @@ class AsyncWorkspacesClient:
 
         fqn : typing.Optional[str]
             Workspace FQN
-
-        offset : typing.Optional[float]
-            Number of Items Skipped. Defaults to 0 if not provided.
-
-        limit : typing.Optional[float]
-            The maximum number of items to return per page. Defaults to a pre-defined value if not provided.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -395,7 +401,10 @@ class AsyncWorkspacesClient:
 
 
         async def main() -> None:
-            await client.v1.workspaces.list()
+            await client.v1.workspaces.list(
+                limit=10,
+                offset=0,
+            )
 
 
         asyncio.run(main())
@@ -404,11 +413,11 @@ class AsyncWorkspacesClient:
             "api/svc/v1/workspaces",
             method="GET",
             params={
+                "limit": limit,
+                "offset": offset,
                 "clusterId": cluster_id,
                 "name": name,
                 "fqn": fqn,
-                "offset": offset,
-                "limit": limit,
             },
             request_options=request_options,
         )
@@ -429,16 +438,16 @@ class AsyncWorkspacesClient:
     async def create_or_update(
         self,
         *,
-        manifest: typing.Dict[str, typing.Optional[typing.Any]],
+        manifest: WorkspaceManifest,
         dry_run: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetWorkspaceResponseDto:
+    ) -> GetWorkspaceResponse:
         """
         Creates a new workspace or updates an existing one based on the provided manifest.
 
         Parameters
         ----------
-        manifest : typing.Dict[str, typing.Optional[typing.Any]]
+        manifest : WorkspaceManifest
             Workspace manifest
 
         dry_run : typing.Optional[bool]
@@ -449,7 +458,7 @@ class AsyncWorkspacesClient:
 
         Returns
         -------
-        GetWorkspaceResponseDto
+        GetWorkspaceResponse
             - Creates or updates a workspace with given manifest
                 - Corresponding authorization entry with admin role is made using newly created workspace
                 - Attached with the cluster id where the workspace is created
@@ -458,7 +467,7 @@ class AsyncWorkspacesClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import AsyncTrueFoundry
+        from truefoundry_sdk import AsyncTrueFoundry, WorkspaceManifest
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -468,7 +477,10 @@ class AsyncWorkspacesClient:
 
         async def main() -> None:
             await client.v1.workspaces.create_or_update(
-                manifest={"key": "value"},
+                manifest=WorkspaceManifest(
+                    cluster_fqn="cluster_fqn",
+                    name="name",
+                ),
             )
 
 
@@ -478,7 +490,9 @@ class AsyncWorkspacesClient:
             "api/svc/v1/workspaces",
             method="PUT",
             json={
-                "manifest": manifest,
+                "manifest": convert_and_respect_annotation_metadata(
+                    object_=manifest, annotation=WorkspaceManifest, direction="write"
+                ),
                 "dryRun": dry_run,
             },
             headers={
@@ -490,9 +504,9 @@ class AsyncWorkspacesClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetWorkspaceResponseDto,
+                    GetWorkspaceResponse,
                     parse_obj_as(
-                        type_=GetWorkspaceResponseDto,  # type: ignore
+                        type_=GetWorkspaceResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -541,15 +555,13 @@ class AsyncWorkspacesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(
-        self, workspace_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetWorkspaceResponseDto:
+    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetWorkspaceResponse:
         """
         Get workspace associated with provided workspace id
 
         Parameters
         ----------
-        workspace_id : str
+        id : str
             Workspace id of the space
 
         request_options : typing.Optional[RequestOptions]
@@ -557,7 +569,7 @@ class AsyncWorkspacesClient:
 
         Returns
         -------
-        GetWorkspaceResponseDto
+        GetWorkspaceResponse
             Returns the workspaces associated with provided workspace id
 
         Examples
@@ -574,23 +586,23 @@ class AsyncWorkspacesClient:
 
         async def main() -> None:
             await client.v1.workspaces.get(
-                workspace_id="workspaceId",
+                id="id",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/workspaces/{jsonable_encoder(workspace_id)}",
+            f"api/svc/v1/workspaces/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetWorkspaceResponseDto,
+                    GetWorkspaceResponse,
                     parse_obj_as(
-                        type_=GetWorkspaceResponseDto,  # type: ignore
+                        type_=GetWorkspaceResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -610,7 +622,7 @@ class AsyncWorkspacesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete(
-        self, workspace_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> WorkspacesDeleteResponse:
         """
         Deletes the workspace with the given workspace ID.
@@ -619,7 +631,7 @@ class AsyncWorkspacesClient:
 
         Parameters
         ----------
-        workspace_id : str
+        id : str
             Workspace id of the space
 
         request_options : typing.Optional[RequestOptions]
@@ -644,14 +656,14 @@ class AsyncWorkspacesClient:
 
         async def main() -> None:
             await client.v1.workspaces.delete(
-                workspace_id="workspaceId",
+                id="id",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/workspaces/{jsonable_encoder(workspace_id)}",
+            f"api/svc/v1/workspaces/{jsonable_encoder(id)}",
             method="DELETE",
             request_options=request_options,
         )

@@ -10,7 +10,7 @@ import pydantic
 
 class NvidiaMigGpuInfo(UniversalBaseModel):
     mig_profile: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="migProfile")] = None
-    total_partitions_per_gpu: typing_extensions.Annotated[float, FieldMetadata(alias="totalPartitionsPerGpu")]
+    total_partitions_per_gpu: typing_extensions.Annotated[int, FieldMetadata(alias="totalPartitionsPerGpu")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

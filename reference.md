@@ -340,7 +340,10 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.v1.workspaces.list()
+client.v1.workspaces.list(
+    limit=10,
+    offset=0,
+)
 
 ```
 </dd>
@@ -352,6 +355,22 @@ client.v1.workspaces.list()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[int]` — Number of items per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**offset:** `typing.Optional[int]` — Number of items to skip
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -373,22 +392,6 @@ client.v1.workspaces.list()
 <dd>
 
 **fqn:** `typing.Optional[str]` — Workspace FQN
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**offset:** `typing.Optional[float]` — Number of Items Skipped. Defaults to 0 if not provided.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**limit:** `typing.Optional[float]` — The maximum number of items to return per page. Defaults to a pre-defined value if not provided.
     
 </dd>
 </dl>
@@ -435,14 +438,17 @@ Creates a new workspace or updates an existing one based on the provided manifes
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
+from truefoundry_sdk import TrueFoundry, WorkspaceManifest
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
 client.v1.workspaces.create_or_update(
-    manifest={"key": "value"},
+    manifest=WorkspaceManifest(
+        cluster_fqn="cluster_fqn",
+        name="name",
+    ),
 )
 
 ```
@@ -459,7 +465,7 @@ client.v1.workspaces.create_or_update(
 <dl>
 <dd>
 
-**manifest:** `typing.Dict[str, typing.Optional[typing.Any]]` — Workspace manifest
+**manifest:** `WorkspaceManifest` — Workspace manifest
     
 </dd>
 </dl>
@@ -521,7 +527,7 @@ client = TrueFoundry(
     base_url="https://yourhost.com/path/to/api",
 )
 client.v1.workspaces.get(
-    workspace_id="workspaceId",
+    id="id",
 )
 
 ```
@@ -538,7 +544,7 @@ client.v1.workspaces.get(
 <dl>
 <dd>
 
-**workspace_id:** `str` — Workspace id of the space
+**id:** `str` — Workspace id of the space
     
 </dd>
 </dl>
@@ -594,7 +600,7 @@ client = TrueFoundry(
     base_url="https://yourhost.com/path/to/api",
 )
 client.v1.workspaces.delete(
-    workspace_id="workspaceId",
+    id="id",
 )
 
 ```
@@ -611,7 +617,7 @@ client.v1.workspaces.delete(
 <dl>
 <dd>
 
-**workspace_id:** `str` — Workspace id of the space
+**id:** `str` — Workspace id of the space
     
 </dd>
 </dl>
