@@ -4,6 +4,7 @@ from ..core.pydantic_utilities import UniversalBaseModel
 import typing_extensions
 from ..core.serialization import FieldMetadata
 import typing
+from .device_info import DeviceInfo
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
@@ -11,7 +12,10 @@ import pydantic
 class InstanceResources(UniversalBaseModel):
     cpu: float
     memory_mb: typing_extensions.Annotated[int, FieldMetadata(alias="memoryMB")]
-    ephemeral_storage_mb: typing_extensions.Annotated[int, FieldMetadata(alias="ephemeralStorageMB")]
+    ephemeral_storage_mb: typing_extensions.Annotated[
+        typing.Optional[int], FieldMetadata(alias="ephemeralStorageMB")
+    ] = None
+    devices: typing.Optional[typing.List[DeviceInfo]] = None
     gpu_count: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="gpuCount")] = None
     gpu_type: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="gpuType")] = None
 

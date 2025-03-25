@@ -43,6 +43,9 @@ from .create_multi_part_upload_request import CreateMultiPartUploadRequest
 from .data import Data
 from .data_directory import DataDirectory
 from .data_directory_manifest import DataDirectoryManifest
+from .device_configuration import DeviceConfiguration
+from .device_info import DeviceInfo
+from .device_type import DeviceType
 from .empty_response import EmptyResponse
 from .environment import Environment
 from .environment_color import EnvironmentColor
@@ -116,8 +119,9 @@ from .multi_part_upload import MultiPartUpload
 from .multi_part_upload_response import MultiPartUploadResponse
 from .multi_part_upload_storage_provider import MultiPartUploadStorageProvider
 from .nodepool import Nodepool
-from .nodepool_taints import NodepoolTaints
+from .nodepool_taint import NodepoolTaint
 from .notebook_config import NotebookConfig
+from .nvidia_gpu_type import NvidiaGpuType
 from .nvidia_mig_gpu_info import NvidiaMigGpuInfo
 from .nvidia_time_slicing_gpu_info import NvidiaTimeSlicingGpuInfo
 from .onnx_framework import OnnxFramework
@@ -207,6 +211,9 @@ __all__ = [
     "Data",
     "DataDirectory",
     "DataDirectoryManifest",
+    "DeviceConfiguration",
+    "DeviceInfo",
+    "DeviceType",
     "EmptyResponse",
     "Environment",
     "EnvironmentColor",
@@ -280,8 +287,9 @@ __all__ = [
     "MultiPartUploadResponse",
     "MultiPartUploadStorageProvider",
     "Nodepool",
-    "NodepoolTaints",
+    "NodepoolTaint",
     "NotebookConfig",
+    "NvidiaGpuType",
     "NvidiaMigGpuInfo",
     "NvidiaTimeSlicingGpuInfo",
     "OnnxFramework",

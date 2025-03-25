@@ -6,7 +6,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
-class NodepoolTaints(UniversalBaseModel):
+class NodepoolTaint(UniversalBaseModel):
     key: str
     value: typing.Optional[str] = None
     effect: str
