@@ -6,17 +6,23 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 
 
-class Collaborator(UniversalBaseModel):
-    subject: str = pydantic.Field()
+class Permissions(UniversalBaseModel):
+    resource_fqn: str = pydantic.Field()
     """
-    +label=Subject FQN
-    +usage=Fully Qualified Name of the subject. eg: user:email or team:teamname
+    +label= Resource FQN
+    +usage=The fully qualified name of the resource
+    """
+
+    resource_type: str = pydantic.Field()
+    """
+    +label=Resource Type
+    +usage=The type of the resource (cluster, workspace, etc.)
     """
 
     role_id: str = pydantic.Field()
     """
     +label=Role ID
-    +usage=Role ID for the resource
+    +usage=The role id of the role to be assigned to the service account for that resource
     """
 
     if IS_PYDANTIC_V2:

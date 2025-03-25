@@ -14,11 +14,14 @@ from . import (
     prompts,
     tool_versions,
     tools,
+    workspaces,
 )
 from .artifact_versions import Manifest
+from .workspaces import WorkspacesDeleteResponse
 
 __all__ = [
     "Manifest",
+    "WorkspacesDeleteResponse",
     "agent_versions",
     "agents",
     "artifact_versions",
@@ -32,4 +35,5 @@ __all__ = [
     "prompts",
     "tool_versions",
     "tools",
+    "workspaces",
 ]
