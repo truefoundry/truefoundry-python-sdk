@@ -3,68 +3,53 @@
 import typing
 from ...core.client_wrapper import SyncClientWrapper
 from ...core.request_options import RequestOptions
-from ...types.list_workspaces_response import ListWorkspacesResponse
+from ...types.list_clusters_response import ListClustersResponse
 from ...core.pydantic_utilities import parse_obj_as
+from ...errors.unauthorized_error import UnauthorizedError
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
-from ...types.workspace_manifest import WorkspaceManifest
-from ...types.get_workspace_response import GetWorkspaceResponse
-from ...core.serialization import convert_and_respect_annotation_metadata
-from ...errors.bad_request_error import BadRequestError
+from ...types.get_cluster_response import GetClusterResponse
+from ...errors.conflict_error import ConflictError
 from ...types.http_error import HttpError
-from ...errors.forbidden_error import ForbiddenError
-from ...errors.not_found_error import NotFoundError
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...core.jsonable_encoder import jsonable_encoder
-from .types.workspaces_delete_response import WorkspacesDeleteResponse
-from ...errors.expectation_failed_error import ExpectationFailedError
+from ...errors.not_found_error import NotFoundError
+from .types.clusters_delete_response import ClustersDeleteResponse
 from ...core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
 
-class WorkspacesClient:
+class ClustersClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     def list(
         self,
         *,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
-        cluster_id: typing.Optional[str] = None,
-        name: typing.Optional[str] = None,
-        fqn: typing.Optional[str] = None,
+        offset: typing.Optional[float] = None,
+        limit: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListWorkspacesResponse:
+    ) -> ListClustersResponse:
         """
-        List workspaces associated with the user. Optional filters include clusterId, fqn, and workspace name. Pagination is available based on query parameters.
+        Retrieves a list of all latest Clusters. Pagination is available based on query parameters.
 
         Parameters
         ----------
-        limit : typing.Optional[int]
-            Number of items per page
+        offset : typing.Optional[float]
+            Number of Items Skipped. Defaults to 0 if not provided.
 
-        offset : typing.Optional[int]
-            Number of items to skip
-
-        cluster_id : typing.Optional[str]
-            ClusterId of the Cluster
-
-        name : typing.Optional[str]
-            Workspace Name
-
-        fqn : typing.Optional[str]
-            Workspace FQN
+        limit : typing.Optional[float]
+            The maximum number of items to return per page. Defaults to a pre-defined value if not provided.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        ListWorkspacesResponse
-            Returns all the workspaces associated with a user and also the response includes paginated data.
+        ListClustersResponse
+            Retrieve latest Clusters. If pagination parameters are provided, the response includes paginated data.
 
         Examples
         --------
@@ -74,31 +59,35 @@ class WorkspacesClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.v1.workspaces.list(
-            limit=10,
-            offset=0,
-        )
+        client.v1.clusters.list()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/svc/v1/workspaces",
+            "api/svc/v1/clusters",
             method="GET",
             params={
-                "limit": limit,
                 "offset": offset,
-                "clusterId": cluster_id,
-                "name": name,
-                "fqn": fqn,
+                "limit": limit,
             },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ListWorkspacesResponse,
+                    ListClustersResponse,
                     parse_obj_as(
-                        type_=ListWorkspacesResponse,  # type: ignore
+                        type_=ListClustersResponse,  # type: ignore
                         object_=_response.json(),
                     ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -108,38 +97,34 @@ class WorkspacesClient:
     def create_or_update(
         self,
         *,
-        manifest: WorkspaceManifest,
+        manifest: typing.Dict[str, typing.Optional[typing.Any]],
         dry_run: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetWorkspaceResponse:
+    ) -> GetClusterResponse:
         """
-        Creates a new workspace or updates an existing one based on the provided manifest.
+        Create or Update cluster with provided manifest
 
         Parameters
         ----------
-        manifest : WorkspaceManifest
-            Workspace manifest
+        manifest : typing.Dict[str, typing.Optional[typing.Any]]
+            Cluster manifest
 
         dry_run : typing.Optional[bool]
-            Dry run the request
+            Dry run the cluster creation/update
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        GetWorkspaceResponse
-            - Creates or updates a workspace with given manifest
-                - Corresponding authorization entry with admin role is made using newly created workspace
-                - Attached with the cluster id where the workspace is created
+        GetClusterResponse
+            Returns newly created/updated cluster on success
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/svc/v1/workspaces",
+            "api/svc/v1/clusters",
             method="PUT",
             json={
-                "manifest": convert_and_respect_annotation_metadata(
-                    object_=manifest, annotation=WorkspaceManifest, direction="write"
-                ),
+                "manifest": manifest,
                 "dryRun": dry_run,
             },
             headers={
@@ -151,34 +136,24 @@ class WorkspacesClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetWorkspaceResponse,
+                    GetClusterResponse,
                     parse_obj_as(
-                        type_=GetWorkspaceResponse,  # type: ignore
+                        type_=GetClusterResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-            if _response.status_code == 400:
-                raise BadRequestError(
+            if _response.status_code == 401:
+                raise UnauthorizedError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
                 )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
+            if _response.status_code == 409:
+                raise ConflictError(
                     typing.cast(
                         HttpError,
                         parse_obj_as(
@@ -202,36 +177,46 @@ class WorkspacesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetWorkspaceResponse:
+    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetClusterResponse:
         """
-        Get workspace associated with provided workspace id
+        Get cluster associated with provided id
 
         Parameters
         ----------
         id : str
-            Workspace id of the space
+            Cluster id of the cluster
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        GetWorkspaceResponse
-            Returns the workspaces associated with provided workspace id
+        GetClusterResponse
+            Return the cluster associated with provided id
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/workspaces/{jsonable_encoder(id)}",
+            f"api/svc/v1/clusters/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetWorkspaceResponse,
+                    GetClusterResponse,
                     parse_obj_as(
-                        type_=GetWorkspaceResponse,  # type: ignore
+                        type_=GetClusterResponse,  # type: ignore
                         object_=_response.json(),
                     ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
                 )
             if _response.status_code == 404:
                 raise NotFoundError(
@@ -248,24 +233,22 @@ class WorkspacesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> WorkspacesDeleteResponse:
+    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> ClustersDeleteResponse:
         """
-        Deletes the workspace with the given workspace ID.
-            - Removes the associated namespace from the cluster.
-            - Deletes the corresponding authorization entry.
+        Delete cluster associated with provided cluster id
 
         Parameters
         ----------
         id : str
-            Workspace id of the space
+            Cluster id of the cluster
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        WorkspacesDeleteResponse
-            Successfully deletes the workspace and returns the workspace details along with a confirmation message.
+        ClustersDeleteResponse
+            Returns success message on successful deletion
 
         Examples
         --------
@@ -275,36 +258,36 @@ class WorkspacesClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.v1.workspaces.delete(
+        client.v1.clusters.delete(
             id="id",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/workspaces/{jsonable_encoder(id)}",
+            f"api/svc/v1/clusters/{jsonable_encoder(id)}",
             method="DELETE",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    WorkspacesDeleteResponse,
+                    ClustersDeleteResponse,
                     parse_obj_as(
-                        type_=WorkspacesDeleteResponse,  # type: ignore
+                        type_=ClustersDeleteResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-            if _response.status_code == 404:
-                raise NotFoundError(
+            if _response.status_code == 401:
+                raise UnauthorizedError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
                 )
-            if _response.status_code == 417:
-                raise ExpectationFailedError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     typing.cast(
                         HttpError,
                         parse_obj_as(
@@ -319,47 +302,35 @@ class WorkspacesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
-class AsyncWorkspacesClient:
+class AsyncClustersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     async def list(
         self,
         *,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
-        cluster_id: typing.Optional[str] = None,
-        name: typing.Optional[str] = None,
-        fqn: typing.Optional[str] = None,
+        offset: typing.Optional[float] = None,
+        limit: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListWorkspacesResponse:
+    ) -> ListClustersResponse:
         """
-        List workspaces associated with the user. Optional filters include clusterId, fqn, and workspace name. Pagination is available based on query parameters.
+        Retrieves a list of all latest Clusters. Pagination is available based on query parameters.
 
         Parameters
         ----------
-        limit : typing.Optional[int]
-            Number of items per page
+        offset : typing.Optional[float]
+            Number of Items Skipped. Defaults to 0 if not provided.
 
-        offset : typing.Optional[int]
-            Number of items to skip
-
-        cluster_id : typing.Optional[str]
-            ClusterId of the Cluster
-
-        name : typing.Optional[str]
-            Workspace Name
-
-        fqn : typing.Optional[str]
-            Workspace FQN
+        limit : typing.Optional[float]
+            The maximum number of items to return per page. Defaults to a pre-defined value if not provided.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        ListWorkspacesResponse
-            Returns all the workspaces associated with a user and also the response includes paginated data.
+        ListClustersResponse
+            Retrieve latest Clusters. If pagination parameters are provided, the response includes paginated data.
 
         Examples
         --------
@@ -374,34 +345,38 @@ class AsyncWorkspacesClient:
 
 
         async def main() -> None:
-            await client.v1.workspaces.list(
-                limit=10,
-                offset=0,
-            )
+            await client.v1.clusters.list()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/svc/v1/workspaces",
+            "api/svc/v1/clusters",
             method="GET",
             params={
-                "limit": limit,
                 "offset": offset,
-                "clusterId": cluster_id,
-                "name": name,
-                "fqn": fqn,
+                "limit": limit,
             },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ListWorkspacesResponse,
+                    ListClustersResponse,
                     parse_obj_as(
-                        type_=ListWorkspacesResponse,  # type: ignore
+                        type_=ListClustersResponse,  # type: ignore
                         object_=_response.json(),
                     ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -411,38 +386,34 @@ class AsyncWorkspacesClient:
     async def create_or_update(
         self,
         *,
-        manifest: WorkspaceManifest,
+        manifest: typing.Dict[str, typing.Optional[typing.Any]],
         dry_run: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetWorkspaceResponse:
+    ) -> GetClusterResponse:
         """
-        Creates a new workspace or updates an existing one based on the provided manifest.
+        Create or Update cluster with provided manifest
 
         Parameters
         ----------
-        manifest : WorkspaceManifest
-            Workspace manifest
+        manifest : typing.Dict[str, typing.Optional[typing.Any]]
+            Cluster manifest
 
         dry_run : typing.Optional[bool]
-            Dry run the request
+            Dry run the cluster creation/update
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        GetWorkspaceResponse
-            - Creates or updates a workspace with given manifest
-                - Corresponding authorization entry with admin role is made using newly created workspace
-                - Attached with the cluster id where the workspace is created
+        GetClusterResponse
+            Returns newly created/updated cluster on success
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/svc/v1/workspaces",
+            "api/svc/v1/clusters",
             method="PUT",
             json={
-                "manifest": convert_and_respect_annotation_metadata(
-                    object_=manifest, annotation=WorkspaceManifest, direction="write"
-                ),
+                "manifest": manifest,
                 "dryRun": dry_run,
             },
             headers={
@@ -454,34 +425,24 @@ class AsyncWorkspacesClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetWorkspaceResponse,
+                    GetClusterResponse,
                     parse_obj_as(
-                        type_=GetWorkspaceResponse,  # type: ignore
+                        type_=GetClusterResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-            if _response.status_code == 400:
-                raise BadRequestError(
+            if _response.status_code == 401:
+                raise UnauthorizedError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
                 )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
+            if _response.status_code == 409:
+                raise ConflictError(
                     typing.cast(
                         HttpError,
                         parse_obj_as(
@@ -505,36 +466,46 @@ class AsyncWorkspacesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetWorkspaceResponse:
+    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetClusterResponse:
         """
-        Get workspace associated with provided workspace id
+        Get cluster associated with provided id
 
         Parameters
         ----------
         id : str
-            Workspace id of the space
+            Cluster id of the cluster
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        GetWorkspaceResponse
-            Returns the workspaces associated with provided workspace id
+        GetClusterResponse
+            Return the cluster associated with provided id
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/workspaces/{jsonable_encoder(id)}",
+            f"api/svc/v1/clusters/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetWorkspaceResponse,
+                    GetClusterResponse,
                     parse_obj_as(
-                        type_=GetWorkspaceResponse,  # type: ignore
+                        type_=GetClusterResponse,  # type: ignore
                         object_=_response.json(),
                     ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
                 )
             if _response.status_code == 404:
                 raise NotFoundError(
@@ -553,24 +524,22 @@ class AsyncWorkspacesClient:
 
     async def delete(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> WorkspacesDeleteResponse:
+    ) -> ClustersDeleteResponse:
         """
-        Deletes the workspace with the given workspace ID.
-            - Removes the associated namespace from the cluster.
-            - Deletes the corresponding authorization entry.
+        Delete cluster associated with provided cluster id
 
         Parameters
         ----------
         id : str
-            Workspace id of the space
+            Cluster id of the cluster
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        WorkspacesDeleteResponse
-            Successfully deletes the workspace and returns the workspace details along with a confirmation message.
+        ClustersDeleteResponse
+            Returns success message on successful deletion
 
         Examples
         --------
@@ -585,7 +554,7 @@ class AsyncWorkspacesClient:
 
 
         async def main() -> None:
-            await client.v1.workspaces.delete(
+            await client.v1.clusters.delete(
                 id="id",
             )
 
@@ -593,31 +562,31 @@ class AsyncWorkspacesClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/workspaces/{jsonable_encoder(id)}",
+            f"api/svc/v1/clusters/{jsonable_encoder(id)}",
             method="DELETE",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    WorkspacesDeleteResponse,
+                    ClustersDeleteResponse,
                     parse_obj_as(
-                        type_=WorkspacesDeleteResponse,  # type: ignore
+                        type_=ClustersDeleteResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-            if _response.status_code == 404:
-                raise NotFoundError(
+            if _response.status_code == 401:
+                raise UnauthorizedError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
                 )
-            if _response.status_code == 417:
-                raise ExpectationFailedError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     typing.cast(
                         HttpError,
                         parse_obj_as(

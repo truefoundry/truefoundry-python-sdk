@@ -5,9 +5,9 @@ from ..core.pydantic_utilities import UniversalBaseModel
 from .cluster_metadata import ClusterMetadata
 from .cluster_manifest import ClusterManifest
 import typing_extensions
-import typing
 from ..core.serialization import FieldMetadata
 from .cluster_cloud_provider import ClusterCloudProvider
+import typing
 from .cluster_recommendation_summary import ClusterRecommendationSummary
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
@@ -20,9 +20,7 @@ class Cluster(UniversalBaseModel):
     name: str
     metadata: ClusterMetadata
     manifest: ClusterManifest
-    infra_config: typing_extensions.Annotated[
-        typing.Dict[str, typing.Optional[typing.Any]], FieldMetadata(alias="infraConfig")
-    ]
+    infra_config: typing_extensions.Annotated["ClusterInfraConfig", FieldMetadata(alias="infraConfig")]
     provisioned: bool
     cloud_provider: typing_extensions.Annotated[ClusterCloudProvider, FieldMetadata(alias="cloudProvider")]
     tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]
@@ -44,6 +42,8 @@ class Cluster(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .cluster_infra_config import ClusterInfraConfig  # noqa: E402
+from .cluster_infra_manifest import ClusterInfraManifest  # noqa: E402
 from .workspace import Workspace  # noqa: E402
 
 update_forward_refs(Cluster)

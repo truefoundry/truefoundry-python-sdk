@@ -5,21 +5,15 @@ from .cluster import Cluster
 from .cluster_infra_config import ClusterInfraConfig
 from .cluster_infra_manifest import ClusterInfraManifest
 from .workspace import Workspace
-import typing
 import pydantic
-from .pagination import Pagination
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
+import typing
 
 
-class ListWorkspacesResponse(UniversalBaseModel):
-    data: typing.List[Workspace] = pydantic.Field()
+class GetClusterResponse(UniversalBaseModel):
+    data: Cluster = pydantic.Field()
     """
-    Array of Workspace
-    """
-
-    pagination: Pagination = pydantic.Field()
-    """
-    Pagination information
+    Cluster
     """
 
     if IS_PYDANTIC_V2:

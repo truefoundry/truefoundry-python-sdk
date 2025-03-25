@@ -11,10 +11,10 @@ from .pagination import Pagination
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
-class ListWorkspacesResponse(UniversalBaseModel):
-    data: typing.List[Workspace] = pydantic.Field()
+class ListClustersResponse(UniversalBaseModel):
+    data: typing.List[Cluster] = pydantic.Field()
     """
-    Array of Workspace
+    Array of cluster
     """
 
     pagination: Pagination = pydantic.Field()
