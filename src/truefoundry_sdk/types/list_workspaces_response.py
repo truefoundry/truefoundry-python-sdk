@@ -9,7 +9,7 @@ from .pagination import Pagination
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
-class ListWorkspaceResponse(UniversalBaseModel):
+class ListWorkspacesResponse(UniversalBaseModel):
     data: typing.List[Workspace] = pydantic.Field()
     """
     Array of Workspace

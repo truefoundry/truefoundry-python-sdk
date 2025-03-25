@@ -3,7 +3,7 @@
 import typing
 from ...core.client_wrapper import SyncClientWrapper
 from ...core.request_options import RequestOptions
-from ...types.list_workspace_response import ListWorkspaceResponse
+from ...types.list_workspaces_response import ListWorkspacesResponse
 from ...core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
@@ -37,7 +37,7 @@ class WorkspacesClient:
         name: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListWorkspaceResponse:
+    ) -> ListWorkspacesResponse:
         """
         List workspaces associated with the user. Optional filters include clusterId, fqn, and workspace name. Pagination is available based on query parameters.
 
@@ -63,7 +63,7 @@ class WorkspacesClient:
 
         Returns
         -------
-        ListWorkspaceResponse
+        ListWorkspacesResponse
             Returns all the workspaces associated with a user and also the response includes paginated data.
 
         Examples
@@ -94,9 +94,9 @@ class WorkspacesClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ListWorkspaceResponse,
+                    ListWorkspacesResponse,
                     parse_obj_as(
-                        type_=ListWorkspaceResponse,  # type: ignore
+                        type_=ListWorkspacesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -359,7 +359,7 @@ class AsyncWorkspacesClient:
         name: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListWorkspaceResponse:
+    ) -> ListWorkspacesResponse:
         """
         List workspaces associated with the user. Optional filters include clusterId, fqn, and workspace name. Pagination is available based on query parameters.
 
@@ -385,7 +385,7 @@ class AsyncWorkspacesClient:
 
         Returns
         -------
-        ListWorkspaceResponse
+        ListWorkspacesResponse
             Returns all the workspaces associated with a user and also the response includes paginated data.
 
         Examples
@@ -424,9 +424,9 @@ class AsyncWorkspacesClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ListWorkspaceResponse,
+                    ListWorkspacesResponse,
                     parse_obj_as(
-                        type_=ListWorkspaceResponse,  # type: ignore
+                        type_=ListWorkspacesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

@@ -44,8 +44,10 @@ from .data import Data
 from .data_directory import DataDirectory
 from .data_directory_manifest import DataDirectoryManifest
 from .device_configuration import DeviceConfiguration
+from .device_configuration_type import DeviceConfigurationType
 from .device_info import DeviceInfo
-from .device_type import DeviceType
+from .device_info_gpu_type import DeviceInfoGpuType
+from .device_info_type import DeviceInfoType
 from .empty_response import EmptyResponse
 from .environment import Environment
 from .environment_color import EnvironmentColor
@@ -102,7 +104,7 @@ from .list_prompt_versions_response import ListPromptVersionsResponse
 from .list_prompts_response import ListPromptsResponse
 from .list_tool_versions_response import ListToolVersionsResponse
 from .list_tools_response import ListToolsResponse
-from .list_workspace_response import ListWorkspaceResponse
+from .list_workspaces_response import ListWorkspacesResponse
 from .local_artifact_source import LocalArtifactSource
 from .local_model_source import LocalModelSource
 from .manifest import Manifest
@@ -121,7 +123,6 @@ from .multi_part_upload_storage_provider import MultiPartUploadStorageProvider
 from .nodepool import Nodepool
 from .nodepool_taint import NodepoolTaint
 from .notebook_config import NotebookConfig
-from .nvidia_gpu_type import NvidiaGpuType
 from .nvidia_mig_gpu_info import NvidiaMigGpuInfo
 from .nvidia_time_slicing_gpu_info import NvidiaTimeSlicingGpuInfo
 from .onnx_framework import OnnxFramework
@@ -212,8 +213,10 @@ __all__ = [
     "DataDirectory",
     "DataDirectoryManifest",
     "DeviceConfiguration",
+    "DeviceConfigurationType",
     "DeviceInfo",
-    "DeviceType",
+    "DeviceInfoGpuType",
+    "DeviceInfoType",
     "EmptyResponse",
     "Environment",
     "EnvironmentColor",
@@ -270,7 +273,7 @@ __all__ = [
     "ListPromptsResponse",
     "ListToolVersionsResponse",
     "ListToolsResponse",
-    "ListWorkspaceResponse",
+    "ListWorkspacesResponse",
     "LocalArtifactSource",
     "LocalModelSource",
     "Manifest",
@@ -289,7 +292,6 @@ __all__ = [
     "Nodepool",
     "NodepoolTaint",
     "NotebookConfig",
-    "NvidiaGpuType",
     "NvidiaMigGpuInfo",
     "NvidiaTimeSlicingGpuInfo",
     "OnnxFramework",

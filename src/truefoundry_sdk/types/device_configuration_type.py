@@ -2,6 +2,6 @@
 
 import typing
 
-DeviceType = typing.Union[
+DeviceConfigurationType = typing.Union[
     typing.Literal["nvidia_gpu", "aws_inferentia", "nvidia_mig_gpu", "nvidia_timeslicing_gpu", "gcp_tpu"], typing.Any
 ]

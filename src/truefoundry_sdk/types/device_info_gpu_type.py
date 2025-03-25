@@ -2,7 +2,7 @@
 
 import typing
 
-NvidiaGpuType = typing.Union[
+DeviceInfoGpuType = typing.Union[
     typing.Literal[
         "P4",
         "P100",
