@@ -2,8 +2,6 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 from .cluster import Cluster
-from .cluster_infra_config import ClusterInfraConfig
-from .cluster_infra_manifest import ClusterInfraManifest
 from .workspace import Workspace
 import typing
 import pydantic

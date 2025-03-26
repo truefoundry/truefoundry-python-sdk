@@ -44,7 +44,5 @@ class Workspace(UniversalBaseModel):
 
 
 from .cluster import Cluster  # noqa: E402
-from .cluster_infra_config import ClusterInfraConfig  # noqa: E402
-from .cluster_infra_manifest import ClusterInfraManifest  # noqa: E402
 
 update_forward_refs(Workspace)

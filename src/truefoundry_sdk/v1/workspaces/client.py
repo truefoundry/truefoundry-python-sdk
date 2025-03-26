@@ -132,6 +132,21 @@ class WorkspacesClient:
             - Creates or updates a workspace with given manifest
                 - Corresponding authorization entry with admin role is made using newly created workspace
                 - Attached with the cluster id where the workspace is created
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry, WorkspaceManifest
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.v1.workspaces.create_or_update(
+            manifest=WorkspaceManifest(
+                cluster_fqn="cluster_fqn",
+                name="name",
+            ),
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/svc/v1/workspaces",
@@ -218,6 +233,18 @@ class WorkspacesClient:
         -------
         GetWorkspaceResponse
             Returns the workspaces associated with provided workspace id
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.v1.workspaces.get(
+            id="id",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/workspaces/{jsonable_encoder(id)}",
@@ -435,6 +462,29 @@ class AsyncWorkspacesClient:
             - Creates or updates a workspace with given manifest
                 - Corresponding authorization entry with admin role is made using newly created workspace
                 - Attached with the cluster id where the workspace is created
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry, WorkspaceManifest
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.v1.workspaces.create_or_update(
+                manifest=WorkspaceManifest(
+                    cluster_fqn="cluster_fqn",
+                    name="name",
+                ),
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/svc/v1/workspaces",
@@ -521,6 +571,26 @@ class AsyncWorkspacesClient:
         -------
         GetWorkspaceResponse
             Returns the workspaces associated with provided workspace id
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.v1.workspaces.get(
+                id="id",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/workspaces/{jsonable_encoder(id)}",

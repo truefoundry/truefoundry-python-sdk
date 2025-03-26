@@ -5,7 +5,6 @@ from . import (
     agents,
     artifact_versions,
     artifacts,
-    clusters,
     data_directories,
     environments,
     ml_repos,
@@ -18,18 +17,15 @@ from . import (
     workspaces,
 )
 from .artifact_versions import Manifest
-from .clusters import ClustersDeleteResponse
 from .workspaces import WorkspacesDeleteResponse
 
 __all__ = [
-    "ClustersDeleteResponse",
     "Manifest",
     "WorkspacesDeleteResponse",
     "agent_versions",
     "agents",
     "artifact_versions",
     "artifacts",
-    "clusters",
     "data_directories",
     "environments",
     "ml_repos",
