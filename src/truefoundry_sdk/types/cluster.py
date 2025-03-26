@@ -21,8 +21,8 @@ class Cluster(UniversalBaseModel):
     metadata: ClusterMetadata
     manifest: ClusterManifest
     infra_config: typing_extensions.Annotated[
-        typing.Dict[str, typing.Optional[typing.Any]], FieldMetadata(alias="infraConfig")
-    ]
+        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="infraConfig")
+    ] = None
     provisioned: bool
     cloud_provider: typing_extensions.Annotated[ClusterCloudProvider, FieldMetadata(alias="cloudProvider")]
     tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]
