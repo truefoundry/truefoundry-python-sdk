@@ -5,6 +5,7 @@ from .conflict_error import ConflictError
 from .expectation_failed_error import ExpectationFailedError
 from .forbidden_error import ForbiddenError
 from .not_found_error import NotFoundError
+from .unauthorized_error import UnauthorizedError
 from .unprocessable_entity_error import UnprocessableEntityError
 
 __all__ = [
@@ -13,5 +14,6 @@ __all__ = [
     "ExpectationFailedError",
     "ForbiddenError",
     "NotFoundError",
+    "UnauthorizedError",
     "UnprocessableEntityError",
 ]
