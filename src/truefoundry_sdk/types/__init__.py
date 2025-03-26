@@ -9,6 +9,15 @@ from .agent_open_api_tool_with_fqn import AgentOpenApiToolWithFqn
 from .agent_open_api_tool_with_fqn_openapi_spec import AgentOpenApiToolWithFqnOpenapiSpec
 from .agent_version import AgentVersion
 from .agent_with_fqn import AgentWithFqn
+from .alert import Alert
+from .application import Application
+from .application_alerts_summary_value import ApplicationAlertsSummaryValue
+from .application_debug_info import ApplicationDebugInfo
+from .application_lifecycle_stage import ApplicationLifecycleStage
+from .application_metadata import ApplicationMetadata
+from .application_problem import ApplicationProblem
+from .application_type import ApplicationType
+from .application_upgrade import ApplicationUpgrade
 from .apply_request import ApplyRequest
 from .apply_response import ApplyResponse
 from .apply_sdk_code import ApplySdkCode
@@ -20,6 +29,9 @@ from .artifact_version import ArtifactVersion
 from .assistant_message import AssistantMessage
 from .base_artifact_version import BaseArtifactVersion
 from .blob_storage_reference import BlobStorageReference
+from .build import Build
+from .build_build_source import BuildBuildSource
+from .build_build_spec import BuildBuildSpec
 from .chat_prompt_manifest import ChatPromptManifest
 from .chat_prompt_manifest_messages_item import ChatPromptManifestMessagesItem
 from .cluster import Cluster
@@ -43,11 +55,17 @@ from .create_multi_part_upload_request import CreateMultiPartUploadRequest
 from .data import Data
 from .data_directory import DataDirectory
 from .data_directory_manifest import DataDirectoryManifest
+from .deployment import Deployment
+from .deployment_status import DeploymentStatus
+from .deployment_status_status import DeploymentStatusStatus
+from .deployment_status_transition import DeploymentStatusTransition
 from .device_configuration import DeviceConfiguration
 from .device_configuration_type import DeviceConfigurationType
 from .device_info import DeviceInfo
 from .device_info_gpu_type import DeviceInfoGpuType
 from .device_info_type import DeviceInfoType
+from .docker_file_build import DockerFileBuild
+from .docker_file_build_command import DockerFileBuildCommand
 from .empty_response import EmptyResponse
 from .environment import Environment
 from .environment_color import EnvironmentColor
@@ -60,10 +78,15 @@ from .fractional_gpu_info import FractionalGpuInfo
 from .framework import Framework
 from .get_agent_response import GetAgentResponse
 from .get_agent_version_response import GetAgentVersionResponse
+from .get_application_deployment_response_dto import GetApplicationDeploymentResponseDto
+from .get_application_deployments_response_dto import GetApplicationDeploymentsResponseDto
+from .get_application_response_dto import GetApplicationResponseDto
+from .get_applications_response_dto import GetApplicationsResponseDto
 from .get_apply_sdk_code_request import GetApplySdkCodeRequest
 from .get_apply_sdk_code_response import GetApplySdkCodeResponse
 from .get_artifact_response import GetArtifactResponse
 from .get_artifact_version_response import GetArtifactVersionResponse
+from .get_cluster_response import GetClusterResponse
 from .get_data_directory_response import GetDataDirectoryResponse
 from .get_environment_response import GetEnvironmentResponse
 from .get_ml_repo_response import GetMlRepoResponse
@@ -76,16 +99,25 @@ from .get_signed_ur_ls_response import GetSignedUrLsResponse
 from .get_tool_response import GetToolResponse
 from .get_tool_version_response import GetToolVersionResponse
 from .get_workspace_response import GetWorkspaceResponse
+from .git_helm_repo_source import GitHelmRepoSource
+from .git_source import GitSource
 from .gluon_framework import GluonFramework
 from .h2o_framework import H2OFramework
+from .helm_deployment_manifest import HelmDeploymentManifest
+from .helm_deployment_manifest_source import HelmDeploymentManifestSource
+from .helm_deployment_manifest_type import HelmDeploymentManifestType
+from .helm_repo_source import HelmRepoSource
 from .http_error import HttpError
 from .http_error_code import HttpErrorCode
 from .http_validation_error import HttpValidationError
+from .i_change import IChange
+from .i_change_type import IChangeType
 from .image_content_part import ImageContentPart
 from .image_url import ImageUrl
 from .infer_method_name import InferMethodName
 from .instance_capacity_type import InstanceCapacityType
 from .instance_resources import InstanceResources
+from .job_run import JobRun
 from .keras_framework import KerasFramework
 from .library_name import LibraryName
 from .light_gbm_framework import LightGbmFramework
@@ -93,6 +125,7 @@ from .list_agent_versions_response import ListAgentVersionsResponse
 from .list_agents_response import ListAgentsResponse
 from .list_artifact_version_response import ListArtifactVersionResponse
 from .list_artifacts_response import ListArtifactsResponse
+from .list_clusters_response import ListClustersResponse
 from .list_data_directories_response import ListDataDirectoriesResponse
 from .list_environments_response import ListEnvironmentsResponse
 from .list_files_request import ListFilesRequest
@@ -107,8 +140,10 @@ from .list_tools_response import ListToolsResponse
 from .list_workspaces_response import ListWorkspacesResponse
 from .local_artifact_source import LocalArtifactSource
 from .local_model_source import LocalModelSource
+from .local_source import LocalSource
 from .manifest import Manifest
 from .method import Method
+from .migration import Migration
 from .mime_type import MimeType
 from .ml_repo import MlRepo
 from .ml_repo_manifest import MlRepoManifest
@@ -125,6 +160,7 @@ from .nodepool_taint import NodepoolTaint
 from .notebook_config import NotebookConfig
 from .nvidia_mig_gpu_info import NvidiaMigGpuInfo
 from .nvidia_time_slicing_gpu_info import NvidiaTimeSlicingGpuInfo
+from .oci_repo_source import OciRepoSource
 from .onnx_framework import OnnxFramework
 from .operation import Operation
 from .paddle_framework import PaddleFramework
@@ -134,6 +170,10 @@ from .permissions import Permissions
 from .prompt import Prompt
 from .prompt_version import PromptVersion
 from .py_torch_framework import PyTorchFramework
+from .python_build import PythonBuild
+from .python_build_command import PythonBuildCommand
+from .recommendation import Recommendation
+from .remote_source import RemoteSource
 from .resolve_agent_app_response import ResolveAgentAppResponse
 from .signed_url import SignedUrl
 from .sklearn_framework import SklearnFramework
@@ -156,6 +196,7 @@ from .tool import Tool
 from .tool_version import ToolVersion
 from .transformers_framework import TransformersFramework
 from .true_foundry_managed_source import TrueFoundryManagedSource
+from .upgrade_data import UpgradeData
 from .url import Url
 from .user_message import UserMessage
 from .user_message_content_item import UserMessageContentItem
@@ -178,6 +219,15 @@ __all__ = [
     "AgentOpenApiToolWithFqnOpenapiSpec",
     "AgentVersion",
     "AgentWithFqn",
+    "Alert",
+    "Application",
+    "ApplicationAlertsSummaryValue",
+    "ApplicationDebugInfo",
+    "ApplicationLifecycleStage",
+    "ApplicationMetadata",
+    "ApplicationProblem",
+    "ApplicationType",
+    "ApplicationUpgrade",
     "ApplyRequest",
     "ApplyResponse",
     "ApplySdkCode",
@@ -189,6 +239,9 @@ __all__ = [
     "AssistantMessage",
     "BaseArtifactVersion",
     "BlobStorageReference",
+    "Build",
+    "BuildBuildSource",
+    "BuildBuildSpec",
     "ChatPromptManifest",
     "ChatPromptManifestMessagesItem",
     "Cluster",
@@ -212,11 +265,17 @@ __all__ = [
     "Data",
     "DataDirectory",
     "DataDirectoryManifest",
+    "Deployment",
+    "DeploymentStatus",
+    "DeploymentStatusStatus",
+    "DeploymentStatusTransition",
     "DeviceConfiguration",
     "DeviceConfigurationType",
     "DeviceInfo",
     "DeviceInfoGpuType",
     "DeviceInfoType",
+    "DockerFileBuild",
+    "DockerFileBuildCommand",
     "EmptyResponse",
     "Environment",
     "EnvironmentColor",
@@ -229,10 +288,15 @@ __all__ = [
     "Framework",
     "GetAgentResponse",
     "GetAgentVersionResponse",
+    "GetApplicationDeploymentResponseDto",
+    "GetApplicationDeploymentsResponseDto",
+    "GetApplicationResponseDto",
+    "GetApplicationsResponseDto",
     "GetApplySdkCodeRequest",
     "GetApplySdkCodeResponse",
     "GetArtifactResponse",
     "GetArtifactVersionResponse",
+    "GetClusterResponse",
     "GetDataDirectoryResponse",
     "GetEnvironmentResponse",
     "GetMlRepoResponse",
@@ -245,16 +309,25 @@ __all__ = [
     "GetToolResponse",
     "GetToolVersionResponse",
     "GetWorkspaceResponse",
+    "GitHelmRepoSource",
+    "GitSource",
     "GluonFramework",
     "H2OFramework",
+    "HelmDeploymentManifest",
+    "HelmDeploymentManifestSource",
+    "HelmDeploymentManifestType",
+    "HelmRepoSource",
     "HttpError",
     "HttpErrorCode",
     "HttpValidationError",
+    "IChange",
+    "IChangeType",
     "ImageContentPart",
     "ImageUrl",
     "InferMethodName",
     "InstanceCapacityType",
     "InstanceResources",
+    "JobRun",
     "KerasFramework",
     "LibraryName",
     "LightGbmFramework",
@@ -262,6 +335,7 @@ __all__ = [
     "ListAgentsResponse",
     "ListArtifactVersionResponse",
     "ListArtifactsResponse",
+    "ListClustersResponse",
     "ListDataDirectoriesResponse",
     "ListEnvironmentsResponse",
     "ListFilesRequest",
@@ -276,8 +350,10 @@ __all__ = [
     "ListWorkspacesResponse",
     "LocalArtifactSource",
     "LocalModelSource",
+    "LocalSource",
     "Manifest",
     "Method",
+    "Migration",
     "MimeType",
     "MlRepo",
     "MlRepoManifest",
@@ -294,6 +370,7 @@ __all__ = [
     "NotebookConfig",
     "NvidiaMigGpuInfo",
     "NvidiaTimeSlicingGpuInfo",
+    "OciRepoSource",
     "OnnxFramework",
     "Operation",
     "PaddleFramework",
@@ -303,6 +380,10 @@ __all__ = [
     "Prompt",
     "PromptVersion",
     "PyTorchFramework",
+    "PythonBuild",
+    "PythonBuildCommand",
+    "Recommendation",
+    "RemoteSource",
     "ResolveAgentAppResponse",
     "SignedUrl",
     "SklearnFramework",
@@ -325,6 +406,7 @@ __all__ = [
     "ToolVersion",
     "TransformersFramework",
     "TrueFoundryManagedSource",
+    "UpgradeData",
     "Url",
     "UserMessage",
     "UserMessageContentItem",

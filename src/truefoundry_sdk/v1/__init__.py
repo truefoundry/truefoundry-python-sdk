@@ -3,8 +3,10 @@
 from . import (
     agent_versions,
     agents,
+    apps,
     artifact_versions,
     artifacts,
+    clusters,
     data_directories,
     environments,
     ml_repos,
@@ -16,16 +18,30 @@ from . import (
     tools,
     workspaces,
 )
+from .apps import (
+    AppsCancelDeploymentResponse,
+    AppsDeleteResponse,
+    AppsListRequestDeviceTypeFilter,
+    AppsListRequestLifecycleStage,
+)
 from .artifact_versions import Manifest
+from .clusters import ClustersDeleteResponse
 from .workspaces import WorkspacesDeleteResponse
 
 __all__ = [
+    "AppsCancelDeploymentResponse",
+    "AppsDeleteResponse",
+    "AppsListRequestDeviceTypeFilter",
+    "AppsListRequestLifecycleStage",
+    "ClustersDeleteResponse",
     "Manifest",
     "WorkspacesDeleteResponse",
     "agent_versions",
     "agents",
+    "apps",
     "artifact_versions",
     "artifacts",
+    "clusters",
     "data_directories",
     "environments",
     "ml_repos",
