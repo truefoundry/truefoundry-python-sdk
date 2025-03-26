@@ -104,14 +104,24 @@ Create or Update cluster with provided manifest
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
+from truefoundry_sdk import ClusterManifest, Collaborator, TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
 client.v1.clusters.create_or_update(
-    manifest={"key": "value"},
+    manifest=ClusterManifest(
+        name="name",
+        cluster_type="aws-eks",
+        environment_names=["environment_names"],
+        collaborators=[
+            Collaborator(
+                subject="subject",
+                role_id="role_id",
+            )
+        ],
+    ),
 )
 
 ```
@@ -128,7 +138,7 @@ client.v1.clusters.create_or_update(
 <dl>
 <dd>
 
-**manifest:** `typing.Dict[str, typing.Optional[typing.Any]]` — Cluster manifest
+**manifest:** `ClusterManifest` — Cluster manifest
     
 </dd>
 </dl>
