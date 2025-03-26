@@ -8,7 +8,9 @@ from ...core.pydantic_utilities import parse_obj_as
 from ...errors.unauthorized_error import UnauthorizedError
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
+from ...types.cluster_manifest import ClusterManifest
 from ...types.get_cluster_response import GetClusterResponse
+from ...core.serialization import convert_and_respect_annotation_metadata
 from ...errors.conflict_error import ConflictError
 from ...types.http_error import HttpError
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
@@ -97,7 +99,7 @@ class ClustersClient:
     def create_or_update(
         self,
         *,
-        manifest: typing.Dict[str, typing.Optional[typing.Any]],
+        manifest: ClusterManifest,
         dry_run: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetClusterResponse:
@@ -106,7 +108,7 @@ class ClustersClient:
 
         Parameters
         ----------
-        manifest : typing.Dict[str, typing.Optional[typing.Any]]
+        manifest : ClusterManifest
             Cluster manifest
 
         dry_run : typing.Optional[bool]
@@ -122,21 +124,33 @@ class ClustersClient:
 
         Examples
         --------
-        from truefoundry_sdk import TrueFoundry
+        from truefoundry_sdk import ClusterManifest, Collaborator, TrueFoundry
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
         client.v1.clusters.create_or_update(
-            manifest={"key": "value"},
+            manifest=ClusterManifest(
+                name="name",
+                cluster_type="aws-eks",
+                environment_names=["environment_names"],
+                collaborators=[
+                    Collaborator(
+                        subject="subject",
+                        role_id="role_id",
+                    )
+                ],
+            ),
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/svc/v1/clusters",
             method="PUT",
             json={
-                "manifest": manifest,
+                "manifest": convert_and_respect_annotation_metadata(
+                    object_=manifest, annotation=ClusterManifest, direction="write"
+                ),
                 "dryRun": dry_run,
             },
             headers={
@@ -410,7 +424,7 @@ class AsyncClustersClient:
     async def create_or_update(
         self,
         *,
-        manifest: typing.Dict[str, typing.Optional[typing.Any]],
+        manifest: ClusterManifest,
         dry_run: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetClusterResponse:
@@ -419,7 +433,7 @@ class AsyncClustersClient:
 
         Parameters
         ----------
-        manifest : typing.Dict[str, typing.Optional[typing.Any]]
+        manifest : ClusterManifest
             Cluster manifest
 
         dry_run : typing.Optional[bool]
@@ -437,7 +451,7 @@ class AsyncClustersClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import AsyncTrueFoundry
+        from truefoundry_sdk import AsyncTrueFoundry, ClusterManifest, Collaborator
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -447,7 +461,17 @@ class AsyncClustersClient:
 
         async def main() -> None:
             await client.v1.clusters.create_or_update(
-                manifest={"key": "value"},
+                manifest=ClusterManifest(
+                    name="name",
+                    cluster_type="aws-eks",
+                    environment_names=["environment_names"],
+                    collaborators=[
+                        Collaborator(
+                            subject="subject",
+                            role_id="role_id",
+                        )
+                    ],
+                ),
             )
 
 
@@ -457,7 +481,9 @@ class AsyncClustersClient:
             "api/svc/v1/clusters",
             method="PUT",
             json={
-                "manifest": manifest,
+                "manifest": convert_and_respect_annotation_metadata(
+                    object_=manifest, annotation=ClusterManifest, direction="write"
+                ),
                 "dryRun": dry_run,
             },
             headers={
