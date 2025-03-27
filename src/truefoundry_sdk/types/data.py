@@ -8,4 +8,11 @@ from .agent_version import AgentVersion
 from .artifact_version import ArtifactVersion
 from .data_directory import DataDirectory
 
-Data = typing.Union[ModelVersion, PromptVersion, ToolVersion, AgentVersion, ArtifactVersion, DataDirectory]
+Data = typing.Union[
+    ModelVersion,
+    PromptVersion,
+    ToolVersion,
+    AgentVersion,
+    ArtifactVersion,
+    DataDirectory,
+]

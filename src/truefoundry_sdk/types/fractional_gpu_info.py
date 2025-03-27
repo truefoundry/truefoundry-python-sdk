@@ -15,7 +15,8 @@ class FractionalGpuInfo(UniversalBaseModel):
         None
     )
     time_slicing_gpu_info: typing_extensions.Annotated[
-        typing.Optional[NvidiaTimeSlicingGpuInfo], FieldMetadata(alias="timeSlicingGpuInfo")
+        typing.Optional[NvidiaTimeSlicingGpuInfo],
+        FieldMetadata(alias="timeSlicingGpuInfo"),
     ] = None
 
     if IS_PYDANTIC_V2:
