@@ -17,6 +17,7 @@ from .tool_versions.client import ToolVersionsClient
 from .agent_versions.client import AgentVersionsClient
 from .data_directories.client import DataDirectoriesClient
 from .ml_repos.client import MlReposClient
+from .internal.client import InternalClient
 from ..core.client_wrapper import AsyncClientWrapper
 from .clusters.client import AsyncClustersClient
 from .environments.client import AsyncEnvironmentsClient
@@ -34,6 +35,7 @@ from .tool_versions.client import AsyncToolVersionsClient
 from .agent_versions.client import AsyncAgentVersionsClient
 from .data_directories.client import AsyncDataDirectoriesClient
 from .ml_repos.client import AsyncMlReposClient
+from .internal.client import AsyncInternalClient
 
 
 class V1Client:
@@ -55,6 +57,7 @@ class V1Client:
         self.agent_versions = AgentVersionsClient(client_wrapper=self._client_wrapper)
         self.data_directories = DataDirectoriesClient(client_wrapper=self._client_wrapper)
         self.ml_repos = MlReposClient(client_wrapper=self._client_wrapper)
+        self.internal = InternalClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncV1Client:
@@ -76,3 +79,4 @@ class AsyncV1Client:
         self.agent_versions = AsyncAgentVersionsClient(client_wrapper=self._client_wrapper)
         self.data_directories = AsyncDataDirectoriesClient(client_wrapper=self._client_wrapper)
         self.ml_repos = AsyncMlReposClient(client_wrapper=self._client_wrapper)
+        self.internal = AsyncInternalClient(client_wrapper=self._client_wrapper)
