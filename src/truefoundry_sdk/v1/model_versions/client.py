@@ -145,7 +145,6 @@ class ModelVersionsClient:
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         include_internal_metadata: typing.Optional[bool] = None,
-        include_model_versions: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[ModelVersion]:
         """
@@ -166,8 +165,6 @@ class ModelVersionsClient:
         run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
 
         include_internal_metadata : typing.Optional[bool]
-
-        include_model_versions : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -204,7 +201,6 @@ class ModelVersionsClient:
                 "run_ids": run_ids,
                 "run_steps": run_steps,
                 "include_internal_metadata": include_internal_metadata,
-                "include_model_versions": include_model_versions,
             },
             request_options=request_options,
         )
@@ -226,7 +222,6 @@ class ModelVersionsClient:
                     run_ids=run_ids,
                     run_steps=run_steps,
                     include_internal_metadata=include_internal_metadata,
-                    include_model_versions=include_model_versions,
                     request_options=request_options,
                 )
                 _items = _parsed_response.data
@@ -391,7 +386,6 @@ class AsyncModelVersionsClient:
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         include_internal_metadata: typing.Optional[bool] = None,
-        include_model_versions: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[ModelVersion]:
         """
@@ -412,8 +406,6 @@ class AsyncModelVersionsClient:
         run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
 
         include_internal_metadata : typing.Optional[bool]
-
-        include_model_versions : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -458,7 +450,6 @@ class AsyncModelVersionsClient:
                 "run_ids": run_ids,
                 "run_steps": run_steps,
                 "include_internal_metadata": include_internal_metadata,
-                "include_model_versions": include_model_versions,
             },
             request_options=request_options,
         )
@@ -480,7 +471,6 @@ class AsyncModelVersionsClient:
                     run_ids=run_ids,
                     run_steps=run_steps,
                     include_internal_metadata=include_internal_metadata,
-                    include_model_versions=include_model_versions,
                     request_options=request_options,
                 )
                 _items = _parsed_response.data

@@ -87,6 +87,10 @@ from .image_url import ImageUrl
 from .infer_method_name import InferMethodName
 from .instance_capacity_type import InstanceCapacityType
 from .instance_resources import InstanceResources
+from .internal_artifact_version import InternalArtifactVersion
+from .internal_list_artifact_version_response import InternalListArtifactVersionResponse
+from .internal_list_artifact_version_response_data_item import InternalListArtifactVersionResponseDataItem
+from .internal_model_version import InternalModelVersion
 from .keras_framework import KerasFramework
 from .library_name import LibraryName
 from .light_gbm_framework import LightGbmFramework
@@ -258,6 +262,10 @@ __all__ = [
     "InferMethodName",
     "InstanceCapacityType",
     "InstanceResources",
+    "InternalArtifactVersion",
+    "InternalListArtifactVersionResponse",
+    "InternalListArtifactVersionResponseDataItem",
+    "InternalModelVersion",
     "KerasFramework",
     "LibraryName",
     "LightGbmFramework",

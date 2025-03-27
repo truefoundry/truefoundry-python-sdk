@@ -15,7 +15,8 @@ class WorkspaceMetadata(UniversalBaseModel):
         typing.Optional[bool], FieldMetadata(alias="isTruefoundryManaged")
     ] = None
     supported_instance_families: typing_extensions.Annotated[
-        typing.Optional[typing.List[str]], FieldMetadata(alias="supportedInstanceFamilies")
+        typing.Optional[typing.List[str]],
+        FieldMetadata(alias="supportedInstanceFamilies"),
     ] = None
     supported_nodepools: typing_extensions.Annotated[
         typing.Optional[typing.List[str]], FieldMetadata(alias="supportedNodepools")
