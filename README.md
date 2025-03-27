@@ -85,7 +85,7 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.v1.artifacts.list()
+response = client.v1.clusters.list()
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page

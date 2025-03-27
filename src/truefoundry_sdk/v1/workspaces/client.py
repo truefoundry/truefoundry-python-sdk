@@ -3,6 +3,8 @@
 import typing
 from ...core.client_wrapper import SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...core.pagination import SyncPager
+from ...types.workspace import Workspace
 from ...types.list_workspaces_response import ListWorkspacesResponse
 from ...core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
@@ -19,6 +21,7 @@ from ...core.jsonable_encoder import jsonable_encoder
 from .types.workspaces_delete_response import WorkspacesDeleteResponse
 from ...errors.expectation_failed_error import ExpectationFailedError
 from ...core.client_wrapper import AsyncClientWrapper
+from ...core.pagination import AsyncPager
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -37,7 +40,7 @@ class WorkspacesClient:
         name: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListWorkspacesResponse:
+    ) -> SyncPager[Workspace]:
         """
         List workspaces associated with the user. Optional filters include clusterId, fqn, and workspace name. Pagination is available based on query parameters.
 
@@ -63,7 +66,7 @@ class WorkspacesClient:
 
         Returns
         -------
-        ListWorkspacesResponse
+        SyncPager[Workspace]
             Returns all the workspaces associated with a user and also the response includes paginated data.
 
         Examples
@@ -74,11 +77,17 @@ class WorkspacesClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.v1.workspaces.list(
+        response = client.v1.workspaces.list(
             limit=10,
             offset=0,
         )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
         """
+        offset = offset if offset is not None else 1
         _response = self._client_wrapper.httpx_client.request(
             "api/svc/v1/workspaces",
             method="GET",
@@ -93,13 +102,24 @@ class WorkspacesClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
+                _parsed_response = typing.cast(
                     ListWorkspacesResponse,
                     parse_obj_as(
                         type_=ListWorkspacesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
+                _has_next = True
+                _get_next = lambda: self.list(
+                    limit=limit,
+                    offset=offset + 1,
+                    cluster_id=cluster_id,
+                    name=name,
+                    fqn=fqn,
+                    request_options=request_options,
+                )
+                _items = _parsed_response.data
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -359,7 +379,7 @@ class AsyncWorkspacesClient:
         name: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListWorkspacesResponse:
+    ) -> AsyncPager[Workspace]:
         """
         List workspaces associated with the user. Optional filters include clusterId, fqn, and workspace name. Pagination is available based on query parameters.
 
@@ -385,7 +405,7 @@ class AsyncWorkspacesClient:
 
         Returns
         -------
-        ListWorkspacesResponse
+        AsyncPager[Workspace]
             Returns all the workspaces associated with a user and also the response includes paginated data.
 
         Examples
@@ -401,14 +421,20 @@ class AsyncWorkspacesClient:
 
 
         async def main() -> None:
-            await client.v1.workspaces.list(
+            response = await client.v1.workspaces.list(
                 limit=10,
                 offset=0,
             )
+            async for item in response:
+                yield item
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
 
 
         asyncio.run(main())
         """
+        offset = offset if offset is not None else 1
         _response = await self._client_wrapper.httpx_client.request(
             "api/svc/v1/workspaces",
             method="GET",
@@ -423,13 +449,24 @@ class AsyncWorkspacesClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
+                _parsed_response = typing.cast(
                     ListWorkspacesResponse,
                     parse_obj_as(
                         type_=ListWorkspacesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
+                _has_next = True
+                _get_next = lambda: self.list(
+                    limit=limit,
+                    offset=offset + 1,
+                    cluster_id=cluster_id,
+                    name=name,
+                    fqn=fqn,
+                    request_options=request_options,
+                )
+                _items = _parsed_response.data
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
