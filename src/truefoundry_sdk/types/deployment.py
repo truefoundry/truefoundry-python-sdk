@@ -24,7 +24,8 @@ class Deployment(UniversalBaseModel):
     manifest: typing.Dict[str, typing.Optional[typing.Any]]
     application: "Application"
     created_by_subject: typing_extensions.Annotated[
-        typing.Dict[str, typing.Optional[typing.Any]], FieldMetadata(alias="createdBySubject")
+        typing.Dict[str, typing.Optional[typing.Any]],
+        FieldMetadata(alias="createdBySubject"),
     ]
     created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
     updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
@@ -35,7 +36,8 @@ class Deployment(UniversalBaseModel):
     current_status_id: typing_extensions.Annotated[str, FieldMetadata(alias="currentStatusId")]
     current_status: typing_extensions.Annotated[DeploymentStatus, FieldMetadata(alias="currentStatus")]
     applied_recommendations: typing_extensions.Annotated[
-        typing.List[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="appliedRecommendations")
+        typing.List[typing.Dict[str, typing.Optional[typing.Any]]],
+        FieldMetadata(alias="appliedRecommendations"),
     ] = pydantic.Field()
     """
     Applied recommendations for this deployment

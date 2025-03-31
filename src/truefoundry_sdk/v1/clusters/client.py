@@ -3,6 +3,8 @@
 import typing
 from ...core.client_wrapper import SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...core.pagination import SyncPager
+from ...types.cluster import Cluster
 from ...types.list_clusters_response import ListClustersResponse
 from ...core.pydantic_utilities import parse_obj_as
 from ...errors.unauthorized_error import UnauthorizedError
@@ -18,6 +20,7 @@ from ...core.jsonable_encoder import jsonable_encoder
 from ...errors.not_found_error import NotFoundError
 from .types.clusters_delete_response import ClustersDeleteResponse
 from ...core.client_wrapper import AsyncClientWrapper
+from ...core.pagination import AsyncPager
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -33,7 +36,7 @@ class ClustersClient:
         offset: typing.Optional[float] = None,
         limit: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListClustersResponse:
+    ) -> SyncPager[Cluster]:
         """
         Retrieves a list of all latest Clusters. Pagination is available based on query parameters.
 
@@ -50,7 +53,7 @@ class ClustersClient:
 
         Returns
         -------
-        ListClustersResponse
+        SyncPager[Cluster]
             Retrieve latest Clusters. If pagination parameters are provided, the response includes paginated data.
 
         Examples
@@ -61,8 +64,14 @@ class ClustersClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.v1.clusters.list()
+        response = client.v1.clusters.list()
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
         """
+        offset = offset if offset is not None else 1
         _response = self._client_wrapper.httpx_client.request(
             "api/svc/v1/clusters",
             method="GET",
@@ -74,13 +83,21 @@ class ClustersClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
+                _parsed_response = typing.cast(
                     ListClustersResponse,
                     parse_obj_as(
                         type_=ListClustersResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
+                _has_next = True
+                _get_next = lambda: self.list(
+                    offset=offset + 1,
+                    limit=limit,
+                    request_options=request_options,
+                )
+                _items = _parsed_response.data
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
@@ -350,7 +367,7 @@ class AsyncClustersClient:
         offset: typing.Optional[float] = None,
         limit: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListClustersResponse:
+    ) -> AsyncPager[Cluster]:
         """
         Retrieves a list of all latest Clusters. Pagination is available based on query parameters.
 
@@ -367,7 +384,7 @@ class AsyncClustersClient:
 
         Returns
         -------
-        ListClustersResponse
+        AsyncPager[Cluster]
             Retrieve latest Clusters. If pagination parameters are provided, the response includes paginated data.
 
         Examples
@@ -383,11 +400,17 @@ class AsyncClustersClient:
 
 
         async def main() -> None:
-            await client.v1.clusters.list()
+            response = await client.v1.clusters.list()
+            async for item in response:
+                yield item
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
 
 
         asyncio.run(main())
         """
+        offset = offset if offset is not None else 1
         _response = await self._client_wrapper.httpx_client.request(
             "api/svc/v1/clusters",
             method="GET",
@@ -399,13 +422,21 @@ class AsyncClustersClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
+                _parsed_response = typing.cast(
                     ListClustersResponse,
                     parse_obj_as(
                         type_=ListClustersResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
+                _has_next = True
+                _get_next = lambda: self.list(
+                    offset=offset + 1,
+                    limit=limit,
+                    request_options=request_options,
+                )
+                _items = _parsed_response.data
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(

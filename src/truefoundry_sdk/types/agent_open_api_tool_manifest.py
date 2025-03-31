@@ -3,7 +3,9 @@
 from ..core.pydantic_utilities import UniversalBaseModel
 import pydantic
 import typing
-from .agent_open_api_tool_manifest_openapi_spec import AgentOpenApiToolManifestOpenapiSpec
+from .agent_open_api_tool_manifest_openapi_spec import (
+    AgentOpenApiToolManifestOpenapiSpec,
+)
 from .method import Method
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 

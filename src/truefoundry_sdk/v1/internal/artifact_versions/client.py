@@ -4,8 +4,12 @@ from ....core.client_wrapper import SyncClientWrapper
 import typing
 from ....core.request_options import RequestOptions
 from ....core.pagination import SyncPager
-from ....types.internal_list_artifact_version_response_data_item import InternalListArtifactVersionResponseDataItem
-from ....types.internal_list_artifact_version_response import InternalListArtifactVersionResponse
+from ....types.internal_list_artifact_version_response_data_item import (
+    InternalListArtifactVersionResponseDataItem,
+)
+from ....types.internal_list_artifact_version_response import (
+    InternalListArtifactVersionResponse,
+)
 from ....core.pydantic_utilities import parse_obj_as
 from ....errors.unprocessable_entity_error import UnprocessableEntityError
 from json.decoder import JSONDecodeError
@@ -77,7 +81,7 @@ class ArtifactVersionsClient:
         """
         offset = offset if offset is not None else 0
         _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/xartifact-versions",
+            "api/ml/v1/x/artifact-versions",
             method="GET",
             params={
                 "artifact_id": artifact_id,
@@ -201,7 +205,7 @@ class AsyncArtifactVersionsClient:
         """
         offset = offset if offset is not None else 0
         _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/xartifact-versions",
+            "api/ml/v1/x/artifact-versions",
             method="GET",
             params={
                 "artifact_id": artifact_id,

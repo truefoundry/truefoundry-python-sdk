@@ -3,5 +3,6 @@
 import typing
 
 ClusterManifestClusterType = typing.Union[
-    typing.Literal["aws-eks", "gcp-gke-standard", "azure-aks", "generic", "civo-talos"], typing.Any
+    typing.Literal["aws-eks", "gcp-gke-standard", "azure-aks", "generic", "civo-talos"],
+    typing.Any,
 ]

@@ -26,11 +26,13 @@ class Recommendation(UniversalBaseModel):
         typing.Optional[str], FieldMetadata(alias="applicationDebugInfoId")
     ] = None
     application_debug_info: typing_extensions.Annotated[
-        typing.Optional["ApplicationDebugInfo"], FieldMetadata(alias="applicationDebugInfo")
+        typing.Optional["ApplicationDebugInfo"],
+        FieldMetadata(alias="applicationDebugInfo"),
     ] = None
     application_version: typing_extensions.Annotated[float, FieldMetadata(alias="applicationVersion")]
     recommendation_data: typing_extensions.Annotated[
-        typing.Dict[str, typing.Optional[typing.Any]], FieldMetadata(alias="recommendationData")
+        typing.Dict[str, typing.Optional[typing.Any]],
+        FieldMetadata(alias="recommendationData"),
     ]
     recommendation_type: typing_extensions.Annotated[str, FieldMetadata(alias="recommendationType")]
     applied_deployment_id: typing_extensions.Annotated[str, FieldMetadata(alias="appliedDeploymentId")]

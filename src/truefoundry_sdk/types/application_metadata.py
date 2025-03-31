@@ -32,7 +32,8 @@ class ApplicationMetadata(UniversalBaseModel):
     """
 
     deletion_failed_state_timestamp: typing_extensions.Annotated[
-        typing.Optional[dt.datetime], FieldMetadata(alias="deletionFailedStateTimestamp")
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="deletionFailedStateTimestamp"),
     ] = pydantic.Field(default=None)
     """
     Timestamp when lifecycle stage was set to DELETION_FAILED

@@ -5,25 +5,32 @@ from ...core.client_wrapper import SyncClientWrapper
 from .types.apps_list_request_device_type_filter import AppsListRequestDeviceTypeFilter
 from .types.apps_list_request_lifecycle_stage import AppsListRequestLifecycleStage
 from ...core.request_options import RequestOptions
+from ...core.pagination import SyncPager
+from ...types.application import Application
 from ...types.get_applications_response_dto import GetApplicationsResponseDto
 from ...core.pydantic_utilities import parse_obj_as
 from ...errors.bad_request_error import BadRequestError
 from ...types.http_error import HttpError
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
-from ...types.get_application_deployment_response_dto import GetApplicationDeploymentResponseDto
+from ...types.get_application_deployment_response_dto import (
+    GetApplicationDeploymentResponseDto,
+)
 from ...errors.forbidden_error import ForbiddenError
 from ...errors.not_found_error import NotFoundError
 from ...errors.conflict_error import ConflictError
 from ...types.get_application_response_dto import GetApplicationResponseDto
 from ...core.jsonable_encoder import jsonable_encoder
 from .types.apps_delete_response import AppsDeleteResponse
-from ...types.get_application_deployments_response_dto import GetApplicationDeploymentsResponseDto
+from ...types.deployment import Deployment
+from ...types.get_application_deployments_response_dto import (
+    GetApplicationDeploymentsResponseDto,
+)
 from ...errors.method_not_allowed_error import MethodNotAllowedError
 from ...errors.not_implemented_error import NotImplementedError
-from ...types.deployment import Deployment
 from .types.apps_cancel_deployment_response import AppsCancelDeploymentResponse
 from ...core.client_wrapper import AsyncClientWrapper
+from ...core.pagination import AsyncPager
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -52,7 +59,7 @@ class AppsClient:
         lifecycle_stage: typing.Optional[AppsListRequestLifecycleStage] = None,
         is_recommendation_present: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetApplicationsResponseDto:
+    ) -> SyncPager[Application]:
         """
         Retrieves a list of all latest applications. Supports filtering by application ID, name, type, and other parameters. Pagination is available based on query parameters.
 
@@ -108,7 +115,7 @@ class AppsClient:
 
         Returns
         -------
-        GetApplicationsResponseDto
+        SyncPager[Application]
             Retrieve latest applications based on the specified query parameters. If pagination parameters are provided, the response includes paginated data.
 
         Examples
@@ -119,11 +126,17 @@ class AppsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.v1.apps.list(
+        response = client.v1.apps.list(
             limit=10,
             offset=0,
         )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
         """
+        offset = offset if offset is not None else 1
         _response = self._client_wrapper.httpx_client.request(
             "api/svc/v1/apps",
             method="GET",
@@ -148,13 +161,34 @@ class AppsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
+                _parsed_response = typing.cast(
                     GetApplicationsResponseDto,
                     parse_obj_as(
                         type_=GetApplicationsResponseDto,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
+                _has_next = True
+                _get_next = lambda: self.list(
+                    limit=limit,
+                    offset=offset + 1,
+                    application_id=application_id,
+                    workspace_id=workspace_id,
+                    application_name=application_name,
+                    application_type=application_type,
+                    name_search_query=name_search_query,
+                    environment_id=environment_id,
+                    cluster_id=cluster_id,
+                    application_set_id=application_set_id,
+                    paused=paused,
+                    device_type_filter=device_type_filter,
+                    last_deployed_by_subjects=last_deployed_by_subjects,
+                    lifecycle_stage=lifecycle_stage,
+                    is_recommendation_present=is_recommendation_present,
+                    request_options=request_options,
+                )
+                _items = _parsed_response.data
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
             if _response.status_code == 400:
                 raise BadRequestError(
                     typing.cast(
@@ -292,7 +326,10 @@ class AppsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get(
-        self, application_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        application_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetApplicationResponseDto:
         """
         Get Application associated with the provided application ID.
@@ -350,7 +387,10 @@ class AppsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete(
-        self, application_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        application_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AppsDeleteResponse:
         """
         Delete Application associated with the provided application ID.
@@ -428,7 +468,7 @@ class AppsClient:
         version: typing.Optional[str] = None,
         id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetApplicationDeploymentsResponseDto:
+    ) -> SyncPager[Deployment]:
         """
         Fetch all deployments for a given application ID with optional filters such as deployment ID or version. Supports pagination.
 
@@ -454,7 +494,7 @@ class AppsClient:
 
         Returns
         -------
-        GetApplicationDeploymentsResponseDto
+        SyncPager[Deployment]
             List of deployments matching the provided filters.
 
         Examples
@@ -465,14 +505,20 @@ class AppsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.v1.apps.list_deployments(
+        response = client.v1.apps.list_deployments(
             application_id="applicationId",
             limit=50.0,
             offset=0.0,
             version="1",
             id="deployment123",
         )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
         """
+        offset = offset if offset is not None else 1
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/apps/{jsonable_encoder(application_id)}/deployments",
             method="GET",
@@ -486,13 +532,24 @@ class AppsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
+                _parsed_response = typing.cast(
                     GetApplicationDeploymentsResponseDto,
                     parse_obj_as(
                         type_=GetApplicationDeploymentsResponseDto,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
+                _has_next = True
+                _get_next = lambda: self.list_deployments(
+                    application_id,
+                    limit=limit,
+                    offset=offset + 1,
+                    version=version,
+                    id=id,
+                    request_options=request_options,
+                )
+                _items = _parsed_response.data
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
             if _response.status_code == 403:
                 raise ForbiddenError(
                     typing.cast(
@@ -519,7 +576,11 @@ class AppsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_application_deployment(
-        self, application_id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        application_id: str,
+        deployment_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetApplicationDeploymentResponseDto:
         """
         Get Deployment associated with the provided application ID and deployment ID.
@@ -579,7 +640,12 @@ class AppsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def scale_to_zero(self, application_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def scale_to_zero(
+        self,
+        application_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Pause a running application by scaling to 0 replicas
 
@@ -661,7 +727,10 @@ class AppsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def scale_to_original(
-        self, application_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        application_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Deployment:
         """
         Resume a paused application by scaling back to the original number of replicas
@@ -729,7 +798,11 @@ class AppsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def cancel_deployment(
-        self, application_id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        application_id: str,
+        deployment_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AppsCancelDeploymentResponse:
         """
         Cancel an ongoing deployment associated with the provided application ID and deployment ID.
@@ -836,7 +909,7 @@ class AsyncAppsClient:
         lifecycle_stage: typing.Optional[AppsListRequestLifecycleStage] = None,
         is_recommendation_present: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetApplicationsResponseDto:
+    ) -> AsyncPager[Application]:
         """
         Retrieves a list of all latest applications. Supports filtering by application ID, name, type, and other parameters. Pagination is available based on query parameters.
 
@@ -892,7 +965,7 @@ class AsyncAppsClient:
 
         Returns
         -------
-        GetApplicationsResponseDto
+        AsyncPager[Application]
             Retrieve latest applications based on the specified query parameters. If pagination parameters are provided, the response includes paginated data.
 
         Examples
@@ -908,14 +981,20 @@ class AsyncAppsClient:
 
 
         async def main() -> None:
-            await client.v1.apps.list(
+            response = await client.v1.apps.list(
                 limit=10,
                 offset=0,
             )
+            async for item in response:
+                yield item
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
 
 
         asyncio.run(main())
         """
+        offset = offset if offset is not None else 1
         _response = await self._client_wrapper.httpx_client.request(
             "api/svc/v1/apps",
             method="GET",
@@ -940,13 +1019,34 @@ class AsyncAppsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
+                _parsed_response = typing.cast(
                     GetApplicationsResponseDto,
                     parse_obj_as(
                         type_=GetApplicationsResponseDto,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
+                _has_next = True
+                _get_next = lambda: self.list(
+                    limit=limit,
+                    offset=offset + 1,
+                    application_id=application_id,
+                    workspace_id=workspace_id,
+                    application_name=application_name,
+                    application_type=application_type,
+                    name_search_query=name_search_query,
+                    environment_id=environment_id,
+                    cluster_id=cluster_id,
+                    application_set_id=application_set_id,
+                    paused=paused,
+                    device_type_filter=device_type_filter,
+                    last_deployed_by_subjects=last_deployed_by_subjects,
+                    lifecycle_stage=lifecycle_stage,
+                    is_recommendation_present=is_recommendation_present,
+                    request_options=request_options,
+                )
+                _items = _parsed_response.data
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
             if _response.status_code == 400:
                 raise BadRequestError(
                     typing.cast(
@@ -1084,7 +1184,10 @@ class AsyncAppsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get(
-        self, application_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        application_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetApplicationResponseDto:
         """
         Get Application associated with the provided application ID.
@@ -1142,7 +1245,10 @@ class AsyncAppsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete(
-        self, application_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        application_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AppsDeleteResponse:
         """
         Delete Application associated with the provided application ID.
@@ -1228,7 +1334,7 @@ class AsyncAppsClient:
         version: typing.Optional[str] = None,
         id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetApplicationDeploymentsResponseDto:
+    ) -> AsyncPager[Deployment]:
         """
         Fetch all deployments for a given application ID with optional filters such as deployment ID or version. Supports pagination.
 
@@ -1254,7 +1360,7 @@ class AsyncAppsClient:
 
         Returns
         -------
-        GetApplicationDeploymentsResponseDto
+        AsyncPager[Deployment]
             List of deployments matching the provided filters.
 
         Examples
@@ -1270,17 +1376,23 @@ class AsyncAppsClient:
 
 
         async def main() -> None:
-            await client.v1.apps.list_deployments(
+            response = await client.v1.apps.list_deployments(
                 application_id="applicationId",
                 limit=50.0,
                 offset=0.0,
                 version="1",
                 id="deployment123",
             )
+            async for item in response:
+                yield item
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
 
 
         asyncio.run(main())
         """
+        offset = offset if offset is not None else 1
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/apps/{jsonable_encoder(application_id)}/deployments",
             method="GET",
@@ -1294,13 +1406,24 @@ class AsyncAppsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
+                _parsed_response = typing.cast(
                     GetApplicationDeploymentsResponseDto,
                     parse_obj_as(
                         type_=GetApplicationDeploymentsResponseDto,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
+                _has_next = True
+                _get_next = lambda: self.list_deployments(
+                    application_id,
+                    limit=limit,
+                    offset=offset + 1,
+                    version=version,
+                    id=id,
+                    request_options=request_options,
+                )
+                _items = _parsed_response.data
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
             if _response.status_code == 403:
                 raise ForbiddenError(
                     typing.cast(
@@ -1327,7 +1450,11 @@ class AsyncAppsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_application_deployment(
-        self, application_id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        application_id: str,
+        deployment_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetApplicationDeploymentResponseDto:
         """
         Get Deployment associated with the provided application ID and deployment ID.
@@ -1388,7 +1515,10 @@ class AsyncAppsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def scale_to_zero(
-        self, application_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        application_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Pause a running application by scaling to 0 replicas
@@ -1479,7 +1609,10 @@ class AsyncAppsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def scale_to_original(
-        self, application_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        application_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Deployment:
         """
         Resume a paused application by scaling back to the original number of replicas
@@ -1547,7 +1680,11 @@ class AsyncAppsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def cancel_deployment(
-        self, application_id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        application_id: str,
+        deployment_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AppsCancelDeploymentResponse:
         """
         Cancel an ongoing deployment associated with the provided application ID and deployment ID.

@@ -3,6 +3,8 @@
 import typing
 from ...core.client_wrapper import SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...core.pagination import SyncPager
+from ...types.environment import Environment
 from ...types.list_environments_response import ListEnvironmentsResponse
 from ...core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
@@ -16,6 +18,7 @@ from ...errors.not_found_error import NotFoundError
 from ...types.http_error import HttpError
 from ...errors.conflict_error import ConflictError
 from ...core.client_wrapper import AsyncClientWrapper
+from ...core.pagination import AsyncPager
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -31,7 +34,7 @@ class EnvironmentsClient:
         limit: typing.Optional[int] = None,
         offset: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListEnvironmentsResponse:
+    ) -> SyncPager[Environment]:
         """
         List environments, if no environments are found, default environments are created and returned. Pagination is available based on query parameters
 
@@ -48,7 +51,7 @@ class EnvironmentsClient:
 
         Returns
         -------
-        ListEnvironmentsResponse
+        SyncPager[Environment]
             Returns a list of environment. If pagination parameters are provided, the response includes paginated data
 
         Examples
@@ -59,11 +62,17 @@ class EnvironmentsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.v1.environments.list(
+        response = client.v1.environments.list(
             limit=10,
             offset=0,
         )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
         """
+        offset = offset if offset is not None else 1
         _response = self._client_wrapper.httpx_client.request(
             "api/svc/v1/environments",
             method="GET",
@@ -75,13 +84,21 @@ class EnvironmentsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
+                _parsed_response = typing.cast(
                     ListEnvironmentsResponse,
                     parse_obj_as(
                         type_=ListEnvironmentsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
+                _has_next = True
+                _get_next = lambda: self.list(
+                    limit=limit,
+                    offset=offset + 1,
+                    request_options=request_options,
+                )
+                _items = _parsed_response.data
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -296,7 +313,7 @@ class AsyncEnvironmentsClient:
         limit: typing.Optional[int] = None,
         offset: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListEnvironmentsResponse:
+    ) -> AsyncPager[Environment]:
         """
         List environments, if no environments are found, default environments are created and returned. Pagination is available based on query parameters
 
@@ -313,7 +330,7 @@ class AsyncEnvironmentsClient:
 
         Returns
         -------
-        ListEnvironmentsResponse
+        AsyncPager[Environment]
             Returns a list of environment. If pagination parameters are provided, the response includes paginated data
 
         Examples
@@ -329,14 +346,20 @@ class AsyncEnvironmentsClient:
 
 
         async def main() -> None:
-            await client.v1.environments.list(
+            response = await client.v1.environments.list(
                 limit=10,
                 offset=0,
             )
+            async for item in response:
+                yield item
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
 
 
         asyncio.run(main())
         """
+        offset = offset if offset is not None else 1
         _response = await self._client_wrapper.httpx_client.request(
             "api/svc/v1/environments",
             method="GET",
@@ -348,13 +371,21 @@ class AsyncEnvironmentsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
+                _parsed_response = typing.cast(
                     ListEnvironmentsResponse,
                     parse_obj_as(
                         type_=ListEnvironmentsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
+                _has_next = True
+                _get_next = lambda: self.list(
+                    limit=limit,
+                    offset=offset + 1,
+                    request_options=request_options,
+                )
+                _items = _parsed_response.data
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

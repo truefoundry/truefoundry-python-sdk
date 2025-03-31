@@ -10,7 +10,9 @@ import pydantic
 from .cluster_autopilot_settings import ClusterAutopilotSettings
 from .cluster_auto_scaler_logs_metadata import ClusterAutoScalerLogsMetadata
 import datetime as dt
-from .cluster_metadata_installed_cr_ds_meta_value import ClusterMetadataInstalledCrDsMetaValue
+from .cluster_metadata_installed_cr_ds_meta_value import (
+    ClusterMetadataInstalledCrDsMetaValue,
+)
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -31,7 +33,8 @@ class ClusterMetadata(UniversalBaseModel):
         typing.Optional[typing.List[str]], FieldMetadata(alias="loadBalancerIPs")
     ] = None
     log_analytics_metadata: typing_extensions.Annotated[
-        typing.Optional[ClusterAutoScalerLogsMetadata], FieldMetadata(alias="logAnalyticsMetadata")
+        typing.Optional[ClusterAutoScalerLogsMetadata],
+        FieldMetadata(alias="logAnalyticsMetadata"),
     ] = None
     last_synced_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="lastSyncedAt")] = (
         None

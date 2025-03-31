@@ -2,7 +2,9 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
-from .internal_list_artifact_version_response_data_item import InternalListArtifactVersionResponseDataItem
+from .internal_list_artifact_version_response_data_item import (
+    InternalListArtifactVersionResponseDataItem,
+)
 from .pagination import Pagination
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic

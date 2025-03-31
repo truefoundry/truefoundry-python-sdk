@@ -16,7 +16,8 @@ class HelmDeploymentManifest(UniversalBaseModel):
     source: HelmDeploymentManifestSource
     values: typing.Dict[str, typing.Optional[typing.Any]]
     ignore_differences: typing_extensions.Annotated[
-        typing.Dict[str, typing.Optional[typing.Any]], FieldMetadata(alias="ignoreDifferences")
+        typing.Dict[str, typing.Optional[typing.Any]],
+        FieldMetadata(alias="ignoreDifferences"),
     ]
     labels: typing.Dict[str, typing.Optional[typing.Any]]
 

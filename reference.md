@@ -33,7 +33,12 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.v1.clusters.list()
+response = client.v1.clusters.list()
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
 
 ```
 </dd>
@@ -342,10 +347,15 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.v1.environments.list(
+response = client.v1.environments.list(
     limit=10,
     offset=0,
 )
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
 
 ```
 </dd>
@@ -649,10 +659,15 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.v1.workspaces.list(
+response = client.v1.workspaces.list(
     limit=10,
     offset=0,
 )
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
 
 ```
 </dd>
@@ -980,10 +995,15 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.v1.apps.list(
+response = client.v1.apps.list(
     limit=10,
     offset=0,
 )
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
 
 ```
 </dd>
@@ -1235,13 +1255,18 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.v1.apps.list_deployments(
+response = client.v1.apps.list_deployments(
     application_id="applicationId",
     limit=50.0,
     offset=0.0,
     version="1",
     id="deployment123",
 )
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
 
 ```
 </dd>
@@ -3590,14 +3615,6 @@ for page in response.iter_pages():
 <dd>
 
 **include_internal_metadata:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**include_model_versions:** `typing.Optional[bool]` 
     
 </dd>
 </dl>

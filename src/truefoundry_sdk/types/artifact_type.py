@@ -3,5 +3,6 @@
 import typing
 
 ArtifactType = typing.Union[
-    typing.Literal["artifact", "model", "plot", "image", "chat_prompt", "openapi-tool", "agent"], typing.Any
+    typing.Literal["artifact", "model", "plot", "image", "chat_prompt", "openapi-tool", "agent"],
+    typing.Any,
 ]

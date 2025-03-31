@@ -3,6 +3,13 @@
 import typing
 
 AppsListRequestDeviceTypeFilter = typing.Union[
-    typing.Literal["cpu", "nvidia_gpu", "aws_inferentia", "nvidia_mig_gpu", "nvidia_timeslicing_gpu", "gcp_tpu"],
+    typing.Literal[
+        "cpu",
+        "nvidia_gpu",
+        "aws_inferentia",
+        "nvidia_mig_gpu",
+        "nvidia_timeslicing_gpu",
+        "gcp_tpu",
+    ],
     typing.Any,
 ]

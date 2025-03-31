@@ -327,7 +327,12 @@ class ArtifactVersionsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def create_multi_part_upload(
-        self, *, id: str, path: str, num_parts: int, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        id: str,
+        path: str,
+        num_parts: int,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> MultiPartUploadResponse:
         """
         Parameters
@@ -396,7 +401,10 @@ class ArtifactVersionsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def stage(
-        self, *, manifest: Manifest, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        manifest: Manifest,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> StageArtifactResponse:
         """
         Parameters
@@ -895,7 +903,12 @@ class AsyncArtifactVersionsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create_multi_part_upload(
-        self, *, id: str, path: str, num_parts: int, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        id: str,
+        path: str,
+        num_parts: int,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> MultiPartUploadResponse:
         """
         Parameters
@@ -972,7 +985,10 @@ class AsyncArtifactVersionsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def stage(
-        self, *, manifest: Manifest, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        manifest: Manifest,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> StageArtifactResponse:
         """
         Parameters

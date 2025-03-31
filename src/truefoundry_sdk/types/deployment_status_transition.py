@@ -3,5 +3,12 @@
 import typing
 
 DeploymentStatusTransition = typing.Union[
-    typing.Literal["BUILDING", "DEPLOYING", "REUSING_EXISTING_BUILD", "COMPONENTS_DEPLOYING", "WAITING"], typing.Any
+    typing.Literal[
+        "BUILDING",
+        "DEPLOYING",
+        "REUSING_EXISTING_BUILD",
+        "COMPONENTS_DEPLOYING",
+        "WAITING",
+    ],
+    typing.Any,
 ]
