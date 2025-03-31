@@ -3,10 +3,13 @@
 from . import (
     agent_versions,
     agents,
+    applications,
+    apps,
     artifact_versions,
     artifacts,
     clusters,
     data_directories,
+    deployments,
     environments,
     internal,
     ml_repos,
@@ -16,22 +19,54 @@ from . import (
     prompts,
     tool_versions,
     tools,
+    users,
     workspaces,
 )
+from .applications import ApplicationsGetPodTemplateHashDeploymentVersionMapResponse
+from .apps import (
+    AppsCancelDeploymentResponse,
+    AppsDeleteResponse,
+    AppsListRequestDeviceTypeFilter,
+    AppsListRequestLifecycleStage,
+)
 from .artifact_versions import Manifest
-from .clusters import ClustersDeleteResponse
-from .workspaces import WorkspacesDeleteResponse
+from .clusters import (
+    ClustersDeleteResponse,
+    ClustersGetAutoscalerLogsRequestOperator,
+    ClustersGetAutoscalerLogsRequestType,
+)
+from .workspaces import (
+    WorkspacesDeleteResponse,
+    WorkspacesGetBuildLogsRequestOperator,
+    WorkspacesGetBuildLogsRequestType,
+    WorkspacesGetLogsRequestOperator,
+    WorkspacesGetLogsRequestType,
+)
 
 __all__ = [
+    "ApplicationsGetPodTemplateHashDeploymentVersionMapResponse",
+    "AppsCancelDeploymentResponse",
+    "AppsDeleteResponse",
+    "AppsListRequestDeviceTypeFilter",
+    "AppsListRequestLifecycleStage",
     "ClustersDeleteResponse",
+    "ClustersGetAutoscalerLogsRequestOperator",
+    "ClustersGetAutoscalerLogsRequestType",
     "Manifest",
     "WorkspacesDeleteResponse",
+    "WorkspacesGetBuildLogsRequestOperator",
+    "WorkspacesGetBuildLogsRequestType",
+    "WorkspacesGetLogsRequestOperator",
+    "WorkspacesGetLogsRequestType",
     "agent_versions",
     "agents",
+    "applications",
+    "apps",
     "artifact_versions",
     "artifacts",
     "clusters",
     "data_directories",
+    "deployments",
     "environments",
     "internal",
     "ml_repos",
@@ -41,5 +76,6 @@ __all__ = [
     "prompts",
     "tool_versions",
     "tools",
+    "users",
     "workspaces",
 ]

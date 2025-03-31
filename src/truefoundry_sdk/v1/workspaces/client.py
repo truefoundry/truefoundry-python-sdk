@@ -2,24 +2,36 @@
 
 import typing
 from ...core.client_wrapper import SyncClientWrapper
+from .types.workspaces_get_logs_request_type import WorkspacesGetLogsRequestType
+from .types.workspaces_get_logs_request_operator import WorkspacesGetLogsRequestOperator
 from ...core.request_options import RequestOptions
+from ...types.logs_response import LogsResponse
+from ...core.jsonable_encoder import jsonable_encoder
+from ...core.pydantic_utilities import parse_obj_as
+from ...errors.bad_request_error import BadRequestError
+from json.decoder import JSONDecodeError
+from ...core.api_error import ApiError
+from .types.workspaces_get_build_logs_request_type import (
+    WorkspacesGetBuildLogsRequestType,
+)
+from .types.workspaces_get_build_logs_request_operator import (
+    WorkspacesGetBuildLogsRequestOperator,
+)
 from ...core.pagination import SyncPager
 from ...types.workspace import Workspace
 from ...types.list_workspaces_response import ListWorkspacesResponse
-from ...core.pydantic_utilities import parse_obj_as
-from json.decoder import JSONDecodeError
-from ...core.api_error import ApiError
 from ...types.workspace_manifest import WorkspaceManifest
 from ...types.get_workspace_response import GetWorkspaceResponse
 from ...core.serialization import convert_and_respect_annotation_metadata
-from ...errors.bad_request_error import BadRequestError
-from ...types.http_error import HttpError
 from ...errors.forbidden_error import ForbiddenError
+from ...types.http_error import HttpError
 from ...errors.not_found_error import NotFoundError
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
-from ...core.jsonable_encoder import jsonable_encoder
 from .types.workspaces_delete_response import WorkspacesDeleteResponse
 from ...errors.expectation_failed_error import ExpectationFailedError
+from ...types.alert_status import AlertStatus
+from ...types.get_alerts_response import GetAlertsResponse
+from ...types.event_response import EventResponse
 from ...core.client_wrapper import AsyncClientWrapper
 from ...core.pagination import AsyncPager
 
@@ -30,6 +42,267 @@ OMIT = typing.cast(typing.Any, ...)
 class WorkspacesClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    def get_logs(
+        self,
+        workspace_id: str,
+        *,
+        match_string: str,
+        type: WorkspacesGetLogsRequestType,
+        operator: WorkspacesGetLogsRequestOperator,
+        start_ts: typing.Optional[str] = None,
+        end_ts: typing.Optional[str] = None,
+        limit: typing.Optional[str] = None,
+        direction: typing.Optional[str] = None,
+        application_id: typing.Optional[str] = None,
+        deployment_id: typing.Optional[str] = None,
+        job_run_name: typing.Optional[str] = None,
+        pod_name: typing.Optional[str] = None,
+        container_name: typing.Optional[str] = None,
+        pod_names: typing.Optional[str] = None,
+        pod_names_regex: typing.Optional[str] = None,
+        num_logs_to_ignore: typing.Optional[float] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> LogsResponse:
+        """
+        Fetch logs for various workload components, including Services, Jobs, Workflows, Job Runs, and Pods. Logs are filtered based on the provided query parameters.
+
+        Parameters
+        ----------
+        workspace_id : str
+            Workspace ID
+
+        match_string : str
+            String that needs to be matched
+
+        type : WorkspacesGetLogsRequestType
+            query filter type, `regex` or `substring`
+
+        operator : WorkspacesGetLogsRequestOperator
+            comparison operator for filter. `equal` or `not_equal`
+
+        start_ts : typing.Optional[str]
+            Start timestamp for querying logs, in nanoseconds from the Unix epoch.
+
+        end_ts : typing.Optional[str]
+            End timestamp for querying logs, in nanoseconds from the Unix epoch.
+
+        limit : typing.Optional[str]
+            Max number of log lines to fetch
+
+        direction : typing.Optional[str]
+            Direction of sorting logs. Can be `asc` or `desc`
+
+        application_id : typing.Optional[str]
+            Application ID
+
+        deployment_id : typing.Optional[str]
+            Deployment ID
+
+        job_run_name : typing.Optional[str]
+            Name of the Job Run for which to fetch logs.
+
+        pod_name : typing.Optional[str]
+            Name of Pod for which to fetch logs.
+
+        container_name : typing.Optional[str]
+            Name of the Container for which to fetch logs.
+
+        pod_names : typing.Optional[str]
+            List of pod names (comma-separated) for which to fetch logs.
+
+        pod_names_regex : typing.Optional[str]
+            Regex pattern for pod names to fetch logs.
+
+        num_logs_to_ignore : typing.Optional[float]
+            Number of logs corresponding to the starting timestamp to be ignored.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LogsResponse
+            Successfully retrieved logs for the workload
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.v1.workspaces.get_logs(
+            workspace_id="workspaceId",
+            start_ts="1635467890123456789",
+            end_ts="1635467891123456789",
+            application_id="application-12345",
+            deployment_id="deployment-67890",
+            job_run_name="example-job-5147f0c8daaa",
+            pod_name="example-pod-1879544112",
+            container_name="example-container",
+            pod_names_regex="example-pod-.*",
+            match_string="matchString",
+            type="regex",
+            operator="equal",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/logs/{jsonable_encoder(workspace_id)}",
+            method="GET",
+            params={
+                "startTs": start_ts,
+                "endTs": end_ts,
+                "limit": limit,
+                "direction": direction,
+                "applicationId": application_id,
+                "deploymentId": deployment_id,
+                "jobRunName": job_run_name,
+                "podName": pod_name,
+                "containerName": container_name,
+                "podNames": pod_names,
+                "podNamesRegex": pod_names_regex,
+                "matchString": match_string,
+                "type": type,
+                "operator": operator,
+                "numLogsToIgnore": num_logs_to_ignore,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    LogsResponse,
+                    parse_obj_as(
+                        type_=LogsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get_build_logs(
+        self,
+        pipeline_run_name: str,
+        *,
+        match_string: str,
+        type: WorkspacesGetBuildLogsRequestType,
+        operator: WorkspacesGetBuildLogsRequestOperator,
+        start_ts: typing.Optional[str] = None,
+        end_ts: typing.Optional[str] = None,
+        limit: typing.Optional[str] = None,
+        direction: typing.Optional[str] = None,
+        num_logs_to_ignore: typing.Optional[float] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> LogsResponse:
+        """
+        Get logs for a given pipeline run by its name, with optional filters and time range.
+
+        Parameters
+        ----------
+        pipeline_run_name : str
+            PipelineRun Name
+
+        match_string : str
+            String that needs to be matched
+
+        type : WorkspacesGetBuildLogsRequestType
+            query filter type, `regex` or `substring`
+
+        operator : WorkspacesGetBuildLogsRequestOperator
+            comparison operator for filter. `equal` or `not_equal`
+
+        start_ts : typing.Optional[str]
+            Start timestamp for querying logs, in nanoseconds from the Unix epoch.
+
+        end_ts : typing.Optional[str]
+            End timestamp for querying logs, in nanoseconds from the Unix epoch.
+
+        limit : typing.Optional[str]
+            Max number of log lines to fetch
+
+        direction : typing.Optional[str]
+            Direction of sorting logs. Can be `asc` or `desc`
+
+        num_logs_to_ignore : typing.Optional[float]
+            Number of logs corresponding to the starting timestamp to be ignored.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LogsResponse
+            Successfully retrieved build logs for the pipeline run
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.v1.workspaces.get_build_logs(
+            pipeline_run_name="pipelineRunName",
+            start_ts="1635467890123456789",
+            end_ts="1635467891123456789",
+            match_string="matchString",
+            type="regex",
+            operator="equal",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/build-logs/{jsonable_encoder(pipeline_run_name)}",
+            method="GET",
+            params={
+                "startTs": start_ts,
+                "endTs": end_ts,
+                "limit": limit,
+                "direction": direction,
+                "matchString": match_string,
+                "type": type,
+                "operator": operator,
+                "numLogsToIgnore": num_logs_to_ignore,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    LogsResponse,
+                    parse_obj_as(
+                        type_=LogsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def list(
         self,
@@ -195,9 +468,9 @@ class WorkspacesClient:
             if _response.status_code == 400:
                 raise BadRequestError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -365,10 +638,481 @@ class WorkspacesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def get_event_alerts(
+        self,
+        *,
+        start_ts: typing.Optional[str] = None,
+        end_ts: typing.Optional[str] = None,
+        cluster_id: typing.Optional[str] = None,
+        application_id: typing.Optional[str] = None,
+        alert_status: typing.Optional[AlertStatus] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetAlertsResponse:
+        """
+        Get alerts for a given application or cluster filtered by start and end timestamp
+
+        Parameters
+        ----------
+        start_ts : typing.Optional[str]
+            Start timestamp (ISO format) for querying events
+
+        end_ts : typing.Optional[str]
+            End timestamp (ISO format) for querying events
+
+        cluster_id : typing.Optional[str]
+            Cluster id
+
+        application_id : typing.Optional[str]
+            Application id
+
+        alert_status : typing.Optional[AlertStatus]
+            Alert status
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetAlertsResponse
+            Returns an object with alert name as key and list of alerts as value
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.v1.workspaces.get_event_alerts()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/svc/v1/events/alerts",
+            method="GET",
+            params={
+                "startTs": start_ts,
+                "endTs": end_ts,
+                "clusterId": cluster_id,
+                "applicationId": application_id,
+                "alertStatus": alert_status,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetAlertsResponse,
+                    parse_obj_as(
+                        type_=GetAlertsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get_events(
+        self,
+        workspace_id: str,
+        *,
+        start_ts: typing.Optional[str] = None,
+        end_ts: typing.Optional[str] = None,
+        application_id: typing.Optional[str] = None,
+        pod_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        job_run_name: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[EventResponse]:
+        """
+        Get Events for Pod, Job Run, Application. The events are sourced from Kubernetes as well as events captured by truefoundry. Optional query parameters include startTs, endTs for filtering.
+
+        Parameters
+        ----------
+        workspace_id : str
+            Workspace id
+
+        start_ts : typing.Optional[str]
+            Start timestamp (ISO format) for querying events
+
+        end_ts : typing.Optional[str]
+            End timestamp (ISO format) for querying events
+
+        application_id : typing.Optional[str]
+            Application id
+
+        pod_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Name of the pods (comma separated)
+
+        job_run_name : typing.Optional[str]
+            Job run name
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[EventResponse]
+            Returns a list of events matching the query parameters.
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.v1.workspaces.get_events(
+            workspace_id="workspaceId",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/events/{jsonable_encoder(workspace_id)}",
+            method="GET",
+            params={
+                "startTs": start_ts,
+                "endTs": end_ts,
+                "applicationId": application_id,
+                "podNames": pod_names,
+                "jobRunName": job_run_name,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.List[EventResponse],
+                    parse_obj_as(
+                        type_=typing.List[EventResponse],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncWorkspacesClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    async def get_logs(
+        self,
+        workspace_id: str,
+        *,
+        match_string: str,
+        type: WorkspacesGetLogsRequestType,
+        operator: WorkspacesGetLogsRequestOperator,
+        start_ts: typing.Optional[str] = None,
+        end_ts: typing.Optional[str] = None,
+        limit: typing.Optional[str] = None,
+        direction: typing.Optional[str] = None,
+        application_id: typing.Optional[str] = None,
+        deployment_id: typing.Optional[str] = None,
+        job_run_name: typing.Optional[str] = None,
+        pod_name: typing.Optional[str] = None,
+        container_name: typing.Optional[str] = None,
+        pod_names: typing.Optional[str] = None,
+        pod_names_regex: typing.Optional[str] = None,
+        num_logs_to_ignore: typing.Optional[float] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> LogsResponse:
+        """
+        Fetch logs for various workload components, including Services, Jobs, Workflows, Job Runs, and Pods. Logs are filtered based on the provided query parameters.
+
+        Parameters
+        ----------
+        workspace_id : str
+            Workspace ID
+
+        match_string : str
+            String that needs to be matched
+
+        type : WorkspacesGetLogsRequestType
+            query filter type, `regex` or `substring`
+
+        operator : WorkspacesGetLogsRequestOperator
+            comparison operator for filter. `equal` or `not_equal`
+
+        start_ts : typing.Optional[str]
+            Start timestamp for querying logs, in nanoseconds from the Unix epoch.
+
+        end_ts : typing.Optional[str]
+            End timestamp for querying logs, in nanoseconds from the Unix epoch.
+
+        limit : typing.Optional[str]
+            Max number of log lines to fetch
+
+        direction : typing.Optional[str]
+            Direction of sorting logs. Can be `asc` or `desc`
+
+        application_id : typing.Optional[str]
+            Application ID
+
+        deployment_id : typing.Optional[str]
+            Deployment ID
+
+        job_run_name : typing.Optional[str]
+            Name of the Job Run for which to fetch logs.
+
+        pod_name : typing.Optional[str]
+            Name of Pod for which to fetch logs.
+
+        container_name : typing.Optional[str]
+            Name of the Container for which to fetch logs.
+
+        pod_names : typing.Optional[str]
+            List of pod names (comma-separated) for which to fetch logs.
+
+        pod_names_regex : typing.Optional[str]
+            Regex pattern for pod names to fetch logs.
+
+        num_logs_to_ignore : typing.Optional[float]
+            Number of logs corresponding to the starting timestamp to be ignored.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LogsResponse
+            Successfully retrieved logs for the workload
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.v1.workspaces.get_logs(
+                workspace_id="workspaceId",
+                start_ts="1635467890123456789",
+                end_ts="1635467891123456789",
+                application_id="application-12345",
+                deployment_id="deployment-67890",
+                job_run_name="example-job-5147f0c8daaa",
+                pod_name="example-pod-1879544112",
+                container_name="example-container",
+                pod_names_regex="example-pod-.*",
+                match_string="matchString",
+                type="regex",
+                operator="equal",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/logs/{jsonable_encoder(workspace_id)}",
+            method="GET",
+            params={
+                "startTs": start_ts,
+                "endTs": end_ts,
+                "limit": limit,
+                "direction": direction,
+                "applicationId": application_id,
+                "deploymentId": deployment_id,
+                "jobRunName": job_run_name,
+                "podName": pod_name,
+                "containerName": container_name,
+                "podNames": pod_names,
+                "podNamesRegex": pod_names_regex,
+                "matchString": match_string,
+                "type": type,
+                "operator": operator,
+                "numLogsToIgnore": num_logs_to_ignore,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    LogsResponse,
+                    parse_obj_as(
+                        type_=LogsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_build_logs(
+        self,
+        pipeline_run_name: str,
+        *,
+        match_string: str,
+        type: WorkspacesGetBuildLogsRequestType,
+        operator: WorkspacesGetBuildLogsRequestOperator,
+        start_ts: typing.Optional[str] = None,
+        end_ts: typing.Optional[str] = None,
+        limit: typing.Optional[str] = None,
+        direction: typing.Optional[str] = None,
+        num_logs_to_ignore: typing.Optional[float] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> LogsResponse:
+        """
+        Get logs for a given pipeline run by its name, with optional filters and time range.
+
+        Parameters
+        ----------
+        pipeline_run_name : str
+            PipelineRun Name
+
+        match_string : str
+            String that needs to be matched
+
+        type : WorkspacesGetBuildLogsRequestType
+            query filter type, `regex` or `substring`
+
+        operator : WorkspacesGetBuildLogsRequestOperator
+            comparison operator for filter. `equal` or `not_equal`
+
+        start_ts : typing.Optional[str]
+            Start timestamp for querying logs, in nanoseconds from the Unix epoch.
+
+        end_ts : typing.Optional[str]
+            End timestamp for querying logs, in nanoseconds from the Unix epoch.
+
+        limit : typing.Optional[str]
+            Max number of log lines to fetch
+
+        direction : typing.Optional[str]
+            Direction of sorting logs. Can be `asc` or `desc`
+
+        num_logs_to_ignore : typing.Optional[float]
+            Number of logs corresponding to the starting timestamp to be ignored.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LogsResponse
+            Successfully retrieved build logs for the pipeline run
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.v1.workspaces.get_build_logs(
+                pipeline_run_name="pipelineRunName",
+                start_ts="1635467890123456789",
+                end_ts="1635467891123456789",
+                match_string="matchString",
+                type="regex",
+                operator="equal",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/build-logs/{jsonable_encoder(pipeline_run_name)}",
+            method="GET",
+            params={
+                "startTs": start_ts,
+                "endTs": end_ts,
+                "limit": limit,
+                "direction": direction,
+                "matchString": match_string,
+                "type": type,
+                "operator": operator,
+                "numLogsToIgnore": num_logs_to_ignore,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    LogsResponse,
+                    parse_obj_as(
+                        type_=LogsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def list(
         self,
@@ -550,9 +1294,9 @@ class AsyncWorkspacesClient:
             if _response.status_code == 400:
                 raise BadRequestError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -725,6 +1469,216 @@ class AsyncWorkspacesClient:
                 )
             if _response.status_code == 417:
                 raise ExpectationFailedError(
+                    typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_event_alerts(
+        self,
+        *,
+        start_ts: typing.Optional[str] = None,
+        end_ts: typing.Optional[str] = None,
+        cluster_id: typing.Optional[str] = None,
+        application_id: typing.Optional[str] = None,
+        alert_status: typing.Optional[AlertStatus] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetAlertsResponse:
+        """
+        Get alerts for a given application or cluster filtered by start and end timestamp
+
+        Parameters
+        ----------
+        start_ts : typing.Optional[str]
+            Start timestamp (ISO format) for querying events
+
+        end_ts : typing.Optional[str]
+            End timestamp (ISO format) for querying events
+
+        cluster_id : typing.Optional[str]
+            Cluster id
+
+        application_id : typing.Optional[str]
+            Application id
+
+        alert_status : typing.Optional[AlertStatus]
+            Alert status
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetAlertsResponse
+            Returns an object with alert name as key and list of alerts as value
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.v1.workspaces.get_event_alerts()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/svc/v1/events/alerts",
+            method="GET",
+            params={
+                "startTs": start_ts,
+                "endTs": end_ts,
+                "clusterId": cluster_id,
+                "applicationId": application_id,
+                "alertStatus": alert_status,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetAlertsResponse,
+                    parse_obj_as(
+                        type_=GetAlertsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_events(
+        self,
+        workspace_id: str,
+        *,
+        start_ts: typing.Optional[str] = None,
+        end_ts: typing.Optional[str] = None,
+        application_id: typing.Optional[str] = None,
+        pod_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        job_run_name: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[EventResponse]:
+        """
+        Get Events for Pod, Job Run, Application. The events are sourced from Kubernetes as well as events captured by truefoundry. Optional query parameters include startTs, endTs for filtering.
+
+        Parameters
+        ----------
+        workspace_id : str
+            Workspace id
+
+        start_ts : typing.Optional[str]
+            Start timestamp (ISO format) for querying events
+
+        end_ts : typing.Optional[str]
+            End timestamp (ISO format) for querying events
+
+        application_id : typing.Optional[str]
+            Application id
+
+        pod_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Name of the pods (comma separated)
+
+        job_run_name : typing.Optional[str]
+            Job run name
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[EventResponse]
+            Returns a list of events matching the query parameters.
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.v1.workspaces.get_events(
+                workspace_id="workspaceId",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/events/{jsonable_encoder(workspace_id)}",
+            method="GET",
+            params={
+                "startTs": start_ts,
+                "endTs": end_ts,
+                "applicationId": application_id,
+                "podNames": pod_names,
+                "jobRunName": job_run_name,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.List[EventResponse],
+                    parse_obj_as(
+                        type_=typing.List[EventResponse],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
                     typing.cast(
                         HttpError,
                         parse_obj_as(

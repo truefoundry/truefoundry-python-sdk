@@ -1,4 +1,66 @@
 # Reference
+## V1 Users
+<details><summary><code>client.v1.users.<a href="src/truefoundry_sdk/v1/users/client.py">get_info</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the user session details for the currently authenticated user
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.v1.users.get_info()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## V1 Clusters
 <details><summary><code>client.v1.clusters.<a href="src/truefoundry_sdk/v1/clusters/client.py">list</a>(...)</code></summary>
 <dl>
@@ -33,7 +95,10 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.v1.clusters.list()
+response = client.v1.clusters.list(
+    limit=10,
+    offset=0,
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -54,7 +119,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**offset:** `typing.Optional[float]` — Number of Items Skipped. Defaults to 0 if not provided.
+**limit:** `typing.Optional[int]` — Number of items per page
     
 </dd>
 </dl>
@@ -62,7 +127,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**limit:** `typing.Optional[float]` — The maximum number of items to return per page. Defaults to a pre-defined value if not provided.
+**offset:** `typing.Optional[int]` — Number of items to skip
     
 </dd>
 </dl>
@@ -294,6 +359,298 @@ client.v1.clusters.delete(
 <dd>
 
 **id:** `str` — Cluster id of the cluster
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.v1.clusters.<a href="src/truefoundry_sdk/v1/clusters/client.py">get_addons</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List addons for the provided cluster.Pagination is available based on query parameters.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.v1.clusters.get_addons(
+    id="id",
+    limit=10,
+    offset=0,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — Cluster id of the cluster
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[int]` — Number of items per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**offset:** `typing.Optional[int]` — Number of items to skip
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.v1.clusters.<a href="src/truefoundry_sdk/v1/clusters/client.py">get_autoprovisioning_state</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the auto provisioning status for the provided cluster
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.v1.clusters.get_autoprovisioning_state(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — Cluster id of the cluster
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.v1.clusters.<a href="src/truefoundry_sdk/v1/clusters/client.py">get_autoscaler_logs</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve logs for the cluster autoscaler or NAP for the specified cluster. For GCP, it returns Node Auto Provisioning (NAP) logs. For Azure, it provides Cluster Autoscaler logs. For AWS, this functionality is not yet implemented.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.v1.clusters.get_autoscaler_logs(
+    id="id",
+    start_ts="1635467890123456789",
+    end_ts="1635467891123456789",
+    match_string="matchString",
+    type="regex",
+    operator="equal",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — Cluster id of the cluster
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**match_string:** `str` — String that needs to be matched
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `ClustersGetAutoscalerLogsRequestType` — query filter type, `regex` or `substring`
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**operator:** `ClustersGetAutoscalerLogsRequestOperator` — comparison operator for filter. `equal` or `not_equal`
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start_ts:** `typing.Optional[str]` — Start timestamp for querying logs, in nanoseconds from the Unix epoch.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end_ts:** `typing.Optional[str]` — End timestamp for querying logs, in nanoseconds from the Unix epoch.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[str]` — Max number of log lines to fetch
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**direction:** `typing.Optional[str]` — Direction of sorting logs. Can be `asc` or `desc`
     
 </dd>
 </dl>
@@ -626,6 +983,348 @@ client.v1.environments.delete(
 </details>
 
 ## V1 Workspaces
+<details><summary><code>client.v1.workspaces.<a href="src/truefoundry_sdk/v1/workspaces/client.py">get_logs</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Fetch logs for various workload components, including Services, Jobs, Workflows, Job Runs, and Pods. Logs are filtered based on the provided query parameters.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.v1.workspaces.get_logs(
+    workspace_id="workspaceId",
+    start_ts="1635467890123456789",
+    end_ts="1635467891123456789",
+    application_id="application-12345",
+    deployment_id="deployment-67890",
+    job_run_name="example-job-5147f0c8daaa",
+    pod_name="example-pod-1879544112",
+    container_name="example-container",
+    pod_names_regex="example-pod-.*",
+    match_string="matchString",
+    type="regex",
+    operator="equal",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workspace_id:** `str` — Workspace ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**match_string:** `str` — String that needs to be matched
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `WorkspacesGetLogsRequestType` — query filter type, `regex` or `substring`
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**operator:** `WorkspacesGetLogsRequestOperator` — comparison operator for filter. `equal` or `not_equal`
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start_ts:** `typing.Optional[str]` — Start timestamp for querying logs, in nanoseconds from the Unix epoch.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end_ts:** `typing.Optional[str]` — End timestamp for querying logs, in nanoseconds from the Unix epoch.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[str]` — Max number of log lines to fetch
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**direction:** `typing.Optional[str]` — Direction of sorting logs. Can be `asc` or `desc`
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**application_id:** `typing.Optional[str]` — Application ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**deployment_id:** `typing.Optional[str]` — Deployment ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**job_run_name:** `typing.Optional[str]` — Name of the Job Run for which to fetch logs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pod_name:** `typing.Optional[str]` — Name of Pod for which to fetch logs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**container_name:** `typing.Optional[str]` — Name of the Container for which to fetch logs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pod_names:** `typing.Optional[str]` — List of pod names (comma-separated) for which to fetch logs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pod_names_regex:** `typing.Optional[str]` — Regex pattern for pod names to fetch logs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_logs_to_ignore:** `typing.Optional[float]` — Number of logs corresponding to the starting timestamp to be ignored.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.v1.workspaces.<a href="src/truefoundry_sdk/v1/workspaces/client.py">get_build_logs</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get logs for a given pipeline run by its name, with optional filters and time range.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.v1.workspaces.get_build_logs(
+    pipeline_run_name="pipelineRunName",
+    start_ts="1635467890123456789",
+    end_ts="1635467891123456789",
+    match_string="matchString",
+    type="regex",
+    operator="equal",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pipeline_run_name:** `str` — PipelineRun Name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**match_string:** `str` — String that needs to be matched
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `WorkspacesGetBuildLogsRequestType` — query filter type, `regex` or `substring`
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**operator:** `WorkspacesGetBuildLogsRequestOperator` — comparison operator for filter. `equal` or `not_equal`
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start_ts:** `typing.Optional[str]` — Start timestamp for querying logs, in nanoseconds from the Unix epoch.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end_ts:** `typing.Optional[str]` — End timestamp for querying logs, in nanoseconds from the Unix epoch.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[str]` — Max number of log lines to fetch
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**direction:** `typing.Optional[str]` — Direction of sorting logs. Can be `asc` or `desc`
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_logs_to_ignore:** `typing.Optional[float]` — Number of logs corresponding to the starting timestamp to be ignored.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.v1.workspaces.<a href="src/truefoundry_sdk/v1/workspaces/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
@@ -942,6 +1641,1017 @@ client.v1.workspaces.delete(
 <dd>
 
 **id:** `str` — Workspace id of the space
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.v1.workspaces.<a href="src/truefoundry_sdk/v1/workspaces/client.py">get_event_alerts</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get alerts for a given application or cluster filtered by start and end timestamp
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.v1.workspaces.get_event_alerts()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**start_ts:** `typing.Optional[str]` — Start timestamp (ISO format) for querying events
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end_ts:** `typing.Optional[str]` — End timestamp (ISO format) for querying events
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cluster_id:** `typing.Optional[str]` — Cluster id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**application_id:** `typing.Optional[str]` — Application id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**alert_status:** `typing.Optional[AlertStatus]` — Alert status
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.v1.workspaces.<a href="src/truefoundry_sdk/v1/workspaces/client.py">get_events</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get Events for Pod, Job Run, Application. The events are sourced from Kubernetes as well as events captured by truefoundry. Optional query parameters include startTs, endTs for filtering.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.v1.workspaces.get_events(
+    workspace_id="workspaceId",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workspace_id:** `str` — Workspace id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start_ts:** `typing.Optional[str]` — Start timestamp (ISO format) for querying events
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end_ts:** `typing.Optional[str]` — End timestamp (ISO format) for querying events
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**application_id:** `typing.Optional[str]` — Application id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pod_names:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Name of the pods (comma separated)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**job_run_name:** `typing.Optional[str]` — Job run name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## V1 Apps
+<details><summary><code>client.v1.apps.<a href="src/truefoundry_sdk/v1/apps/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieves a list of all latest applications. Supports filtering by application ID, name, type, and other parameters. Pagination is available based on query parameters.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.v1.apps.list(
+    limit=10,
+    offset=0,
+)
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[int]` — Number of items per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**offset:** `typing.Optional[int]` — Number of items to skip
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**application_id:** `typing.Optional[str]` — Application id of the application
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workspace_id:** `typing.Optional[str]` — Workspace id of the application (comma separated for multiple)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**application_name:** `typing.Optional[str]` — Name of application
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**application_type:** `typing.Optional[str]` — Type of application (comma separated for multiple). Allowed Values: async-service, service, model-deployment, job, spark-job, helm, notebook, codeserver, rstudio, ssh-server, volume, application, application-set, intercept, workflow
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name_search_query:** `typing.Optional[str]` — Search query for application name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**environment_id:** `typing.Optional[str]` — Filter by Environment ids of the application (comma separated for multiple)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cluster_id:** `typing.Optional[str]` — Filter by Cluster ids of the application (comma separated for multiple)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**application_set_id:** `typing.Optional[str]` — Filter by Application Set id of the application
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**paused:** `typing.Optional[bool]` — Filter by Application Paused status
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**device_type_filter:** `typing.Optional[AppsListRequestDeviceTypeFilter]` — Filter by device type of the application. Allowed values: cpu, nvidia_gpu, aws_inferentia, nvidia_mig_gpu, nvidia_timeslicing_gpu, gcp_tpu
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_deployed_by_subjects:** `typing.Optional[str]` — Filter by last deployed by specific users
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**lifecycle_stage:** `typing.Optional[AppsListRequestLifecycleStage]` — Filter by application lifecycle state
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_recommendation_present:** `typing.Optional[bool]` — Filter out applications with recommendations
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.v1.apps.<a href="src/truefoundry_sdk/v1/apps/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete Application associated with the provided application ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.v1.apps.delete(
+    application_id="applicationId",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**application_id:** `str` — Application Id of the application
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.v1.apps.<a href="src/truefoundry_sdk/v1/apps/client.py">list_deployments</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Fetch all deployments for a given application ID with optional filters such as deployment ID or version. Supports pagination.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.v1.apps.list_deployments(
+    application_id="applicationId",
+    limit=50.0,
+    offset=0.0,
+    version="1",
+    id="deployment123",
+)
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**application_id:** `str` — Application Id of the application
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[float]` — Number of items per page. Defaults to 50 if not provided.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**offset:** `typing.Optional[float]` — Number of items to skip.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version:** `typing.Optional[str]` — Deployment version. Filter deployments by version.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**id:** `typing.Optional[str]` — Deployment ID. Filter deployments by a specific ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.v1.apps.<a href="src/truefoundry_sdk/v1/apps/client.py">scale_to_zero</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pause a running application by scaling to 0 replicas
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.v1.apps.scale_to_zero(
+    application_id="applicationId",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**application_id:** `str` — Application Id of the application
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.v1.apps.<a href="src/truefoundry_sdk/v1/apps/client.py">cancel_deployment</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Cancel an ongoing deployment associated with the provided application ID and deployment ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.v1.apps.cancel_deployment(
+    application_id="applicationId",
+    deployment_id="deploymentId",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**application_id:** `str` — Application id of the application
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**deployment_id:** `str` — Deployment id of the deployment
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.v1.apps.<a href="src/truefoundry_sdk/v1/apps/client.py">get_deployment_builds</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+This endpoint returns all build details associated with a specific deployment in a given application.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.v1.apps.get_deployment_builds(
+    application_id="applicationId",
+    deployment_id="deploymentId",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**application_id:** `str` — Application id of the application
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**deployment_id:** `str` — Deployment id of the deployment
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## V1 Applications
+<details><summary><code>client.v1.applications.<a href="src/truefoundry_sdk/v1/applications/client.py">get_pod_template_hash_deployment_version_map</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+This endpoint fetches the pod template hash to deployment version map for a specific application.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.v1.applications.get_pod_template_hash_deployment_version_map(
+    application_id="applicationId",
+    pod_template_hashes="podTemplateHashes",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**application_id:** `str` — Application Id of the application
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pod_template_hashes:** `str` — Pod Template Hashes (comma separated for multiple)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## V1 Deployments
+<details><summary><code>client.v1.deployments.<a href="src/truefoundry_sdk/v1/deployments/client.py">get_deployment_endpoint</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Generate deployment endpoint based on the provided query parameters.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.v1.deployments.get_deployment_endpoint(
+    application_type="async-service",
+    application_name="applicationName",
+    workspace_id="workspaceId",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**application_type:** `ApplicationType` — Application Type
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**application_name:** `str` — Application name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workspace_id:** `str` — Workspace id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**base_domain:** `typing.Optional[str]` — Base domain
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**port:** `typing.Optional[str]` — Port
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefer_wildcard:** `typing.Optional[bool]` — Prefer wildcard
     
 </dd>
 </dl>

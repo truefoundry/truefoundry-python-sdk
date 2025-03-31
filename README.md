@@ -26,10 +26,9 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.v1.artifact_versions.get_signed_urls(
-    id="id",
-    paths=["paths"],
-    operation="READ",
+client.v1.apps.cancel_deployment(
+    application_id="applicationId",
+    deployment_id="deploymentId",
 )
 ```
 
@@ -49,10 +48,9 @@ client = AsyncTrueFoundry(
 
 
 async def main() -> None:
-    await client.v1.artifact_versions.get_signed_urls(
-        id="id",
-        paths=["paths"],
-        operation="READ",
+    await client.v1.apps.cancel_deployment(
+        application_id="applicationId",
+        deployment_id="deploymentId",
     )
 
 
@@ -68,7 +66,7 @@ will be thrown.
 from truefoundry_sdk.core.api_error import ApiError
 
 try:
-    client.v1.artifact_versions.get_signed_urls(...)
+    client.v1.apps.cancel_deployment(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -85,7 +83,10 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.v1.clusters.list()
+response = client.v1.clusters.list(
+    limit=10,
+    offset=0,
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -110,7 +111,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.v1.artifact_versions.get_signed_urls(..., request_options={
+client.v1.apps.cancel_deployment(..., request_options={
     "max_retries": 1
 })
 ```
@@ -130,7 +131,7 @@ client = TrueFoundry(
 
 
 # Override timeout for a specific method
-client.v1.artifact_versions.get_signed_urls(..., request_options={
+client.v1.apps.cancel_deployment(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

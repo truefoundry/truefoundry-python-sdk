@@ -19,6 +19,16 @@ from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...core.jsonable_encoder import jsonable_encoder
 from ...errors.not_found_error import NotFoundError
 from .types.clusters_delete_response import ClustersDeleteResponse
+from ...types.list_cluster_addons_response import ListClusterAddonsResponse
+from ...types.auto_provisioning_state_response import AutoProvisioningStateResponse
+from .types.clusters_get_autoscaler_logs_request_type import (
+    ClustersGetAutoscalerLogsRequestType,
+)
+from .types.clusters_get_autoscaler_logs_request_operator import (
+    ClustersGetAutoscalerLogsRequestOperator,
+)
+from ...types.logs_response import LogsResponse
+from ...errors.bad_request_error import BadRequestError
 from ...core.client_wrapper import AsyncClientWrapper
 from ...core.pagination import AsyncPager
 
@@ -33,8 +43,8 @@ class ClustersClient:
     def list(
         self,
         *,
-        offset: typing.Optional[float] = None,
-        limit: typing.Optional[float] = None,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Cluster]:
         """
@@ -42,11 +52,11 @@ class ClustersClient:
 
         Parameters
         ----------
-        offset : typing.Optional[float]
-            Number of Items Skipped. Defaults to 0 if not provided.
+        limit : typing.Optional[int]
+            Number of items per page
 
-        limit : typing.Optional[float]
-            The maximum number of items to return per page. Defaults to a pre-defined value if not provided.
+        offset : typing.Optional[int]
+            Number of items to skip
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -64,7 +74,10 @@ class ClustersClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = client.v1.clusters.list()
+        response = client.v1.clusters.list(
+            limit=10,
+            offset=0,
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -76,8 +89,8 @@ class ClustersClient:
             "api/svc/v1/clusters",
             method="GET",
             params={
-                "offset": offset,
                 "limit": limit,
+                "offset": offset,
             },
             request_options=request_options,
         )
@@ -92,8 +105,8 @@ class ClustersClient:
                 )
                 _has_next = True
                 _get_next = lambda: self.list(
-                    offset=offset + 1,
                     limit=limit,
+                    offset=offset + 1,
                     request_options=request_options,
                 )
                 _items = _parsed_response.data
@@ -356,6 +369,258 @@ class ClustersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def get_addons(
+        self,
+        id: str,
+        *,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ListClusterAddonsResponse:
+        """
+        List addons for the provided cluster.Pagination is available based on query parameters.
+
+        Parameters
+        ----------
+        id : str
+            Cluster id of the cluster
+
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListClusterAddonsResponse
+            Returns the list of addons for the cluster And also response includes paginated data
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.v1.clusters.get_addons(
+            id="id",
+            limit=10,
+            offset=0,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/clusters/{jsonable_encoder(id)}/get-addons",
+            method="GET",
+            params={
+                "limit": limit,
+                "offset": offset,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ListClusterAddonsResponse,
+                    parse_obj_as(
+                        type_=ListClusterAddonsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get_autoprovisioning_state(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AutoProvisioningStateResponse:
+        """
+        Get the auto provisioning status for the provided cluster
+
+        Parameters
+        ----------
+        id : str
+            Cluster id of the cluster
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AutoProvisioningStateResponse
+            Returns the auto provisioning status for the cluster
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.v1.clusters.get_autoprovisioning_state(
+            id="id",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/clusters/{jsonable_encoder(id)}/autoprovisioning-state",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    AutoProvisioningStateResponse,
+                    parse_obj_as(
+                        type_=AutoProvisioningStateResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get_autoscaler_logs(
+        self,
+        id: str,
+        *,
+        match_string: str,
+        type: ClustersGetAutoscalerLogsRequestType,
+        operator: ClustersGetAutoscalerLogsRequestOperator,
+        start_ts: typing.Optional[str] = None,
+        end_ts: typing.Optional[str] = None,
+        limit: typing.Optional[str] = None,
+        direction: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> LogsResponse:
+        """
+        Retrieve logs for the cluster autoscaler or NAP for the specified cluster. For GCP, it returns Node Auto Provisioning (NAP) logs. For Azure, it provides Cluster Autoscaler logs. For AWS, this functionality is not yet implemented.
+
+        Parameters
+        ----------
+        id : str
+            Cluster id of the cluster
+
+        match_string : str
+            String that needs to be matched
+
+        type : ClustersGetAutoscalerLogsRequestType
+            query filter type, `regex` or `substring`
+
+        operator : ClustersGetAutoscalerLogsRequestOperator
+            comparison operator for filter. `equal` or `not_equal`
+
+        start_ts : typing.Optional[str]
+            Start timestamp for querying logs, in nanoseconds from the Unix epoch.
+
+        end_ts : typing.Optional[str]
+            End timestamp for querying logs, in nanoseconds from the Unix epoch.
+
+        limit : typing.Optional[str]
+            Max number of log lines to fetch
+
+        direction : typing.Optional[str]
+            Direction of sorting logs. Can be `asc` or `desc`
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LogsResponse
+            Successfully retrieved logs: Cluster Autoscaler or NAP
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.v1.clusters.get_autoscaler_logs(
+            id="id",
+            start_ts="1635467890123456789",
+            end_ts="1635467891123456789",
+            match_string="matchString",
+            type="regex",
+            operator="equal",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/cluster-autoscaler-logs/{jsonable_encoder(id)}",
+            method="GET",
+            params={
+                "startTs": start_ts,
+                "endTs": end_ts,
+                "limit": limit,
+                "direction": direction,
+                "matchString": match_string,
+                "type": type,
+                "operator": operator,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    LogsResponse,
+                    parse_obj_as(
+                        type_=LogsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncClustersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -364,8 +629,8 @@ class AsyncClustersClient:
     async def list(
         self,
         *,
-        offset: typing.Optional[float] = None,
-        limit: typing.Optional[float] = None,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Cluster]:
         """
@@ -373,11 +638,11 @@ class AsyncClustersClient:
 
         Parameters
         ----------
-        offset : typing.Optional[float]
-            Number of Items Skipped. Defaults to 0 if not provided.
+        limit : typing.Optional[int]
+            Number of items per page
 
-        limit : typing.Optional[float]
-            The maximum number of items to return per page. Defaults to a pre-defined value if not provided.
+        offset : typing.Optional[int]
+            Number of items to skip
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -400,7 +665,10 @@ class AsyncClustersClient:
 
 
         async def main() -> None:
-            response = await client.v1.clusters.list()
+            response = await client.v1.clusters.list(
+                limit=10,
+                offset=0,
+            )
             async for item in response:
                 yield item
             # alternatively, you can paginate page-by-page
@@ -415,8 +683,8 @@ class AsyncClustersClient:
             "api/svc/v1/clusters",
             method="GET",
             params={
-                "offset": offset,
                 "limit": limit,
+                "offset": offset,
             },
             request_options=request_options,
         )
@@ -431,8 +699,8 @@ class AsyncClustersClient:
                 )
                 _has_next = True
                 _get_next = lambda: self.list(
-                    offset=offset + 1,
                     limit=limit,
+                    offset=offset + 1,
                     request_options=request_options,
                 )
                 _items = _parsed_response.data
@@ -712,6 +980,282 @@ class AsyncClustersClient:
                         HttpError,
                         parse_obj_as(
                             type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_addons(
+        self,
+        id: str,
+        *,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ListClusterAddonsResponse:
+        """
+        List addons for the provided cluster.Pagination is available based on query parameters.
+
+        Parameters
+        ----------
+        id : str
+            Cluster id of the cluster
+
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListClusterAddonsResponse
+            Returns the list of addons for the cluster And also response includes paginated data
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.v1.clusters.get_addons(
+                id="id",
+                limit=10,
+                offset=0,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/clusters/{jsonable_encoder(id)}/get-addons",
+            method="GET",
+            params={
+                "limit": limit,
+                "offset": offset,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ListClusterAddonsResponse,
+                    parse_obj_as(
+                        type_=ListClusterAddonsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_autoprovisioning_state(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AutoProvisioningStateResponse:
+        """
+        Get the auto provisioning status for the provided cluster
+
+        Parameters
+        ----------
+        id : str
+            Cluster id of the cluster
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AutoProvisioningStateResponse
+            Returns the auto provisioning status for the cluster
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.v1.clusters.get_autoprovisioning_state(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/clusters/{jsonable_encoder(id)}/autoprovisioning-state",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    AutoProvisioningStateResponse,
+                    parse_obj_as(
+                        type_=AutoProvisioningStateResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_autoscaler_logs(
+        self,
+        id: str,
+        *,
+        match_string: str,
+        type: ClustersGetAutoscalerLogsRequestType,
+        operator: ClustersGetAutoscalerLogsRequestOperator,
+        start_ts: typing.Optional[str] = None,
+        end_ts: typing.Optional[str] = None,
+        limit: typing.Optional[str] = None,
+        direction: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> LogsResponse:
+        """
+        Retrieve logs for the cluster autoscaler or NAP for the specified cluster. For GCP, it returns Node Auto Provisioning (NAP) logs. For Azure, it provides Cluster Autoscaler logs. For AWS, this functionality is not yet implemented.
+
+        Parameters
+        ----------
+        id : str
+            Cluster id of the cluster
+
+        match_string : str
+            String that needs to be matched
+
+        type : ClustersGetAutoscalerLogsRequestType
+            query filter type, `regex` or `substring`
+
+        operator : ClustersGetAutoscalerLogsRequestOperator
+            comparison operator for filter. `equal` or `not_equal`
+
+        start_ts : typing.Optional[str]
+            Start timestamp for querying logs, in nanoseconds from the Unix epoch.
+
+        end_ts : typing.Optional[str]
+            End timestamp for querying logs, in nanoseconds from the Unix epoch.
+
+        limit : typing.Optional[str]
+            Max number of log lines to fetch
+
+        direction : typing.Optional[str]
+            Direction of sorting logs. Can be `asc` or `desc`
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LogsResponse
+            Successfully retrieved logs: Cluster Autoscaler or NAP
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.v1.clusters.get_autoscaler_logs(
+                id="id",
+                start_ts="1635467890123456789",
+                end_ts="1635467891123456789",
+                match_string="matchString",
+                type="regex",
+                operator="equal",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/cluster-autoscaler-logs/{jsonable_encoder(id)}",
+            method="GET",
+            params={
+                "startTs": start_ts,
+                "endTs": end_ts,
+                "limit": limit,
+                "direction": direction,
+                "matchString": match_string,
+                "type": type,
+                "operator": operator,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    LogsResponse,
+                    parse_obj_as(
+                        type_=LogsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
