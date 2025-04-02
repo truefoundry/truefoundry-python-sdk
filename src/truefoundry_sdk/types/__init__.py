@@ -17,7 +17,6 @@ from .application_lifecycle_stage import ApplicationLifecycleStage
 from .application_metadata import ApplicationMetadata
 from .application_problem import ApplicationProblem
 from .application_type import ApplicationType
-from .application_upgrade import ApplicationUpgrade
 from .apply_request import ApplyRequest
 from .apply_response import ApplyResponse
 from .apply_sdk_code import ApplySdkCode
@@ -30,24 +29,15 @@ from .assistant_message import AssistantMessage
 from .base_artifact_version import BaseArtifactVersion
 from .blob_storage_reference import BlobStorageReference
 from .build import Build
-from .build_build_source import BuildBuildSource
-from .build_build_spec import BuildBuildSpec
+from .build_status import BuildStatus
 from .chat_prompt_manifest import ChatPromptManifest
 from .chat_prompt_manifest_messages_item import ChatPromptManifestMessagesItem
 from .cluster import Cluster
-from .cluster_auto_scaler_logs_metadata import ClusterAutoScalerLogsMetadata
-from .cluster_autopilot_settings import ClusterAutopilotSettings
-from .cluster_cloud_provider import ClusterCloudProvider
-from .cluster_gateway import ClusterGateway
 from .cluster_manifest import ClusterManifest
 from .cluster_manifest_cluster_type import ClusterManifestClusterType
 from .cluster_manifest_monitoring import ClusterManifestMonitoring
 from .cluster_manifest_node_label_keys import ClusterManifestNodeLabelKeys
 from .cluster_manifest_workbench_config import ClusterManifestWorkbenchConfig
-from .cluster_metadata import ClusterMetadata
-from .cluster_metadata_installed_cr_ds_meta_value import ClusterMetadataInstalledCrDsMetaValue
-from .cluster_nodepool import ClusterNodepool
-from .cluster_recommendation_summary import ClusterRecommendationSummary
 from .code_file_data import CodeFileData
 from .collaborator import Collaborator
 from .content import Content
@@ -59,13 +49,6 @@ from .deployment import Deployment
 from .deployment_status import DeploymentStatus
 from .deployment_status_status import DeploymentStatusStatus
 from .deployment_status_transition import DeploymentStatusTransition
-from .device_configuration import DeviceConfiguration
-from .device_configuration_type import DeviceConfigurationType
-from .device_info import DeviceInfo
-from .device_info_gpu_type import DeviceInfoGpuType
-from .device_info_type import DeviceInfoType
-from .docker_file_build import DockerFileBuild
-from .docker_file_build_command import DockerFileBuildCommand
 from .empty_response import EmptyResponse
 from .environment import Environment
 from .environment_color import EnvironmentColor
@@ -74,7 +57,6 @@ from .environment_optimize_for import EnvironmentOptimizeFor
 from .external_blob_storage_source import ExternalBlobStorageSource
 from .fast_ai_framework import FastAiFramework
 from .file_info import FileInfo
-from .fractional_gpu_info import FractionalGpuInfo
 from .framework import Framework
 from .get_agent_response import GetAgentResponse
 from .get_agent_version_response import GetAgentVersionResponse
@@ -99,29 +81,18 @@ from .get_signed_ur_ls_response import GetSignedUrLsResponse
 from .get_tool_response import GetToolResponse
 from .get_tool_version_response import GetToolVersionResponse
 from .get_workspace_response import GetWorkspaceResponse
-from .git_helm_repo_source import GitHelmRepoSource
-from .git_source import GitSource
 from .gluon_framework import GluonFramework
 from .h2o_framework import H2OFramework
-from .helm_deployment_manifest import HelmDeploymentManifest
-from .helm_deployment_manifest_source import HelmDeploymentManifestSource
-from .helm_deployment_manifest_type import HelmDeploymentManifestType
-from .helm_repo_source import HelmRepoSource
 from .http_error import HttpError
 from .http_error_code import HttpErrorCode
 from .http_validation_error import HttpValidationError
-from .i_change import IChange
-from .i_change_type import IChangeType
 from .image_content_part import ImageContentPart
 from .image_url import ImageUrl
 from .infer_method_name import InferMethodName
-from .instance_capacity_type import InstanceCapacityType
-from .instance_resources import InstanceResources
 from .internal_artifact_version import InternalArtifactVersion
 from .internal_list_artifact_version_response import InternalListArtifactVersionResponse
 from .internal_list_artifact_version_response_data_item import InternalListArtifactVersionResponseDataItem
 from .internal_model_version import InternalModelVersion
-from .job_run import JobRun
 from .keras_framework import KerasFramework
 from .library_name import LibraryName
 from .light_gbm_framework import LightGbmFramework
@@ -144,10 +115,8 @@ from .list_tools_response import ListToolsResponse
 from .list_workspaces_response import ListWorkspacesResponse
 from .local_artifact_source import LocalArtifactSource
 from .local_model_source import LocalModelSource
-from .local_source import LocalSource
 from .manifest import Manifest
 from .method import Method
-from .migration import Migration
 from .mime_type import MimeType
 from .ml_repo import MlRepo
 from .ml_repo_manifest import MlRepoManifest
@@ -160,11 +129,7 @@ from .multi_part_upload import MultiPartUpload
 from .multi_part_upload_response import MultiPartUploadResponse
 from .multi_part_upload_storage_provider import MultiPartUploadStorageProvider
 from .nodepool import Nodepool
-from .nodepool_taint import NodepoolTaint
 from .notebook_config import NotebookConfig
-from .nvidia_mig_gpu_info import NvidiaMigGpuInfo
-from .nvidia_time_slicing_gpu_info import NvidiaTimeSlicingGpuInfo
-from .oci_repo_source import OciRepoSource
 from .onnx_framework import OnnxFramework
 from .operation import Operation
 from .paddle_framework import PaddleFramework
@@ -174,10 +139,7 @@ from .permissions import Permissions
 from .prompt import Prompt
 from .prompt_version import PromptVersion
 from .py_torch_framework import PyTorchFramework
-from .python_build import PythonBuild
-from .python_build_command import PythonBuildCommand
 from .recommendation import Recommendation
-from .remote_source import RemoteSource
 from .resolve_agent_app_response import ResolveAgentAppResponse
 from .signed_url import SignedUrl
 from .sklearn_framework import SklearnFramework
@@ -200,7 +162,6 @@ from .tool import Tool
 from .tool_version import ToolVersion
 from .transformers_framework import TransformersFramework
 from .true_foundry_managed_source import TrueFoundryManagedSource
-from .upgrade_data import UpgradeData
 from .url import Url
 from .user_message import UserMessage
 from .user_message_content_item import UserMessageContentItem
@@ -208,7 +169,6 @@ from .validation_error import ValidationError
 from .validation_error_loc_item import ValidationErrorLocItem
 from .workspace import Workspace
 from .workspace_manifest import WorkspaceManifest
-from .workspace_metadata import WorkspaceMetadata
 from .xg_boost_framework import XgBoostFramework
 from .xg_boost_model_schema import XgBoostModelSchema
 from .xg_boost_serialization_format import XgBoostSerializationFormat
@@ -231,7 +191,6 @@ __all__ = [
     "ApplicationMetadata",
     "ApplicationProblem",
     "ApplicationType",
-    "ApplicationUpgrade",
     "ApplyRequest",
     "ApplyResponse",
     "ApplySdkCode",
@@ -244,24 +203,15 @@ __all__ = [
     "BaseArtifactVersion",
     "BlobStorageReference",
     "Build",
-    "BuildBuildSource",
-    "BuildBuildSpec",
+    "BuildStatus",
     "ChatPromptManifest",
     "ChatPromptManifestMessagesItem",
     "Cluster",
-    "ClusterAutoScalerLogsMetadata",
-    "ClusterAutopilotSettings",
-    "ClusterCloudProvider",
-    "ClusterGateway",
     "ClusterManifest",
     "ClusterManifestClusterType",
     "ClusterManifestMonitoring",
     "ClusterManifestNodeLabelKeys",
     "ClusterManifestWorkbenchConfig",
-    "ClusterMetadata",
-    "ClusterMetadataInstalledCrDsMetaValue",
-    "ClusterNodepool",
-    "ClusterRecommendationSummary",
     "CodeFileData",
     "Collaborator",
     "Content",
@@ -273,13 +223,6 @@ __all__ = [
     "DeploymentStatus",
     "DeploymentStatusStatus",
     "DeploymentStatusTransition",
-    "DeviceConfiguration",
-    "DeviceConfigurationType",
-    "DeviceInfo",
-    "DeviceInfoGpuType",
-    "DeviceInfoType",
-    "DockerFileBuild",
-    "DockerFileBuildCommand",
     "EmptyResponse",
     "Environment",
     "EnvironmentColor",
@@ -288,7 +231,6 @@ __all__ = [
     "ExternalBlobStorageSource",
     "FastAiFramework",
     "FileInfo",
-    "FractionalGpuInfo",
     "Framework",
     "GetAgentResponse",
     "GetAgentVersionResponse",
@@ -313,29 +255,18 @@ __all__ = [
     "GetToolResponse",
     "GetToolVersionResponse",
     "GetWorkspaceResponse",
-    "GitHelmRepoSource",
-    "GitSource",
     "GluonFramework",
     "H2OFramework",
-    "HelmDeploymentManifest",
-    "HelmDeploymentManifestSource",
-    "HelmDeploymentManifestType",
-    "HelmRepoSource",
     "HttpError",
     "HttpErrorCode",
     "HttpValidationError",
-    "IChange",
-    "IChangeType",
     "ImageContentPart",
     "ImageUrl",
     "InferMethodName",
-    "InstanceCapacityType",
-    "InstanceResources",
     "InternalArtifactVersion",
     "InternalListArtifactVersionResponse",
     "InternalListArtifactVersionResponseDataItem",
     "InternalModelVersion",
-    "JobRun",
     "KerasFramework",
     "LibraryName",
     "LightGbmFramework",
@@ -358,10 +289,8 @@ __all__ = [
     "ListWorkspacesResponse",
     "LocalArtifactSource",
     "LocalModelSource",
-    "LocalSource",
     "Manifest",
     "Method",
-    "Migration",
     "MimeType",
     "MlRepo",
     "MlRepoManifest",
@@ -374,11 +303,7 @@ __all__ = [
     "MultiPartUploadResponse",
     "MultiPartUploadStorageProvider",
     "Nodepool",
-    "NodepoolTaint",
     "NotebookConfig",
-    "NvidiaMigGpuInfo",
-    "NvidiaTimeSlicingGpuInfo",
-    "OciRepoSource",
     "OnnxFramework",
     "Operation",
     "PaddleFramework",
@@ -388,10 +313,7 @@ __all__ = [
     "Prompt",
     "PromptVersion",
     "PyTorchFramework",
-    "PythonBuild",
-    "PythonBuildCommand",
     "Recommendation",
-    "RemoteSource",
     "ResolveAgentAppResponse",
     "SignedUrl",
     "SklearnFramework",
@@ -414,7 +336,6 @@ __all__ = [
     "ToolVersion",
     "TransformersFramework",
     "TrueFoundryManagedSource",
-    "UpgradeData",
     "Url",
     "UserMessage",
     "UserMessageContentItem",
@@ -422,7 +343,6 @@ __all__ = [
     "ValidationErrorLocItem",
     "Workspace",
     "WorkspaceManifest",
-    "WorkspaceMetadata",
     "XgBoostFramework",
     "XgBoostModelSchema",
     "XgBoostSerializationFormat",

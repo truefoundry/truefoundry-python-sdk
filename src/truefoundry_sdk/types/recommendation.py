@@ -2,9 +2,6 @@
 
 from __future__ import annotations
 from ..core.pydantic_utilities import UniversalBaseModel
-from .cluster import Cluster
-from .workspace import Workspace
-from .i_change import IChange
 import typing_extensions
 from ..core.serialization import FieldMetadata
 import typing
@@ -17,28 +14,22 @@ from ..core.pydantic_utilities import update_forward_refs
 class Recommendation(UniversalBaseModel):
     id: str
     cluster_id: typing_extensions.Annotated[str, FieldMetadata(alias="clusterId")]
-    cluster: Cluster
     application_id: typing_extensions.Annotated[str, FieldMetadata(alias="applicationId")]
-    application: "Application"
     deployment_id: typing_extensions.Annotated[str, FieldMetadata(alias="deploymentId")]
-    deployment: "Deployment"
-    application_debug_info_id: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="applicationDebugInfoId")
-    ] = None
     application_debug_info: typing_extensions.Annotated[
         typing.Optional["ApplicationDebugInfo"],
         FieldMetadata(alias="applicationDebugInfo"),
     ] = None
-    application_version: typing_extensions.Annotated[float, FieldMetadata(alias="applicationVersion")]
+    application_version: typing_extensions.Annotated[int, FieldMetadata(alias="applicationVersion")]
     recommendation_data: typing_extensions.Annotated[
         typing.Dict[str, typing.Optional[typing.Any]],
         FieldMetadata(alias="recommendationData"),
     ]
     recommendation_type: typing_extensions.Annotated[str, FieldMetadata(alias="recommendationType")]
-    applied_deployment_id: typing_extensions.Annotated[str, FieldMetadata(alias="appliedDeploymentId")]
+    applied_deployment_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="appliedDeploymentId")
+    ] = None
     expiry_timestamp: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="expiryTimestamp")]
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

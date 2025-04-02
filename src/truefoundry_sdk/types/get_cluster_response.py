@@ -2,7 +2,6 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 from .cluster import Cluster
-from .workspace import Workspace
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing

@@ -2,22 +2,17 @@
 
 from __future__ import annotations
 from ..core.pydantic_utilities import UniversalBaseModel
-from .cluster import Cluster
-from .workspace import Workspace
-from .i_change import IChange
 from .application_type import ApplicationType
 import typing_extensions
 from ..core.serialization import FieldMetadata
 from .application_metadata import ApplicationMetadata
 from .application_lifecycle_stage import ApplicationLifecycleStage
+import datetime as dt
 import typing
 import pydantic
-import datetime as dt
-from .job_run import JobRun
 from .alert import Alert
 from .application_alerts_summary_value import ApplicationAlertsSummaryValue
 from .application_problem import ApplicationProblem
-from .application_upgrade import ApplicationUpgrade
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.pydantic_utilities import update_forward_refs
 
@@ -34,16 +29,9 @@ class Application(UniversalBaseModel):
     workspace_id: typing_extensions.Annotated[str, FieldMetadata(alias="workspaceId")]
     last_version: typing_extensions.Annotated[int, FieldMetadata(alias="lastVersion")]
     active_version: typing_extensions.Annotated[int, FieldMetadata(alias="activeVersion")]
-    workspace: Workspace
-    components: typing.List["Application"] = pydantic.Field()
-    """
-    Application Set
-    """
-
     created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
     updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
-    last_job_runs: typing_extensions.Annotated[typing.List[JobRun], FieldMetadata(alias="lastJobRuns")]
-    recommendations: typing.List["Recommendation"] = pydantic.Field()
+    recommendations: typing.Optional[typing.List["Recommendation"]] = pydantic.Field(default=None)
     """
     Recommendations for this application
     """
@@ -62,22 +50,21 @@ class Application(UniversalBaseModel):
     """
 
     application_debug_infos: typing_extensions.Annotated[
-        typing.List["ApplicationDebugInfo"],
+        typing.Optional[typing.List["ApplicationDebugInfo"]],
         FieldMetadata(alias="applicationDebugInfos"),
-    ] = pydantic.Field()
+    ] = pydantic.Field(default=None)
     """
     Debug infos for this application
     """
 
     potential_problems: typing_extensions.Annotated[
-        typing.List[ApplicationProblem], FieldMetadata(alias="potentialProblems")
-    ] = pydantic.Field()
+        typing.Optional[typing.List[ApplicationProblem]],
+        FieldMetadata(alias="potentialProblems"),
+    ] = pydantic.Field(default=None)
     """
     Potential problems with the application
     """
 
-    autopilot: typing.Dict[str, typing.Optional[typing.Any]]
-    upgrade: ApplicationUpgrade
     created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = None
     deployment: "Deployment"
     active_deployment_id: typing_extensions.Annotated[str, FieldMetadata(alias="activeDeploymentId")]
