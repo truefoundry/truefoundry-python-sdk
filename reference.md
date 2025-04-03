@@ -109,7 +109,12 @@ Create or Update cluster with provided manifest
 <dd>
 
 ```python
-from truefoundry_sdk import ClusterManifest, Collaborator, TrueFoundry
+from truefoundry_sdk import (
+    ClusterManifest,
+    ClusterManifestClusterType,
+    Collaborator,
+    TrueFoundry,
+)
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -118,7 +123,7 @@ client = TrueFoundry(
 client.v1.clusters.create_or_update(
     manifest=ClusterManifest(
         name="name",
-        cluster_type="aws-eks",
+        cluster_type=ClusterManifestClusterType.AWS_EKS,
         environment_names=["environment_names"],
         collaborators=[
             Collaborator(
@@ -426,7 +431,12 @@ Creates a new Environment or updates an existing Environment.
 <dd>
 
 ```python
-from truefoundry_sdk import EnvironmentColor, EnvironmentManifest, TrueFoundry
+from truefoundry_sdk import (
+    EnvironmentColor,
+    EnvironmentManifest,
+    EnvironmentOptimizeFor,
+    TrueFoundry,
+)
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -437,7 +447,7 @@ client.v1.environments.create_or_update(
         name="name",
         color=EnvironmentColor(),
         is_production=True,
-        optimize_for="COST",
+        optimize_for=EnvironmentOptimizeFor.COST,
     ),
 )
 
@@ -3084,7 +3094,7 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
+from truefoundry_sdk import Operation, TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -3093,7 +3103,7 @@ client = TrueFoundry(
 client.v1.artifact_versions.get_signed_urls(
     id="id",
     paths=["paths"],
-    operation="READ",
+    operation=Operation.READ,
 )
 
 ```
@@ -4979,7 +4989,7 @@ Returns:
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
+from truefoundry_sdk import Operation, TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -4988,7 +4998,7 @@ client = TrueFoundry(
 client.v1.data_directories.get_signed_urls(
     id="id",
     paths=["paths"],
-    operation="READ",
+    operation=Operation.READ,
 )
 
 ```

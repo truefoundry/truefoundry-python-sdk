@@ -132,7 +132,12 @@ class EnvironmentsClient:
 
         Examples
         --------
-        from truefoundry_sdk import EnvironmentColor, EnvironmentManifest, TrueFoundry
+        from truefoundry_sdk import (
+            EnvironmentColor,
+            EnvironmentManifest,
+            EnvironmentOptimizeFor,
+            TrueFoundry,
+        )
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -143,7 +148,7 @@ class EnvironmentsClient:
                 name="name",
                 color=EnvironmentColor(),
                 is_production=True,
-                optimize_for="COST",
+                optimize_for=EnvironmentOptimizeFor.COST,
             ),
         )
         """
@@ -425,6 +430,7 @@ class AsyncEnvironmentsClient:
             AsyncTrueFoundry,
             EnvironmentColor,
             EnvironmentManifest,
+            EnvironmentOptimizeFor,
         )
 
         client = AsyncTrueFoundry(
@@ -439,7 +445,7 @@ class AsyncEnvironmentsClient:
                     name="name",
                     color=EnvironmentColor(),
                     is_production=True,
-                    optimize_for="COST",
+                    optimize_for=EnvironmentOptimizeFor.COST,
                 ),
             )
 
