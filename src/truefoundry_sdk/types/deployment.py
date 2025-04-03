@@ -4,6 +4,7 @@ from __future__ import annotations
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing_extensions
 from ..core.serialization import FieldMetadata
+from .deployment_manifest import DeploymentManifest
 import typing
 import datetime as dt
 from .build import Build
@@ -18,7 +19,7 @@ class Deployment(UniversalBaseModel):
     version: float
     fqn: str
     application_id: typing_extensions.Annotated[str, FieldMetadata(alias="applicationId")]
-    manifest: typing.Dict[str, typing.Optional[typing.Any]]
+    manifest: DeploymentManifest
     application: "Application"
     created_by_subject: typing_extensions.Annotated[
         typing.Dict[str, typing.Optional[typing.Any]],
@@ -33,9 +34,9 @@ class Deployment(UniversalBaseModel):
     current_status_id: typing_extensions.Annotated[str, FieldMetadata(alias="currentStatusId")]
     current_status: typing_extensions.Annotated[DeploymentStatus, FieldMetadata(alias="currentStatus")]
     applied_recommendations: typing_extensions.Annotated[
-        typing.List[typing.Dict[str, typing.Optional[typing.Any]]],
+        typing.Optional[typing.List["Recommendation"]],
         FieldMetadata(alias="appliedRecommendations"),
-    ] = pydantic.Field()
+    ] = pydantic.Field(default=None)
     """
     Applied recommendations for this deployment
     """
