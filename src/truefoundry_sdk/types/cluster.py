@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 from ..core.pydantic_utilities import UniversalBaseModel
+import typing
 from .cluster_metadata import ClusterMetadata
 from .cluster_manifest import ClusterManifest
 import typing_extensions
-import typing
 from ..core.serialization import FieldMetadata
 from .cluster_cloud_provider import ClusterCloudProvider
+from .subject import Subject
 from .cluster_recommendation_summary import ClusterRecommendationSummary
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
@@ -18,7 +19,7 @@ class Cluster(UniversalBaseModel):
     id: str
     fqn: str
     name: str
-    metadata: ClusterMetadata
+    metadata: typing.Optional[ClusterMetadata] = None
     manifest: ClusterManifest
     infra_config: typing_extensions.Annotated[
         typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]],
@@ -29,9 +30,8 @@ class Cluster(UniversalBaseModel):
     tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]
     workspaces: typing.List["Workspace"]
     created_by_subject: typing_extensions.Annotated[
-        typing.Dict[str, typing.Optional[typing.Any]],
-        FieldMetadata(alias="createdBySubject"),
-    ]
+        typing.Optional[Subject], FieldMetadata(alias="createdBySubject")
+    ] = None
     recommendation_summary: typing_extensions.Annotated[
         ClusterRecommendationSummary, FieldMetadata(alias="recommendationSummary")
     ]

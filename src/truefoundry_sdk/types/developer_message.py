@@ -4,33 +4,27 @@ from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 import pydantic
 from .content import Content
-from .tool_call import ToolCall
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
-class AssistantMessage(UniversalBaseModel):
+class DeveloperMessage(UniversalBaseModel):
     """
-    Assistant message turn
-    """
-
-    role: typing.Literal["assistant"] = pydantic.Field(default="assistant")
-    """
-    Role of the message
+    Developer message for the chat
     """
 
-    content: typing.Optional[Content] = pydantic.Field(default=None)
+    role: typing.Literal["developer"] = pydantic.Field(default="developer")
     """
-    Text content for the assistant message
+    The role of the messages author, in this case developer.
     """
 
-    tool_calls: typing.Optional[typing.List[ToolCall]] = pydantic.Field(default=None)
+    content: Content = pydantic.Field()
     """
-    List of tool calls made by the assistant
+    The contents of the developer message.
     """
 
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Name of the assistant this message is from
+    An optional name for the participant.
     """
 
     if IS_PYDANTIC_V2:

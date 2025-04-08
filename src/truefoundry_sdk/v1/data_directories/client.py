@@ -15,10 +15,10 @@ from ...types.data_directory import DataDirectory
 from ...types.list_data_directories_response import ListDataDirectoriesResponse
 from ...types.manifest import Manifest
 from ...core.serialization import convert_and_respect_annotation_metadata
-from ...types.operation import Operation
-from ...types.get_signed_ur_ls_response import GetSignedUrLsResponse
 from ...types.file_info import FileInfo
 from ...types.list_files_response import ListFilesResponse
+from ...types.operation import Operation
+from ...types.get_signed_ur_ls_response import GetSignedUrLsResponse
 from ...types.multi_part_upload_response import MultiPartUploadResponse
 from ...core.client_wrapper import AsyncClientWrapper
 from ...core.pagination import AsyncPager
@@ -344,89 +344,6 @@ class DataDirectoriesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_signed_urls(
-        self,
-        *,
-        id: str,
-        paths: typing.Sequence[str],
-        operation: Operation,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetSignedUrLsResponse:
-        """
-        Get signed URLs for a dataset.
-
-        Args:
-            request_dto: Request containing dataset ID, paths and operation
-            user_info: Authenticated user information
-
-        Returns:
-            GetSignedURLsResponse: Response containing signed URLs
-
-        Parameters
-        ----------
-        id : str
-
-        paths : typing.Sequence[str]
-
-        operation : Operation
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetSignedUrLsResponse
-            Successful Response
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.v1.data_directories.get_signed_urls(
-            id="id",
-            paths=["paths"],
-            operation="READ",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/data-directories/signed-urls",
-            method="POST",
-            json={
-                "id": id,
-                "paths": paths,
-                "operation": operation,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetSignedUrLsResponse,
-                    parse_obj_as(
-                        type_=GetSignedUrLsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
     def list_files(
         self,
         *,
@@ -594,6 +511,89 @@ class DataDirectoriesClient:
                     EmptyResponse,
                     parse_obj_as(
                         type_=EmptyResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get_signed_urls(
+        self,
+        *,
+        id: str,
+        paths: typing.Sequence[str],
+        operation: Operation,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetSignedUrLsResponse:
+        """
+        Get signed URLs for a dataset.
+
+        Args:
+            request_dto: Request containing dataset ID, paths and operation
+            user_info: Authenticated user information
+
+        Returns:
+            GetSignedURLsResponse: Response containing signed URLs
+
+        Parameters
+        ----------
+        id : str
+
+        paths : typing.Sequence[str]
+
+        operation : Operation
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetSignedUrLsResponse
+            Successful Response
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.v1.data_directories.get_signed_urls(
+            id="id",
+            paths=["paths"],
+            operation="READ",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/ml/v1/data-directories/signed-urls",
+            method="POST",
+            json={
+                "id": id,
+                "paths": paths,
+                "operation": operation,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetSignedUrLsResponse,
+                    parse_obj_as(
+                        type_=GetSignedUrLsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1051,97 +1051,6 @@ class AsyncDataDirectoriesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_signed_urls(
-        self,
-        *,
-        id: str,
-        paths: typing.Sequence[str],
-        operation: Operation,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetSignedUrLsResponse:
-        """
-        Get signed URLs for a dataset.
-
-        Args:
-            request_dto: Request containing dataset ID, paths and operation
-            user_info: Authenticated user information
-
-        Returns:
-            GetSignedURLsResponse: Response containing signed URLs
-
-        Parameters
-        ----------
-        id : str
-
-        paths : typing.Sequence[str]
-
-        operation : Operation
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetSignedUrLsResponse
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.v1.data_directories.get_signed_urls(
-                id="id",
-                paths=["paths"],
-                operation="READ",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/data-directories/signed-urls",
-            method="POST",
-            json={
-                "id": id,
-                "paths": paths,
-                "operation": operation,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetSignedUrLsResponse,
-                    parse_obj_as(
-                        type_=GetSignedUrLsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
     async def list_files(
         self,
         *,
@@ -1325,6 +1234,97 @@ class AsyncDataDirectoriesClient:
                     EmptyResponse,
                     parse_obj_as(
                         type_=EmptyResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_signed_urls(
+        self,
+        *,
+        id: str,
+        paths: typing.Sequence[str],
+        operation: Operation,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetSignedUrLsResponse:
+        """
+        Get signed URLs for a dataset.
+
+        Args:
+            request_dto: Request containing dataset ID, paths and operation
+            user_info: Authenticated user information
+
+        Returns:
+            GetSignedURLsResponse: Response containing signed URLs
+
+        Parameters
+        ----------
+        id : str
+
+        paths : typing.Sequence[str]
+
+        operation : Operation
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetSignedUrLsResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.v1.data_directories.get_signed_urls(
+                id="id",
+                paths=["paths"],
+                operation="READ",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/ml/v1/data-directories/signed-urls",
+            method="POST",
+            json={
+                "id": id,
+                "paths": paths,
+                "operation": operation,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetSignedUrLsResponse,
+                    parse_obj_as(
+                        type_=GetSignedUrLsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

@@ -5,6 +5,7 @@ import pydantic
 import typing
 from .chat_prompt_manifest_messages_item import ChatPromptManifestMessagesItem
 from .model_configuration import ModelConfiguration
+from .tool_schema import ToolSchema
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -51,6 +52,10 @@ class ChatPromptManifest(UniversalBaseModel):
     """
 
     model_configuration: ModelConfiguration
+    tools: typing.Optional[typing.List[ToolSchema]] = pydantic.Field(default=None)
+    """
+    List of tools to be used in the chat prompt
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

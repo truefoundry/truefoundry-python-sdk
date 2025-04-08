@@ -38,11 +38,6 @@ class AgentWithFqn(UniversalBaseModel):
     Type of the entity
     """
 
-    available_tools: typing.List[str] = pydantic.Field()
-    """
-    Tools available to the agent
-    """
-
     goal: str = pydantic.Field()
     """
     Short form description. Will be used as `description` when this agent is used as a tool.
@@ -51,6 +46,11 @@ class AgentWithFqn(UniversalBaseModel):
     instruction: str = pydantic.Field()
     """
     Instructions for the agent to follow to achieve the goal
+    """
+
+    available_tools: typing.List[str] = pydantic.Field()
+    """
+    Tools available to the agent
     """
 
     model_id: str = pydantic.Field()
