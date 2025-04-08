@@ -3,11 +3,6 @@
 import typing
 import os
 import httpx
-<<<<<<< Updated upstream
-=======
-
-from truefoundry_sdk.v1._wrapped_clients import aget_by_fqn, get_by_fqn
->>>>>>> Stashed changes
 from .core.api_error import ApiError
 from .core.client_wrapper import SyncClientWrapper
 from .v1.client import V1Client
