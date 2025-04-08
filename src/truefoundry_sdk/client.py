@@ -7,26 +7,16 @@ import httpx
 from truefoundry_sdk.base_client import AsyncBaseTrueFoundry, BaseTrueFoundry
 from truefoundry_sdk.v1._wrapped_clients import (
     WrappedAgentVersionsClient,
-    WrappedAgentsClient,
     WrappedArtifactVersionsClient,
-    WrappedDataDirectoriesClient,
     WrappedModelVersionsClient,
-    WrappedModelsClient,
     WrappedPromptVersionsClient,
-    WrappedPromptsClient,
     WrappedToolVersionsClient,
-    WrappedToolsClient,
     WrappedWorkspacesClient,
     WrappedAsyncAgentVersionsClient,
-    WrappedAsyncAgentsClient,
     WrappedAsyncArtifactVersionsClient,
-    WrappedAsyncDataDirectoriesClient,
     WrappedAsyncModelVersionsClient,
-    WrappedAsyncModelsClient,
     WrappedAsyncPromptVersionsClient,
-    WrappedAsyncPromptsClient,
     WrappedAsyncToolVersionsClient,
-    WrappedAsyncToolsClient,
     WrappedAsyncWorkspacesClient,
 )
 
@@ -53,25 +43,18 @@ class TrueFoundry(BaseTrueFoundry):
         self.v1.agent_versions = WrappedAgentVersionsClient(
             client_wrapper=self.v1._client_wrapper
         )
-        self.v1.agents = WrappedAgentsClient(client_wrapper=self.v1._client_wrapper)
         self.v1.artifact_versions = WrappedArtifactVersionsClient(
-            client_wrapper=self.v1._client_wrapper
-        )
-        self.v1.data_directories = WrappedDataDirectoriesClient(
             client_wrapper=self.v1._client_wrapper
         )
         self.v1.model_versions = WrappedModelVersionsClient(
             client_wrapper=self.v1._client_wrapper
         )
-        self.v1.models = WrappedModelsClient(client_wrapper=self.v1._client_wrapper)
         self.v1.prompt_versions = WrappedPromptVersionsClient(
             client_wrapper=self.v1._client_wrapper
         )
-        self.v1.prompts = WrappedPromptsClient(client_wrapper=self.v1._client_wrapper)
         self.v1.tool_versions = WrappedToolVersionsClient(
             client_wrapper=self.v1._client_wrapper
         )
-        self.v1.tools = WrappedToolsClient(client_wrapper=self.v1._client_wrapper)
         self.v1.workspaces = WrappedWorkspacesClient(
             client_wrapper=self.v1._client_wrapper
         )
@@ -99,31 +82,18 @@ class AsyncTrueFoundry(AsyncBaseTrueFoundry):
         self.v1.agent_versions = WrappedAsyncAgentVersionsClient(
             client_wrapper=self.v1._client_wrapper
         )
-        self.v1.agents = WrappedAsyncAgentsClient(
-            client_wrapper=self.v1._client_wrapper
-        )
         self.v1.artifact_versions = WrappedAsyncArtifactVersionsClient(
-            client_wrapper=self.v1._client_wrapper
-        )
-        self.v1.data_directories = WrappedAsyncDataDirectoriesClient(
             client_wrapper=self.v1._client_wrapper
         )
         self.v1.model_versions = WrappedAsyncModelVersionsClient(
             client_wrapper=self.v1._client_wrapper
         )
-        self.v1.models = WrappedAsyncModelsClient(
-            client_wrapper=self.v1._client_wrapper
-        )
         self.v1.prompt_versions = WrappedAsyncPromptVersionsClient(
-            client_wrapper=self.v1._client_wrapper
-        )
-        self.v1.prompts = WrappedAsyncPromptsClient(
             client_wrapper=self.v1._client_wrapper
         )
         self.v1.tool_versions = WrappedAsyncToolVersionsClient(
             client_wrapper=self.v1._client_wrapper
         )
-        self.v1.tools = WrappedAsyncToolsClient(client_wrapper=self.v1._client_wrapper)
         self.v1.workspaces = WrappedAsyncWorkspacesClient(
             client_wrapper=self.v1._client_wrapper
         )
