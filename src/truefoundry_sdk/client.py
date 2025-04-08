@@ -27,17 +27,17 @@ class TrueFoundry(BaseTrueFoundry):
             follow_redirects=follow_redirects,
             httpx_client=httpx_client,
         )
-        self.v1.agent_versions.get_by_fqn = types.MethodType(get_by_fqn, self.v1.agent_versions)
-        self.v1.agents.get_by_fqn = types.MethodType(get_by_fqn, self.v1.agents)
-        self.v1.artifact_versions.get_by_fqn = types.MethodType(get_by_fqn, self.v1.artifact_versions)
-        self.v1.data_directories.get_by_fqn = types.MethodType(get_by_fqn, self.v1.data_directories)
-        self.v1.model_versions.get_by_fqn = types.MethodType(get_by_fqn, self.v1.model_versions)
-        self.v1.models.get_by_fqn = types.MethodType(get_by_fqn, self.v1.models)
-        self.v1.prompt_versions.get_by_fqn = types.MethodType(get_by_fqn, self.v1.prompt_versions)
-        self.v1.prompts.get_by_fqn = types.MethodType(get_by_fqn, self.v1.prompts)
-        self.v1.tool_versions.get_by_fqn = types.MethodType(get_by_fqn, self.v1.tool_versions)
-        self.v1.tools.get_by_fqn = types.MethodType(get_by_fqn, self.v1.tools)
-        self.v1.workspaces.get_by_fqn = types.MethodType(get_by_fqn, self.v1.workspaces)
+        self.v1.agent_versions.get_by_fqn = types.MethodType(get_by_fqn, self.v1.agent_versions) # type: ignore[attr-defined]
+        self.v1.agents.get_by_fqn = types.MethodType(get_by_fqn, self.v1.agents) # type: ignore[attr-defined]
+        self.v1.artifact_versions.get_by_fqn = types.MethodType(get_by_fqn, self.v1.artifact_versions) # type: ignore[attr-defined]
+        self.v1.data_directories.get_by_fqn = types.MethodType(get_by_fqn, self.v1.data_directories) # type: ignore[attr-defined]
+        self.v1.model_versions.get_by_fqn = types.MethodType(get_by_fqn, self.v1.model_versions) # type: ignore[attr-defined]
+        self.v1.models.get_by_fqn = types.MethodType(get_by_fqn, self.v1.models) # type: ignore[attr-defined]
+        self.v1.prompt_versions.get_by_fqn = types.MethodType(get_by_fqn, self.v1.prompt_versions) # type: ignore[attr-defined]
+        self.v1.prompts.get_by_fqn = types.MethodType(get_by_fqn, self.v1.prompts) # type: ignore[attr-defined]
+        self.v1.tool_versions.get_by_fqn = types.MethodType(get_by_fqn, self.v1.tool_versions) # type: ignore[attr-defined]
+        self.v1.tools.get_by_fqn = types.MethodType(get_by_fqn, self.v1.tools) # type: ignore[attr-defined]
+        self.v1.workspaces.get_by_fqn = types.MethodType(get_by_fqn, self.v1.workspaces) # type: ignore[attr-defined]
 
 
 class AsyncTrueFoundry(AsyncBaseTrueFoundry):
@@ -58,17 +58,17 @@ class AsyncTrueFoundry(AsyncBaseTrueFoundry):
             follow_redirects=follow_redirects,
             httpx_client=httpx_client,
         )
-        self.v1.agent_versions.get_by_fqn = types.MethodType(aget_by_fqn, self.v1.agent_versions)
-        self.v1.agents.get_by_fqn = types.MethodType(aget_by_fqn, self.v1.agents)
-        self.v1.artifact_versions.get_by_fqn = types.MethodType(aget_by_fqn, self.v1.artifact_versions)
-        self.v1.data_directories.get_by_fqn = types.MethodType(aget_by_fqn, self.v1.data_directories)
-        self.v1.model_versions.get_by_fqn = types.MethodType(aget_by_fqn, self.v1.model_versions)
-        self.v1.models.get_by_fqn = types.MethodType(aget_by_fqn, self.v1.models)
-        self.v1.prompt_versions.get_by_fqn = types.MethodType(aget_by_fqn, self.v1.prompt_versions)
-        self.v1.prompts.get_by_fqn = types.MethodType(aget_by_fqn, self.v1.prompts)
-        self.v1.tool_versions.get_by_fqn = types.MethodType(aget_by_fqn, self.v1.tool_versions)
-        self.v1.tools.get_by_fqn = types.MethodType(aget_by_fqn, self.v1.tools)
-        self.v1.workspaces.get_by_fqn = types.MethodType(aget_by_fqn, self.v1.workspaces)
+        self.v1.agent_versions.get_by_fqn = types.MethodType(aget_by_fqn, self.v1.agent_versions) # type: ignore[attr-defined]
+        self.v1.agents.get_by_fqn = types.MethodType(aget_by_fqn, self.v1.agents) # type: ignore[attr-defined]
+        self.v1.artifact_versions.get_by_fqn = types.MethodType(aget_by_fqn, self.v1.artifact_versions) # type: ignore[attr-defined]
+        self.v1.data_directories.get_by_fqn = types.MethodType(aget_by_fqn, self.v1.data_directories) # type: ignore[attr-defined]
+        self.v1.model_versions.get_by_fqn = types.MethodType(aget_by_fqn, self.v1.model_versions) # type: ignore[attr-defined]
+        self.v1.models.get_by_fqn = types.MethodType(aget_by_fqn, self.v1.models) # type: ignore[attr-defined]
+        self.v1.prompt_versions.get_by_fqn = types.MethodType(aget_by_fqn, self.v1.prompt_versions) # type: ignore[attr-defined]
+        self.v1.prompts.get_by_fqn = types.MethodType(aget_by_fqn, self.v1.prompts) # type: ignore[attr-defined]
+        self.v1.tool_versions.get_by_fqn = types.MethodType(aget_by_fqn, self.v1.tool_versions) # type: ignore[attr-defined]
+        self.v1.tools.get_by_fqn = types.MethodType(aget_by_fqn, self.v1.tools) # type: ignore[attr-defined]
+        self.v1.workspaces.get_by_fqn = types.MethodType(aget_by_fqn, self.v1.workspaces) # type: ignore[attr-defined]
 
 
 TrueFoundry.__doc__ = BaseTrueFoundry.__doc__
