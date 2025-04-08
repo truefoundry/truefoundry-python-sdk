@@ -6,10 +6,10 @@ import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
-class AppsDeleteResponse(UniversalBaseModel):
+class ApplicationsCancelDeploymentResponse(UniversalBaseModel):
     message: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Application deleted
+    Deployment cancelled
     """
 
     if IS_PYDANTIC_V2:

@@ -971,8 +971,8 @@ client.v1.workspaces.delete(
 </dl>
 </details>
 
-## V1 Apps
-<details><summary><code>client.v1.apps.<a href="src/truefoundry_sdk/v1/apps/client.py">list</a>(...)</code></summary>
+## V1 Applications
+<details><summary><code>client.v1.applications.<a href="src/truefoundry_sdk/v1/applications/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1005,7 +1005,7 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.v1.apps.list(
+response = client.v1.applications.list(
     limit=10,
     offset=0,
 )
@@ -1117,7 +1117,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**device_type_filter:** `typing.Optional[AppsListRequestDeviceTypeFilter]` — Filter by device type of the application. Allowed values: cpu, nvidia_gpu, aws_inferentia, nvidia_mig_gpu, nvidia_timeslicing_gpu, gcp_tpu
+**device_type_filter:** `typing.Optional[ApplicationsListRequestDeviceTypeFilter]` — Filter by device type of the application. Allowed values: cpu, nvidia_gpu, aws_inferentia, nvidia_mig_gpu, nvidia_timeslicing_gpu, gcp_tpu
     
 </dd>
 </dl>
@@ -1133,7 +1133,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**lifecycle_stage:** `typing.Optional[AppsListRequestLifecycleStage]` — Filter by application lifecycle state
+**lifecycle_stage:** `typing.Optional[ApplicationsListRequestLifecycleStage]` — Filter by application lifecycle state
     
 </dd>
 </dl>
@@ -1161,7 +1161,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.v1.apps.<a href="src/truefoundry_sdk/v1/apps/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.v1.applications.<a href="src/truefoundry_sdk/v1/applications/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1194,8 +1194,8 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.v1.apps.delete(
-    application_id="applicationId",
+client.v1.applications.delete(
+    id="id",
 )
 
 ```
@@ -1212,7 +1212,7 @@ client.v1.apps.delete(
 <dl>
 <dd>
 
-**application_id:** `str` — Application Id of the application
+**id:** `str` — Application Id of the application
     
 </dd>
 </dl>
@@ -1232,119 +1232,7 @@ client.v1.apps.delete(
 </dl>
 </details>
 
-<details><summary><code>client.v1.apps.<a href="src/truefoundry_sdk/v1/apps/client.py">list_deployments</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Fetch all deployments for a given application ID with optional filters such as deployment ID or version. Supports pagination.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-response = client.v1.apps.list_deployments(
-    application_id="applicationId",
-    limit=50.0,
-    offset=0.0,
-    version="1",
-    id="deployment123",
-)
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**application_id:** `str` — Application Id of the application
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**limit:** `typing.Optional[float]` — Number of items per page. Defaults to 50 if not provided.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**offset:** `typing.Optional[float]` — Number of items to skip.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**version:** `typing.Optional[str]` — Deployment version. Filter deployments by version.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**id:** `typing.Optional[str]` — Deployment ID. Filter deployments by a specific ID.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.v1.apps.<a href="src/truefoundry_sdk/v1/apps/client.py">scale_to_zero</a>(...)</code></summary>
+<details><summary><code>client.v1.applications.<a href="src/truefoundry_sdk/v1/applications/client.py">scale_to_zero</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1377,8 +1265,8 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.v1.apps.scale_to_zero(
-    application_id="applicationId",
+client.v1.applications.scale_to_zero(
+    id="id",
 )
 
 ```
@@ -1395,7 +1283,7 @@ client.v1.apps.scale_to_zero(
 <dl>
 <dd>
 
-**application_id:** `str` — Application Id of the application
+**id:** `str` — Application Id of the application
     
 </dd>
 </dl>
@@ -1415,7 +1303,7 @@ client.v1.apps.scale_to_zero(
 </dl>
 </details>
 
-<details><summary><code>client.v1.apps.<a href="src/truefoundry_sdk/v1/apps/client.py">cancel_deployment</a>(...)</code></summary>
+<details><summary><code>client.v1.applications.<a href="src/truefoundry_sdk/v1/applications/client.py">cancel_deployment</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1448,8 +1336,8 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.v1.apps.cancel_deployment(
-    application_id="applicationId",
+client.v1.applications.cancel_deployment(
+    id="id",
     deployment_id="deploymentId",
 )
 
@@ -1467,7 +1355,7 @@ client.v1.apps.cancel_deployment(
 <dl>
 <dd>
 
-**application_id:** `str` — Application id of the application
+**id:** `str` — Application id of the application
     
 </dd>
 </dl>
@@ -1476,6 +1364,119 @@ client.v1.apps.cancel_deployment(
 <dd>
 
 **deployment_id:** `str` — Deployment id of the deployment
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## V1 ApplicationVersions
+<details><summary><code>client.v1.application_versions.<a href="src/truefoundry_sdk/v1/application_versions/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Fetch all deployments for a given application ID with optional filters such as deployment ID or version. Supports pagination.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.v1.application_versions.list(
+    id_="id",
+    limit=50.0,
+    offset=0.0,
+    version="1",
+    id="deployment123",
+)
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id_:** `str` — Application Id of the application
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[float]` — Number of items per page. Defaults to 50 if not provided.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**offset:** `typing.Optional[float]` — Number of items to skip.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version:** `typing.Optional[str]` — Deployment version. Filter deployments by version.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**id:** `typing.Optional[str]` — Deployment ID. Filter deployments by a specific ID.
     
 </dd>
 </dl>

@@ -3,7 +3,8 @@
 from . import (
     agent_versions,
     agents,
-    apps,
+    application_versions,
+    applications,
     artifact_versions,
     artifacts,
     clusters,
@@ -19,27 +20,26 @@ from . import (
     tools,
     workspaces,
 )
-from .apps import (
-    AppsCancelDeploymentResponse,
-    AppsDeleteResponse,
-    AppsListRequestDeviceTypeFilter,
-    AppsListRequestLifecycleStage,
+from .applications import (
+    ApplicationsCancelDeploymentResponse,
+    ApplicationsListRequestDeviceTypeFilter,
+    ApplicationsListRequestLifecycleStage,
 )
 from .artifact_versions import Manifest
 from .clusters import ClustersDeleteResponse
 from .workspaces import WorkspacesDeleteResponse
 
 __all__ = [
-    "AppsCancelDeploymentResponse",
-    "AppsDeleteResponse",
-    "AppsListRequestDeviceTypeFilter",
-    "AppsListRequestLifecycleStage",
+    "ApplicationsCancelDeploymentResponse",
+    "ApplicationsListRequestDeviceTypeFilter",
+    "ApplicationsListRequestLifecycleStage",
     "ClustersDeleteResponse",
     "Manifest",
     "WorkspacesDeleteResponse",
     "agent_versions",
     "agents",
-    "apps",
+    "application_versions",
+    "applications",
     "artifact_versions",
     "artifacts",
     "clusters",

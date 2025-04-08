@@ -9,10 +9,10 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 
 
-class GetApplicationDeploymentResponseDto(UniversalBaseModel):
-    data: Deployment = pydantic.Field()
+class GetApplicationResponse(UniversalBaseModel):
+    data: Application = pydantic.Field()
     """
-    Deployment
+    Application
     """
 
     if IS_PYDANTIC_V2:

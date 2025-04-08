@@ -6,7 +6,7 @@ import typing
 T_Result = typing.TypeVar("T_Result")
 
 
-class AppsListRequestLifecycleStage(str, enum.Enum):
+class ApplicationsListRequestLifecycleStage(str, enum.Enum):
     ACTIVE = "active"
     DELETING = "deleting"
     DELETION_FAILED = "deletion_failed"
@@ -17,9 +17,9 @@ class AppsListRequestLifecycleStage(str, enum.Enum):
         deleting: typing.Callable[[], T_Result],
         deletion_failed: typing.Callable[[], T_Result],
     ) -> T_Result:
-        if self is AppsListRequestLifecycleStage.ACTIVE:
+        if self is ApplicationsListRequestLifecycleStage.ACTIVE:
             return active()
-        if self is AppsListRequestLifecycleStage.DELETING:
+        if self is ApplicationsListRequestLifecycleStage.DELETING:
             return deleting()
-        if self is AppsListRequestLifecycleStage.DELETION_FAILED:
+        if self is ApplicationsListRequestLifecycleStage.DELETION_FAILED:
             return deletion_failed()

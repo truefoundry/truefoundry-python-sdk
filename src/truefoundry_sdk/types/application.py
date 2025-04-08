@@ -9,6 +9,7 @@ from .application_metadata import ApplicationMetadata
 from .application_lifecycle_stage import ApplicationLifecycleStage
 import datetime as dt
 import typing
+from .recommendation import Recommendation
 import pydantic
 from .alert import Alert
 from .application_alerts_summary_value import ApplicationAlertsSummaryValue
@@ -31,7 +32,7 @@ class Application(UniversalBaseModel):
     active_version: typing_extensions.Annotated[int, FieldMetadata(alias="activeVersion")]
     created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
     updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
-    recommendations: typing.Optional[typing.List["Recommendation"]] = pydantic.Field(default=None)
+    recommendations: typing.Optional[typing.List[Recommendation]] = pydantic.Field(default=None)
     """
     Recommendations for this application
     """
@@ -65,6 +66,7 @@ class Application(UniversalBaseModel):
     Potential problems with the application
     """
 
+    autopilot: typing.Dict[str, typing.Optional[typing.Any]]
     created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = None
     deployment: "Deployment"
     active_deployment_id: typing_extensions.Annotated[str, FieldMetadata(alias="activeDeploymentId")]
@@ -81,6 +83,5 @@ class Application(UniversalBaseModel):
 
 from .application_debug_info import ApplicationDebugInfo  # noqa: E402
 from .deployment import Deployment  # noqa: E402
-from .recommendation import Recommendation  # noqa: E402
 
 update_forward_refs(Application)

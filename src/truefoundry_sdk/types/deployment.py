@@ -9,6 +9,7 @@ import typing
 import datetime as dt
 from .build import Build
 from .deployment_status import DeploymentStatus
+from .recommendation import Recommendation
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.pydantic_utilities import update_forward_refs
@@ -34,7 +35,7 @@ class Deployment(UniversalBaseModel):
     current_status_id: typing_extensions.Annotated[str, FieldMetadata(alias="currentStatusId")]
     current_status: typing_extensions.Annotated[DeploymentStatus, FieldMetadata(alias="currentStatus")]
     applied_recommendations: typing_extensions.Annotated[
-        typing.Optional[typing.List["Recommendation"]],
+        typing.Optional[typing.List[Recommendation]],
         FieldMetadata(alias="appliedRecommendations"),
     ] = pydantic.Field(default=None)
     """
@@ -54,6 +55,5 @@ class Deployment(UniversalBaseModel):
 
 from .application import Application  # noqa: E402
 from .application_debug_info import ApplicationDebugInfo  # noqa: E402
-from .recommendation import Recommendation  # noqa: E402
 
 update_forward_refs(Deployment)

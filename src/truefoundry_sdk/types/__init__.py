@@ -35,6 +35,7 @@ from .artifacts_cache_volume import ArtifactsCacheVolume
 from .artifacts_download import ArtifactsDownload
 from .artifacts_download_artifacts_item import ArtifactsDownloadArtifactsItem
 from .assistant_message import AssistantMessage
+from .assistant_message_content_item import AssistantMessageContentItem
 from .async_processor_sidecar import AsyncProcessorSidecar
 from .async_service import AsyncService
 from .async_service_autoscaling import AsyncServiceAutoscaling
@@ -73,11 +74,13 @@ from .cron_metric import CronMetric
 from .data import Data
 from .data_directory import DataDirectory
 from .data_directory_manifest import DataDirectoryManifest
+from .delete_application_response import DeleteApplicationResponse
 from .deployment import Deployment
 from .deployment_manifest import DeploymentManifest
 from .deployment_status import DeploymentStatus
 from .deployment_status_status import DeploymentStatusStatus
 from .deployment_status_transition import DeploymentStatusTransition
+from .developer_message import DeveloperMessage
 from .email import Email
 from .empty_response import EmptyResponse
 from .environment import Environment
@@ -88,13 +91,14 @@ from .external_blob_storage_source import ExternalBlobStorageSource
 from .fast_ai_framework import FastAiFramework
 from .file_info import FileInfo
 from .framework import Framework
+from .function import Function
+from .function_schema import FunctionSchema
 from .gcp_tpu import GcpTpu
 from .get_agent_response import GetAgentResponse
 from .get_agent_version_response import GetAgentVersionResponse
 from .get_application_deployment_response_dto import GetApplicationDeploymentResponseDto
 from .get_application_deployments_response_dto import GetApplicationDeploymentsResponseDto
-from .get_application_response_dto import GetApplicationResponseDto
-from .get_applications_response_dto import GetApplicationsResponseDto
+from .get_application_response import GetApplicationResponse
 from .get_apply_sdk_code_request import GetApplySdkCodeRequest
 from .get_apply_sdk_code_response import GetApplySdkCodeResponse
 from .get_artifact_response import GetArtifactResponse
@@ -150,6 +154,7 @@ from .library_name import LibraryName
 from .light_gbm_framework import LightGbmFramework
 from .list_agent_versions_response import ListAgentVersionsResponse
 from .list_agents_response import ListAgentsResponse
+from .list_applications_response import ListApplicationsResponse
 from .list_artifact_version_response import ListArtifactVersionResponse
 from .list_artifacts_response import ListArtifactsResponse
 from .list_clusters_response import ListClustersResponse
@@ -212,6 +217,7 @@ from .prompt import Prompt
 from .prompt_version import PromptVersion
 from .py_torch_framework import PyTorchFramework
 from .recommendation import Recommendation
+from .refusal_content_part import RefusalContentPart
 from .resolve_agent_app_response import ResolveAgentAppResponse
 from .rolling import Rolling
 from .rps_metric import RpsMetric
@@ -246,6 +252,9 @@ from .text import Text
 from .text_content_part import TextContentPart
 from .token_pagination import TokenPagination
 from .tool import Tool
+from .tool_call import ToolCall
+from .tool_message import ToolMessage
+from .tool_schema import ToolSchema
 from .tool_version import ToolVersion
 from .transformers_framework import TransformersFramework
 from .true_foundry_artifact_source import TrueFoundryArtifactSource
@@ -299,6 +308,7 @@ __all__ = [
     "ArtifactsDownload",
     "ArtifactsDownloadArtifactsItem",
     "AssistantMessage",
+    "AssistantMessageContentItem",
     "AsyncProcessorSidecar",
     "AsyncService",
     "AsyncServiceAutoscaling",
@@ -337,11 +347,13 @@ __all__ = [
     "Data",
     "DataDirectory",
     "DataDirectoryManifest",
+    "DeleteApplicationResponse",
     "Deployment",
     "DeploymentManifest",
     "DeploymentStatus",
     "DeploymentStatusStatus",
     "DeploymentStatusTransition",
+    "DeveloperMessage",
     "Email",
     "EmptyResponse",
     "Environment",
@@ -352,13 +364,14 @@ __all__ = [
     "FastAiFramework",
     "FileInfo",
     "Framework",
+    "Function",
+    "FunctionSchema",
     "GcpTpu",
     "GetAgentResponse",
     "GetAgentVersionResponse",
     "GetApplicationDeploymentResponseDto",
     "GetApplicationDeploymentsResponseDto",
-    "GetApplicationResponseDto",
-    "GetApplicationsResponseDto",
+    "GetApplicationResponse",
     "GetApplySdkCodeRequest",
     "GetApplySdkCodeResponse",
     "GetArtifactResponse",
@@ -414,6 +427,7 @@ __all__ = [
     "LightGbmFramework",
     "ListAgentVersionsResponse",
     "ListAgentsResponse",
+    "ListApplicationsResponse",
     "ListArtifactVersionResponse",
     "ListArtifactsResponse",
     "ListClustersResponse",
@@ -476,6 +490,7 @@ __all__ = [
     "PromptVersion",
     "PyTorchFramework",
     "Recommendation",
+    "RefusalContentPart",
     "ResolveAgentAppResponse",
     "Resources",
     "ResourcesDevicesItem",
@@ -513,6 +528,9 @@ __all__ = [
     "TextContentPart",
     "TokenPagination",
     "Tool",
+    "ToolCall",
+    "ToolMessage",
+    "ToolSchema",
     "ToolVersion",
     "TransformersFramework",
     "TrueFoundryArtifactSource",

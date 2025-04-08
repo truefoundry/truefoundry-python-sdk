@@ -6,7 +6,7 @@ import typing
 T_Result = typing.TypeVar("T_Result")
 
 
-class AppsListRequestDeviceTypeFilter(str, enum.Enum):
+class ApplicationsListRequestDeviceTypeFilter(str, enum.Enum):
     CPU = "cpu"
     NVIDIA_GPU = "nvidia_gpu"
     AWS_INFERENTIA = "aws_inferentia"
@@ -23,15 +23,15 @@ class AppsListRequestDeviceTypeFilter(str, enum.Enum):
         nvidia_timeslicing_gpu: typing.Callable[[], T_Result],
         gcp_tpu: typing.Callable[[], T_Result],
     ) -> T_Result:
-        if self is AppsListRequestDeviceTypeFilter.CPU:
+        if self is ApplicationsListRequestDeviceTypeFilter.CPU:
             return cpu()
-        if self is AppsListRequestDeviceTypeFilter.NVIDIA_GPU:
+        if self is ApplicationsListRequestDeviceTypeFilter.NVIDIA_GPU:
             return nvidia_gpu()
-        if self is AppsListRequestDeviceTypeFilter.AWS_INFERENTIA:
+        if self is ApplicationsListRequestDeviceTypeFilter.AWS_INFERENTIA:
             return aws_inferentia()
-        if self is AppsListRequestDeviceTypeFilter.NVIDIA_MIG_GPU:
+        if self is ApplicationsListRequestDeviceTypeFilter.NVIDIA_MIG_GPU:
             return nvidia_mig_gpu()
-        if self is AppsListRequestDeviceTypeFilter.NVIDIA_TIMESLICING_GPU:
+        if self is ApplicationsListRequestDeviceTypeFilter.NVIDIA_TIMESLICING_GPU:
             return nvidia_timeslicing_gpu()
-        if self is AppsListRequestDeviceTypeFilter.GCP_TPU:
+        if self is ApplicationsListRequestDeviceTypeFilter.GCP_TPU:
             return gcp_tpu()

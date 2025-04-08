@@ -4,15 +4,21 @@ from ..core.pydantic_utilities import UniversalBaseModel
 from .application import Application
 from .application_debug_info import ApplicationDebugInfo
 from .deployment import Deployment
-import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
+import pydantic
+from .pagination import Pagination
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
-class GetApplicationDeploymentResponseDto(UniversalBaseModel):
-    data: Deployment = pydantic.Field()
+class ListApplicationsResponse(UniversalBaseModel):
+    data: typing.List[Application] = pydantic.Field()
     """
-    Deployment
+    Array of Applications
+    """
+
+    pagination: Pagination = pydantic.Field()
+    """
+    Pagination information
     """
 
     if IS_PYDANTIC_V2:
