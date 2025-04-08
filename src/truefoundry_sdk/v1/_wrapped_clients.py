@@ -73,112 +73,112 @@ async def _aget_by_fqn(client: HasAsyncListMethod[T], *, fqn: str) -> T:
 
 class WrappedAgentVersionsClient(AgentVersionsClient):
     def get_by_fqn(self, *, fqn: str) -> GetAgentVersionResponse:
-        item = _get_by_fqn(self, fqn=fqn) # type: ignore[arg-type]
+        item = _get_by_fqn(self, fqn=fqn)   # type: ignore[arg-type,var-annotated]
         return GetAgentVersionResponse.model_validate({"data": item})
 
 class WrappedAgentsClient(AgentsClient):
     def get_by_fqn(self, *, fqn: str) -> GetAgentResponse:
-        item = _get_by_fqn(self, fqn=fqn) # type: ignore[arg-type]
+        item = _get_by_fqn(self, fqn=fqn)   # type: ignore[arg-type,var-annotated]
         return GetAgentResponse.model_validate({"data": item})
 
 class WrappedArtifactVersionsClient(ArtifactVersionsClient):
     def get_by_fqn(self, *, fqn: str) -> GetArtifactVersionResponse:
-        item = _get_by_fqn(self, fqn=fqn) # type: ignore[arg-type]
+        item = _get_by_fqn(self, fqn=fqn)   # type: ignore[arg-type,var-annotated]
         return GetArtifactVersionResponse.model_validate({"data": item})
 
 class WrappedDataDirectoriesClient(DataDirectoriesClient):
     def get_by_fqn(self, *, fqn: str) -> GetDataDirectoryResponse:
-        item = _get_by_fqn(self, fqn=fqn) # type: ignore[arg-type]
+        item = _get_by_fqn(self, fqn=fqn)   # type: ignore[arg-type,var-annotated]
         return GetDataDirectoryResponse.model_validate({"data": item})
 
 class WrappedModelVersionsClient(ModelVersionsClient):
     def get_by_fqn(self, *, fqn: str) -> GetModelVersionResponse:
-        item = _get_by_fqn(self, fqn=fqn) # type: ignore[arg-type]
+        item = _get_by_fqn(self, fqn=fqn)   # type: ignore[arg-type,var-annotated]
         return GetModelVersionResponse.model_validate({"data": item})
 
 class WrappedModelsClient(ModelsClient):
     def get_by_fqn(self, *, fqn: str) -> GetModelResponse:
-        item = _get_by_fqn(self, fqn=fqn) # type: ignore[arg-type]
+        item = _get_by_fqn(self, fqn=fqn)   # type: ignore[arg-type,var-annotated]
         return GetModelResponse.model_validate({"data": item})
 
 class WrappedPromptVersionsClient(PromptVersionsClient):
     def get_by_fqn(self, *, fqn: str) -> GetPromptVersionResponse:
-        item = _get_by_fqn(self, fqn=fqn) # type: ignore[arg-type]
+        item = _get_by_fqn(self, fqn=fqn)   # type: ignore[arg-type,var-annotated]
         return GetPromptVersionResponse.model_validate({"data": item})
 
 class WrappedPromptsClient(PromptsClient):
     def get_by_fqn(self, *, fqn: str) -> GetPromptResponse:
-        item = _get_by_fqn(self, fqn=fqn) # type: ignore[arg-type]
+        item = _get_by_fqn(self, fqn=fqn)   # type: ignore[arg-type,var-annotated]
         return GetPromptResponse.model_validate({"data": item})
 
 class WrappedToolVersionsClient(ToolVersionsClient):
     def get_by_fqn(self, *, fqn: str) -> GetToolVersionResponse:
-        item = _get_by_fqn(self, fqn=fqn) # type: ignore[arg-type]
+        item = _get_by_fqn(self, fqn=fqn)   # type: ignore[arg-type,var-annotated]
         return GetToolVersionResponse.model_validate({"data": item})
 
 class WrappedToolsClient(ToolsClient):
     def get_by_fqn(self, *, fqn: str) -> GetToolResponse:
-        item = _get_by_fqn(self, fqn=fqn) # type: ignore[arg-type]
+        item = _get_by_fqn(self, fqn=fqn)   # type: ignore[arg-type,var-annotated]
         return GetToolResponse.model_validate({"data": item})
 
 class WrappedWorkspacesClient(WorkspacesClient):
     def get_by_fqn(self, *, fqn: str) -> GetWorkspaceResponse:
-        item = _get_by_fqn(self, fqn=fqn) # type: ignore[arg-type]
+        item = _get_by_fqn(self, fqn=fqn)   # type: ignore[arg-type,var-annotated]
         return GetWorkspaceResponse.model_validate({"data": item})
 
 
 
 class WrappedAsyncAgentVersionsClient(AsyncAgentVersionsClient):
     async def get_by_fqn(self, *, fqn: str) -> GetAgentVersionResponse:
-        item = await _aget_by_fqn(self, fqn=fqn) # type: ignore[arg-type]
+        item = await _aget_by_fqn(self, fqn=fqn)   # type: ignore[arg-type,var-annotated]
         return GetAgentVersionResponse.model_validate({"data": item})
 
 class WrappedAsyncAgentsClient(AsyncAgentsClient):
     async def get_by_fqn(self, *, fqn: str) -> GetAgentResponse:
-        item = await _aget_by_fqn(self, fqn=fqn) # type: ignore[arg-type]
+        item = await _aget_by_fqn(self, fqn=fqn)   # type: ignore[arg-type,var-annotated]
         return GetAgentResponse.model_validate({"data": item})
 
 class WrappedAsyncArtifactVersionsClient(AsyncArtifactVersionsClient):
     async def get_by_fqn(self, *, fqn: str) -> GetArtifactVersionResponse:
-        item = await _aget_by_fqn(self, fqn=fqn) # type: ignore[arg-type]
+        item = await _aget_by_fqn(self, fqn=fqn)   # type: ignore[arg-type,var-annotated]
         return GetArtifactVersionResponse.model_validate({"data": item})
 
 class WrappedAsyncDataDirectoriesClient(AsyncDataDirectoriesClient):
     async def get_by_fqn(self, *, fqn: str) -> GetDataDirectoryResponse:
-        item = await _aget_by_fqn(self, fqn=fqn) # type: ignore[arg-type]
+        item = await _aget_by_fqn(self, fqn=fqn)   # type: ignore[arg-type,var-annotated]
         return GetDataDirectoryResponse.model_validate({"data": item})
 
 class WrappedAsyncModelVersionsClient(AsyncModelVersionsClient):
     async def get_by_fqn(self, *, fqn: str) -> GetModelVersionResponse:
-        item = await _aget_by_fqn(self, fqn=fqn) # type: ignore[arg-type]
+        item = await _aget_by_fqn(self, fqn=fqn)   # type: ignore[arg-type,var-annotated]
         return GetModelVersionResponse.model_validate({"data": item})
 
 class WrappedAsyncModelsClient(AsyncModelsClient):
     async def get_by_fqn(self, *, fqn: str) -> GetModelResponse:
-        item = await _aget_by_fqn(self, fqn=fqn) # type: ignore[arg-type]
+        item = await _aget_by_fqn(self, fqn=fqn)   # type: ignore[arg-type,var-annotated]
         return GetModelResponse.model_validate({"data": item})
 
 class WrappedAsyncPromptVersionsClient(AsyncPromptVersionsClient):
     async def get_by_fqn(self, *, fqn: str) -> GetPromptVersionResponse:
-        item = await _aget_by_fqn(self, fqn=fqn) # type: ignore[arg-type]
+        item = await _aget_by_fqn(self, fqn=fqn)   # type: ignore[arg-type,var-annotated]
         return GetPromptVersionResponse.model_validate({"data": item})
 
 class WrappedAsyncPromptsClient(AsyncPromptsClient):
     async def get_by_fqn(self, *, fqn: str) -> GetPromptResponse:
-        item = await _aget_by_fqn(self, fqn=fqn) # type: ignore[arg-type]
+        item = await _aget_by_fqn(self, fqn=fqn)   # type: ignore[arg-type,var-annotated]
         return GetPromptResponse.model_validate({"data": item})
 
 class WrappedAsyncToolVersionsClient(AsyncToolVersionsClient):
     async def get_by_fqn(self, *, fqn: str) -> GetToolVersionResponse:
-        item = await _aget_by_fqn(self, fqn=fqn) # type: ignore[arg-type]
+        item = await _aget_by_fqn(self, fqn=fqn)   # type: ignore[arg-type,var-annotated]
         return GetToolVersionResponse.model_validate({"data": item})
 
 class WrappedAsyncToolsClient(AsyncToolsClient):
     async def get_by_fqn(self, *, fqn: str) -> GetToolResponse:
-        item = await _aget_by_fqn(self, fqn=fqn) # type: ignore[arg-type]
+        item = await _aget_by_fqn(self, fqn=fqn)   # type: ignore[arg-type,var-annotated]
         return GetToolResponse.model_validate({"data": item})
 
 class WrappedAsyncWorkspacesClient(AsyncWorkspacesClient):
     async def get_by_fqn(self, *, fqn: str) -> GetWorkspaceResponse:
-        item = await _aget_by_fqn(self, fqn=fqn) # type: ignore[arg-type]
+        item = await _aget_by_fqn(self, fqn=fqn)   # type: ignore[arg-type,var-annotated]
         return GetWorkspaceResponse.model_validate({"data": item})
