@@ -3,17 +3,17 @@
 from ...core.client_wrapper import SyncClientWrapper
 import typing
 from ...core.request_options import RequestOptions
-from ...types.get_agent_version_response import GetAgentVersionResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...types.resolve_agent_app_response import ResolveAgentAppResponse
 from ...core.pydantic_utilities import parse_obj_as
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
+from ...types.get_agent_version_response import GetAgentVersionResponse
+from ...core.jsonable_encoder import jsonable_encoder
 from ...types.empty_response import EmptyResponse
 from ...core.pagination import SyncPager
 from ...types.agent_version import AgentVersion
 from ...types.list_agent_versions_response import ListAgentVersionsResponse
-from ...types.resolve_agent_app_response import ResolveAgentAppResponse
 from ...core.client_wrapper import AsyncClientWrapper
 from ...core.pagination import AsyncPager
 
@@ -21,6 +21,64 @@ from ...core.pagination import AsyncPager
 class AgentVersionsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    def resolve(self, *, fqn: str, request_options: typing.Optional[RequestOptions] = None) -> ResolveAgentAppResponse:
+        """
+        Parameters
+        ----------
+        fqn : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ResolveAgentAppResponse
+            Successful Response
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.v1.agent_versions.resolve(
+            fqn="fqn",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/ml/v1/agent-versions/resolve",
+            method="GET",
+            params={
+                "fqn": fqn,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ResolveAgentAppResponse,
+                    parse_obj_as(
+                        type_=ResolveAgentAppResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetAgentVersionResponse:
         """
@@ -227,7 +285,14 @@ class AgentVersionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def resolve(self, *, fqn: str, request_options: typing.Optional[RequestOptions] = None) -> ResolveAgentAppResponse:
+
+class AsyncAgentVersionsClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._client_wrapper = client_wrapper
+
+    async def resolve(
+        self, *, fqn: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> ResolveAgentAppResponse:
         """
         Parameters
         ----------
@@ -243,17 +308,25 @@ class AgentVersionsClient:
 
         Examples
         --------
-        from truefoundry_sdk import TrueFoundry
+        import asyncio
 
-        client = TrueFoundry(
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.v1.agent_versions.resolve(
-            fqn="fqn",
-        )
+
+
+        async def main() -> None:
+            await client.v1.agent_versions.resolve(
+                fqn="fqn",
+            )
+
+
+        asyncio.run(main())
         """
-        _response = self._client_wrapper.httpx_client.request(
+        _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/agent-versions/resolve",
             method="GET",
             params={
@@ -284,11 +357,6 @@ class AgentVersionsClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
-
-
-class AsyncAgentVersionsClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetAgentVersionResponse:
         """
@@ -504,74 +572,6 @@ class AsyncAgentVersionsClient:
                 )
                 _items = _parsed_response.data
                 return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def resolve(
-        self, *, fqn: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> ResolveAgentAppResponse:
-        """
-        Parameters
-        ----------
-        fqn : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ResolveAgentAppResponse
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.v1.agent_versions.resolve(
-                fqn="fqn",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/agent-versions/resolve",
-            method="GET",
-            params={
-                "fqn": fqn,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ResolveAgentAppResponse,
-                    parse_obj_as(
-                        type_=ResolveAgentAppResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     typing.cast(

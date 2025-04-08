@@ -19,6 +19,7 @@ class InternalModelVersion(UniversalBaseModel):
     usage_code_snippet: typing.Optional[str] = None
     ml_repo_id: str
     model_id: str
+    artifact_fqn: str
     artifact_size: typing.Optional[int] = None
 
     if IS_PYDANTIC_V2:

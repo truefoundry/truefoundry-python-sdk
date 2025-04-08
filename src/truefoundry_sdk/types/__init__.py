@@ -18,6 +18,7 @@ from .artifact_path import ArtifactPath
 from .artifact_type import ArtifactType
 from .artifact_version import ArtifactVersion
 from .assistant_message import AssistantMessage
+from .assistant_message_content_item import AssistantMessageContentItem
 from .base_artifact_version import BaseArtifactVersion
 from .blob_storage_reference import BlobStorageReference
 from .chat_prompt_manifest import ChatPromptManifest
@@ -43,6 +44,7 @@ from .create_multi_part_upload_request import CreateMultiPartUploadRequest
 from .data import Data
 from .data_directory import DataDirectory
 from .data_directory_manifest import DataDirectoryManifest
+from .developer_message import DeveloperMessage
 from .device_configuration import DeviceConfiguration
 from .device_configuration_type import DeviceConfigurationType
 from .device_info import DeviceInfo
@@ -58,6 +60,8 @@ from .fast_ai_framework import FastAiFramework
 from .file_info import FileInfo
 from .fractional_gpu_info import FractionalGpuInfo
 from .framework import Framework
+from .function import Function
+from .function_schema import FunctionSchema
 from .get_agent_response import GetAgentResponse
 from .get_agent_version_response import GetAgentVersionResponse
 from .get_apply_sdk_code_request import GetApplySdkCodeRequest
@@ -140,6 +144,7 @@ from .permissions import Permissions
 from .prompt import Prompt
 from .prompt_version import PromptVersion
 from .py_torch_framework import PyTorchFramework
+from .refusal_content_part import RefusalContentPart
 from .resolve_agent_app_response import ResolveAgentAppResponse
 from .signed_url import SignedUrl
 from .sklearn_framework import SklearnFramework
@@ -159,6 +164,9 @@ from .text import Text
 from .text_content_part import TextContentPart
 from .token_pagination import TokenPagination
 from .tool import Tool
+from .tool_call import ToolCall
+from .tool_message import ToolMessage
+from .tool_schema import ToolSchema
 from .tool_version import ToolVersion
 from .transformers_framework import TransformersFramework
 from .true_foundry_managed_source import TrueFoundryManagedSource
@@ -193,6 +201,7 @@ __all__ = [
     "ArtifactType",
     "ArtifactVersion",
     "AssistantMessage",
+    "AssistantMessageContentItem",
     "BaseArtifactVersion",
     "BlobStorageReference",
     "ChatPromptManifest",
@@ -218,6 +227,7 @@ __all__ = [
     "Data",
     "DataDirectory",
     "DataDirectoryManifest",
+    "DeveloperMessage",
     "DeviceConfiguration",
     "DeviceConfigurationType",
     "DeviceInfo",
@@ -233,6 +243,8 @@ __all__ = [
     "FileInfo",
     "FractionalGpuInfo",
     "Framework",
+    "Function",
+    "FunctionSchema",
     "GetAgentResponse",
     "GetAgentVersionResponse",
     "GetApplySdkCodeRequest",
@@ -315,6 +327,7 @@ __all__ = [
     "Prompt",
     "PromptVersion",
     "PyTorchFramework",
+    "RefusalContentPart",
     "ResolveAgentAppResponse",
     "SignedUrl",
     "SklearnFramework",
@@ -334,6 +347,9 @@ __all__ = [
     "TextContentPart",
     "TokenPagination",
     "Tool",
+    "ToolCall",
+    "ToolMessage",
+    "ToolSchema",
     "ToolVersion",
     "TransformersFramework",
     "TrueFoundryManagedSource",
