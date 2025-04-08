@@ -3253,6 +3253,77 @@ client.v1.prompt_versions.delete(
 </dl>
 </details>
 
+<details><summary><code>client.v1.prompt_versions.<a href="src/truefoundry_sdk/v1/prompt_versions/client.py">get_by_fqn</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get prompt version API by fqn
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.v1.prompt_versions.get_by_fqn(
+    fqn="fqn",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**fqn:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.v1.prompt_versions.<a href="src/truefoundry_sdk/v1/prompt_versions/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>

@@ -135,6 +135,68 @@ class PromptVersionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def get_by_fqn(
+        self, *, fqn: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetPromptVersionResponse:
+        """
+        Get prompt version API by fqn
+
+        Parameters
+        ----------
+        fqn : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetPromptVersionResponse
+            Successful Response
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.v1.prompt_versions.get_by_fqn(
+            fqn="fqn",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/ml/v1/prompt-versions/get_by_fqn",
+            method="GET",
+            params={
+                "fqn": fqn,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetPromptVersionResponse,
+                    parse_obj_as(
+                        type_=GetPromptVersionResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     def list(
         self,
         *,
@@ -345,6 +407,76 @@ class AsyncPromptVersionsClient:
                     EmptyResponse,
                     parse_obj_as(
                         type_=EmptyResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_by_fqn(
+        self, *, fqn: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetPromptVersionResponse:
+        """
+        Get prompt version API by fqn
+
+        Parameters
+        ----------
+        fqn : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetPromptVersionResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.v1.prompt_versions.get_by_fqn(
+                fqn="fqn",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/ml/v1/prompt-versions/get_by_fqn",
+            method="GET",
+            params={
+                "fqn": fqn,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetPromptVersionResponse,
+                    parse_obj_as(
+                        type_=GetPromptVersionResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
