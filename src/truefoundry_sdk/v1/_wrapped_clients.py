@@ -16,7 +16,7 @@ from ..v1.tool_versions.client import ToolVersionsClient, AsyncToolVersionsClien
 from ..v1.workspaces.client import WorkspacesClient, AsyncWorkspacesClient
 
 # Response types
-from ..types.get_agent_version_response import GetAgentVersionResponse
+from truefoundry_sdk.types.get_agent_version_response import GetAgentVersionResponse
 from ..types.get_artifact_version_response import GetArtifactVersionResponse
 from ..types.get_model_version_response import GetModelVersionResponse
 from ..types.get_prompt_version_response import GetPromptVersionResponse
