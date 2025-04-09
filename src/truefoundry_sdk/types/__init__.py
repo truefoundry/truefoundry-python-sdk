@@ -53,6 +53,9 @@ from .basic_auth_creds import BasicAuthCreds
 from .blob_storage_reference import BlobStorageReference
 from .blue_green import BlueGreen
 from .build import Build
+from .build_build_source import BuildBuildSource
+from .build_build_spec import BuildBuildSpec
+from .build_info import BuildInfo
 from .build_status import BuildStatus
 from .canary import Canary
 from .canary_step import CanaryStep
@@ -81,6 +84,8 @@ from .deployment_status import DeploymentStatus
 from .deployment_status_status import DeploymentStatusStatus
 from .deployment_status_transition import DeploymentStatusTransition
 from .developer_message import DeveloperMessage
+from .docker_file_build import DockerFileBuild
+from .docker_file_build_command import DockerFileBuildCommand
 from .email import Email
 from .empty_response import EmptyResponse
 from .environment import Environment
@@ -117,6 +122,7 @@ from .get_tool_response import GetToolResponse
 from .get_tool_version_response import GetToolVersionResponse
 from .get_workspace_response import GetWorkspaceResponse
 from .git_helm_repo import GitHelmRepo
+from .git_source import GitSource
 from .gluon_framework import GluonFramework
 from .h2o_framework import H2OFramework
 from .health_probe import HealthProbe
@@ -172,6 +178,7 @@ from .list_tools_response import ListToolsResponse
 from .list_workspaces_response import ListWorkspacesResponse
 from .local_artifact_source import LocalArtifactSource
 from .local_model_source import LocalModelSource
+from .local_source import LocalSource
 from .manifest import Manifest
 from .manual import Manual
 from .method import Method
@@ -216,8 +223,11 @@ from .port_protocol import PortProtocol
 from .prompt import Prompt
 from .prompt_version import PromptVersion
 from .py_torch_framework import PyTorchFramework
+from .python_build import PythonBuild
+from .python_build_command import PythonBuildCommand
 from .recommendation import Recommendation
 from .refusal_content_part import RefusalContentPart
+from .remote_source import RemoteSource
 from .resolve_agent_app_response import ResolveAgentAppResponse
 from .rolling import Rolling
 from .rps_metric import RpsMetric
@@ -326,6 +336,9 @@ __all__ = [
     "BlobStorageReference",
     "BlueGreen",
     "Build",
+    "BuildBuildSource",
+    "BuildBuildSpec",
+    "BuildInfo",
     "BuildStatus",
     "Canary",
     "CanaryStep",
@@ -354,6 +367,8 @@ __all__ = [
     "DeploymentStatusStatus",
     "DeploymentStatusTransition",
     "DeveloperMessage",
+    "DockerFileBuild",
+    "DockerFileBuildCommand",
     "Email",
     "EmptyResponse",
     "Environment",
@@ -390,6 +405,7 @@ __all__ = [
     "GetToolVersionResponse",
     "GetWorkspaceResponse",
     "GitHelmRepo",
+    "GitSource",
     "GluonFramework",
     "H2OFramework",
     "HealthProbe",
@@ -445,6 +461,7 @@ __all__ = [
     "ListWorkspacesResponse",
     "LocalArtifactSource",
     "LocalModelSource",
+    "LocalSource",
     "Manifest",
     "Manual",
     "Method",
@@ -489,8 +506,11 @@ __all__ = [
     "Prompt",
     "PromptVersion",
     "PyTorchFramework",
+    "PythonBuild",
+    "PythonBuildCommand",
     "Recommendation",
     "RefusalContentPart",
+    "RemoteSource",
     "ResolveAgentAppResponse",
     "Resources",
     "ResourcesDevicesItem",

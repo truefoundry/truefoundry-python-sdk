@@ -237,7 +237,7 @@ class ApplicationsClient:
             workspace id of the workspace
 
         application_id : typing.Optional[str]
-            Application Id of the application
+            Id of the application
 
         name : typing.Optional[str]
             Name of application
@@ -335,7 +335,7 @@ class ApplicationsClient:
         Parameters
         ----------
         id : str
-            Application Id of the application
+            Id of the application
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -391,7 +391,7 @@ class ApplicationsClient:
         Parameters
         ----------
         id : str
-            Application Id of the application
+            Id of the application
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -459,7 +459,7 @@ class ApplicationsClient:
         Parameters
         ----------
         id : str
-            Application Id of the application
+            Id of the application
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -540,7 +540,7 @@ class ApplicationsClient:
         Parameters
         ----------
         id : str
-            Application Id of the application
+            Id of the application
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -894,7 +894,7 @@ class AsyncApplicationsClient:
             workspace id of the workspace
 
         application_id : typing.Optional[str]
-            Application Id of the application
+            Id of the application
 
         name : typing.Optional[str]
             Name of application
@@ -992,7 +992,7 @@ class AsyncApplicationsClient:
         Parameters
         ----------
         id : str
-            Application Id of the application
+            Id of the application
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1050,7 +1050,7 @@ class AsyncApplicationsClient:
         Parameters
         ----------
         id : str
-            Application Id of the application
+            Id of the application
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1126,7 +1126,7 @@ class AsyncApplicationsClient:
         Parameters
         ----------
         id : str
-            Application Id of the application
+            Id of the application
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1217,7 +1217,7 @@ class AsyncApplicationsClient:
         Parameters
         ----------
         id : str
-            Application Id of the application
+            Id of the application
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

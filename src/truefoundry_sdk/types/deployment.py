@@ -7,7 +7,7 @@ from ..core.serialization import FieldMetadata
 from .deployment_manifest import DeploymentManifest
 import typing
 import datetime as dt
-from .build import Build
+from .build_info import BuildInfo
 from .deployment_status import DeploymentStatus
 from .recommendation import Recommendation
 import pydantic
@@ -28,7 +28,7 @@ class Deployment(UniversalBaseModel):
     ]
     created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
     updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
-    deployment_builds: typing_extensions.Annotated[typing.List[Build], FieldMetadata(alias="deploymentBuilds")]
+    deployment_builds: typing_extensions.Annotated[typing.List[BuildInfo], FieldMetadata(alias="deploymentBuilds")]
     deployment_statuses: typing_extensions.Annotated[
         typing.List[DeploymentStatus], FieldMetadata(alias="deploymentStatuses")
     ]

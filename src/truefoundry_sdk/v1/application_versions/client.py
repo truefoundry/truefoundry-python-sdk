@@ -42,7 +42,7 @@ class ApplicationVersionsClient:
         Parameters
         ----------
         id_ : str
-            Application Id of the application
+            Id of the application
 
         limit : typing.Optional[float]
             Number of items per page. Defaults to 50 if not provided.
@@ -228,7 +228,7 @@ class AsyncApplicationVersionsClient:
         Parameters
         ----------
         id_ : str
-            Application Id of the application
+            Id of the application
 
         limit : typing.Optional[float]
             Number of items per page. Defaults to 50 if not provided.

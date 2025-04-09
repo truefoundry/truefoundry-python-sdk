@@ -569,6 +569,68 @@ class ArtifactVersionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def mark_stage_failure(self, *, id: str, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
+        """
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EmptyResponse
+            Successful Response
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.v1.artifact_versions.mark_stage_failure(
+            id="id",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/ml/v1/artifact-versions/mark-stage-failure",
+            method="POST",
+            json={
+                "id": id,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    EmptyResponse,
+                    parse_obj_as(
+                        type_=EmptyResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncArtifactVersionsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -1158,6 +1220,78 @@ class AsyncArtifactVersionsClient:
                     )
                 _items = _parsed_response.data
                 return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def mark_stage_failure(
+        self, *, id: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> EmptyResponse:
+        """
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EmptyResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.v1.artifact_versions.mark_stage_failure(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/ml/v1/artifact-versions/mark-stage-failure",
+            method="POST",
+            json={
+                "id": id,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    EmptyResponse,
+                    parse_obj_as(
+                        type_=EmptyResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     typing.cast(

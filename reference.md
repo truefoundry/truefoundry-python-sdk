@@ -1212,7 +1212,7 @@ client.v1.applications.delete(
 <dl>
 <dd>
 
-**id:** `str` — Application Id of the application
+**id:** `str` — Id of the application
     
 </dd>
 </dl>
@@ -1283,7 +1283,7 @@ client.v1.applications.scale_to_zero(
 <dl>
 <dd>
 
-**id:** `str` — Application Id of the application
+**id:** `str` — Id of the application
     
 </dd>
 </dl>
@@ -1444,7 +1444,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**id_:** `str` — Application Id of the application
+**id_:** `str` — Id of the application
     
 </dd>
 </dl>
@@ -3361,6 +3361,63 @@ for page in response.iter_pages():
 <dd>
 
 **page_token:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.v1.artifact_versions.<a href="src/truefoundry_sdk/v1/artifact_versions/client.py">mark_stage_failure</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.v1.artifact_versions.mark_stage_failure(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
     
 </dd>
 </dl>
