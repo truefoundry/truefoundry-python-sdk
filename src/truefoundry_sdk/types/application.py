@@ -5,6 +5,7 @@ from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 from .application_type import ApplicationType
 import typing_extensions
+from .subject import Subject
 from ..core.serialization import FieldMetadata
 from .application_metadata import ApplicationMetadata
 from .application_lifecycle_stage import ApplicationLifecycleStage
@@ -22,7 +23,7 @@ class Application(UniversalBaseModel):
     fqn: typing.Optional[str] = None
     name: typing.Optional[str] = None
     type: typing.Optional[ApplicationType] = None
-    created_by_subject: typing_extensions.Annotated[str, FieldMetadata(alias="createdBySubject")]
+    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")]
     tenant_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="tenantName")] = None
     metadata: typing.Optional[ApplicationMetadata] = None
     lifecycle_stage: typing_extensions.Annotated[ApplicationLifecycleStage, FieldMetadata(alias="lifecycleStage")]

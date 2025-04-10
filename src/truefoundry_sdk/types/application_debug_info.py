@@ -14,12 +14,12 @@ from ..core.pydantic_utilities import update_forward_refs
 class ApplicationDebugInfo(UniversalBaseModel):
     id: str
     application_id: typing_extensions.Annotated[str, FieldMetadata(alias="applicationId")]
-    application: "Application"
+    application: typing.Optional["Application"] = None
     debug_info: typing_extensions.Annotated[
         typing.Dict[str, typing.Optional[typing.Any]], FieldMetadata(alias="debugInfo")
     ]
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
+    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None
+    updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

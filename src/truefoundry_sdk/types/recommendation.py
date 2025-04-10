@@ -2,8 +2,8 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing_extensions
-from ..core.serialization import FieldMetadata
 import typing
+from ..core.serialization import FieldMetadata
 import datetime as dt
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
@@ -11,8 +11,8 @@ import pydantic
 
 class Recommendation(UniversalBaseModel):
     id: str
-    cluster_id: typing_extensions.Annotated[str, FieldMetadata(alias="clusterId")]
-    application_id: typing_extensions.Annotated[str, FieldMetadata(alias="applicationId")]
+    cluster_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="clusterId")] = None
+    application_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="applicationId")] = None
     deployment_id: typing_extensions.Annotated[str, FieldMetadata(alias="deploymentId")]
     application_version: typing_extensions.Annotated[int, FieldMetadata(alias="applicationVersion")]
     recommendation_data: typing_extensions.Annotated[
@@ -24,8 +24,8 @@ class Recommendation(UniversalBaseModel):
         typing.Optional[str], FieldMetadata(alias="appliedDeploymentId")
     ] = None
     expiry_timestamp: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="expiryTimestamp")]
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
+    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None
+    updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
