@@ -4,6 +4,7 @@ from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 import pydantic
 from .content import Content
+from .tool_call import ToolCall
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -17,9 +18,14 @@ class AssistantMessage(UniversalBaseModel):
     Role of the message
     """
 
-    content: Content = pydantic.Field()
+    content: typing.Optional[Content] = pydantic.Field(default=None)
     """
     Text content for the assistant message
+    """
+
+    tool_calls: typing.Optional[typing.List[ToolCall]] = pydantic.Field(default=None)
+    """
+    List of tool calls made by the assistant
     """
 
     name: typing.Optional[str] = pydantic.Field(default=None)

@@ -29,6 +29,7 @@ AddonComponentName = typing.Union[
         "GRAFANA",
         "TRUEFOUNDRY",
         "TFY_PROMETHEUS_CONFIG",
+        "SPARK_OPERATOR",
     ],
     typing.Any,
 ]

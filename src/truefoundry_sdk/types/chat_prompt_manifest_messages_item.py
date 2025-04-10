@@ -4,5 +4,9 @@ import typing
 from .system_message import SystemMessage
 from .assistant_message import AssistantMessage
 from .user_message import UserMessage
+from .tool_message import ToolMessage
+from .developer_message import DeveloperMessage
 
-ChatPromptManifestMessagesItem = typing.Union[SystemMessage, AssistantMessage, UserMessage]
+ChatPromptManifestMessagesItem = typing.Union[
+    SystemMessage, AssistantMessage, UserMessage, ToolMessage, DeveloperMessage
+]

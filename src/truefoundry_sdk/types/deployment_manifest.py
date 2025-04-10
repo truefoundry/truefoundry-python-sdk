@@ -4,6 +4,29 @@ import typing
 from .service import Service
 from .async_service import AsyncService
 from .job import Job
+from .notebook import Notebook
+from .codeserver import Codeserver
+from .ssh_server import SshServer
+from .r_studio import RStudio
 from .helm import Helm
+from .volume import Volume
+from .application_set import ApplicationSet
+from .workflow import Workflow
+from .spark_job import SparkJob
+from .intercept import Intercept
 
-DeploymentManifest = typing.Union[Service, AsyncService, Job, Helm]
+DeploymentManifest = typing.Union[
+    Service,
+    AsyncService,
+    Job,
+    Notebook,
+    Codeserver,
+    SshServer,
+    RStudio,
+    Helm,
+    Volume,
+    ApplicationSet,
+    Workflow,
+    SparkJob,
+    Intercept,
+]

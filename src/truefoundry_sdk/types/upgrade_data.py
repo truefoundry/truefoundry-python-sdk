@@ -4,21 +4,17 @@ from ..core.pydantic_utilities import UniversalBaseModel
 from .i_change import IChange
 import typing
 import typing_extensions
-from .helm_deployment_manifest import HelmDeploymentManifest
+from .helm import Helm
 from ..core.serialization import FieldMetadata
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
 class UpgradeData(UniversalBaseModel):
-    diff: typing.List[IChange]
-    current_manifest: typing_extensions.Annotated[
-        typing.Optional[HelmDeploymentManifest], FieldMetadata(alias="currentManifest")
-    ] = None
-    desired_manifest: typing_extensions.Annotated[
-        typing.Optional[HelmDeploymentManifest], FieldMetadata(alias="desiredManifest")
-    ] = None
-    upgrade_possible: typing_extensions.Annotated[bool, FieldMetadata(alias="upgradePossible")]
+    diff: typing.Optional[typing.List[IChange]] = None
+    current_manifest: typing_extensions.Annotated[typing.Optional[Helm], FieldMetadata(alias="currentManifest")] = None
+    desired_manifest: typing_extensions.Annotated[typing.Optional[Helm], FieldMetadata(alias="desiredManifest")] = None
+    upgrade_possible: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="upgradePossible")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -6,7 +6,6 @@ ApplicationType = typing.Union[
     typing.Literal[
         "async-service",
         "service",
-        "model-deployment",
         "job",
         "spark-job",
         "helm",

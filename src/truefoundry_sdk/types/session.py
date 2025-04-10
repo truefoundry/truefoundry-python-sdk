@@ -14,6 +14,10 @@ class Session(UniversalBaseModel):
     id: str
     user_name: typing_extensions.Annotated[str, FieldMetadata(alias="userName")]
     subject_slug: typing_extensions.Annotated[str, FieldMetadata(alias="subjectSlug")]
+    subject_controller_name: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="subjectControllerName")
+    ] = None
+    subject_pat_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="subjectPatName")] = None
     email: typing.Optional[str] = None
     subject_type: typing_extensions.Annotated[SessionSubjectType, FieldMetadata(alias="subjectType")]
     tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]

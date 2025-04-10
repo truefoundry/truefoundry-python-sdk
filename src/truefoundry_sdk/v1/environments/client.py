@@ -15,7 +15,6 @@ from ...core.serialization import convert_and_respect_annotation_metadata
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...core.jsonable_encoder import jsonable_encoder
 from ...errors.not_found_error import NotFoundError
-from ...types.http_error import HttpError
 from ...errors.conflict_error import ConflictError
 from ...core.client_wrapper import AsyncClientWrapper
 from ...core.pagination import AsyncPager
@@ -280,9 +279,9 @@ class EnvironmentsClient:
             if _response.status_code == 404:
                 raise NotFoundError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -290,9 +289,9 @@ class EnvironmentsClient:
             if _response.status_code == 409:
                 raise ConflictError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -595,9 +594,9 @@ class AsyncEnvironmentsClient:
             if _response.status_code == 404:
                 raise NotFoundError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -605,9 +604,9 @@ class AsyncEnvironmentsClient:
             if _response.status_code == 409:
                 raise ConflictError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )

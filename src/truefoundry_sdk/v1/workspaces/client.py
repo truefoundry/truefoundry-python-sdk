@@ -11,6 +11,12 @@ from ...core.pydantic_utilities import parse_obj_as
 from ...errors.bad_request_error import BadRequestError
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
+from .types.workspaces_download_logs_request_type import (
+    WorkspacesDownloadLogsRequestType,
+)
+from .types.workspaces_download_logs_request_operator import (
+    WorkspacesDownloadLogsRequestOperator,
+)
 from .types.workspaces_get_build_logs_request_type import (
     WorkspacesGetBuildLogsRequestType,
 )
@@ -24,14 +30,19 @@ from ...types.workspace_manifest import WorkspaceManifest
 from ...types.get_workspace_response import GetWorkspaceResponse
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...errors.forbidden_error import ForbiddenError
-from ...types.http_error import HttpError
 from ...errors.not_found_error import NotFoundError
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from .types.workspaces_delete_response import WorkspacesDeleteResponse
 from ...errors.expectation_failed_error import ExpectationFailedError
+from ...types.http_error import HttpError
 from ...types.alert_status import AlertStatus
 from ...types.get_alerts_response import GetAlertsResponse
 from ...types.event_response import EventResponse
+from .types.workspaces_list_charts_request_filter_entity import (
+    WorkspacesListChartsRequestFilterEntity,
+)
+from ...types.charts_response import ChartsResponse
+from ...errors.method_not_allowed_error import MethodNotAllowedError
 from ...core.client_wrapper import AsyncClientWrapper
 from ...core.pagination import AsyncPager
 
@@ -193,6 +204,131 @@ class WorkspacesClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def download_logs(
+        self,
+        workspace_id: str,
+        *,
+        match_string: str,
+        type: WorkspacesDownloadLogsRequestType,
+        operator: WorkspacesDownloadLogsRequestOperator,
+        start_ts: typing.Optional[str] = None,
+        end_ts: typing.Optional[str] = None,
+        limit: typing.Optional[str] = None,
+        direction: typing.Optional[str] = None,
+        application_id: typing.Optional[str] = None,
+        deployment_id: typing.Optional[str] = None,
+        job_run_name: typing.Optional[str] = None,
+        pod_name: typing.Optional[str] = None,
+        container_name: typing.Optional[str] = None,
+        pod_names: typing.Optional[str] = None,
+        pod_names_regex: typing.Optional[str] = None,
+        num_logs_to_ignore: typing.Optional[float] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[bytes]:
+        """
+        Download logs associated with the specified workload, including Jobs, Services, Job Runs, Pods, or Workflows. Logs are filtered based on the provided query parameters.
+
+        Parameters
+        ----------
+        workspace_id : str
+
+        match_string : str
+            String that needs to be matched
+
+        type : WorkspacesDownloadLogsRequestType
+            query filter type, `regex` or `substring`
+
+        operator : WorkspacesDownloadLogsRequestOperator
+            comparison operator for filter. `equal` or `not_equal`
+
+        start_ts : typing.Optional[str]
+            Start timestamp for querying logs, in nanoseconds from the Unix epoch.
+
+        end_ts : typing.Optional[str]
+            End timestamp for querying logs, in nanoseconds from the Unix epoch.
+
+        limit : typing.Optional[str]
+            Max number of log lines to fetch
+
+        direction : typing.Optional[str]
+            Direction of sorting logs. Can be `asc` or `desc`
+
+        application_id : typing.Optional[str]
+            Application ID
+
+        deployment_id : typing.Optional[str]
+            Deployment ID
+
+        job_run_name : typing.Optional[str]
+            Name of the Job Run for which to fetch logs.
+
+        pod_name : typing.Optional[str]
+            Name of Pod for which to fetch logs.
+
+        container_name : typing.Optional[str]
+            Name of the Container for which to fetch logs.
+
+        pod_names : typing.Optional[str]
+            List of pod names (comma-separated) for which to fetch logs.
+
+        pod_names_regex : typing.Optional[str]
+            Regex pattern for pod names to fetch logs.
+
+        num_logs_to_ignore : typing.Optional[float]
+            Number of logs corresponding to the starting timestamp to be ignored.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Yields
+        ------
+        typing.Iterator[bytes]
+            Successfully retrieved and streamed logs as a downloadable file
+        """
+        with self._client_wrapper.httpx_client.stream(
+            f"api/svc/v1/logs/{jsonable_encoder(workspace_id)}/download",
+            method="GET",
+            params={
+                "startTs": start_ts,
+                "endTs": end_ts,
+                "limit": limit,
+                "direction": direction,
+                "applicationId": application_id,
+                "deploymentId": deployment_id,
+                "jobRunName": job_run_name,
+                "podName": pod_name,
+                "containerName": container_name,
+                "podNames": pod_names,
+                "podNamesRegex": pod_names_regex,
+                "matchString": match_string,
+                "type": type,
+                "operator": operator,
+                "numLogsToIgnore": num_logs_to_ignore,
+            },
+            request_options=request_options,
+        ) as _response:
+            try:
+                if 200 <= _response.status_code < 300:
+                    _chunk_size = request_options.get("chunk_size", None) if request_options is not None else None
+                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
+                        yield _chunk
+                    return
+                _response.read()
+                if _response.status_code == 400:
+                    raise BadRequestError(
+                        typing.cast(
+                            typing.Optional[typing.Any],
+                            parse_obj_as(
+                                type_=typing.Optional[typing.Any],  # type: ignore
+                                object_=_response.json(),
+                            ),
+                        )
+                    )
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_build_logs(
         self,
@@ -478,9 +614,9 @@ class WorkspacesClient:
             if _response.status_code == 403:
                 raise ForbiddenError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -488,9 +624,9 @@ class WorkspacesClient:
             if _response.status_code == 404:
                 raise NotFoundError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -556,9 +692,9 @@ class WorkspacesClient:
             if _response.status_code == 404:
                 raise NotFoundError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -616,9 +752,9 @@ class WorkspacesClient:
             if _response.status_code == 404:
                 raise NotFoundError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -720,9 +856,9 @@ class WorkspacesClient:
             if _response.status_code == 403:
                 raise ForbiddenError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -820,9 +956,118 @@ class WorkspacesClient:
             if _response.status_code == 404:
                 raise NotFoundError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def list_charts(
+        self,
+        workspace_id: str,
+        *,
+        application_id: str,
+        filter_entity: WorkspacesListChartsRequestFilterEntity,
+        start_ts: typing.Optional[str] = None,
+        end_ts: typing.Optional[str] = None,
+        filter_query: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ChartsResponse:
+        """
+        List charts for a given Application based on parameters passed in the query.
+
+        Parameters
+        ----------
+        workspace_id : str
+
+        application_id : str
+
+        filter_entity : WorkspacesListChartsRequestFilterEntity
+
+        start_ts : typing.Optional[str]
+            Start Timestamp
+
+        end_ts : typing.Optional[str]
+            End Timestamp
+
+        filter_query : typing.Optional[str]
+            Query params to filter metrics
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ChartsResponse
+            Charts have been successfully retrieved.
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.v1.workspaces.list_charts(
+            workspace_id="workspaceId",
+            application_id="applicationId",
+            filter_entity="application",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/metrics/{jsonable_encoder(workspace_id)}/charts",
+            method="GET",
+            params={
+                "applicationId": application_id,
+                "startTs": start_ts,
+                "endTs": end_ts,
+                "filterEntity": filter_entity,
+                "filterQuery": filter_query,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ChartsResponse,
+                    parse_obj_as(
+                        type_=ChartsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 405:
+                raise MethodNotAllowedError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -995,6 +1240,131 @@ class AsyncWorkspacesClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def download_logs(
+        self,
+        workspace_id: str,
+        *,
+        match_string: str,
+        type: WorkspacesDownloadLogsRequestType,
+        operator: WorkspacesDownloadLogsRequestOperator,
+        start_ts: typing.Optional[str] = None,
+        end_ts: typing.Optional[str] = None,
+        limit: typing.Optional[str] = None,
+        direction: typing.Optional[str] = None,
+        application_id: typing.Optional[str] = None,
+        deployment_id: typing.Optional[str] = None,
+        job_run_name: typing.Optional[str] = None,
+        pod_name: typing.Optional[str] = None,
+        container_name: typing.Optional[str] = None,
+        pod_names: typing.Optional[str] = None,
+        pod_names_regex: typing.Optional[str] = None,
+        num_logs_to_ignore: typing.Optional[float] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[bytes]:
+        """
+        Download logs associated with the specified workload, including Jobs, Services, Job Runs, Pods, or Workflows. Logs are filtered based on the provided query parameters.
+
+        Parameters
+        ----------
+        workspace_id : str
+
+        match_string : str
+            String that needs to be matched
+
+        type : WorkspacesDownloadLogsRequestType
+            query filter type, `regex` or `substring`
+
+        operator : WorkspacesDownloadLogsRequestOperator
+            comparison operator for filter. `equal` or `not_equal`
+
+        start_ts : typing.Optional[str]
+            Start timestamp for querying logs, in nanoseconds from the Unix epoch.
+
+        end_ts : typing.Optional[str]
+            End timestamp for querying logs, in nanoseconds from the Unix epoch.
+
+        limit : typing.Optional[str]
+            Max number of log lines to fetch
+
+        direction : typing.Optional[str]
+            Direction of sorting logs. Can be `asc` or `desc`
+
+        application_id : typing.Optional[str]
+            Application ID
+
+        deployment_id : typing.Optional[str]
+            Deployment ID
+
+        job_run_name : typing.Optional[str]
+            Name of the Job Run for which to fetch logs.
+
+        pod_name : typing.Optional[str]
+            Name of Pod for which to fetch logs.
+
+        container_name : typing.Optional[str]
+            Name of the Container for which to fetch logs.
+
+        pod_names : typing.Optional[str]
+            List of pod names (comma-separated) for which to fetch logs.
+
+        pod_names_regex : typing.Optional[str]
+            Regex pattern for pod names to fetch logs.
+
+        num_logs_to_ignore : typing.Optional[float]
+            Number of logs corresponding to the starting timestamp to be ignored.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Yields
+        ------
+        typing.AsyncIterator[bytes]
+            Successfully retrieved and streamed logs as a downloadable file
+        """
+        async with self._client_wrapper.httpx_client.stream(
+            f"api/svc/v1/logs/{jsonable_encoder(workspace_id)}/download",
+            method="GET",
+            params={
+                "startTs": start_ts,
+                "endTs": end_ts,
+                "limit": limit,
+                "direction": direction,
+                "applicationId": application_id,
+                "deploymentId": deployment_id,
+                "jobRunName": job_run_name,
+                "podName": pod_name,
+                "containerName": container_name,
+                "podNames": pod_names,
+                "podNamesRegex": pod_names_regex,
+                "matchString": match_string,
+                "type": type,
+                "operator": operator,
+                "numLogsToIgnore": num_logs_to_ignore,
+            },
+            request_options=request_options,
+        ) as _response:
+            try:
+                if 200 <= _response.status_code < 300:
+                    _chunk_size = request_options.get("chunk_size", None) if request_options is not None else None
+                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
+                        yield _chunk
+                    return
+                await _response.aread()
+                if _response.status_code == 400:
+                    raise BadRequestError(
+                        typing.cast(
+                            typing.Optional[typing.Any],
+                            parse_obj_as(
+                                type_=typing.Optional[typing.Any],  # type: ignore
+                                object_=_response.json(),
+                            ),
+                        )
+                    )
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_build_logs(
         self,
@@ -1304,9 +1674,9 @@ class AsyncWorkspacesClient:
             if _response.status_code == 403:
                 raise ForbiddenError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -1314,9 +1684,9 @@ class AsyncWorkspacesClient:
             if _response.status_code == 404:
                 raise NotFoundError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -1390,9 +1760,9 @@ class AsyncWorkspacesClient:
             if _response.status_code == 404:
                 raise NotFoundError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -1460,9 +1830,9 @@ class AsyncWorkspacesClient:
             if _response.status_code == 404:
                 raise NotFoundError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -1572,9 +1942,9 @@ class AsyncWorkspacesClient:
             if _response.status_code == 403:
                 raise ForbiddenError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -1680,9 +2050,126 @@ class AsyncWorkspacesClient:
             if _response.status_code == 404:
                 raise NotFoundError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def list_charts(
+        self,
+        workspace_id: str,
+        *,
+        application_id: str,
+        filter_entity: WorkspacesListChartsRequestFilterEntity,
+        start_ts: typing.Optional[str] = None,
+        end_ts: typing.Optional[str] = None,
+        filter_query: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ChartsResponse:
+        """
+        List charts for a given Application based on parameters passed in the query.
+
+        Parameters
+        ----------
+        workspace_id : str
+
+        application_id : str
+
+        filter_entity : WorkspacesListChartsRequestFilterEntity
+
+        start_ts : typing.Optional[str]
+            Start Timestamp
+
+        end_ts : typing.Optional[str]
+            End Timestamp
+
+        filter_query : typing.Optional[str]
+            Query params to filter metrics
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ChartsResponse
+            Charts have been successfully retrieved.
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.v1.workspaces.list_charts(
+                workspace_id="workspaceId",
+                application_id="applicationId",
+                filter_entity="application",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/metrics/{jsonable_encoder(workspace_id)}/charts",
+            method="GET",
+            params={
+                "applicationId": application_id,
+                "startTs": start_ts,
+                "endTs": end_ts,
+                "filterEntity": filter_entity,
+                "filterQuery": filter_query,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ChartsResponse,
+                    parse_obj_as(
+                        type_=ChartsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 405:
+                raise MethodNotAllowedError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )

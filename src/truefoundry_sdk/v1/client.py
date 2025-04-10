@@ -5,8 +5,8 @@ from .users.client import UsersClient
 from .clusters.client import ClustersClient
 from .environments.client import EnvironmentsClient
 from .workspaces.client import WorkspacesClient
-from .apps.client import AppsClient
 from .applications.client import ApplicationsClient
+from .application_versions.client import ApplicationVersionsClient
 from .deployments.client import DeploymentsClient
 from .artifacts.client import ArtifactsClient
 from .agents.client import AgentsClient
@@ -21,13 +21,14 @@ from .agent_versions.client import AgentVersionsClient
 from .data_directories.client import DataDirectoriesClient
 from .ml_repos.client import MlReposClient
 from .internal.client import InternalClient
+from .vcs.client import VcsClient
 from ..core.client_wrapper import AsyncClientWrapper
 from .users.client import AsyncUsersClient
 from .clusters.client import AsyncClustersClient
 from .environments.client import AsyncEnvironmentsClient
 from .workspaces.client import AsyncWorkspacesClient
-from .apps.client import AsyncAppsClient
 from .applications.client import AsyncApplicationsClient
+from .application_versions.client import AsyncApplicationVersionsClient
 from .deployments.client import AsyncDeploymentsClient
 from .artifacts.client import AsyncArtifactsClient
 from .agents.client import AsyncAgentsClient
@@ -42,6 +43,7 @@ from .agent_versions.client import AsyncAgentVersionsClient
 from .data_directories.client import AsyncDataDirectoriesClient
 from .ml_repos.client import AsyncMlReposClient
 from .internal.client import AsyncInternalClient
+from .vcs.client import AsyncVcsClient
 
 
 class V1Client:
@@ -51,8 +53,8 @@ class V1Client:
         self.clusters = ClustersClient(client_wrapper=self._client_wrapper)
         self.environments = EnvironmentsClient(client_wrapper=self._client_wrapper)
         self.workspaces = WorkspacesClient(client_wrapper=self._client_wrapper)
-        self.apps = AppsClient(client_wrapper=self._client_wrapper)
         self.applications = ApplicationsClient(client_wrapper=self._client_wrapper)
+        self.application_versions = ApplicationVersionsClient(client_wrapper=self._client_wrapper)
         self.deployments = DeploymentsClient(client_wrapper=self._client_wrapper)
         self.artifacts = ArtifactsClient(client_wrapper=self._client_wrapper)
         self.agents = AgentsClient(client_wrapper=self._client_wrapper)
@@ -67,6 +69,7 @@ class V1Client:
         self.data_directories = DataDirectoriesClient(client_wrapper=self._client_wrapper)
         self.ml_repos = MlReposClient(client_wrapper=self._client_wrapper)
         self.internal = InternalClient(client_wrapper=self._client_wrapper)
+        self.vcs = VcsClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncV1Client:
@@ -76,8 +79,8 @@ class AsyncV1Client:
         self.clusters = AsyncClustersClient(client_wrapper=self._client_wrapper)
         self.environments = AsyncEnvironmentsClient(client_wrapper=self._client_wrapper)
         self.workspaces = AsyncWorkspacesClient(client_wrapper=self._client_wrapper)
-        self.apps = AsyncAppsClient(client_wrapper=self._client_wrapper)
         self.applications = AsyncApplicationsClient(client_wrapper=self._client_wrapper)
+        self.application_versions = AsyncApplicationVersionsClient(client_wrapper=self._client_wrapper)
         self.deployments = AsyncDeploymentsClient(client_wrapper=self._client_wrapper)
         self.artifacts = AsyncArtifactsClient(client_wrapper=self._client_wrapper)
         self.agents = AsyncAgentsClient(client_wrapper=self._client_wrapper)
@@ -92,3 +95,4 @@ class AsyncV1Client:
         self.data_directories = AsyncDataDirectoriesClient(client_wrapper=self._client_wrapper)
         self.ml_repos = AsyncMlReposClient(client_wrapper=self._client_wrapper)
         self.internal = AsyncInternalClient(client_wrapper=self._client_wrapper)
+        self.vcs = AsyncVcsClient(client_wrapper=self._client_wrapper)

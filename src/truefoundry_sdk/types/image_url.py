@@ -3,8 +3,8 @@
 from ..core.pydantic_utilities import UniversalBaseModel
 from .url import Url
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ImageUrl(UniversalBaseModel):
@@ -16,6 +16,8 @@ class ImageUrl(UniversalBaseModel):
     """
     Image URL linking to the image
     """
+
+    detail: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

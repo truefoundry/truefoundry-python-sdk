@@ -4,7 +4,6 @@ from ..core.pydantic_utilities import UniversalBaseModel
 from .application import Application
 from .application_debug_info import ApplicationDebugInfo
 from .deployment import Deployment
-from .recommendation import Recommendation
 import typing
 import pydantic
 from .pagination import Pagination

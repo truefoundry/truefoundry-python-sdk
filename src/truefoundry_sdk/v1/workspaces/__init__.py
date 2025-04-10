@@ -2,16 +2,22 @@
 
 from .types import (
     WorkspacesDeleteResponse,
+    WorkspacesDownloadLogsRequestOperator,
+    WorkspacesDownloadLogsRequestType,
     WorkspacesGetBuildLogsRequestOperator,
     WorkspacesGetBuildLogsRequestType,
     WorkspacesGetLogsRequestOperator,
     WorkspacesGetLogsRequestType,
+    WorkspacesListChartsRequestFilterEntity,
 )
 
 __all__ = [
     "WorkspacesDeleteResponse",
+    "WorkspacesDownloadLogsRequestOperator",
+    "WorkspacesDownloadLogsRequestType",
     "WorkspacesGetBuildLogsRequestOperator",
     "WorkspacesGetBuildLogsRequestType",
     "WorkspacesGetLogsRequestOperator",
     "WorkspacesGetLogsRequestType",
+    "WorkspacesListChartsRequestFilterEntity",
 ]

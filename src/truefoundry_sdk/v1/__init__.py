@@ -3,8 +3,8 @@
 from . import (
     agent_versions,
     agents,
+    application_versions,
     applications,
-    apps,
     artifact_versions,
     artifacts,
     clusters,
@@ -20,14 +20,13 @@ from . import (
     tool_versions,
     tools,
     users,
+    vcs,
     workspaces,
 )
-from .applications import ApplicationsGetPodTemplateHashDeploymentVersionMapResponse
-from .apps import (
-    AppsCancelDeploymentResponse,
-    AppsDeleteResponse,
-    AppsListRequestDeviceTypeFilter,
-    AppsListRequestLifecycleStage,
+from .applications import (
+    ApplicationsCancelDeploymentResponse,
+    ApplicationsListRequestDeviceTypeFilter,
+    ApplicationsListRequestLifecycleStage,
 )
 from .artifact_versions import Manifest
 from .clusters import (
@@ -35,33 +34,39 @@ from .clusters import (
     ClustersGetAutoscalerLogsRequestOperator,
     ClustersGetAutoscalerLogsRequestType,
 )
+from .deployments import DeploymentsCreateResponse
 from .workspaces import (
     WorkspacesDeleteResponse,
+    WorkspacesDownloadLogsRequestOperator,
+    WorkspacesDownloadLogsRequestType,
     WorkspacesGetBuildLogsRequestOperator,
     WorkspacesGetBuildLogsRequestType,
     WorkspacesGetLogsRequestOperator,
     WorkspacesGetLogsRequestType,
+    WorkspacesListChartsRequestFilterEntity,
 )
 
 __all__ = [
-    "ApplicationsGetPodTemplateHashDeploymentVersionMapResponse",
-    "AppsCancelDeploymentResponse",
-    "AppsDeleteResponse",
-    "AppsListRequestDeviceTypeFilter",
-    "AppsListRequestLifecycleStage",
+    "ApplicationsCancelDeploymentResponse",
+    "ApplicationsListRequestDeviceTypeFilter",
+    "ApplicationsListRequestLifecycleStage",
     "ClustersDeleteResponse",
     "ClustersGetAutoscalerLogsRequestOperator",
     "ClustersGetAutoscalerLogsRequestType",
+    "DeploymentsCreateResponse",
     "Manifest",
     "WorkspacesDeleteResponse",
+    "WorkspacesDownloadLogsRequestOperator",
+    "WorkspacesDownloadLogsRequestType",
     "WorkspacesGetBuildLogsRequestOperator",
     "WorkspacesGetBuildLogsRequestType",
     "WorkspacesGetLogsRequestOperator",
     "WorkspacesGetLogsRequestType",
+    "WorkspacesListChartsRequestFilterEntity",
     "agent_versions",
     "agents",
+    "application_versions",
     "applications",
-    "apps",
     "artifact_versions",
     "artifacts",
     "clusters",
@@ -77,5 +82,6 @@ __all__ = [
     "tool_versions",
     "tools",
     "users",
+    "vcs",
     "workspaces",
 ]

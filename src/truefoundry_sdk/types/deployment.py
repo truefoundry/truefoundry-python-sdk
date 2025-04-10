@@ -2,39 +2,43 @@
 
 from __future__ import annotations
 from ..core.pydantic_utilities import UniversalBaseModel
+import typing
 import typing_extensions
 from ..core.serialization import FieldMetadata
 from .deployment_manifest import DeploymentManifest
-import typing
+from .subject import Subject
 import datetime as dt
-from .build import Build
+from .build_info import BuildInfo
 from .deployment_status import DeploymentStatus
+from .recommendation import Recommendation
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.pydantic_utilities import update_forward_refs
 
 
 class Deployment(UniversalBaseModel):
-    id: str
-    version: float
-    fqn: str
-    application_id: typing_extensions.Annotated[str, FieldMetadata(alias="applicationId")]
+    id: typing.Optional[str] = None
+    version: typing.Optional[float] = None
+    fqn: typing.Optional[str] = None
+    application_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="applicationId")] = None
     manifest: DeploymentManifest
-    application: "Application"
-    created_by_subject: typing_extensions.Annotated[
-        typing.Dict[str, typing.Optional[typing.Any]],
-        FieldMetadata(alias="createdBySubject"),
-    ]
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
-    deployment_builds: typing_extensions.Annotated[typing.List[Build], FieldMetadata(alias="deploymentBuilds")]
+    application: typing.Optional["Application"] = None
+    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")]
+    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None
+    updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = None
+    deployment_builds: typing_extensions.Annotated[
+        typing.Optional[typing.List[BuildInfo]], FieldMetadata(alias="deploymentBuilds")
+    ] = None
     deployment_statuses: typing_extensions.Annotated[
-        typing.List[DeploymentStatus], FieldMetadata(alias="deploymentStatuses")
-    ]
-    current_status_id: typing_extensions.Annotated[str, FieldMetadata(alias="currentStatusId")]
-    current_status: typing_extensions.Annotated[DeploymentStatus, FieldMetadata(alias="currentStatus")]
+        typing.Optional[typing.List[DeploymentStatus]],
+        FieldMetadata(alias="deploymentStatuses"),
+    ] = None
+    current_status_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="currentStatusId")] = None
+    current_status: typing_extensions.Annotated[
+        typing.Optional[DeploymentStatus], FieldMetadata(alias="currentStatus")
+    ] = None
     applied_recommendations: typing_extensions.Annotated[
-        typing.Optional[typing.List["Recommendation"]],
+        typing.Optional[typing.List[Recommendation]],
         FieldMetadata(alias="appliedRecommendations"),
     ] = pydantic.Field(default=None)
     """
@@ -54,6 +58,5 @@ class Deployment(UniversalBaseModel):
 
 from .application import Application  # noqa: E402
 from .application_debug_info import ApplicationDebugInfo  # noqa: E402
-from .recommendation import Recommendation  # noqa: E402
 
 update_forward_refs(Deployment)

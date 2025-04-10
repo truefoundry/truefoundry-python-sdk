@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 from ..core.pydantic_utilities import UniversalBaseModel
-from .i_change_type import IChangeType
+from .i_change_operation import IChangeOperation
 import typing
 import typing_extensions
 from ..core.serialization import FieldMetadata
@@ -12,13 +12,14 @@ from ..core.pydantic_utilities import update_forward_refs
 
 
 class IChange(UniversalBaseModel):
-    type: IChangeType
+    type: IChangeOperation
     key: str
-    value: typing.Dict[str, typing.Optional[typing.Any]]
+    value: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
     old_value: typing_extensions.Annotated[
-        typing.Dict[str, typing.Optional[typing.Any]], FieldMetadata(alias="oldValue")
-    ]
-    changes: typing.List["IChange"]
+        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]],
+        FieldMetadata(alias="oldValue"),
+    ] = None
+    changes: typing.Optional[typing.List["IChange"]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
