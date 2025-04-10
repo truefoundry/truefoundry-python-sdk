@@ -10,14 +10,14 @@ import pydantic
 
 
 class Alert(UniversalBaseModel):
-    id: str
+    id: typing.Optional[str] = None
     name: str
     timestamps: typing.List[dt.datetime]
     start_time: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="startTime")]
     resolved_time: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="resolvedTime")] = None
-    application_id: typing_extensions.Annotated[str, FieldMetadata(alias="applicationId")]
+    application_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="applicationId")] = None
     cluster_id: typing_extensions.Annotated[str, FieldMetadata(alias="clusterId")]
-    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]
+    tenant_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="tenantName")] = None
     fingerprint: str
     updated_at: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="updatedAt")] = None
     created_at: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdAt")] = None
