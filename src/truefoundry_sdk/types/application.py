@@ -2,36 +2,35 @@
 
 from __future__ import annotations
 from ..core.pydantic_utilities import UniversalBaseModel
+import typing
 from .application_type import ApplicationType
 import typing_extensions
 from ..core.serialization import FieldMetadata
 from .application_metadata import ApplicationMetadata
 from .application_lifecycle_stage import ApplicationLifecycleStage
 import datetime as dt
-import typing
 from .recommendation import Recommendation
 import pydantic
 from .alert import Alert
-from .application_alerts_summary_value import ApplicationAlertsSummaryValue
 from .application_problem import ApplicationProblem
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.pydantic_utilities import update_forward_refs
 
 
 class Application(UniversalBaseModel):
-    id: str
-    fqn: str
-    name: str
-    type: ApplicationType
+    id: typing.Optional[str] = None
+    fqn: typing.Optional[str] = None
+    name: typing.Optional[str] = None
+    type: typing.Optional[ApplicationType] = None
     created_by_subject: typing_extensions.Annotated[str, FieldMetadata(alias="createdBySubject")]
-    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]
-    metadata: ApplicationMetadata
+    tenant_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="tenantName")] = None
+    metadata: typing.Optional[ApplicationMetadata] = None
     lifecycle_stage: typing_extensions.Annotated[ApplicationLifecycleStage, FieldMetadata(alias="lifecycleStage")]
-    workspace_id: typing_extensions.Annotated[str, FieldMetadata(alias="workspaceId")]
-    last_version: typing_extensions.Annotated[int, FieldMetadata(alias="lastVersion")]
-    active_version: typing_extensions.Annotated[int, FieldMetadata(alias="activeVersion")]
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
+    workspace_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="workspaceId")] = None
+    last_version: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="lastVersion")] = None
+    active_version: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="activeVersion")] = None
+    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None
+    updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = None
     recommendations: typing.Optional[typing.List[Recommendation]] = pydantic.Field(default=None)
     """
     Recommendations for this application
@@ -43,7 +42,7 @@ class Application(UniversalBaseModel):
     """
 
     alerts_summary: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, ApplicationAlertsSummaryValue]],
+        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]],
         FieldMetadata(alias="alertsSummary"),
     ] = pydantic.Field(default=None)
     """

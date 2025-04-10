@@ -84,7 +84,7 @@ class ApplicationsClient:
             Name of application
 
         application_type : typing.Optional[str]
-            Type of application (comma separated for multiple). Allowed Values: async-service, service, model-deployment, job, spark-job, helm, notebook, codeserver, rstudio, ssh-server, volume, application, application-set, intercept, workflow
+            Type of application (comma separated for multiple). Allowed Values: async-service, service, job, spark-job, helm, notebook, codeserver, rstudio, ssh-server, volume, application, application-set, intercept, workflow
 
         name_search_query : typing.Optional[str]
             Search query for application name
@@ -255,6 +255,18 @@ class ApplicationsClient:
                   - It also creates an application if not already present
                   - validates third party requirements
                   - updates application, version
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.v1.applications.create_or_update(
+            manifest={"key": "value"},
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/svc/v1/apps",
@@ -344,6 +356,18 @@ class ApplicationsClient:
         -------
         GetApplicationResponse
             Application details retrieved successfully
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.v1.applications.get(
+            id="id",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/apps/{jsonable_encoder(id)}",
@@ -549,6 +573,18 @@ class ApplicationsClient:
         -------
         Deployment
             Scales back a paused applicaion to the original number of replicas
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.v1.applications.scale_to_original(
+            id="id",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/apps/{jsonable_encoder(id)}/scale-to-original",
@@ -733,7 +769,7 @@ class AsyncApplicationsClient:
             Name of application
 
         application_type : typing.Optional[str]
-            Type of application (comma separated for multiple). Allowed Values: async-service, service, model-deployment, job, spark-job, helm, notebook, codeserver, rstudio, ssh-server, volume, application, application-set, intercept, workflow
+            Type of application (comma separated for multiple). Allowed Values: async-service, service, job, spark-job, helm, notebook, codeserver, rstudio, ssh-server, volume, application, application-set, intercept, workflow
 
         name_search_query : typing.Optional[str]
             Search query for application name
@@ -912,6 +948,26 @@ class AsyncApplicationsClient:
                   - It also creates an application if not already present
                   - validates third party requirements
                   - updates application, version
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.v1.applications.create_or_update(
+                manifest={"key": "value"},
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/svc/v1/apps",
@@ -1001,6 +1057,26 @@ class AsyncApplicationsClient:
         -------
         GetApplicationResponse
             Application details retrieved successfully
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.v1.applications.get(
+                id="id",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/apps/{jsonable_encoder(id)}",
@@ -1226,6 +1302,26 @@ class AsyncApplicationsClient:
         -------
         Deployment
             Scales back a paused applicaion to the original number of replicas
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.v1.applications.scale_to_original(
+                id="id",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/apps/{jsonable_encoder(id)}/scale-to-original",

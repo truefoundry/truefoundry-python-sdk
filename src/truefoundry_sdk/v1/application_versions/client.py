@@ -167,6 +167,19 @@ class ApplicationVersionsClient:
         -------
         GetApplicationDeploymentResponseDto
             Deployment details returned successfully.
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.v1.application_versions.get(
+            id="id",
+            deployment_id="deploymentId",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}",
@@ -361,6 +374,27 @@ class AsyncApplicationVersionsClient:
         -------
         GetApplicationDeploymentResponseDto
             Deployment details returned successfully.
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.v1.application_versions.get(
+                id="id",
+                deployment_id="deploymentId",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}",

@@ -9,7 +9,6 @@ T_Result = typing.TypeVar("T_Result")
 class ApplicationType(str, enum.Enum):
     ASYNC_SERVICE = "async-service"
     SERVICE = "service"
-    MODEL_DEPLOYMENT = "model-deployment"
     JOB = "job"
     SPARK_JOB = "spark-job"
     HELM = "helm"
@@ -27,7 +26,6 @@ class ApplicationType(str, enum.Enum):
         self,
         async_service: typing.Callable[[], T_Result],
         service: typing.Callable[[], T_Result],
-        model_deployment: typing.Callable[[], T_Result],
         job: typing.Callable[[], T_Result],
         spark_job: typing.Callable[[], T_Result],
         helm: typing.Callable[[], T_Result],
@@ -45,8 +43,6 @@ class ApplicationType(str, enum.Enum):
             return async_service()
         if self is ApplicationType.SERVICE:
             return service()
-        if self is ApplicationType.MODEL_DEPLOYMENT:
-            return model_deployment()
         if self is ApplicationType.JOB:
             return job()
         if self is ApplicationType.SPARK_JOB:

@@ -17,11 +17,12 @@ from .amqp_input_config import AmqpInputConfig
 from .amqp_metric_config import AmqpMetricConfig
 from .amqp_output_config import AmqpOutputConfig
 from .application import Application
-from .application_alerts_summary_value import ApplicationAlertsSummaryValue
 from .application_debug_info import ApplicationDebugInfo
 from .application_lifecycle_stage import ApplicationLifecycleStage
 from .application_metadata import ApplicationMetadata
 from .application_problem import ApplicationProblem
+from .application_set import ApplicationSet
+from .application_set_components_item import ApplicationSetComponentsItem
 from .application_type import ApplicationType
 from .apply_request import ApplyRequest
 from .apply_response import ApplyResponse
@@ -49,6 +50,8 @@ from .base_autoscaling import BaseAutoscaling
 from .base_service import BaseService
 from .base_service_image import BaseServiceImage
 from .base_service_mounts_item import BaseServiceMountsItem
+from .base_workbench_input import BaseWorkbenchInput
+from .base_workbench_input_mounts_item import BaseWorkbenchInputMountsItem
 from .basic_auth_creds import BasicAuthCreds
 from .blob_storage_reference import BlobStorageReference
 from .blue_green import BlueGreen
@@ -68,7 +71,11 @@ from .cluster_manifest_monitoring import ClusterManifestMonitoring
 from .cluster_manifest_node_label_keys import ClusterManifestNodeLabelKeys
 from .cluster_manifest_workbench_config import ClusterManifestWorkbenchConfig
 from .code_file_data import CodeFileData
+from .codeserver import Codeserver
 from .collaborator import Collaborator
+from .container_task_config import ContainerTaskConfig
+from .container_task_config_image import ContainerTaskConfigImage
+from .container_task_config_mounts_item import ContainerTaskConfigMountsItem
 from .content import Content
 from .core_nats_output_config import CoreNatsOutputConfig
 from .cpu_utilization_metric import CpuUtilizationMetric
@@ -86,8 +93,10 @@ from .deployment_status_transition import DeploymentStatusTransition
 from .developer_message import DeveloperMessage
 from .docker_file_build import DockerFileBuild
 from .docker_file_build_command import DockerFileBuildCommand
+from .dynamic_volume_config import DynamicVolumeConfig
 from .email import Email
 from .empty_response import EmptyResponse
+from .endpoint import Endpoint
 from .environment import Environment
 from .environment_color import EnvironmentColor
 from .environment_manifest import EnvironmentManifest
@@ -95,6 +104,18 @@ from .environment_optimize_for import EnvironmentOptimizeFor
 from .external_blob_storage_source import ExternalBlobStorageSource
 from .fast_ai_framework import FastAiFramework
 from .file_info import FileInfo
+from .flyte_launch_plan import FlyteLaunchPlan
+from .flyte_launch_plan_id import FlyteLaunchPlanId
+from .flyte_launch_plan_spec import FlyteLaunchPlanSpec
+from .flyte_task import FlyteTask
+from .flyte_task_custom import FlyteTaskCustom
+from .flyte_task_custom_truefoundry import FlyteTaskCustomTruefoundry
+from .flyte_task_id import FlyteTaskId
+from .flyte_task_template import FlyteTaskTemplate
+from .flyte_workflow import FlyteWorkflow
+from .flyte_workflow_id import FlyteWorkflowId
+from .flyte_workflow_template import FlyteWorkflowTemplate
+from .forward_action import ForwardAction
 from .framework import Framework
 from .function import Function
 from .function_schema import FunctionSchema
@@ -125,6 +146,7 @@ from .git_helm_repo import GitHelmRepo
 from .git_source import GitSource
 from .gluon_framework import GluonFramework
 from .h2o_framework import H2OFramework
+from .header_match import HeaderMatch
 from .health_probe import HealthProbe
 from .helm import Helm
 from .helm_repo import HelmRepo
@@ -139,6 +161,9 @@ from .image_command import ImageCommand
 from .image_content_part import ImageContentPart
 from .image_url import ImageUrl
 from .infer_method_name import InferMethodName
+from .intercept import Intercept
+from .intercept_rules_item import InterceptRulesItem
+from .intercept_rules_item_action import InterceptRulesItemAction
 from .internal_artifact_version import InternalArtifactVersion
 from .internal_list_artifact_version_response import InternalListArtifactVersionResponse
 from .internal_list_artifact_version_response_data_item import InternalListArtifactVersionResponseDataItem
@@ -183,6 +208,7 @@ from .manifest import Manifest
 from .manual import Manual
 from .method import Method
 from .mime_type import MimeType
+from .mirror_action import MirrorAction
 from .ml_repo import MlRepo
 from .ml_repo_manifest import MlRepoManifest
 from .model import Model
@@ -201,6 +227,7 @@ from .node_selector import NodeSelector
 from .node_selector_capacity_type import NodeSelectorCapacityType
 from .nodepool import Nodepool
 from .nodepool_selector import NodepoolSelector
+from .notebook import Notebook
 from .notebook_config import NotebookConfig
 from .notification_target import NotificationTarget
 from .nvidia_gpu import NvidiaGpu
@@ -225,6 +252,10 @@ from .prompt_version import PromptVersion
 from .py_torch_framework import PyTorchFramework
 from .python_build import PythonBuild
 from .python_build_command import PythonBuildCommand
+from .python_task_config import PythonTaskConfig
+from .python_task_config_image import PythonTaskConfigImage
+from .python_task_config_mounts_item import PythonTaskConfigMountsItem
+from .r_studio import RStudio
 from .recommendation import Recommendation
 from .refusal_content_part import RefusalContentPart
 from .remote_source import RemoteSource
@@ -246,17 +277,32 @@ from .sklearn_serialization_format import SklearnSerializationFormat
 from .slack_webhook import SlackWebhook
 from .source import Source
 from .spa_cy_framework import SpaCyFramework
+from .spark_driver_config import SparkDriverConfig
+from .spark_executor_config import SparkExecutorConfig
+from .spark_executor_config_instances import SparkExecutorConfigInstances
+from .spark_executor_dynamic_scaling import SparkExecutorDynamicScaling
+from .spark_executor_fixed_instances import SparkExecutorFixedInstances
+from .spark_image import SparkImage
+from .spark_job import SparkJob
+from .spark_job_entrypoint import SparkJobEntrypoint
+from .spark_job_java_entrypoint import SparkJobJavaEntrypoint
+from .spark_job_python_entrypoint import SparkJobPythonEntrypoint
+from .spark_job_scala_entrypoint import SparkJobScalaEntrypoint
 from .sqs_input_config import SqsInputConfig
 from .sqs_output_config import SqsOutputConfig
 from .sqs_queue_metric_config import SqsQueueMetricConfig
+from .ssh_server import SshServer
 from .ssh_server_config import SshServerConfig
 from .stage_artifact_response import StageArtifactResponse
+from .static_volume_config import StaticVolumeConfig
 from .stats_models_framework import StatsModelsFramework
 from .stop import Stop
 from .string_data_mount import StringDataMount
 from .subject import Subject
 from .subject_type import SubjectType
 from .system_message import SystemMessage
+from .task_docker_file_build import TaskDockerFileBuild
+from .task_python_build import TaskPythonBuild
 from .tensor_flow_framework import TensorFlowFramework
 from .text import Text
 from .text_content_part import TextContentPart
@@ -275,10 +321,18 @@ from .user_message import UserMessage
 from .user_message_content_item import UserMessageContentItem
 from .validation_error import ValidationError
 from .validation_error_loc_item import ValidationErrorLocItem
+from .volume import Volume
+from .volume_browser import VolumeBrowser
+from .volume_config import VolumeConfig
 from .volume_mount import VolumeMount
+from .workbench_image import WorkbenchImage
 from .worker_config import WorkerConfig
 from .worker_config_input_config import WorkerConfigInputConfig
 from .worker_config_output_config import WorkerConfigOutputConfig
+from .workflow import Workflow
+from .workflow_alert import WorkflowAlert
+from .workflow_flyte_entities_item import WorkflowFlyteEntitiesItem
+from .workflow_source import WorkflowSource
 from .workspace import Workspace
 from .workspace_manifest import WorkspaceManifest
 from .xg_boost_framework import XgBoostFramework
@@ -300,11 +354,12 @@ __all__ = [
     "AmqpMetricConfig",
     "AmqpOutputConfig",
     "Application",
-    "ApplicationAlertsSummaryValue",
     "ApplicationDebugInfo",
     "ApplicationLifecycleStage",
     "ApplicationMetadata",
     "ApplicationProblem",
+    "ApplicationSet",
+    "ApplicationSetComponentsItem",
     "ApplicationType",
     "ApplyRequest",
     "ApplyResponse",
@@ -332,6 +387,8 @@ __all__ = [
     "BaseService",
     "BaseServiceImage",
     "BaseServiceMountsItem",
+    "BaseWorkbenchInput",
+    "BaseWorkbenchInputMountsItem",
     "BasicAuthCreds",
     "BlobStorageReference",
     "BlueGreen",
@@ -351,7 +408,11 @@ __all__ = [
     "ClusterManifestNodeLabelKeys",
     "ClusterManifestWorkbenchConfig",
     "CodeFileData",
+    "Codeserver",
     "Collaborator",
+    "ContainerTaskConfig",
+    "ContainerTaskConfigImage",
+    "ContainerTaskConfigMountsItem",
     "Content",
     "CoreNatsOutputConfig",
     "CpuUtilizationMetric",
@@ -369,8 +430,10 @@ __all__ = [
     "DeveloperMessage",
     "DockerFileBuild",
     "DockerFileBuildCommand",
+    "DynamicVolumeConfig",
     "Email",
     "EmptyResponse",
+    "Endpoint",
     "Environment",
     "EnvironmentColor",
     "EnvironmentManifest",
@@ -378,6 +441,18 @@ __all__ = [
     "ExternalBlobStorageSource",
     "FastAiFramework",
     "FileInfo",
+    "FlyteLaunchPlan",
+    "FlyteLaunchPlanId",
+    "FlyteLaunchPlanSpec",
+    "FlyteTask",
+    "FlyteTaskCustom",
+    "FlyteTaskCustomTruefoundry",
+    "FlyteTaskId",
+    "FlyteTaskTemplate",
+    "FlyteWorkflow",
+    "FlyteWorkflowId",
+    "FlyteWorkflowTemplate",
+    "ForwardAction",
     "Framework",
     "Function",
     "FunctionSchema",
@@ -408,6 +483,7 @@ __all__ = [
     "GitSource",
     "GluonFramework",
     "H2OFramework",
+    "HeaderMatch",
     "HealthProbe",
     "Helm",
     "HelmRepo",
@@ -422,6 +498,9 @@ __all__ = [
     "ImageContentPart",
     "ImageUrl",
     "InferMethodName",
+    "Intercept",
+    "InterceptRulesItem",
+    "InterceptRulesItemAction",
     "InternalArtifactVersion",
     "InternalListArtifactVersionResponse",
     "InternalListArtifactVersionResponseDataItem",
@@ -466,6 +545,7 @@ __all__ = [
     "Manual",
     "Method",
     "MimeType",
+    "MirrorAction",
     "MlRepo",
     "MlRepoManifest",
     "Model",
@@ -484,6 +564,7 @@ __all__ = [
     "NodeSelectorCapacityType",
     "Nodepool",
     "NodepoolSelector",
+    "Notebook",
     "NotebookConfig",
     "NotificationTarget",
     "NvidiaGpu",
@@ -508,6 +589,10 @@ __all__ = [
     "PyTorchFramework",
     "PythonBuild",
     "PythonBuildCommand",
+    "PythonTaskConfig",
+    "PythonTaskConfigImage",
+    "PythonTaskConfigMountsItem",
+    "RStudio",
     "Recommendation",
     "RefusalContentPart",
     "RemoteSource",
@@ -532,17 +617,32 @@ __all__ = [
     "SlackWebhook",
     "Source",
     "SpaCyFramework",
+    "SparkDriverConfig",
+    "SparkExecutorConfig",
+    "SparkExecutorConfigInstances",
+    "SparkExecutorDynamicScaling",
+    "SparkExecutorFixedInstances",
+    "SparkImage",
+    "SparkJob",
+    "SparkJobEntrypoint",
+    "SparkJobJavaEntrypoint",
+    "SparkJobPythonEntrypoint",
+    "SparkJobScalaEntrypoint",
     "SqsInputConfig",
     "SqsOutputConfig",
     "SqsQueueMetricConfig",
+    "SshServer",
     "SshServerConfig",
     "StageArtifactResponse",
+    "StaticVolumeConfig",
     "StatsModelsFramework",
     "Stop",
     "StringDataMount",
     "Subject",
     "SubjectType",
     "SystemMessage",
+    "TaskDockerFileBuild",
+    "TaskPythonBuild",
     "TensorFlowFramework",
     "Text",
     "TextContentPart",
@@ -561,10 +661,18 @@ __all__ = [
     "UserMessageContentItem",
     "ValidationError",
     "ValidationErrorLocItem",
+    "Volume",
+    "VolumeBrowser",
+    "VolumeConfig",
     "VolumeMount",
+    "WorkbenchImage",
     "WorkerConfig",
     "WorkerConfigInputConfig",
     "WorkerConfigOutputConfig",
+    "Workflow",
+    "WorkflowAlert",
+    "WorkflowFlyteEntitiesItem",
+    "WorkflowSource",
     "Workspace",
     "WorkspaceManifest",
     "XgBoostFramework",
