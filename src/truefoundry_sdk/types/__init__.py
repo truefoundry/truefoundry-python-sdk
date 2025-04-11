@@ -121,7 +121,10 @@ from .manifest import Manifest
 from .method import Method
 from .mime_type import MimeType
 from .ml_repo import MlRepo
+from .ml_repo_entity import MlRepoEntity
+from .ml_repo_lifecycle_stage import MlRepoLifecycleStage
 from .ml_repo_manifest import MlRepoManifest
+from .ml_repo_response import MlRepoResponse
 from .model import Model
 from .model_configuration import ModelConfiguration
 from .model_manifest import ModelManifest
@@ -304,7 +307,10 @@ __all__ = [
     "Method",
     "MimeType",
     "MlRepo",
+    "MlRepoEntity",
+    "MlRepoLifecycleStage",
     "MlRepoManifest",
+    "MlRepoResponse",
     "Model",
     "ModelConfiguration",
     "ModelManifest",

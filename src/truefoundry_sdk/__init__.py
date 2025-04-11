@@ -122,7 +122,10 @@ from .types import (
     Method,
     MimeType,
     MlRepo,
+    MlRepoEntity,
+    MlRepoLifecycleStage,
     MlRepoManifest,
+    MlRepoResponse,
     Model,
     ModelConfiguration,
     ModelManifest,
@@ -192,7 +195,7 @@ from .errors import (
     UnauthorizedError,
     UnprocessableEntityError,
 )
-from . import v1
+from . import ml_repos, v1
 from .client import AsyncTrueFoundry, TrueFoundry
 from .version import __version__
 
@@ -323,7 +326,10 @@ __all__ = [
     "Method",
     "MimeType",
     "MlRepo",
+    "MlRepoEntity",
+    "MlRepoLifecycleStage",
     "MlRepoManifest",
+    "MlRepoResponse",
     "Model",
     "ModelConfiguration",
     "ModelManifest",
@@ -388,5 +394,6 @@ __all__ = [
     "XgBoostModelSchema",
     "XgBoostSerializationFormat",
     "__version__",
+    "ml_repos",
     "v1",
 ]
