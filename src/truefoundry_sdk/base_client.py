@@ -10,7 +10,7 @@ from .core.client_wrapper import AsyncClientWrapper
 from .v1.client import AsyncV1Client
 
 
-class TrueFoundry:
+class BaseTrueFoundry:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -66,7 +66,7 @@ class TrueFoundry:
         self.v1 = V1Client(client_wrapper=self._client_wrapper)
 
 
-class AsyncTrueFoundry:
+class AsyncBaseTrueFoundry:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 

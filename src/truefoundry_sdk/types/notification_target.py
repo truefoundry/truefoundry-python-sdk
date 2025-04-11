@@ -3,5 +3,6 @@
 import typing
 from .email import Email
 from .slack_webhook import SlackWebhook
+from .slack_bot import SlackBot
 
-NotificationTarget = typing.Union[Email, SlackWebhook]
+NotificationTarget = typing.Union[Email, SlackWebhook, SlackBot]

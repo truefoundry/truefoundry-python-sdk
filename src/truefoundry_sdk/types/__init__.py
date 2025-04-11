@@ -274,6 +274,7 @@ from .signed_url import SignedUrl
 from .sklearn_framework import SklearnFramework
 from .sklearn_model_schema import SklearnModelSchema
 from .sklearn_serialization_format import SklearnSerializationFormat
+from .slack_bot import SlackBot
 from .slack_webhook import SlackWebhook
 from .source import Source
 from .spa_cy_framework import SpaCyFramework
@@ -614,6 +615,7 @@ __all__ = [
     "SklearnFramework",
     "SklearnModelSchema",
     "SklearnSerializationFormat",
+    "SlackBot",
     "SlackWebhook",
     "Source",
     "SpaCyFramework",
