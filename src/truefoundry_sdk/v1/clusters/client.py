@@ -141,7 +141,12 @@ class ClustersClient:
 
         Examples
         --------
-        from truefoundry_sdk import ClusterManifest, Collaborator, TrueFoundry
+        from truefoundry_sdk import (
+            ClusterManifest,
+            ClusterManifestClusterType,
+            Collaborator,
+            TrueFoundry,
+        )
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -150,7 +155,7 @@ class ClustersClient:
         client.v1.clusters.create_or_update(
             manifest=ClusterManifest(
                 name="name",
-                cluster_type="aws-eks",
+                cluster_type=ClusterManifestClusterType.AWS_EKS,
                 environment_names=["environment_names"],
                 collaborators=[
                     Collaborator(
@@ -482,7 +487,12 @@ class AsyncClustersClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import AsyncTrueFoundry, ClusterManifest, Collaborator
+        from truefoundry_sdk import (
+            AsyncTrueFoundry,
+            ClusterManifest,
+            ClusterManifestClusterType,
+            Collaborator,
+        )
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -494,7 +504,7 @@ class AsyncClustersClient:
             await client.v1.clusters.create_or_update(
                 manifest=ClusterManifest(
                     name="name",
-                    cluster_type="aws-eks",
+                    cluster_type=ClusterManifestClusterType.AWS_EKS,
                     environment_names=["environment_names"],
                     collaborators=[
                         Collaborator(

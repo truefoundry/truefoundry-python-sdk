@@ -4,6 +4,8 @@ from ..core.client_wrapper import SyncClientWrapper
 from .clusters.client import ClustersClient
 from .environments.client import EnvironmentsClient
 from .workspaces.client import WorkspacesClient
+from .applications.client import ApplicationsClient
+from .application_versions.client import ApplicationVersionsClient
 from .artifacts.client import ArtifactsClient
 from .agents.client import AgentsClient
 from .prompts.client import PromptsClient
@@ -21,6 +23,8 @@ from ..core.client_wrapper import AsyncClientWrapper
 from .clusters.client import AsyncClustersClient
 from .environments.client import AsyncEnvironmentsClient
 from .workspaces.client import AsyncWorkspacesClient
+from .applications.client import AsyncApplicationsClient
+from .application_versions.client import AsyncApplicationVersionsClient
 from .artifacts.client import AsyncArtifactsClient
 from .agents.client import AsyncAgentsClient
 from .prompts.client import AsyncPromptsClient
@@ -42,6 +46,8 @@ class V1Client:
         self.clusters = ClustersClient(client_wrapper=self._client_wrapper)
         self.environments = EnvironmentsClient(client_wrapper=self._client_wrapper)
         self.workspaces = WorkspacesClient(client_wrapper=self._client_wrapper)
+        self.applications = ApplicationsClient(client_wrapper=self._client_wrapper)
+        self.application_versions = ApplicationVersionsClient(client_wrapper=self._client_wrapper)
         self.artifacts = ArtifactsClient(client_wrapper=self._client_wrapper)
         self.agents = AgentsClient(client_wrapper=self._client_wrapper)
         self.prompts = PromptsClient(client_wrapper=self._client_wrapper)
@@ -63,6 +69,8 @@ class AsyncV1Client:
         self.clusters = AsyncClustersClient(client_wrapper=self._client_wrapper)
         self.environments = AsyncEnvironmentsClient(client_wrapper=self._client_wrapper)
         self.workspaces = AsyncWorkspacesClient(client_wrapper=self._client_wrapper)
+        self.applications = AsyncApplicationsClient(client_wrapper=self._client_wrapper)
+        self.application_versions = AsyncApplicationVersionsClient(client_wrapper=self._client_wrapper)
         self.artifacts = AsyncArtifactsClient(client_wrapper=self._client_wrapper)
         self.agents = AsyncAgentsClient(client_wrapper=self._client_wrapper)
         self.prompts = AsyncPromptsClient(client_wrapper=self._client_wrapper)

@@ -109,7 +109,12 @@ Create or Update cluster with provided manifest
 <dd>
 
 ```python
-from truefoundry_sdk import ClusterManifest, Collaborator, TrueFoundry
+from truefoundry_sdk import (
+    ClusterManifest,
+    ClusterManifestClusterType,
+    Collaborator,
+    TrueFoundry,
+)
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -118,7 +123,7 @@ client = TrueFoundry(
 client.v1.clusters.create_or_update(
     manifest=ClusterManifest(
         name="name",
-        cluster_type="aws-eks",
+        cluster_type=ClusterManifestClusterType.AWS_EKS,
         environment_names=["environment_names"],
         collaborators=[
             Collaborator(
@@ -426,7 +431,12 @@ Creates a new Environment or updates an existing Environment.
 <dd>
 
 ```python
-from truefoundry_sdk import EnvironmentColor, EnvironmentManifest, TrueFoundry
+from truefoundry_sdk import (
+    EnvironmentColor,
+    EnvironmentManifest,
+    EnvironmentOptimizeFor,
+    TrueFoundry,
+)
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -437,7 +447,7 @@ client.v1.environments.create_or_update(
         name="name",
         color=EnvironmentColor(),
         is_production=True,
-        optimize_for="COST",
+        optimize_for=EnvironmentOptimizeFor.COST,
     ),
 )
 
@@ -942,6 +952,872 @@ client.v1.workspaces.delete(
 <dd>
 
 **id:** `str` — Workspace id of the space
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## V1 Applications
+<details><summary><code>client.v1.applications.<a href="src/truefoundry_sdk/v1/applications/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieves a list of all latest applications. Supports filtering by application ID, name, type, and other parameters. Pagination is available based on query parameters.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.v1.applications.list(
+    limit=10,
+    offset=0,
+)
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[int]` — Number of items per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**offset:** `typing.Optional[int]` — Number of items to skip
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**application_id:** `typing.Optional[str]` — Application id of the application
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workspace_id:** `typing.Optional[str]` — Workspace id of the application (comma separated for multiple)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**application_name:** `typing.Optional[str]` — Name of application
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**application_type:** `typing.Optional[str]` — Type of application (comma separated for multiple). Allowed Values: async-service, service, job, spark-job, helm, notebook, codeserver, rstudio, ssh-server, volume, application, application-set, intercept, workflow
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name_search_query:** `typing.Optional[str]` — Search query for application name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**environment_id:** `typing.Optional[str]` — Filter by Environment ids of the application (comma separated for multiple)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cluster_id:** `typing.Optional[str]` — Filter by Cluster ids of the application (comma separated for multiple)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**application_set_id:** `typing.Optional[str]` — Filter by Application Set id of the application
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**paused:** `typing.Optional[bool]` — Filter by Application Paused status
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**device_type_filter:** `typing.Optional[ApplicationsListRequestDeviceTypeFilter]` — Filter by device type of the application. Allowed values: cpu, nvidia_gpu, aws_inferentia, nvidia_mig_gpu, nvidia_timeslicing_gpu, gcp_tpu
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_deployed_by_subjects:** `typing.Optional[str]` — Filter by last deployed by specific users
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**lifecycle_stage:** `typing.Optional[ApplicationsListRequestLifecycleStage]` — Filter by application lifecycle state
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_recommendation_present:** `typing.Optional[bool]` — Filter out applications with recommendations
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.v1.applications.<a href="src/truefoundry_sdk/v1/applications/client.py">create_or_update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new Application Deployment based on the provided manifest.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.v1.applications.create_or_update(
+    manifest={"key": "value"},
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**manifest:** `typing.Dict[str, typing.Optional[typing.Any]]` — Manifest of application
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dry_run:** `typing.Optional[bool]` — Dry run
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force_deploy:** `typing.Optional[bool]` — Cancels any ongoing deployments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workspace_id:** `typing.Optional[str]` — workspace id of the workspace
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**application_id:** `typing.Optional[str]` — Id of the application
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — Name of application
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**application_set_id:** `typing.Optional[str]` — Application Set Id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.v1.applications.<a href="src/truefoundry_sdk/v1/applications/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get Application associated with the provided application ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.v1.applications.get(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — Id of the application
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.v1.applications.<a href="src/truefoundry_sdk/v1/applications/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete Application associated with the provided application ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.v1.applications.delete(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — Id of the application
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.v1.applications.<a href="src/truefoundry_sdk/v1/applications/client.py">scale_to_zero</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pause a running application by scaling to 0 replicas
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.v1.applications.scale_to_zero(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — Id of the application
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.v1.applications.<a href="src/truefoundry_sdk/v1/applications/client.py">scale_to_original</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Resume a paused application by scaling back to the original number of replicas
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.v1.applications.scale_to_original(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — Id of the application
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.v1.applications.<a href="src/truefoundry_sdk/v1/applications/client.py">cancel_deployment</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Cancel an ongoing deployment associated with the provided application ID and deployment ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.v1.applications.cancel_deployment(
+    id="id",
+    deployment_id="deploymentId",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — Application id of the application
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**deployment_id:** `str` — Deployment id of the deployment
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## V1 ApplicationVersions
+<details><summary><code>client.v1.application_versions.<a href="src/truefoundry_sdk/v1/application_versions/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Fetch all deployments for a given application ID with optional filters such as deployment ID or version. Supports pagination.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.v1.application_versions.list(
+    id_="id",
+    limit=50.0,
+    offset=0.0,
+    version="1",
+    id="deployment123",
+)
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id_:** `str` — Id of the application
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[float]` — Number of items per page. Defaults to 50 if not provided.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**offset:** `typing.Optional[float]` — Number of items to skip.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version:** `typing.Optional[str]` — Deployment version. Filter deployments by version.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**id:** `typing.Optional[str]` — Deployment ID. Filter deployments by a specific ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.v1.application_versions.<a href="src/truefoundry_sdk/v1/application_versions/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get Deployment associated with the provided application ID and deployment ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.v1.application_versions.get(
+    id="id",
+    deployment_id="deploymentId",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — Application id of the application
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**deployment_id:** `str` — Deployment id of the deployment
     
 </dd>
 </dl>
@@ -2560,7 +3436,7 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
+from truefoundry_sdk import Operation, TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -2569,7 +3445,7 @@ client = TrueFoundry(
 client.v1.artifact_versions.get_signed_urls(
     id="id",
     paths=["paths"],
-    operation="READ",
+    operation=Operation.READ,
 )
 
 ```
@@ -2826,6 +3702,63 @@ for page in response.iter_pages():
 <dd>
 
 **page_token:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.v1.artifact_versions.<a href="src/truefoundry_sdk/v1/artifact_versions/client.py">mark_stage_failure</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.v1.artifact_versions.mark_stage_failure(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
     
 </dd>
 </dl>
@@ -4455,7 +5388,7 @@ Returns:
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
+from truefoundry_sdk import Operation, TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -4464,7 +5397,7 @@ client = TrueFoundry(
 client.v1.data_directories.get_signed_urls(
     id="id",
     paths=["paths"],
-    operation="READ",
+    operation=Operation.READ,
 )
 
 ```
