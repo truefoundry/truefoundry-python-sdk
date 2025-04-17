@@ -8,17 +8,18 @@ from ...types.cluster import Cluster
 from ...types.list_clusters_response import ListClustersResponse
 from ...core.pydantic_utilities import parse_obj_as
 from ...errors.unauthorized_error import UnauthorizedError
+from ...types.http_error import HttpError
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.cluster_manifest import ClusterManifest
 from ...types.get_cluster_response import GetClusterResponse
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...errors.conflict_error import ConflictError
-from ...types.http_error import HttpError
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...core.jsonable_encoder import jsonable_encoder
 from ...errors.not_found_error import NotFoundError
 from .types.clusters_delete_response import ClustersDeleteResponse
+from ...types.is_cluster_connected_response import IsClusterConnectedResponse
 from ...core.client_wrapper import AsyncClientWrapper
 from ...core.pagination import AsyncPager
 
@@ -101,9 +102,9 @@ class ClustersClient:
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -141,7 +142,12 @@ class ClustersClient:
 
         Examples
         --------
-        from truefoundry_sdk import ClusterManifest, Collaborator, TrueFoundry
+        from truefoundry_sdk import (
+            ClusterManifest,
+            ClusterManifestClusterType,
+            Collaborator,
+            TrueFoundry,
+        )
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -150,7 +156,7 @@ class ClustersClient:
         client.v1.clusters.create_or_update(
             manifest=ClusterManifest(
                 name="name",
-                cluster_type="aws-eks",
+                cluster_type=ClusterManifestClusterType.AWS_EKS,
                 environment_names=["environment_names"],
                 collaborators=[
                     Collaborator(
@@ -188,9 +194,9 @@ class ClustersClient:
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -266,9 +272,9 @@ class ClustersClient:
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -334,15 +340,75 @@ class ClustersClient:
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
                 )
             if _response.status_code == 404:
                 raise NotFoundError(
+                    typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def is_connected(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> IsClusterConnectedResponse:
+        """
+        Get the status of provided cluster
+
+        Parameters
+        ----------
+        id : str
+            Cluster id of the cluster
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        IsClusterConnectedResponse
+            Returns the status of provided cluster
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.v1.clusters.is_connected(
+            id="id",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/clusters/{jsonable_encoder(id)}/is-connected",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    IsClusterConnectedResponse,
+                    parse_obj_as(
+                        type_=IsClusterConnectedResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
                     typing.cast(
                         HttpError,
                         parse_obj_as(
@@ -440,9 +506,9 @@ class AsyncClustersClient:
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -482,7 +548,12 @@ class AsyncClustersClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import AsyncTrueFoundry, ClusterManifest, Collaborator
+        from truefoundry_sdk import (
+            AsyncTrueFoundry,
+            ClusterManifest,
+            ClusterManifestClusterType,
+            Collaborator,
+        )
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -494,7 +565,7 @@ class AsyncClustersClient:
             await client.v1.clusters.create_or_update(
                 manifest=ClusterManifest(
                     name="name",
-                    cluster_type="aws-eks",
+                    cluster_type=ClusterManifestClusterType.AWS_EKS,
                     environment_names=["environment_names"],
                     collaborators=[
                         Collaborator(
@@ -535,9 +606,9 @@ class AsyncClustersClient:
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -621,9 +692,9 @@ class AsyncClustersClient:
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -699,15 +770,83 @@ class AsyncClustersClient:
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
                 )
             if _response.status_code == 404:
                 raise NotFoundError(
+                    typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def is_connected(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> IsClusterConnectedResponse:
+        """
+        Get the status of provided cluster
+
+        Parameters
+        ----------
+        id : str
+            Cluster id of the cluster
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        IsClusterConnectedResponse
+            Returns the status of provided cluster
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.v1.clusters.is_connected(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/clusters/{jsonable_encoder(id)}/is-connected",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    IsClusterConnectedResponse,
+                    parse_obj_as(
+                        type_=IsClusterConnectedResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
                     typing.cast(
                         HttpError,
                         parse_obj_as(

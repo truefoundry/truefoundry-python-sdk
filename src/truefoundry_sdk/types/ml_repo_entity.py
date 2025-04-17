@@ -3,31 +3,16 @@
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 import pydantic
-from .subject import Subject
-from .ml_repo_lifecycle_stage import MlRepoLifecycleStage
 from .ml_repo_manifest import MlRepoManifest
+from .subject import Subject
+import datetime as dt
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class MlRepoEntity(UniversalBaseModel):
-    experiment_id: typing.Optional[int] = pydantic.Field(default=None)
+    id: typing.Optional[str] = pydantic.Field(default=None)
     """
     Experiment Id
-    """
-
-    name: str = pydantic.Field()
-    """
-    MlRepo Name
-    """
-
-    description: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Description
-    """
-
-    storage_integration_id: str = pydantic.Field()
-    """
-    Storage Integration Id
     """
 
     tenant_name: str = pydantic.Field()
@@ -35,13 +20,22 @@ class MlRepoEntity(UniversalBaseModel):
     Tenant Name
     """
 
-    created_by_subject: Subject
-    artifact_location: str
-    lifecycle_stage: MlRepoLifecycleStage
     manifest: MlRepoManifest
-    created_at: typing.Optional[int] = pydantic.Field(default=None)
+    created_by_subject: Subject
+    created_at: dt.datetime = pydantic.Field()
     """
-    Created At in Milliseconds (Unix epoch time)
+    Created At
+    """
+
+    num_runs: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of runs
+    """
+
+    artifact_type_counts: typing.Optional[typing.Dict[str, int]] = None
+    datasets_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of datasets
     """
 
     if IS_PYDANTIC_V2:

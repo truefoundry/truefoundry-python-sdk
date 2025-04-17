@@ -3,11 +3,11 @@
 import typing
 from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.ml_repo_response import MlRepoResponse
+from ..types.apply_ml_repo_response import ApplyMlRepoResponse
 from ..core.pydantic_utilities import parse_obj_as
 from ..errors.bad_request_error import BadRequestError
-from ..types.http_error import HttpError
 from ..errors.not_found_error import NotFoundError
+from ..types.http_error import HttpError
 from ..errors.conflict_error import ConflictError
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from json.decoder import JSONDecodeError
@@ -27,7 +27,7 @@ class MlReposClient:
         *,
         manifest: typing.Dict[str, typing.Optional[typing.Any]],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> MlRepoResponse:
+    ) -> ApplyMlRepoResponse:
         """
         Creates or updates an MLRepo entity based on the provided manifest.
 
@@ -41,7 +41,7 @@ class MlReposClient:
 
         Returns
         -------
-        MlRepoResponse
+        ApplyMlRepoResponse
             Returns the created or updated MLRepo entity based on the provided manifest.
 
         Examples
@@ -71,18 +71,18 @@ class MlReposClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    MlRepoResponse,
+                    ApplyMlRepoResponse,
                     parse_obj_as(
-                        type_=MlRepoResponse,  # type: ignore
+                        type_=ApplyMlRepoResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
             if _response.status_code == 400:
                 raise BadRequestError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -132,7 +132,7 @@ class AsyncMlReposClient:
         *,
         manifest: typing.Dict[str, typing.Optional[typing.Any]],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> MlRepoResponse:
+    ) -> ApplyMlRepoResponse:
         """
         Creates or updates an MLRepo entity based on the provided manifest.
 
@@ -146,7 +146,7 @@ class AsyncMlReposClient:
 
         Returns
         -------
-        MlRepoResponse
+        ApplyMlRepoResponse
             Returns the created or updated MLRepo entity based on the provided manifest.
 
         Examples
@@ -184,18 +184,18 @@ class AsyncMlReposClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    MlRepoResponse,
+                    ApplyMlRepoResponse,
                     parse_obj_as(
-                        type_=MlRepoResponse,  # type: ignore
+                        type_=ApplyMlRepoResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
             if _response.status_code == 400:
                 raise BadRequestError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
