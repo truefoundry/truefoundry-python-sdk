@@ -5,6 +5,7 @@ from .subject import Subject
 import typing
 import datetime as dt
 from .model_manifest import ModelManifest
+from .metric import Metric
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
@@ -19,6 +20,7 @@ class InternalModelVersion(UniversalBaseModel):
     usage_code_snippet: typing.Optional[str] = None
     ml_repo_id: str
     model_id: str
+    metrics: typing.Optional[typing.List[Metric]] = None
     artifact_fqn: str
     artifact_size: typing.Optional[int] = None
 

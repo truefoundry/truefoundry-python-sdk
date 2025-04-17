@@ -3,6 +3,7 @@
 from . import (
     agent_versions,
     agents,
+    alerts,
     application_versions,
     applications,
     artifact_versions,
@@ -10,14 +11,20 @@ from . import (
     clusters,
     data_directories,
     environments,
+    events,
     internal,
+    jobs,
+    logs,
     ml_repos,
     model_versions,
     models,
     prompt_versions,
     prompts,
+    secret_groups,
+    secrets,
     tool_versions,
     tools,
+    tracing_projects,
     workspaces,
 )
 from .applications import (
@@ -27,6 +34,7 @@ from .applications import (
 )
 from .artifact_versions import Manifest
 from .clusters import ClustersDeleteResponse
+from .jobs import TriggerJobRequestInput
 from .workspaces import WorkspacesDeleteResponse
 
 __all__ = [
@@ -35,9 +43,11 @@ __all__ = [
     "ApplicationsListRequestLifecycleStage",
     "ClustersDeleteResponse",
     "Manifest",
+    "TriggerJobRequestInput",
     "WorkspacesDeleteResponse",
     "agent_versions",
     "agents",
+    "alerts",
     "application_versions",
     "applications",
     "artifact_versions",
@@ -45,13 +55,19 @@ __all__ = [
     "clusters",
     "data_directories",
     "environments",
+    "events",
     "internal",
+    "jobs",
+    "logs",
     "ml_repos",
     "model_versions",
     "models",
     "prompt_versions",
     "prompts",
+    "secret_groups",
+    "secrets",
     "tool_versions",
     "tools",
+    "tracing_projects",
     "workspaces",
 ]

@@ -66,13 +66,6 @@ class Resources(UniversalBaseModel):
     +sort=6
     """
 
-    gpu_count: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    +label=GPU Count
-    +usage=Count of GPUs to provide to the application
-    Note the exact count and max count available for a given GPU type depends on cloud provider and cluster type.
-    """
-
     shared_memory_size: typing.Optional[int] = pydantic.Field(default=None)
     """
     +label=Shared Memory Size (MB)
