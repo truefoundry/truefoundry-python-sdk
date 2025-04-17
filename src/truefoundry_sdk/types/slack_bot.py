@@ -25,8 +25,6 @@ class SlackBot(UniversalBaseModel):
     """
     +label=Slack Channel Names
     +usage=List of channels to send messages to.
-    +sort=200
-    +uiType=SlackChannels
     +message=3 to 81 lower case characters long alphanumeric word, may contain - or _ in between, must start with #
     +sort=665
     """

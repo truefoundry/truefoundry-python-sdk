@@ -14,13 +14,13 @@ from ...types.application import Application
 from ...types.list_applications_response import ListApplicationsResponse
 from ...core.pydantic_utilities import parse_obj_as
 from ...errors.bad_request_error import BadRequestError
-from ...types.http_error import HttpError
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.get_application_deployment_response_dto import (
     GetApplicationDeploymentResponseDto,
 )
 from ...errors.forbidden_error import ForbiddenError
+from ...types.http_error import HttpError
 from ...errors.not_found_error import NotFoundError
 from ...errors.conflict_error import ConflictError
 from ...types.get_application_response import GetApplicationResponse
@@ -195,9 +195,9 @@ class ApplicationsClient:
             if _response.status_code == 400:
                 raise BadRequestError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -298,9 +298,9 @@ class ApplicationsClient:
             if _response.status_code == 400:
                 raise BadRequestError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -888,9 +888,9 @@ class AsyncApplicationsClient:
             if _response.status_code == 400:
                 raise BadRequestError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -999,9 +999,9 @@ class AsyncApplicationsClient:
             if _response.status_code == 400:
                 raise BadRequestError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
