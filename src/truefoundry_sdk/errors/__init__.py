@@ -3,6 +3,7 @@
 from .bad_request_error import BadRequestError
 from .conflict_error import ConflictError
 from .expectation_failed_error import ExpectationFailedError
+from .failed_dependency_error import FailedDependencyError
 from .forbidden_error import ForbiddenError
 from .method_not_allowed_error import MethodNotAllowedError
 from .not_found_error import NotFoundError
@@ -14,6 +15,7 @@ __all__ = [
     "BadRequestError",
     "ConflictError",
     "ExpectationFailedError",
+    "FailedDependencyError",
     "ForbiddenError",
     "MethodNotAllowedError",
     "NotFoundError",

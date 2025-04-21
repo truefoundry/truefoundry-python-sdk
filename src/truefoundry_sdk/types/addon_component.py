@@ -4,43 +4,42 @@ from ..core.pydantic_utilities import UniversalBaseModel
 from .i_change import IChange
 from .addon_component_name import AddonComponentName
 import typing_extensions
-from ..core.serialization import FieldMetadata
-from .status import Status
 import typing
-from .addon_component_unsupported_cluster_types_item import (
-    AddonComponentUnsupportedClusterTypesItem,
-)
+from ..core.serialization import FieldMetadata
+from .addon_component_status import AddonComponentStatus
+from .cluster_type import ClusterType
 from .add_on_component_source import AddOnComponentSource
 from .upgrade_data import UpgradeData
+from .recommendation import Recommendation
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class AddonComponent(UniversalBaseModel):
     name: AddonComponentName
-    app_name: typing_extensions.Annotated[str, FieldMetadata(alias="appName")]
-    namespace: str
-    application_id: typing_extensions.Annotated[str, FieldMetadata(alias="applicationId")]
-    description: str
-    path: str
-    addon_folder: typing_extensions.Annotated[str, FieldMetadata(alias="addonFolder")]
-    installed: bool
-    status: Status
-    version: str
-    manifest: typing.Dict[str, typing.Optional[typing.Any]]
-    installation_source: typing_extensions.Annotated[str, FieldMetadata(alias="installationSource")]
+    app_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="appName")] = None
+    namespace: typing.Optional[str] = None
+    application_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="applicationId")] = None
+    description: typing.Optional[str] = None
+    path: typing.Optional[str] = None
+    addon_folder: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="addonFolder")] = None
+    installed: typing.Optional[bool] = None
+    status: typing.Optional[AddonComponentStatus] = None
+    version: typing.Optional[str] = None
+    manifest: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    installation_source: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="installationSource")
+    ] = None
     unsupported_cluster_types: typing_extensions.Annotated[
-        typing.List[AddonComponentUnsupportedClusterTypesItem],
+        typing.Optional[typing.List[ClusterType]],
         FieldMetadata(alias="unsupportedClusterTypes"),
-    ]
-    required: bool
-    known_cr_ds: typing_extensions.Annotated[typing.List[str], FieldMetadata(alias="knownCRDs")]
+    ] = None
+    required: typing.Optional[bool] = None
+    known_cr_ds: typing_extensions.Annotated[typing.Optional[typing.List[str]], FieldMetadata(alias="knownCRDs")] = None
     source: typing.Optional[AddOnComponentSource] = None
-    upgrades: typing.Optional[typing.List[UpgradeData]] = None
+    upgrades: typing.Optional[UpgradeData] = None
     labels: typing.Optional[typing.List[str]] = None
-    recommendations: typing.Optional[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]] = pydantic.Field(
-        default=None
-    )
+    recommendations: typing.Optional[typing.List[Recommendation]] = pydantic.Field(default=None)
     """
     Recommendations
     """

@@ -3,6 +3,7 @@
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 from .notification_target import NotificationTarget
+from .workflow_event import WorkflowEvent
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
@@ -14,6 +15,14 @@ class WorkflowAlert(UniversalBaseModel):
     """
 
     notification_target: typing.Optional[NotificationTarget] = None
+    events: typing.Optional[typing.List[WorkflowEvent]] = pydantic.Field(default=None)
+    """
+    +label=Alert Events
+    +usage=Specify the events to send alerts for, it should be one of the following: SUCCEEDED, FAILED, ABORTED, TIMED_OUT
+    +sort=670
+    +uiType=Hidden
+    """
+
     on_completion: typing.Optional[bool] = pydantic.Field(default=None)
     """
     +label=On Completion

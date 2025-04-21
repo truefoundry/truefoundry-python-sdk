@@ -51,7 +51,7 @@ class ChatPromptManifest(UniversalBaseModel):
     Variables referenced in messages and that can be replaced when running generation
     """
 
-    model_configuration: ModelConfiguration
+    model_configuration: typing.Optional[ModelConfiguration] = None
     tools: typing.Optional[typing.List[ToolSchema]] = pydantic.Field(default=None)
     """
     List of tools to be used in the chat prompt

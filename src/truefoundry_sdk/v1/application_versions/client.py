@@ -6,11 +6,12 @@ from ...core.request_options import RequestOptions
 from ...core.pagination import SyncPager
 from ...types.deployment import Deployment
 from ...core.jsonable_encoder import jsonable_encoder
-from ...types.get_application_deployments_response import (
-    GetApplicationDeploymentsResponse,
+from ...types.list_application_deployments_response import (
+    ListApplicationDeploymentsResponse,
 )
 from ...core.pydantic_utilities import parse_obj_as
 from ...errors.forbidden_error import ForbiddenError
+from ...types.http_error import HttpError
 from ...errors.not_found_error import NotFoundError
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
@@ -99,9 +100,9 @@ class ApplicationVersionsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
-                    GetApplicationDeploymentsResponse,
+                    ListApplicationDeploymentsResponse,
                     parse_obj_as(
-                        type_=GetApplicationDeploymentsResponse,  # type: ignore
+                        type_=ListApplicationDeploymentsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -119,9 +120,9 @@ class ApplicationVersionsClient:
             if _response.status_code == 403:
                 raise ForbiddenError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -197,9 +198,9 @@ class ApplicationVersionsClient:
             if _response.status_code == 403:
                 raise ForbiddenError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -306,9 +307,9 @@ class AsyncApplicationVersionsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
-                    GetApplicationDeploymentsResponse,
+                    ListApplicationDeploymentsResponse,
                     parse_obj_as(
-                        type_=GetApplicationDeploymentsResponse,  # type: ignore
+                        type_=ListApplicationDeploymentsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -326,9 +327,9 @@ class AsyncApplicationVersionsClient:
             if _response.status_code == 403:
                 raise ForbiddenError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -412,9 +413,9 @@ class AsyncApplicationVersionsClient:
             if _response.status_code == 403:
                 raise ForbiddenError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )

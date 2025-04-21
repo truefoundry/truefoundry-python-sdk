@@ -7,6 +7,7 @@ from .tool_version import ToolVersion
 from .agent_version import AgentVersion
 from .artifact_version import ArtifactVersion
 from .data_directory import DataDirectory
+from .tracing_project import TracingProject
 
 Data = typing.Union[
     ModelVersion,
@@ -15,4 +16,5 @@ Data = typing.Union[
     AgentVersion,
     ArtifactVersion,
     DataDirectory,
+    TracingProject,
 ]

@@ -10,7 +10,6 @@ from .subject import Subject
 import datetime as dt
 from .build_info import BuildInfo
 from .deployment_status import DeploymentStatus
-from .recommendation import Recommendation
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.pydantic_utilities import update_forward_refs
@@ -38,7 +37,7 @@ class Deployment(UniversalBaseModel):
         typing.Optional[DeploymentStatus], FieldMetadata(alias="currentStatus")
     ] = None
     applied_recommendations: typing_extensions.Annotated[
-        typing.Optional[typing.List[Recommendation]],
+        typing.Optional[typing.List[typing.List[typing.Optional[typing.Any]]]],
         FieldMetadata(alias="appliedRecommendations"),
     ] = pydantic.Field(default=None)
     """

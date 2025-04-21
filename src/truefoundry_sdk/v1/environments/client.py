@@ -16,6 +16,7 @@ from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...core.jsonable_encoder import jsonable_encoder
 from ...errors.not_found_error import NotFoundError
 from ...errors.conflict_error import ConflictError
+from ...types.http_error import HttpError
 from ...core.client_wrapper import AsyncClientWrapper
 from ...core.pagination import AsyncPager
 
@@ -131,7 +132,12 @@ class EnvironmentsClient:
 
         Examples
         --------
-        from truefoundry_sdk import EnvironmentColor, EnvironmentManifest, TrueFoundry
+        from truefoundry_sdk import (
+            EnvironmentColor,
+            EnvironmentManifest,
+            EnvironmentOptimizeFor,
+            TrueFoundry,
+        )
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -142,7 +148,7 @@ class EnvironmentsClient:
                 name="name",
                 color=EnvironmentColor(),
                 is_production=True,
-                optimize_for="COST",
+                optimize_for=EnvironmentOptimizeFor.COST,
             ),
         )
         """
@@ -289,9 +295,9 @@ class EnvironmentsClient:
             if _response.status_code == 409:
                 raise ConflictError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -424,6 +430,7 @@ class AsyncEnvironmentsClient:
             AsyncTrueFoundry,
             EnvironmentColor,
             EnvironmentManifest,
+            EnvironmentOptimizeFor,
         )
 
         client = AsyncTrueFoundry(
@@ -438,7 +445,7 @@ class AsyncEnvironmentsClient:
                     name="name",
                     color=EnvironmentColor(),
                     is_production=True,
-                    optimize_for="COST",
+                    optimize_for=EnvironmentOptimizeFor.COST,
                 ),
             )
 
@@ -604,9 +611,9 @@ class AsyncEnvironmentsClient:
             if _response.status_code == 409:
                 raise ConflictError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )

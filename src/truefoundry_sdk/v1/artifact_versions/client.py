@@ -279,7 +279,7 @@ class ArtifactVersionsClient:
 
         Examples
         --------
-        from truefoundry_sdk import TrueFoundry
+        from truefoundry_sdk import Operation, TrueFoundry
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -288,7 +288,7 @@ class ArtifactVersionsClient:
         client.v1.artifact_versions.get_signed_urls(
             id="id",
             paths=["paths"],
-            operation="READ",
+            operation=Operation.READ,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -911,7 +911,7 @@ class AsyncArtifactVersionsClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import AsyncTrueFoundry
+        from truefoundry_sdk import AsyncTrueFoundry, Operation
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -923,7 +923,7 @@ class AsyncArtifactVersionsClient:
             await client.v1.artifact_versions.get_signed_urls(
                 id="id",
                 paths=["paths"],
-                operation="READ",
+                operation=Operation.READ,
             )
 
 

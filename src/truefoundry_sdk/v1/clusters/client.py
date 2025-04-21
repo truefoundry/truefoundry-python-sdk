@@ -8,6 +8,7 @@ from ...types.cluster import Cluster
 from ...types.list_clusters_response import ListClustersResponse
 from ...core.pydantic_utilities import parse_obj_as
 from ...errors.unauthorized_error import UnauthorizedError
+from ...types.http_error import HttpError
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.cluster_manifest import ClusterManifest
@@ -19,15 +20,7 @@ from ...core.jsonable_encoder import jsonable_encoder
 from ...errors.not_found_error import NotFoundError
 from .types.clusters_delete_response import ClustersDeleteResponse
 from ...types.list_cluster_addons_response import ListClusterAddonsResponse
-from ...types.auto_provisioning_state_response import AutoProvisioningStateResponse
-from .types.clusters_get_autoscaler_logs_request_type import (
-    ClustersGetAutoscalerLogsRequestType,
-)
-from .types.clusters_get_autoscaler_logs_request_operator import (
-    ClustersGetAutoscalerLogsRequestOperator,
-)
-from ...types.logs_response import LogsResponse
-from ...errors.bad_request_error import BadRequestError
+from ...types.is_cluster_connected_response import IsClusterConnectedResponse
 from ...core.client_wrapper import AsyncClientWrapper
 from ...core.pagination import AsyncPager
 
@@ -113,9 +106,9 @@ class ClustersClient:
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -153,7 +146,12 @@ class ClustersClient:
 
         Examples
         --------
-        from truefoundry_sdk import ClusterManifest, Collaborator, TrueFoundry
+        from truefoundry_sdk import (
+            ClusterManifest,
+            ClusterManifestClusterType,
+            Collaborator,
+            TrueFoundry,
+        )
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -162,7 +160,7 @@ class ClustersClient:
         client.v1.clusters.create_or_update(
             manifest=ClusterManifest(
                 name="name",
-                cluster_type="aws-eks",
+                cluster_type=ClusterManifestClusterType.AWS_EKS,
                 environment_names=["environment_names"],
                 collaborators=[
                     Collaborator(
@@ -200,9 +198,9 @@ class ClustersClient:
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -210,9 +208,9 @@ class ClustersClient:
             if _response.status_code == 409:
                 raise ConflictError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -278,9 +276,9 @@ class ClustersClient:
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -346,9 +344,9 @@ class ClustersClient:
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -433,9 +431,9 @@ class ClustersClient:
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -455,11 +453,11 @@ class ClustersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_autoprovisioning_state(
+    def is_connected(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AutoProvisioningStateResponse:
+    ) -> IsClusterConnectedResponse:
         """
-        Get the auto provisioning status for the provided cluster
+        Get the status of provided cluster
 
         Parameters
         ----------
@@ -471,8 +469,8 @@ class ClustersClient:
 
         Returns
         -------
-        AutoProvisioningStateResponse
-            Returns the auto provisioning status for the cluster
+        IsClusterConnectedResponse
+            Returns the status of provided cluster
 
         Examples
         --------
@@ -482,135 +480,30 @@ class ClustersClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.v1.clusters.get_autoprovisioning_state(
+        client.v1.clusters.is_connected(
             id="id",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/clusters/{jsonable_encoder(id)}/autoprovisioning-state",
+            f"api/svc/v1/clusters/{jsonable_encoder(id)}/is-connected",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AutoProvisioningStateResponse,
+                    IsClusterConnectedResponse,
                     parse_obj_as(
-                        type_=AutoProvisioningStateResponse,  # type: ignore
+                        type_=IsClusterConnectedResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def get_autoscaler_logs(
-        self,
-        id: str,
-        *,
-        match_string: str,
-        type: ClustersGetAutoscalerLogsRequestType,
-        operator: ClustersGetAutoscalerLogsRequestOperator,
-        start_ts: typing.Optional[str] = None,
-        end_ts: typing.Optional[str] = None,
-        limit: typing.Optional[str] = None,
-        direction: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> LogsResponse:
-        """
-        Retrieve logs for the cluster autoscaler or NAP for the specified cluster. For GCP, it returns Node Auto Provisioning (NAP) logs. For Azure, it provides Cluster Autoscaler logs. For AWS, this functionality is not yet implemented.
-
-        Parameters
-        ----------
-        id : str
-            Cluster id of the cluster
-
-        match_string : str
-            String that needs to be matched
-
-        type : ClustersGetAutoscalerLogsRequestType
-            query filter type, `regex` or `substring`
-
-        operator : ClustersGetAutoscalerLogsRequestOperator
-            comparison operator for filter. `equal` or `not_equal`
-
-        start_ts : typing.Optional[str]
-            Start timestamp for querying logs, in nanoseconds from the Unix epoch.
-
-        end_ts : typing.Optional[str]
-            End timestamp for querying logs, in nanoseconds from the Unix epoch.
-
-        limit : typing.Optional[str]
-            Max number of log lines to fetch
-
-        direction : typing.Optional[str]
-            Direction of sorting logs. Can be `asc` or `desc`
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        LogsResponse
-            Successfully retrieved logs: Cluster Autoscaler or NAP
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.v1.clusters.get_autoscaler_logs(
-            id="id",
-            start_ts="1635467890123456789",
-            end_ts="1635467891123456789",
-            match_string="matchString",
-            type="regex",
-            operator="equal",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/cluster-autoscaler-logs/{jsonable_encoder(id)}",
-            method="GET",
-            params={
-                "startTs": start_ts,
-                "endTs": end_ts,
-                "limit": limit,
-                "direction": direction,
-                "matchString": match_string,
-                "type": type,
-                "operator": operator,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    LogsResponse,
-                    parse_obj_as(
-                        type_=LogsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 400:
-                raise BadRequestError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -707,9 +600,9 @@ class AsyncClustersClient:
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -749,7 +642,12 @@ class AsyncClustersClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import AsyncTrueFoundry, ClusterManifest, Collaborator
+        from truefoundry_sdk import (
+            AsyncTrueFoundry,
+            ClusterManifest,
+            ClusterManifestClusterType,
+            Collaborator,
+        )
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -761,7 +659,7 @@ class AsyncClustersClient:
             await client.v1.clusters.create_or_update(
                 manifest=ClusterManifest(
                     name="name",
-                    cluster_type="aws-eks",
+                    cluster_type=ClusterManifestClusterType.AWS_EKS,
                     environment_names=["environment_names"],
                     collaborators=[
                         Collaborator(
@@ -802,9 +700,9 @@ class AsyncClustersClient:
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -812,9 +710,9 @@ class AsyncClustersClient:
             if _response.status_code == 409:
                 raise ConflictError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -888,9 +786,9 @@ class AsyncClustersClient:
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -966,9 +864,9 @@ class AsyncClustersClient:
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -1061,9 +959,9 @@ class AsyncClustersClient:
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -1083,11 +981,11 @@ class AsyncClustersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_autoprovisioning_state(
+    async def is_connected(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AutoProvisioningStateResponse:
+    ) -> IsClusterConnectedResponse:
         """
-        Get the auto provisioning status for the provided cluster
+        Get the status of provided cluster
 
         Parameters
         ----------
@@ -1099,8 +997,8 @@ class AsyncClustersClient:
 
         Returns
         -------
-        AutoProvisioningStateResponse
-            Returns the auto provisioning status for the cluster
+        IsClusterConnectedResponse
+            Returns the status of provided cluster
 
         Examples
         --------
@@ -1115,7 +1013,7 @@ class AsyncClustersClient:
 
 
         async def main() -> None:
-            await client.v1.clusters.get_autoprovisioning_state(
+            await client.v1.clusters.is_connected(
                 id="id",
             )
 
@@ -1123,138 +1021,25 @@ class AsyncClustersClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/clusters/{jsonable_encoder(id)}/autoprovisioning-state",
+            f"api/svc/v1/clusters/{jsonable_encoder(id)}/is-connected",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AutoProvisioningStateResponse,
+                    IsClusterConnectedResponse,
                     parse_obj_as(
-                        type_=AutoProvisioningStateResponse,  # type: ignore
+                        type_=IsClusterConnectedResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def get_autoscaler_logs(
-        self,
-        id: str,
-        *,
-        match_string: str,
-        type: ClustersGetAutoscalerLogsRequestType,
-        operator: ClustersGetAutoscalerLogsRequestOperator,
-        start_ts: typing.Optional[str] = None,
-        end_ts: typing.Optional[str] = None,
-        limit: typing.Optional[str] = None,
-        direction: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> LogsResponse:
-        """
-        Retrieve logs for the cluster autoscaler or NAP for the specified cluster. For GCP, it returns Node Auto Provisioning (NAP) logs. For Azure, it provides Cluster Autoscaler logs. For AWS, this functionality is not yet implemented.
-
-        Parameters
-        ----------
-        id : str
-            Cluster id of the cluster
-
-        match_string : str
-            String that needs to be matched
-
-        type : ClustersGetAutoscalerLogsRequestType
-            query filter type, `regex` or `substring`
-
-        operator : ClustersGetAutoscalerLogsRequestOperator
-            comparison operator for filter. `equal` or `not_equal`
-
-        start_ts : typing.Optional[str]
-            Start timestamp for querying logs, in nanoseconds from the Unix epoch.
-
-        end_ts : typing.Optional[str]
-            End timestamp for querying logs, in nanoseconds from the Unix epoch.
-
-        limit : typing.Optional[str]
-            Max number of log lines to fetch
-
-        direction : typing.Optional[str]
-            Direction of sorting logs. Can be `asc` or `desc`
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        LogsResponse
-            Successfully retrieved logs: Cluster Autoscaler or NAP
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.v1.clusters.get_autoscaler_logs(
-                id="id",
-                start_ts="1635467890123456789",
-                end_ts="1635467891123456789",
-                match_string="matchString",
-                type="regex",
-                operator="equal",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/cluster-autoscaler-logs/{jsonable_encoder(id)}",
-            method="GET",
-            params={
-                "startTs": start_ts,
-                "endTs": end_ts,
-                "limit": limit,
-                "direction": direction,
-                "matchString": match_string,
-                "type": type,
-                "operator": operator,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    LogsResponse,
-                    parse_obj_as(
-                        type_=LogsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 400:
-                raise BadRequestError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )

@@ -18,14 +18,6 @@ class NodeSelector(UniversalBaseModel):
     +value=node_selector
     """
 
-    gpu_type: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    +label=GPU Type
-    +usage=Name of the Nvidia GPU. One of [P4, P100, V100, T4, A10G, A100_40GB, A100_80GB]
-    One instance of the card contains the following amount of memory -
-    P4: 8 GB, P100: 16 GB, V100: 16 GB, T4: 16 GB, A10G: 24 GB, A100_40GB: 40GB, A100_80GB: 80 GB
-    """
-
     instance_families: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     +label=Instance family

@@ -565,7 +565,7 @@ class DataDirectoriesClient:
 
         Examples
         --------
-        from truefoundry_sdk import TrueFoundry
+        from truefoundry_sdk import Operation, TrueFoundry
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -574,7 +574,7 @@ class DataDirectoriesClient:
         client.v1.data_directories.get_signed_urls(
             id="id",
             paths=["paths"],
-            operation="READ",
+            operation=Operation.READ,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -1290,7 +1290,7 @@ class AsyncDataDirectoriesClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import AsyncTrueFoundry
+        from truefoundry_sdk import AsyncTrueFoundry, Operation
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -1302,7 +1302,7 @@ class AsyncDataDirectoriesClient:
             await client.v1.data_directories.get_signed_urls(
                 id="id",
                 paths=["paths"],
-                operation="READ",
+                operation=Operation.READ,
             )
 
 
