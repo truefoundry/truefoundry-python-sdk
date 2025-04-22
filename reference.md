@@ -2467,8 +2467,8 @@ client = TrueFoundry(
 )
 response = client.v1.jobs.list_runs(
     job_id="jobId",
-    limit=1,
-    offset=1,
+    limit=10,
+    offset=0,
 )
 for item in response:
     yield item
@@ -2498,7 +2498,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**limit:** `int` — Number of items per page
+**limit:** `typing.Optional[int]` — Number of items per page
     
 </dd>
 </dl>
@@ -2506,7 +2506,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**offset:** `int` — Number of items to skip
+**offset:** `typing.Optional[int]` — Number of items to skip
     
 </dd>
 </dl>

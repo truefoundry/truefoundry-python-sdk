@@ -50,8 +50,8 @@ class JobsClient:
         self,
         job_id: str,
         *,
-        limit: int,
-        offset: int,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
         search_prefix: typing.Optional[str] = None,
         sort_by: typing.Optional[JobRunsSortBy] = None,
         order: typing.Optional[JobRunsSortDirection] = None,
@@ -67,10 +67,10 @@ class JobsClient:
         job_id : str
             Job id of the application
 
-        limit : int
+        limit : typing.Optional[int]
             Number of items per page
 
-        offset : int
+        offset : typing.Optional[int]
             Number of items to skip
 
         search_prefix : typing.Optional[str]
@@ -106,8 +106,8 @@ class JobsClient:
         )
         response = client.v1.jobs.list_runs(
             job_id="jobId",
-            limit=1,
-            offset=1,
+            limit=10,
+            offset=0,
         )
         for item in response:
             yield item
@@ -115,7 +115,7 @@ class JobsClient:
         for page in response.iter_pages():
             yield page
         """
-        offset = offset if offset is not None else 1
+        offset = offset if offset is not None else 0
         _response = self._raw_client._client_wrapper.httpx_client.request(
             f"api/svc/v1/jobs/{jsonable_encoder(job_id)}/runs",
             method="GET",
@@ -369,8 +369,8 @@ class AsyncJobsClient:
         self,
         job_id: str,
         *,
-        limit: int,
-        offset: int,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
         search_prefix: typing.Optional[str] = None,
         sort_by: typing.Optional[JobRunsSortBy] = None,
         order: typing.Optional[JobRunsSortDirection] = None,
@@ -386,10 +386,10 @@ class AsyncJobsClient:
         job_id : str
             Job id of the application
 
-        limit : int
+        limit : typing.Optional[int]
             Number of items per page
 
-        offset : int
+        offset : typing.Optional[int]
             Number of items to skip
 
         search_prefix : typing.Optional[str]
@@ -430,8 +430,8 @@ class AsyncJobsClient:
         async def main() -> None:
             response = await client.v1.jobs.list_runs(
                 job_id="jobId",
-                limit=1,
-                offset=1,
+                limit=10,
+                offset=0,
             )
             async for item in response:
                 yield item
@@ -442,7 +442,7 @@ class AsyncJobsClient:
 
         asyncio.run(main())
         """
-        offset = offset if offset is not None else 1
+        offset = offset if offset is not None else 0
         _response = await self._raw_client._client_wrapper.httpx_client.request(
             f"api/svc/v1/jobs/{jsonable_encoder(job_id)}/runs",
             method="GET",
