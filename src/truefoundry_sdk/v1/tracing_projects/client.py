@@ -2,18 +2,14 @@
 
 import typing
 from ...core.client_wrapper import SyncClientWrapper
+from .raw_client import RawTracingProjectsClient
 from ...core.request_options import RequestOptions
 from ...types.list_tracing_projects_response import ListTracingProjectsResponse
-from ...core.pydantic_utilities import parse_obj_as
-from ...errors.unprocessable_entity_error import UnprocessableEntityError
-from json.decoder import JSONDecodeError
-from ...core.api_error import ApiError
 from ...types.manifest import Manifest
 from ...types.get_tracing_project_response import GetTracingProjectResponse
-from ...core.serialization import convert_and_respect_annotation_metadata
-from ...core.jsonable_encoder import jsonable_encoder
 from ...types.empty_response import EmptyResponse
 from ...core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawTracingProjectsClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -21,7 +17,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class TracingProjectsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawTracingProjectsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawTracingProjectsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawTracingProjectsClient
+        """
+        return self._raw_client
 
     def list(
         self,
@@ -64,47 +71,13 @@ class TracingProjectsClient:
         )
         client.v1.tracing_projects.list()
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/tracing-projects",
-            method="GET",
-            params={
-                "ml_repo_id": ml_repo_id,
-                "fqn": fqn,
-                "name": name,
-                "offset": offset,
-                "limit": limit,
-            },
-            request_options=request_options,
+        response = self._raw_client.list(
+            ml_repo_id=ml_repo_id, fqn=fqn, name=name, offset=offset, limit=limit, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ListTracingProjectsResponse,
-                    parse_obj_as(
-                        type_=ListTracingProjectsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def create_or_update(
-        self,
-        *,
-        manifest: Manifest,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, manifest: Manifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetTracingProjectResponse:
         """
         Parameters
@@ -136,40 +109,8 @@ class TracingProjectsClient:
             ),
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/tracing-projects",
-            method="PUT",
-            json={
-                "manifest": convert_and_respect_annotation_metadata(
-                    object_=manifest, annotation=Manifest, direction="write"
-                ),
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetTracingProjectResponse,
-                    parse_obj_as(
-                        type_=GetTracingProjectResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
+        return response.data
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetTracingProjectResponse:
         """
@@ -197,34 +138,8 @@ class TracingProjectsClient:
             id="id",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/tracing-projects/{jsonable_encoder(id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetTracingProjectResponse,
-                    parse_obj_as(
-                        type_=GetTracingProjectResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.get(id, request_options=request_options)
+        return response.data
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
         """
@@ -252,39 +167,24 @@ class TracingProjectsClient:
             id="id",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/tracing-projects/{jsonable_encoder(id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    EmptyResponse,
-                    parse_obj_as(
-                        type_=EmptyResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.delete(id, request_options=request_options)
+        return response.data
 
 
 class AsyncTracingProjectsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawTracingProjectsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawTracingProjectsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawTracingProjectsClient
+        """
+        return self._raw_client
 
     async def list(
         self,
@@ -335,47 +235,13 @@ class AsyncTracingProjectsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/tracing-projects",
-            method="GET",
-            params={
-                "ml_repo_id": ml_repo_id,
-                "fqn": fqn,
-                "name": name,
-                "offset": offset,
-                "limit": limit,
-            },
-            request_options=request_options,
+        response = await self._raw_client.list(
+            ml_repo_id=ml_repo_id, fqn=fqn, name=name, offset=offset, limit=limit, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ListTracingProjectsResponse,
-                    parse_obj_as(
-                        type_=ListTracingProjectsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def create_or_update(
-        self,
-        *,
-        manifest: Manifest,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, manifest: Manifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetTracingProjectResponse:
         """
         Parameters
@@ -419,40 +285,8 @@ class AsyncTracingProjectsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/tracing-projects",
-            method="PUT",
-            json={
-                "manifest": convert_and_respect_annotation_metadata(
-                    object_=manifest, annotation=Manifest, direction="write"
-                ),
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetTracingProjectResponse,
-                    parse_obj_as(
-                        type_=GetTracingProjectResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
+        return response.data
 
     async def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -490,34 +324,8 @@ class AsyncTracingProjectsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/tracing-projects/{jsonable_encoder(id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetTracingProjectResponse,
-                    parse_obj_as(
-                        type_=GetTracingProjectResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.get(id, request_options=request_options)
+        return response.data
 
     async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
         """
@@ -553,31 +361,5 @@ class AsyncTracingProjectsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/tracing-projects/{jsonable_encoder(id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    EmptyResponse,
-                    parse_obj_as(
-                        type_=EmptyResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.delete(id, request_options=request_options)
+        return response.data

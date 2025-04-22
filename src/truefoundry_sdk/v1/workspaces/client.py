@@ -2,6 +2,7 @@
 
 import typing
 from ...core.client_wrapper import SyncClientWrapper
+from .raw_client import RawWorkspacesClient
 from ...core.request_options import RequestOptions
 from ...core.pagination import SyncPager
 from ...types.workspace import Workspace
@@ -11,16 +12,9 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.workspace_manifest import WorkspaceManifest
 from ...types.get_workspace_response import GetWorkspaceResponse
-from ...core.serialization import convert_and_respect_annotation_metadata
-from ...errors.bad_request_error import BadRequestError
-from ...errors.forbidden_error import ForbiddenError
-from ...types.http_error import HttpError
-from ...errors.not_found_error import NotFoundError
-from ...errors.unprocessable_entity_error import UnprocessableEntityError
-from ...core.jsonable_encoder import jsonable_encoder
 from .types.workspaces_delete_response import WorkspacesDeleteResponse
-from ...errors.expectation_failed_error import ExpectationFailedError
 from ...core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawWorkspacesClient
 from ...core.pagination import AsyncPager
 
 # this is used as the default value for optional parameters
@@ -29,7 +23,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class WorkspacesClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawWorkspacesClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawWorkspacesClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawWorkspacesClient
+        """
+        return self._raw_client
 
     def list(
         self,
@@ -88,7 +93,7 @@ class WorkspacesClient:
             yield page
         """
         offset = offset if offset is not None else 1
-        _response = self._client_wrapper.httpx_client.request(
+        _response = self._raw_client._client_wrapper.httpx_client.request(
             "api/svc/v1/workspaces",
             method="GET",
             params={
@@ -168,74 +173,10 @@ class WorkspacesClient:
             ),
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/svc/v1/workspaces",
-            method="PUT",
-            json={
-                "manifest": convert_and_respect_annotation_metadata(
-                    object_=manifest, annotation=WorkspaceManifest, direction="write"
-                ),
-                "dryRun": dry_run,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = self._raw_client.create_or_update(
+            manifest=manifest, dry_run=dry_run, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetWorkspaceResponse,
-                    parse_obj_as(
-                        type_=GetWorkspaceResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 400:
-                raise BadRequestError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetWorkspaceResponse:
         """
@@ -266,34 +207,8 @@ class WorkspacesClient:
             id="id",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/workspaces/{jsonable_encoder(id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetWorkspaceResponse,
-                    parse_obj_as(
-                        type_=GetWorkspaceResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.get(id, request_options=request_options)
+        return response.data
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> WorkspacesDeleteResponse:
         """
@@ -326,49 +241,24 @@ class WorkspacesClient:
             id="id",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/workspaces/{jsonable_encoder(id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    WorkspacesDeleteResponse,
-                    parse_obj_as(
-                        type_=WorkspacesDeleteResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 417:
-                raise ExpectationFailedError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.delete(id, request_options=request_options)
+        return response.data
 
 
 class AsyncWorkspacesClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawWorkspacesClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawWorkspacesClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawWorkspacesClient
+        """
+        return self._raw_client
 
     async def list(
         self,
@@ -435,7 +325,7 @@ class AsyncWorkspacesClient:
         asyncio.run(main())
         """
         offset = offset if offset is not None else 1
-        _response = await self._client_wrapper.httpx_client.request(
+        _response = await self._raw_client._client_wrapper.httpx_client.request(
             "api/svc/v1/workspaces",
             method="GET",
             params={
@@ -523,74 +413,10 @@ class AsyncWorkspacesClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/svc/v1/workspaces",
-            method="PUT",
-            json={
-                "manifest": convert_and_respect_annotation_metadata(
-                    object_=manifest, annotation=WorkspaceManifest, direction="write"
-                ),
-                "dryRun": dry_run,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = await self._raw_client.create_or_update(
+            manifest=manifest, dry_run=dry_run, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetWorkspaceResponse,
-                    parse_obj_as(
-                        type_=GetWorkspaceResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 400:
-                raise BadRequestError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetWorkspaceResponse:
         """
@@ -629,34 +455,8 @@ class AsyncWorkspacesClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/workspaces/{jsonable_encoder(id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetWorkspaceResponse,
-                    parse_obj_as(
-                        type_=GetWorkspaceResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.get(id, request_options=request_options)
+        return response.data
 
     async def delete(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -699,41 +499,5 @@ class AsyncWorkspacesClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/workspaces/{jsonable_encoder(id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    WorkspacesDeleteResponse,
-                    parse_obj_as(
-                        type_=WorkspacesDeleteResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 417:
-                raise ExpectationFailedError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.delete(id, request_options=request_options)
+        return response.data

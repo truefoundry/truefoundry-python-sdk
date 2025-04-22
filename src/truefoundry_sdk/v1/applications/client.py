@@ -2,12 +2,9 @@
 
 import typing
 from ...core.client_wrapper import SyncClientWrapper
-from .types.applications_list_request_device_type_filter import (
-    ApplicationsListRequestDeviceTypeFilter,
-)
-from .types.applications_list_request_lifecycle_stage import (
-    ApplicationsListRequestLifecycleStage,
-)
+from .raw_client import RawApplicationsClient
+from .types.applications_list_request_device_type_filter import ApplicationsListRequestDeviceTypeFilter
+from .types.applications_list_request_lifecycle_stage import ApplicationsListRequestLifecycleStage
 from ...core.request_options import RequestOptions
 from ...core.pagination import SyncPager
 from ...types.application import Application
@@ -16,23 +13,13 @@ from ...core.pydantic_utilities import parse_obj_as
 from ...errors.bad_request_error import BadRequestError
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
-from ...types.get_application_deployment_response import (
-    GetApplicationDeploymentResponse,
-)
-from ...errors.forbidden_error import ForbiddenError
-from ...types.http_error import HttpError
-from ...errors.not_found_error import NotFoundError
-from ...errors.conflict_error import ConflictError
+from ...types.get_application_deployment_response import GetApplicationDeploymentResponse
 from ...types.get_application_response import GetApplicationResponse
-from ...core.jsonable_encoder import jsonable_encoder
 from ...types.delete_application_response import DeleteApplicationResponse
-from ...errors.method_not_allowed_error import MethodNotAllowedError
-from ...errors.not_implemented_error import NotImplementedError
 from ...types.deployment import Deployment
-from .types.applications_cancel_deployment_response import (
-    ApplicationsCancelDeploymentResponse,
-)
+from .types.applications_cancel_deployment_response import ApplicationsCancelDeploymentResponse
 from ...core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawApplicationsClient
 from ...core.pagination import AsyncPager
 
 # this is used as the default value for optional parameters
@@ -41,7 +28,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class ApplicationsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawApplicationsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawApplicationsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawApplicationsClient
+        """
+        return self._raw_client
 
     def list(
         self,
@@ -140,7 +138,7 @@ class ApplicationsClient:
             yield page
         """
         offset = offset if offset is not None else 1
-        _response = self._client_wrapper.httpx_client.request(
+        _response = self._raw_client._client_wrapper.httpx_client.request(
             "api/svc/v1/apps",
             method="GET",
             params={
@@ -268,77 +266,17 @@ class ApplicationsClient:
             manifest={"key": "value"},
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/svc/v1/apps",
-            method="PUT",
-            json={
-                "manifest": manifest,
-                "dryRun": dry_run,
-                "forceDeploy": force_deploy,
-                "workspaceId": workspace_id,
-                "applicationId": application_id,
-                "name": name,
-                "applicationSetId": application_set_id,
-            },
-            headers={
-                "content-type": "application/json",
-            },
+        response = self._raw_client.create_or_update(
+            manifest=manifest,
+            dry_run=dry_run,
+            force_deploy=force_deploy,
+            workspace_id=workspace_id,
+            application_id=application_id,
+            name=name,
+            application_set_id=application_set_id,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetApplicationDeploymentResponse,
-                    parse_obj_as(
-                        type_=GetApplicationDeploymentResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 400:
-                raise BadRequestError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 409:
-                raise ConflictError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetApplicationResponse:
         """
@@ -369,44 +307,8 @@ class ApplicationsClient:
             id="id",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetApplicationResponse,
-                    parse_obj_as(
-                        type_=GetApplicationResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.get(id, request_options=request_options)
+        return response.data
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> DeleteApplicationResponse:
         """
@@ -437,44 +339,8 @@ class ApplicationsClient:
             id="id",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    DeleteApplicationResponse,
-                    parse_obj_as(
-                        type_=DeleteApplicationResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.delete(id, request_options=request_options)
+        return response.data
 
     def scale_to_zero(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
@@ -504,58 +370,8 @@ class ApplicationsClient:
             id="id",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}/scale-to-zero",
-            method="PATCH",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 405:
-                raise MethodNotAllowedError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 501:
-                raise NotImplementedError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.scale_to_zero(id, request_options=request_options)
+        return response.data
 
     def scale_to_original(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Deployment:
         """
@@ -586,61 +402,11 @@ class ApplicationsClient:
             id="id",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}/scale-to-original",
-            method="PATCH",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Deployment,
-                    parse_obj_as(
-                        type_=Deployment,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 501:
-                raise NotImplementedError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.scale_to_original(id, request_options=request_options)
+        return response.data
 
     def cancel_deployment(
-        self,
-        id: str,
-        deployment_id: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ApplicationsCancelDeploymentResponse:
         """
         Cancel an ongoing deployment associated with the provided application ID and deployment ID.
@@ -674,59 +440,24 @@ class ApplicationsClient:
             deployment_id="deploymentId",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/cancel",
-            method="POST",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ApplicationsCancelDeploymentResponse,
-                    parse_obj_as(
-                        type_=ApplicationsCancelDeploymentResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 409:
-                raise ConflictError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.cancel_deployment(id, deployment_id, request_options=request_options)
+        return response.data
 
 
 class AsyncApplicationsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawApplicationsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawApplicationsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawApplicationsClient
+        """
+        return self._raw_client
 
     async def list(
         self,
@@ -833,7 +564,7 @@ class AsyncApplicationsClient:
         asyncio.run(main())
         """
         offset = offset if offset is not None else 1
-        _response = await self._client_wrapper.httpx_client.request(
+        _response = await self._raw_client._client_wrapper.httpx_client.request(
             "api/svc/v1/apps",
             method="GET",
             params={
@@ -969,77 +700,17 @@ class AsyncApplicationsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/svc/v1/apps",
-            method="PUT",
-            json={
-                "manifest": manifest,
-                "dryRun": dry_run,
-                "forceDeploy": force_deploy,
-                "workspaceId": workspace_id,
-                "applicationId": application_id,
-                "name": name,
-                "applicationSetId": application_set_id,
-            },
-            headers={
-                "content-type": "application/json",
-            },
+        response = await self._raw_client.create_or_update(
+            manifest=manifest,
+            dry_run=dry_run,
+            force_deploy=force_deploy,
+            workspace_id=workspace_id,
+            application_id=application_id,
+            name=name,
+            application_set_id=application_set_id,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetApplicationDeploymentResponse,
-                    parse_obj_as(
-                        type_=GetApplicationDeploymentResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 400:
-                raise BadRequestError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 409:
-                raise ConflictError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetApplicationResponse:
         """
@@ -1078,44 +749,8 @@ class AsyncApplicationsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetApplicationResponse,
-                    parse_obj_as(
-                        type_=GetApplicationResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.get(id, request_options=request_options)
+        return response.data
 
     async def delete(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -1156,44 +791,8 @@ class AsyncApplicationsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    DeleteApplicationResponse,
-                    parse_obj_as(
-                        type_=DeleteApplicationResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.delete(id, request_options=request_options)
+        return response.data
 
     async def scale_to_zero(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
@@ -1231,58 +830,8 @@ class AsyncApplicationsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}/scale-to-zero",
-            method="PATCH",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 405:
-                raise MethodNotAllowedError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 501:
-                raise NotImplementedError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.scale_to_zero(id, request_options=request_options)
+        return response.data
 
     async def scale_to_original(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -1323,61 +872,11 @@ class AsyncApplicationsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}/scale-to-original",
-            method="PATCH",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Deployment,
-                    parse_obj_as(
-                        type_=Deployment,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 501:
-                raise NotImplementedError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.scale_to_original(id, request_options=request_options)
+        return response.data
 
     async def cancel_deployment(
-        self,
-        id: str,
-        deployment_id: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ApplicationsCancelDeploymentResponse:
         """
         Cancel an ongoing deployment associated with the provided application ID and deployment ID.
@@ -1419,51 +918,5 @@ class AsyncApplicationsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/cancel",
-            method="POST",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ApplicationsCancelDeploymentResponse,
-                    parse_obj_as(
-                        type_=ApplicationsCancelDeploymentResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 409:
-                raise ConflictError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.cancel_deployment(id, deployment_id, request_options=request_options)
+        return response.data

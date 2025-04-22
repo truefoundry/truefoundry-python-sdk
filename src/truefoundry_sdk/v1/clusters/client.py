@@ -2,6 +2,7 @@
 
 import typing
 from ...core.client_wrapper import SyncClientWrapper
+from .raw_client import RawClustersClient
 from ...core.request_options import RequestOptions
 from ...core.pagination import SyncPager
 from ...types.cluster import Cluster
@@ -13,15 +14,11 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.cluster_manifest import ClusterManifest
 from ...types.get_cluster_response import GetClusterResponse
-from ...core.serialization import convert_and_respect_annotation_metadata
-from ...errors.conflict_error import ConflictError
-from ...errors.unprocessable_entity_error import UnprocessableEntityError
-from ...core.jsonable_encoder import jsonable_encoder
-from ...errors.not_found_error import NotFoundError
 from .types.clusters_delete_response import ClustersDeleteResponse
 from ...types.list_cluster_addons_response import ListClusterAddonsResponse
 from ...types.is_cluster_connected_response import IsClusterConnectedResponse
 from ...core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawClustersClient
 from ...core.pagination import AsyncPager
 
 # this is used as the default value for optional parameters
@@ -30,7 +27,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class ClustersClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawClustersClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawClustersClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawClustersClient
+        """
+        return self._raw_client
 
     def list(
         self,
@@ -77,7 +85,7 @@ class ClustersClient:
             yield page
         """
         offset = offset if offset is not None else 1
-        _response = self._client_wrapper.httpx_client.request(
+        _response = self._raw_client._client_wrapper.httpx_client.request(
             "api/svc/v1/clusters",
             method="GET",
             params={
@@ -171,64 +179,10 @@ class ClustersClient:
             ),
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/svc/v1/clusters",
-            method="PUT",
-            json={
-                "manifest": convert_and_respect_annotation_metadata(
-                    object_=manifest, annotation=ClusterManifest, direction="write"
-                ),
-                "dryRun": dry_run,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = self._raw_client.create_or_update(
+            manifest=manifest, dry_run=dry_run, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetClusterResponse,
-                    parse_obj_as(
-                        type_=GetClusterResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 409:
-                raise ConflictError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetClusterResponse:
         """
@@ -259,44 +213,8 @@ class ClustersClient:
             id="id",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/clusters/{jsonable_encoder(id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetClusterResponse,
-                    parse_obj_as(
-                        type_=GetClusterResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.get(id, request_options=request_options)
+        return response.data
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> ClustersDeleteResponse:
         """
@@ -327,44 +245,8 @@ class ClustersClient:
             id="id",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/clusters/{jsonable_encoder(id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ClustersDeleteResponse,
-                    parse_obj_as(
-                        type_=ClustersDeleteResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.delete(id, request_options=request_options)
+        return response.data
 
     def get_addons(
         self,
@@ -410,48 +292,8 @@ class ClustersClient:
             offset=0,
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/clusters/{jsonable_encoder(id)}/get-addons",
-            method="GET",
-            params={
-                "limit": limit,
-                "offset": offset,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ListClusterAddonsResponse,
-                    parse_obj_as(
-                        type_=ListClusterAddonsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.get_addons(id, limit=limit, offset=offset, request_options=request_options)
+        return response.data
 
     def is_connected(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -484,39 +326,24 @@ class ClustersClient:
             id="id",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/clusters/{jsonable_encoder(id)}/is-connected",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    IsClusterConnectedResponse,
-                    parse_obj_as(
-                        type_=IsClusterConnectedResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.is_connected(id, request_options=request_options)
+        return response.data
 
 
 class AsyncClustersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawClustersClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawClustersClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawClustersClient
+        """
+        return self._raw_client
 
     async def list(
         self,
@@ -571,7 +398,7 @@ class AsyncClustersClient:
         asyncio.run(main())
         """
         offset = offset if offset is not None else 1
-        _response = await self._client_wrapper.httpx_client.request(
+        _response = await self._raw_client._client_wrapper.httpx_client.request(
             "api/svc/v1/clusters",
             method="GET",
             params={
@@ -673,64 +500,10 @@ class AsyncClustersClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/svc/v1/clusters",
-            method="PUT",
-            json={
-                "manifest": convert_and_respect_annotation_metadata(
-                    object_=manifest, annotation=ClusterManifest, direction="write"
-                ),
-                "dryRun": dry_run,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = await self._raw_client.create_or_update(
+            manifest=manifest, dry_run=dry_run, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetClusterResponse,
-                    parse_obj_as(
-                        type_=GetClusterResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 409:
-                raise ConflictError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetClusterResponse:
         """
@@ -769,44 +542,8 @@ class AsyncClustersClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/clusters/{jsonable_encoder(id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetClusterResponse,
-                    parse_obj_as(
-                        type_=GetClusterResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.get(id, request_options=request_options)
+        return response.data
 
     async def delete(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -847,44 +584,8 @@ class AsyncClustersClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/clusters/{jsonable_encoder(id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ClustersDeleteResponse,
-                    parse_obj_as(
-                        type_=ClustersDeleteResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.delete(id, request_options=request_options)
+        return response.data
 
     async def get_addons(
         self,
@@ -938,48 +639,8 @@ class AsyncClustersClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/clusters/{jsonable_encoder(id)}/get-addons",
-            method="GET",
-            params={
-                "limit": limit,
-                "offset": offset,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ListClusterAddonsResponse,
-                    parse_obj_as(
-                        type_=ListClusterAddonsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.get_addons(id, limit=limit, offset=offset, request_options=request_options)
+        return response.data
 
     async def is_connected(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -1020,31 +681,5 @@ class AsyncClustersClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/clusters/{jsonable_encoder(id)}/is-connected",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    IsClusterConnectedResponse,
-                    parse_obj_as(
-                        type_=IsClusterConnectedResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.is_connected(id, request_options=request_options)
+        return response.data

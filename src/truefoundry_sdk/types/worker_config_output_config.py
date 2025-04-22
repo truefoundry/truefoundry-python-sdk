@@ -8,9 +8,5 @@ from .kafka_output_config import KafkaOutputConfig
 from .amqp_output_config import AmqpOutputConfig
 
 WorkerConfigOutputConfig = typing.Union[
-    SqsOutputConfig,
-    NatsOutputConfig,
-    CoreNatsOutputConfig,
-    KafkaOutputConfig,
-    AmqpOutputConfig,
+    SqsOutputConfig, NatsOutputConfig, CoreNatsOutputConfig, KafkaOutputConfig, AmqpOutputConfig
 ]

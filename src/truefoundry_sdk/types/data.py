@@ -10,11 +10,5 @@ from .data_directory import DataDirectory
 from .tracing_project import TracingProject
 
 Data = typing.Union[
-    ModelVersion,
-    PromptVersion,
-    ToolVersion,
-    AgentVersion,
-    ArtifactVersion,
-    DataDirectory,
-    TracingProject,
+    ModelVersion, PromptVersion, ToolVersion, AgentVersion, ArtifactVersion, DataDirectory, TracingProject
 ]

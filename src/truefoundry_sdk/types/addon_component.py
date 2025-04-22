@@ -31,8 +31,7 @@ class AddonComponent(UniversalBaseModel):
         typing.Optional[str], FieldMetadata(alias="installationSource")
     ] = None
     unsupported_cluster_types: typing_extensions.Annotated[
-        typing.Optional[typing.List[ClusterType]],
-        FieldMetadata(alias="unsupportedClusterTypes"),
+        typing.Optional[typing.List[ClusterType]], FieldMetadata(alias="unsupportedClusterTypes")
     ] = None
     required: typing.Optional[bool] = None
     known_cr_ds: typing_extensions.Annotated[typing.Optional[typing.List[str]], FieldMetadata(alias="knownCRDs")] = None

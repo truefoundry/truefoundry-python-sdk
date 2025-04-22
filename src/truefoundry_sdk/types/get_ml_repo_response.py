@@ -2,13 +2,16 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 from .ml_repo import MlRepo
+import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
-import pydantic
 
 
 class GetMlRepoResponse(UniversalBaseModel):
-    data: MlRepo
+    data: MlRepo = pydantic.Field()
+    """
+    ML Repo
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

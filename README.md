@@ -141,6 +141,7 @@ client.v1.secrets.list(..., request_options={
 
 You can override the `httpx` client to customize it for your use-case. Some common use-cases include support for proxies
 and transports.
+
 ```python
 import httpx
 from truefoundry_sdk import TrueFoundry

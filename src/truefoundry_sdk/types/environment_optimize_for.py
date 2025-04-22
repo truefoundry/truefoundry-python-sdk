@@ -10,11 +10,7 @@ class EnvironmentOptimizeFor(str, enum.Enum):
     COST = "COST"
     AVAILABILITY = "AVAILABILITY"
 
-    def visit(
-        self,
-        cost: typing.Callable[[], T_Result],
-        availability: typing.Callable[[], T_Result],
-    ) -> T_Result:
+    def visit(self, cost: typing.Callable[[], T_Result], availability: typing.Callable[[], T_Result]) -> T_Result:
         if self is EnvironmentOptimizeFor.COST:
             return cost()
         if self is EnvironmentOptimizeFor.AVAILABILITY:

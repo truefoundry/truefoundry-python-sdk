@@ -10,11 +10,7 @@ class ParamParamType(str, enum.Enum):
     STRING = "string"
     ML_REPO = "ml_repo"
 
-    def visit(
-        self,
-        string: typing.Callable[[], T_Result],
-        ml_repo: typing.Callable[[], T_Result],
-    ) -> T_Result:
+    def visit(self, string: typing.Callable[[], T_Result], ml_repo: typing.Callable[[], T_Result]) -> T_Result:
         if self is ParamParamType.STRING:
             return string()
         if self is ParamParamType.ML_REPO:

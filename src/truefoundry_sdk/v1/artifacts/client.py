@@ -2,21 +2,21 @@
 
 import typing
 from ...core.client_wrapper import SyncClientWrapper
+from .raw_client import RawArtifactsClient
 from ...core.request_options import RequestOptions
 from ...types.get_artifact_response import GetArtifactResponse
-from ...core.jsonable_encoder import jsonable_encoder
-from ...core.pydantic_utilities import parse_obj_as
-from ...errors.unprocessable_entity_error import UnprocessableEntityError
-from json.decoder import JSONDecodeError
-from ...core.api_error import ApiError
 from ...types.empty_response import EmptyResponse
 from ...core.pagination import SyncPager
 from ...types.artifact import Artifact
 from ...types.list_artifacts_response import ListArtifactsResponse
+from ...core.pydantic_utilities import parse_obj_as
+from ...errors.unprocessable_entity_error import UnprocessableEntityError
+from json.decoder import JSONDecodeError
+from ...core.api_error import ApiError
 from ...types.manifest import Manifest
 from ...types.get_artifact_version_response import GetArtifactVersionResponse
-from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawArtifactsClient
 from ...core.pagination import AsyncPager
 
 # this is used as the default value for optional parameters
@@ -25,7 +25,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class ArtifactsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawArtifactsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawArtifactsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawArtifactsClient
+        """
+        return self._raw_client
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetArtifactResponse:
         """
@@ -53,34 +64,8 @@ class ArtifactsClient:
             id="id",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/artifacts/{jsonable_encoder(id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetArtifactResponse,
-                    parse_obj_as(
-                        type_=GetArtifactResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.get(id, request_options=request_options)
+        return response.data
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
         """
@@ -108,34 +93,8 @@ class ArtifactsClient:
             id="id",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/artifacts/{jsonable_encoder(id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    EmptyResponse,
-                    parse_obj_as(
-                        type_=EmptyResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.delete(id, request_options=request_options)
+        return response.data
 
     def list(
         self,
@@ -184,7 +143,7 @@ class ArtifactsClient:
             yield page
         """
         offset = offset if offset is not None else 0
-        _response = self._client_wrapper.httpx_client.request(
+        _response = self._raw_client._client_wrapper.httpx_client.request(
             "api/ml/v1/artifacts",
             method="GET",
             params={
@@ -232,10 +191,7 @@ class ArtifactsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def create_or_update(
-        self,
-        *,
-        manifest: Manifest,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, manifest: Manifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetArtifactVersionResponse:
         """
         Parameters
@@ -267,45 +223,24 @@ class ArtifactsClient:
             ),
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/artifact-versions",
-            method="PUT",
-            json={
-                "manifest": convert_and_respect_annotation_metadata(
-                    object_=manifest, annotation=Manifest, direction="write"
-                ),
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetArtifactVersionResponse,
-                    parse_obj_as(
-                        type_=GetArtifactVersionResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
+        return response.data
 
 
 class AsyncArtifactsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawArtifactsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawArtifactsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawArtifactsClient
+        """
+        return self._raw_client
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetArtifactResponse:
         """
@@ -341,34 +276,8 @@ class AsyncArtifactsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/artifacts/{jsonable_encoder(id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetArtifactResponse,
-                    parse_obj_as(
-                        type_=GetArtifactResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.get(id, request_options=request_options)
+        return response.data
 
     async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
         """
@@ -404,34 +313,8 @@ class AsyncArtifactsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/artifacts/{jsonable_encoder(id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    EmptyResponse,
-                    parse_obj_as(
-                        type_=EmptyResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.delete(id, request_options=request_options)
+        return response.data
 
     async def list(
         self,
@@ -488,7 +371,7 @@ class AsyncArtifactsClient:
         asyncio.run(main())
         """
         offset = offset if offset is not None else 0
-        _response = await self._client_wrapper.httpx_client.request(
+        _response = await self._raw_client._client_wrapper.httpx_client.request(
             "api/ml/v1/artifacts",
             method="GET",
             params={
@@ -536,10 +419,7 @@ class AsyncArtifactsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create_or_update(
-        self,
-        *,
-        manifest: Manifest,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, manifest: Manifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetArtifactVersionResponse:
         """
         Parameters
@@ -583,37 +463,5 @@ class AsyncArtifactsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/artifact-versions",
-            method="PUT",
-            json={
-                "manifest": convert_and_respect_annotation_metadata(
-                    object_=manifest, annotation=Manifest, direction="write"
-                ),
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetArtifactVersionResponse,
-                    parse_obj_as(
-                        type_=GetArtifactVersionResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
+        return response.data

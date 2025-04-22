@@ -44,24 +44,21 @@ class Application(UniversalBaseModel):
     """
 
     alerts_summary: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]],
-        FieldMetadata(alias="alertsSummary"),
+        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="alertsSummary")
     ] = pydantic.Field(default=None)
     """
     Summary of alerts for this application
     """
 
     application_debug_infos: typing_extensions.Annotated[
-        typing.Optional[typing.List["ApplicationDebugInfo"]],
-        FieldMetadata(alias="applicationDebugInfos"),
+        typing.Optional[typing.List["ApplicationDebugInfo"]], FieldMetadata(alias="applicationDebugInfos")
     ] = pydantic.Field(default=None)
     """
     Debug infos for this application
     """
 
     potential_problems: typing_extensions.Annotated[
-        typing.Optional[typing.List[ApplicationProblem]],
-        FieldMetadata(alias="potentialProblems"),
+        typing.Optional[typing.List[ApplicationProblem]], FieldMetadata(alias="potentialProblems")
     ] = pydantic.Field(default=None)
     """
     Potential problems with the application

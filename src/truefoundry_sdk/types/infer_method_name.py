@@ -14,11 +14,7 @@ class InferMethodName(str, enum.Enum):
     PREDICT = "predict"
     PREDICT_PROBA = "predict_proba"
 
-    def visit(
-        self,
-        predict: typing.Callable[[], T_Result],
-        predict_proba: typing.Callable[[], T_Result],
-    ) -> T_Result:
+    def visit(self, predict: typing.Callable[[], T_Result], predict_proba: typing.Callable[[], T_Result]) -> T_Result:
         if self is InferMethodName.PREDICT:
             return predict()
         if self is InferMethodName.PREDICT_PROBA:

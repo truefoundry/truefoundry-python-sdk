@@ -13,8 +13,7 @@ class UserMetadata(UniversalBaseModel):
     image_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="imageURL")] = None
     display_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="displayName")] = None
     user_object: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]],
-        FieldMetadata(alias="userObject"),
+        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="userObject")
     ] = None
     invite_accepted: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="inviteAccepted")] = None
     preference: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None

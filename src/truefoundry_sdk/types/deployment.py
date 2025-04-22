@@ -29,8 +29,7 @@ class Deployment(UniversalBaseModel):
         typing.Optional[typing.List[BuildInfo]], FieldMetadata(alias="deploymentBuilds")
     ] = None
     deployment_statuses: typing_extensions.Annotated[
-        typing.Optional[typing.List[DeploymentStatus]],
-        FieldMetadata(alias="deploymentStatuses"),
+        typing.Optional[typing.List[DeploymentStatus]], FieldMetadata(alias="deploymentStatuses")
     ] = None
     current_status_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="currentStatusId")] = None
     current_status: typing_extensions.Annotated[
