@@ -4,12 +4,19 @@ import typing
 from ...core.client_wrapper import SyncClientWrapper
 from .raw_client import RawTracingProjectsClient
 from ...core.request_options import RequestOptions
+from ...core.pagination import SyncPager
+from ...types.tracing_project import TracingProject
 from ...types.list_tracing_projects_response import ListTracingProjectsResponse
+from ...core.pydantic_utilities import parse_obj_as
+from ...errors.unprocessable_entity_error import UnprocessableEntityError
+from json.decoder import JSONDecodeError
+from ...core.api_error import ApiError
 from ...types.manifest import Manifest
 from ...types.get_tracing_project_response import GetTracingProjectResponse
 from ...types.empty_response import EmptyResponse
 from ...core.client_wrapper import AsyncClientWrapper
 from .raw_client import AsyncRawTracingProjectsClient
+from ...core.pagination import AsyncPager
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -39,7 +46,7 @@ class TracingProjectsClient:
         offset: typing.Optional[int] = None,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListTracingProjectsResponse:
+    ) -> SyncPager[TracingProject]:
         """
         Parameters
         ----------
@@ -58,7 +65,7 @@ class TracingProjectsClient:
 
         Returns
         -------
-        ListTracingProjectsResponse
+        SyncPager[TracingProject]
             Successful Response
 
         Examples
@@ -69,12 +76,60 @@ class TracingProjectsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.v1.tracing_projects.list()
+        response = client.v1.tracing_projects.list()
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
         """
-        response = self._raw_client.list(
-            ml_repo_id=ml_repo_id, fqn=fqn, name=name, offset=offset, limit=limit, request_options=request_options
+        offset = offset if offset is not None else 0
+        _response = self._raw_client._client_wrapper.httpx_client.request(
+            "api/ml/v1/tracing-projects",
+            method="GET",
+            params={
+                "ml_repo_id": ml_repo_id,
+                "fqn": fqn,
+                "name": name,
+                "offset": offset,
+                "limit": limit,
+            },
+            request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    ListTracingProjectsResponse,
+                    parse_obj_as(
+                        type_=ListTracingProjectsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                _has_next = True
+                _get_next = lambda: self.list(
+                    ml_repo_id=ml_repo_id,
+                    fqn=fqn,
+                    name=name,
+                    offset=offset + 1,
+                    limit=limit,
+                    request_options=request_options,
+                )
+                _items = _parsed_response.data
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def create_or_update(
         self, *, manifest: Manifest, request_options: typing.Optional[RequestOptions] = None
@@ -195,7 +250,7 @@ class AsyncTracingProjectsClient:
         offset: typing.Optional[int] = None,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListTracingProjectsResponse:
+    ) -> AsyncPager[TracingProject]:
         """
         Parameters
         ----------
@@ -214,7 +269,7 @@ class AsyncTracingProjectsClient:
 
         Returns
         -------
-        ListTracingProjectsResponse
+        AsyncPager[TracingProject]
             Successful Response
 
         Examples
@@ -230,15 +285,63 @@ class AsyncTracingProjectsClient:
 
 
         async def main() -> None:
-            await client.v1.tracing_projects.list()
+            response = await client.v1.tracing_projects.list()
+            async for item in response:
+                yield item
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
 
 
         asyncio.run(main())
         """
-        response = await self._raw_client.list(
-            ml_repo_id=ml_repo_id, fqn=fqn, name=name, offset=offset, limit=limit, request_options=request_options
+        offset = offset if offset is not None else 0
+        _response = await self._raw_client._client_wrapper.httpx_client.request(
+            "api/ml/v1/tracing-projects",
+            method="GET",
+            params={
+                "ml_repo_id": ml_repo_id,
+                "fqn": fqn,
+                "name": name,
+                "offset": offset,
+                "limit": limit,
+            },
+            request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    ListTracingProjectsResponse,
+                    parse_obj_as(
+                        type_=ListTracingProjectsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                _has_next = True
+                _get_next = lambda: self.list(
+                    ml_repo_id=ml_repo_id,
+                    fqn=fqn,
+                    name=name,
+                    offset=offset + 1,
+                    limit=limit,
+                    request_options=request_options,
+                )
+                _items = _parsed_response.data
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create_or_update(
         self, *, manifest: Manifest, request_options: typing.Optional[RequestOptions] = None

@@ -2,16 +2,15 @@
 
 import typing
 from ...core.client_wrapper import SyncClientWrapper
+from ...types.manifest import Manifest
 from ...core.request_options import RequestOptions
 from ...core.http_response import HttpResponse
-from ...types.list_tracing_projects_response import ListTracingProjectsResponse
+from ...types.get_tracing_project_response import GetTracingProjectResponse
+from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.pydantic_utilities import parse_obj_as
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
-from ...types.manifest import Manifest
-from ...types.get_tracing_project_response import GetTracingProjectResponse
-from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.jsonable_encoder import jsonable_encoder
 from ...types.empty_response import EmptyResponse
 from ...core.client_wrapper import AsyncClientWrapper
@@ -24,74 +23,6 @@ OMIT = typing.cast(typing.Any, ...)
 class RawTracingProjectsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
-
-    def list(
-        self,
-        *,
-        ml_repo_id: typing.Optional[int] = None,
-        fqn: typing.Optional[str] = None,
-        name: typing.Optional[str] = None,
-        offset: typing.Optional[int] = None,
-        limit: typing.Optional[int] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[ListTracingProjectsResponse]:
-        """
-        Parameters
-        ----------
-        ml_repo_id : typing.Optional[int]
-
-        fqn : typing.Optional[str]
-
-        name : typing.Optional[str]
-
-        offset : typing.Optional[int]
-
-        limit : typing.Optional[int]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[ListTracingProjectsResponse]
-            Successful Response
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/tracing-projects",
-            method="GET",
-            params={
-                "ml_repo_id": ml_repo_id,
-                "fqn": fqn,
-                "name": name,
-                "offset": offset,
-                "limit": limit,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    ListTracingProjectsResponse,
-                    parse_obj_as(
-                        type_=ListTracingProjectsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def create_or_update(
         self, *, manifest: Manifest, request_options: typing.Optional[RequestOptions] = None
@@ -241,74 +172,6 @@ class RawTracingProjectsClient:
 class AsyncRawTracingProjectsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
-
-    async def list(
-        self,
-        *,
-        ml_repo_id: typing.Optional[int] = None,
-        fqn: typing.Optional[str] = None,
-        name: typing.Optional[str] = None,
-        offset: typing.Optional[int] = None,
-        limit: typing.Optional[int] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[ListTracingProjectsResponse]:
-        """
-        Parameters
-        ----------
-        ml_repo_id : typing.Optional[int]
-
-        fqn : typing.Optional[str]
-
-        name : typing.Optional[str]
-
-        offset : typing.Optional[int]
-
-        limit : typing.Optional[int]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[ListTracingProjectsResponse]
-            Successful Response
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/tracing-projects",
-            method="GET",
-            params={
-                "ml_repo_id": ml_repo_id,
-                "fqn": fqn,
-                "name": name,
-                "offset": offset,
-                "limit": limit,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    ListTracingProjectsResponse,
-                    parse_obj_as(
-                        type_=ListTracingProjectsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create_or_update(
         self, *, manifest: Manifest, request_options: typing.Optional[RequestOptions] = None

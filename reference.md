@@ -2273,11 +2273,11 @@ client = TrueFoundry(
     base_url="https://yourhost.com/path/to/api",
 )
 response = client.v1.application_versions.list(
-    id_="id",
-    limit=50.0,
-    offset=0.0,
+    id="id",
+    limit=10,
+    offset=0,
     version="1",
-    id="deployment123",
+    deployment_id="deployment123",
 )
 for item in response:
     yield item
@@ -2299,7 +2299,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**id_:** `str` — Id of the application
+**id:** `str` — Id of the application
     
 </dd>
 </dl>
@@ -2307,7 +2307,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**limit:** `typing.Optional[float]` — Number of items per page. Defaults to 50 if not provided.
+**limit:** `typing.Optional[int]` — Number of items per page
     
 </dd>
 </dl>
@@ -2315,7 +2315,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**offset:** `typing.Optional[float]` — Number of items to skip.
+**offset:** `typing.Optional[int]` — Number of items to skip
     
 </dd>
 </dl>
@@ -2331,7 +2331,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**id:** `typing.Optional[str]` — Deployment ID. Filter deployments by a specific ID.
+**deployment_id:** `typing.Optional[str]` — Deployment ID. Filter deployments by a specific ID.
     
 </dd>
 </dl>
@@ -7680,7 +7680,12 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.v1.tracing_projects.list()
+response = client.v1.tracing_projects.list()
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
 
 ```
 </dd>

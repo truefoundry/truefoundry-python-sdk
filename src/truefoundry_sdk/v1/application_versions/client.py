@@ -37,12 +37,12 @@ class ApplicationVersionsClient:
 
     def list(
         self,
-        id_: str,
+        id: str,
         *,
-        limit: typing.Optional[float] = None,
-        offset: typing.Optional[float] = None,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
         version: typing.Optional[str] = None,
-        id: typing.Optional[str] = None,
+        deployment_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Deployment]:
         """
@@ -50,19 +50,19 @@ class ApplicationVersionsClient:
 
         Parameters
         ----------
-        id_ : str
+        id : str
             Id of the application
 
-        limit : typing.Optional[float]
-            Number of items per page. Defaults to 50 if not provided.
+        limit : typing.Optional[int]
+            Number of items per page
 
-        offset : typing.Optional[float]
-            Number of items to skip.
+        offset : typing.Optional[int]
+            Number of items to skip
 
         version : typing.Optional[str]
             Deployment version. Filter deployments by version.
 
-        id : typing.Optional[str]
+        deployment_id : typing.Optional[str]
             Deployment ID. Filter deployments by a specific ID.
 
         request_options : typing.Optional[RequestOptions]
@@ -82,11 +82,11 @@ class ApplicationVersionsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         response = client.v1.application_versions.list(
-            id_="id",
-            limit=50.0,
-            offset=0.0,
+            id="id",
+            limit=10,
+            offset=0,
             version="1",
-            id="deployment123",
+            deployment_id="deployment123",
         )
         for item in response:
             yield item
@@ -96,13 +96,13 @@ class ApplicationVersionsClient:
         """
         offset = offset if offset is not None else 1
         _response = self._raw_client._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id_)}/deployments",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments",
             method="GET",
             params={
                 "limit": limit,
                 "offset": offset,
                 "version": version,
-                "id": id,
+                "deploymentId": deployment_id,
             },
             request_options=request_options,
         )
@@ -117,11 +117,11 @@ class ApplicationVersionsClient:
                 )
                 _has_next = True
                 _get_next = lambda: self.list(
-                    id_,
+                    id,
                     limit=limit,
                     offset=offset + 1,
                     version=version,
-                    id=id,
+                    deployment_id=deployment_id,
                     request_options=request_options,
                 )
                 _items = _parsed_response.data
@@ -207,12 +207,12 @@ class AsyncApplicationVersionsClient:
 
     async def list(
         self,
-        id_: str,
+        id: str,
         *,
-        limit: typing.Optional[float] = None,
-        offset: typing.Optional[float] = None,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
         version: typing.Optional[str] = None,
-        id: typing.Optional[str] = None,
+        deployment_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Deployment]:
         """
@@ -220,19 +220,19 @@ class AsyncApplicationVersionsClient:
 
         Parameters
         ----------
-        id_ : str
+        id : str
             Id of the application
 
-        limit : typing.Optional[float]
-            Number of items per page. Defaults to 50 if not provided.
+        limit : typing.Optional[int]
+            Number of items per page
 
-        offset : typing.Optional[float]
-            Number of items to skip.
+        offset : typing.Optional[int]
+            Number of items to skip
 
         version : typing.Optional[str]
             Deployment version. Filter deployments by version.
 
-        id : typing.Optional[str]
+        deployment_id : typing.Optional[str]
             Deployment ID. Filter deployments by a specific ID.
 
         request_options : typing.Optional[RequestOptions]
@@ -257,11 +257,11 @@ class AsyncApplicationVersionsClient:
 
         async def main() -> None:
             response = await client.v1.application_versions.list(
-                id_="id",
-                limit=50.0,
-                offset=0.0,
+                id="id",
+                limit=10,
+                offset=0,
                 version="1",
-                id="deployment123",
+                deployment_id="deployment123",
             )
             async for item in response:
                 yield item
@@ -274,13 +274,13 @@ class AsyncApplicationVersionsClient:
         """
         offset = offset if offset is not None else 1
         _response = await self._raw_client._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id_)}/deployments",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments",
             method="GET",
             params={
                 "limit": limit,
                 "offset": offset,
                 "version": version,
-                "id": id,
+                "deploymentId": deployment_id,
             },
             request_options=request_options,
         )
@@ -295,11 +295,11 @@ class AsyncApplicationVersionsClient:
                 )
                 _has_next = True
                 _get_next = lambda: self.list(
-                    id_,
+                    id,
                     limit=limit,
                     offset=offset + 1,
                     version=version,
-                    id=id,
+                    deployment_id=deployment_id,
                     request_options=request_options,
                 )
                 _items = _parsed_response.data
