@@ -8,17 +8,19 @@ from ...types.cluster import Cluster
 from ...types.list_clusters_response import ListClustersResponse
 from ...core.pydantic_utilities import parse_obj_as
 from ...errors.unauthorized_error import UnauthorizedError
+from ...types.http_error import HttpError
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.cluster_manifest import ClusterManifest
 from ...types.get_cluster_response import GetClusterResponse
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...errors.conflict_error import ConflictError
-from ...types.http_error import HttpError
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...core.jsonable_encoder import jsonable_encoder
 from ...errors.not_found_error import NotFoundError
 from .types.clusters_delete_response import ClustersDeleteResponse
+from ...types.list_cluster_addons_response import ListClusterAddonsResponse
+from ...types.is_cluster_connected_response import IsClusterConnectedResponse
 from ...core.client_wrapper import AsyncClientWrapper
 from ...core.pagination import AsyncPager
 
@@ -33,8 +35,8 @@ class ClustersClient:
     def list(
         self,
         *,
-        offset: typing.Optional[float] = None,
-        limit: typing.Optional[float] = None,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Cluster]:
         """
@@ -42,11 +44,11 @@ class ClustersClient:
 
         Parameters
         ----------
-        offset : typing.Optional[float]
-            Number of Items Skipped. Defaults to 0 if not provided.
+        limit : typing.Optional[int]
+            Number of items per page
 
-        limit : typing.Optional[float]
-            The maximum number of items to return per page. Defaults to a pre-defined value if not provided.
+        offset : typing.Optional[int]
+            Number of items to skip
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -64,7 +66,10 @@ class ClustersClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = client.v1.clusters.list()
+        response = client.v1.clusters.list(
+            limit=10,
+            offset=0,
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -76,8 +81,8 @@ class ClustersClient:
             "api/svc/v1/clusters",
             method="GET",
             params={
-                "offset": offset,
                 "limit": limit,
+                "offset": offset,
             },
             request_options=request_options,
         )
@@ -92,8 +97,8 @@ class ClustersClient:
                 )
                 _has_next = True
                 _get_next = lambda: self.list(
-                    offset=offset + 1,
                     limit=limit,
+                    offset=offset + 1,
                     request_options=request_options,
                 )
                 _items = _parsed_response.data
@@ -101,9 +106,9 @@ class ClustersClient:
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -193,9 +198,9 @@ class ClustersClient:
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -271,9 +276,9 @@ class ClustersClient:
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -281,9 +286,9 @@ class ClustersClient:
             if _response.status_code == 404:
                 raise NotFoundError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -339,6 +344,16 @@ class ClustersClient:
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    typing.cast(
                         typing.Optional[typing.Any],
                         parse_obj_as(
                             type_=typing.Optional[typing.Any],  # type: ignore
@@ -346,8 +361,145 @@ class ClustersClient:
                         ),
                     )
                 )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get_addons(
+        self,
+        id: str,
+        *,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ListClusterAddonsResponse:
+        """
+        List addons for the provided cluster.Pagination is available based on query parameters.
+
+        Parameters
+        ----------
+        id : str
+            Cluster id of the cluster
+
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListClusterAddonsResponse
+            Returns the list of addons for the cluster And also response includes paginated data
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.v1.clusters.get_addons(
+            id="id",
+            limit=10,
+            offset=0,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/clusters/{jsonable_encoder(id)}/get-addons",
+            method="GET",
+            params={
+                "limit": limit,
+                "offset": offset,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ListClusterAddonsResponse,
+                    parse_obj_as(
+                        type_=ListClusterAddonsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
             if _response.status_code == 404:
                 raise NotFoundError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def is_connected(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> IsClusterConnectedResponse:
+        """
+        Get the status of provided cluster
+
+        Parameters
+        ----------
+        id : str
+            Cluster id of the cluster
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        IsClusterConnectedResponse
+            Returns the status of provided cluster
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.v1.clusters.is_connected(
+            id="id",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/clusters/{jsonable_encoder(id)}/is-connected",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    IsClusterConnectedResponse,
+                    parse_obj_as(
+                        type_=IsClusterConnectedResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
                     typing.cast(
                         HttpError,
                         parse_obj_as(
@@ -369,8 +521,8 @@ class AsyncClustersClient:
     async def list(
         self,
         *,
-        offset: typing.Optional[float] = None,
-        limit: typing.Optional[float] = None,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Cluster]:
         """
@@ -378,11 +530,11 @@ class AsyncClustersClient:
 
         Parameters
         ----------
-        offset : typing.Optional[float]
-            Number of Items Skipped. Defaults to 0 if not provided.
+        limit : typing.Optional[int]
+            Number of items per page
 
-        limit : typing.Optional[float]
-            The maximum number of items to return per page. Defaults to a pre-defined value if not provided.
+        offset : typing.Optional[int]
+            Number of items to skip
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -405,7 +557,10 @@ class AsyncClustersClient:
 
 
         async def main() -> None:
-            response = await client.v1.clusters.list()
+            response = await client.v1.clusters.list(
+                limit=10,
+                offset=0,
+            )
             async for item in response:
                 yield item
             # alternatively, you can paginate page-by-page
@@ -420,8 +575,8 @@ class AsyncClustersClient:
             "api/svc/v1/clusters",
             method="GET",
             params={
-                "offset": offset,
                 "limit": limit,
+                "offset": offset,
             },
             request_options=request_options,
         )
@@ -436,8 +591,8 @@ class AsyncClustersClient:
                 )
                 _has_next = True
                 _get_next = lambda: self.list(
-                    offset=offset + 1,
                     limit=limit,
+                    offset=offset + 1,
                     request_options=request_options,
                 )
                 _items = _parsed_response.data
@@ -445,9 +600,9 @@ class AsyncClustersClient:
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -545,9 +700,9 @@ class AsyncClustersClient:
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -631,9 +786,9 @@ class AsyncClustersClient:
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
-                        typing.Optional[typing.Any],
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -641,9 +796,9 @@ class AsyncClustersClient:
             if _response.status_code == 404:
                 raise NotFoundError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -709,6 +864,16 @@ class AsyncClustersClient:
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    typing.cast(
                         typing.Optional[typing.Any],
                         parse_obj_as(
                             type_=typing.Optional[typing.Any],  # type: ignore
@@ -716,8 +881,161 @@ class AsyncClustersClient:
                         ),
                     )
                 )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_addons(
+        self,
+        id: str,
+        *,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ListClusterAddonsResponse:
+        """
+        List addons for the provided cluster.Pagination is available based on query parameters.
+
+        Parameters
+        ----------
+        id : str
+            Cluster id of the cluster
+
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListClusterAddonsResponse
+            Returns the list of addons for the cluster And also response includes paginated data
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.v1.clusters.get_addons(
+                id="id",
+                limit=10,
+                offset=0,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/clusters/{jsonable_encoder(id)}/get-addons",
+            method="GET",
+            params={
+                "limit": limit,
+                "offset": offset,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ListClusterAddonsResponse,
+                    parse_obj_as(
+                        type_=ListClusterAddonsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
             if _response.status_code == 404:
                 raise NotFoundError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def is_connected(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> IsClusterConnectedResponse:
+        """
+        Get the status of provided cluster
+
+        Parameters
+        ----------
+        id : str
+            Cluster id of the cluster
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        IsClusterConnectedResponse
+            Returns the status of provided cluster
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.v1.clusters.is_connected(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/clusters/{jsonable_encoder(id)}/is-connected",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    IsClusterConnectedResponse,
+                    parse_obj_as(
+                        type_=IsClusterConnectedResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
                     typing.cast(
                         HttpError,
                         parse_obj_as(

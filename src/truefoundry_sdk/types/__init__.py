@@ -3,6 +3,10 @@
 from .resources import Resources
 from .resources_devices_item import ResourcesDevicesItem
 from .resources_node import ResourcesNode
+from .add_on_component_source import AddOnComponentSource
+from .addon_component import AddonComponent
+from .addon_component_name import AddonComponentName
+from .addon_component_status import AddonComponentStatus
 from .agent import Agent
 from .agent_app import AgentApp
 from .agent_manifest import AgentManifest
@@ -13,6 +17,7 @@ from .agent_open_api_tool_with_fqn_openapi_spec import AgentOpenApiToolWithFqnOp
 from .agent_version import AgentVersion
 from .agent_with_fqn import AgentWithFqn
 from .alert import Alert
+from .alert_status import AlertStatus
 from .amqp_input_config import AmqpInputConfig
 from .amqp_metric_config import AmqpMetricConfig
 from .amqp_output_config import AmqpOutputConfig
@@ -24,6 +29,7 @@ from .application_problem import ApplicationProblem
 from .application_set import ApplicationSet
 from .application_set_components_item import ApplicationSetComponentsItem
 from .application_type import ApplicationType
+from .apply_ml_repo_response import ApplyMlRepoResponse
 from .apply_request import ApplyRequest
 from .apply_response import ApplyResponse
 from .apply_sdk_code import ApplySdkCode
@@ -65,11 +71,13 @@ from .canary_step import CanaryStep
 from .chat_prompt_manifest import ChatPromptManifest
 from .chat_prompt_manifest_messages_item import ChatPromptManifestMessagesItem
 from .cluster import Cluster
+from .cluster_gateway import ClusterGateway
 from .cluster_manifest import ClusterManifest
 from .cluster_manifest_cluster_type import ClusterManifestClusterType
 from .cluster_manifest_monitoring import ClusterManifestMonitoring
 from .cluster_manifest_node_label_keys import ClusterManifestNodeLabelKeys
 from .cluster_manifest_workbench_config import ClusterManifestWorkbenchConfig
+from .cluster_type import ClusterType
 from .code_file_data import CodeFileData
 from .codeserver import Codeserver
 from .collaborator import Collaborator
@@ -85,7 +93,10 @@ from .data import Data
 from .data_directory import DataDirectory
 from .data_directory_manifest import DataDirectoryManifest
 from .delete_application_response import DeleteApplicationResponse
+from .delete_job_run_response import DeleteJobRunResponse
+from .delete_secret_group_response import DeleteSecretGroupResponse
 from .deployment import Deployment
+from .deployment_build import DeploymentBuild
 from .deployment_manifest import DeploymentManifest
 from .deployment_status import DeploymentStatus
 from .deployment_status_status import DeploymentStatusStatus
@@ -101,6 +112,10 @@ from .environment import Environment
 from .environment_color import EnvironmentColor
 from .environment_manifest import EnvironmentManifest
 from .environment_optimize_for import EnvironmentOptimizeFor
+from .event import Event
+from .event_chart import EventChart
+from .event_chart_category import EventChartCategory
+from .event_involved_object import EventInvolvedObject
 from .external_blob_storage_source import ExternalBlobStorageSource
 from .fast_ai_framework import FastAiFramework
 from .file_info import FileInfo
@@ -122,29 +137,42 @@ from .function_schema import FunctionSchema
 from .gcp_tpu import GcpTpu
 from .get_agent_response import GetAgentResponse
 from .get_agent_version_response import GetAgentVersionResponse
-from .get_application_deployment_response_dto import GetApplicationDeploymentResponseDto
-from .get_application_deployments_response_dto import GetApplicationDeploymentsResponseDto
+from .get_alerts_response import GetAlertsResponse
+from .get_application_deployment_response import GetApplicationDeploymentResponse
 from .get_application_response import GetApplicationResponse
 from .get_apply_sdk_code_request import GetApplySdkCodeRequest
 from .get_apply_sdk_code_response import GetApplySdkCodeResponse
 from .get_artifact_response import GetArtifactResponse
 from .get_artifact_version_response import GetArtifactVersionResponse
+from .get_authenticated_vcsurl_response import GetAuthenticatedVcsurlResponse
+from .get_auto_provisioning_state_response import GetAutoProvisioningStateResponse
+from .get_charts_response import GetChartsResponse
 from .get_cluster_response import GetClusterResponse
 from .get_data_directory_response import GetDataDirectoryResponse
 from .get_environment_response import GetEnvironmentResponse
+from .get_events_response import GetEventsResponse
+from .get_job_run_response import GetJobRunResponse
+from .get_logs_response import GetLogsResponse
 from .get_ml_repo_response import GetMlRepoResponse
 from .get_model_response import GetModelResponse
 from .get_model_version_response import GetModelVersionResponse
 from .get_prompt_response import GetPromptResponse
 from .get_prompt_version_response import GetPromptVersionResponse
+from .get_secret_group_response import GetSecretGroupResponse
+from .get_secret_response import GetSecretResponse
 from .get_signed_ur_ls_request import GetSignedUrLsRequest
 from .get_signed_ur_ls_response import GetSignedUrLsResponse
+from .get_suggested_deployment_endpoint_response import GetSuggestedDeploymentEndpointResponse
 from .get_tool_response import GetToolResponse
 from .get_tool_version_response import GetToolVersionResponse
+from .get_tracing_project_response import GetTracingProjectResponse
 from .get_workspace_response import GetWorkspaceResponse
 from .git_helm_repo import GitHelmRepo
+from .git_repository_exists_response import GitRepositoryExistsResponse
 from .git_source import GitSource
 from .gluon_framework import GluonFramework
+from .graph import Graph
+from .graph_chart_type import GraphChartType
 from .h2o_framework import H2OFramework
 from .header_match import HeaderMatch
 from .health_probe import HealthProbe
@@ -156,6 +184,8 @@ from .http_error_code import HttpErrorCode
 from .http_probe import HttpProbe
 from .http_validation_error import HttpValidationError
 from .huggingface_artifact_source import HuggingfaceArtifactSource
+from .i_change import IChange
+from .i_change_operation import IChangeOperation
 from .image import Image
 from .image_command import ImageCommand
 from .image_content_part import ImageContentPart
@@ -168,11 +198,19 @@ from .internal_artifact_version import InternalArtifactVersion
 from .internal_list_artifact_version_response import InternalListArtifactVersionResponse
 from .internal_list_artifact_version_response_data_item import InternalListArtifactVersionResponseDataItem
 from .internal_model_version import InternalModelVersion
+from .is_cluster_connected_response import IsClusterConnectedResponse
 from .job import Job
 from .job_alert import JobAlert
+from .job_event import JobEvent
 from .job_image import JobImage
 from .job_mounts_item import JobMountsItem
+from .job_run_dto import JobRunDto
+from .job_run_status import JobRunStatus
+from .job_runs_sort_by import JobRunsSortBy
+from .job_runs_sort_direction import JobRunsSortDirection
 from .job_trigger import JobTrigger
+from .job_trigger_input import JobTriggerInput
+from .job_trigger_input_command import JobTriggerInputCommand
 from .jwt_auth_config import JwtAuthConfig
 from .jwt_auth_config_claims_item import JwtAuthConfigClaimsItem
 from .kafka_input_config import KafkaInputConfig
@@ -185,28 +223,39 @@ from .library_name import LibraryName
 from .light_gbm_framework import LightGbmFramework
 from .list_agent_versions_response import ListAgentVersionsResponse
 from .list_agents_response import ListAgentsResponse
+from .list_application_deployments_response import ListApplicationDeploymentsResponse
 from .list_applications_response import ListApplicationsResponse
 from .list_artifact_version_response import ListArtifactVersionResponse
 from .list_artifacts_response import ListArtifactsResponse
+from .list_cluster_addons_response import ListClusterAddonsResponse
 from .list_clusters_response import ListClustersResponse
 from .list_data_directories_response import ListDataDirectoriesResponse
 from .list_environments_response import ListEnvironmentsResponse
 from .list_files_request import ListFilesRequest
 from .list_files_response import ListFilesResponse
+from .list_job_run_response import ListJobRunResponse
 from .list_ml_repos_response import ListMlReposResponse
 from .list_model_versions_response import ListModelVersionsResponse
 from .list_models_response import ListModelsResponse
 from .list_prompt_versions_response import ListPromptVersionsResponse
 from .list_prompts_response import ListPromptsResponse
+from .list_secret_group_response import ListSecretGroupResponse
+from .list_secrets_response import ListSecretsResponse
 from .list_tool_versions_response import ListToolVersionsResponse
 from .list_tools_response import ListToolsResponse
+from .list_tracing_projects_response import ListTracingProjectsResponse
 from .list_workspaces_response import ListWorkspacesResponse
 from .local_artifact_source import LocalArtifactSource
 from .local_model_source import LocalModelSource
 from .local_source import LocalSource
+from .log import Log
+from .logs_search_filter_type import LogsSearchFilterType
+from .logs_search_operator_type import LogsSearchOperatorType
+from .logs_sorting_direction import LogsSortingDirection
 from .manifest import Manifest
 from .manual import Manual
 from .method import Method
+from .metric import Metric
 from .mime_type import MimeType
 from .mirror_action import MirrorAction
 from .ml_repo import MlRepo
@@ -247,6 +296,7 @@ from .port import Port
 from .port_app_protocol import PortAppProtocol
 from .port_auth import PortAuth
 from .port_protocol import PortProtocol
+from .presigned_url_object import PresignedUrlObject
 from .prompt import Prompt
 from .prompt_version import PromptVersion
 from .py_torch_framework import PyTorchFramework
@@ -264,12 +314,18 @@ from .rolling import Rolling
 from .rps_metric import RpsMetric
 from .schedule import Schedule
 from .schedule_concurrency_policy import ScheduleConcurrencyPolicy
+from .secret import Secret
+from .secret_group import SecretGroup
+from .secret_input import SecretInput
 from .secret_mount import SecretMount
+from .secret_version import SecretVersion
 from .service import Service
 from .service_autoscaling import ServiceAutoscaling
 from .service_autoscaling_metrics import ServiceAutoscalingMetrics
 from .service_replicas import ServiceReplicas
 from .service_rollout_strategy import ServiceRolloutStrategy
+from .session import Session
+from .session_subject_type import SessionSubjectType
 from .signed_url import SignedUrl
 from .sklearn_framework import SklearnFramework
 from .sklearn_model_schema import SklearnModelSchema
@@ -305,6 +361,7 @@ from .system_message import SystemMessage
 from .task_docker_file_build import TaskDockerFileBuild
 from .task_python_build import TaskPythonBuild
 from .tensor_flow_framework import TensorFlowFramework
+from .terminate_job_response import TerminateJobResponse
 from .text import Text
 from .text_content_part import TextContentPart
 from .token_pagination import TokenPagination
@@ -313,13 +370,19 @@ from .tool_call import ToolCall
 from .tool_message import ToolMessage
 from .tool_schema import ToolSchema
 from .tool_version import ToolVersion
+from .tracing_project import TracingProject
+from .tracing_project_manifest import TracingProjectManifest
 from .transformers_framework import TransformersFramework
+from .trigger_job_run_response import TriggerJobRunResponse
 from .true_foundry_artifact_source import TrueFoundryArtifactSource
 from .true_foundry_interactive_login import TrueFoundryInteractiveLogin
 from .true_foundry_managed_source import TrueFoundryManagedSource
+from .update_secret_dto import UpdateSecretDto
+from .upgrade_data import UpgradeData
 from .url import Url
 from .user_message import UserMessage
 from .user_message_content_item import UserMessageContentItem
+from .user_metadata import UserMetadata
 from .validation_error import ValidationError
 from .validation_error_loc_item import ValidationErrorLocItem
 from .volume import Volume
@@ -332,6 +395,7 @@ from .worker_config_input_config import WorkerConfigInputConfig
 from .worker_config_output_config import WorkerConfigOutputConfig
 from .workflow import Workflow
 from .workflow_alert import WorkflowAlert
+from .workflow_event import WorkflowEvent
 from .workflow_flyte_entities_item import WorkflowFlyteEntitiesItem
 from .workflow_source import WorkflowSource
 from .workspace import Workspace
@@ -341,6 +405,10 @@ from .xg_boost_model_schema import XgBoostModelSchema
 from .xg_boost_serialization_format import XgBoostSerializationFormat
 
 __all__ = [
+    "AddOnComponentSource",
+    "AddonComponent",
+    "AddonComponentName",
+    "AddonComponentStatus",
     "Agent",
     "AgentApp",
     "AgentManifest",
@@ -351,6 +419,7 @@ __all__ = [
     "AgentVersion",
     "AgentWithFqn",
     "Alert",
+    "AlertStatus",
     "AmqpInputConfig",
     "AmqpMetricConfig",
     "AmqpOutputConfig",
@@ -362,6 +431,7 @@ __all__ = [
     "ApplicationSet",
     "ApplicationSetComponentsItem",
     "ApplicationType",
+    "ApplyMlRepoResponse",
     "ApplyRequest",
     "ApplyResponse",
     "ApplySdkCode",
@@ -403,11 +473,13 @@ __all__ = [
     "ChatPromptManifest",
     "ChatPromptManifestMessagesItem",
     "Cluster",
+    "ClusterGateway",
     "ClusterManifest",
     "ClusterManifestClusterType",
     "ClusterManifestMonitoring",
     "ClusterManifestNodeLabelKeys",
     "ClusterManifestWorkbenchConfig",
+    "ClusterType",
     "CodeFileData",
     "Codeserver",
     "Collaborator",
@@ -423,7 +495,10 @@ __all__ = [
     "DataDirectory",
     "DataDirectoryManifest",
     "DeleteApplicationResponse",
+    "DeleteJobRunResponse",
+    "DeleteSecretGroupResponse",
     "Deployment",
+    "DeploymentBuild",
     "DeploymentManifest",
     "DeploymentStatus",
     "DeploymentStatusStatus",
@@ -439,6 +514,10 @@ __all__ = [
     "EnvironmentColor",
     "EnvironmentManifest",
     "EnvironmentOptimizeFor",
+    "Event",
+    "EventChart",
+    "EventChartCategory",
+    "EventInvolvedObject",
     "ExternalBlobStorageSource",
     "FastAiFramework",
     "FileInfo",
@@ -460,29 +539,42 @@ __all__ = [
     "GcpTpu",
     "GetAgentResponse",
     "GetAgentVersionResponse",
-    "GetApplicationDeploymentResponseDto",
-    "GetApplicationDeploymentsResponseDto",
+    "GetAlertsResponse",
+    "GetApplicationDeploymentResponse",
     "GetApplicationResponse",
     "GetApplySdkCodeRequest",
     "GetApplySdkCodeResponse",
     "GetArtifactResponse",
     "GetArtifactVersionResponse",
+    "GetAuthenticatedVcsurlResponse",
+    "GetAutoProvisioningStateResponse",
+    "GetChartsResponse",
     "GetClusterResponse",
     "GetDataDirectoryResponse",
     "GetEnvironmentResponse",
+    "GetEventsResponse",
+    "GetJobRunResponse",
+    "GetLogsResponse",
     "GetMlRepoResponse",
     "GetModelResponse",
     "GetModelVersionResponse",
     "GetPromptResponse",
     "GetPromptVersionResponse",
+    "GetSecretGroupResponse",
+    "GetSecretResponse",
     "GetSignedUrLsRequest",
     "GetSignedUrLsResponse",
+    "GetSuggestedDeploymentEndpointResponse",
     "GetToolResponse",
     "GetToolVersionResponse",
+    "GetTracingProjectResponse",
     "GetWorkspaceResponse",
     "GitHelmRepo",
+    "GitRepositoryExistsResponse",
     "GitSource",
     "GluonFramework",
+    "Graph",
+    "GraphChartType",
     "H2OFramework",
     "HeaderMatch",
     "HealthProbe",
@@ -494,6 +586,8 @@ __all__ = [
     "HttpProbe",
     "HttpValidationError",
     "HuggingfaceArtifactSource",
+    "IChange",
+    "IChangeOperation",
     "Image",
     "ImageCommand",
     "ImageContentPart",
@@ -506,11 +600,19 @@ __all__ = [
     "InternalListArtifactVersionResponse",
     "InternalListArtifactVersionResponseDataItem",
     "InternalModelVersion",
+    "IsClusterConnectedResponse",
     "Job",
     "JobAlert",
+    "JobEvent",
     "JobImage",
     "JobMountsItem",
+    "JobRunDto",
+    "JobRunStatus",
+    "JobRunsSortBy",
+    "JobRunsSortDirection",
     "JobTrigger",
+    "JobTriggerInput",
+    "JobTriggerInputCommand",
     "JwtAuthConfig",
     "JwtAuthConfigClaimsItem",
     "KafkaInputConfig",
@@ -523,28 +625,39 @@ __all__ = [
     "LightGbmFramework",
     "ListAgentVersionsResponse",
     "ListAgentsResponse",
+    "ListApplicationDeploymentsResponse",
     "ListApplicationsResponse",
     "ListArtifactVersionResponse",
     "ListArtifactsResponse",
+    "ListClusterAddonsResponse",
     "ListClustersResponse",
     "ListDataDirectoriesResponse",
     "ListEnvironmentsResponse",
     "ListFilesRequest",
     "ListFilesResponse",
+    "ListJobRunResponse",
     "ListMlReposResponse",
     "ListModelVersionsResponse",
     "ListModelsResponse",
     "ListPromptVersionsResponse",
     "ListPromptsResponse",
+    "ListSecretGroupResponse",
+    "ListSecretsResponse",
     "ListToolVersionsResponse",
     "ListToolsResponse",
+    "ListTracingProjectsResponse",
     "ListWorkspacesResponse",
     "LocalArtifactSource",
     "LocalModelSource",
     "LocalSource",
+    "Log",
+    "LogsSearchFilterType",
+    "LogsSearchOperatorType",
+    "LogsSortingDirection",
     "Manifest",
     "Manual",
     "Method",
+    "Metric",
     "MimeType",
     "MirrorAction",
     "MlRepo",
@@ -585,6 +698,7 @@ __all__ = [
     "PortAppProtocol",
     "PortAuth",
     "PortProtocol",
+    "PresignedUrlObject",
     "Prompt",
     "PromptVersion",
     "PyTorchFramework",
@@ -605,12 +719,18 @@ __all__ = [
     "RpsMetric",
     "Schedule",
     "ScheduleConcurrencyPolicy",
+    "Secret",
+    "SecretGroup",
+    "SecretInput",
     "SecretMount",
+    "SecretVersion",
     "Service",
     "ServiceAutoscaling",
     "ServiceAutoscalingMetrics",
     "ServiceReplicas",
     "ServiceRolloutStrategy",
+    "Session",
+    "SessionSubjectType",
     "SignedUrl",
     "SklearnFramework",
     "SklearnModelSchema",
@@ -646,6 +766,7 @@ __all__ = [
     "TaskDockerFileBuild",
     "TaskPythonBuild",
     "TensorFlowFramework",
+    "TerminateJobResponse",
     "Text",
     "TextContentPart",
     "TokenPagination",
@@ -654,13 +775,19 @@ __all__ = [
     "ToolMessage",
     "ToolSchema",
     "ToolVersion",
+    "TracingProject",
+    "TracingProjectManifest",
     "TransformersFramework",
+    "TriggerJobRunResponse",
     "TrueFoundryArtifactSource",
     "TrueFoundryInteractiveLogin",
     "TrueFoundryManagedSource",
+    "UpdateSecretDto",
+    "UpgradeData",
     "Url",
     "UserMessage",
     "UserMessageContentItem",
+    "UserMetadata",
     "ValidationError",
     "ValidationErrorLocItem",
     "Volume",
@@ -673,6 +800,7 @@ __all__ = [
     "WorkerConfigOutputConfig",
     "Workflow",
     "WorkflowAlert",
+    "WorkflowEvent",
     "WorkflowFlyteEntitiesItem",
     "WorkflowSource",
     "Workspace",

@@ -6,8 +6,8 @@ from ...core.request_options import RequestOptions
 from ...core.pagination import SyncPager
 from ...types.deployment import Deployment
 from ...core.jsonable_encoder import jsonable_encoder
-from ...types.get_application_deployments_response_dto import (
-    GetApplicationDeploymentsResponseDto,
+from ...types.list_application_deployments_response import (
+    ListApplicationDeploymentsResponse,
 )
 from ...core.pydantic_utilities import parse_obj_as
 from ...errors.forbidden_error import ForbiddenError
@@ -15,8 +15,8 @@ from ...types.http_error import HttpError
 from ...errors.not_found_error import NotFoundError
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
-from ...types.get_application_deployment_response_dto import (
-    GetApplicationDeploymentResponseDto,
+from ...types.get_application_deployment_response import (
+    GetApplicationDeploymentResponse,
 )
 from ...core.client_wrapper import AsyncClientWrapper
 from ...core.pagination import AsyncPager
@@ -100,9 +100,9 @@ class ApplicationVersionsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
-                    GetApplicationDeploymentsResponseDto,
+                    ListApplicationDeploymentsResponse,
                     parse_obj_as(
-                        type_=GetApplicationDeploymentsResponseDto,  # type: ignore
+                        type_=ListApplicationDeploymentsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -130,9 +130,9 @@ class ApplicationVersionsClient:
             if _response.status_code == 404:
                 raise NotFoundError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -148,7 +148,7 @@ class ApplicationVersionsClient:
         deployment_id: str,
         *,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetApplicationDeploymentResponseDto:
+    ) -> GetApplicationDeploymentResponse:
         """
         Get Deployment associated with the provided application ID and deployment ID.
 
@@ -165,7 +165,7 @@ class ApplicationVersionsClient:
 
         Returns
         -------
-        GetApplicationDeploymentResponseDto
+        GetApplicationDeploymentResponse
             Deployment details returned successfully.
 
         Examples
@@ -189,9 +189,9 @@ class ApplicationVersionsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetApplicationDeploymentResponseDto,
+                    GetApplicationDeploymentResponse,
                     parse_obj_as(
-                        type_=GetApplicationDeploymentResponseDto,  # type: ignore
+                        type_=GetApplicationDeploymentResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -208,9 +208,9 @@ class ApplicationVersionsClient:
             if _response.status_code == 404:
                 raise NotFoundError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -307,9 +307,9 @@ class AsyncApplicationVersionsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
-                    GetApplicationDeploymentsResponseDto,
+                    ListApplicationDeploymentsResponse,
                     parse_obj_as(
-                        type_=GetApplicationDeploymentsResponseDto,  # type: ignore
+                        type_=ListApplicationDeploymentsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -337,9 +337,9 @@ class AsyncApplicationVersionsClient:
             if _response.status_code == 404:
                 raise NotFoundError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -355,7 +355,7 @@ class AsyncApplicationVersionsClient:
         deployment_id: str,
         *,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetApplicationDeploymentResponseDto:
+    ) -> GetApplicationDeploymentResponse:
         """
         Get Deployment associated with the provided application ID and deployment ID.
 
@@ -372,7 +372,7 @@ class AsyncApplicationVersionsClient:
 
         Returns
         -------
-        GetApplicationDeploymentResponseDto
+        GetApplicationDeploymentResponse
             Deployment details returned successfully.
 
         Examples
@@ -404,9 +404,9 @@ class AsyncApplicationVersionsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetApplicationDeploymentResponseDto,
+                    GetApplicationDeploymentResponse,
                     parse_obj_as(
-                        type_=GetApplicationDeploymentResponseDto,  # type: ignore
+                        type_=GetApplicationDeploymentResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -423,9 +423,9 @@ class AsyncApplicationVersionsClient:
             if _response.status_code == 404:
                 raise NotFoundError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )

@@ -10,7 +10,6 @@ from ..core.serialization import FieldMetadata
 from .application_metadata import ApplicationMetadata
 from .application_lifecycle_stage import ApplicationLifecycleStage
 import datetime as dt
-from .recommendation import Recommendation
 import pydantic
 from .alert import Alert
 from .application_problem import ApplicationProblem
@@ -32,7 +31,9 @@ class Application(UniversalBaseModel):
     active_version: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="activeVersion")] = None
     created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None
     updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = None
-    recommendations: typing.Optional[typing.List[Recommendation]] = pydantic.Field(default=None)
+    recommendations: typing.Optional[typing.List[typing.List[typing.Optional[typing.Any]]]] = pydantic.Field(
+        default=None
+    )
     """
     Recommendations for this application
     """

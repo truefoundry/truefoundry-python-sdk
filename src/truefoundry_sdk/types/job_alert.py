@@ -4,6 +4,7 @@ from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 import pydantic
 from .notification_target import NotificationTarget
+from .job_event import JobEvent
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -31,6 +32,13 @@ class JobAlert(UniversalBaseModel):
     """
 
     notification_target: typing.Optional[NotificationTarget] = None
+    events: typing.Optional[typing.List[JobEvent]] = pydantic.Field(default=None)
+    """
+    +label=Events
+    +usage=Specify the events to send alerts for, it should be one of the following: START, SUCCEEDED, FAILED, TERMINATED
+    +uiType=Hidden
+    """
+
     on_start: typing.Optional[bool] = pydantic.Field(default=None)
     """
     +label=On Start
@@ -38,13 +46,7 @@ class JobAlert(UniversalBaseModel):
     +sort=670
     """
 
-    on_completion: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    +label=On Completion
-    +usage=Send an alert when the job completes
-    +sort=680
-    """
-
+    on_completion: typing.Optional[bool] = None
     on_failure: typing.Optional[bool] = pydantic.Field(default=None)
     """
     +label=On Failure

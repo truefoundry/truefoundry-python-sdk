@@ -3,10 +3,11 @@
 import typing
 import os
 import httpx
-from .core.api_error import ApiError
 from .core.client_wrapper import SyncClientWrapper
+from .ml_repos.client import MlReposClient
 from .v1.client import V1Client
 from .core.client_wrapper import AsyncClientWrapper
+from .ml_repos.client import AsyncMlReposClient
 from .v1.client import AsyncV1Client
 
 
@@ -51,8 +52,6 @@ class BaseTrueFoundry:
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
-        if api_key is None:
-            raise ApiError(body="The client must be instantiated be either passing in api_key or setting TFY_API_KEY")
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
             api_key=api_key,
@@ -63,6 +62,7 @@ class BaseTrueFoundry:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self.ml_repos = MlReposClient(client_wrapper=self._client_wrapper)
         self.v1 = V1Client(client_wrapper=self._client_wrapper)
 
 
@@ -107,8 +107,6 @@ class AsyncBaseTrueFoundry:
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
-        if api_key is None:
-            raise ApiError(body="The client must be instantiated be either passing in api_key or setting TFY_API_KEY")
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
             api_key=api_key,
@@ -119,4 +117,5 @@ class AsyncBaseTrueFoundry:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self.ml_repos = AsyncMlReposClient(client_wrapper=self._client_wrapper)
         self.v1 = AsyncV1Client(client_wrapper=self._client_wrapper)

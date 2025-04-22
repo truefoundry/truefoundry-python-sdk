@@ -13,8 +13,8 @@ from ...types.workspace_manifest import WorkspaceManifest
 from ...types.get_workspace_response import GetWorkspaceResponse
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...errors.bad_request_error import BadRequestError
-from ...types.http_error import HttpError
 from ...errors.forbidden_error import ForbiddenError
+from ...types.http_error import HttpError
 from ...errors.not_found_error import NotFoundError
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...core.jsonable_encoder import jsonable_encoder
@@ -195,9 +195,9 @@ class WorkspacesClient:
             if _response.status_code == 400:
                 raise BadRequestError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -215,9 +215,9 @@ class WorkspacesClient:
             if _response.status_code == 404:
                 raise NotFoundError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -283,9 +283,9 @@ class WorkspacesClient:
             if _response.status_code == 404:
                 raise NotFoundError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -343,9 +343,9 @@ class WorkspacesClient:
             if _response.status_code == 404:
                 raise NotFoundError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -550,9 +550,9 @@ class AsyncWorkspacesClient:
             if _response.status_code == 400:
                 raise BadRequestError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -570,9 +570,9 @@ class AsyncWorkspacesClient:
             if _response.status_code == 404:
                 raise NotFoundError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -646,9 +646,9 @@ class AsyncWorkspacesClient:
             if _response.status_code == 404:
                 raise NotFoundError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -716,9 +716,9 @@ class AsyncWorkspacesClient:
             if _response.status_code == 404:
                 raise NotFoundError(
                     typing.cast(
-                        HttpError,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=HttpError,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
