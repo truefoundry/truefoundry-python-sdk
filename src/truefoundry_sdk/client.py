@@ -8,9 +8,11 @@ from truefoundry_sdk.base_client import AsyncBaseTrueFoundry, BaseTrueFoundry
 from truefoundry_sdk.v1._wrapped_clients import (
     WrappedAgentVersionsClient,
     WrappedArtifactVersionsClient,
+    WrappedAsyncTracingProjectsClient,
     WrappedModelVersionsClient,
     WrappedPromptVersionsClient,
     WrappedToolVersionsClient,
+    WrappedTracingProjectsClient,
     WrappedWorkspacesClient,
     WrappedAsyncAgentVersionsClient,
     WrappedAsyncArtifactVersionsClient,
@@ -41,22 +43,25 @@ class TrueFoundry(BaseTrueFoundry):
             httpx_client=httpx_client,
         )
         self.v1.agent_versions = WrappedAgentVersionsClient(
-            client_wrapper=self.v1._client_wrapper
+            client_wrapper=self._client_wrapper
         )
         self.v1.artifact_versions = WrappedArtifactVersionsClient(
-            client_wrapper=self.v1._client_wrapper
+            client_wrapper=self._client_wrapper
         )
         self.v1.model_versions = WrappedModelVersionsClient(
-            client_wrapper=self.v1._client_wrapper
+            client_wrapper=self._client_wrapper
         )
         self.v1.prompt_versions = WrappedPromptVersionsClient(
-            client_wrapper=self.v1._client_wrapper
+            client_wrapper=self._client_wrapper
         )
         self.v1.tool_versions = WrappedToolVersionsClient(
-            client_wrapper=self.v1._client_wrapper
+            client_wrapper=self._client_wrapper
+        )
+        self.v1.tracing_projects = WrappedTracingProjectsClient(
+            client_wrapper=self._client_wrapper
         )
         self.v1.workspaces = WrappedWorkspacesClient(
-            client_wrapper=self.v1._client_wrapper
+            client_wrapper=self._client_wrapper
         )
 
 
@@ -80,22 +85,25 @@ class AsyncTrueFoundry(AsyncBaseTrueFoundry):
             httpx_client=httpx_client,
         )
         self.v1.agent_versions = WrappedAsyncAgentVersionsClient(
-            client_wrapper=self.v1._client_wrapper
+            client_wrapper=self._client_wrapper
         )
         self.v1.artifact_versions = WrappedAsyncArtifactVersionsClient(
-            client_wrapper=self.v1._client_wrapper
+            client_wrapper=self._client_wrapper
         )
         self.v1.model_versions = WrappedAsyncModelVersionsClient(
-            client_wrapper=self.v1._client_wrapper
+            client_wrapper=self._client_wrapper
         )
         self.v1.prompt_versions = WrappedAsyncPromptVersionsClient(
-            client_wrapper=self.v1._client_wrapper
+            client_wrapper=self._client_wrapper
         )
         self.v1.tool_versions = WrappedAsyncToolVersionsClient(
-            client_wrapper=self.v1._client_wrapper
+            client_wrapper=self._client_wrapper
+        )
+        self.v1.tracing_projects = WrappedAsyncTracingProjectsClient(
+            client_wrapper=self._client_wrapper
         )
         self.v1.workspaces = WrappedAsyncWorkspacesClient(
-            client_wrapper=self.v1._client_wrapper
+            client_wrapper=self._client_wrapper
         )
 
 

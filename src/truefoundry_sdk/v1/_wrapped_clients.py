@@ -2,6 +2,7 @@ from typing import Any, Optional, Protocol, TypeVar
 
 from pydantic import BaseModel
 
+
 from ..errors import NotFoundError
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.pydantic_utilities import parse_obj_as
@@ -14,6 +15,7 @@ from ..v1.artifact_versions.client import ArtifactVersionsClient, AsyncArtifactV
 from ..v1.model_versions.client import ModelVersionsClient, AsyncModelVersionsClient
 from ..v1.prompt_versions.client import PromptVersionsClient, AsyncPromptVersionsClient
 from ..v1.tool_versions.client import ToolVersionsClient, AsyncToolVersionsClient
+from ..v1.tracing_projects.client import AsyncTracingProjectsClient, TracingProjectsClient
 from ..v1.workspaces.client import WorkspacesClient, AsyncWorkspacesClient
 
 # Response types
@@ -22,6 +24,7 @@ from ..types.get_artifact_version_response import GetArtifactVersionResponse
 from ..types.get_model_version_response import GetModelVersionResponse
 from ..types.get_prompt_version_response import GetPromptVersionResponse
 from ..types.get_tool_version_response import GetToolVersionResponse
+from ..types.get_tracing_project_response import GetTracingProjectResponse
 from ..types.get_workspace_response import GetWorkspaceResponse
 
 T = TypeVar("T", bound=BaseModel)
@@ -71,71 +74,97 @@ async def _aget_by_fqn(client: HasAsyncListMethod[T], *, fqn: str, request_optio
 
 class WrappedAgentVersionsClient(AgentVersionsClient):
     def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetAgentVersionResponse:
-        item = _get_by_fqn(self, fqn=fqn, request_options=request_options) # type: ignore[arg-type,var-annotated]
+        # type: ignore[arg-type,var-annotated]
+        item = _get_by_fqn(self, fqn=fqn, request_options=request_options)
         return parse_obj_as(GetAgentVersionResponse, {"data": item})
 
 
 class WrappedArtifactVersionsClient(ArtifactVersionsClient):
     def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetArtifactVersionResponse:
-        item = _get_by_fqn(self, fqn=fqn, request_options=request_options) # type: ignore[arg-type,var-annotated]
+        # type: ignore[arg-type,var-annotated]
+        item = _get_by_fqn(self, fqn=fqn, request_options=request_options)
         return parse_obj_as(GetArtifactVersionResponse, {"data": item})
 
 
 class WrappedModelVersionsClient(ModelVersionsClient):
     def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetModelVersionResponse:
-        item = _get_by_fqn(self, fqn=fqn, request_options=request_options) # type: ignore[arg-type,var-annotated]
+        # type: ignore[arg-type,var-annotated]
+        item = _get_by_fqn(self, fqn=fqn, request_options=request_options)
         return parse_obj_as(GetModelVersionResponse, {"data": item})
 
 
 class WrappedPromptVersionsClient(PromptVersionsClient):
     def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetPromptVersionResponse:
-        item = _get_by_fqn(self, fqn=fqn, request_options=request_options) # type: ignore[arg-type,var-annotated]
+        # type: ignore[arg-type,var-annotated]
+        item = _get_by_fqn(self, fqn=fqn, request_options=request_options)
         return parse_obj_as(GetPromptVersionResponse, {"data": item})
 
 
 class WrappedToolVersionsClient(ToolVersionsClient):
     def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetToolVersionResponse:
-        item = _get_by_fqn(self, fqn=fqn, request_options=request_options) # type: ignore[arg-type,var-annotated]
+        # type: ignore[arg-type,var-annotated]
+        item = _get_by_fqn(self, fqn=fqn, request_options=request_options)
         return parse_obj_as(GetToolVersionResponse, {"data": item})
+
+
+class WrappedTracingProjectsClient(TracingProjectsClient):
+    def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetTracingProjectResponse:
+        # type: ignore[arg-type,var-annotated]
+        item = _get_by_fqn(self, fqn=fqn, request_options=request_options)
+        return parse_obj_as(GetTracingProjectResponse, {"data": item})
 
 
 class WrappedWorkspacesClient(WorkspacesClient):
     def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetWorkspaceResponse:
-        item = _get_by_fqn(self, fqn=fqn, request_options=request_options) # type: ignore[arg-type,var-annotated]
+        # type: ignore[arg-type,var-annotated]
+        item = _get_by_fqn(self, fqn=fqn, request_options=request_options)
         return parse_obj_as(GetWorkspaceResponse, {"data": item})
 
 
 class WrappedAsyncAgentVersionsClient(AsyncAgentVersionsClient):
     async def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetAgentVersionResponse:
-        item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options) # type: ignore[arg-type,var-annotated]
+        # type: ignore[arg-type,var-annotated]
+        item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options)
         return parse_obj_as(GetAgentVersionResponse, {"data": item})
 
 
 class WrappedAsyncArtifactVersionsClient(AsyncArtifactVersionsClient):
     async def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetArtifactVersionResponse:
-        item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options) # type: ignore[arg-type,var-annotated]
+        # type: ignore[arg-type,var-annotated]
+        item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options)
         return parse_obj_as(GetArtifactVersionResponse, {"data": item})
 
 
 class WrappedAsyncModelVersionsClient(AsyncModelVersionsClient):
     async def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetModelVersionResponse:
-        item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options) # type: ignore[arg-type,var-annotated]
+        # type: ignore[arg-type,var-annotated]
+        item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options)
         return parse_obj_as(GetModelVersionResponse, {"data": item})
 
 
 class WrappedAsyncPromptVersionsClient(AsyncPromptVersionsClient):
     async def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetPromptVersionResponse:
-        item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options) # type: ignore[arg-type,var-annotated]
+        # type: ignore[arg-type,var-annotated]
+        item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options)
         return parse_obj_as(GetPromptVersionResponse, {"data": item})
 
 
 class WrappedAsyncToolVersionsClient(AsyncToolVersionsClient):
     async def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetToolVersionResponse:
-        item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options) # type: ignore[arg-type,var-annotated]
+        # type: ignore[arg-type,var-annotated]
+        item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options)
         return parse_obj_as(GetToolVersionResponse, {"data": item})
+
+
+class WrappedAsyncTracingProjectsClient(AsyncTracingProjectsClient):
+    async def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetTracingProjectResponse:
+        # type: ignore[arg-type,var-annotated]
+        item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options)
+        return parse_obj_as(GetTracingProjectResponse, {"data": item})
 
 
 class WrappedAsyncWorkspacesClient(AsyncWorkspacesClient):
     async def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetWorkspaceResponse:
-        item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options) # type: ignore[arg-type,var-annotated]
+        # type: ignore[arg-type,var-annotated]
+        item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options)
         return parse_obj_as(GetWorkspaceResponse, {"data": item})
