@@ -2,20 +2,14 @@
 
 import typing
 from ....core.client_wrapper import SyncClientWrapper
+from .raw_client import RawDeploymentsClient
 from ....core.request_options import RequestOptions
 from ....types.deployment_build import DeploymentBuild
-from ....core.jsonable_encoder import jsonable_encoder
-from ....core.pydantic_utilities import parse_obj_as
-from ....errors.not_found_error import NotFoundError
-from json.decoder import JSONDecodeError
-from ....core.api_error import ApiError
 from ....types.presigned_url_object import PresignedUrlObject
 from ....types.application_type import ApplicationType
-from ....types.get_suggested_deployment_endpoint_response import (
-    GetSuggestedDeploymentEndpointResponse,
-)
-from ....errors.bad_request_error import BadRequestError
+from ....types.get_suggested_deployment_endpoint_response import GetSuggestedDeploymentEndpointResponse
 from ....core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawDeploymentsClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -23,14 +17,21 @@ OMIT = typing.cast(typing.Any, ...)
 
 class DeploymentsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawDeploymentsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawDeploymentsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawDeploymentsClient
+        """
+        return self._raw_client
 
     def get_builds(
-        self,
-        id: str,
-        deployment_id: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[DeploymentBuild]:
         """
         This endpoint returns all build details associated with a specific deployment in a given application.
@@ -64,41 +65,11 @@ class DeploymentsClient:
             deployment_id="deploymentId",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/builds",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.List[DeploymentBuild],
-                    parse_obj_as(
-                        type_=typing.List[DeploymentBuild],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.get_builds(id, deployment_id, request_options=request_options)
+        return response.data
 
     def get_code_upload_url(
-        self,
-        *,
-        service_name: str,
-        workspace_fqn: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, service_name: str, workspace_fqn: str, request_options: typing.Optional[RequestOptions] = None
     ) -> PresignedUrlObject:
         """
         Generate presigned URL to upload code for given serviceName and workspaceFqn
@@ -132,32 +103,10 @@ class DeploymentsClient:
             workspace_fqn="workspaceFqn",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/svc/v1/deployment/code-upload-url",
-            method="POST",
-            json={
-                "serviceName": service_name,
-                "workspaceFqn": workspace_fqn,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = self._raw_client.get_code_upload_url(
+            service_name=service_name, workspace_fqn=workspace_fqn, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    PresignedUrlObject,
-                    parse_obj_as(
-                        type_=PresignedUrlObject,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def get_suggested_endpoint(
         self,
@@ -215,54 +164,35 @@ class DeploymentsClient:
             workspace_id="workspaceId",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/svc/v1/deployment/deployment-endpoint",
-            method="GET",
-            params={
-                "applicationType": application_type,
-                "applicationName": application_name,
-                "workspaceId": workspace_id,
-                "baseDomain": base_domain,
-                "port": port,
-                "preferWildcard": prefer_wildcard,
-            },
+        response = self._raw_client.get_suggested_endpoint(
+            application_type=application_type,
+            application_name=application_name,
+            workspace_id=workspace_id,
+            base_domain=base_domain,
+            port=port,
+            prefer_wildcard=prefer_wildcard,
             request_options=request_options,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetSuggestedDeploymentEndpointResponse,
-                    parse_obj_as(
-                        type_=GetSuggestedDeploymentEndpointResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 400:
-                raise BadRequestError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
 
 class AsyncDeploymentsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawDeploymentsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawDeploymentsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawDeploymentsClient
+        """
+        return self._raw_client
 
     async def get_builds(
-        self,
-        id: str,
-        deployment_id: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[DeploymentBuild]:
         """
         This endpoint returns all build details associated with a specific deployment in a given application.
@@ -304,41 +234,11 @@ class AsyncDeploymentsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/builds",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.List[DeploymentBuild],
-                    parse_obj_as(
-                        type_=typing.List[DeploymentBuild],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.get_builds(id, deployment_id, request_options=request_options)
+        return response.data
 
     async def get_code_upload_url(
-        self,
-        *,
-        service_name: str,
-        workspace_fqn: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, service_name: str, workspace_fqn: str, request_options: typing.Optional[RequestOptions] = None
     ) -> PresignedUrlObject:
         """
         Generate presigned URL to upload code for given serviceName and workspaceFqn
@@ -380,32 +280,10 @@ class AsyncDeploymentsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/svc/v1/deployment/code-upload-url",
-            method="POST",
-            json={
-                "serviceName": service_name,
-                "workspaceFqn": workspace_fqn,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = await self._raw_client.get_code_upload_url(
+            service_name=service_name, workspace_fqn=workspace_fqn, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    PresignedUrlObject,
-                    parse_obj_as(
-                        type_=PresignedUrlObject,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def get_suggested_endpoint(
         self,
@@ -471,39 +349,13 @@ class AsyncDeploymentsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/svc/v1/deployment/deployment-endpoint",
-            method="GET",
-            params={
-                "applicationType": application_type,
-                "applicationName": application_name,
-                "workspaceId": workspace_id,
-                "baseDomain": base_domain,
-                "port": port,
-                "preferWildcard": prefer_wildcard,
-            },
+        response = await self._raw_client.get_suggested_endpoint(
+            application_type=application_type,
+            application_name=application_name,
+            workspace_id=workspace_id,
+            base_domain=base_domain,
+            port=port,
+            prefer_wildcard=prefer_wildcard,
             request_options=request_options,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetSuggestedDeploymentEndpointResponse,
-                    parse_obj_as(
-                        type_=GetSuggestedDeploymentEndpointResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 400:
-                raise BadRequestError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data

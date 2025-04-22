@@ -29,7 +29,6 @@ from .application_problem import ApplicationProblem
 from .application_set import ApplicationSet
 from .application_set_components_item import ApplicationSetComponentsItem
 from .application_type import ApplicationType
-from .apply_ml_repo_response import ApplyMlRepoResponse
 from .apply_request import ApplyRequest
 from .apply_response import ApplyResponse
 from .apply_sdk_code import ApplySdkCode
@@ -345,6 +344,7 @@ from .spark_job_entrypoint import SparkJobEntrypoint
 from .spark_job_java_entrypoint import SparkJobJavaEntrypoint
 from .spark_job_python_entrypoint import SparkJobPythonEntrypoint
 from .spark_job_scala_entrypoint import SparkJobScalaEntrypoint
+from .spark_job_trigger_input import SparkJobTriggerInput
 from .sqs_input_config import SqsInputConfig
 from .sqs_output_config import SqsOutputConfig
 from .sqs_queue_metric_config import SqsQueueMetricConfig
@@ -431,7 +431,6 @@ __all__ = [
     "ApplicationSet",
     "ApplicationSetComponentsItem",
     "ApplicationType",
-    "ApplyMlRepoResponse",
     "ApplyRequest",
     "ApplyResponse",
     "ApplySdkCode",
@@ -750,6 +749,7 @@ __all__ = [
     "SparkJobJavaEntrypoint",
     "SparkJobPythonEntrypoint",
     "SparkJobScalaEntrypoint",
+    "SparkJobTriggerInput",
     "SqsInputConfig",
     "SqsOutputConfig",
     "SqsQueueMetricConfig",

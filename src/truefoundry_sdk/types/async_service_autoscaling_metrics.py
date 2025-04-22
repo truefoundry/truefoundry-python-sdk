@@ -8,9 +8,5 @@ from .cron_metric import CronMetric
 from .amqp_metric_config import AmqpMetricConfig
 
 AsyncServiceAutoscalingMetrics = typing.Union[
-    SqsQueueMetricConfig,
-    NatsMetricConfig,
-    KafkaMetricConfig,
-    CronMetric,
-    AmqpMetricConfig,
+    SqsQueueMetricConfig, NatsMetricConfig, KafkaMetricConfig, CronMetric, AmqpMetricConfig
 ]

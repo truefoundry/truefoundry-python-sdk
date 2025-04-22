@@ -14,11 +14,7 @@ class LogsSearchOperatorType(str, enum.Enum):
     EQUAL = "equal"
     NOT_EQUAL = "not_equal"
 
-    def visit(
-        self,
-        equal: typing.Callable[[], T_Result],
-        not_equal: typing.Callable[[], T_Result],
-    ) -> T_Result:
+    def visit(self, equal: typing.Callable[[], T_Result], not_equal: typing.Callable[[], T_Result]) -> T_Result:
         if self is LogsSearchOperatorType.EQUAL:
             return equal()
         if self is LogsSearchOperatorType.NOT_EQUAL:

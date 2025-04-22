@@ -16,8 +16,7 @@ class IChange(UniversalBaseModel):
     key: str
     value: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
     old_value: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]],
-        FieldMetadata(alias="oldValue"),
+        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="oldValue")
     ] = None
     changes: typing.Optional[typing.List["IChange"]] = None
 

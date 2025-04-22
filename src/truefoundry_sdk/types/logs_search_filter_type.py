@@ -10,11 +10,7 @@ class LogsSearchFilterType(str, enum.Enum):
     REGEX = "regex"
     SUBSTRING = "substring"
 
-    def visit(
-        self,
-        regex: typing.Callable[[], T_Result],
-        substring: typing.Callable[[], T_Result],
-    ) -> T_Result:
+    def visit(self, regex: typing.Callable[[], T_Result], substring: typing.Callable[[], T_Result]) -> T_Result:
         if self is LogsSearchFilterType.REGEX:
             return regex()
         if self is LogsSearchFilterType.SUBSTRING:

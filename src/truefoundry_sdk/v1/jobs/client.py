@@ -2,6 +2,7 @@
 
 import typing
 from ...core.client_wrapper import SyncClientWrapper
+from .raw_client import RawJobsClient
 from ...types.job_runs_sort_by import JobRunsSortBy
 from ...types.job_runs_sort_direction import JobRunsSortDirection
 from ...types.job_run_status import JobRunStatus
@@ -19,14 +20,11 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.get_job_run_response import GetJobRunResponse
 from ...types.delete_job_run_response import DeleteJobRunResponse
-from ...errors.conflict_error import ConflictError
-from ...types.job_trigger_input import JobTriggerInput
+from .types.trigger_job_request_input import TriggerJobRequestInput
 from ...types.trigger_job_run_response import TriggerJobRunResponse
-from ...core.serialization import convert_and_respect_annotation_metadata
-from ...errors.bad_request_error import BadRequestError
 from ...types.terminate_job_response import TerminateJobResponse
-from ...errors.expectation_failed_error import ExpectationFailedError
 from ...core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawJobsClient
 from ...core.pagination import AsyncPager
 
 # this is used as the default value for optional parameters
@@ -35,7 +33,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class JobsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawJobsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawJobsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawJobsClient
+        """
+        return self._raw_client
 
     def list_runs(
         self,
@@ -107,7 +116,7 @@ class JobsClient:
             yield page
         """
         offset = offset if offset is not None else 1
-        _response = self._client_wrapper.httpx_client.request(
+        _response = self._raw_client._client_wrapper.httpx_client.request(
             f"api/svc/v1/jobs/{jsonable_encoder(job_id)}/runs",
             method="GET",
             params={
@@ -180,11 +189,7 @@ class JobsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_run(
-        self,
-        job_id: str,
-        job_run_name: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, job_id: str, job_run_name: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetJobRunResponse:
         """
         Get Job Run for provided jobRunName and jobId
@@ -218,51 +223,11 @@ class JobsClient:
             job_run_name="jobRunName",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/jobs/{jsonable_encoder(job_id)}/runs/{jsonable_encoder(job_run_name)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetJobRunResponse,
-                    parse_obj_as(
-                        type_=GetJobRunResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.get_run(job_id, job_run_name, request_options=request_options)
+        return response.data
 
     def delete_run(
-        self,
-        job_id: str,
-        job_run_name: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, job_id: str, job_run_name: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> DeleteJobRunResponse:
         """
         Delete Job Run for provided jobRunName and jobId
@@ -296,61 +261,15 @@ class JobsClient:
             job_run_name="jobRunName",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/jobs/{jsonable_encoder(job_id)}/runs/{jsonable_encoder(job_run_name)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    DeleteJobRunResponse,
-                    parse_obj_as(
-                        type_=DeleteJobRunResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 409:
-                raise ConflictError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.delete_run(job_id, job_run_name, request_options=request_options)
+        return response.data
 
     def trigger(
         self,
         *,
         deployment_id: typing.Optional[str] = OMIT,
         application_id: typing.Optional[str] = OMIT,
-        input: typing.Optional[JobTriggerInput] = OMIT,
+        input: typing.Optional[TriggerJobRequestInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TriggerJobRunResponse:
         """
@@ -364,7 +283,7 @@ class JobsClient:
         application_id : typing.Optional[str]
             Application Id of the job
 
-        input : typing.Optional[JobTriggerInput]
+        input : typing.Optional[TriggerJobRequestInput]
             Job trigger input
 
         request_options : typing.Optional[RequestOptions]
@@ -385,82 +304,13 @@ class JobsClient:
         )
         client.v1.jobs.trigger()
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/svc/v1/jobs/trigger",
-            method="POST",
-            json={
-                "deploymentId": deployment_id,
-                "applicationId": application_id,
-                "input": convert_and_respect_annotation_metadata(
-                    object_=input, annotation=JobTriggerInput, direction="write"
-                ),
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = self._raw_client.trigger(
+            deployment_id=deployment_id, application_id=application_id, input=input, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    TriggerJobRunResponse,
-                    parse_obj_as(
-                        type_=TriggerJobRunResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 400:
-                raise BadRequestError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def terminate(
-        self,
-        *,
-        deployment_id: str,
-        job_run_name: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, deployment_id: str, job_run_name: str, request_options: typing.Optional[RequestOptions] = None
     ) -> TerminateJobResponse:
         """
         Terminate Job for provided deploymentId and jobRunName
@@ -494,73 +344,26 @@ class JobsClient:
             job_run_name="jobRunName",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/svc/v1/jobs/terminate",
-            method="POST",
-            params={
-                "deploymentId": deployment_id,
-                "jobRunName": job_run_name,
-            },
-            request_options=request_options,
+        response = self._raw_client.terminate(
+            deployment_id=deployment_id, job_run_name=job_run_name, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    TerminateJobResponse,
-                    parse_obj_as(
-                        type_=TerminateJobResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 417:
-                raise ExpectationFailedError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
 
 class AsyncJobsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawJobsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawJobsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawJobsClient
+        """
+        return self._raw_client
 
     async def list_runs(
         self,
@@ -640,7 +443,7 @@ class AsyncJobsClient:
         asyncio.run(main())
         """
         offset = offset if offset is not None else 1
-        _response = await self._client_wrapper.httpx_client.request(
+        _response = await self._raw_client._client_wrapper.httpx_client.request(
             f"api/svc/v1/jobs/{jsonable_encoder(job_id)}/runs",
             method="GET",
             params={
@@ -713,11 +516,7 @@ class AsyncJobsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_run(
-        self,
-        job_id: str,
-        job_run_name: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, job_id: str, job_run_name: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetJobRunResponse:
         """
         Get Job Run for provided jobRunName and jobId
@@ -759,51 +558,11 @@ class AsyncJobsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/jobs/{jsonable_encoder(job_id)}/runs/{jsonable_encoder(job_run_name)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetJobRunResponse,
-                    parse_obj_as(
-                        type_=GetJobRunResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.get_run(job_id, job_run_name, request_options=request_options)
+        return response.data
 
     async def delete_run(
-        self,
-        job_id: str,
-        job_run_name: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, job_id: str, job_run_name: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> DeleteJobRunResponse:
         """
         Delete Job Run for provided jobRunName and jobId
@@ -845,61 +604,15 @@ class AsyncJobsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/jobs/{jsonable_encoder(job_id)}/runs/{jsonable_encoder(job_run_name)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    DeleteJobRunResponse,
-                    parse_obj_as(
-                        type_=DeleteJobRunResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 409:
-                raise ConflictError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.delete_run(job_id, job_run_name, request_options=request_options)
+        return response.data
 
     async def trigger(
         self,
         *,
         deployment_id: typing.Optional[str] = OMIT,
         application_id: typing.Optional[str] = OMIT,
-        input: typing.Optional[JobTriggerInput] = OMIT,
+        input: typing.Optional[TriggerJobRequestInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TriggerJobRunResponse:
         """
@@ -913,7 +626,7 @@ class AsyncJobsClient:
         application_id : typing.Optional[str]
             Application Id of the job
 
-        input : typing.Optional[JobTriggerInput]
+        input : typing.Optional[TriggerJobRequestInput]
             Job trigger input
 
         request_options : typing.Optional[RequestOptions]
@@ -942,82 +655,13 @@ class AsyncJobsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/svc/v1/jobs/trigger",
-            method="POST",
-            json={
-                "deploymentId": deployment_id,
-                "applicationId": application_id,
-                "input": convert_and_respect_annotation_metadata(
-                    object_=input, annotation=JobTriggerInput, direction="write"
-                ),
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = await self._raw_client.trigger(
+            deployment_id=deployment_id, application_id=application_id, input=input, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    TriggerJobRunResponse,
-                    parse_obj_as(
-                        type_=TriggerJobRunResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 400:
-                raise BadRequestError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def terminate(
-        self,
-        *,
-        deployment_id: str,
-        job_run_name: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, deployment_id: str, job_run_name: str, request_options: typing.Optional[RequestOptions] = None
     ) -> TerminateJobResponse:
         """
         Terminate Job for provided deploymentId and jobRunName
@@ -1059,65 +703,7 @@ class AsyncJobsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/svc/v1/jobs/terminate",
-            method="POST",
-            params={
-                "deploymentId": deployment_id,
-                "jobRunName": job_run_name,
-            },
-            request_options=request_options,
+        response = await self._raw_client.terminate(
+            deployment_id=deployment_id, job_run_name=job_run_name, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    TerminateJobResponse,
-                    parse_obj_as(
-                        type_=TerminateJobResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 417:
-                raise ExpectationFailedError(
-                    typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data

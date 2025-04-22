@@ -2,13 +2,12 @@
 
 import typing
 from ....core.client_wrapper import SyncClientWrapper
+from .raw_client import RawVcsClient
 from ....core.request_options import RequestOptions
 from ....types.git_repository_exists_response import GitRepositoryExistsResponse
-from ....core.pydantic_utilities import parse_obj_as
-from json.decoder import JSONDecodeError
-from ....core.api_error import ApiError
 from ....types.get_authenticated_vcsurl_response import GetAuthenticatedVcsurlResponse
 from ....core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawVcsClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -16,14 +15,21 @@ OMIT = typing.cast(typing.Any, ...)
 
 class VcsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawVcsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawVcsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawVcsClient
+        """
+        return self._raw_client
 
     def get_repository_details(
-        self,
-        *,
-        repo_url: str,
-        id: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, repo_url: str, id: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> GitRepositoryExistsResponse:
         """
         Parameters
@@ -54,32 +60,8 @@ class VcsClient:
             repo_url="repoURL",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/svc/v1/vcs/repository/details",
-            method="POST",
-            json={
-                "repoURL": repo_url,
-                "id": id,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GitRepositoryExistsResponse,
-                    parse_obj_as(
-                        type_=GitRepositoryExistsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.get_repository_details(repo_url=repo_url, id=id, request_options=request_options)
+        return response.data
 
     def get_authenticated_url(
         self, *, repo_url: str, request_options: typing.Optional[RequestOptions] = None
@@ -110,43 +92,27 @@ class VcsClient:
             repo_url="repoURL",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/svc/v1/vcs/repository/authenticated-url",
-            method="POST",
-            json={
-                "repoURL": repo_url,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetAuthenticatedVcsurlResponse,
-                    parse_obj_as(
-                        type_=GetAuthenticatedVcsurlResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.get_authenticated_url(repo_url=repo_url, request_options=request_options)
+        return response.data
 
 
 class AsyncVcsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawVcsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawVcsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawVcsClient
+        """
+        return self._raw_client
 
     async def get_repository_details(
-        self,
-        *,
-        repo_url: str,
-        id: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, repo_url: str, id: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> GitRepositoryExistsResponse:
         """
         Parameters
@@ -185,32 +151,10 @@ class AsyncVcsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/svc/v1/vcs/repository/details",
-            method="POST",
-            json={
-                "repoURL": repo_url,
-                "id": id,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = await self._raw_client.get_repository_details(
+            repo_url=repo_url, id=id, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GitRepositoryExistsResponse,
-                    parse_obj_as(
-                        type_=GitRepositoryExistsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def get_authenticated_url(
         self, *, repo_url: str, request_options: typing.Optional[RequestOptions] = None
@@ -249,28 +193,5 @@ class AsyncVcsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/svc/v1/vcs/repository/authenticated-url",
-            method="POST",
-            json={
-                "repoURL": repo_url,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetAuthenticatedVcsurlResponse,
-                    parse_obj_as(
-                        type_=GetAuthenticatedVcsurlResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.get_authenticated_url(repo_url=repo_url, request_options=request_options)
+        return response.data

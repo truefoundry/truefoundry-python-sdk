@@ -2,26 +2,26 @@
 
 import typing
 from ...core.client_wrapper import SyncClientWrapper
+from .raw_client import RawArtifactVersionsClient
 from ...core.request_options import RequestOptions
 from ...types.get_artifact_version_response import GetArtifactVersionResponse
-from ...core.jsonable_encoder import jsonable_encoder
-from ...core.pydantic_utilities import parse_obj_as
-from ...errors.unprocessable_entity_error import UnprocessableEntityError
-from json.decoder import JSONDecodeError
-from ...core.api_error import ApiError
 from ...types.empty_response import EmptyResponse
 from ...core.pagination import SyncPager
 from ...types.artifact_version import ArtifactVersion
 from ...types.list_artifact_version_response import ListArtifactVersionResponse
+from ...core.pydantic_utilities import parse_obj_as
+from ...errors.unprocessable_entity_error import UnprocessableEntityError
+from json.decoder import JSONDecodeError
+from ...core.api_error import ApiError
 from ...types.operation import Operation
 from ...types.get_signed_ur_ls_response import GetSignedUrLsResponse
 from ...types.multi_part_upload_response import MultiPartUploadResponse
 from .types.manifest import Manifest
 from ...types.stage_artifact_response import StageArtifactResponse
-from ...core.serialization import convert_and_respect_annotation_metadata
 from ...types.file_info import FileInfo
 from ...types.list_files_response import ListFilesResponse
 from ...core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawArtifactVersionsClient
 from ...core.pagination import AsyncPager
 
 # this is used as the default value for optional parameters
@@ -30,7 +30,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class ArtifactVersionsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawArtifactVersionsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawArtifactVersionsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawArtifactVersionsClient
+        """
+        return self._raw_client
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetArtifactVersionResponse:
         """
@@ -60,34 +71,8 @@ class ArtifactVersionsClient:
             id="id",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/artifact-versions/{jsonable_encoder(id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetArtifactVersionResponse,
-                    parse_obj_as(
-                        type_=GetArtifactVersionResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.get(id, request_options=request_options)
+        return response.data
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
         """
@@ -117,34 +102,8 @@ class ArtifactVersionsClient:
             id="id",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/artifact-versions/{jsonable_encoder(id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    EmptyResponse,
-                    parse_obj_as(
-                        type_=EmptyResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.delete(id, request_options=request_options)
+        return response.data
 
     def list(
         self,
@@ -201,7 +160,7 @@ class ArtifactVersionsClient:
             yield page
         """
         offset = offset if offset is not None else 0
-        _response = self._client_wrapper.httpx_client.request(
+        _response = self._raw_client._client_wrapper.httpx_client.request(
             "api/ml/v1/artifact-versions",
             method="GET",
             params={
@@ -291,48 +250,13 @@ class ArtifactVersionsClient:
             operation=Operation.READ,
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/artifact-versions/signed-urls",
-            method="POST",
-            json={
-                "id": id,
-                "paths": paths,
-                "operation": operation,
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = self._raw_client.get_signed_urls(
+            id=id, paths=paths, operation=operation, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetSignedUrLsResponse,
-                    parse_obj_as(
-                        type_=GetSignedUrLsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def create_multi_part_upload(
-        self,
-        *,
-        id: str,
-        path: str,
-        num_parts: int,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, id: str, path: str, num_parts: int, request_options: typing.Optional[RequestOptions] = None
     ) -> MultiPartUploadResponse:
         """
         Parameters
@@ -365,46 +289,13 @@ class ArtifactVersionsClient:
             num_parts=1,
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/artifact-versions/signed-urls/multipart",
-            method="POST",
-            json={
-                "id": id,
-                "path": path,
-                "num_parts": num_parts,
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = self._raw_client.create_multi_part_upload(
+            id=id, path=path, num_parts=num_parts, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    MultiPartUploadResponse,
-                    parse_obj_as(
-                        type_=MultiPartUploadResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def stage(
-        self,
-        *,
-        manifest: Manifest,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, manifest: Manifest, request_options: typing.Optional[RequestOptions] = None
     ) -> StageArtifactResponse:
         """
         Parameters
@@ -436,43 +327,8 @@ class ArtifactVersionsClient:
             ),
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/artifact-versions/stage",
-            method="POST",
-            json={
-                "manifest": convert_and_respect_annotation_metadata(
-                    object_=manifest, annotation=Manifest, direction="write"
-                ),
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    StageArtifactResponse,
-                    parse_obj_as(
-                        type_=StageArtifactResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.stage(manifest=manifest, request_options=request_options)
+        return response.data
 
     def list_files(
         self,
@@ -519,7 +375,7 @@ class ArtifactVersionsClient:
         for page in response.iter_pages():
             yield page
         """
-        _response = self._client_wrapper.httpx_client.request(
+        _response = self._raw_client._client_wrapper.httpx_client.request(
             "api/ml/v1/artifact-versions/files",
             method="POST",
             json={
@@ -595,46 +451,24 @@ class ArtifactVersionsClient:
             id="id",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/artifact-versions/mark-stage-failure",
-            method="POST",
-            json={
-                "id": id,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    EmptyResponse,
-                    parse_obj_as(
-                        type_=EmptyResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.mark_stage_failure(id=id, request_options=request_options)
+        return response.data
 
 
 class AsyncArtifactVersionsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawArtifactVersionsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawArtifactVersionsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawArtifactVersionsClient
+        """
+        return self._raw_client
 
     async def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -674,34 +508,8 @@ class AsyncArtifactVersionsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/artifact-versions/{jsonable_encoder(id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetArtifactVersionResponse,
-                    parse_obj_as(
-                        type_=GetArtifactVersionResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.get(id, request_options=request_options)
+        return response.data
 
     async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
         """
@@ -739,34 +547,8 @@ class AsyncArtifactVersionsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/artifact-versions/{jsonable_encoder(id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    EmptyResponse,
-                    parse_obj_as(
-                        type_=EmptyResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.delete(id, request_options=request_options)
+        return response.data
 
     async def list(
         self,
@@ -831,7 +613,7 @@ class AsyncArtifactVersionsClient:
         asyncio.run(main())
         """
         offset = offset if offset is not None else 0
-        _response = await self._client_wrapper.httpx_client.request(
+        _response = await self._raw_client._client_wrapper.httpx_client.request(
             "api/ml/v1/artifact-versions",
             method="GET",
             params={
@@ -929,48 +711,13 @@ class AsyncArtifactVersionsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/artifact-versions/signed-urls",
-            method="POST",
-            json={
-                "id": id,
-                "paths": paths,
-                "operation": operation,
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = await self._raw_client.get_signed_urls(
+            id=id, paths=paths, operation=operation, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    GetSignedUrLsResponse,
-                    parse_obj_as(
-                        type_=GetSignedUrLsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def create_multi_part_upload(
-        self,
-        *,
-        id: str,
-        path: str,
-        num_parts: int,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, id: str, path: str, num_parts: int, request_options: typing.Optional[RequestOptions] = None
     ) -> MultiPartUploadResponse:
         """
         Parameters
@@ -1011,46 +758,13 @@ class AsyncArtifactVersionsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/artifact-versions/signed-urls/multipart",
-            method="POST",
-            json={
-                "id": id,
-                "path": path,
-                "num_parts": num_parts,
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = await self._raw_client.create_multi_part_upload(
+            id=id, path=path, num_parts=num_parts, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    MultiPartUploadResponse,
-                    parse_obj_as(
-                        type_=MultiPartUploadResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def stage(
-        self,
-        *,
-        manifest: Manifest,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, manifest: Manifest, request_options: typing.Optional[RequestOptions] = None
     ) -> StageArtifactResponse:
         """
         Parameters
@@ -1094,43 +808,8 @@ class AsyncArtifactVersionsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/artifact-versions/stage",
-            method="POST",
-            json={
-                "manifest": convert_and_respect_annotation_metadata(
-                    object_=manifest, annotation=Manifest, direction="write"
-                ),
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    StageArtifactResponse,
-                    parse_obj_as(
-                        type_=StageArtifactResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.stage(manifest=manifest, request_options=request_options)
+        return response.data
 
     async def list_files(
         self,
@@ -1185,7 +864,7 @@ class AsyncArtifactVersionsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
+        _response = await self._raw_client._client_wrapper.httpx_client.request(
             "api/ml/v1/artifact-versions/files",
             method="POST",
             json={
@@ -1271,38 +950,5 @@ class AsyncArtifactVersionsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/artifact-versions/mark-stage-failure",
-            method="POST",
-            json={
-                "id": id,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    EmptyResponse,
-                    parse_obj_as(
-                        type_=EmptyResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.mark_stage_failure(id=id, request_options=request_options)
+        return response.data

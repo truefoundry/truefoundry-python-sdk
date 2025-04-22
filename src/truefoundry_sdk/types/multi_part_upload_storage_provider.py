@@ -14,11 +14,7 @@ class MultiPartUploadStorageProvider(str, enum.Enum):
     S3COMPATIBLE = "S3_COMPATIBLE"
     AZURE_BLOB = "AZURE_BLOB"
 
-    def visit(
-        self,
-        s3compatible: typing.Callable[[], T_Result],
-        azure_blob: typing.Callable[[], T_Result],
-    ) -> T_Result:
+    def visit(self, s3compatible: typing.Callable[[], T_Result], azure_blob: typing.Callable[[], T_Result]) -> T_Result:
         if self is MultiPartUploadStorageProvider.S3COMPATIBLE:
             return s3compatible()
         if self is MultiPartUploadStorageProvider.AZURE_BLOB:

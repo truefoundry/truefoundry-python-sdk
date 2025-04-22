@@ -27,7 +27,6 @@ from .types import (
     ApplicationSet,
     ApplicationSetComponentsItem,
     ApplicationType,
-    ApplyMlRepoResponse,
     ApplyRequest,
     ApplyResponse,
     ApplySdkCode,
@@ -346,6 +345,7 @@ from .types import (
     SparkJobJavaEntrypoint,
     SparkJobPythonEntrypoint,
     SparkJobScalaEntrypoint,
+    SparkJobTriggerInput,
     SqsInputConfig,
     SqsOutputConfig,
     SqsQueueMetricConfig,
@@ -417,7 +417,7 @@ from .errors import (
     UnauthorizedError,
     UnprocessableEntityError,
 )
-from . import ml_repos, v1
+from . import v1
 from .client import AsyncTrueFoundry, TrueFoundry
 from .version import __version__
 
@@ -448,7 +448,6 @@ __all__ = [
     "ApplicationSet",
     "ApplicationSetComponentsItem",
     "ApplicationType",
-    "ApplyMlRepoResponse",
     "ApplyRequest",
     "ApplyResponse",
     "ApplySdkCode",
@@ -776,6 +775,7 @@ __all__ = [
     "SparkJobJavaEntrypoint",
     "SparkJobPythonEntrypoint",
     "SparkJobScalaEntrypoint",
+    "SparkJobTriggerInput",
     "SqsInputConfig",
     "SqsOutputConfig",
     "SqsQueueMetricConfig",
@@ -838,6 +838,5 @@ __all__ = [
     "XgBoostModelSchema",
     "XgBoostSerializationFormat",
     "__version__",
-    "ml_repos",
     "v1",
 ]

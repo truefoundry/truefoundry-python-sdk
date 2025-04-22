@@ -10,11 +10,7 @@ class AlertStatus(str, enum.Enum):
     FIRING = "firing"
     RESOLVED = "resolved"
 
-    def visit(
-        self,
-        firing: typing.Callable[[], T_Result],
-        resolved: typing.Callable[[], T_Result],
-    ) -> T_Result:
+    def visit(self, firing: typing.Callable[[], T_Result], resolved: typing.Callable[[], T_Result]) -> T_Result:
         if self is AlertStatus.FIRING:
             return firing()
         if self is AlertStatus.RESOLVED:

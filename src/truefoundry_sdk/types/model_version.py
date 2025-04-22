@@ -21,6 +21,7 @@ class ModelVersion(UniversalBaseModel):
     ml_repo_id: str
     model_id: str
     metrics: typing.Optional[typing.List[Metric]] = None
+    deployable: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
