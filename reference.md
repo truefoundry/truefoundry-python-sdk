@@ -2467,8 +2467,8 @@ client = TrueFoundry(
 )
 response = client.v1.jobs.list_runs(
     job_id="jobId",
-    limit=10,
-    offset=0,
+    limit=1,
+    offset=1,
 )
 for item in response:
     yield item
@@ -2498,7 +2498,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` — Number of items per page
+**limit:** `int` — Number of items per page
     
 </dd>
 </dl>
@@ -2506,7 +2506,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**offset:** `typing.Optional[int]` — Number of items to skip
+**offset:** `int` — Number of items to skip
     
 </dd>
 </dl>
@@ -2791,7 +2791,7 @@ client.v1.jobs.trigger()
 <dl>
 <dd>
 
-**input:** `typing.Optional[TriggerJobRequestInput]` — Job trigger input
+**input:** `typing.Optional[JobTriggerInput]` — Job trigger input
     
 </dd>
 </dl>

@@ -344,7 +344,6 @@ from .spark_job_entrypoint import SparkJobEntrypoint
 from .spark_job_java_entrypoint import SparkJobJavaEntrypoint
 from .spark_job_python_entrypoint import SparkJobPythonEntrypoint
 from .spark_job_scala_entrypoint import SparkJobScalaEntrypoint
-from .spark_job_trigger_input import SparkJobTriggerInput
 from .sqs_input_config import SqsInputConfig
 from .sqs_output_config import SqsOutputConfig
 from .sqs_queue_metric_config import SqsQueueMetricConfig
@@ -749,7 +748,6 @@ __all__ = [
     "SparkJobJavaEntrypoint",
     "SparkJobPythonEntrypoint",
     "SparkJobScalaEntrypoint",
-    "SparkJobTriggerInput",
     "SqsInputConfig",
     "SqsOutputConfig",
     "SqsQueueMetricConfig",

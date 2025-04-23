@@ -102,7 +102,7 @@ class SecretGroupsClient:
         for page in response.iter_pages():
             yield page
         """
-        offset = offset if offset is not None else 0
+        offset = offset if offset is not None else 1
         _response = self._raw_client._client_wrapper.httpx_client.request(
             "api/svc/v1/secret-groups",
             method="GET",
@@ -428,7 +428,7 @@ class AsyncSecretGroupsClient:
 
         asyncio.run(main())
         """
-        offset = offset if offset is not None else 0
+        offset = offset if offset is not None else 1
         _response = await self._raw_client._client_wrapper.httpx_client.request(
             "api/svc/v1/secret-groups",
             method="GET",

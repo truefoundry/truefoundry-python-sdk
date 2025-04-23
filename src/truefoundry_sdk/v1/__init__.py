@@ -34,7 +34,6 @@ from .applications import (
 )
 from .artifact_versions import Manifest
 from .clusters import ClustersDeleteResponse
-from .jobs import TriggerJobRequestInput
 from .workspaces import WorkspacesDeleteResponse
 
 __all__ = [
@@ -43,7 +42,6 @@ __all__ = [
     "ApplicationsListRequestLifecycleStage",
     "ClustersDeleteResponse",
     "Manifest",
-    "TriggerJobRequestInput",
     "WorkspacesDeleteResponse",
     "agent_versions",
     "agents",

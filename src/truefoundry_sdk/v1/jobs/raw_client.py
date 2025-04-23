@@ -14,7 +14,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.delete_job_run_response import DeleteJobRunResponse
 from ...errors.conflict_error import ConflictError
-from .types.trigger_job_request_input import TriggerJobRequestInput
+from ...types.job_trigger_input import JobTriggerInput
 from ...types.trigger_job_run_response import TriggerJobRunResponse
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...errors.bad_request_error import BadRequestError
@@ -171,7 +171,7 @@ class RawJobsClient:
         *,
         deployment_id: typing.Optional[str] = OMIT,
         application_id: typing.Optional[str] = OMIT,
-        input: typing.Optional[TriggerJobRequestInput] = OMIT,
+        input: typing.Optional[JobTriggerInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[TriggerJobRunResponse]:
         """
@@ -185,7 +185,7 @@ class RawJobsClient:
         application_id : typing.Optional[str]
             Application Id of the job
 
-        input : typing.Optional[TriggerJobRequestInput]
+        input : typing.Optional[JobTriggerInput]
             Job trigger input
 
         request_options : typing.Optional[RequestOptions]
@@ -203,7 +203,7 @@ class RawJobsClient:
                 "deploymentId": deployment_id,
                 "applicationId": application_id,
                 "input": convert_and_respect_annotation_metadata(
-                    object_=input, annotation=TriggerJobRequestInput, direction="write"
+                    object_=input, annotation=JobTriggerInput, direction="write"
                 ),
             },
             headers={
@@ -497,7 +497,7 @@ class AsyncRawJobsClient:
         *,
         deployment_id: typing.Optional[str] = OMIT,
         application_id: typing.Optional[str] = OMIT,
-        input: typing.Optional[TriggerJobRequestInput] = OMIT,
+        input: typing.Optional[JobTriggerInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[TriggerJobRunResponse]:
         """
@@ -511,7 +511,7 @@ class AsyncRawJobsClient:
         application_id : typing.Optional[str]
             Application Id of the job
 
-        input : typing.Optional[TriggerJobRequestInput]
+        input : typing.Optional[JobTriggerInput]
             Job trigger input
 
         request_options : typing.Optional[RequestOptions]
@@ -529,7 +529,7 @@ class AsyncRawJobsClient:
                 "deploymentId": deployment_id,
                 "applicationId": application_id,
                 "input": convert_and_respect_annotation_metadata(
-                    object_=input, annotation=TriggerJobRequestInput, direction="write"
+                    object_=input, annotation=JobTriggerInput, direction="write"
                 ),
             },
             headers={
