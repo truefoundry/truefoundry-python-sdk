@@ -4,8 +4,8 @@ from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 import typing_extensions
 from ..core.serialization import FieldMetadata
-from .deployment_status_status import DeploymentStatusStatus
-from .deployment_status_transition import DeploymentStatusTransition
+from .new_deployment_status_enum import NewDeploymentStatusEnum
+from .deployment_transition import DeploymentTransition
 import datetime as dt
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
@@ -14,9 +14,9 @@ import pydantic
 class DeploymentStatus(UniversalBaseModel):
     id: typing.Optional[str] = None
     deployment_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="deploymentId")] = None
-    status: typing.Optional[DeploymentStatusStatus] = None
+    status: typing.Optional[NewDeploymentStatusEnum] = None
     state: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
-    transition: typing.Optional[DeploymentStatusTransition] = None
+    transition: typing.Optional[DeploymentTransition] = None
     message: typing.Optional[str] = None
     retry_count: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="retryCount")] = None
     created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None

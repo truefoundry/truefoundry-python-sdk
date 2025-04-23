@@ -6,7 +6,7 @@ import typing
 T_Result = typing.TypeVar("T_Result")
 
 
-class DeploymentStatusTransition(str, enum.Enum):
+class DeploymentTransition(str, enum.Enum):
     BUILDING = "BUILDING"
     DEPLOYING = "DEPLOYING"
     REUSING_EXISTING_BUILD = "REUSING_EXISTING_BUILD"
@@ -21,13 +21,13 @@ class DeploymentStatusTransition(str, enum.Enum):
         components_deploying: typing.Callable[[], T_Result],
         waiting: typing.Callable[[], T_Result],
     ) -> T_Result:
-        if self is DeploymentStatusTransition.BUILDING:
+        if self is DeploymentTransition.BUILDING:
             return building()
-        if self is DeploymentStatusTransition.DEPLOYING:
+        if self is DeploymentTransition.DEPLOYING:
             return deploying()
-        if self is DeploymentStatusTransition.REUSING_EXISTING_BUILD:
+        if self is DeploymentTransition.REUSING_EXISTING_BUILD:
             return reusing_existing_build()
-        if self is DeploymentStatusTransition.COMPONENTS_DEPLOYING:
+        if self is DeploymentTransition.COMPONENTS_DEPLOYING:
             return components_deploying()
-        if self is DeploymentStatusTransition.WAITING:
+        if self is DeploymentTransition.WAITING:
             return waiting()

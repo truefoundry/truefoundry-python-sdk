@@ -84,7 +84,7 @@ class ClustersClient:
         for page in response.iter_pages():
             yield page
         """
-        offset = offset if offset is not None else 1
+        offset = offset if offset is not None else 0
         _response = self._raw_client._client_wrapper.httpx_client.request(
             "api/svc/v1/clusters",
             method="GET",
@@ -397,7 +397,7 @@ class AsyncClustersClient:
 
         asyncio.run(main())
         """
-        offset = offset if offset is not None else 1
+        offset = offset if offset is not None else 0
         _response = await self._raw_client._client_wrapper.httpx_client.request(
             "api/svc/v1/clusters",
             method="GET",

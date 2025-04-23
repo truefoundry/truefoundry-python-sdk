@@ -20,7 +20,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.get_job_run_response import GetJobRunResponse
 from ...types.delete_job_run_response import DeleteJobRunResponse
-from ...types.job_trigger_input import JobTriggerInput
+from .types.trigger_job_request_input import TriggerJobRequestInput
 from ...types.trigger_job_run_response import TriggerJobRunResponse
 from ...types.terminate_job_response import TerminateJobResponse
 from ...core.client_wrapper import AsyncClientWrapper
@@ -50,8 +50,8 @@ class JobsClient:
         self,
         job_id: str,
         *,
-        limit: int,
-        offset: int,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
         search_prefix: typing.Optional[str] = None,
         sort_by: typing.Optional[JobRunsSortBy] = None,
         order: typing.Optional[JobRunsSortDirection] = None,
@@ -67,10 +67,10 @@ class JobsClient:
         job_id : str
             Job id of the application
 
-        limit : int
+        limit : typing.Optional[int]
             Number of items per page
 
-        offset : int
+        offset : typing.Optional[int]
             Number of items to skip
 
         search_prefix : typing.Optional[str]
@@ -106,8 +106,8 @@ class JobsClient:
         )
         response = client.v1.jobs.list_runs(
             job_id="jobId",
-            limit=1,
-            offset=1,
+            limit=10,
+            offset=0,
         )
         for item in response:
             yield item
@@ -115,7 +115,7 @@ class JobsClient:
         for page in response.iter_pages():
             yield page
         """
-        offset = offset if offset is not None else 1
+        offset = offset if offset is not None else 0
         _response = self._raw_client._client_wrapper.httpx_client.request(
             f"api/svc/v1/jobs/{jsonable_encoder(job_id)}/runs",
             method="GET",
@@ -269,7 +269,7 @@ class JobsClient:
         *,
         deployment_id: typing.Optional[str] = OMIT,
         application_id: typing.Optional[str] = OMIT,
-        input: typing.Optional[JobTriggerInput] = OMIT,
+        input: typing.Optional[TriggerJobRequestInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TriggerJobRunResponse:
         """
@@ -283,7 +283,7 @@ class JobsClient:
         application_id : typing.Optional[str]
             Application Id of the job
 
-        input : typing.Optional[JobTriggerInput]
+        input : typing.Optional[TriggerJobRequestInput]
             Job trigger input
 
         request_options : typing.Optional[RequestOptions]
@@ -369,8 +369,8 @@ class AsyncJobsClient:
         self,
         job_id: str,
         *,
-        limit: int,
-        offset: int,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
         search_prefix: typing.Optional[str] = None,
         sort_by: typing.Optional[JobRunsSortBy] = None,
         order: typing.Optional[JobRunsSortDirection] = None,
@@ -386,10 +386,10 @@ class AsyncJobsClient:
         job_id : str
             Job id of the application
 
-        limit : int
+        limit : typing.Optional[int]
             Number of items per page
 
-        offset : int
+        offset : typing.Optional[int]
             Number of items to skip
 
         search_prefix : typing.Optional[str]
@@ -430,8 +430,8 @@ class AsyncJobsClient:
         async def main() -> None:
             response = await client.v1.jobs.list_runs(
                 job_id="jobId",
-                limit=1,
-                offset=1,
+                limit=10,
+                offset=0,
             )
             async for item in response:
                 yield item
@@ -442,7 +442,7 @@ class AsyncJobsClient:
 
         asyncio.run(main())
         """
-        offset = offset if offset is not None else 1
+        offset = offset if offset is not None else 0
         _response = await self._raw_client._client_wrapper.httpx_client.request(
             f"api/svc/v1/jobs/{jsonable_encoder(job_id)}/runs",
             method="GET",
@@ -612,7 +612,7 @@ class AsyncJobsClient:
         *,
         deployment_id: typing.Optional[str] = OMIT,
         application_id: typing.Optional[str] = OMIT,
-        input: typing.Optional[JobTriggerInput] = OMIT,
+        input: typing.Optional[TriggerJobRequestInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TriggerJobRunResponse:
         """
@@ -626,7 +626,7 @@ class AsyncJobsClient:
         application_id : typing.Optional[str]
             Application Id of the job
 
-        input : typing.Optional[JobTriggerInput]
+        input : typing.Optional[TriggerJobRequestInput]
             Job trigger input
 
         request_options : typing.Optional[RequestOptions]
