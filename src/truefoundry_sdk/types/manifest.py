@@ -3,6 +3,8 @@
 import typing
 from .model_manifest import ModelManifest
 from .chat_prompt_manifest import ChatPromptManifest
+from .agent_open_api_tool_manifest import AgentOpenApiToolManifest
 from .artifact_manifest import ArtifactManifest
+from .agent_manifest import AgentManifest
 
-Manifest = typing.Union[ModelManifest, ChatPromptManifest, ArtifactManifest]
+Manifest = typing.Union[ModelManifest, ChatPromptManifest, AgentOpenApiToolManifest, ArtifactManifest, AgentManifest]
