@@ -6,7 +6,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 
 
-class UpdateSecretDto(UniversalBaseModel):
+class UpdateSecretInput(UniversalBaseModel):
     key: str = pydantic.Field()
     """
     Key of the secret.

@@ -41,7 +41,7 @@ class RawSecretsClient:
             Returns the Secret associated with provided id
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/secrets/{jsonable_encoder(id)}",
+            f"api/svc/v1/secret/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -98,7 +98,7 @@ class RawSecretsClient:
             Deletes a secret and its versions along with its values and returns the count of the deleted secrets.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/secrets/{jsonable_encoder(id)}",
+            f"api/svc/v1/secret/{jsonable_encoder(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -172,7 +172,7 @@ class AsyncRawSecretsClient:
             Returns the Secret associated with provided id
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/secrets/{jsonable_encoder(id)}",
+            f"api/svc/v1/secret/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -231,7 +231,7 @@ class AsyncRawSecretsClient:
             Deletes a secret and its versions along with its values and returns the count of the deleted secrets.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/secrets/{jsonable_encoder(id)}",
+            f"api/svc/v1/secret/{jsonable_encoder(id)}",
             method="DELETE",
             request_options=request_options,
         )

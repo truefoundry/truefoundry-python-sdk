@@ -3,21 +3,26 @@
 from ..core.pydantic_utilities import UniversalBaseModel
 import pydantic
 import typing_extensions
-from .job_run_status import JobRunStatus
 from ..core.serialization import FieldMetadata
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
+from .secret_input import SecretInput
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
-class TerminateJobResponse(UniversalBaseModel):
-    message: str = pydantic.Field()
+class CreateSecretGroupRequest(UniversalBaseModel):
+    name: str = pydantic.Field()
     """
-    Terminate Job Message
+    Name of the secret group.
     """
 
-    job_run_status: typing_extensions.Annotated[JobRunStatus, FieldMetadata(alias="jobRunStatus")] = pydantic.Field()
+    integration_id: typing_extensions.Annotated[str, FieldMetadata(alias="integrationId")] = pydantic.Field()
     """
-    Job run status
+    Id of the provider integration.
+    """
+
+    secrets: typing.List[SecretInput] = pydantic.Field()
+    """
+    The secrets to be associated with the secret group
     """
 
     if IS_PYDANTIC_V2:

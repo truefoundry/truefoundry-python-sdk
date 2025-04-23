@@ -48,7 +48,7 @@ class RawDeploymentsClient:
             Deployment builds returned successfully.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/builds",
+            f"api/svc/v1/app/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/builds",
             method="GET",
             request_options=request_options,
         )
@@ -235,7 +235,7 @@ class AsyncRawDeploymentsClient:
             Deployment builds returned successfully.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/builds",
+            f"api/svc/v1/app/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/builds",
             method="GET",
             request_options=request_options,
         )

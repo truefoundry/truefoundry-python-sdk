@@ -29,6 +29,7 @@ from .application_problem import ApplicationProblem
 from .application_set import ApplicationSet
 from .application_set_components_item import ApplicationSetComponentsItem
 from .application_type import ApplicationType
+from .apply_ml_repo_request import ApplyMlRepoRequest
 from .apply_request import ApplyRequest
 from .apply_response import ApplyResponse
 from .apply_sdk_code import ApplySdkCode
@@ -86,7 +87,11 @@ from .container_task_config_mounts_item import ContainerTaskConfigMountsItem
 from .content import Content
 from .core_nats_output_config import CoreNatsOutputConfig
 from .cpu_utilization_metric import CpuUtilizationMetric
+from .create_deployment_request import CreateDeploymentRequest
 from .create_multi_part_upload_request import CreateMultiPartUploadRequest
+from .create_or_update_cluster_request import CreateOrUpdateClusterRequest
+from .create_or_update_environment_request import CreateOrUpdateEnvironmentRequest
+from .create_secret_group_request import CreateSecretGroupRequest
 from .cron_metric import CronMetric
 from .data import Data
 from .data_directory import DataDirectory
@@ -203,7 +208,7 @@ from .job_alert import JobAlert
 from .job_event import JobEvent
 from .job_image import JobImage
 from .job_mounts_item import JobMountsItem
-from .job_run_dto import JobRunDto
+from .job_run import JobRun
 from .job_run_status import JobRunStatus
 from .job_runs_sort_by import JobRunsSortBy
 from .job_runs_sort_direction import JobRunsSortDirection
@@ -239,6 +244,7 @@ from .list_models_response import ListModelsResponse
 from .list_prompt_versions_response import ListPromptVersionsResponse
 from .list_prompts_response import ListPromptsResponse
 from .list_secret_group_response import ListSecretGroupResponse
+from .list_secrets_request import ListSecretsRequest
 from .list_secrets_response import ListSecretsResponse
 from .list_tool_versions_response import ListToolVersionsResponse
 from .list_tools_response import ListToolsResponse
@@ -298,6 +304,10 @@ from .port_protocol import PortProtocol
 from .presigned_url_object import PresignedUrlObject
 from .prompt import Prompt
 from .prompt_version import PromptVersion
+from .provider_account import ProviderAccount
+from .provider_account_provider import ProviderAccountProvider
+from .provider_integration import ProviderIntegration
+from .provider_integration_type import ProviderIntegrationType
 from .py_torch_framework import PyTorchFramework
 from .python_build import PythonBuild
 from .python_build_command import PythonBuildCommand
@@ -377,7 +387,8 @@ from .trigger_job_run_response import TriggerJobRunResponse
 from .true_foundry_artifact_source import TrueFoundryArtifactSource
 from .true_foundry_interactive_login import TrueFoundryInteractiveLogin
 from .true_foundry_managed_source import TrueFoundryManagedSource
-from .update_secret_dto import UpdateSecretDto
+from .update_secret_group_request import UpdateSecretGroupRequest
+from .update_secret_input import UpdateSecretInput
 from .upgrade_data import UpgradeData
 from .url import Url
 from .user_message import UserMessage
@@ -431,6 +442,7 @@ __all__ = [
     "ApplicationSet",
     "ApplicationSetComponentsItem",
     "ApplicationType",
+    "ApplyMlRepoRequest",
     "ApplyRequest",
     "ApplyResponse",
     "ApplySdkCode",
@@ -488,7 +500,11 @@ __all__ = [
     "Content",
     "CoreNatsOutputConfig",
     "CpuUtilizationMetric",
+    "CreateDeploymentRequest",
     "CreateMultiPartUploadRequest",
+    "CreateOrUpdateClusterRequest",
+    "CreateOrUpdateEnvironmentRequest",
+    "CreateSecretGroupRequest",
     "CronMetric",
     "Data",
     "DataDirectory",
@@ -605,7 +621,7 @@ __all__ = [
     "JobEvent",
     "JobImage",
     "JobMountsItem",
-    "JobRunDto",
+    "JobRun",
     "JobRunStatus",
     "JobRunsSortBy",
     "JobRunsSortDirection",
@@ -641,6 +657,7 @@ __all__ = [
     "ListPromptVersionsResponse",
     "ListPromptsResponse",
     "ListSecretGroupResponse",
+    "ListSecretsRequest",
     "ListSecretsResponse",
     "ListToolVersionsResponse",
     "ListToolsResponse",
@@ -700,6 +717,10 @@ __all__ = [
     "PresignedUrlObject",
     "Prompt",
     "PromptVersion",
+    "ProviderAccount",
+    "ProviderAccountProvider",
+    "ProviderIntegration",
+    "ProviderIntegrationType",
     "PyTorchFramework",
     "PythonBuild",
     "PythonBuildCommand",
@@ -782,7 +803,8 @@ __all__ = [
     "TrueFoundryArtifactSource",
     "TrueFoundryInteractiveLogin",
     "TrueFoundryManagedSource",
-    "UpdateSecretDto",
+    "UpdateSecretGroupRequest",
+    "UpdateSecretInput",
     "UpgradeData",
     "Url",
     "UserMessage",

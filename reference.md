@@ -566,7 +566,7 @@ Updates the secrets in a secret group with new values. A new secret version is c
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, UpdateSecretDto
+from truefoundry_sdk import TrueFoundry, UpdateSecretInput
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -575,7 +575,7 @@ client = TrueFoundry(
 client.v1.secret_groups.update(
     id="id",
     secrets=[
-        UpdateSecretDto(
+        UpdateSecretInput(
             key="key",
             value="value",
         )
@@ -604,7 +604,7 @@ client.v1.secret_groups.update(
 <dl>
 <dd>
 
-**secrets:** `typing.Sequence[UpdateSecretDto]` 
+**secrets:** `typing.Sequence[UpdateSecretInput]` 
     
 </dd>
 </dl>

@@ -4,7 +4,7 @@ from ..core.pydantic_utilities import UniversalBaseModel
 import pydantic
 import typing_extensions
 from ..core.serialization import FieldMetadata
-from .job_run_dto import JobRunDto
+from .job_run import JobRun
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 
@@ -20,7 +20,7 @@ class TriggerJobRunResponse(UniversalBaseModel):
     Name of the job run
     """
 
-    data: JobRunDto = pydantic.Field()
+    data: JobRun = pydantic.Field()
     """
     Details of the triggered job run
     """

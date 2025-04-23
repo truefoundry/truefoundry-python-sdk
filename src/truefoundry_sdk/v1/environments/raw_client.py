@@ -53,16 +53,13 @@ class RawEnvironmentsClient:
             Returns the created or updated Environment
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/svc/v1/environments",
+            "api/svc/v1/environment",
             method="PUT",
             json={
                 "manifest": convert_and_respect_annotation_metadata(
                     object_=manifest, annotation=EnvironmentManifest, direction="write"
                 ),
                 "dryRun": dry_run,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -112,7 +109,7 @@ class RawEnvironmentsClient:
             Returns the Environment associated with the provided id
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/environments/{jsonable_encoder(id)}",
+            f"api/svc/v1/environment/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -149,7 +146,7 @@ class RawEnvironmentsClient:
             Returns true if the Environment is deleted successfully
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/environments/{jsonable_encoder(id)}",
+            f"api/svc/v1/environment/{jsonable_encoder(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -220,16 +217,13 @@ class AsyncRawEnvironmentsClient:
             Returns the created or updated Environment
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/svc/v1/environments",
+            "api/svc/v1/environment",
             method="PUT",
             json={
                 "manifest": convert_and_respect_annotation_metadata(
                     object_=manifest, annotation=EnvironmentManifest, direction="write"
                 ),
                 "dryRun": dry_run,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -279,7 +273,7 @@ class AsyncRawEnvironmentsClient:
             Returns the Environment associated with the provided id
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/environments/{jsonable_encoder(id)}",
+            f"api/svc/v1/environment/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -318,7 +312,7 @@ class AsyncRawEnvironmentsClient:
             Returns true if the Environment is deleted successfully
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/environments/{jsonable_encoder(id)}",
+            f"api/svc/v1/environment/{jsonable_encoder(id)}",
             method="DELETE",
             request_options=request_options,
         )

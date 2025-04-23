@@ -2,22 +2,13 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
-from .job_run import JobRun
-import pydantic
-from .pagination import Pagination
+from .update_secret_input import UpdateSecretInput
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
+import pydantic
 
 
-class ListJobRunResponse(UniversalBaseModel):
-    data: typing.List[JobRun] = pydantic.Field()
-    """
-    JobRun History
-    """
-
-    pagination: Pagination = pydantic.Field()
-    """
-    Pagination Information
-    """
+class UpdateSecretGroupRequest(UniversalBaseModel):
+    secrets: typing.List[UpdateSecretInput]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

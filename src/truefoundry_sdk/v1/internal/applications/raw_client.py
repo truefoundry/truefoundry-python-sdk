@@ -40,7 +40,7 @@ class RawApplicationsClient:
             Successfully retrieved the pod template hash to deployment version map.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}/pod-template-hash-deployment-version-map",
+            f"api/svc/v1/app/{jsonable_encoder(id)}/pod-template-hash-deployment-version-map",
             method="GET",
             params={
                 "podTemplateHashes": pod_template_hashes,
@@ -100,7 +100,7 @@ class AsyncRawApplicationsClient:
             Successfully retrieved the pod template hash to deployment version map.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}/pod-template-hash-deployment-version-map",
+            f"api/svc/v1/app/{jsonable_encoder(id)}/pod-template-hash-deployment-version-map",
             method="GET",
             params={
                 "podTemplateHashes": pod_template_hashes,
