@@ -96,7 +96,7 @@ class ApplicationVersionsClient:
         """
         offset = offset if offset is not None else 0
         _response = self._raw_client._client_wrapper.httpx_client.request(
-            f"api/svc/v1/app/{jsonable_encoder(id)}/deployments",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments",
             method="GET",
             params={
                 "limit": limit,
@@ -274,7 +274,7 @@ class AsyncApplicationVersionsClient:
         """
         offset = offset if offset is not None else 0
         _response = await self._raw_client._client_wrapper.httpx_client.request(
-            f"api/svc/v1/app/{jsonable_encoder(id)}/deployments",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments",
             method="GET",
             params={
                 "limit": limit,

@@ -29,7 +29,6 @@ from .application_problem import ApplicationProblem
 from .application_set import ApplicationSet
 from .application_set_components_item import ApplicationSetComponentsItem
 from .application_type import ApplicationType
-from .apply_ml_repo_request import ApplyMlRepoRequest
 from .apply_request import ApplyRequest
 from .apply_response import ApplyResponse
 from .apply_sdk_code import ApplySdkCode
@@ -87,11 +86,7 @@ from .container_task_config_mounts_item import ContainerTaskConfigMountsItem
 from .content import Content
 from .core_nats_output_config import CoreNatsOutputConfig
 from .cpu_utilization_metric import CpuUtilizationMetric
-from .create_deployment_request import CreateDeploymentRequest
 from .create_multi_part_upload_request import CreateMultiPartUploadRequest
-from .create_or_update_cluster_request import CreateOrUpdateClusterRequest
-from .create_or_update_environment_request import CreateOrUpdateEnvironmentRequest
-from .create_secret_group_request import CreateSecretGroupRequest
 from .cron_metric import CronMetric
 from .data import Data
 from .data_directory import DataDirectory
@@ -244,7 +239,6 @@ from .list_models_response import ListModelsResponse
 from .list_prompt_versions_response import ListPromptVersionsResponse
 from .list_prompts_response import ListPromptsResponse
 from .list_secret_group_response import ListSecretGroupResponse
-from .list_secrets_request import ListSecretsRequest
 from .list_secrets_response import ListSecretsResponse
 from .list_tool_versions_response import ListToolVersionsResponse
 from .list_tools_response import ListToolsResponse
@@ -387,7 +381,6 @@ from .trigger_job_run_response import TriggerJobRunResponse
 from .true_foundry_artifact_source import TrueFoundryArtifactSource
 from .true_foundry_interactive_login import TrueFoundryInteractiveLogin
 from .true_foundry_managed_source import TrueFoundryManagedSource
-from .update_secret_group_request import UpdateSecretGroupRequest
 from .update_secret_input import UpdateSecretInput
 from .upgrade_data import UpgradeData
 from .url import Url
@@ -442,7 +435,6 @@ __all__ = [
     "ApplicationSet",
     "ApplicationSetComponentsItem",
     "ApplicationType",
-    "ApplyMlRepoRequest",
     "ApplyRequest",
     "ApplyResponse",
     "ApplySdkCode",
@@ -500,11 +492,7 @@ __all__ = [
     "Content",
     "CoreNatsOutputConfig",
     "CpuUtilizationMetric",
-    "CreateDeploymentRequest",
     "CreateMultiPartUploadRequest",
-    "CreateOrUpdateClusterRequest",
-    "CreateOrUpdateEnvironmentRequest",
-    "CreateSecretGroupRequest",
     "CronMetric",
     "Data",
     "DataDirectory",
@@ -657,7 +645,6 @@ __all__ = [
     "ListPromptVersionsResponse",
     "ListPromptsResponse",
     "ListSecretGroupResponse",
-    "ListSecretsRequest",
     "ListSecretsResponse",
     "ListToolVersionsResponse",
     "ListToolsResponse",
@@ -803,7 +790,6 @@ __all__ = [
     "TrueFoundryArtifactSource",
     "TrueFoundryInteractiveLogin",
     "TrueFoundryManagedSource",
-    "UpdateSecretGroupRequest",
     "UpdateSecretInput",
     "UpgradeData",
     "Url",

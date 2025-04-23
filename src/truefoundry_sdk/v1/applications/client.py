@@ -139,7 +139,7 @@ class ApplicationsClient:
         """
         offset = offset if offset is not None else 0
         _response = self._raw_client._client_wrapper.httpx_client.request(
-            "api/svc/v1/app",
+            "api/svc/v1/apps",
             method="GET",
             params={
                 "limit": limit,
@@ -565,7 +565,7 @@ class AsyncApplicationsClient:
         """
         offset = offset if offset is not None else 0
         _response = await self._raw_client._client_wrapper.httpx_client.request(
-            "api/svc/v1/app",
+            "api/svc/v1/apps",
             method="GET",
             params={
                 "limit": limit,

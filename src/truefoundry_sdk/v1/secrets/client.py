@@ -90,7 +90,7 @@ class SecretsClient:
         """
         offset = offset if offset is not None else 0
         _response = self._raw_client._client_wrapper.httpx_client.request(
-            "api/svc/v1/secret",
+            "api/svc/v1/secrets",
             method="POST",
             json={
                 "limit": limit,
@@ -98,6 +98,9 @@ class SecretsClient:
                 "secretId": secret_id,
                 "secretFqns": secret_fqns,
                 "secretGroupId": secret_group_id,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -280,7 +283,7 @@ class AsyncSecretsClient:
         """
         offset = offset if offset is not None else 0
         _response = await self._raw_client._client_wrapper.httpx_client.request(
-            "api/svc/v1/secret",
+            "api/svc/v1/secrets",
             method="POST",
             json={
                 "limit": limit,
@@ -288,6 +291,9 @@ class AsyncSecretsClient:
                 "secretId": secret_id,
                 "secretFqns": secret_fqns,
                 "secretGroupId": secret_group_id,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

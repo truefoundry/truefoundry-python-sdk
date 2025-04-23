@@ -39,7 +39,7 @@ class RawClustersClient:
             Returns the auto provisioning status for the cluster
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/cluster/{jsonable_encoder(id)}/autoprovisioning-state",
+            f"api/svc/v1/clusters/{jsonable_encoder(id)}/autoprovisioning-state",
             method="GET",
             request_options=request_options,
         )
@@ -93,7 +93,7 @@ class AsyncRawClustersClient:
             Returns the auto provisioning status for the cluster
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/cluster/{jsonable_encoder(id)}/autoprovisioning-state",
+            f"api/svc/v1/clusters/{jsonable_encoder(id)}/autoprovisioning-state",
             method="GET",
             request_options=request_options,
         )

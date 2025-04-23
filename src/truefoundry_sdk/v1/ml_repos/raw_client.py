@@ -49,10 +49,13 @@ class RawMlReposClient:
             Returns the created or updated MLRepo entity based on the provided manifest.
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/svc/v1/ml-repo",
+            "api/svc/v1/ml-repos",
             method="PUT",
             json={
                 "manifest": manifest,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -248,10 +251,13 @@ class AsyncRawMlReposClient:
             Returns the created or updated MLRepo entity based on the provided manifest.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/svc/v1/ml-repo",
+            "api/svc/v1/ml-repos",
             method="PUT",
             json={
                 "manifest": manifest,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

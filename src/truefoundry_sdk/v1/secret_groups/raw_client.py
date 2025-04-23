@@ -62,7 +62,7 @@ class RawSecretGroupsClient:
             Returns the created secret group without the associated secrets.
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/svc/v1/secret-group",
+            "api/svc/v1/secret-groups",
             method="POST",
             json={
                 "name": name,
@@ -70,6 +70,9 @@ class RawSecretGroupsClient:
                 "secrets": convert_and_respect_annotation_metadata(
                     object_=secrets, annotation=typing.Sequence[SecretInput], direction="write"
                 ),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -129,7 +132,7 @@ class RawSecretGroupsClient:
             Returns the Secret Group associated with provided secretGroup id
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/secret-group/{jsonable_encoder(id)}",
+            f"api/svc/v1/secret-groups/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -194,12 +197,15 @@ class RawSecretGroupsClient:
             Returns the updated secret group without associated secrets.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/secret-group/{jsonable_encoder(id)}",
+            f"api/svc/v1/secret-groups/{jsonable_encoder(id)}",
             method="PUT",
             json={
                 "secrets": convert_and_respect_annotation_metadata(
                     object_=secrets, annotation=typing.Sequence[UpdateSecretInput], direction="write"
                 ),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -279,7 +285,7 @@ class RawSecretGroupsClient:
             Deletes Secret Group.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/secret-group/{jsonable_encoder(id)}",
+            f"api/svc/v1/secret-groups/{jsonable_encoder(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -338,7 +344,7 @@ class RawSecretGroupsClient:
             Returns the secrets associated with a secret group.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/secret-group/{jsonable_encoder(id)}/secrets",
+            f"api/svc/v1/secret-groups/{jsonable_encoder(id)}/secrets",
             method="GET",
             request_options=request_options,
         )
@@ -413,7 +419,7 @@ class AsyncRawSecretGroupsClient:
             Returns the created secret group without the associated secrets.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/svc/v1/secret-group",
+            "api/svc/v1/secret-groups",
             method="POST",
             json={
                 "name": name,
@@ -421,6 +427,9 @@ class AsyncRawSecretGroupsClient:
                 "secrets": convert_and_respect_annotation_metadata(
                     object_=secrets, annotation=typing.Sequence[SecretInput], direction="write"
                 ),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -480,7 +489,7 @@ class AsyncRawSecretGroupsClient:
             Returns the Secret Group associated with provided secretGroup id
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/secret-group/{jsonable_encoder(id)}",
+            f"api/svc/v1/secret-groups/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -545,12 +554,15 @@ class AsyncRawSecretGroupsClient:
             Returns the updated secret group without associated secrets.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/secret-group/{jsonable_encoder(id)}",
+            f"api/svc/v1/secret-groups/{jsonable_encoder(id)}",
             method="PUT",
             json={
                 "secrets": convert_and_respect_annotation_metadata(
                     object_=secrets, annotation=typing.Sequence[UpdateSecretInput], direction="write"
                 ),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -630,7 +642,7 @@ class AsyncRawSecretGroupsClient:
             Deletes Secret Group.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/secret-group/{jsonable_encoder(id)}",
+            f"api/svc/v1/secret-groups/{jsonable_encoder(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -689,7 +701,7 @@ class AsyncRawSecretGroupsClient:
             Returns the secrets associated with a secret group.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/secret-group/{jsonable_encoder(id)}/secrets",
+            f"api/svc/v1/secret-groups/{jsonable_encoder(id)}/secrets",
             method="GET",
             request_options=request_options,
         )

@@ -104,7 +104,7 @@ class SecretGroupsClient:
         """
         offset = offset if offset is not None else 0
         _response = self._raw_client._client_wrapper.httpx_client.request(
-            "api/svc/v1/secret-group",
+            "api/svc/v1/secret-groups",
             method="GET",
             params={
                 "limit": limit,
@@ -430,7 +430,7 @@ class AsyncSecretGroupsClient:
         """
         offset = offset if offset is not None else 0
         _response = await self._raw_client._client_wrapper.httpx_client.request(
-            "api/svc/v1/secret-group",
+            "api/svc/v1/secret-groups",
             method="GET",
             params={
                 "limit": limit,

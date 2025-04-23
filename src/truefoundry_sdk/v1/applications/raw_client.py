@@ -81,7 +81,7 @@ class RawApplicationsClient:
                   - updates application, version
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/svc/v1/app",
+            "api/svc/v1/apps",
             method="PUT",
             json={
                 "manifest": manifest,
@@ -91,6 +91,9 @@ class RawApplicationsClient:
                 "applicationId": application_id,
                 "name": name,
                 "applicationSetId": application_set_id,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -170,7 +173,7 @@ class RawApplicationsClient:
             Application details retrieved successfully
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/app/{jsonable_encoder(id)}",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -229,7 +232,7 @@ class RawApplicationsClient:
             Delete application response.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/app/{jsonable_encoder(id)}",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -285,7 +288,7 @@ class RawApplicationsClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/app/{jsonable_encoder(id)}/scale-to-zero",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/scale-to-zero",
             method="PATCH",
             request_options=request_options,
         )
@@ -357,7 +360,7 @@ class RawApplicationsClient:
             Scales back a paused applicaion to the original number of replicas
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/app/{jsonable_encoder(id)}/scale-to-original",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/scale-to-original",
             method="PATCH",
             request_options=request_options,
         )
@@ -429,7 +432,7 @@ class RawApplicationsClient:
             Deployment cancelled successfully.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/app/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/cancel",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/cancel",
             method="POST",
             request_options=request_options,
         )
@@ -533,7 +536,7 @@ class AsyncRawApplicationsClient:
                   - updates application, version
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/svc/v1/app",
+            "api/svc/v1/apps",
             method="PUT",
             json={
                 "manifest": manifest,
@@ -543,6 +546,9 @@ class AsyncRawApplicationsClient:
                 "applicationId": application_id,
                 "name": name,
                 "applicationSetId": application_set_id,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -622,7 +628,7 @@ class AsyncRawApplicationsClient:
             Application details retrieved successfully
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/app/{jsonable_encoder(id)}",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -681,7 +687,7 @@ class AsyncRawApplicationsClient:
             Delete application response.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/app/{jsonable_encoder(id)}",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -739,7 +745,7 @@ class AsyncRawApplicationsClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/app/{jsonable_encoder(id)}/scale-to-zero",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/scale-to-zero",
             method="PATCH",
             request_options=request_options,
         )
@@ -811,7 +817,7 @@ class AsyncRawApplicationsClient:
             Scales back a paused applicaion to the original number of replicas
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/app/{jsonable_encoder(id)}/scale-to-original",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/scale-to-original",
             method="PATCH",
             request_options=request_options,
         )
@@ -883,7 +889,7 @@ class AsyncRawApplicationsClient:
             Deployment cancelled successfully.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/app/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/cancel",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/cancel",
             method="POST",
             request_options=request_options,
         )

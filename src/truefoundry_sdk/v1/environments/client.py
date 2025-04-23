@@ -81,7 +81,7 @@ class EnvironmentsClient:
         """
         offset = offset if offset is not None else 0
         _response = self._raw_client._client_wrapper.httpx_client.request(
-            "api/svc/v1/environment",
+            "api/svc/v1/environments",
             method="GET",
             params={
                 "limit": limit,
@@ -298,7 +298,7 @@ class AsyncEnvironmentsClient:
         """
         offset = offset if offset is not None else 0
         _response = await self._raw_client._client_wrapper.httpx_client.request(
-            "api/svc/v1/environment",
+            "api/svc/v1/environments",
             method="GET",
             params={
                 "limit": limit,

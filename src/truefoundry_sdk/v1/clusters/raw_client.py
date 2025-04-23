@@ -57,13 +57,16 @@ class RawClustersClient:
             Returns newly created/updated cluster on success
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/svc/v1/cluster",
+            "api/svc/v1/clusters",
             method="PUT",
             json={
                 "manifest": convert_and_respect_annotation_metadata(
                     object_=manifest, annotation=ClusterManifest, direction="write"
                 ),
                 "dryRun": dry_run,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -133,7 +136,7 @@ class RawClustersClient:
             Return the cluster associated with provided id
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/cluster/{jsonable_encoder(id)}",
+            f"api/svc/v1/clusters/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -192,7 +195,7 @@ class RawClustersClient:
             Returns success message on successful deletion
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/cluster/{jsonable_encoder(id)}",
+            f"api/svc/v1/clusters/{jsonable_encoder(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -262,7 +265,7 @@ class RawClustersClient:
             Returns the list of addons for the cluster And also response includes paginated data
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/cluster/{jsonable_encoder(id)}/get-addons",
+            f"api/svc/v1/clusters/{jsonable_encoder(id)}/get-addons",
             method="GET",
             params={
                 "limit": limit,
@@ -325,7 +328,7 @@ class RawClustersClient:
             Returns the status of provided cluster
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/cluster/{jsonable_encoder(id)}/is-connected",
+            f"api/svc/v1/clusters/{jsonable_encoder(id)}/is-connected",
             method="GET",
             request_options=request_options,
         )
@@ -386,13 +389,16 @@ class AsyncRawClustersClient:
             Returns newly created/updated cluster on success
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/svc/v1/cluster",
+            "api/svc/v1/clusters",
             method="PUT",
             json={
                 "manifest": convert_and_respect_annotation_metadata(
                     object_=manifest, annotation=ClusterManifest, direction="write"
                 ),
                 "dryRun": dry_run,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -462,7 +468,7 @@ class AsyncRawClustersClient:
             Return the cluster associated with provided id
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/cluster/{jsonable_encoder(id)}",
+            f"api/svc/v1/clusters/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -521,7 +527,7 @@ class AsyncRawClustersClient:
             Returns success message on successful deletion
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/cluster/{jsonable_encoder(id)}",
+            f"api/svc/v1/clusters/{jsonable_encoder(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -591,7 +597,7 @@ class AsyncRawClustersClient:
             Returns the list of addons for the cluster And also response includes paginated data
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/cluster/{jsonable_encoder(id)}/get-addons",
+            f"api/svc/v1/clusters/{jsonable_encoder(id)}/get-addons",
             method="GET",
             params={
                 "limit": limit,
@@ -654,7 +660,7 @@ class AsyncRawClustersClient:
             Returns the status of provided cluster
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/cluster/{jsonable_encoder(id)}/is-connected",
+            f"api/svc/v1/clusters/{jsonable_encoder(id)}/is-connected",
             method="GET",
             request_options=request_options,
         )
