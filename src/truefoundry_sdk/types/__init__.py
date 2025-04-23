@@ -98,8 +98,7 @@ from .deployment import Deployment
 from .deployment_build import DeploymentBuild
 from .deployment_manifest import DeploymentManifest
 from .deployment_status import DeploymentStatus
-from .deployment_status_status import DeploymentStatusStatus
-from .deployment_status_transition import DeploymentStatusTransition
+from .deployment_transition import DeploymentTransition
 from .developer_message import DeveloperMessage
 from .docker_file_build import DockerFileBuild
 from .docker_file_build_command import DockerFileBuildCommand
@@ -271,6 +270,7 @@ from .nats_input_config import NatsInputConfig
 from .nats_metric_config import NatsMetricConfig
 from .nats_output_config import NatsOutputConfig
 from .nats_user_password_auth import NatsUserPasswordAuth
+from .new_deployment_status_enum import NewDeploymentStatusEnum
 from .node_selector import NodeSelector
 from .node_selector_capacity_type import NodeSelectorCapacityType
 from .nodepool import Nodepool
@@ -500,8 +500,7 @@ __all__ = [
     "DeploymentBuild",
     "DeploymentManifest",
     "DeploymentStatus",
-    "DeploymentStatusStatus",
-    "DeploymentStatusTransition",
+    "DeploymentTransition",
     "DeveloperMessage",
     "DockerFileBuild",
     "DockerFileBuildCommand",
@@ -673,6 +672,7 @@ __all__ = [
     "NatsMetricConfig",
     "NatsOutputConfig",
     "NatsUserPasswordAuth",
+    "NewDeploymentStatusEnum",
     "NodeSelector",
     "NodeSelectorCapacityType",
     "Nodepool",

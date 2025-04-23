@@ -6,7 +6,7 @@ import typing
 T_Result = typing.TypeVar("T_Result")
 
 
-class DeploymentStatusStatus(str, enum.Enum):
+class NewDeploymentStatusEnum(str, enum.Enum):
     INITIALIZED = "INITIALIZED"
     BUILD_SUCCESS = "BUILD_SUCCESS"
     BUILD_FAILED = "BUILD_FAILED"
@@ -37,29 +37,29 @@ class DeploymentStatusStatus(str, enum.Enum):
         redeploy_started: typing.Callable[[], T_Result],
         building: typing.Callable[[], T_Result],
     ) -> T_Result:
-        if self is DeploymentStatusStatus.INITIALIZED:
+        if self is NewDeploymentStatusEnum.INITIALIZED:
             return initialized()
-        if self is DeploymentStatusStatus.BUILD_SUCCESS:
+        if self is NewDeploymentStatusEnum.BUILD_SUCCESS:
             return build_success()
-        if self is DeploymentStatusStatus.BUILD_FAILED:
+        if self is NewDeploymentStatusEnum.BUILD_FAILED:
             return build_failed()
-        if self is DeploymentStatusStatus.DEPLOY_FAILED:
+        if self is NewDeploymentStatusEnum.DEPLOY_FAILED:
             return deploy_failed()
-        if self is DeploymentStatusStatus.DEPLOY_FAILED_WITH_RETRY:
+        if self is NewDeploymentStatusEnum.DEPLOY_FAILED_WITH_RETRY:
             return deploy_failed_with_retry()
-        if self is DeploymentStatusStatus.DEPLOY_SUCCESS:
+        if self is NewDeploymentStatusEnum.DEPLOY_SUCCESS:
             return deploy_success()
-        if self is DeploymentStatusStatus.ROLLOUT_STARTED:
+        if self is NewDeploymentStatusEnum.ROLLOUT_STARTED:
             return rollout_started()
-        if self is DeploymentStatusStatus.SET_TRAFFIC:
+        if self is NewDeploymentStatusEnum.SET_TRAFFIC:
             return set_traffic()
-        if self is DeploymentStatusStatus.PAUSED:
+        if self is NewDeploymentStatusEnum.PAUSED:
             return paused()
-        if self is DeploymentStatusStatus.FAILED:
+        if self is NewDeploymentStatusEnum.FAILED:
             return failed()
-        if self is DeploymentStatusStatus.CANCELLED:
+        if self is NewDeploymentStatusEnum.CANCELLED:
             return cancelled()
-        if self is DeploymentStatusStatus.REDEPLOY_STARTED:
+        if self is NewDeploymentStatusEnum.REDEPLOY_STARTED:
             return redeploy_started()
-        if self is DeploymentStatusStatus.BUILDING:
+        if self is NewDeploymentStatusEnum.BUILDING:
             return building()
