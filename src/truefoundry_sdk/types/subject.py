@@ -15,7 +15,11 @@ class Subject(UniversalBaseModel):
     Subject ID
     """
 
-    subject_type: typing_extensions.Annotated[SubjectType, FieldMetadata(alias="subjectType")]
+    subject_type: typing_extensions.Annotated[SubjectType, FieldMetadata(alias="subjectType")] = pydantic.Field()
+    """
+    Subject type
+    """
+
     subject_slug: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="subjectSlug")] = (
         pydantic.Field(default=None)
     )

@@ -16,7 +16,7 @@ from ...core.api_error import ApiError
 from ...core.jsonable_encoder import jsonable_encoder
 from ...errors.forbidden_error import ForbiddenError
 from ...errors.not_found_error import NotFoundError
-from ...types.update_secret_dto import UpdateSecretDto
+from ...types.update_secret_input import UpdateSecretInput
 from ...errors.bad_request_error import BadRequestError
 from ...types.delete_secret_group_response import DeleteSecretGroupResponse
 from ...types.secret import Secret
@@ -175,7 +175,7 @@ class RawSecretGroupsClient:
         self,
         id: str,
         *,
-        secrets: typing.Sequence[UpdateSecretDto],
+        secrets: typing.Sequence[UpdateSecretInput],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetSecretGroupResponse]:
         """
@@ -186,7 +186,7 @@ class RawSecretGroupsClient:
         id : str
             Secret Id of the secret group.
 
-        secrets : typing.Sequence[UpdateSecretDto]
+        secrets : typing.Sequence[UpdateSecretInput]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -201,7 +201,7 @@ class RawSecretGroupsClient:
             method="PUT",
             json={
                 "secrets": convert_and_respect_annotation_metadata(
-                    object_=secrets, annotation=typing.Sequence[UpdateSecretDto], direction="write"
+                    object_=secrets, annotation=typing.Sequence[UpdateSecretInput], direction="write"
                 ),
             },
             headers={
@@ -532,7 +532,7 @@ class AsyncRawSecretGroupsClient:
         self,
         id: str,
         *,
-        secrets: typing.Sequence[UpdateSecretDto],
+        secrets: typing.Sequence[UpdateSecretInput],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetSecretGroupResponse]:
         """
@@ -543,7 +543,7 @@ class AsyncRawSecretGroupsClient:
         id : str
             Secret Id of the secret group.
 
-        secrets : typing.Sequence[UpdateSecretDto]
+        secrets : typing.Sequence[UpdateSecretInput]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -558,7 +558,7 @@ class AsyncRawSecretGroupsClient:
             method="PUT",
             json={
                 "secrets": convert_and_respect_annotation_metadata(
-                    object_=secrets, annotation=typing.Sequence[UpdateSecretDto], direction="write"
+                    object_=secrets, annotation=typing.Sequence[UpdateSecretInput], direction="write"
                 ),
             },
             headers={

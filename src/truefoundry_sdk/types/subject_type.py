@@ -7,10 +7,6 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class SubjectType(str, enum.Enum):
-    """
-    Subject type
-    """
-
     USER = "user"
     TEAM = "team"
     SERVICEACCOUNT = "serviceaccount"

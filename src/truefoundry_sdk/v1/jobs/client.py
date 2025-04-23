@@ -8,7 +8,7 @@ from ...types.job_runs_sort_direction import JobRunsSortDirection
 from ...types.job_run_status import JobRunStatus
 from ...core.request_options import RequestOptions
 from ...core.pagination import SyncPager
-from ...types.job_run_dto import JobRunDto
+from ...types.job_run import JobRun
 from ...core.jsonable_encoder import jsonable_encoder
 from ...types.list_job_run_response import ListJobRunResponse
 from ...core.pydantic_utilities import parse_obj_as
@@ -58,7 +58,7 @@ class JobsClient:
         triggered_by: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         status: typing.Optional[typing.Union[JobRunStatus, typing.Sequence[JobRunStatus]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[JobRunDto]:
+    ) -> SyncPager[JobRun]:
         """
         List Job Runs for provided Job Id. Filter the data based on parameters passed in the query
 
@@ -93,7 +93,7 @@ class JobsClient:
 
         Returns
         -------
-        SyncPager[JobRunDto]
+        SyncPager[JobRun]
             Returns all runs of a Job sorted by creation date in "data" key and total count in "totalCount" key
 
         Examples
@@ -377,7 +377,7 @@ class AsyncJobsClient:
         triggered_by: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         status: typing.Optional[typing.Union[JobRunStatus, typing.Sequence[JobRunStatus]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[JobRunDto]:
+    ) -> AsyncPager[JobRun]:
         """
         List Job Runs for provided Job Id. Filter the data based on parameters passed in the query
 
@@ -412,7 +412,7 @@ class AsyncJobsClient:
 
         Returns
         -------
-        AsyncPager[JobRunDto]
+        AsyncPager[JobRun]
             Returns all runs of a Job sorted by creation date in "data" key and total count in "totalCount" key
 
         Examples

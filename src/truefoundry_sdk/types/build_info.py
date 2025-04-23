@@ -2,14 +2,22 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 from .build_status import BuildStatus
+import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
-import pydantic
 
 
 class BuildInfo(UniversalBaseModel):
     name: str
-    status: BuildStatus
+    status: BuildStatus = pydantic.Field()
+    """
+    
+          Status of the build:
+            STARTED = 20,
+            SUCCEEDED = 30,
+            FAILED = 40
+        
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

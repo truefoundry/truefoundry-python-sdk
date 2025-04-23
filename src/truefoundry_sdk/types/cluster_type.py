@@ -7,10 +7,6 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class ClusterType(str, enum.Enum):
-    """
-    Type of cluster
-    """
-
     AWS_EKS = "aws-eks"
     GCP_GKE_STANDARD = "gcp-gke-standard"
     AZURE_AKS = "azure-aks"

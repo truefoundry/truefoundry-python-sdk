@@ -12,7 +12,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.secret_input import SecretInput
 from ...types.get_secret_group_response import GetSecretGroupResponse
-from ...types.update_secret_dto import UpdateSecretDto
+from ...types.update_secret_input import UpdateSecretInput
 from ...types.delete_secret_group_response import DeleteSecretGroupResponse
 from ...types.secret import Secret
 from ...core.client_wrapper import AsyncClientWrapper
@@ -234,7 +234,7 @@ class SecretGroupsClient:
         self,
         id: str,
         *,
-        secrets: typing.Sequence[UpdateSecretDto],
+        secrets: typing.Sequence[UpdateSecretInput],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSecretGroupResponse:
         """
@@ -245,7 +245,7 @@ class SecretGroupsClient:
         id : str
             Secret Id of the secret group.
 
-        secrets : typing.Sequence[UpdateSecretDto]
+        secrets : typing.Sequence[UpdateSecretInput]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -257,7 +257,7 @@ class SecretGroupsClient:
 
         Examples
         --------
-        from truefoundry_sdk import TrueFoundry, UpdateSecretDto
+        from truefoundry_sdk import TrueFoundry, UpdateSecretInput
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -266,7 +266,7 @@ class SecretGroupsClient:
         client.v1.secret_groups.update(
             id="id",
             secrets=[
-                UpdateSecretDto(
+                UpdateSecretInput(
                     key="key",
                     value="value",
                 )
@@ -576,7 +576,7 @@ class AsyncSecretGroupsClient:
         self,
         id: str,
         *,
-        secrets: typing.Sequence[UpdateSecretDto],
+        secrets: typing.Sequence[UpdateSecretInput],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSecretGroupResponse:
         """
@@ -587,7 +587,7 @@ class AsyncSecretGroupsClient:
         id : str
             Secret Id of the secret group.
 
-        secrets : typing.Sequence[UpdateSecretDto]
+        secrets : typing.Sequence[UpdateSecretInput]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -601,7 +601,7 @@ class AsyncSecretGroupsClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import AsyncTrueFoundry, UpdateSecretDto
+        from truefoundry_sdk import AsyncTrueFoundry, UpdateSecretInput
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -613,7 +613,7 @@ class AsyncSecretGroupsClient:
             await client.v1.secret_groups.update(
                 id="id",
                 secrets=[
-                    UpdateSecretDto(
+                    UpdateSecretInput(
                         key="key",
                         value="value",
                     )

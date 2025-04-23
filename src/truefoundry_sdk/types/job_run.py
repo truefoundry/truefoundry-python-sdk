@@ -10,7 +10,7 @@ from .subject import Subject
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
-class JobRunDto(UniversalBaseModel):
+class JobRun(UniversalBaseModel):
     name: str = pydantic.Field()
     """
     JobRun Name
@@ -58,7 +58,11 @@ class JobRunDto(UniversalBaseModel):
     Error
     """
 
-    status: JobRunStatus
+    status: JobRunStatus = pydantic.Field()
+    """
+    Status of JobRun
+    """
+
     triggered_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="triggeredBy")] = (
         pydantic.Field(default=None)
     )

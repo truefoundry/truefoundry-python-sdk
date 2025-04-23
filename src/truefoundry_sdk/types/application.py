@@ -10,6 +10,7 @@ from ..core.serialization import FieldMetadata
 from .application_metadata import ApplicationMetadata
 from .application_lifecycle_stage import ApplicationLifecycleStage
 import datetime as dt
+from .recommendation import Recommendation
 import pydantic
 from .alert import Alert
 from .application_problem import ApplicationProblem
@@ -31,9 +32,7 @@ class Application(UniversalBaseModel):
     active_version: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="activeVersion")] = None
     created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None
     updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = None
-    recommendations: typing.Optional[typing.List[typing.List[typing.Optional[typing.Any]]]] = pydantic.Field(
-        default=None
-    )
+    recommendations: typing.Optional[typing.List[Recommendation]] = pydantic.Field(default=None)
     """
     Recommendations for this application
     """
@@ -66,9 +65,13 @@ class Application(UniversalBaseModel):
 
     autopilot: typing.Dict[str, typing.Optional[typing.Any]]
     created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = None
-    deployment: "Deployment"
-    active_deployment_id: typing_extensions.Annotated[str, FieldMetadata(alias="activeDeploymentId")]
-    last_deployment_id: typing_extensions.Annotated[str, FieldMetadata(alias="lastDeploymentId")]
+    deployment: typing.Optional["Deployment"] = None
+    active_deployment_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="activeDeploymentId")
+    ] = None
+    last_deployment_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="lastDeploymentId")] = (
+        None
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

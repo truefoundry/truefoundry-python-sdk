@@ -2,14 +2,14 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
-from .job_run_dto import JobRunDto
+from .job_run import JobRun
 import pydantic
 from .pagination import Pagination
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ListJobRunResponse(UniversalBaseModel):
-    data: typing.List[JobRunDto] = pydantic.Field()
+    data: typing.List[JobRun] = pydantic.Field()
     """
     JobRun History
     """
