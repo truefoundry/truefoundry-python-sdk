@@ -18,15 +18,18 @@ from .logs.client import AsyncLogsClient, LogsClient
 from .ml_repos.client import AsyncMlReposClient, MlReposClient
 from .model_versions.client import AsyncModelVersionsClient, ModelVersionsClient
 from .models.client import AsyncModelsClient, ModelsClient
+from .personal_access_tokens.client import AsyncPersonalAccessTokensClient, PersonalAccessTokensClient
 from .prompt_versions.client import AsyncPromptVersionsClient, PromptVersionsClient
 from .prompts.client import AsyncPromptsClient, PromptsClient
 from .raw_client import AsyncRawV1Client, RawV1Client
 from .secret_groups.client import AsyncSecretGroupsClient, SecretGroupsClient
 from .secrets.client import AsyncSecretsClient, SecretsClient
+from .teams.client import AsyncTeamsClient, TeamsClient
 from .tool_versions.client import AsyncToolVersionsClient, ToolVersionsClient
 from .tools.client import AsyncToolsClient, ToolsClient
 from .tracing_projects.client import AsyncTracingProjectsClient, TracingProjectsClient
 from .users.client import AsyncUsersClient, UsersClient
+from .virtual_accounts.client import AsyncVirtualAccountsClient, VirtualAccountsClient
 from .workspaces.client import AsyncWorkspacesClient, WorkspacesClient
 
 
@@ -34,6 +37,12 @@ class V1Client:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawV1Client(client_wrapper=client_wrapper)
         self.users = UsersClient(client_wrapper=client_wrapper)
+
+        self.teams = TeamsClient(client_wrapper=client_wrapper)
+
+        self.personal_access_tokens = PersonalAccessTokensClient(client_wrapper=client_wrapper)
+
+        self.virtual_accounts = VirtualAccountsClient(client_wrapper=client_wrapper)
 
         self.secrets = SecretsClient(client_wrapper=client_wrapper)
 
@@ -101,6 +110,12 @@ class AsyncV1Client:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawV1Client(client_wrapper=client_wrapper)
         self.users = AsyncUsersClient(client_wrapper=client_wrapper)
+
+        self.teams = AsyncTeamsClient(client_wrapper=client_wrapper)
+
+        self.personal_access_tokens = AsyncPersonalAccessTokensClient(client_wrapper=client_wrapper)
+
+        self.virtual_accounts = AsyncVirtualAccountsClient(client_wrapper=client_wrapper)
 
         self.secrets = AsyncSecretsClient(client_wrapper=client_wrapper)
 

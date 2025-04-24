@@ -87,13 +87,17 @@ from .content import Content
 from .core_nats_output_config import CoreNatsOutputConfig
 from .cpu_utilization_metric import CpuUtilizationMetric
 from .create_multi_part_upload_request import CreateMultiPartUploadRequest
+from .create_personal_access_token_response import CreatePersonalAccessTokenResponse
 from .cron_metric import CronMetric
 from .data_directory import DataDirectory
 from .data_directory_manifest import DataDirectoryManifest
 from .deactivate_user_response import DeactivateUserResponse
 from .delete_application_response import DeleteApplicationResponse
 from .delete_job_run_response import DeleteJobRunResponse
+from .delete_personal_access_token_response import DeletePersonalAccessTokenResponse
 from .delete_secret_group_response import DeleteSecretGroupResponse
+from .delete_team_response import DeleteTeamResponse
+from .delete_virtual_account_response import DeleteVirtualAccountResponse
 from .deployment import Deployment
 from .deployment_build import DeploymentBuild
 from .deployment_manifest import DeploymentManifest
@@ -160,10 +164,12 @@ from .get_secret_response import GetSecretResponse
 from .get_signed_ur_ls_request import GetSignedUrLsRequest
 from .get_signed_ur_ls_response import GetSignedUrLsResponse
 from .get_suggested_deployment_endpoint_response import GetSuggestedDeploymentEndpointResponse
+from .get_team_response import GetTeamResponse
 from .get_tool_response import GetToolResponse
 from .get_tool_version_response import GetToolVersionResponse
 from .get_tracing_project_response import GetTracingProjectResponse
 from .get_user_response import GetUserResponse
+from .get_virtual_account_response import GetVirtualAccountResponse
 from .get_workspace_response import GetWorkspaceResponse
 from .git_helm_repo import GitHelmRepo
 from .git_repository_exists_response import GitRepositoryExistsResponse
@@ -236,14 +242,17 @@ from .list_job_run_response import ListJobRunResponse
 from .list_ml_repos_response import ListMlReposResponse
 from .list_model_versions_response import ListModelVersionsResponse
 from .list_models_response import ListModelsResponse
+from .list_personal_access_token_response import ListPersonalAccessTokenResponse
 from .list_prompt_versions_response import ListPromptVersionsResponse
 from .list_prompts_response import ListPromptsResponse
 from .list_secret_group_response import ListSecretGroupResponse
 from .list_secrets_response import ListSecretsResponse
+from .list_teams_response import ListTeamsResponse
 from .list_tool_versions_response import ListToolVersionsResponse
 from .list_tools_response import ListToolsResponse
 from .list_tracing_projects_response import ListTracingProjectsResponse
 from .list_users_response import ListUsersResponse
+from .list_virtual_account_response import ListVirtualAccountResponse
 from .list_workspaces_response import ListWorkspacesResponse
 from .local_artifact_source import LocalArtifactSource
 from .local_model_source import LocalModelSource
@@ -360,6 +369,8 @@ from .subject_type import SubjectType
 from .system_message import SystemMessage
 from .task_docker_file_build import TaskDockerFileBuild
 from .task_python_build import TaskPythonBuild
+from .team import Team
+from .team_manifest import TeamManifest
 from .tensor_flow_framework import TensorFlowFramework
 from .terminate_job_response import TerminateJobResponse
 from .text import Text
@@ -387,6 +398,8 @@ from .user_message_content_item import UserMessageContentItem
 from .user_metadata import UserMetadata
 from .validation_error import ValidationError
 from .validation_error_loc_item import ValidationErrorLocItem
+from .virtual_account import VirtualAccount
+from .virtual_account_manifest import VirtualAccountManifest
 from .volume import Volume
 from .volume_browser import VolumeBrowser
 from .volume_config import VolumeConfig
@@ -489,13 +502,17 @@ __all__ = [
     "CoreNatsOutputConfig",
     "CpuUtilizationMetric",
     "CreateMultiPartUploadRequest",
+    "CreatePersonalAccessTokenResponse",
     "CronMetric",
     "DataDirectory",
     "DataDirectoryManifest",
     "DeactivateUserResponse",
     "DeleteApplicationResponse",
     "DeleteJobRunResponse",
+    "DeletePersonalAccessTokenResponse",
     "DeleteSecretGroupResponse",
+    "DeleteTeamResponse",
+    "DeleteVirtualAccountResponse",
     "Deployment",
     "DeploymentBuild",
     "DeploymentManifest",
@@ -562,10 +579,12 @@ __all__ = [
     "GetSignedUrLsRequest",
     "GetSignedUrLsResponse",
     "GetSuggestedDeploymentEndpointResponse",
+    "GetTeamResponse",
     "GetToolResponse",
     "GetToolVersionResponse",
     "GetTracingProjectResponse",
     "GetUserResponse",
+    "GetVirtualAccountResponse",
     "GetWorkspaceResponse",
     "GitHelmRepo",
     "GitRepositoryExistsResponse",
@@ -638,14 +657,17 @@ __all__ = [
     "ListMlReposResponse",
     "ListModelVersionsResponse",
     "ListModelsResponse",
+    "ListPersonalAccessTokenResponse",
     "ListPromptVersionsResponse",
     "ListPromptsResponse",
     "ListSecretGroupResponse",
     "ListSecretsResponse",
+    "ListTeamsResponse",
     "ListToolVersionsResponse",
     "ListToolsResponse",
     "ListTracingProjectsResponse",
     "ListUsersResponse",
+    "ListVirtualAccountResponse",
     "ListWorkspacesResponse",
     "LocalArtifactSource",
     "LocalModelSource",
@@ -765,6 +787,8 @@ __all__ = [
     "SystemMessage",
     "TaskDockerFileBuild",
     "TaskPythonBuild",
+    "Team",
+    "TeamManifest",
     "TensorFlowFramework",
     "TerminateJobResponse",
     "Text",
@@ -792,6 +816,8 @@ __all__ = [
     "UserMetadata",
     "ValidationError",
     "ValidationErrorLocItem",
+    "VirtualAccount",
+    "VirtualAccountManifest",
     "Volume",
     "VolumeBrowser",
     "VolumeConfig",
