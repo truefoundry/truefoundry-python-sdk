@@ -8373,7 +8373,6 @@ client = TrueFoundry(
 )
 client.v1.internal.applications.get_pod_template_hash_to_deployment_version(
     id="id",
-    pod_template_hashes="podTemplateHashes",
 )
 
 ```
@@ -8398,7 +8397,7 @@ client.v1.internal.applications.get_pod_template_hash_to_deployment_version(
 <dl>
 <dd>
 
-**pod_template_hashes:** `str` — Pod Template Hashes (comma separated for multiple)
+**pod_template_hashes:** `typing.Optional[str]` — Pod Template Hashes (comma separated for multiple)
     
 </dd>
 </dl>

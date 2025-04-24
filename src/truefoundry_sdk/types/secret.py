@@ -4,8 +4,8 @@ from __future__ import annotations
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing_extensions
 from ..core.serialization import FieldMetadata
-from .subject import Subject
 import typing
+from .subject import Subject
 import datetime as dt
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
@@ -18,10 +18,14 @@ class Secret(UniversalBaseModel):
     name: str
     secret_group_id: typing_extensions.Annotated[str, FieldMetadata(alias="secretGroupId")]
     value: str
-    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")]
+    created_by_subject: typing_extensions.Annotated[
+        typing.Optional[Subject], FieldMetadata(alias="createdBySubject")
+    ] = None
     created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None
     updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = None
-    secret_versions: typing_extensions.Annotated[typing.List["SecretVersion"], FieldMetadata(alias="secretVersions")]
+    secret_versions: typing_extensions.Annotated[
+        typing.Optional[typing.List["SecretVersion"]], FieldMetadata(alias="secretVersions")
+    ] = None
     active_deployments_count: typing_extensions.Annotated[
         typing.Optional[int], FieldMetadata(alias="activeDeploymentsCount")
     ] = None

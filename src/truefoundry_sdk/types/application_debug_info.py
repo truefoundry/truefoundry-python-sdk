@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 from ..core.pydantic_utilities import UniversalBaseModel
+import typing
 import typing_extensions
 from ..core.serialization import FieldMetadata
-import typing
 import datetime as dt
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
@@ -12,7 +12,7 @@ from ..core.pydantic_utilities import update_forward_refs
 
 
 class ApplicationDebugInfo(UniversalBaseModel):
-    id: str
+    id: typing.Optional[str] = None
     application_id: typing_extensions.Annotated[str, FieldMetadata(alias="applicationId")]
     application: typing.Optional["Application"] = None
     debug_info: typing_extensions.Annotated[

@@ -18,7 +18,11 @@ class RawApplicationsClient:
         self._client_wrapper = client_wrapper
 
     def get_pod_template_hash_to_deployment_version(
-        self, id: str, *, pod_template_hashes: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: str,
+        *,
+        pod_template_hashes: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[typing.Dict[str, float]]:
         """
         This endpoint fetches the pod template hash to deployment version map for a specific application.
@@ -28,7 +32,7 @@ class RawApplicationsClient:
         id : str
             Id of the application
 
-        pod_template_hashes : str
+        pod_template_hashes : typing.Optional[str]
             Pod Template Hashes (comma separated for multiple)
 
         request_options : typing.Optional[RequestOptions]
@@ -78,7 +82,11 @@ class AsyncRawApplicationsClient:
         self._client_wrapper = client_wrapper
 
     async def get_pod_template_hash_to_deployment_version(
-        self, id: str, *, pod_template_hashes: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: str,
+        *,
+        pod_template_hashes: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[typing.Dict[str, float]]:
         """
         This endpoint fetches the pod template hash to deployment version map for a specific application.
@@ -88,7 +96,7 @@ class AsyncRawApplicationsClient:
         id : str
             Id of the application
 
-        pod_template_hashes : str
+        pod_template_hashes : typing.Optional[str]
             Pod Template Hashes (comma separated for multiple)
 
         request_options : typing.Optional[RequestOptions]

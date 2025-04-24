@@ -20,7 +20,7 @@ class Session(UniversalBaseModel):
     subject_pat_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="subjectPatName")] = None
     email: typing.Optional[str] = None
     subject_type: typing_extensions.Annotated[SessionSubjectType, FieldMetadata(alias="subjectType")]
-    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]
+    tenant_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="tenantName")] = None
     roles: typing.List[str]
     teams: typing.List[str]
     metadata: typing.Optional[UserMetadata] = None
