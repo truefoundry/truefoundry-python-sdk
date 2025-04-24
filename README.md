@@ -21,11 +21,7 @@ Instantiate and use the client with the following:
 
 ```python
 from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
+client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
 response = client.v1.secrets.list()
 for item in response:
     yield item
@@ -39,27 +35,18 @@ for page in response.iter_pages():
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-import asyncio
-
 from truefoundry_sdk import AsyncTrueFoundry
-
-client = AsyncTrueFoundry(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-
+import asyncio
+client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
     response = await client.v1.secrets.list()
     async for item in response:
         yield item
+    
     # alternatively, you can paginate page-by-page
     async for page in response.iter_pages():
         yield page
-
-
-asyncio.run(main())
-```
+asyncio.run(main())```
 
 ## Exception Handling
 
@@ -68,7 +55,6 @@ will be thrown.
 
 ```python
 from truefoundry_sdk.core.api_error import ApiError
-
 try:
     client.v1.secrets.list(...)
 except ApiError as e:
@@ -82,11 +68,7 @@ Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used 
 
 ```python
 from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
+client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
 response = client.v1.secrets.list()
 for item in response:
     yield item
@@ -96,6 +78,23 @@ for page in response.iter_pages():
 ```
 
 ## Advanced
+
+### Access Raw Response Data
+
+The SDK provides access to raw response data, including headers, through the `.with_raw_response` property.
+The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
+
+```python
+from truefoundry_sdk import TrueFoundry
+client = TrueFoundry(..., )
+response = client.v1.secrets.with_raw_response.list(...)
+print(response.headers)  # access the response headers
+for item in response.data:
+    print(item)  # access the underlying object(s)
+for page in response.data.iter_pages():
+    for item in page:
+        print(item)  # access the underlying object(s)
+```
 
 ### Retries
 
@@ -124,12 +123,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    ...,
-    timeout=20.0,
-)
-
+client = TrueFoundry(..., timeout=20.0, )
 
 # Override timeout for a specific method
 client.v1.secrets.list(..., request_options={
@@ -143,17 +137,9 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-import httpx
 from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    ...,
-    httpx_client=httpx.Client(
-        proxies="http://my.test.proxy.example.com",
-        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
-    ),
-)
-```
+import httpx
+client = TrueFoundry(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
 
 ## Contributing
 
