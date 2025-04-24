@@ -24,7 +24,11 @@ class ApplicationsClient:
         return self._raw_client
 
     def get_pod_template_hash_to_deployment_version(
-        self, id: str, *, pod_template_hashes: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: str,
+        *,
+        pod_template_hashes: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Dict[str, float]:
         """
         This endpoint fetches the pod template hash to deployment version map for a specific application.
@@ -34,7 +38,7 @@ class ApplicationsClient:
         id : str
             Id of the application
 
-        pod_template_hashes : str
+        pod_template_hashes : typing.Optional[str]
             Pod Template Hashes (comma separated for multiple)
 
         request_options : typing.Optional[RequestOptions]
@@ -55,7 +59,6 @@ class ApplicationsClient:
         )
         client.v1.internal.applications.get_pod_template_hash_to_deployment_version(
             id="id",
-            pod_template_hashes="podTemplateHashes",
         )
         """
         response = self._raw_client.get_pod_template_hash_to_deployment_version(
@@ -80,7 +83,11 @@ class AsyncApplicationsClient:
         return self._raw_client
 
     async def get_pod_template_hash_to_deployment_version(
-        self, id: str, *, pod_template_hashes: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: str,
+        *,
+        pod_template_hashes: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Dict[str, float]:
         """
         This endpoint fetches the pod template hash to deployment version map for a specific application.
@@ -90,7 +97,7 @@ class AsyncApplicationsClient:
         id : str
             Id of the application
 
-        pod_template_hashes : str
+        pod_template_hashes : typing.Optional[str]
             Pod Template Hashes (comma separated for multiple)
 
         request_options : typing.Optional[RequestOptions]
@@ -116,7 +123,6 @@ class AsyncApplicationsClient:
         async def main() -> None:
             await client.v1.internal.applications.get_pod_template_hash_to_deployment_version(
                 id="id",
-                pod_template_hashes="podTemplateHashes",
             )
 
 

@@ -13,8 +13,10 @@ class Recommendation(UniversalBaseModel):
     id: typing.Optional[str] = None
     cluster_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="clusterId")] = None
     application_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="applicationId")] = None
-    deployment_id: typing_extensions.Annotated[str, FieldMetadata(alias="deploymentId")]
-    application_version: typing_extensions.Annotated[int, FieldMetadata(alias="applicationVersion")]
+    deployment_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="deploymentId")] = None
+    application_version: typing_extensions.Annotated[
+        typing.Optional[int], FieldMetadata(alias="applicationVersion")
+    ] = None
     recommendation_data: typing_extensions.Annotated[
         typing.Dict[str, typing.Optional[typing.Any]], FieldMetadata(alias="recommendationData")
     ]
