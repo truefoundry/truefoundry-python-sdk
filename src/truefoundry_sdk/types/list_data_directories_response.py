@@ -9,7 +9,7 @@ from .pagination import Pagination
 
 
 class ListDataDirectoriesResponse(UniversalBaseModel):
-    data: typing.Optional[typing.List[DataDirectory]] = None
+    data: typing.List[DataDirectory]
     pagination: Pagination
 
     if IS_PYDANTIC_V2:
