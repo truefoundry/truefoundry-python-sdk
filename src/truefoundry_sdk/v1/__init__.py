@@ -27,6 +27,7 @@ from . import (
     tool_versions,
     tools,
     tracing_projects,
+    users,
     workspaces,
 )
 from .applications import (
@@ -71,5 +72,6 @@ __all__ = [
     "tool_versions",
     "tools",
     "tracing_projects",
+    "users",
     "workspaces",
 ]

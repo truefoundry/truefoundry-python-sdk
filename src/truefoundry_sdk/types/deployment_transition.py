@@ -12,6 +12,7 @@ class DeploymentTransition(str, enum.Enum):
     REUSING_EXISTING_BUILD = "REUSING_EXISTING_BUILD"
     COMPONENTS_DEPLOYING = "COMPONENTS_DEPLOYING"
     WAITING = "WAITING"
+    EMPTY = ""
 
     def visit(
         self,
@@ -20,6 +21,7 @@ class DeploymentTransition(str, enum.Enum):
         reusing_existing_build: typing.Callable[[], T_Result],
         components_deploying: typing.Callable[[], T_Result],
         waiting: typing.Callable[[], T_Result],
+        empty: typing.Callable[[], T_Result],
     ) -> T_Result:
         if self is DeploymentTransition.BUILDING:
             return building()
@@ -31,3 +33,5 @@ class DeploymentTransition(str, enum.Enum):
             return components_deploying()
         if self is DeploymentTransition.WAITING:
             return waiting()
+        if self is DeploymentTransition.EMPTY:
+            return empty()

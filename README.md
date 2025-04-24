@@ -22,12 +22,7 @@ Instantiate and use the client with the following:
 ```python
 from truefoundry_sdk import TrueFoundry
 client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-response = client.v1.secrets.list()
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
+client.v1.users.invite_user(accept_invite_client_url='<control plane url>/invite-accept', email='email', )
 ```
 
 ## Async Client
@@ -39,13 +34,7 @@ from truefoundry_sdk import AsyncTrueFoundry
 import asyncio
 client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
-    response = await client.v1.secrets.list()
-    async for item in response:
-        yield item
-    
-    # alternatively, you can paginate page-by-page
-    async for page in response.iter_pages():
-        yield page
+    await client.v1.users.invite_user(accept_invite_client_url='<control plane url>/invite-accept', email='email', )
 asyncio.run(main())```
 
 ## Exception Handling
@@ -56,7 +45,7 @@ will be thrown.
 ```python
 from truefoundry_sdk.core.api_error import ApiError
 try:
-    client.v1.secrets.list(...)
+    client.v1.users.invite_user(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -69,7 +58,7 @@ Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used 
 ```python
 from truefoundry_sdk import TrueFoundry
 client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-response = client.v1.secrets.list()
+response = client.v1.users.list(limit=10, offset=0, )
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -87,7 +76,10 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from truefoundry_sdk import TrueFoundry
 client = TrueFoundry(..., )
-response = client.v1.secrets.with_raw_response.list(...)
+response = client.v1.users.with_raw_response.invite_user(...)
+print(response.headers)  # access the response headers
+print(response.data)  # access the underlying object
+response = client.v1.users.with_raw_response.list(...)
 print(response.headers)  # access the response headers
 for item in response.data:
     print(item)  # access the underlying object(s)
@@ -111,7 +103,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.v1.secrets.list(..., request_options={
+client.v1.users.invite_user(..., request_options={
     "max_retries": 1
 })
 ```
@@ -126,7 +118,7 @@ from truefoundry_sdk import TrueFoundry
 client = TrueFoundry(..., timeout=20.0, )
 
 # Override timeout for a specific method
-client.v1.secrets.list(..., request_options={
+client.v1.users.invite_user(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

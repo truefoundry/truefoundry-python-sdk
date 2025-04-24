@@ -5,6 +5,7 @@
 from .resources import Resources
 from .resources_devices_item import ResourcesDevicesItem
 from .resources_node import ResourcesNode
+from .activate_user_response import ActivateUserResponse
 from .add_on_component_source import AddOnComponentSource
 from .addon_component import AddonComponent
 from .addon_component_name import AddonComponentName
@@ -89,6 +90,7 @@ from .create_multi_part_upload_request import CreateMultiPartUploadRequest
 from .cron_metric import CronMetric
 from .data_directory import DataDirectory
 from .data_directory_manifest import DataDirectoryManifest
+from .deactivate_user_response import DeactivateUserResponse
 from .delete_application_response import DeleteApplicationResponse
 from .delete_job_run_response import DeleteJobRunResponse
 from .delete_secret_group_response import DeleteSecretGroupResponse
@@ -161,6 +163,7 @@ from .get_suggested_deployment_endpoint_response import GetSuggestedDeploymentEn
 from .get_tool_response import GetToolResponse
 from .get_tool_version_response import GetToolVersionResponse
 from .get_tracing_project_response import GetTracingProjectResponse
+from .get_user_response import GetUserResponse
 from .get_workspace_response import GetWorkspaceResponse
 from .git_helm_repo import GitHelmRepo
 from .git_repository_exists_response import GitRepositoryExistsResponse
@@ -193,6 +196,7 @@ from .internal_artifact_version import InternalArtifactVersion
 from .internal_list_artifact_version_response import InternalListArtifactVersionResponse
 from .internal_list_artifact_version_response_data_item import InternalListArtifactVersionResponseDataItem
 from .internal_model_version import InternalModelVersion
+from .invite_user_response import InviteUserResponse
 from .is_cluster_connected_response import IsClusterConnectedResponse
 from .job import Job
 from .job_alert import JobAlert
@@ -239,6 +243,7 @@ from .list_secrets_response import ListSecretsResponse
 from .list_tool_versions_response import ListToolVersionsResponse
 from .list_tools_response import ListToolsResponse
 from .list_tracing_projects_response import ListTracingProjectsResponse
+from .list_users_response import ListUsersResponse
 from .list_workspaces_response import ListWorkspacesResponse
 from .local_artifact_source import LocalArtifactSource
 from .local_model_source import LocalModelSource
@@ -320,7 +325,6 @@ from .service_autoscaling_metrics import ServiceAutoscalingMetrics
 from .service_replicas import ServiceReplicas
 from .service_rollout_strategy import ServiceRolloutStrategy
 from .session import Session
-from .session_subject_type import SessionSubjectType
 from .signed_url import SignedUrl
 from .sklearn_framework import SklearnFramework
 from .sklearn_model_schema import SklearnModelSchema
@@ -374,8 +378,10 @@ from .true_foundry_artifact_source import TrueFoundryArtifactSource
 from .true_foundry_interactive_login import TrueFoundryInteractiveLogin
 from .true_foundry_managed_source import TrueFoundryManagedSource
 from .update_secret_input import UpdateSecretInput
+from .update_user_roles_response import UpdateUserRolesResponse
 from .upgrade_data import UpgradeData
 from .url import Url
+from .user import User
 from .user_message import UserMessage
 from .user_message_content_item import UserMessageContentItem
 from .user_metadata import UserMetadata
@@ -401,6 +407,7 @@ from .xg_boost_model_schema import XgBoostModelSchema
 from .xg_boost_serialization_format import XgBoostSerializationFormat
 
 __all__ = [
+    "ActivateUserResponse",
     "AddOnComponentSource",
     "AddonComponent",
     "AddonComponentName",
@@ -485,6 +492,7 @@ __all__ = [
     "CronMetric",
     "DataDirectory",
     "DataDirectoryManifest",
+    "DeactivateUserResponse",
     "DeleteApplicationResponse",
     "DeleteJobRunResponse",
     "DeleteSecretGroupResponse",
@@ -557,6 +565,7 @@ __all__ = [
     "GetToolResponse",
     "GetToolVersionResponse",
     "GetTracingProjectResponse",
+    "GetUserResponse",
     "GetWorkspaceResponse",
     "GitHelmRepo",
     "GitRepositoryExistsResponse",
@@ -589,6 +598,7 @@ __all__ = [
     "InternalListArtifactVersionResponse",
     "InternalListArtifactVersionResponseDataItem",
     "InternalModelVersion",
+    "InviteUserResponse",
     "IsClusterConnectedResponse",
     "Job",
     "JobAlert",
@@ -635,6 +645,7 @@ __all__ = [
     "ListToolVersionsResponse",
     "ListToolsResponse",
     "ListTracingProjectsResponse",
+    "ListUsersResponse",
     "ListWorkspacesResponse",
     "LocalArtifactSource",
     "LocalModelSource",
@@ -719,7 +730,6 @@ __all__ = [
     "ServiceReplicas",
     "ServiceRolloutStrategy",
     "Session",
-    "SessionSubjectType",
     "SignedUrl",
     "SklearnFramework",
     "SklearnModelSchema",
@@ -773,8 +783,10 @@ __all__ = [
     "TrueFoundryInteractiveLogin",
     "TrueFoundryManagedSource",
     "UpdateSecretInput",
+    "UpdateUserRolesResponse",
     "UpgradeData",
     "Url",
+    "User",
     "UserMessage",
     "UserMessageContentItem",
     "UserMetadata",

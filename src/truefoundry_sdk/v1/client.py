@@ -26,12 +26,15 @@ from .secrets.client import AsyncSecretsClient, SecretsClient
 from .tool_versions.client import AsyncToolVersionsClient, ToolVersionsClient
 from .tools.client import AsyncToolsClient, ToolsClient
 from .tracing_projects.client import AsyncTracingProjectsClient, TracingProjectsClient
+from .users.client import AsyncUsersClient, UsersClient
 from .workspaces.client import AsyncWorkspacesClient, WorkspacesClient
 
 
 class V1Client:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawV1Client(client_wrapper=client_wrapper)
+        self.users = UsersClient(client_wrapper=client_wrapper)
+
         self.secrets = SecretsClient(client_wrapper=client_wrapper)
 
         self.secret_groups = SecretGroupsClient(client_wrapper=client_wrapper)
@@ -97,6 +100,8 @@ class V1Client:
 class AsyncV1Client:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawV1Client(client_wrapper=client_wrapper)
+        self.users = AsyncUsersClient(client_wrapper=client_wrapper)
+
         self.secrets = AsyncSecretsClient(client_wrapper=client_wrapper)
 
         self.secret_groups = AsyncSecretGroupsClient(client_wrapper=client_wrapper)

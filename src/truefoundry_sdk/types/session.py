@@ -6,7 +6,7 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
-from .session_subject_type import SessionSubjectType
+from .subject_type import SubjectType
 from .user_metadata import UserMetadata
 
 
@@ -19,7 +19,7 @@ class Session(UniversalBaseModel):
     ] = None
     subject_pat_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="subjectPatName")] = None
     email: typing.Optional[str] = None
-    subject_type: typing_extensions.Annotated[SessionSubjectType, FieldMetadata(alias="subjectType")]
+    subject_type: typing_extensions.Annotated[SubjectType, FieldMetadata(alias="subjectType")]
     tenant_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="tenantName")] = None
     roles: typing.List[str]
     teams: typing.List[str]
