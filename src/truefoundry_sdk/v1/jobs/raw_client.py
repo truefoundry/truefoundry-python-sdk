@@ -112,19 +112,19 @@ class RawJobsClient:
                         object_=_response.json(),
                     ),
                 )
+                _items = _parsed_response.data
                 _has_next = True
                 _get_next = lambda: self.list_runs(
                     job_id,
                     limit=limit,
-                    offset=offset + 1,
+                    offset=offset + len(_items),
                     search_prefix=search_prefix,
                     sort_by=sort_by,
                     order=order,
                     triggered_by=triggered_by,
                     status=status,
                     request_options=request_options,
-                )
-                _items = _parsed_response.data
+                ).data
                 return HttpResponse(
                     response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -564,19 +564,23 @@ class AsyncRawJobsClient:
                         object_=_response.json(),
                     ),
                 )
-                _has_next = True
-                _get_next = lambda: self.list_runs(
-                    job_id,
-                    limit=limit,
-                    offset=offset + 1,
-                    search_prefix=search_prefix,
-                    sort_by=sort_by,
-                    order=order,
-                    triggered_by=triggered_by,
-                    status=status,
-                    request_options=request_options,
-                )
                 _items = _parsed_response.data
+                _has_next = True
+
+                async def _get_next():
+                    _next_page_response = await self.list_runs(
+                        job_id,
+                        limit=limit,
+                        offset=offset + len(_items),
+                        search_prefix=search_prefix,
+                        sort_by=sort_by,
+                        order=order,
+                        triggered_by=triggered_by,
+                        status=status,
+                        request_options=request_options,
+                    )
+                    return _next_page_response.data
+
                 return AsyncHttpResponse(
                     response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )

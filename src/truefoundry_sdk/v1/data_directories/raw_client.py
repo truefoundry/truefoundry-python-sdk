@@ -214,15 +214,15 @@ class RawDataDirectoriesClient:
                         object_=_response.json(),
                     ),
                 )
+                _items = _parsed_response.data
                 _has_next = True
                 _get_next = lambda: self.list(
                     ml_repo_id=ml_repo_id,
                     name=name,
                     limit=limit,
-                    offset=offset + 1,
+                    offset=offset + len(_items),
                     request_options=request_options,
-                )
-                _items = _parsed_response.data
+                ).data
                 return HttpResponse(
                     response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -264,6 +264,9 @@ class RawDataDirectoriesClient:
                 "manifest": convert_and_respect_annotation_metadata(
                     object_=manifest, annotation=Manifest, direction="write"
                 ),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -339,6 +342,9 @@ class RawDataDirectoriesClient:
                 "limit": limit,
                 "page_token": page_token,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -351,6 +357,7 @@ class RawDataDirectoriesClient:
                         object_=_response.json(),
                     ),
                 )
+                _items = _parsed_response.data
                 _has_next = False
                 _get_next = None
                 if _parsed_response.pagination is not None:
@@ -362,8 +369,7 @@ class RawDataDirectoriesClient:
                         limit=limit,
                         page_token=_parsed_next,
                         request_options=request_options,
-                    )
-                _items = _parsed_response.data
+                    ).data
                 return HttpResponse(
                     response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -489,6 +495,9 @@ class RawDataDirectoriesClient:
                 "paths": paths,
                 "operation": operation,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -553,6 +562,9 @@ class RawDataDirectoriesClient:
                 "id": id,
                 "path": path,
                 "num_parts": num_parts,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -770,15 +782,19 @@ class AsyncRawDataDirectoriesClient:
                         object_=_response.json(),
                     ),
                 )
-                _has_next = True
-                _get_next = lambda: self.list(
-                    ml_repo_id=ml_repo_id,
-                    name=name,
-                    limit=limit,
-                    offset=offset + 1,
-                    request_options=request_options,
-                )
                 _items = _parsed_response.data
+                _has_next = True
+
+                async def _get_next():
+                    _next_page_response = await self.list(
+                        ml_repo_id=ml_repo_id,
+                        name=name,
+                        limit=limit,
+                        offset=offset + len(_items),
+                        request_options=request_options,
+                    )
+                    return _next_page_response.data
+
                 return AsyncHttpResponse(
                     response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -820,6 +836,9 @@ class AsyncRawDataDirectoriesClient:
                 "manifest": convert_and_respect_annotation_metadata(
                     object_=manifest, annotation=Manifest, direction="write"
                 ),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -895,6 +914,9 @@ class AsyncRawDataDirectoriesClient:
                 "limit": limit,
                 "page_token": page_token,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -907,19 +929,23 @@ class AsyncRawDataDirectoriesClient:
                         object_=_response.json(),
                     ),
                 )
+                _items = _parsed_response.data
                 _has_next = False
                 _get_next = None
                 if _parsed_response.pagination is not None:
                     _parsed_next = _parsed_response.pagination.next_page_token
                     _has_next = _parsed_next is not None and _parsed_next != ""
-                    _get_next = lambda: self.list_files(
-                        id=id,
-                        path=path,
-                        limit=limit,
-                        page_token=_parsed_next,
-                        request_options=request_options,
-                    )
-                _items = _parsed_response.data
+
+                    async def _get_next():
+                        _next_page_response = await self.list_files(
+                            id=id,
+                            path=path,
+                            limit=limit,
+                            page_token=_parsed_next,
+                            request_options=request_options,
+                        )
+                        return _next_page_response.data
+
                 return AsyncHttpResponse(
                     response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -1045,6 +1071,9 @@ class AsyncRawDataDirectoriesClient:
                 "paths": paths,
                 "operation": operation,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -1109,6 +1138,9 @@ class AsyncRawDataDirectoriesClient:
                 "id": id,
                 "path": path,
                 "num_parts": num_parts,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

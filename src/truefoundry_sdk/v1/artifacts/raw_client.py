@@ -173,16 +173,16 @@ class RawArtifactsClient:
                         object_=_response.json(),
                     ),
                 )
+                _items = _parsed_response.data
                 _has_next = True
                 _get_next = lambda: self.list(
                     ml_repo_id=ml_repo_id,
                     name=name,
-                    offset=offset + 1,
+                    offset=offset + len(_items),
                     limit=limit,
                     run_id=run_id,
                     request_options=request_options,
-                )
-                _items = _parsed_response.data
+                ).data
                 return HttpResponse(
                     response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -224,6 +224,9 @@ class RawArtifactsClient:
                 "manifest": convert_and_respect_annotation_metadata(
                     object_=manifest, annotation=Manifest, direction="write"
                 ),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -404,16 +407,20 @@ class AsyncRawArtifactsClient:
                         object_=_response.json(),
                     ),
                 )
-                _has_next = True
-                _get_next = lambda: self.list(
-                    ml_repo_id=ml_repo_id,
-                    name=name,
-                    offset=offset + 1,
-                    limit=limit,
-                    run_id=run_id,
-                    request_options=request_options,
-                )
                 _items = _parsed_response.data
+                _has_next = True
+
+                async def _get_next():
+                    _next_page_response = await self.list(
+                        ml_repo_id=ml_repo_id,
+                        name=name,
+                        offset=offset + len(_items),
+                        limit=limit,
+                        run_id=run_id,
+                        request_options=request_options,
+                    )
+                    return _next_page_response.data
+
                 return AsyncHttpResponse(
                     response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -455,6 +462,9 @@ class AsyncRawArtifactsClient:
                 "manifest": convert_and_respect_annotation_metadata(
                     object_=manifest, annotation=Manifest, direction="write"
                 ),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

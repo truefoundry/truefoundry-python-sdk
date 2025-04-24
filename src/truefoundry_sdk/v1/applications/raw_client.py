@@ -146,10 +146,11 @@ class RawApplicationsClient:
                         object_=_response.json(),
                     ),
                 )
+                _items = _parsed_response.data
                 _has_next = True
                 _get_next = lambda: self.list(
                     limit=limit,
-                    offset=offset + 1,
+                    offset=offset + len(_items),
                     application_id=application_id,
                     workspace_id=workspace_id,
                     application_name=application_name,
@@ -164,8 +165,7 @@ class RawApplicationsClient:
                     lifecycle_stage=lifecycle_stage,
                     is_recommendation_present=is_recommendation_present,
                     request_options=request_options,
-                )
-                _items = _parsed_response.data
+                ).data
                 return HttpResponse(
                     response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -750,26 +750,30 @@ class AsyncRawApplicationsClient:
                         object_=_response.json(),
                     ),
                 )
-                _has_next = True
-                _get_next = lambda: self.list(
-                    limit=limit,
-                    offset=offset + 1,
-                    application_id=application_id,
-                    workspace_id=workspace_id,
-                    application_name=application_name,
-                    application_type=application_type,
-                    name_search_query=name_search_query,
-                    environment_id=environment_id,
-                    cluster_id=cluster_id,
-                    application_set_id=application_set_id,
-                    paused=paused,
-                    device_type_filter=device_type_filter,
-                    last_deployed_by_subjects=last_deployed_by_subjects,
-                    lifecycle_stage=lifecycle_stage,
-                    is_recommendation_present=is_recommendation_present,
-                    request_options=request_options,
-                )
                 _items = _parsed_response.data
+                _has_next = True
+
+                async def _get_next():
+                    _next_page_response = await self.list(
+                        limit=limit,
+                        offset=offset + len(_items),
+                        application_id=application_id,
+                        workspace_id=workspace_id,
+                        application_name=application_name,
+                        application_type=application_type,
+                        name_search_query=name_search_query,
+                        environment_id=environment_id,
+                        cluster_id=cluster_id,
+                        application_set_id=application_set_id,
+                        paused=paused,
+                        device_type_filter=device_type_filter,
+                        last_deployed_by_subjects=last_deployed_by_subjects,
+                        lifecycle_stage=lifecycle_stage,
+                        is_recommendation_present=is_recommendation_present,
+                        request_options=request_options,
+                    )
+                    return _next_page_response.data
+
                 return AsyncHttpResponse(
                     response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
