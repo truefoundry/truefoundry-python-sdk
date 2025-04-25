@@ -20,10 +20,10 @@ class BaseClientWrapper:
 
     def get_headers(self) -> typing.Dict[str, str]:
         headers: typing.Dict[str, str] = {
-            "User-Agent": "truefoundry-sdk/0.0.0",
+            "User-Agent": "truefoundry-sdk/0.0.15",
             "X-Fern-Language": "Python",
             "X-Fern-SDK-Name": "truefoundry-sdk",
-            "X-Fern-SDK-Version": "0.0.0",
+            "X-Fern-SDK-Version": "0.0.15",
         }
         api_key = self._get_api_key()
         if api_key is not None:
