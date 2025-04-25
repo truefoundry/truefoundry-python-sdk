@@ -7,6 +7,7 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
+from .service_account_type import ServiceAccountType
 from .subject import Subject
 from .virtual_account_manifest import VirtualAccountManifest
 
@@ -14,7 +15,7 @@ from .virtual_account_manifest import VirtualAccountManifest
 class VirtualAccount(UniversalBaseModel):
     id: str
     name: str
-    type: str
+    type: ServiceAccountType
     tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]
     manifest: typing.Optional[VirtualAccountManifest] = None
     created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")]

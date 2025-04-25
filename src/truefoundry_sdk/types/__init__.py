@@ -329,6 +329,7 @@ from .secret_input import SecretInput
 from .secret_mount import SecretMount
 from .secret_version import SecretVersion
 from .service import Service
+from .service_account_type import ServiceAccountType
 from .service_autoscaling import ServiceAutoscaling
 from .service_autoscaling_metrics import ServiceAutoscalingMetrics
 from .service_replicas import ServiceReplicas
@@ -747,6 +748,7 @@ __all__ = [
     "SecretMount",
     "SecretVersion",
     "Service",
+    "ServiceAccountType",
     "ServiceAutoscaling",
     "ServiceAutoscalingMetrics",
     "ServiceReplicas",
