@@ -59,7 +59,7 @@ class SparkJob(UniversalBaseModel):
     +uiType=Mounts
     """
 
-    retries: typing.Optional[int] = pydantic.Field(default=None)
+    retries: typing.Optional[int] = pydantic.Field(default=0)
     """
     +label=Retries
     +usage=Specify the maximum number of attempts to retry a job before it is marked as failed.

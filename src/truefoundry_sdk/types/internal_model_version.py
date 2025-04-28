@@ -21,7 +21,7 @@ class InternalModelVersion(UniversalBaseModel):
     ml_repo_id: str
     model_id: str
     metrics: typing.Optional[typing.List[Metric]] = None
-    deployable: typing.Optional[bool] = None
+    deployable: typing.Optional[bool] = False
     artifact_fqn: str
     artifact_size: typing.Optional[int] = None
 

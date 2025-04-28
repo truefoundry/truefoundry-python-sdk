@@ -39,7 +39,7 @@ class SqsInputConfig(UniversalBaseModel):
     +sort=3
     """
 
-    wait_time_seconds: int = pydantic.Field()
+    wait_time_seconds: int = pydantic.Field(default=19)
     """
     +label=Wait Time Seconds
     +usage=Wait timeout for long polling. For more information, see [here](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-short-and-long-polling.html)

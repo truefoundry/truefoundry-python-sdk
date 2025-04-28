@@ -33,8 +33,8 @@ class WorkspacesClient:
     def list(
         self,
         *,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         cluster_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
@@ -197,8 +197,8 @@ class AsyncWorkspacesClient:
     async def list(
         self,
         *,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         cluster_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,

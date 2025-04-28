@@ -36,8 +36,8 @@ class RawSecretGroupsClient:
     def list(
         self,
         *,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         secret_group_id: typing.Optional[str] = None,
         secret_group_fqn: typing.Optional[str] = None,
         secret_attributes: typing.Optional[str] = None,
@@ -484,8 +484,8 @@ class AsyncRawSecretGroupsClient:
     async def list(
         self,
         *,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         secret_group_id: typing.Optional[str] = None,
         secret_group_fqn: typing.Optional[str] = None,
         secret_attributes: typing.Optional[str] = None,

@@ -82,8 +82,8 @@ class ModelsClient:
         *,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        offset: typing.Optional[int] = None,
-        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = 100,
         run_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Model]:
@@ -225,8 +225,8 @@ class AsyncModelsClient:
         *,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        offset: typing.Optional[int] = None,
-        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = 100,
         run_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Model]:

@@ -48,7 +48,7 @@ class NatsInputConfig(UniversalBaseModel):
     +sort=4
     """
 
-    wait_time_seconds: int = pydantic.Field()
+    wait_time_seconds: int = pydantic.Field(default=19)
     """
     +label=Wait Time Seconds
     +usage=Wait timeout for long polling.

@@ -35,8 +35,8 @@ class RawClustersClient:
     def list(
         self,
         *,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SyncPager[Cluster]]:
         """
@@ -311,8 +311,8 @@ class RawClustersClient:
         self,
         id: str,
         *,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListClusterAddonsResponse]:
         """
@@ -438,8 +438,8 @@ class AsyncRawClustersClient:
     async def list(
         self,
         *,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AsyncPager[Cluster]]:
         """
@@ -718,8 +718,8 @@ class AsyncRawClustersClient:
         self,
         id: str,
         *,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListClusterAddonsResponse]:
         """

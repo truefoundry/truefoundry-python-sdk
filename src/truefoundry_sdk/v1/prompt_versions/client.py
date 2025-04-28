@@ -81,8 +81,8 @@ class PromptVersionsClient:
         *,
         prompt_id: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
-        offset: typing.Optional[int] = None,
-        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[PromptVersion]:
         """
@@ -201,8 +201,8 @@ class AsyncPromptVersionsClient:
         *,
         prompt_id: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
-        offset: typing.Optional[int] = None,
-        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[PromptVersion]:
         """

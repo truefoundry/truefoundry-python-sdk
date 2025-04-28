@@ -229,8 +229,8 @@ class RawMlReposClient:
         self,
         *,
         name: typing.Optional[str] = None,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SyncPager[MlRepo]]:
         """
@@ -511,8 +511,8 @@ class AsyncRawMlReposClient:
         self,
         *,
         name: typing.Optional[str] = None,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AsyncPager[MlRepo]]:
         """

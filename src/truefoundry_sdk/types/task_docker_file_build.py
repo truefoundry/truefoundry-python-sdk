@@ -27,7 +27,7 @@ class TaskDockerFileBuild(UniversalBaseModel):
     add it through the [Integrations](/integrations?tab=docker-registry) page
     """
 
-    dockerfile_path: str = pydantic.Field()
+    dockerfile_path: str = pydantic.Field(default="./Dockerfile")
     """
     +label=Path to Dockerfile
     +usage=The file path of the Dockerfile relative to project root path.

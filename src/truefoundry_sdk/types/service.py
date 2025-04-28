@@ -29,7 +29,7 @@ class Service(BaseService):
     """
 
     auto_shutdown: typing.Optional[Autoshutdown] = None
-    allow_interception: typing.Optional[bool] = pydantic.Field(default=None)
+    allow_interception: typing.Optional[bool] = pydantic.Field(default=False)
     """
     +label=Allow intercepts
     +usage=Whether to allow intercepts to be applied for this service.

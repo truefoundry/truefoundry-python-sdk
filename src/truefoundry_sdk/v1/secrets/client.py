@@ -31,8 +31,8 @@ class SecretsClient:
     def list(
         self,
         *,
-        limit: typing.Optional[int] = OMIT,
-        offset: typing.Optional[int] = OMIT,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         secret_id: typing.Optional[str] = OMIT,
         secret_fqns: typing.Optional[typing.Sequence[str]] = OMIT,
         secret_group_id: typing.Optional[str] = OMIT,
@@ -158,8 +158,8 @@ class AsyncSecretsClient:
     async def list(
         self,
         *,
-        limit: typing.Optional[int] = OMIT,
-        offset: typing.Optional[int] = OMIT,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         secret_id: typing.Optional[str] = OMIT,
         secret_fqns: typing.Optional[typing.Sequence[str]] = OMIT,
         secret_group_id: typing.Optional[str] = OMIT,

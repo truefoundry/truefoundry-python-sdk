@@ -23,7 +23,7 @@ class Rolling(UniversalBaseModel):
     +value=rolling_update
     """
 
-    max_unavailable_percentage: int = pydantic.Field()
+    max_unavailable_percentage: int = pydantic.Field(default=25)
     """
     +label=Max unavailable(%)
     +usage=Percentage of total replicas that can be brought down at one time.
@@ -31,7 +31,7 @@ class Rolling(UniversalBaseModel):
     Setting this to a higher value can help in speeding up the deployment process.
     """
 
-    max_surge_percentage: int = pydantic.Field()
+    max_surge_percentage: int = pydantic.Field(default=25)
     """
     +label=Max Surge(%)
     +usage=Percentage of total replicas of updated image that can be brought up over the total replicas count.

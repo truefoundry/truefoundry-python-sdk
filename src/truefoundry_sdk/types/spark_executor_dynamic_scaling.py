@@ -16,14 +16,14 @@ class SparkExecutorDynamicScaling(UniversalBaseModel):
     +value=dynamic
     """
 
-    min: int = pydantic.Field()
+    min: int = pydantic.Field(default=1)
     """
     +label=Min Instances
     +usage=Minimum number of instances to start / scale down to
     +sort=100
     """
 
-    max: int = pydantic.Field()
+    max: int = pydantic.Field(default=1)
     """
     +label=Max Instances
     +usage=Maximum number of instances to scale up to

@@ -23,7 +23,7 @@ class WorkerConfig(UniversalBaseModel):
     +sort=2
     """
 
-    num_concurrent_workers: int = pydantic.Field()
+    num_concurrent_workers: int = pydantic.Field(default=1)
     """
     +label=Number of Concurrent Workers
     +usage=Number of concurrent workers to spawn for the processor
