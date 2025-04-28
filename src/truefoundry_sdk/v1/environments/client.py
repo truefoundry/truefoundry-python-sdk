@@ -32,8 +32,8 @@ class EnvironmentsClient:
     def list(
         self,
         *,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Environment]:
         """
@@ -73,7 +73,7 @@ class EnvironmentsClient:
         self,
         *,
         manifest: EnvironmentManifest,
-        dry_run: typing.Optional[bool] = OMIT,
+        dry_run: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetEnvironmentResponse:
         """
@@ -180,8 +180,8 @@ class AsyncEnvironmentsClient:
     async def list(
         self,
         *,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Environment]:
         """
@@ -225,7 +225,7 @@ class AsyncEnvironmentsClient:
         self,
         *,
         manifest: EnvironmentManifest,
-        dry_run: typing.Optional[bool] = OMIT,
+        dry_run: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetEnvironmentResponse:
         """

@@ -22,7 +22,7 @@ class BaseWorkbenchInput(UniversalBaseModel):
     +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
     """
 
-    home_directory_size: int = pydantic.Field()
+    home_directory_size: int = pydantic.Field(default=20)
     """
     +label=Home Directory Size in GB (Persistent)
     +usage=Size of the home directory for the workbench (Persistent Storage)

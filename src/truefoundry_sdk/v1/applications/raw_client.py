@@ -38,8 +38,8 @@ class RawApplicationsClient:
     def list(
         self,
         *,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         application_id: typing.Optional[str] = None,
         workspace_id: typing.Optional[str] = None,
         application_name: typing.Optional[str] = None,
@@ -642,8 +642,8 @@ class AsyncRawApplicationsClient:
     async def list(
         self,
         *,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         application_id: typing.Optional[str] = None,
         workspace_id: typing.Optional[str] = None,
         application_name: typing.Optional[str] = None,

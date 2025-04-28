@@ -10,7 +10,7 @@ class Metric(UniversalBaseModel):
     key: str
     value: typing.Optional[float] = None
     timestamp: typing.Optional[int] = None
-    step: typing.Optional[int] = None
+    step: typing.Optional[int] = 0
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

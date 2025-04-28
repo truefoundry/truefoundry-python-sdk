@@ -19,7 +19,7 @@ class Notebook(BaseWorkbenchInput):
     """
 
     image: typing.Optional[WorkbenchImage] = None
-    cull_timeout: typing.Optional[int] = pydantic.Field(default=None)
+    cull_timeout: typing.Optional[int] = pydantic.Field(default=30)
     """
     +label=Stop after (minutes of inactivity)
     +usage=Stop the notebook instance after this much time in minutes of inactivity.

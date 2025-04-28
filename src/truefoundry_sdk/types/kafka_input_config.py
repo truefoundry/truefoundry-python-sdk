@@ -39,13 +39,13 @@ class KafkaInputConfig(UniversalBaseModel):
     +sort=3
     """
 
-    tls: bool = pydantic.Field()
+    tls: bool = pydantic.Field(default=True)
     """
     +label=TLS
     +usage=TLS configuration for SASL authentication
     """
 
-    wait_time_seconds: typing.Optional[int] = pydantic.Field(default=None)
+    wait_time_seconds: typing.Optional[int] = pydantic.Field(default=10)
     """
     +label=Wait Time Seconds
     +usage=Wait timeout for long polling.

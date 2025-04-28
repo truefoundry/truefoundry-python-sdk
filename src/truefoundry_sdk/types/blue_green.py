@@ -18,13 +18,13 @@ class BlueGreen(UniversalBaseModel):
     +value=blue_green
     """
 
-    enable_auto_promotion: typing.Optional[bool] = pydantic.Field(default=None)
+    enable_auto_promotion: typing.Optional[bool] = pydantic.Field(default=False)
     """
     +docs=Promote the new release to handle the complete traffic. A manual promotion would be needed if this is disabled
     +label=Auto-promotion
     """
 
-    auto_promotion_seconds: typing.Optional[int] = pydantic.Field(default=None)
+    auto_promotion_seconds: typing.Optional[int] = pydantic.Field(default=30)
     """
     +docs=Promote the new release to handle the complete traffic after waiting for these many seconds
     +label=Auto-promotion seconds

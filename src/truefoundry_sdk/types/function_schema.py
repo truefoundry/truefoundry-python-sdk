@@ -26,7 +26,7 @@ class FunctionSchema(UniversalBaseModel):
     Parameters schema for the function
     """
 
-    strict: typing.Optional[bool] = pydantic.Field(default=None)
+    strict: typing.Optional[bool] = pydantic.Field(default=False)
     """
     Indicates if the function should be called strictly
     """

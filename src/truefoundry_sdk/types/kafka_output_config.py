@@ -32,7 +32,7 @@ class KafkaOutputConfig(UniversalBaseModel):
     +sort=2
     """
 
-    tls: bool = pydantic.Field()
+    tls: bool = pydantic.Field(default=True)
     """
     +label=TLS
     +usage=TLS configuration for SASL authentication

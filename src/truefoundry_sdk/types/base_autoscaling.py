@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class BaseAutoscaling(UniversalBaseModel):
-    min_replicas: int = pydantic.Field()
+    min_replicas: int = pydantic.Field(default=1)
     """
     +label=Minimum replicas
     +usage=Minimum number of replicas to keep available
@@ -21,7 +21,7 @@ class BaseAutoscaling(UniversalBaseModel):
     +sort=2
     """
 
-    polling_interval: typing.Optional[int] = pydantic.Field(default=None)
+    polling_interval: typing.Optional[int] = pydantic.Field(default=30)
     """
     +label=Polling Interval
     +usage=This is the interval to check each trigger on.

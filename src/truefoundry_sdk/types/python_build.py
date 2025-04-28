@@ -19,14 +19,14 @@ class PythonBuild(UniversalBaseModel):
     +value=tfy-python-buildpack
     """
 
-    python_version: str = pydantic.Field()
+    python_version: str = pydantic.Field(default="3.11")
     """
     +label=Python version
     +usage=Python version to run your application. Should be one of the tags listed on [Official Python Docker Page](https://hub.docker.com/_/python)
     +message=Please enter a valid Python version tag
     """
 
-    build_context_path: str = pydantic.Field()
+    build_context_path: str = pydantic.Field(default="./")
     """
     +label=Path to build context
     +usage=Build path relative to project root path.

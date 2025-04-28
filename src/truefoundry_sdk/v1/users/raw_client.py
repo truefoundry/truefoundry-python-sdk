@@ -35,8 +35,8 @@ class RawUsersClient:
     def list(
         self,
         *,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         query: typing.Optional[str] = None,
         show_invalid_users: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -451,8 +451,8 @@ class AsyncRawUsersClient:
     async def list(
         self,
         *,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         query: typing.Optional[str] = None,
         show_invalid_users: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,

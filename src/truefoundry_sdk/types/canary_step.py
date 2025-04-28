@@ -16,7 +16,7 @@ class CanaryStep(UniversalBaseModel):
     +placeholder=Weight
     """
 
-    pause_duration: typing.Optional[int] = pydantic.Field(default=None)
+    pause_duration: typing.Optional[int] = pydantic.Field(default=30)
     """
     +docs=Duration for which to pause the release. The release process will wait for these seconds before proceeding to the next step.
     If this is not set, the step will pause indefinitely on this step

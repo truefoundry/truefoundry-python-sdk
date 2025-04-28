@@ -134,7 +134,7 @@ class RawDeploymentsClient:
         workspace_id: str,
         base_domain: typing.Optional[str] = None,
         port: typing.Optional[str] = None,
-        prefer_wildcard: typing.Optional[bool] = None,
+        prefer_wildcard: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetSuggestedDeploymentEndpointResponse]:
         """
@@ -321,7 +321,7 @@ class AsyncRawDeploymentsClient:
         workspace_id: str,
         base_domain: typing.Optional[str] = None,
         port: typing.Optional[str] = None,
-        prefer_wildcard: typing.Optional[bool] = None,
+        prefer_wildcard: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetSuggestedDeploymentEndpointResponse]:
         """

@@ -23,14 +23,14 @@ class WorkflowAlert(UniversalBaseModel):
     +uiType=Hidden
     """
 
-    on_completion: typing.Optional[bool] = pydantic.Field(default=None)
+    on_completion: typing.Optional[bool] = pydantic.Field(default=False)
     """
     +label=On Completion
     +usage=Send an alert when the job completes
     +sort=680
     """
 
-    on_failure: typing.Optional[bool] = pydantic.Field(default=None)
+    on_failure: typing.Optional[bool] = pydantic.Field(default=True)
     """
     +label=On Failure
     +usage=Send an alert when the job fails

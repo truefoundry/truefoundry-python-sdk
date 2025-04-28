@@ -44,7 +44,7 @@ class Job(UniversalBaseModel):
     +sort=300
     """
 
-    trigger_on_deploy: typing.Optional[bool] = pydantic.Field(default=None)
+    trigger_on_deploy: typing.Optional[bool] = pydantic.Field(default=False)
     """
     +docs=Trigger on deploy
     +sort=350
@@ -75,7 +75,7 @@ class Job(UniversalBaseModel):
     +sort=650
     """
 
-    retries: typing.Optional[int] = pydantic.Field(default=None)
+    retries: typing.Optional[int] = pydantic.Field(default=0)
     """
     +label=Retries
     +usage=Specify the maximum number of attempts to retry a job before it is marked as failed.

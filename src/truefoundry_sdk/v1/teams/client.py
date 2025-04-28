@@ -33,8 +33,8 @@ class TeamsClient:
     def list(
         self,
         *,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Team]:
         """
@@ -179,8 +179,8 @@ class AsyncTeamsClient:
     async def list(
         self,
         *,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Team]:
         """

@@ -39,15 +39,15 @@ class JobAlert(UniversalBaseModel):
     +uiType=Hidden
     """
 
-    on_start: typing.Optional[bool] = pydantic.Field(default=None)
+    on_start: typing.Optional[bool] = pydantic.Field(default=False)
     """
     +label=On Start
     +usage=Send an alert when the job starts
     +sort=670
     """
 
-    on_completion: typing.Optional[bool] = None
-    on_failure: typing.Optional[bool] = pydantic.Field(default=None)
+    on_completion: typing.Optional[bool] = False
+    on_failure: typing.Optional[bool] = pydantic.Field(default=True)
     """
     +label=On Failure
     +usage=Send an alert when the job fails

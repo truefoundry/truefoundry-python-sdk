@@ -13,7 +13,7 @@ class AsyncProcessorSidecar(UniversalBaseModel):
     +usage=URL for the processor to invoke
     """
 
-    request_timeout: typing.Optional[int] = pydantic.Field(default=None)
+    request_timeout: typing.Optional[int] = pydantic.Field(default=10)
     """
     +label=Request Timeout Seconds
     +usage=Timeout for the invoke request in seconds

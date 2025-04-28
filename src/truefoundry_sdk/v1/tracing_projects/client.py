@@ -36,8 +36,8 @@ class TracingProjectsClient:
         ml_repo_id: typing.Optional[int] = None,
         fqn: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        offset: typing.Optional[int] = None,
-        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[TracingProject]:
         """
@@ -173,8 +173,8 @@ class AsyncTracingProjectsClient:
         ml_repo_id: typing.Optional[int] = None,
         fqn: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        offset: typing.Optional[int] = None,
-        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[TracingProject]:
         """

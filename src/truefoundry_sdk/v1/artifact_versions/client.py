@@ -90,11 +90,11 @@ class ArtifactVersionsClient:
         *,
         artifact_id: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
-        offset: typing.Optional[int] = None,
-        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = 100,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
-        include_internal_metadata: typing.Optional[bool] = None,
+        include_internal_metadata: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[ArtifactVersion]:
         """
@@ -389,11 +389,11 @@ class AsyncArtifactVersionsClient:
         *,
         artifact_id: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
-        offset: typing.Optional[int] = None,
-        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = 100,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
-        include_internal_metadata: typing.Optional[bool] = None,
+        include_internal_metadata: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[ArtifactVersion]:
         """

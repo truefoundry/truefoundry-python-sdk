@@ -12,7 +12,7 @@ class NatsUserPasswordAuth(UniversalBaseModel):
     +label=NATS User Password Authentication
     """
 
-    account_name: str = pydantic.Field()
+    account_name: str = pydantic.Field(default="$G")
     """
     +label=Account Name
     +usage=Name of the NATS account
