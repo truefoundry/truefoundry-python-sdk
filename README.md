@@ -2,7 +2,6 @@
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Ftruefoundry%2Ftruefoundry-python-sdk)
 [![pypi](https://img.shields.io/pypi/v/truefoundry-sdk)](https://pypi.python.org/pypi/truefoundry-sdk)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/truefoundry/truefoundry-python-sdk)
 
 The Truefoundry Python library provides convenient access to the Truefoundry API from Python.
 
@@ -23,7 +22,12 @@ Instantiate and use the client with the following:
 ```python
 from truefoundry_sdk import TrueFoundry
 client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.users.invite_user(accept_invite_client_url='<control plane url>/invite-accept', email='email', )
+response = client.applications.list(limit=10, offset=0, )
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
 ```
 
 ## Async Client
@@ -35,7 +39,13 @@ from truefoundry_sdk import AsyncTrueFoundry
 import asyncio
 client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
-    await client.users.invite_user(accept_invite_client_url='<control plane url>/invite-accept', email='email', )
+    response = await client.applications.list(limit=10, offset=0, )
+    async for item in response:
+        yield item
+    
+    # alternatively, you can paginate page-by-page
+    async for page in response.iter_pages():
+        yield page
 asyncio.run(main())
 ```
 
@@ -47,7 +57,7 @@ will be thrown.
 ```python
 from truefoundry_sdk.core.api_error import ApiError
 try:
-    client.users.invite_user(...)
+    client.applications.list(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -78,7 +88,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from truefoundry_sdk import TrueFoundry
 client = TrueFoundry(..., )
-response = client.users.with_raw_response.invite_user(...)
+response = client.applications.with_raw_response.list(...)
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
 pager = client.users.list(...)
@@ -106,7 +116,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.users.invite_user(..., request_options={
+client.applications.list(..., request_options={
     "max_retries": 1
 })
 ```
@@ -121,7 +131,7 @@ from truefoundry_sdk import TrueFoundry
 client = TrueFoundry(..., timeout=20.0, )
 
 # Override timeout for a specific method
-client.users.invite_user(..., request_options={
+client.applications.list(..., request_options={
     "timeout_in_seconds": 1
 })
 ```
