@@ -4,7 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .source import Source
+from .data_directory_manifest_source import DataDirectoryManifestSource
 
 
 class DataDirectoryManifest(UniversalBaseModel):
@@ -33,7 +33,7 @@ class DataDirectoryManifest(UniversalBaseModel):
     Key Value metadata. Should be valid JSON. For e.g. `{"business-unit": "sales", "quality": "good", "rating": 4.5}`
     """
 
-    source: Source
+    source: DataDirectoryManifestSource
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

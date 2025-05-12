@@ -4,7 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .content import Content
+from .developer_message_content import DeveloperMessageContent
 
 
 class DeveloperMessage(UniversalBaseModel):
@@ -17,7 +17,7 @@ class DeveloperMessage(UniversalBaseModel):
     The role of the messages author, in this case developer.
     """
 
-    content: Content = pydantic.Field()
+    content: DeveloperMessageContent = pydantic.Field()
     """
     The contents of the developer message.
     """

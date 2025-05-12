@@ -6,4 +6,4 @@ from .external_blob_storage_source import ExternalBlobStorageSource
 from .local_model_source import LocalModelSource
 from .true_foundry_managed_source import TrueFoundryManagedSource
 
-Source = typing.Union[TrueFoundryManagedSource, ExternalBlobStorageSource, LocalModelSource]
+ModelManifestSource = typing.Union[TrueFoundryManagedSource, ExternalBlobStorageSource, LocalModelSource]

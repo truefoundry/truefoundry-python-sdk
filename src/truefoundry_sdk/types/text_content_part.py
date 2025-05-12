@@ -4,7 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .text import Text
+from .text_content_part_text import TextContentPartText
 
 
 class TextContentPart(UniversalBaseModel):
@@ -17,7 +17,7 @@ class TextContentPart(UniversalBaseModel):
     Type of the content part
     """
 
-    text: Text = pydantic.Field()
+    text: TextContentPartText = pydantic.Field()
     """
     Text content for the message
     """

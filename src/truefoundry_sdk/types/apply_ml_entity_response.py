@@ -4,11 +4,11 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .data import Data
+from .apply_ml_entity_response_data import ApplyMlEntityResponseData
 
 
 class ApplyMlEntityResponse(UniversalBaseModel):
-    data: Data
+    data: ApplyMlEntityResponseData
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

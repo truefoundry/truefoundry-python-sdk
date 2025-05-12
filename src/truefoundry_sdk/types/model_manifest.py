@@ -4,9 +4,9 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .framework import Framework
+from .model_manifest_framework import ModelManifestFramework
+from .model_manifest_source import ModelManifestSource
 from .model_version_environment import ModelVersionEnvironment
-from .source import Source
 
 
 class ModelManifest(UniversalBaseModel):
@@ -41,8 +41,8 @@ class ModelManifest(UniversalBaseModel):
     """
 
     type: typing.Literal["model-version"] = "model-version"
-    source: Source
-    framework: typing.Optional[Framework] = pydantic.Field(default=None)
+    source: ModelManifestSource
+    framework: typing.Optional[ModelManifestFramework] = pydantic.Field(default=None)
     """
     Framework for the model version like Transformers, PyTorch, Sklearn, Xgboost etc with framework specific metadata. This will be used to infer model deployment configuration
     """

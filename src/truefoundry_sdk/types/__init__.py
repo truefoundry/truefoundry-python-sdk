@@ -33,8 +33,10 @@ from .application_set import ApplicationSet
 from .application_set_components_item import ApplicationSetComponentsItem
 from .application_type import ApplicationType
 from .apply_ml_entity_response import ApplyMlEntityResponse
+from .apply_ml_entity_response_data import ApplyMlEntityResponseData
 from .artifact import Artifact
 from .artifact_manifest import ArtifactManifest
+from .artifact_manifest_source import ArtifactManifestSource
 from .artifact_path import ArtifactPath
 from .artifact_type import ArtifactType
 from .artifact_version import ArtifactVersion
@@ -42,6 +44,7 @@ from .artifacts_cache_volume import ArtifactsCacheVolume
 from .artifacts_download import ArtifactsDownload
 from .artifacts_download_artifacts_item import ArtifactsDownloadArtifactsItem
 from .assistant_message import AssistantMessage
+from .assistant_message_content import AssistantMessageContent
 from .assistant_message_content_item import AssistantMessageContentItem
 from .async_processor_sidecar import AsyncProcessorSidecar
 from .async_service import AsyncService
@@ -84,15 +87,14 @@ from .collaborator import Collaborator
 from .container_task_config import ContainerTaskConfig
 from .container_task_config_image import ContainerTaskConfigImage
 from .container_task_config_mounts_item import ContainerTaskConfigMountsItem
-from .content import Content
 from .core_nats_output_config import CoreNatsOutputConfig
 from .cpu_utilization_metric import CpuUtilizationMetric
 from .create_multi_part_upload_request import CreateMultiPartUploadRequest
 from .create_personal_access_token_response import CreatePersonalAccessTokenResponse
 from .cron_metric import CronMetric
-from .data import Data
 from .data_directory import DataDirectory
 from .data_directory_manifest import DataDirectoryManifest
+from .data_directory_manifest_source import DataDirectoryManifestSource
 from .deactivate_user_response import DeactivateUserResponse
 from .delete_application_response import DeleteApplicationResponse
 from .delete_job_run_response import DeleteJobRunResponse
@@ -107,6 +109,7 @@ from .deployment_status import DeploymentStatus
 from .deployment_status_value import DeploymentStatusValue
 from .deployment_transition import DeploymentTransition
 from .developer_message import DeveloperMessage
+from .developer_message_content import DeveloperMessageContent
 from .docker_file_build import DockerFileBuild
 from .docker_file_build_command import DockerFileBuildCommand
 from .dynamic_volume_config import DynamicVolumeConfig
@@ -136,7 +139,6 @@ from .flyte_workflow import FlyteWorkflow
 from .flyte_workflow_id import FlyteWorkflowId
 from .flyte_workflow_template import FlyteWorkflowTemplate
 from .forward_action import ForwardAction
-from .framework import Framework
 from .function import Function
 from .function_schema import FunctionSchema
 from .gcp_tpu import GcpTpu
@@ -196,6 +198,7 @@ from .image import Image
 from .image_command import ImageCommand
 from .image_content_part import ImageContentPart
 from .image_url import ImageUrl
+from .image_url_url import ImageUrlUrl
 from .infer_method_name import InferMethodName
 from .intercept import Intercept
 from .intercept_rules_item import InterceptRulesItem
@@ -273,6 +276,8 @@ from .ml_repo_manifest import MlRepoManifest
 from .model import Model
 from .model_configuration import ModelConfiguration
 from .model_manifest import ModelManifest
+from .model_manifest_framework import ModelManifestFramework
+from .model_manifest_source import ModelManifestSource
 from .model_version import ModelVersion
 from .model_version_environment import ModelVersionEnvironment
 from .multi_part_upload import MultiPartUpload
@@ -301,6 +306,7 @@ from .pagination import Pagination
 from .param import Param
 from .param_param_type import ParamParamType
 from .parameters import Parameters
+from .parameters_stop import ParametersStop
 from .permissions import Permissions
 from .port import Port
 from .port_app_protocol import PortAppProtocol
@@ -341,7 +347,6 @@ from .sklearn_model_schema import SklearnModelSchema
 from .sklearn_serialization_format import SklearnSerializationFormat
 from .slack_bot import SlackBot
 from .slack_webhook import SlackWebhook
-from .source import Source
 from .spa_cy_framework import SpaCyFramework
 from .spark_driver_config import SparkDriverConfig
 from .spark_executor_config import SparkExecutorConfig
@@ -363,23 +368,24 @@ from .ssh_server_config import SshServerConfig
 from .stage_artifact_response import StageArtifactResponse
 from .static_volume_config import StaticVolumeConfig
 from .stats_models_framework import StatsModelsFramework
-from .stop import Stop
 from .string_data_mount import StringDataMount
 from .subject import Subject
 from .subject_type import SubjectType
 from .system_message import SystemMessage
+from .system_message_content import SystemMessageContent
 from .task_docker_file_build import TaskDockerFileBuild
 from .task_python_build import TaskPythonBuild
 from .team import Team
 from .team_manifest import TeamManifest
 from .tensor_flow_framework import TensorFlowFramework
 from .terminate_job_response import TerminateJobResponse
-from .text import Text
 from .text_content_part import TextContentPart
+from .text_content_part_text import TextContentPartText
 from .token_pagination import TokenPagination
 from .tool import Tool
 from .tool_call import ToolCall
 from .tool_message import ToolMessage
+from .tool_message_content import ToolMessageContent
 from .tool_schema import ToolSchema
 from .tool_version import ToolVersion
 from .tracing_project import TracingProject
@@ -392,9 +398,9 @@ from .true_foundry_managed_source import TrueFoundryManagedSource
 from .update_secret_input import UpdateSecretInput
 from .update_user_roles_response import UpdateUserRolesResponse
 from .upgrade_data import UpgradeData
-from .url import Url
 from .user import User
 from .user_message import UserMessage
+from .user_message_content import UserMessageContent
 from .user_message_content_item import UserMessageContentItem
 from .user_metadata import UserMetadata
 from .validation_error import ValidationError
@@ -449,8 +455,10 @@ __all__ = [
     "ApplicationSetComponentsItem",
     "ApplicationType",
     "ApplyMlEntityResponse",
+    "ApplyMlEntityResponseData",
     "Artifact",
     "ArtifactManifest",
+    "ArtifactManifestSource",
     "ArtifactPath",
     "ArtifactType",
     "ArtifactVersion",
@@ -458,6 +466,7 @@ __all__ = [
     "ArtifactsDownload",
     "ArtifactsDownloadArtifactsItem",
     "AssistantMessage",
+    "AssistantMessageContent",
     "AssistantMessageContentItem",
     "AsyncProcessorSidecar",
     "AsyncService",
@@ -500,15 +509,14 @@ __all__ = [
     "ContainerTaskConfig",
     "ContainerTaskConfigImage",
     "ContainerTaskConfigMountsItem",
-    "Content",
     "CoreNatsOutputConfig",
     "CpuUtilizationMetric",
     "CreateMultiPartUploadRequest",
     "CreatePersonalAccessTokenResponse",
     "CronMetric",
-    "Data",
     "DataDirectory",
     "DataDirectoryManifest",
+    "DataDirectoryManifestSource",
     "DeactivateUserResponse",
     "DeleteApplicationResponse",
     "DeleteJobRunResponse",
@@ -523,6 +531,7 @@ __all__ = [
     "DeploymentStatusValue",
     "DeploymentTransition",
     "DeveloperMessage",
+    "DeveloperMessageContent",
     "DockerFileBuild",
     "DockerFileBuildCommand",
     "DynamicVolumeConfig",
@@ -552,7 +561,6 @@ __all__ = [
     "FlyteWorkflowId",
     "FlyteWorkflowTemplate",
     "ForwardAction",
-    "Framework",
     "Function",
     "FunctionSchema",
     "GcpTpu",
@@ -612,6 +620,7 @@ __all__ = [
     "ImageCommand",
     "ImageContentPart",
     "ImageUrl",
+    "ImageUrlUrl",
     "InferMethodName",
     "Intercept",
     "InterceptRulesItem",
@@ -689,6 +698,8 @@ __all__ = [
     "Model",
     "ModelConfiguration",
     "ModelManifest",
+    "ModelManifestFramework",
+    "ModelManifestSource",
     "ModelVersion",
     "ModelVersionEnvironment",
     "MultiPartUpload",
@@ -717,6 +728,7 @@ __all__ = [
     "Param",
     "ParamParamType",
     "Parameters",
+    "ParametersStop",
     "Permissions",
     "Port",
     "PortAppProtocol",
@@ -760,7 +772,6 @@ __all__ = [
     "SklearnSerializationFormat",
     "SlackBot",
     "SlackWebhook",
-    "Source",
     "SpaCyFramework",
     "SparkDriverConfig",
     "SparkExecutorConfig",
@@ -782,23 +793,24 @@ __all__ = [
     "StageArtifactResponse",
     "StaticVolumeConfig",
     "StatsModelsFramework",
-    "Stop",
     "StringDataMount",
     "Subject",
     "SubjectType",
     "SystemMessage",
+    "SystemMessageContent",
     "TaskDockerFileBuild",
     "TaskPythonBuild",
     "Team",
     "TeamManifest",
     "TensorFlowFramework",
     "TerminateJobResponse",
-    "Text",
     "TextContentPart",
+    "TextContentPartText",
     "TokenPagination",
     "Tool",
     "ToolCall",
     "ToolMessage",
+    "ToolMessageContent",
     "ToolSchema",
     "ToolVersion",
     "TracingProject",
@@ -811,9 +823,9 @@ __all__ = [
     "UpdateSecretInput",
     "UpdateUserRolesResponse",
     "UpgradeData",
-    "Url",
     "User",
     "UserMessage",
+    "UserMessageContent",
     "UserMessageContentItem",
     "UserMetadata",
     "ValidationError",
