@@ -3,29 +3,31 @@ from typing import Any, Optional, Protocol, TypeVar
 from pydantic import BaseModel
 
 
-from ..errors import NotFoundError
-from ..core.pagination import AsyncPager, SyncPager
-from ..core.pydantic_utilities import parse_obj_as
+from .errors import NotFoundError
+from .core.pagination import AsyncPager, SyncPager
+from .core.pydantic_utilities import parse_obj_as
 
 # Clients
-from ..core.request_options import RequestOptions
-from ..types.http_error import HttpError
-from ..v1.agent_versions.client import AgentVersionsClient, AsyncAgentVersionsClient
-from ..v1.artifact_versions.client import ArtifactVersionsClient, AsyncArtifactVersionsClient
-from ..v1.model_versions.client import ModelVersionsClient, AsyncModelVersionsClient
-from ..v1.prompt_versions.client import PromptVersionsClient, AsyncPromptVersionsClient
-from ..v1.tool_versions.client import ToolVersionsClient, AsyncToolVersionsClient
-from ..v1.tracing_projects.client import AsyncTracingProjectsClient, TracingProjectsClient
-from ..v1.workspaces.client import WorkspacesClient, AsyncWorkspacesClient
+from .core.request_options import RequestOptions
+from .types.http_error import HttpError
+from .agent_versions.client import AgentVersionsClient, AsyncAgentVersionsClient
+from .applications.client import ApplicationsClient, AsyncApplicationsClient
+from .artifact_versions.client import ArtifactVersionsClient, AsyncArtifactVersionsClient
+from .model_versions.client import ModelVersionsClient, AsyncModelVersionsClient
+from .prompt_versions.client import PromptVersionsClient, AsyncPromptVersionsClient
+from .tool_versions.client import ToolVersionsClient, AsyncToolVersionsClient
+from .tracing_projects.client import AsyncTracingProjectsClient, TracingProjectsClient
+from .workspaces.client import WorkspacesClient, AsyncWorkspacesClient
 
 # Response types
-from ..types.get_agent_version_response import GetAgentVersionResponse
-from ..types.get_artifact_version_response import GetArtifactVersionResponse
-from ..types.get_model_version_response import GetModelVersionResponse
-from ..types.get_prompt_version_response import GetPromptVersionResponse
-from ..types.get_tool_version_response import GetToolVersionResponse
-from ..types.get_tracing_project_response import GetTracingProjectResponse
-from ..types.get_workspace_response import GetWorkspaceResponse
+from .types.get_agent_version_response import GetAgentVersionResponse
+from .types.get_application_response import GetApplicationResponse
+from .types.get_artifact_version_response import GetArtifactVersionResponse
+from .types.get_model_version_response import GetModelVersionResponse
+from .types.get_prompt_version_response import GetPromptVersionResponse
+from .types.get_tool_version_response import GetToolVersionResponse
+from .types.get_tracing_project_response import GetTracingProjectResponse
+from .types.get_workspace_response import GetWorkspaceResponse
 
 T = TypeVar("T", bound=BaseModel)
 
@@ -78,6 +80,12 @@ class WrappedAgentVersionsClient(AgentVersionsClient):
         return parse_obj_as(GetAgentVersionResponse, {"data": item})
 
 
+class WrappedApplicationsClient(ApplicationsClient):
+    def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetApplicationResponse:
+        item = _get_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
+        return parse_obj_as(GetApplicationResponse, {"data": item})
+
+
 class WrappedArtifactVersionsClient(ArtifactVersionsClient):
     def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetArtifactVersionResponse:
         item = _get_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
@@ -118,6 +126,12 @@ class WrappedAsyncAgentVersionsClient(AsyncAgentVersionsClient):
     async def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetAgentVersionResponse:
         item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
         return parse_obj_as(GetAgentVersionResponse, {"data": item})
+
+
+class WrappedAsyncApplicationsClient(AsyncApplicationsClient):
+    async def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetApplicationResponse:
+        item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
+        return parse_obj_as(GetApplicationResponse, {"data": item})
 
 
 class WrappedAsyncArtifactVersionsClient(AsyncArtifactVersionsClient):

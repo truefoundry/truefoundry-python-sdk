@@ -5,9 +5,11 @@ import os
 import httpx
 
 from truefoundry_sdk.base_client import AsyncBaseTrueFoundry, BaseTrueFoundry
-from truefoundry_sdk.v1._wrapped_clients import (
+from truefoundry_sdk._wrapped_clients import (
     WrappedAgentVersionsClient,
+    WrappedApplicationsClient,
     WrappedArtifactVersionsClient,
+    WrappedAsyncApplicationsClient,
     WrappedAsyncTracingProjectsClient,
     WrappedModelVersionsClient,
     WrappedPromptVersionsClient,
@@ -42,25 +44,28 @@ class TrueFoundry(BaseTrueFoundry):
             follow_redirects=follow_redirects,
             httpx_client=httpx_client,
         )
-        self.v1.agent_versions = WrappedAgentVersionsClient(
+        self.agent_versions = WrappedAgentVersionsClient(
             client_wrapper=self._client_wrapper
         )
-        self.v1.artifact_versions = WrappedArtifactVersionsClient(
+        self.applications = WrappedApplicationsClient(
             client_wrapper=self._client_wrapper
         )
-        self.v1.model_versions = WrappedModelVersionsClient(
+        self.artifact_versions = WrappedArtifactVersionsClient(
             client_wrapper=self._client_wrapper
         )
-        self.v1.prompt_versions = WrappedPromptVersionsClient(
+        self.model_versions = WrappedModelVersionsClient(
             client_wrapper=self._client_wrapper
         )
-        self.v1.tool_versions = WrappedToolVersionsClient(
+        self.prompt_versions = WrappedPromptVersionsClient(
             client_wrapper=self._client_wrapper
         )
-        self.v1.tracing_projects = WrappedTracingProjectsClient(
+        self.tool_versions = WrappedToolVersionsClient(
             client_wrapper=self._client_wrapper
         )
-        self.v1.workspaces = WrappedWorkspacesClient(
+        self.tracing_projects = WrappedTracingProjectsClient(
+            client_wrapper=self._client_wrapper
+        )
+        self.workspaces = WrappedWorkspacesClient(
             client_wrapper=self._client_wrapper
         )
 
@@ -84,25 +89,28 @@ class AsyncTrueFoundry(AsyncBaseTrueFoundry):
             follow_redirects=follow_redirects,
             httpx_client=httpx_client,
         )
-        self.v1.agent_versions = WrappedAsyncAgentVersionsClient(
+        self.agent_versions = WrappedAsyncAgentVersionsClient(
             client_wrapper=self._client_wrapper
         )
-        self.v1.artifact_versions = WrappedAsyncArtifactVersionsClient(
+        self.applications = WrappedAsyncApplicationsClient(
             client_wrapper=self._client_wrapper
         )
-        self.v1.model_versions = WrappedAsyncModelVersionsClient(
+        self.artifact_versions = WrappedAsyncArtifactVersionsClient(
             client_wrapper=self._client_wrapper
         )
-        self.v1.prompt_versions = WrappedAsyncPromptVersionsClient(
+        self.model_versions = WrappedAsyncModelVersionsClient(
             client_wrapper=self._client_wrapper
         )
-        self.v1.tool_versions = WrappedAsyncToolVersionsClient(
+        self.prompt_versions = WrappedAsyncPromptVersionsClient(
             client_wrapper=self._client_wrapper
         )
-        self.v1.tracing_projects = WrappedAsyncTracingProjectsClient(
+        self.tool_versions = WrappedAsyncToolVersionsClient(
             client_wrapper=self._client_wrapper
         )
-        self.v1.workspaces = WrappedAsyncWorkspacesClient(
+        self.tracing_projects = WrappedAsyncTracingProjectsClient(
+            client_wrapper=self._client_wrapper
+        )
+        self.workspaces = WrappedAsyncWorkspacesClient(
             client_wrapper=self._client_wrapper
         )
 
