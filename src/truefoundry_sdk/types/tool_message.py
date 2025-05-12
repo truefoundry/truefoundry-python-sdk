@@ -4,7 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .content import Content
+from .tool_message_content import ToolMessageContent
 
 
 class ToolMessage(UniversalBaseModel):
@@ -17,7 +17,7 @@ class ToolMessage(UniversalBaseModel):
     Role of the message
     """
 
-    content: Content = pydantic.Field()
+    content: ToolMessageContent = pydantic.Field()
     """
     Content of the tool call result
     """

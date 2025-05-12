@@ -4,7 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .content import Content
+from .user_message_content import UserMessageContent
 
 
 class UserMessage(UniversalBaseModel):
@@ -17,7 +17,7 @@ class UserMessage(UniversalBaseModel):
     Role of the message
     """
 
-    content: Content = pydantic.Field()
+    content: UserMessageContent = pydantic.Field()
     """
     Content of the user message. can be a mix of text and images
     """

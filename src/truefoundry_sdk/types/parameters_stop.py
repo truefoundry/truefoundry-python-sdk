@@ -2,4 +2,4 @@
 
 import typing
 
-Stop = typing.Union[typing.List[str], str]
+ParametersStop = typing.Union[typing.List[str], str]

@@ -10,6 +10,6 @@ from .prompt_version import PromptVersion
 from .tool_version import ToolVersion
 from .tracing_project import TracingProject
 
-Data = typing.Union[
+ApplyMlEntityResponseData = typing.Union[
     ModelVersion, PromptVersion, ToolVersion, AgentVersion, ArtifactVersion, DataDirectory, TracingProject
 ]

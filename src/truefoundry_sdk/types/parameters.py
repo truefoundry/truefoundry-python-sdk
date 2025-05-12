@@ -4,7 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .stop import Stop
+from .parameters_stop import ParametersStop
 
 
 class Parameters(UniversalBaseModel):
@@ -16,7 +16,7 @@ class Parameters(UniversalBaseModel):
     temperature: typing.Optional[float] = None
     top_k: typing.Optional[float] = None
     top_p: typing.Optional[float] = None
-    stop: typing.Optional[Stop] = None
+    stop: typing.Optional[ParametersStop] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

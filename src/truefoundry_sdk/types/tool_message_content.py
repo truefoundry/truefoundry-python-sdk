@@ -4,4 +4,4 @@ import typing
 
 from .blob_storage_reference import BlobStorageReference
 
-Text = typing.Union[str, BlobStorageReference]
+ToolMessageContent = typing.Union[str, BlobStorageReference]

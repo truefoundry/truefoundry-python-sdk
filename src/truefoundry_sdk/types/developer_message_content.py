@@ -4,4 +4,4 @@ import typing
 
 from .blob_storage_reference import BlobStorageReference
 
-Url = typing.Union[str, BlobStorageReference]
+DeveloperMessageContent = typing.Union[str, BlobStorageReference]
