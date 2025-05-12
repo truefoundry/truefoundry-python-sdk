@@ -4,8 +4,37 @@ import os
 import typing
 
 import httpx
+from .agent_versions.client import AgentVersionsClient, AsyncAgentVersionsClient
+from .agents.client import AgentsClient, AsyncAgentsClient
+from .alerts.client import AlertsClient, AsyncAlertsClient
+from .application_versions.client import ApplicationVersionsClient, AsyncApplicationVersionsClient
+from .applications.client import ApplicationsClient, AsyncApplicationsClient
+from .artifact_versions.client import ArtifactVersionsClient, AsyncArtifactVersionsClient
+from .artifacts.client import ArtifactsClient, AsyncArtifactsClient
+from .clusters.client import AsyncClustersClient, ClustersClient
+from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .v1.client import AsyncV1Client, V1Client
+from .data_directories.client import AsyncDataDirectoriesClient, DataDirectoriesClient
+from .environments.client import AsyncEnvironmentsClient, EnvironmentsClient
+from .events.client import AsyncEventsClient, EventsClient
+from .internal.client import AsyncInternalClient, InternalClient
+from .jobs.client import AsyncJobsClient, JobsClient
+from .logs.client import AsyncLogsClient, LogsClient
+from .ml_repos.client import AsyncMlReposClient, MlReposClient
+from .model_versions.client import AsyncModelVersionsClient, ModelVersionsClient
+from .models.client import AsyncModelsClient, ModelsClient
+from .personal_access_tokens.client import AsyncPersonalAccessTokensClient, PersonalAccessTokensClient
+from .prompt_versions.client import AsyncPromptVersionsClient, PromptVersionsClient
+from .prompts.client import AsyncPromptsClient, PromptsClient
+from .secret_groups.client import AsyncSecretGroupsClient, SecretGroupsClient
+from .secrets.client import AsyncSecretsClient, SecretsClient
+from .teams.client import AsyncTeamsClient, TeamsClient
+from .tool_versions.client import AsyncToolVersionsClient, ToolVersionsClient
+from .tools.client import AsyncToolsClient, ToolsClient
+from .tracing_projects.client import AsyncTracingProjectsClient, TracingProjectsClient
+from .users.client import AsyncUsersClient, UsersClient
+from .virtual_accounts.client import AsyncVirtualAccountsClient, VirtualAccountsClient
+from .workspaces.client import AsyncWorkspacesClient, WorkspacesClient
 
 
 class BaseTrueFoundry:
@@ -45,6 +74,8 @@ class BaseTrueFoundry:
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
+        if api_key is None:
+            raise ApiError(body="The client must be instantiated be either passing in api_key or setting TFY_API_KEY")
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
             api_key=api_key,
@@ -55,7 +86,35 @@ class BaseTrueFoundry:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
-        self.v1 = V1Client(client_wrapper=self._client_wrapper)
+        self.users = UsersClient(client_wrapper=self._client_wrapper)
+        self.teams = TeamsClient(client_wrapper=self._client_wrapper)
+        self.personal_access_tokens = PersonalAccessTokensClient(client_wrapper=self._client_wrapper)
+        self.virtual_accounts = VirtualAccountsClient(client_wrapper=self._client_wrapper)
+        self.secrets = SecretsClient(client_wrapper=self._client_wrapper)
+        self.secret_groups = SecretGroupsClient(client_wrapper=self._client_wrapper)
+        self.clusters = ClustersClient(client_wrapper=self._client_wrapper)
+        self.environments = EnvironmentsClient(client_wrapper=self._client_wrapper)
+        self.applications = ApplicationsClient(client_wrapper=self._client_wrapper)
+        self.application_versions = ApplicationVersionsClient(client_wrapper=self._client_wrapper)
+        self.jobs = JobsClient(client_wrapper=self._client_wrapper)
+        self.workspaces = WorkspacesClient(client_wrapper=self._client_wrapper)
+        self.events = EventsClient(client_wrapper=self._client_wrapper)
+        self.alerts = AlertsClient(client_wrapper=self._client_wrapper)
+        self.logs = LogsClient(client_wrapper=self._client_wrapper)
+        self.ml_repos = MlReposClient(client_wrapper=self._client_wrapper)
+        self.artifacts = ArtifactsClient(client_wrapper=self._client_wrapper)
+        self.agents = AgentsClient(client_wrapper=self._client_wrapper)
+        self.prompts = PromptsClient(client_wrapper=self._client_wrapper)
+        self.tools = ToolsClient(client_wrapper=self._client_wrapper)
+        self.models = ModelsClient(client_wrapper=self._client_wrapper)
+        self.artifact_versions = ArtifactVersionsClient(client_wrapper=self._client_wrapper)
+        self.model_versions = ModelVersionsClient(client_wrapper=self._client_wrapper)
+        self.prompt_versions = PromptVersionsClient(client_wrapper=self._client_wrapper)
+        self.tool_versions = ToolVersionsClient(client_wrapper=self._client_wrapper)
+        self.agent_versions = AgentVersionsClient(client_wrapper=self._client_wrapper)
+        self.data_directories = DataDirectoriesClient(client_wrapper=self._client_wrapper)
+        self.tracing_projects = TracingProjectsClient(client_wrapper=self._client_wrapper)
+        self.internal = InternalClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncBaseTrueFoundry:
@@ -95,6 +154,8 @@ class AsyncBaseTrueFoundry:
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
+        if api_key is None:
+            raise ApiError(body="The client must be instantiated be either passing in api_key or setting TFY_API_KEY")
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
             api_key=api_key,
@@ -105,4 +166,32 @@ class AsyncBaseTrueFoundry:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
-        self.v1 = AsyncV1Client(client_wrapper=self._client_wrapper)
+        self.users = AsyncUsersClient(client_wrapper=self._client_wrapper)
+        self.teams = AsyncTeamsClient(client_wrapper=self._client_wrapper)
+        self.personal_access_tokens = AsyncPersonalAccessTokensClient(client_wrapper=self._client_wrapper)
+        self.virtual_accounts = AsyncVirtualAccountsClient(client_wrapper=self._client_wrapper)
+        self.secrets = AsyncSecretsClient(client_wrapper=self._client_wrapper)
+        self.secret_groups = AsyncSecretGroupsClient(client_wrapper=self._client_wrapper)
+        self.clusters = AsyncClustersClient(client_wrapper=self._client_wrapper)
+        self.environments = AsyncEnvironmentsClient(client_wrapper=self._client_wrapper)
+        self.applications = AsyncApplicationsClient(client_wrapper=self._client_wrapper)
+        self.application_versions = AsyncApplicationVersionsClient(client_wrapper=self._client_wrapper)
+        self.jobs = AsyncJobsClient(client_wrapper=self._client_wrapper)
+        self.workspaces = AsyncWorkspacesClient(client_wrapper=self._client_wrapper)
+        self.events = AsyncEventsClient(client_wrapper=self._client_wrapper)
+        self.alerts = AsyncAlertsClient(client_wrapper=self._client_wrapper)
+        self.logs = AsyncLogsClient(client_wrapper=self._client_wrapper)
+        self.ml_repos = AsyncMlReposClient(client_wrapper=self._client_wrapper)
+        self.artifacts = AsyncArtifactsClient(client_wrapper=self._client_wrapper)
+        self.agents = AsyncAgentsClient(client_wrapper=self._client_wrapper)
+        self.prompts = AsyncPromptsClient(client_wrapper=self._client_wrapper)
+        self.tools = AsyncToolsClient(client_wrapper=self._client_wrapper)
+        self.models = AsyncModelsClient(client_wrapper=self._client_wrapper)
+        self.artifact_versions = AsyncArtifactVersionsClient(client_wrapper=self._client_wrapper)
+        self.model_versions = AsyncModelVersionsClient(client_wrapper=self._client_wrapper)
+        self.prompt_versions = AsyncPromptVersionsClient(client_wrapper=self._client_wrapper)
+        self.tool_versions = AsyncToolVersionsClient(client_wrapper=self._client_wrapper)
+        self.agent_versions = AsyncAgentVersionsClient(client_wrapper=self._client_wrapper)
+        self.data_directories = AsyncDataDirectoriesClient(client_wrapper=self._client_wrapper)
+        self.tracing_projects = AsyncTracingProjectsClient(client_wrapper=self._client_wrapper)
+        self.internal = AsyncInternalClient(client_wrapper=self._client_wrapper)

@@ -5,7 +5,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .manifest import Manifest
+from .base_artifact_version_manifest import BaseArtifactVersionManifest
 from .subject import Subject
 
 
@@ -15,7 +15,7 @@ class BaseArtifactVersion(UniversalBaseModel):
     created_by_subject: Subject
     created_at: typing.Optional[dt.datetime] = None
     updated_at: typing.Optional[dt.datetime] = None
-    manifest: typing.Optional[Manifest] = None
+    manifest: typing.Optional[BaseArtifactVersionManifest] = None
     usage_code_snippet: typing.Optional[str] = None
     ml_repo_id: str
 

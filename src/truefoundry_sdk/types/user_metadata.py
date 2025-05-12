@@ -16,6 +16,7 @@ class UserMetadata(UniversalBaseModel):
         typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="userObject")
     ] = None
     invite_accepted: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="inviteAccepted")] = None
+    registered_in_idp: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="registeredInIdp")] = None
     preference: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
 
     if IS_PYDANTIC_V2:

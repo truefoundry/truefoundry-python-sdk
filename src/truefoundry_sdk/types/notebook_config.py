@@ -11,6 +11,7 @@ class NotebookConfig(UniversalBaseModel):
     """
     +label=Notebook Base Domain
     +usage=The base domain for the cluster with which you can access your Notebooks
+    +message=Must not contain any spaces.
     """
 
     if IS_PYDANTIC_V2:

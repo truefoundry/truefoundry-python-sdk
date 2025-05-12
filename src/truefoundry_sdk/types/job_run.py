@@ -84,6 +84,13 @@ class JobRun(UniversalBaseModel):
     Exit Code
     """
 
+    external_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="externalId")] = pydantic.Field(
+        default=None
+    )
+    """
+    External Id
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
