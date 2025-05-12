@@ -32,7 +32,7 @@ from .application_problem import ApplicationProblem
 from .application_set import ApplicationSet
 from .application_set_components_item import ApplicationSetComponentsItem
 from .application_type import ApplicationType
-from .apply_request import ApplyRequest
+from .apply_ml_entity_response import ApplyMlEntityResponse
 from .artifact import Artifact
 from .artifact_manifest import ArtifactManifest
 from .artifact_path import ArtifactPath
@@ -52,6 +52,7 @@ from .autoshutdown import Autoshutdown
 from .aws_access_key_auth import AwsAccessKeyAuth
 from .aws_inferentia import AwsInferentia
 from .base_artifact_version import BaseArtifactVersion
+from .base_artifact_version_manifest import BaseArtifactVersionManifest
 from .base_autoscaling import BaseAutoscaling
 from .base_service import BaseService
 from .base_service_image import BaseServiceImage
@@ -89,6 +90,7 @@ from .cpu_utilization_metric import CpuUtilizationMetric
 from .create_multi_part_upload_request import CreateMultiPartUploadRequest
 from .create_personal_access_token_response import CreatePersonalAccessTokenResponse
 from .cron_metric import CronMetric
+from .data import Data
 from .data_directory import DataDirectory
 from .data_directory_manifest import DataDirectoryManifest
 from .deactivate_user_response import DeactivateUserResponse
@@ -261,7 +263,6 @@ from .log import Log
 from .logs_search_filter_type import LogsSearchFilterType
 from .logs_search_operator_type import LogsSearchOperatorType
 from .logs_sorting_direction import LogsSortingDirection
-from .manifest import Manifest
 from .manual import Manual
 from .method import Method
 from .metric import Metric
@@ -447,7 +448,7 @@ __all__ = [
     "ApplicationSet",
     "ApplicationSetComponentsItem",
     "ApplicationType",
-    "ApplyRequest",
+    "ApplyMlEntityResponse",
     "Artifact",
     "ArtifactManifest",
     "ArtifactPath",
@@ -467,6 +468,7 @@ __all__ = [
     "AwsAccessKeyAuth",
     "AwsInferentia",
     "BaseArtifactVersion",
+    "BaseArtifactVersionManifest",
     "BaseAutoscaling",
     "BaseService",
     "BaseServiceImage",
@@ -504,6 +506,7 @@ __all__ = [
     "CreateMultiPartUploadRequest",
     "CreatePersonalAccessTokenResponse",
     "CronMetric",
+    "Data",
     "DataDirectory",
     "DataDirectoryManifest",
     "DeactivateUserResponse",
@@ -676,7 +679,6 @@ __all__ = [
     "LogsSearchFilterType",
     "LogsSearchOperatorType",
     "LogsSortingDirection",
-    "Manifest",
     "Manual",
     "Method",
     "Metric",

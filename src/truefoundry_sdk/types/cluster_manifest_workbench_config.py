@@ -20,6 +20,7 @@ class ClusterManifestWorkbenchConfig(UniversalBaseModel):
     """
     +label=Default Storage Class
     +usage=The default storage class for the home directory of workbench
+    +message=Must not contain any spaces.
     """
 
     if IS_PYDANTIC_V2:

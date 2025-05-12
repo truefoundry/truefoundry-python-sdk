@@ -13,11 +13,7 @@ class MlRepoManifest(UniversalBaseModel):
     +usage=MLRepo is a repository ML training runs that log params, metrics, plots, images and versioned entities like artifacts, models, prompts, tools, agents
     """
 
-    type: typing.Literal["ml-repo"] = pydantic.Field(default="ml-repo")
-    """
-    +value=ml-repo
-    """
-
+    type: typing.Literal["ml-repo"] = "ml-repo"
     name: str = pydantic.Field()
     """
     +label=Name

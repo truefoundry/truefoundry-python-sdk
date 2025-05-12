@@ -12,6 +12,7 @@ class SshServerConfig(UniversalBaseModel):
     +label=SSH Base Domain
     +usage=The base domain for the cluster with which you can access your SSH containers
     +sort=1000
+    +message=Must not contain any spaces.
     """
 
     port: float = pydantic.Field()
