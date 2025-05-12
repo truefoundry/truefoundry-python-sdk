@@ -1,4 +1,4 @@
 # Specify files that shouldn't be modified by Fern
-src/truefoundry_sdk/v1/_wrapped_clients.py
+src/truefoundry_sdk/_wrapped_clients.py
 src/truefoundry_sdk/client.py
 .github/workflows/ci.yml
