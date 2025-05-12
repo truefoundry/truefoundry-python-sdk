@@ -4,7 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .source import Source
+from .artifact_manifest_source import ArtifactManifestSource
 
 
 class ArtifactManifest(UniversalBaseModel):
@@ -39,7 +39,7 @@ class ArtifactManifest(UniversalBaseModel):
     """
 
     type: typing.Literal["artifact-version"] = "artifact-version"
-    source: Source
+    source: ArtifactManifestSource
     step: typing.Optional[int] = pydantic.Field(default=0)
     """
     Step/Epoch number in an iterative training loop the artifact version was created. Generally useful when logging a model version from a MLRepo Run

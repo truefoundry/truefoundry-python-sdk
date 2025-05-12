@@ -4,7 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .url import Url
+from .image_url_url import ImageUrlUrl
 
 
 class ImageUrl(UniversalBaseModel):
@@ -12,7 +12,7 @@ class ImageUrl(UniversalBaseModel):
     Image URL linking to the image
     """
 
-    url: Url = pydantic.Field()
+    url: ImageUrlUrl = pydantic.Field()
     """
     Image URL linking to the image
     """

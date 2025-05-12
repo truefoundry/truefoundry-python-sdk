@@ -17,7 +17,7 @@ from .tensor_flow_framework import TensorFlowFramework
 from .transformers_framework import TransformersFramework
 from .xg_boost_framework import XgBoostFramework
 
-Framework = typing.Union[
+ModelManifestFramework = typing.Union[
     TransformersFramework,
     TensorFlowFramework,
     SklearnFramework,

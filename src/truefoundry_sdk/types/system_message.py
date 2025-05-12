@@ -4,7 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .content import Content
+from .system_message_content import SystemMessageContent
 
 
 class SystemMessage(UniversalBaseModel):
@@ -17,7 +17,7 @@ class SystemMessage(UniversalBaseModel):
     Role of the message
     """
 
-    content: Content = pydantic.Field()
+    content: SystemMessageContent = pydantic.Field()
     """
     Text content for the system message
     """
