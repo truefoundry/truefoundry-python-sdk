@@ -2,21 +2,21 @@ from typing import Any, Optional, Protocol, TypeVar
 
 from pydantic import BaseModel
 
-
 from .errors import NotFoundError
 from .core.pagination import AsyncPager, SyncPager
 from .core.pydantic_utilities import parse_obj_as
 
 # Clients
-from .core.request_options import RequestOptions
-from .types.http_error import HttpError
 from .agent_versions.client import AgentVersionsClient, AsyncAgentVersionsClient
 from .applications.client import ApplicationsClient, AsyncApplicationsClient
 from .artifact_versions.client import ArtifactVersionsClient, AsyncArtifactVersionsClient
+from .core.request_options import RequestOptions
 from .model_versions.client import ModelVersionsClient, AsyncModelVersionsClient
 from .prompt_versions.client import PromptVersionsClient, AsyncPromptVersionsClient
+from .secret_groups.client import SecretGroupsClient, AsyncSecretGroupsClient
 from .tool_versions.client import ToolVersionsClient, AsyncToolVersionsClient
 from .tracing_projects.client import AsyncTracingProjectsClient, TracingProjectsClient
+from .types.http_error import HttpError
 from .workspaces.client import WorkspacesClient, AsyncWorkspacesClient
 
 # Response types
@@ -25,6 +25,7 @@ from .types.get_application_response import GetApplicationResponse
 from .types.get_artifact_version_response import GetArtifactVersionResponse
 from .types.get_model_version_response import GetModelVersionResponse
 from .types.get_prompt_version_response import GetPromptVersionResponse
+from .types.get_secret_group_response import GetSecretGroupResponse
 from .types.get_tool_version_response import GetToolVersionResponse
 from .types.get_tracing_project_response import GetTracingProjectResponse
 from .types.get_workspace_response import GetWorkspaceResponse
@@ -104,6 +105,12 @@ class WrappedPromptVersionsClient(PromptVersionsClient):
         return parse_obj_as(GetPromptVersionResponse, {"data": item})
 
 
+class WrappedSecretGroupsClient(SecretGroupsClient):
+    def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetSecretGroupResponse:
+        item = _get_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
+        return parse_obj_as(GetSecretGroupResponse, {"data": item})
+
+
 class WrappedToolVersionsClient(ToolVersionsClient):
     def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetToolVersionResponse:
         item = _get_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
@@ -150,6 +157,12 @@ class WrappedAsyncPromptVersionsClient(AsyncPromptVersionsClient):
     async def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetPromptVersionResponse:
         item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
         return parse_obj_as(GetPromptVersionResponse, {"data": item})
+
+
+class WrappedAsyncSecretGroupsClient(AsyncSecretGroupsClient):
+    async def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetSecretGroupResponse:
+        item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
+        return parse_obj_as(GetSecretGroupResponse, {"data": item})
 
 
 class WrappedAsyncToolVersionsClient(AsyncToolVersionsClient):

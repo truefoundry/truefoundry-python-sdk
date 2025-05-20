@@ -9,19 +9,21 @@ from truefoundry_sdk._wrapped_clients import (
     WrappedAgentVersionsClient,
     WrappedApplicationsClient,
     WrappedArtifactVersionsClient,
-    WrappedAsyncApplicationsClient,
-    WrappedAsyncTracingProjectsClient,
-    WrappedModelVersionsClient,
-    WrappedPromptVersionsClient,
-    WrappedToolVersionsClient,
-    WrappedTracingProjectsClient,
-    WrappedWorkspacesClient,
     WrappedAsyncAgentVersionsClient,
+    WrappedAsyncApplicationsClient,
     WrappedAsyncArtifactVersionsClient,
     WrappedAsyncModelVersionsClient,
     WrappedAsyncPromptVersionsClient,
+    WrappedAsyncSecretGroupsClient,
     WrappedAsyncToolVersionsClient,
+    WrappedAsyncTracingProjectsClient,
     WrappedAsyncWorkspacesClient,
+    WrappedModelVersionsClient,
+    WrappedPromptVersionsClient,
+    WrappedSecretGroupsClient,
+    WrappedToolVersionsClient,
+    WrappedTracingProjectsClient,
+    WrappedWorkspacesClient,
 )
 
 
@@ -57,6 +59,9 @@ class TrueFoundry(BaseTrueFoundry):
             client_wrapper=self._client_wrapper
         )
         self.prompt_versions = WrappedPromptVersionsClient(
+            client_wrapper=self._client_wrapper
+        )
+        self.secret_groups = WrappedSecretGroupsClient(
             client_wrapper=self._client_wrapper
         )
         self.tool_versions = WrappedToolVersionsClient(
@@ -102,6 +107,9 @@ class AsyncTrueFoundry(AsyncBaseTrueFoundry):
             client_wrapper=self._client_wrapper
         )
         self.prompt_versions = WrappedAsyncPromptVersionsClient(
+            client_wrapper=self._client_wrapper
+        )
+        self.secret_groups = WrappedAsyncSecretGroupsClient(
             client_wrapper=self._client_wrapper
         )
         self.tool_versions = WrappedAsyncToolVersionsClient(
