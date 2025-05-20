@@ -48,8 +48,14 @@ class ToolsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.tools.get(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.tools.get(
+            id="id",
+        )
         """
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
@@ -71,8 +77,14 @@ class ToolsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.tools.delete(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.tools.delete(
+            id="id",
+        )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
@@ -108,7 +120,11 @@ class ToolsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
         response = client.tools.list()
         for item in response:
             yield item
@@ -138,14 +154,32 @@ class ToolsClient:
 
         Examples
         --------
-        from truefoundry_sdk import TrueFoundry
-        from truefoundry_sdk import AgentOpenApiToolManifest
-        from truefoundry_sdk import BlobStorageReference
-        from truefoundry_sdk import MimeType
-        from truefoundry_sdk import Method
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.tools.create_or_update(manifest=AgentOpenApiToolManifest(name='name', metadata={'key': 'value'
-        }, ml_repo='ml_repo', openapi_spec=BlobStorageReference(path='path', mime_type=MimeType.TEXT_PLAIN, ), base_url='base_url', path='path', method=Method.GET, ), )
+        from truefoundry_sdk import (
+            AgentOpenApiToolManifest,
+            BlobStorageReference,
+            Method,
+            MimeType,
+            TrueFoundry,
+        )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.tools.create_or_update(
+            manifest=AgentOpenApiToolManifest(
+                name="name",
+                metadata={"key": "value"},
+                ml_repo="ml_repo",
+                openapi_spec=BlobStorageReference(
+                    path="path",
+                    mime_type=MimeType.TEXT_PLAIN,
+                ),
+                base_url="base_url",
+                path="path",
+                method=Method.GET,
+            ),
+        )
         """
         _response = self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
         return _response.data
@@ -182,11 +216,22 @@ class AsyncToolsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.tools.get(id='id', )
+            await client.tools.get(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(id, request_options=request_options)
@@ -208,11 +253,22 @@ class AsyncToolsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.tools.delete(id='id', )
+            await client.tools.delete(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
@@ -248,9 +304,16 @@ class AsyncToolsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
             response = await client.tools.list()
             async for item in response:
@@ -259,6 +322,8 @@ class AsyncToolsClient:
             # alternatively, you can paginate page-by-page
             async for page in response.iter_pages():
                 yield page
+
+
         asyncio.run(main())
         """
         return await self._raw_client.list(
@@ -283,16 +348,39 @@ class AsyncToolsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
-        from truefoundry_sdk import AgentOpenApiToolManifest
-        from truefoundry_sdk import BlobStorageReference
-        from truefoundry_sdk import MimeType
-        from truefoundry_sdk import Method
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import (
+            AgentOpenApiToolManifest,
+            AsyncTrueFoundry,
+            BlobStorageReference,
+            Method,
+            MimeType,
+        )
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.tools.create_or_update(manifest=AgentOpenApiToolManifest(name='name', metadata={'key': 'value'
-            }, ml_repo='ml_repo', openapi_spec=BlobStorageReference(path='path', mime_type=MimeType.TEXT_PLAIN, ), base_url='base_url', path='path', method=Method.GET, ), )
+            await client.tools.create_or_update(
+                manifest=AgentOpenApiToolManifest(
+                    name="name",
+                    metadata={"key": "value"},
+                    ml_repo="ml_repo",
+                    openapi_spec=BlobStorageReference(
+                        path="path",
+                        mime_type=MimeType.TEXT_PLAIN,
+                    ),
+                    base_url="base_url",
+                    path="path",
+                    method=Method.GET,
+                ),
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.create_or_update(manifest=manifest, request_options=request_options)

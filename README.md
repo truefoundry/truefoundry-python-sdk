@@ -2,9 +2,14 @@
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Ftruefoundry%2Ftruefoundry-python-sdk)
 [![pypi](https://img.shields.io/pypi/v/truefoundry-sdk)](https://pypi.python.org/pypi/truefoundry-sdk)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/truefoundry/truefoundry-python-sdk)
 
-The Truefoundry Python library provides convenient access to the Truefoundry API from Python.
+This library provides convenient access to the TrueFoundry API.
+
+> [!tip]
+> You can ask questions about this SDK using DeepWiki
+> - Python: [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/truefoundry/truefoundry-python-sdk)
+> - TypeScript: [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/truefoundry/truefoundry-typescript-sdk)
+
 
 ## Installation
 
@@ -22,8 +27,15 @@ Instantiate and use the client with the following:
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-response = client.applications.list(limit=10, offset=0, )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.applications.list(
+    limit=10,
+    offset=0,
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -36,17 +48,29 @@ for page in response.iter_pages():
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-from truefoundry_sdk import AsyncTrueFoundry
 import asyncio
-client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+from truefoundry_sdk import AsyncTrueFoundry
+
+client = AsyncTrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+
 async def main() -> None:
-    response = await client.applications.list(limit=10, offset=0, )
+    response = await client.applications.list(
+        limit=10,
+        offset=0,
+    )
     async for item in response:
         yield item
-    
+
     # alternatively, you can paginate page-by-page
     async for page in response.iter_pages():
         yield page
+
+
 asyncio.run(main())
 ```
 
@@ -57,6 +81,7 @@ will be thrown.
 
 ```python
 from truefoundry_sdk.core.api_error import ApiError
+
 try:
     client.applications.list(...)
 except ApiError as e:
@@ -70,8 +95,15 @@ Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used 
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-response = client.users.list(limit=10, offset=0, )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.users.list(
+    limit=10,
+    offset=0,
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -88,7 +120,10 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(..., )
+
+client = TrueFoundry(
+    ...,
+)
 response = client.applications.with_raw_response.list(...)
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
@@ -129,7 +164,12 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(..., timeout=20.0, )
+
+client = TrueFoundry(
+    ...,
+    timeout=20.0,
+)
+
 
 # Override timeout for a specific method
 client.applications.list(..., request_options={
@@ -143,9 +183,17 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-from truefoundry_sdk import TrueFoundry
 import httpx
-client = TrueFoundry(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    ...,
+    httpx_client=httpx.Client(
+        proxies="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
+```
 
 ## Contributing
 

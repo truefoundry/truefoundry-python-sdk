@@ -17,7 +17,7 @@ class Secret(UniversalBaseModel):
     fqn: str
     name: str
     secret_group_id: typing_extensions.Annotated[str, FieldMetadata(alias="secretGroupId")]
-    value: str
+    value: typing.Optional[str] = None
     created_by_subject: typing_extensions.Annotated[
         typing.Optional[Subject], FieldMetadata(alias="createdBySubject")
     ] = None

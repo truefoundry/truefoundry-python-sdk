@@ -51,8 +51,14 @@ class ApplicationsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.internal.applications.get_pod_template_hash_to_deployment_version(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.internal.applications.get_pod_template_hash_to_deployment_version(
+            id="id",
+        )
         """
         _response = self._raw_client.get_pod_template_hash_to_deployment_version(
             id, pod_template_hashes=pod_template_hashes, request_options=request_options
@@ -103,11 +109,22 @@ class AsyncApplicationsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.internal.applications.get_pod_template_hash_to_deployment_version(id='id', )
+            await client.internal.applications.get_pod_template_hash_to_deployment_version(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_pod_template_hash_to_deployment_version(

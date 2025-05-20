@@ -14,8 +14,8 @@ from ..core.serialization import FieldMetadata
 class SecretVersion(UniversalBaseModel):
     id: str
     fqn: str
-    value: str
-    version: float
+    value: typing.Optional[str] = None
+    version: typing.Optional[float] = None
     secret: "Secret"
     secret_id: typing_extensions.Annotated[str, FieldMetadata(alias="secretId")]
     created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None

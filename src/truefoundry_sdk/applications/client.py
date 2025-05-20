@@ -53,7 +53,7 @@ class ApplicationsClient:
         device_type_filter: typing.Optional[ApplicationsListRequestDeviceTypeFilter] = None,
         last_deployed_by_subjects: typing.Optional[str] = None,
         lifecycle_stage: typing.Optional[ApplicationsListRequestLifecycleStage] = None,
-        is_recommendation_present: typing.Optional[bool] = None,
+        is_recommendation_present_and_visible: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Application]:
         """
@@ -109,8 +109,8 @@ class ApplicationsClient:
         lifecycle_stage : typing.Optional[ApplicationsListRequestLifecycleStage]
             Filter by application lifecycle state
 
-        is_recommendation_present : typing.Optional[bool]
-            Filter out applications with recommendations
+        is_recommendation_present_and_visible : typing.Optional[bool]
+            Filter out applications with recommendations that are allowed to be shown
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -123,8 +123,15 @@ class ApplicationsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        response = client.applications.list(limit=10, offset=0, )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.applications.list(
+            limit=10,
+            offset=0,
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -148,7 +155,7 @@ class ApplicationsClient:
             device_type_filter=device_type_filter,
             last_deployed_by_subjects=last_deployed_by_subjects,
             lifecycle_stage=lifecycle_stage,
-            is_recommendation_present=is_recommendation_present,
+            is_recommendation_present_and_visible=is_recommendation_present_and_visible,
             request_options=request_options,
         )
 
@@ -158,6 +165,7 @@ class ApplicationsClient:
         manifest: typing.Dict[str, typing.Optional[typing.Any]],
         dry_run: typing.Optional[bool] = OMIT,
         force_deploy: typing.Optional[bool] = OMIT,
+        trigger_on_deploy: typing.Optional[bool] = OMIT,
         workspace_id: typing.Optional[str] = OMIT,
         application_id: typing.Optional[str] = OMIT,
         name: typing.Optional[str] = OMIT,
@@ -177,6 +185,9 @@ class ApplicationsClient:
 
         force_deploy : typing.Optional[bool]
             Cancels any ongoing deployments
+
+        trigger_on_deploy : typing.Optional[bool]
+            Trigger on deploy
 
         workspace_id : typing.Optional[str]
             workspace id of the workspace
@@ -204,14 +215,20 @@ class ApplicationsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.applications.create_or_update(manifest={'key': 'value'
-        }, )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.applications.create_or_update(
+            manifest={"key": "value"},
+        )
         """
         _response = self._raw_client.create_or_update(
             manifest=manifest,
             dry_run=dry_run,
             force_deploy=force_deploy,
+            trigger_on_deploy=trigger_on_deploy,
             workspace_id=workspace_id,
             application_id=application_id,
             name=name,
@@ -240,8 +257,14 @@ class ApplicationsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.applications.get(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.applications.get(
+            id="id",
+        )
         """
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
@@ -266,8 +289,14 @@ class ApplicationsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.applications.delete(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.applications.delete(
+            id="id",
+        )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
@@ -291,8 +320,14 @@ class ApplicationsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.applications.scale_to_zero(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.applications.scale_to_zero(
+            id="id",
+        )
         """
         _response = self._raw_client.scale_to_zero(id, request_options=request_options)
         return _response.data
@@ -317,8 +352,14 @@ class ApplicationsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.applications.scale_to_original(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.applications.scale_to_original(
+            id="id",
+        )
         """
         _response = self._raw_client.scale_to_original(id, request_options=request_options)
         return _response.data
@@ -348,8 +389,15 @@ class ApplicationsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.applications.cancel_deployment(id='id', deployment_id='deploymentId', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.applications.cancel_deployment(
+            id="id",
+            deployment_id="deploymentId",
+        )
         """
         _response = self._raw_client.cancel_deployment(id, deployment_id, request_options=request_options)
         return _response.data
@@ -389,7 +437,7 @@ class AsyncApplicationsClient:
         device_type_filter: typing.Optional[ApplicationsListRequestDeviceTypeFilter] = None,
         last_deployed_by_subjects: typing.Optional[str] = None,
         lifecycle_stage: typing.Optional[ApplicationsListRequestLifecycleStage] = None,
-        is_recommendation_present: typing.Optional[bool] = None,
+        is_recommendation_present_and_visible: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Application]:
         """
@@ -445,8 +493,8 @@ class AsyncApplicationsClient:
         lifecycle_stage : typing.Optional[ApplicationsListRequestLifecycleStage]
             Filter by application lifecycle state
 
-        is_recommendation_present : typing.Optional[bool]
-            Filter out applications with recommendations
+        is_recommendation_present_and_visible : typing.Optional[bool]
+            Filter out applications with recommendations that are allowed to be shown
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -458,17 +506,29 @@ class AsyncApplicationsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            response = await client.applications.list(limit=10, offset=0, )
+            response = await client.applications.list(
+                limit=10,
+                offset=0,
+            )
             async for item in response:
                 yield item
 
             # alternatively, you can paginate page-by-page
             async for page in response.iter_pages():
                 yield page
+
+
         asyncio.run(main())
         """
         return await self._raw_client.list(
@@ -488,7 +548,7 @@ class AsyncApplicationsClient:
             device_type_filter=device_type_filter,
             last_deployed_by_subjects=last_deployed_by_subjects,
             lifecycle_stage=lifecycle_stage,
-            is_recommendation_present=is_recommendation_present,
+            is_recommendation_present_and_visible=is_recommendation_present_and_visible,
             request_options=request_options,
         )
 
@@ -498,6 +558,7 @@ class AsyncApplicationsClient:
         manifest: typing.Dict[str, typing.Optional[typing.Any]],
         dry_run: typing.Optional[bool] = OMIT,
         force_deploy: typing.Optional[bool] = OMIT,
+        trigger_on_deploy: typing.Optional[bool] = OMIT,
         workspace_id: typing.Optional[str] = OMIT,
         application_id: typing.Optional[str] = OMIT,
         name: typing.Optional[str] = OMIT,
@@ -517,6 +578,9 @@ class AsyncApplicationsClient:
 
         force_deploy : typing.Optional[bool]
             Cancels any ongoing deployments
+
+        trigger_on_deploy : typing.Optional[bool]
+            Trigger on deploy
 
         workspace_id : typing.Optional[str]
             workspace id of the workspace
@@ -543,18 +607,29 @@ class AsyncApplicationsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.applications.create_or_update(manifest={'key': 'value'
-            }, )
+            await client.applications.create_or_update(
+                manifest={"key": "value"},
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.create_or_update(
             manifest=manifest,
             dry_run=dry_run,
             force_deploy=force_deploy,
+            trigger_on_deploy=trigger_on_deploy,
             workspace_id=workspace_id,
             application_id=application_id,
             name=name,
@@ -582,11 +657,22 @@ class AsyncApplicationsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.applications.get(id='id', )
+            await client.applications.get(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(id, request_options=request_options)
@@ -613,11 +699,22 @@ class AsyncApplicationsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.applications.delete(id='id', )
+            await client.applications.delete(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
@@ -641,11 +738,22 @@ class AsyncApplicationsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.applications.scale_to_zero(id='id', )
+            await client.applications.scale_to_zero(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.scale_to_zero(id, request_options=request_options)
@@ -672,11 +780,22 @@ class AsyncApplicationsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.applications.scale_to_original(id='id', )
+            await client.applications.scale_to_original(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.scale_to_original(id, request_options=request_options)
@@ -706,11 +825,23 @@ class AsyncApplicationsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.applications.cancel_deployment(id='id', deployment_id='deploymentId', )
+            await client.applications.cancel_deployment(
+                id="id",
+                deployment_id="deploymentId",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.cancel_deployment(id, deployment_id, request_options=request_options)

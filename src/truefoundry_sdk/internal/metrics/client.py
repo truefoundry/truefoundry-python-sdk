@@ -67,8 +67,16 @@ class MetricsClient:
         --------
         from truefoundry_sdk import TrueFoundry
         from truefoundry_sdk.internal.metrics import MetricsGetChartsRequestFilterEntity
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.internal.metrics.get_charts(workspace_id='workspaceId', application_id='applicationId', filter_entity=MetricsGetChartsRequestFilterEntity.APPLICATION, )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.internal.metrics.get_charts(
+            workspace_id="workspaceId",
+            application_id="applicationId",
+            filter_entity=MetricsGetChartsRequestFilterEntity.APPLICATION,
+        )
         """
         _response = self._raw_client.get_charts(
             workspace_id,
@@ -138,12 +146,25 @@ class AsyncMetricsClient:
 
         Examples
         --------
+        import asyncio
+
         from truefoundry_sdk import AsyncTrueFoundry
         from truefoundry_sdk.internal.metrics import MetricsGetChartsRequestFilterEntity
-        import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.internal.metrics.get_charts(workspace_id='workspaceId', application_id='applicationId', filter_entity=MetricsGetChartsRequestFilterEntity.APPLICATION, )
+            await client.internal.metrics.get_charts(
+                workspace_id="workspaceId",
+                application_id="applicationId",
+                filter_entity=MetricsGetChartsRequestFilterEntity.APPLICATION,
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_charts(

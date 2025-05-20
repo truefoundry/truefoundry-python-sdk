@@ -211,7 +211,6 @@ from .invite_user_response import InviteUserResponse
 from .is_cluster_connected_response import IsClusterConnectedResponse
 from .job import Job
 from .job_alert import JobAlert
-from .job_event import JobEvent
 from .job_image import JobImage
 from .job_mounts_item import JobMountsItem
 from .job_run import JobRun
@@ -251,7 +250,6 @@ from .list_personal_access_token_response import ListPersonalAccessTokenResponse
 from .list_prompt_versions_response import ListPromptVersionsResponse
 from .list_prompts_response import ListPromptsResponse
 from .list_secret_group_response import ListSecretGroupResponse
-from .list_secrets_response import ListSecretsResponse
 from .list_teams_response import ListTeamsResponse
 from .list_tool_versions_response import ListToolVersionsResponse
 from .list_tools_response import ListToolsResponse
@@ -417,7 +415,6 @@ from .worker_config_input_config import WorkerConfigInputConfig
 from .worker_config_output_config import WorkerConfigOutputConfig
 from .workflow import Workflow
 from .workflow_alert import WorkflowAlert
-from .workflow_event import WorkflowEvent
 from .workflow_flyte_entities_item import WorkflowFlyteEntitiesItem
 from .workflow_source import WorkflowSource
 from .workspace import Workspace
@@ -633,7 +630,6 @@ __all__ = [
     "IsClusterConnectedResponse",
     "Job",
     "JobAlert",
-    "JobEvent",
     "JobImage",
     "JobMountsItem",
     "JobRun",
@@ -673,7 +669,6 @@ __all__ = [
     "ListPromptVersionsResponse",
     "ListPromptsResponse",
     "ListSecretGroupResponse",
-    "ListSecretsResponse",
     "ListTeamsResponse",
     "ListToolVersionsResponse",
     "ListToolsResponse",
@@ -842,7 +837,6 @@ __all__ = [
     "WorkerConfigOutputConfig",
     "Workflow",
     "WorkflowAlert",
-    "WorkflowEvent",
     "WorkflowFlyteEntitiesItem",
     "WorkflowSource",
     "Workspace",

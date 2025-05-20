@@ -61,8 +61,15 @@ class ClustersClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        response = client.clusters.list(limit=10, offset=0, )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.clusters.list(
+            limit=10,
+            offset=0,
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -99,12 +106,30 @@ class ClustersClient:
 
         Examples
         --------
-        from truefoundry_sdk import TrueFoundry
-        from truefoundry_sdk import ClusterManifest
-        from truefoundry_sdk import ClusterManifestClusterType
-        from truefoundry_sdk import Collaborator
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.clusters.create_or_update(manifest=ClusterManifest(name='name', cluster_type=ClusterManifestClusterType.AWS_EKS, environment_names=['environment_names'], collaborators=[Collaborator(subject='subject', role_id='role_id', )], ), )
+        from truefoundry_sdk import (
+            ClusterManifest,
+            ClusterManifestClusterType,
+            Collaborator,
+            TrueFoundry,
+        )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.clusters.create_or_update(
+            manifest=ClusterManifest(
+                name="name",
+                cluster_type=ClusterManifestClusterType.AWS_EKS,
+                environment_names=["environment_names"],
+                collaborators=[
+                    Collaborator(
+                        subject="subject",
+                        role_id="role_id",
+                    )
+                ],
+            ),
+        )
         """
         _response = self._raw_client.create_or_update(
             manifest=manifest, dry_run=dry_run, request_options=request_options
@@ -131,8 +156,14 @@ class ClustersClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.clusters.get(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.clusters.get(
+            id="id",
+        )
         """
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
@@ -157,8 +188,14 @@ class ClustersClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.clusters.delete(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.clusters.delete(
+            id="id",
+        )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
@@ -196,8 +233,16 @@ class ClustersClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.clusters.get_addons(id='id', limit=10, offset=0, )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.clusters.get_addons(
+            id="id",
+            limit=10,
+            offset=0,
+        )
         """
         _response = self._raw_client.get_addons(id, limit=limit, offset=offset, request_options=request_options)
         return _response.data
@@ -224,8 +269,14 @@ class ClustersClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.clusters.is_connected(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.clusters.is_connected(
+            id="id",
+        )
         """
         _response = self._raw_client.is_connected(id, request_options=request_options)
         return _response.data
@@ -274,17 +325,29 @@ class AsyncClustersClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            response = await client.clusters.list(limit=10, offset=0, )
+            response = await client.clusters.list(
+                limit=10,
+                offset=0,
+            )
             async for item in response:
                 yield item
 
             # alternatively, you can paginate page-by-page
             async for page in response.iter_pages():
                 yield page
+
+
         asyncio.run(main())
         """
         return await self._raw_client.list(limit=limit, offset=offset, request_options=request_options)
@@ -317,14 +380,37 @@ class AsyncClustersClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
-        from truefoundry_sdk import ClusterManifest
-        from truefoundry_sdk import ClusterManifestClusterType
-        from truefoundry_sdk import Collaborator
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import (
+            AsyncTrueFoundry,
+            ClusterManifest,
+            ClusterManifestClusterType,
+            Collaborator,
+        )
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.clusters.create_or_update(manifest=ClusterManifest(name='name', cluster_type=ClusterManifestClusterType.AWS_EKS, environment_names=['environment_names'], collaborators=[Collaborator(subject='subject', role_id='role_id', )], ), )
+            await client.clusters.create_or_update(
+                manifest=ClusterManifest(
+                    name="name",
+                    cluster_type=ClusterManifestClusterType.AWS_EKS,
+                    environment_names=["environment_names"],
+                    collaborators=[
+                        Collaborator(
+                            subject="subject",
+                            role_id="role_id",
+                        )
+                    ],
+                ),
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.create_or_update(
@@ -351,11 +437,22 @@ class AsyncClustersClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.clusters.get(id='id', )
+            await client.clusters.get(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(id, request_options=request_options)
@@ -382,11 +479,22 @@ class AsyncClustersClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.clusters.delete(id='id', )
+            await client.clusters.delete(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
@@ -424,11 +532,24 @@ class AsyncClustersClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.clusters.get_addons(id='id', limit=10, offset=0, )
+            await client.clusters.get_addons(
+                id="id",
+                limit=10,
+                offset=0,
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_addons(id, limit=limit, offset=offset, request_options=request_options)
@@ -455,11 +576,22 @@ class AsyncClustersClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.clusters.is_connected(id='id', )
+            await client.clusters.is_connected(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.is_connected(id, request_options=request_options)

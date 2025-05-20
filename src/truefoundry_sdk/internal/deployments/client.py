@@ -54,8 +54,15 @@ class DeploymentsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.internal.deployments.get_builds(id='id', deployment_id='deploymentId', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.internal.deployments.get_builds(
+            id="id",
+            deployment_id="deploymentId",
+        )
         """
         _response = self._raw_client.get_builds(id, deployment_id, request_options=request_options)
         return _response.data
@@ -85,8 +92,15 @@ class DeploymentsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.internal.deployments.get_code_upload_url(service_name='serviceName', workspace_fqn='workspaceFqn', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.internal.deployments.get_code_upload_url(
+            service_name="serviceName",
+            workspace_fqn="workspaceFqn",
+        )
         """
         _response = self._raw_client.get_code_upload_url(
             service_name=service_name, workspace_fqn=workspace_fqn, request_options=request_options
@@ -137,10 +151,17 @@ class DeploymentsClient:
 
         Examples
         --------
-        from truefoundry_sdk import TrueFoundry
-        from truefoundry_sdk import ApplicationType
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.internal.deployments.get_suggested_endpoint(application_type=ApplicationType.ASYNC_SERVICE, application_name='applicationName', workspace_id='workspaceId', )
+        from truefoundry_sdk import ApplicationType, TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.internal.deployments.get_suggested_endpoint(
+            application_type=ApplicationType.ASYNC_SERVICE,
+            application_name="applicationName",
+            workspace_id="workspaceId",
+        )
         """
         _response = self._raw_client.get_suggested_endpoint(
             application_type=application_type,
@@ -193,11 +214,23 @@ class AsyncDeploymentsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.internal.deployments.get_builds(id='id', deployment_id='deploymentId', )
+            await client.internal.deployments.get_builds(
+                id="id",
+                deployment_id="deploymentId",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_builds(id, deployment_id, request_options=request_options)
@@ -227,11 +260,23 @@ class AsyncDeploymentsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.internal.deployments.get_code_upload_url(service_name='serviceName', workspace_fqn='workspaceFqn', )
+            await client.internal.deployments.get_code_upload_url(
+                service_name="serviceName",
+                workspace_fqn="workspaceFqn",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_code_upload_url(
@@ -283,12 +328,24 @@ class AsyncDeploymentsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
-        from truefoundry_sdk import ApplicationType
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import ApplicationType, AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.internal.deployments.get_suggested_endpoint(application_type=ApplicationType.ASYNC_SERVICE, application_name='applicationName', workspace_id='workspaceId', )
+            await client.internal.deployments.get_suggested_endpoint(
+                application_type=ApplicationType.ASYNC_SERVICE,
+                application_name="applicationName",
+                workspace_id="workspaceId",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_suggested_endpoint(

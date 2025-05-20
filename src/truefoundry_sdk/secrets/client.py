@@ -3,14 +3,9 @@
 import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.get_secret_response import GetSecretResponse
-from ..types.secret import Secret
 from .raw_client import AsyncRawSecretsClient, RawSecretsClient
-
-# this is used as the default value for optional parameters
-OMIT = typing.cast(typing.Any, ...)
 
 
 class SecretsClient:
@@ -28,67 +23,9 @@ class SecretsClient:
         """
         return self._raw_client
 
-    def list(
-        self,
-        *,
-        limit: typing.Optional[int] = 100,
-        offset: typing.Optional[int] = 0,
-        secret_id: typing.Optional[str] = OMIT,
-        secret_fqns: typing.Optional[typing.Sequence[str]] = OMIT,
-        secret_group_id: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Secret]:
-        """
-        List secrets associated with a user filtered with optional parameters passed in the body.
-
-        Parameters
-        ----------
-        limit : typing.Optional[int]
-            Number of items per page
-
-        offset : typing.Optional[int]
-            Number of items to skip
-
-        secret_id : typing.Optional[str]
-            Secret Id of the secret.
-
-        secret_fqns : typing.Optional[typing.Sequence[str]]
-            Array of FQNs
-
-        secret_group_id : typing.Optional[str]
-            Secret Group Id of the secret gourp.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SyncPager[Secret]
-            Returns the secrets associated with a user filtered with optional parameters passed in the body.
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        response = client.secrets.list()
-        for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        for page in response.iter_pages():
-            yield page
-        """
-        return self._raw_client.list(
-            limit=limit,
-            offset=offset,
-            secret_id=secret_id,
-            secret_fqns=secret_fqns,
-            secret_group_id=secret_group_id,
-            request_options=request_options,
-        )
-
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetSecretResponse:
         """
-        Get Secret associated with provided id
+        Get Secret associated with provided id. The secret value is not returned if the control plane has `DISABLE_SECRET_VALUE_VIEW` set
 
         Parameters
         ----------
@@ -106,8 +43,14 @@ class SecretsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.secrets.get(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.secrets.get(
+            id="id",
+        )
         """
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
@@ -132,8 +75,14 @@ class SecretsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.secrets.delete(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.secrets.delete(
+            id="id",
+        )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
@@ -154,71 +103,9 @@ class AsyncSecretsClient:
         """
         return self._raw_client
 
-    async def list(
-        self,
-        *,
-        limit: typing.Optional[int] = 100,
-        offset: typing.Optional[int] = 0,
-        secret_id: typing.Optional[str] = OMIT,
-        secret_fqns: typing.Optional[typing.Sequence[str]] = OMIT,
-        secret_group_id: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Secret]:
-        """
-        List secrets associated with a user filtered with optional parameters passed in the body.
-
-        Parameters
-        ----------
-        limit : typing.Optional[int]
-            Number of items per page
-
-        offset : typing.Optional[int]
-            Number of items to skip
-
-        secret_id : typing.Optional[str]
-            Secret Id of the secret.
-
-        secret_fqns : typing.Optional[typing.Sequence[str]]
-            Array of FQNs
-
-        secret_group_id : typing.Optional[str]
-            Secret Group Id of the secret gourp.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncPager[Secret]
-            Returns the secrets associated with a user filtered with optional parameters passed in the body.
-
-        Examples
-        --------
-        from truefoundry_sdk import AsyncTrueFoundry
-        import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        async def main() -> None:
-            response = await client.secrets.list()
-            async for item in response:
-                yield item
-
-            # alternatively, you can paginate page-by-page
-            async for page in response.iter_pages():
-                yield page
-        asyncio.run(main())
-        """
-        return await self._raw_client.list(
-            limit=limit,
-            offset=offset,
-            secret_id=secret_id,
-            secret_fqns=secret_fqns,
-            secret_group_id=secret_group_id,
-            request_options=request_options,
-        )
-
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetSecretResponse:
         """
-        Get Secret associated with provided id
+        Get Secret associated with provided id. The secret value is not returned if the control plane has `DISABLE_SECRET_VALUE_VIEW` set
 
         Parameters
         ----------
@@ -235,11 +122,22 @@ class AsyncSecretsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.secrets.get(id='id', )
+            await client.secrets.get(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(id, request_options=request_options)
@@ -264,11 +162,22 @@ class AsyncSecretsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.secrets.delete(id='id', )
+            await client.secrets.delete(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
