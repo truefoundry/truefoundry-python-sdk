@@ -16,8 +16,8 @@ class SecretVersion(UniversalBaseModel):
     fqn: str
     value: typing.Optional[str] = None
     version: typing.Optional[float] = None
-    secret: "Secret"
-    secret_id: typing_extensions.Annotated[str, FieldMetadata(alias="secretId")]
+    secret: typing.Optional["Secret"] = None
+    secret_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="secretId")] = None
     created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None
     updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = None
 
