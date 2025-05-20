@@ -48,8 +48,14 @@ class AgentsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.agents.get(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.agents.get(
+            id="id",
+        )
         """
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
@@ -71,8 +77,14 @@ class AgentsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.agents.delete(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.agents.delete(
+            id="id",
+        )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
@@ -108,7 +120,11 @@ class AgentsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
         response = client.agents.list()
         for item in response:
             yield item
@@ -138,11 +154,23 @@ class AgentsClient:
 
         Examples
         --------
-        from truefoundry_sdk import TrueFoundry
-        from truefoundry_sdk import AgentManifest
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.agents.create_or_update(manifest=AgentManifest(name='name', metadata={'key': 'value'
-        }, ml_repo='ml_repo', goal='goal', instruction='instruction', available_tools=['available_tools'], model_id='model_id', ), )
+        from truefoundry_sdk import AgentManifest, TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.agents.create_or_update(
+            manifest=AgentManifest(
+                name="name",
+                metadata={"key": "value"},
+                ml_repo="ml_repo",
+                goal="goal",
+                instruction="instruction",
+                available_tools=["available_tools"],
+                model_id="model_id",
+            ),
+        )
         """
         _response = self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
         return _response.data
@@ -179,11 +207,22 @@ class AsyncAgentsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.agents.get(id='id', )
+            await client.agents.get(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(id, request_options=request_options)
@@ -205,11 +244,22 @@ class AsyncAgentsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.agents.delete(id='id', )
+            await client.agents.delete(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
@@ -245,9 +295,16 @@ class AsyncAgentsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
             response = await client.agents.list()
             async for item in response:
@@ -256,6 +313,8 @@ class AsyncAgentsClient:
             # alternatively, you can paginate page-by-page
             async for page in response.iter_pages():
                 yield page
+
+
         asyncio.run(main())
         """
         return await self._raw_client.list(
@@ -280,13 +339,30 @@ class AsyncAgentsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
-        from truefoundry_sdk import AgentManifest
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AgentManifest, AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.agents.create_or_update(manifest=AgentManifest(name='name', metadata={'key': 'value'
-            }, ml_repo='ml_repo', goal='goal', instruction='instruction', available_tools=['available_tools'], model_id='model_id', ), )
+            await client.agents.create_or_update(
+                manifest=AgentManifest(
+                    name="name",
+                    metadata={"key": "value"},
+                    ml_repo="ml_repo",
+                    goal="goal",
+                    instruction="instruction",
+                    available_tools=["available_tools"],
+                    model_id="model_id",
+                ),
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.create_or_update(manifest=manifest, request_options=request_options)

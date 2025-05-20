@@ -45,8 +45,14 @@ class ClustersClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.internal.clusters.get_autoprovisioning_state(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.internal.clusters.get_autoprovisioning_state(
+            id="id",
+        )
         """
         _response = self._raw_client.get_autoprovisioning_state(id, request_options=request_options)
         return _response.data
@@ -88,11 +94,22 @@ class AsyncClustersClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.internal.clusters.get_autoprovisioning_state(id='id', )
+            await client.internal.clusters.get_autoprovisioning_state(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_autoprovisioning_state(id, request_options=request_options)

@@ -59,8 +59,15 @@ class TeamsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        response = client.teams.list(limit=10, offset=0, )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.teams.list(
+            limit=10,
+            offset=0,
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -97,10 +104,18 @@ class TeamsClient:
 
         Examples
         --------
-        from truefoundry_sdk import TrueFoundry
-        from truefoundry_sdk import TeamManifest
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.teams.create_or_update(manifest=TeamManifest(name='name', members=['members'], ), )
+        from truefoundry_sdk import TeamManifest, TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.teams.create_or_update(
+            manifest=TeamManifest(
+                name="name",
+                members=["members"],
+            ),
+        )
         """
         _response = self._raw_client.create_or_update(
             manifest=manifest, dry_run=dry_run, request_options=request_options
@@ -127,8 +142,14 @@ class TeamsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.teams.get(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.teams.get(
+            id="id",
+        )
         """
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
@@ -153,8 +174,14 @@ class TeamsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.teams.delete(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.teams.delete(
+            id="id",
+        )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
@@ -203,17 +230,29 @@ class AsyncTeamsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            response = await client.teams.list(limit=10, offset=0, )
+            response = await client.teams.list(
+                limit=10,
+                offset=0,
+            )
             async for item in response:
                 yield item
 
             # alternatively, you can paginate page-by-page
             async for page in response.iter_pages():
                 yield page
+
+
         asyncio.run(main())
         """
         return await self._raw_client.list(limit=limit, offset=offset, request_options=request_options)
@@ -246,12 +285,25 @@ class AsyncTeamsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
-        from truefoundry_sdk import TeamManifest
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry, TeamManifest
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.teams.create_or_update(manifest=TeamManifest(name='name', members=['members'], ), )
+            await client.teams.create_or_update(
+                manifest=TeamManifest(
+                    name="name",
+                    members=["members"],
+                ),
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.create_or_update(
@@ -278,11 +330,22 @@ class AsyncTeamsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.teams.get(id='id', )
+            await client.teams.get(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(id, request_options=request_options)
@@ -307,11 +370,22 @@ class AsyncTeamsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.teams.delete(id='id', )
+            await client.teams.delete(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)

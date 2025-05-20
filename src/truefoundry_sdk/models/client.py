@@ -48,8 +48,14 @@ class ModelsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.models.get(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.models.get(
+            id="id",
+        )
         """
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
@@ -71,8 +77,14 @@ class ModelsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.models.delete(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.models.delete(
+            id="id",
+        )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
@@ -111,7 +123,11 @@ class ModelsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
         response = client.models.list()
         for item in response:
             yield item
@@ -141,12 +157,20 @@ class ModelsClient:
 
         Examples
         --------
-        from truefoundry_sdk import TrueFoundry
-        from truefoundry_sdk import ModelManifest
-        from truefoundry_sdk import TrueFoundryManagedSource
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.models.create_or_update(manifest=ModelManifest(name='name', metadata={'key': 'value'
-        }, ml_repo='ml_repo', source=TrueFoundryManagedSource(), ), )
+        from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.models.create_or_update(
+            manifest=ModelManifest(
+                name="name",
+                metadata={"key": "value"},
+                ml_repo="ml_repo",
+                source=TrueFoundryManagedSource(),
+            ),
+        )
         """
         _response = self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
         return _response.data
@@ -183,11 +207,22 @@ class AsyncModelsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.models.get(id='id', )
+            await client.models.get(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(id, request_options=request_options)
@@ -209,11 +244,22 @@ class AsyncModelsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.models.delete(id='id', )
+            await client.models.delete(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
@@ -252,9 +298,16 @@ class AsyncModelsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
             response = await client.models.list()
             async for item in response:
@@ -263,6 +316,8 @@ class AsyncModelsClient:
             # alternatively, you can paginate page-by-page
             async for page in response.iter_pages():
                 yield page
+
+
         asyncio.run(main())
         """
         return await self._raw_client.list(
@@ -287,14 +342,31 @@ class AsyncModelsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
-        from truefoundry_sdk import ModelManifest
-        from truefoundry_sdk import TrueFoundryManagedSource
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import (
+            AsyncTrueFoundry,
+            ModelManifest,
+            TrueFoundryManagedSource,
+        )
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.models.create_or_update(manifest=ModelManifest(name='name', metadata={'key': 'value'
-            }, ml_repo='ml_repo', source=TrueFoundryManagedSource(), ), )
+            await client.models.create_or_update(
+                manifest=ModelManifest(
+                    name="name",
+                    metadata={"key": "value"},
+                    ml_repo="ml_repo",
+                    source=TrueFoundryManagedSource(),
+                ),
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.create_or_update(manifest=manifest, request_options=request_options)

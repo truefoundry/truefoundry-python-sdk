@@ -50,8 +50,14 @@ class VcsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.internal.vcs.get_repository_details(repo_url='repoURL', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.internal.vcs.get_repository_details(
+            repo_url="repoURL",
+        )
         """
         _response = self._raw_client.get_repository_details(repo_url=repo_url, id=id, request_options=request_options)
         return _response.data
@@ -76,8 +82,14 @@ class VcsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.internal.vcs.get_authenticated_url(repo_url='repoURL', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.internal.vcs.get_authenticated_url(
+            repo_url="repoURL",
+        )
         """
         _response = self._raw_client.get_authenticated_url(repo_url=repo_url, request_options=request_options)
         return _response.data
@@ -120,11 +132,22 @@ class AsyncVcsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.internal.vcs.get_repository_details(repo_url='repoURL', )
+            await client.internal.vcs.get_repository_details(
+                repo_url="repoURL",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_repository_details(
@@ -151,11 +174,22 @@ class AsyncVcsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.internal.vcs.get_authenticated_url(repo_url='repoURL', )
+            await client.internal.vcs.get_authenticated_url(
+                repo_url="repoURL",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_authenticated_url(repo_url=repo_url, request_options=request_options)

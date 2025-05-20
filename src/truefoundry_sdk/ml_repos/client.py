@@ -54,9 +54,14 @@ class MlReposClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.ml_repos.create_or_update(manifest={'key': 'value'
-        }, )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.ml_repos.create_or_update(
+            manifest={"key": "value"},
+        )
         """
         _response = self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
         return _response.data
@@ -86,8 +91,14 @@ class MlReposClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.ml_repos.get(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.ml_repos.get(
+            id="id",
+        )
         """
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
@@ -117,8 +128,14 @@ class MlReposClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.ml_repos.delete(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.ml_repos.delete(
+            id="id",
+        )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
@@ -159,7 +176,11 @@ class MlReposClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
         response = client.ml_repos.list()
         for item in response:
             yield item
@@ -209,12 +230,22 @@ class AsyncMlReposClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.ml_repos.create_or_update(manifest={'key': 'value'
-            }, )
+            await client.ml_repos.create_or_update(
+                manifest={"key": "value"},
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
@@ -244,11 +275,22 @@ class AsyncMlReposClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.ml_repos.get(id='id', )
+            await client.ml_repos.get(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(id, request_options=request_options)
@@ -278,11 +320,22 @@ class AsyncMlReposClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.ml_repos.delete(id='id', )
+            await client.ml_repos.delete(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
@@ -323,9 +376,16 @@ class AsyncMlReposClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
             response = await client.ml_repos.list()
             async for item in response:
@@ -334,6 +394,8 @@ class AsyncMlReposClient:
             # alternatively, you can paginate page-by-page
             async for page in response.iter_pages():
                 yield page
+
+
         asyncio.run(main())
         """
         return await self._raw_client.list(name=name, limit=limit, offset=offset, request_options=request_options)

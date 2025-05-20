@@ -54,7 +54,7 @@ class RawApplicationsClient:
         device_type_filter: typing.Optional[ApplicationsListRequestDeviceTypeFilter] = None,
         last_deployed_by_subjects: typing.Optional[str] = None,
         lifecycle_stage: typing.Optional[ApplicationsListRequestLifecycleStage] = None,
-        is_recommendation_present: typing.Optional[bool] = None,
+        is_recommendation_present_and_visible: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Application]:
         """
@@ -110,8 +110,8 @@ class RawApplicationsClient:
         lifecycle_stage : typing.Optional[ApplicationsListRequestLifecycleStage]
             Filter by application lifecycle state
 
-        is_recommendation_present : typing.Optional[bool]
-            Filter out applications with recommendations
+        is_recommendation_present_and_visible : typing.Optional[bool]
+            Filter out applications with recommendations that are allowed to be shown
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -143,7 +143,7 @@ class RawApplicationsClient:
                 "deviceTypeFilter": device_type_filter,
                 "lastDeployedBySubjects": last_deployed_by_subjects,
                 "lifecycleStage": lifecycle_stage,
-                "isRecommendationPresent": is_recommendation_present,
+                "isRecommendationPresentAndVisible": is_recommendation_present_and_visible,
             },
             request_options=request_options,
         )
@@ -175,7 +175,7 @@ class RawApplicationsClient:
                     device_type_filter=device_type_filter,
                     last_deployed_by_subjects=last_deployed_by_subjects,
                     lifecycle_stage=lifecycle_stage,
-                    is_recommendation_present=is_recommendation_present,
+                    is_recommendation_present_and_visible=is_recommendation_present_and_visible,
                     request_options=request_options,
                 )
                 return SyncPager(
@@ -203,6 +203,7 @@ class RawApplicationsClient:
         manifest: typing.Dict[str, typing.Optional[typing.Any]],
         dry_run: typing.Optional[bool] = OMIT,
         force_deploy: typing.Optional[bool] = OMIT,
+        trigger_on_deploy: typing.Optional[bool] = OMIT,
         workspace_id: typing.Optional[str] = OMIT,
         application_id: typing.Optional[str] = OMIT,
         name: typing.Optional[str] = OMIT,
@@ -222,6 +223,9 @@ class RawApplicationsClient:
 
         force_deploy : typing.Optional[bool]
             Cancels any ongoing deployments
+
+        trigger_on_deploy : typing.Optional[bool]
+            Trigger on deploy
 
         workspace_id : typing.Optional[str]
             workspace id of the workspace
@@ -253,6 +257,7 @@ class RawApplicationsClient:
                 "manifest": manifest,
                 "dryRun": dry_run,
                 "forceDeploy": force_deploy,
+                "triggerOnDeploy": trigger_on_deploy,
                 "workspaceId": workspace_id,
                 "applicationId": application_id,
                 "name": name,
@@ -689,7 +694,7 @@ class AsyncRawApplicationsClient:
         device_type_filter: typing.Optional[ApplicationsListRequestDeviceTypeFilter] = None,
         last_deployed_by_subjects: typing.Optional[str] = None,
         lifecycle_stage: typing.Optional[ApplicationsListRequestLifecycleStage] = None,
-        is_recommendation_present: typing.Optional[bool] = None,
+        is_recommendation_present_and_visible: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Application]:
         """
@@ -745,8 +750,8 @@ class AsyncRawApplicationsClient:
         lifecycle_stage : typing.Optional[ApplicationsListRequestLifecycleStage]
             Filter by application lifecycle state
 
-        is_recommendation_present : typing.Optional[bool]
-            Filter out applications with recommendations
+        is_recommendation_present_and_visible : typing.Optional[bool]
+            Filter out applications with recommendations that are allowed to be shown
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -778,7 +783,7 @@ class AsyncRawApplicationsClient:
                 "deviceTypeFilter": device_type_filter,
                 "lastDeployedBySubjects": last_deployed_by_subjects,
                 "lifecycleStage": lifecycle_stage,
-                "isRecommendationPresent": is_recommendation_present,
+                "isRecommendationPresentAndVisible": is_recommendation_present_and_visible,
             },
             request_options=request_options,
         )
@@ -812,7 +817,7 @@ class AsyncRawApplicationsClient:
                         device_type_filter=device_type_filter,
                         last_deployed_by_subjects=last_deployed_by_subjects,
                         lifecycle_stage=lifecycle_stage,
-                        is_recommendation_present=is_recommendation_present,
+                        is_recommendation_present_and_visible=is_recommendation_present_and_visible,
                         request_options=request_options,
                     )
 
@@ -841,6 +846,7 @@ class AsyncRawApplicationsClient:
         manifest: typing.Dict[str, typing.Optional[typing.Any]],
         dry_run: typing.Optional[bool] = OMIT,
         force_deploy: typing.Optional[bool] = OMIT,
+        trigger_on_deploy: typing.Optional[bool] = OMIT,
         workspace_id: typing.Optional[str] = OMIT,
         application_id: typing.Optional[str] = OMIT,
         name: typing.Optional[str] = OMIT,
@@ -860,6 +866,9 @@ class AsyncRawApplicationsClient:
 
         force_deploy : typing.Optional[bool]
             Cancels any ongoing deployments
+
+        trigger_on_deploy : typing.Optional[bool]
+            Trigger on deploy
 
         workspace_id : typing.Optional[str]
             workspace id of the workspace
@@ -891,6 +900,7 @@ class AsyncRawApplicationsClient:
                 "manifest": manifest,
                 "dryRun": dry_run,
                 "forceDeploy": force_deploy,
+                "triggerOnDeploy": trigger_on_deploy,
                 "workspaceId": workspace_id,
                 "applicationId": application_id,
                 "name": name,

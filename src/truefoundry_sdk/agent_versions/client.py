@@ -44,8 +44,14 @@ class AgentVersionsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.agent_versions.resolve(fqn='fqn', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.agent_versions.resolve(
+            fqn="fqn",
+        )
         """
         _response = self._raw_client.resolve(fqn=fqn, request_options=request_options)
         return _response.data
@@ -69,8 +75,14 @@ class AgentVersionsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.agent_versions.get(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.agent_versions.get(
+            id="id",
+        )
         """
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
@@ -94,8 +106,14 @@ class AgentVersionsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.agent_versions.delete(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.agent_versions.delete(
+            id="id",
+        )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
@@ -133,7 +151,11 @@ class AgentVersionsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
         response = client.agent_versions.list()
         for item in response:
             yield item
@@ -179,11 +201,22 @@ class AsyncAgentVersionsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.agent_versions.resolve(fqn='fqn', )
+            await client.agent_versions.resolve(
+                fqn="fqn",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.resolve(fqn=fqn, request_options=request_options)
@@ -207,11 +240,22 @@ class AsyncAgentVersionsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.agent_versions.get(id='id', )
+            await client.agent_versions.get(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(id, request_options=request_options)
@@ -235,11 +279,22 @@ class AsyncAgentVersionsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.agent_versions.delete(id='id', )
+            await client.agent_versions.delete(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
@@ -277,9 +332,16 @@ class AsyncAgentVersionsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
             response = await client.agent_versions.list()
             async for item in response:
@@ -288,6 +350,8 @@ class AsyncAgentVersionsClient:
             # alternatively, you can paginate page-by-page
             async for page in response.iter_pages():
                 yield page
+
+
         asyncio.run(main())
         """
         return await self._raw_client.list(

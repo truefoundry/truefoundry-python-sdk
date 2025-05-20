@@ -58,8 +58,15 @@ class PersonalAccessTokensClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        response = client.personal_access_tokens.list(limit=10, offset=0, )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.personal_access_tokens.list(
+            limit=10,
+            offset=0,
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -90,8 +97,14 @@ class PersonalAccessTokensClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.personal_access_tokens.create(name='name', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.personal_access_tokens.create(
+            name="name",
+        )
         """
         _response = self._raw_client.create(name=name, request_options=request_options)
         return _response.data
@@ -118,8 +131,14 @@ class PersonalAccessTokensClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.personal_access_tokens.delete(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.personal_access_tokens.delete(
+            id="id",
+        )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
@@ -168,17 +187,29 @@ class AsyncPersonalAccessTokensClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            response = await client.personal_access_tokens.list(limit=10, offset=0, )
+            response = await client.personal_access_tokens.list(
+                limit=10,
+                offset=0,
+            )
             async for item in response:
                 yield item
 
             # alternatively, you can paginate page-by-page
             async for page in response.iter_pages():
                 yield page
+
+
         asyncio.run(main())
         """
         return await self._raw_client.list(limit=limit, offset=offset, request_options=request_options)
@@ -204,11 +235,22 @@ class AsyncPersonalAccessTokensClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.personal_access_tokens.create(name='name', )
+            await client.personal_access_tokens.create(
+                name="name",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.create(name=name, request_options=request_options)
@@ -235,11 +277,22 @@ class AsyncPersonalAccessTokensClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.personal_access_tokens.delete(id='id', )
+            await client.personal_access_tokens.delete(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)

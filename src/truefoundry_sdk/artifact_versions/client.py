@@ -54,8 +54,14 @@ class ArtifactVersionsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.artifact_versions.get(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.artifact_versions.get(
+            id="id",
+        )
         """
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
@@ -79,8 +85,14 @@ class ArtifactVersionsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.artifact_versions.delete(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.artifact_versions.delete(
+            id="id",
+        )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
@@ -127,7 +139,11 @@ class ArtifactVersionsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
         response = client.artifact_versions.list()
         for item in response:
             yield item
@@ -173,10 +189,17 @@ class ArtifactVersionsClient:
 
         Examples
         --------
-        from truefoundry_sdk import TrueFoundry
-        from truefoundry_sdk import Operation
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.artifact_versions.get_signed_urls(id='id', paths=['paths'], operation=Operation.READ, )
+        from truefoundry_sdk import Operation, TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.artifact_versions.get_signed_urls(
+            id="id",
+            paths=["paths"],
+            operation=Operation.READ,
+        )
         """
         _response = self._raw_client.get_signed_urls(
             id=id, paths=paths, operation=operation, request_options=request_options
@@ -206,8 +229,16 @@ class ArtifactVersionsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.artifact_versions.create_multi_part_upload(id='id', path='path', num_parts=1, )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.artifact_versions.create_multi_part_upload(
+            id="id",
+            path="path",
+            num_parts=1,
+        )
         """
         _response = self._raw_client.create_multi_part_upload(
             id=id, path=path, num_parts=num_parts, request_options=request_options
@@ -232,12 +263,20 @@ class ArtifactVersionsClient:
 
         Examples
         --------
-        from truefoundry_sdk import TrueFoundry
-        from truefoundry_sdk import ModelManifest
-        from truefoundry_sdk import TrueFoundryManagedSource
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.artifact_versions.stage(manifest=ModelManifest(name='name', metadata={'key': 'value'
-        }, ml_repo='ml_repo', source=TrueFoundryManagedSource(), ), )
+        from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.artifact_versions.stage(
+            manifest=ModelManifest(
+                name="name",
+                metadata={"key": "value"},
+                ml_repo="ml_repo",
+                source=TrueFoundryManagedSource(),
+            ),
+        )
         """
         _response = self._raw_client.stage(manifest=manifest, request_options=request_options)
         return _response.data
@@ -273,8 +312,14 @@ class ArtifactVersionsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        response = client.artifact_versions.list_files(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.artifact_versions.list_files(
+            id="id",
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -302,8 +347,14 @@ class ArtifactVersionsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.artifact_versions.mark_stage_failure(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.artifact_versions.mark_stage_failure(
+            id="id",
+        )
         """
         _response = self._raw_client.mark_stage_failure(id=id, request_options=request_options)
         return _response.data
@@ -344,11 +395,22 @@ class AsyncArtifactVersionsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.artifact_versions.get(id='id', )
+            await client.artifact_versions.get(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(id, request_options=request_options)
@@ -372,11 +434,22 @@ class AsyncArtifactVersionsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.artifact_versions.delete(id='id', )
+            await client.artifact_versions.delete(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
@@ -423,9 +496,16 @@ class AsyncArtifactVersionsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
             response = await client.artifact_versions.list()
             async for item in response:
@@ -434,6 +514,8 @@ class AsyncArtifactVersionsClient:
             # alternatively, you can paginate page-by-page
             async for page in response.iter_pages():
                 yield page
+
+
         asyncio.run(main())
         """
         return await self._raw_client.list(
@@ -474,12 +556,24 @@ class AsyncArtifactVersionsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
-        from truefoundry_sdk import Operation
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry, Operation
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.artifact_versions.get_signed_urls(id='id', paths=['paths'], operation=Operation.READ, )
+            await client.artifact_versions.get_signed_urls(
+                id="id",
+                paths=["paths"],
+                operation=Operation.READ,
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_signed_urls(
@@ -509,11 +603,24 @@ class AsyncArtifactVersionsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.artifact_versions.create_multi_part_upload(id='id', path='path', num_parts=1, )
+            await client.artifact_versions.create_multi_part_upload(
+                id="id",
+                path="path",
+                num_parts=1,
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.create_multi_part_upload(
@@ -539,14 +646,31 @@ class AsyncArtifactVersionsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
-        from truefoundry_sdk import ModelManifest
-        from truefoundry_sdk import TrueFoundryManagedSource
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import (
+            AsyncTrueFoundry,
+            ModelManifest,
+            TrueFoundryManagedSource,
+        )
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.artifact_versions.stage(manifest=ModelManifest(name='name', metadata={'key': 'value'
-            }, ml_repo='ml_repo', source=TrueFoundryManagedSource(), ), )
+            await client.artifact_versions.stage(
+                manifest=ModelManifest(
+                    name="name",
+                    metadata={"key": "value"},
+                    ml_repo="ml_repo",
+                    source=TrueFoundryManagedSource(),
+                ),
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.stage(manifest=manifest, request_options=request_options)
@@ -582,17 +706,28 @@ class AsyncArtifactVersionsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            response = await client.artifact_versions.list_files(id='id', )
+            response = await client.artifact_versions.list_files(
+                id="id",
+            )
             async for item in response:
                 yield item
 
             # alternatively, you can paginate page-by-page
             async for page in response.iter_pages():
                 yield page
+
+
         asyncio.run(main())
         """
         return await self._raw_client.list_files(
@@ -617,11 +752,22 @@ class AsyncArtifactVersionsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.artifact_versions.mark_stage_failure(id='id', )
+            await client.artifact_versions.mark_stage_failure(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.mark_stage_failure(id=id, request_options=request_options)

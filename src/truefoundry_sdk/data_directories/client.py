@@ -60,8 +60,14 @@ class DataDirectoriesClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.data_directories.get(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.data_directories.get(
+            id="id",
+        )
         """
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
@@ -101,8 +107,14 @@ class DataDirectoriesClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.data_directories.delete(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.data_directories.delete(
+            id="id",
+        )
         """
         _response = self._raw_client.delete(id, delete_contents=delete_contents, request_options=request_options)
         return _response.data
@@ -151,7 +163,11 @@ class DataDirectoriesClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
         response = client.data_directories.list()
         for item in response:
             yield item
@@ -181,12 +197,24 @@ class DataDirectoriesClient:
 
         Examples
         --------
-        from truefoundry_sdk import TrueFoundry
-        from truefoundry_sdk import DataDirectoryManifest
-        from truefoundry_sdk import TrueFoundryManagedSource
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.data_directories.create_or_update(manifest=DataDirectoryManifest(name='name', ml_repo='ml_repo', metadata={'key': 'value'
-        }, source=TrueFoundryManagedSource(), ), )
+        from truefoundry_sdk import (
+            DataDirectoryManifest,
+            TrueFoundry,
+            TrueFoundryManagedSource,
+        )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.data_directories.create_or_update(
+            manifest=DataDirectoryManifest(
+                name="name",
+                ml_repo="ml_repo",
+                metadata={"key": "value"},
+                source=TrueFoundryManagedSource(),
+            ),
+        )
         """
         _response = self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
         return _response.data
@@ -231,8 +259,14 @@ class DataDirectoriesClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        response = client.data_directories.list_files(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.data_directories.list_files(
+            id="id",
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -273,8 +307,15 @@ class DataDirectoriesClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.data_directories.delete_files(id='id', paths=['paths'], )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.data_directories.delete_files(
+            id="id",
+            paths=["paths"],
+        )
         """
         _response = self._raw_client.delete_files(id=id, paths=paths, request_options=request_options)
         return _response.data
@@ -315,10 +356,17 @@ class DataDirectoriesClient:
 
         Examples
         --------
-        from truefoundry_sdk import TrueFoundry
-        from truefoundry_sdk import Operation
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.data_directories.get_signed_urls(id='id', paths=['paths'], operation=Operation.READ, )
+        from truefoundry_sdk import Operation, TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.data_directories.get_signed_urls(
+            id="id",
+            paths=["paths"],
+            operation=Operation.READ,
+        )
         """
         _response = self._raw_client.get_signed_urls(
             id=id, paths=paths, operation=operation, request_options=request_options
@@ -357,8 +405,16 @@ class DataDirectoriesClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.data_directories.create_multipart_upload(id='id', path='path', num_parts=1, )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.data_directories.create_multipart_upload(
+            id="id",
+            path="path",
+            num_parts=1,
+        )
         """
         _response = self._raw_client.create_multipart_upload(
             id=id, path=path, num_parts=num_parts, request_options=request_options
@@ -408,11 +464,22 @@ class AsyncDataDirectoriesClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.data_directories.get(id='id', )
+            await client.data_directories.get(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(id, request_options=request_options)
@@ -452,11 +519,22 @@ class AsyncDataDirectoriesClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.data_directories.delete(id='id', )
+            await client.data_directories.delete(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, delete_contents=delete_contents, request_options=request_options)
@@ -505,9 +583,16 @@ class AsyncDataDirectoriesClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
             response = await client.data_directories.list()
             async for item in response:
@@ -516,6 +601,8 @@ class AsyncDataDirectoriesClient:
             # alternatively, you can paginate page-by-page
             async for page in response.iter_pages():
                 yield page
+
+
         asyncio.run(main())
         """
         return await self._raw_client.list(
@@ -540,14 +627,31 @@ class AsyncDataDirectoriesClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
-        from truefoundry_sdk import DataDirectoryManifest
-        from truefoundry_sdk import TrueFoundryManagedSource
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import (
+            AsyncTrueFoundry,
+            DataDirectoryManifest,
+            TrueFoundryManagedSource,
+        )
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.data_directories.create_or_update(manifest=DataDirectoryManifest(name='name', ml_repo='ml_repo', metadata={'key': 'value'
-            }, source=TrueFoundryManagedSource(), ), )
+            await client.data_directories.create_or_update(
+                manifest=DataDirectoryManifest(
+                    name="name",
+                    ml_repo="ml_repo",
+                    metadata={"key": "value"},
+                    source=TrueFoundryManagedSource(),
+                ),
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
@@ -592,17 +696,28 @@ class AsyncDataDirectoriesClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            response = await client.data_directories.list_files(id='id', )
+            response = await client.data_directories.list_files(
+                id="id",
+            )
             async for item in response:
                 yield item
 
             # alternatively, you can paginate page-by-page
             async for page in response.iter_pages():
                 yield page
+
+
         asyncio.run(main())
         """
         return await self._raw_client.list_files(
@@ -638,11 +753,23 @@ class AsyncDataDirectoriesClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.data_directories.delete_files(id='id', paths=['paths'], )
+            await client.data_directories.delete_files(
+                id="id",
+                paths=["paths"],
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.delete_files(id=id, paths=paths, request_options=request_options)
@@ -684,12 +811,24 @@ class AsyncDataDirectoriesClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
-        from truefoundry_sdk import Operation
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry, Operation
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.data_directories.get_signed_urls(id='id', paths=['paths'], operation=Operation.READ, )
+            await client.data_directories.get_signed_urls(
+                id="id",
+                paths=["paths"],
+                operation=Operation.READ,
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_signed_urls(
@@ -728,11 +867,24 @@ class AsyncDataDirectoriesClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.data_directories.create_multipart_upload(id='id', path='path', num_parts=1, )
+            await client.data_directories.create_multipart_upload(
+                id="id",
+                path="path",
+                num_parts=1,
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.create_multipart_upload(

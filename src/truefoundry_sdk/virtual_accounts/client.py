@@ -59,8 +59,15 @@ class VirtualAccountsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        response = client.virtual_accounts.list(limit=10, offset=0, )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.virtual_accounts.list(
+            limit=10,
+            offset=0,
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -97,11 +104,24 @@ class VirtualAccountsClient:
 
         Examples
         --------
-        from truefoundry_sdk import TrueFoundry
-        from truefoundry_sdk import VirtualAccountManifest
-        from truefoundry_sdk import Permissions
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.virtual_accounts.create_or_update(manifest=VirtualAccountManifest(name='name', permissions=[Permissions(resource_fqn='resource_fqn', resource_type='resource_type', role_id='role_id', )], ), )
+        from truefoundry_sdk import Permissions, TrueFoundry, VirtualAccountManifest
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.virtual_accounts.create_or_update(
+            manifest=VirtualAccountManifest(
+                name="name",
+                permissions=[
+                    Permissions(
+                        resource_fqn="resource_fqn",
+                        resource_type="resource_type",
+                        role_id="role_id",
+                    )
+                ],
+            ),
+        )
         """
         _response = self._raw_client.create_or_update(
             manifest=manifest, dry_run=dry_run, request_options=request_options
@@ -128,8 +148,14 @@ class VirtualAccountsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.virtual_accounts.get(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.virtual_accounts.get(
+            id="id",
+        )
         """
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
@@ -156,8 +182,14 @@ class VirtualAccountsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.virtual_accounts.delete(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.virtual_accounts.delete(
+            id="id",
+        )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
@@ -206,17 +238,29 @@ class AsyncVirtualAccountsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            response = await client.virtual_accounts.list(limit=10, offset=0, )
+            response = await client.virtual_accounts.list(
+                limit=10,
+                offset=0,
+            )
             async for item in response:
                 yield item
 
             # alternatively, you can paginate page-by-page
             async for page in response.iter_pages():
                 yield page
+
+
         asyncio.run(main())
         """
         return await self._raw_client.list(limit=limit, offset=offset, request_options=request_options)
@@ -249,13 +293,35 @@ class AsyncVirtualAccountsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
-        from truefoundry_sdk import VirtualAccountManifest
-        from truefoundry_sdk import Permissions
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import (
+            AsyncTrueFoundry,
+            Permissions,
+            VirtualAccountManifest,
+        )
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.virtual_accounts.create_or_update(manifest=VirtualAccountManifest(name='name', permissions=[Permissions(resource_fqn='resource_fqn', resource_type='resource_type', role_id='role_id', )], ), )
+            await client.virtual_accounts.create_or_update(
+                manifest=VirtualAccountManifest(
+                    name="name",
+                    permissions=[
+                        Permissions(
+                            resource_fqn="resource_fqn",
+                            resource_type="resource_type",
+                            role_id="role_id",
+                        )
+                    ],
+                ),
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.create_or_update(
@@ -284,11 +350,22 @@ class AsyncVirtualAccountsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.virtual_accounts.get(id='id', )
+            await client.virtual_accounts.get(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(id, request_options=request_options)
@@ -315,11 +392,22 @@ class AsyncVirtualAccountsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.virtual_accounts.delete(id='id', )
+            await client.virtual_accounts.delete(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)

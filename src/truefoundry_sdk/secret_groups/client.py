@@ -7,7 +7,6 @@ from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.delete_secret_group_response import DeleteSecretGroupResponse
 from ..types.get_secret_group_response import GetSecretGroupResponse
-from ..types.secret import Secret
 from ..types.secret_group import SecretGroup
 from ..types.secret_input import SecretInput
 from ..types.update_secret_input import UpdateSecretInput
@@ -37,15 +36,12 @@ class SecretGroupsClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
-        secret_group_id: typing.Optional[str] = None,
-        secret_group_fqn: typing.Optional[str] = None,
-        secret_attributes: typing.Optional[str] = None,
-        secret_group_attributes: typing.Optional[str] = None,
+        fqn: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[SecretGroup]:
         """
-        List the secret groups associated with a user along with the associated secrets for each group. Filtered with the options passed in the query fields.
+        List the secret groups associated with a user along with the associated secrets for each group. Filtered with the options passed in the query fields. Note: This method does not return the secret values of the <em>associatedSecrets</em> in the response. A separate API call to `/v1/secrets/{id}` should be made to fetch the associated secret value.
 
         Parameters
         ----------
@@ -55,17 +51,8 @@ class SecretGroupsClient:
         offset : typing.Optional[int]
             Number of items to skip
 
-        secret_group_id : typing.Optional[str]
-            Secret Group Id of secret group.
-
-        secret_group_fqn : typing.Optional[str]
+        fqn : typing.Optional[str]
             Fqn of secret group.
-
-        secret_attributes : typing.Optional[str]
-            Attributes to return for secret object provided as comma separated values (`secretAttributes=id,fqn`)
-
-        secret_group_attributes : typing.Optional[str]
-            Attributes returned for secret group object provided as comma separated values (`secretGroupAttributes=id,fqn`)
 
         search : typing.Optional[str]
             Search query - filters by secret group names that contain the search string
@@ -81,8 +68,15 @@ class SecretGroupsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        response = client.secret_groups.list(limit=10, offset=0, )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.secret_groups.list(
+            limit=10,
+            offset=0,
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -90,14 +84,7 @@ class SecretGroupsClient:
             yield page
         """
         return self._raw_client.list(
-            limit=limit,
-            offset=offset,
-            secret_group_id=secret_group_id,
-            secret_group_fqn=secret_group_fqn,
-            secret_attributes=secret_attributes,
-            secret_group_attributes=secret_group_attributes,
-            search=search,
-            request_options=request_options,
+            limit=limit, offset=offset, fqn=fqn, search=search, request_options=request_options
         )
 
     def create(
@@ -109,7 +96,7 @@ class SecretGroupsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSecretGroupResponse:
         """
-        Creates a secret group with secrets in it. A secret version for each of the created secret is created with version number as 1. The returned secret group does not have any secrets in the <em>associatedSecrets</em> field. A separate API call should be made to fetch the associated secrets.
+        Creates a secret group with secrets in it. A secret version for each of the created secret is created with version number as 1. The returned secret group does not have any secret values in the <em>associatedSecrets</em> field. A separate API call to `/v1/secrets/{id}` should be made to fetch the associated secret value.
 
         Parameters
         ----------
@@ -132,10 +119,22 @@ class SecretGroupsClient:
 
         Examples
         --------
-        from truefoundry_sdk import TrueFoundry
-        from truefoundry_sdk import SecretInput
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.secret_groups.create(name='name', integration_id='integrationId', secrets=[SecretInput(key='key', value='value', )], )
+        from truefoundry_sdk import SecretInput, TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.secret_groups.create(
+            name="name",
+            integration_id="integrationId",
+            secrets=[
+                SecretInput(
+                    key="key",
+                    value="value",
+                )
+            ],
+        )
         """
         _response = self._raw_client.create(
             name=name, integration_id=integration_id, secrets=secrets, request_options=request_options
@@ -144,7 +143,7 @@ class SecretGroupsClient:
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetSecretGroupResponse:
         """
-        Get Secret Group associated with provided secretGroup id
+        Get Secret Group by id. This method does not return the secret values of the <em>associatedSecrets</em> in the response. A separate API call to `/v1/secrets/{id}` should be made to fetch the associated secret value.
 
         Parameters
         ----------
@@ -157,13 +156,19 @@ class SecretGroupsClient:
         Returns
         -------
         GetSecretGroupResponse
-            Returns the Secret Group associated with provided secretGroup id
+            Returns the Secret Group associated with provided id
 
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.secret_groups.get(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.secret_groups.get(
+            id="id",
+        )
         """
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
@@ -176,7 +181,7 @@ class SecretGroupsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSecretGroupResponse:
         """
-        Updates the secrets in a secret group with new values. A new secret version is created for every secret that has a modified value. Returns the updated secret group. The returned secret group does not have any secrets in the <em>associatedSecrets</em> field. A separate API call should be made to fetch the associated secrets.
+        Updates the secrets in a secret group with new values. A new secret version is created for every secret that has a modified value and any omitted secrets are deleted. The returned updated secret group does not have any secret values in the <em>associatedSecrets</em> field. A separate API call to `/v1/secrets/{id}` should be made to fetch the associated secret value.
 
         Parameters
         ----------
@@ -195,10 +200,21 @@ class SecretGroupsClient:
 
         Examples
         --------
-        from truefoundry_sdk import TrueFoundry
-        from truefoundry_sdk import UpdateSecretInput
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.secret_groups.update(id='id', secrets=[UpdateSecretInput(key='key', value='value', )], )
+        from truefoundry_sdk import TrueFoundry, UpdateSecretInput
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.secret_groups.update(
+            id="id",
+            secrets=[
+                UpdateSecretInput(
+                    key="key",
+                    value="value",
+                )
+            ],
+        )
         """
         _response = self._raw_client.update(id, secrets=secrets, request_options=request_options)
         return _response.data
@@ -223,36 +239,16 @@ class SecretGroupsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.secret_groups.delete(id='id', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.secret_groups.delete(
+            id="id",
+        )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
-        return _response.data
-
-    def list_secrets(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Secret]:
-        """
-        List Secrets associated with a Secret Group.
-
-        Parameters
-        ----------
-        id : str
-            Secret Id of the secret group.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        typing.List[Secret]
-            Returns the secrets associated with a secret group.
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.secret_groups.list_secrets(id='id', )
-        """
-        _response = self._raw_client.list_secrets(id, request_options=request_options)
         return _response.data
 
 
@@ -276,15 +272,12 @@ class AsyncSecretGroupsClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
-        secret_group_id: typing.Optional[str] = None,
-        secret_group_fqn: typing.Optional[str] = None,
-        secret_attributes: typing.Optional[str] = None,
-        secret_group_attributes: typing.Optional[str] = None,
+        fqn: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[SecretGroup]:
         """
-        List the secret groups associated with a user along with the associated secrets for each group. Filtered with the options passed in the query fields.
+        List the secret groups associated with a user along with the associated secrets for each group. Filtered with the options passed in the query fields. Note: This method does not return the secret values of the <em>associatedSecrets</em> in the response. A separate API call to `/v1/secrets/{id}` should be made to fetch the associated secret value.
 
         Parameters
         ----------
@@ -294,17 +287,8 @@ class AsyncSecretGroupsClient:
         offset : typing.Optional[int]
             Number of items to skip
 
-        secret_group_id : typing.Optional[str]
-            Secret Group Id of secret group.
-
-        secret_group_fqn : typing.Optional[str]
+        fqn : typing.Optional[str]
             Fqn of secret group.
-
-        secret_attributes : typing.Optional[str]
-            Attributes to return for secret object provided as comma separated values (`secretAttributes=id,fqn`)
-
-        secret_group_attributes : typing.Optional[str]
-            Attributes returned for secret group object provided as comma separated values (`secretGroupAttributes=id,fqn`)
 
         search : typing.Optional[str]
             Search query - filters by secret group names that contain the search string
@@ -319,28 +303,33 @@ class AsyncSecretGroupsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            response = await client.secret_groups.list(limit=10, offset=0, )
+            response = await client.secret_groups.list(
+                limit=10,
+                offset=0,
+            )
             async for item in response:
                 yield item
 
             # alternatively, you can paginate page-by-page
             async for page in response.iter_pages():
                 yield page
+
+
         asyncio.run(main())
         """
         return await self._raw_client.list(
-            limit=limit,
-            offset=offset,
-            secret_group_id=secret_group_id,
-            secret_group_fqn=secret_group_fqn,
-            secret_attributes=secret_attributes,
-            secret_group_attributes=secret_group_attributes,
-            search=search,
-            request_options=request_options,
+            limit=limit, offset=offset, fqn=fqn, search=search, request_options=request_options
         )
 
     async def create(
@@ -352,7 +341,7 @@ class AsyncSecretGroupsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSecretGroupResponse:
         """
-        Creates a secret group with secrets in it. A secret version for each of the created secret is created with version number as 1. The returned secret group does not have any secrets in the <em>associatedSecrets</em> field. A separate API call should be made to fetch the associated secrets.
+        Creates a secret group with secrets in it. A secret version for each of the created secret is created with version number as 1. The returned secret group does not have any secret values in the <em>associatedSecrets</em> field. A separate API call to `/v1/secrets/{id}` should be made to fetch the associated secret value.
 
         Parameters
         ----------
@@ -375,12 +364,29 @@ class AsyncSecretGroupsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
-        from truefoundry_sdk import SecretInput
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry, SecretInput
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.secret_groups.create(name='name', integration_id='integrationId', secrets=[SecretInput(key='key', value='value', )], )
+            await client.secret_groups.create(
+                name="name",
+                integration_id="integrationId",
+                secrets=[
+                    SecretInput(
+                        key="key",
+                        value="value",
+                    )
+                ],
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
@@ -390,7 +396,7 @@ class AsyncSecretGroupsClient:
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetSecretGroupResponse:
         """
-        Get Secret Group associated with provided secretGroup id
+        Get Secret Group by id. This method does not return the secret values of the <em>associatedSecrets</em> in the response. A separate API call to `/v1/secrets/{id}` should be made to fetch the associated secret value.
 
         Parameters
         ----------
@@ -403,15 +409,26 @@ class AsyncSecretGroupsClient:
         Returns
         -------
         GetSecretGroupResponse
-            Returns the Secret Group associated with provided secretGroup id
+            Returns the Secret Group associated with provided id
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.secret_groups.get(id='id', )
+            await client.secret_groups.get(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(id, request_options=request_options)
@@ -425,7 +442,7 @@ class AsyncSecretGroupsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSecretGroupResponse:
         """
-        Updates the secrets in a secret group with new values. A new secret version is created for every secret that has a modified value. Returns the updated secret group. The returned secret group does not have any secrets in the <em>associatedSecrets</em> field. A separate API call should be made to fetch the associated secrets.
+        Updates the secrets in a secret group with new values. A new secret version is created for every secret that has a modified value and any omitted secrets are deleted. The returned updated secret group does not have any secret values in the <em>associatedSecrets</em> field. A separate API call to `/v1/secrets/{id}` should be made to fetch the associated secret value.
 
         Parameters
         ----------
@@ -444,12 +461,28 @@ class AsyncSecretGroupsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
-        from truefoundry_sdk import UpdateSecretInput
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry, UpdateSecretInput
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.secret_groups.update(id='id', secrets=[UpdateSecretInput(key='key', value='value', )], )
+            await client.secret_groups.update(
+                id="id",
+                secrets=[
+                    UpdateSecretInput(
+                        key="key",
+                        value="value",
+                    )
+                ],
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.update(id, secrets=secrets, request_options=request_options)
@@ -476,43 +509,23 @@ class AsyncSecretGroupsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.secret_groups.delete(id='id', )
+            await client.secret_groups.delete(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
-        return _response.data
-
-    async def list_secrets(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[Secret]:
-        """
-        List Secrets associated with a Secret Group.
-
-        Parameters
-        ----------
-        id : str
-            Secret Id of the secret group.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        typing.List[Secret]
-            Returns the secrets associated with a secret group.
-
-        Examples
-        --------
-        from truefoundry_sdk import AsyncTrueFoundry
-        import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        async def main() -> None:
-            await client.secret_groups.list_secrets(id='id', )
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.list_secrets(id, request_options=request_options)
         return _response.data

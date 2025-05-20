@@ -66,8 +66,18 @@ class ApplicationVersionsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        response = client.application_versions.list(id='id', limit=10, offset=0, version='1', deployment_id='deployment123', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.application_versions.list(
+            id="id",
+            limit=10,
+            offset=0,
+            version="1",
+            deployment_id="deployment123",
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -108,8 +118,15 @@ class ApplicationVersionsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.application_versions.get(id='id', deployment_id='deploymentId', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.application_versions.get(
+            id="id",
+            deployment_id="deploymentId",
+        )
         """
         _response = self._raw_client.get(id, deployment_id, request_options=request_options)
         return _response.data
@@ -170,17 +187,32 @@ class AsyncApplicationVersionsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            response = await client.application_versions.list(id='id', limit=10, offset=0, version='1', deployment_id='deployment123', )
+            response = await client.application_versions.list(
+                id="id",
+                limit=10,
+                offset=0,
+                version="1",
+                deployment_id="deployment123",
+            )
             async for item in response:
                 yield item
 
             # alternatively, you can paginate page-by-page
             async for page in response.iter_pages():
                 yield page
+
+
         asyncio.run(main())
         """
         return await self._raw_client.list(
@@ -216,11 +248,23 @@ class AsyncApplicationVersionsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.application_versions.get(id='id', deployment_id='deploymentId', )
+            await client.application_versions.get(
+                id="id",
+                deployment_id="deploymentId",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(id, deployment_id, request_options=request_options)

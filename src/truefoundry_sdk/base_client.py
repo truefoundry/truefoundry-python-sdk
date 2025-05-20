@@ -59,7 +59,11 @@ class BaseTrueFoundry:
     Examples
     --------
     from truefoundry_sdk import TrueFoundry
-    client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+    client = TrueFoundry(
+        api_key="YOUR_API_KEY",
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(
@@ -139,7 +143,11 @@ class AsyncBaseTrueFoundry:
     Examples
     --------
     from truefoundry_sdk import AsyncTrueFoundry
-    client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+    client = AsyncTrueFoundry(
+        api_key="YOUR_API_KEY",
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(

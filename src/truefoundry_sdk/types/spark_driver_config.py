@@ -4,7 +4,6 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .endpoint import Endpoint
 from .resources import Resources
 
 
@@ -13,7 +12,6 @@ class SparkDriverConfig(UniversalBaseModel):
     +label=Driver Config
     """
 
-    ui_endpoint: Endpoint
     resources: typing.Optional[Resources] = None
 
     if IS_PYDANTIC_V2:

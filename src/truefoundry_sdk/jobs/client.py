@@ -88,8 +88,16 @@ class JobsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        response = client.jobs.list_runs(job_id='jobId', limit=10, offset=0, )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.jobs.list_runs(
+            job_id="jobId",
+            limit=10,
+            offset=0,
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -133,8 +141,15 @@ class JobsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.jobs.get_run(job_id='jobId', job_run_name='jobRunName', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.jobs.get_run(
+            job_id="jobId",
+            job_run_name="jobRunName",
+        )
         """
         _response = self._raw_client.get_run(job_id, job_run_name, request_options=request_options)
         return _response.data
@@ -164,8 +179,15 @@ class JobsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.jobs.delete_run(job_id='jobId', job_run_name='jobRunName', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.jobs.delete_run(
+            job_id="jobId",
+            job_run_name="jobRunName",
+        )
         """
         _response = self._raw_client.delete_run(job_id, job_run_name, request_options=request_options)
         return _response.data
@@ -203,7 +225,11 @@ class JobsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
         client.jobs.trigger()
         """
         _response = self._raw_client.trigger(
@@ -236,8 +262,15 @@ class JobsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-        client.jobs.terminate(deployment_id='deploymentId', job_run_name='jobRunName', )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.jobs.terminate(
+            deployment_id="deploymentId",
+            job_run_name="jobRunName",
+        )
         """
         _response = self._raw_client.terminate(
             deployment_id=deployment_id, job_run_name=job_run_name, request_options=request_options
@@ -312,17 +345,30 @@ class AsyncJobsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            response = await client.jobs.list_runs(job_id='jobId', limit=10, offset=0, )
+            response = await client.jobs.list_runs(
+                job_id="jobId",
+                limit=10,
+                offset=0,
+            )
             async for item in response:
                 yield item
 
             # alternatively, you can paginate page-by-page
             async for page in response.iter_pages():
                 yield page
+
+
         asyncio.run(main())
         """
         return await self._raw_client.list_runs(
@@ -361,11 +407,23 @@ class AsyncJobsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.jobs.get_run(job_id='jobId', job_run_name='jobRunName', )
+            await client.jobs.get_run(
+                job_id="jobId",
+                job_run_name="jobRunName",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_run(job_id, job_run_name, request_options=request_options)
@@ -395,11 +453,23 @@ class AsyncJobsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.jobs.delete_run(job_id='jobId', job_run_name='jobRunName', )
+            await client.jobs.delete_run(
+                job_id="jobId",
+                job_run_name="jobRunName",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.delete_run(job_id, job_run_name, request_options=request_options)
@@ -437,11 +507,20 @@ class AsyncJobsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
             await client.jobs.trigger()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.trigger(
@@ -473,11 +552,23 @@ class AsyncJobsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AsyncTrueFoundry
         import asyncio
-        client = AsyncTrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.jobs.terminate(deployment_id='deploymentId', job_run_name='jobRunName', )
+            await client.jobs.terminate(
+                deployment_id="deploymentId",
+                job_run_name="jobRunName",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.terminate(

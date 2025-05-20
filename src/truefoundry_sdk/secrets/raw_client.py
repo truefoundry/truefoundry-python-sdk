@@ -7,7 +7,6 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pagination import AsyncPager, BaseHttpResponse, SyncPager
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..errors.failed_dependency_error import FailedDependencyError
@@ -15,116 +14,17 @@ from ..errors.forbidden_error import ForbiddenError
 from ..errors.not_found_error import NotFoundError
 from ..types.get_secret_response import GetSecretResponse
 from ..types.http_error import HttpError
-from ..types.list_secrets_response import ListSecretsResponse
-from ..types.secret import Secret
-
-# this is used as the default value for optional parameters
-OMIT = typing.cast(typing.Any, ...)
 
 
 class RawSecretsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def list(
-        self,
-        *,
-        limit: typing.Optional[int] = 100,
-        offset: typing.Optional[int] = 0,
-        secret_id: typing.Optional[str] = OMIT,
-        secret_fqns: typing.Optional[typing.Sequence[str]] = OMIT,
-        secret_group_id: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Secret]:
-        """
-        List secrets associated with a user filtered with optional parameters passed in the body.
-
-        Parameters
-        ----------
-        limit : typing.Optional[int]
-            Number of items per page
-
-        offset : typing.Optional[int]
-            Number of items to skip
-
-        secret_id : typing.Optional[str]
-            Secret Id of the secret.
-
-        secret_fqns : typing.Optional[typing.Sequence[str]]
-            Array of FQNs
-
-        secret_group_id : typing.Optional[str]
-            Secret Group Id of the secret gourp.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SyncPager[Secret]
-            Returns the secrets associated with a user filtered with optional parameters passed in the body.
-        """
-        offset = offset if offset is not None else 0
-
-        _response = self._client_wrapper.httpx_client.request(
-            "api/svc/v1/secrets",
-            method="POST",
-            json={
-                "limit": limit,
-                "offset": offset,
-                "secretId": secret_id,
-                "secretFqns": secret_fqns,
-                "secretGroupId": secret_group_id,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _parsed_response = typing.cast(
-                    ListSecretsResponse,
-                    parse_obj_as(
-                        type_=ListSecretsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                _items = _parsed_response.data
-                _has_next = True
-                _get_next = lambda: self.list(
-                    limit=limit,
-                    offset=offset + len(_items),
-                    secret_id=secret_id,
-                    secret_fqns=secret_fqns,
-                    secret_group_id=secret_group_id,
-                    request_options=request_options,
-                )
-                return SyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
     def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetSecretResponse]:
         """
-        Get Secret associated with provided id
+        Get Secret associated with provided id. The secret value is not returned if the control plane has `DISABLE_SECRET_VALUE_VIEW` set
 
         Parameters
         ----------
@@ -256,108 +156,11 @@ class AsyncRawSecretsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def list(
-        self,
-        *,
-        limit: typing.Optional[int] = 100,
-        offset: typing.Optional[int] = 0,
-        secret_id: typing.Optional[str] = OMIT,
-        secret_fqns: typing.Optional[typing.Sequence[str]] = OMIT,
-        secret_group_id: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Secret]:
-        """
-        List secrets associated with a user filtered with optional parameters passed in the body.
-
-        Parameters
-        ----------
-        limit : typing.Optional[int]
-            Number of items per page
-
-        offset : typing.Optional[int]
-            Number of items to skip
-
-        secret_id : typing.Optional[str]
-            Secret Id of the secret.
-
-        secret_fqns : typing.Optional[typing.Sequence[str]]
-            Array of FQNs
-
-        secret_group_id : typing.Optional[str]
-            Secret Group Id of the secret gourp.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncPager[Secret]
-            Returns the secrets associated with a user filtered with optional parameters passed in the body.
-        """
-        offset = offset if offset is not None else 0
-
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/svc/v1/secrets",
-            method="POST",
-            json={
-                "limit": limit,
-                "offset": offset,
-                "secretId": secret_id,
-                "secretFqns": secret_fqns,
-                "secretGroupId": secret_group_id,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _parsed_response = typing.cast(
-                    ListSecretsResponse,
-                    parse_obj_as(
-                        type_=ListSecretsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                _items = _parsed_response.data
-                _has_next = True
-
-                async def _get_next():
-                    return await self.list(
-                        limit=limit,
-                        offset=offset + len(_items),
-                        secret_id=secret_id,
-                        secret_fqns=secret_fqns,
-                        secret_group_id=secret_group_id,
-                        request_options=request_options,
-                    )
-
-                return AsyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
     async def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetSecretResponse]:
         """
-        Get Secret associated with provided id
+        Get Secret associated with provided id. The secret value is not returned if the control plane has `DISABLE_SECRET_VALUE_VIEW` set
 
         Parameters
         ----------

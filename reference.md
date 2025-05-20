@@ -28,8 +28,15 @@ List all users of tenant filtered by query and showInvalidUsers. Pagination is a
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-response = client.users.list(limit=10, offset=0, )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.users.list(
+    limit=10,
+    offset=0,
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -122,8 +129,15 @@ This endpoint allows tenant administrators to update the roles of a user within 
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.users.update_roles(email='email', roles=['roles'], )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.users.update_roles(
+    email="email",
+    roles=["roles"],
+)
 
 ```
 </dd>
@@ -195,8 +209,14 @@ Get User associated with provided User id
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.users.get(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.users.get(
+    id="id",
+)
 
 ```
 </dd>
@@ -260,8 +280,15 @@ Invite a user to the tenant
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.users.invite_user(accept_invite_client_url='<control plane url>/invite-accept', email='email', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.users.invite_user(
+    accept_invite_client_url="<control plane url>/invite-accept",
+    email="email",
+)
 
 ```
 </dd>
@@ -333,8 +360,14 @@ Deactivate user associated with the provided email within the tenant.
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.users.deactivate(email='email', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.users.deactivate(
+    email="email",
+)
 
 ```
 </dd>
@@ -398,8 +431,14 @@ Activate user associated with the provided email within the tenant.
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.users.activate(email='email', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.users.activate(
+    email="email",
+)
 
 ```
 </dd>
@@ -464,8 +503,15 @@ Retrieve all teams associated with the authenticated user. If the user is a tena
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-response = client.teams.list(limit=10, offset=0, )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.teams.list(
+    limit=10,
+    offset=0,
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -541,10 +587,18 @@ Creates a new team or updates an existing team. It ensures that the team name is
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk import TeamManifest
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.teams.create_or_update(manifest=TeamManifest(name='name', members=['members'], ), )
+from truefoundry_sdk import TeamManifest, TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.teams.create_or_update(
+    manifest=TeamManifest(
+        name="name",
+        members=["members"],
+    ),
+)
 
 ```
 </dd>
@@ -616,8 +670,14 @@ Get Team associated with provided team id
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.teams.get(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.teams.get(
+    id="id",
+)
 
 ```
 </dd>
@@ -681,8 +741,14 @@ Deletes the Team associated with the provided Id.
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.teams.delete(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.teams.delete(
+    id="id",
+)
 
 ```
 </dd>
@@ -747,8 +813,15 @@ List Personal Access Tokens created by the user in the current tenant.
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-response = client.personal_access_tokens.list(limit=10, offset=0, )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.personal_access_tokens.list(
+    limit=10,
+    offset=0,
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -825,8 +898,14 @@ Create Personal Access Token
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.personal_access_tokens.create(name='name', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.personal_access_tokens.create(
+    name="name",
+)
 
 ```
 </dd>
@@ -890,8 +969,14 @@ Delete Personal Access Token associated with the provided serviceAccountId
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.personal_access_tokens.delete(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.personal_access_tokens.delete(
+    id="id",
+)
 
 ```
 </dd>
@@ -956,8 +1041,15 @@ List virtual accounts for the tenant.
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-response = client.virtual_accounts.list(limit=10, offset=0, )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.virtual_accounts.list(
+    limit=10,
+    offset=0,
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -1033,11 +1125,24 @@ Creates a new virtual account or updates an existing one based on the provided m
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk import VirtualAccountManifest
-from truefoundry_sdk import Permissions
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.virtual_accounts.create_or_update(manifest=VirtualAccountManifest(name='name', permissions=[Permissions(resource_fqn='resource_fqn', resource_type='resource_type', role_id='role_id', )], ), )
+from truefoundry_sdk import Permissions, TrueFoundry, VirtualAccountManifest
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.virtual_accounts.create_or_update(
+    manifest=VirtualAccountManifest(
+        name="name",
+        permissions=[
+            Permissions(
+                resource_fqn="resource_fqn",
+                resource_type="resource_type",
+                role_id="role_id",
+            )
+        ],
+    ),
+)
 
 ```
 </dd>
@@ -1109,8 +1214,14 @@ Get virtual account by id
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.virtual_accounts.get(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.virtual_accounts.get(
+    id="id",
+)
 
 ```
 </dd>
@@ -1174,8 +1285,14 @@ Delete a virtual account associated with the provided virtual account id.
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.virtual_accounts.delete(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.virtual_accounts.delete(
+    id="id",
+)
 
 ```
 </dd>
@@ -1212,108 +1329,6 @@ client.virtual_accounts.delete(id='id', )
 </details>
 
 ## Secrets
-<details><summary><code>client.secrets.<a href="src/truefoundry_sdk/secrets/client.py">list</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List secrets associated with a user filtered with optional parameters passed in the body.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-response = client.secrets.list()
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**limit:** `typing.Optional[int]` — Number of items per page
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**offset:** `typing.Optional[int]` — Number of items to skip
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**secret_id:** `typing.Optional[str]` — Secret Id of the secret.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**secret_fqns:** `typing.Optional[typing.Sequence[str]]` — Array of FQNs
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**secret_group_id:** `typing.Optional[str]` — Secret Group Id of the secret gourp.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.secrets.<a href="src/truefoundry_sdk/secrets/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
@@ -1326,7 +1341,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-Get Secret associated with provided id
+Get Secret associated with provided id. The secret value is not returned if the control plane has `DISABLE_SECRET_VALUE_VIEW` set
 </dd>
 </dl>
 </dd>
@@ -1342,8 +1357,14 @@ Get Secret associated with provided id
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.secrets.get(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.secrets.get(
+    id="id",
+)
 
 ```
 </dd>
@@ -1407,8 +1428,14 @@ Deletes a secret and its versions along with its values.
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.secrets.delete(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.secrets.delete(
+    id="id",
+)
 
 ```
 </dd>
@@ -1457,7 +1484,7 @@ client.secrets.delete(id='id', )
 <dl>
 <dd>
 
-List the secret groups associated with a user along with the associated secrets for each group. Filtered with the options passed in the query fields.
+List the secret groups associated with a user along with the associated secrets for each group. Filtered with the options passed in the query fields. Note: This method does not return the secret values of the <em>associatedSecrets</em> in the response. A separate API call to `/v1/secrets/{id}` should be made to fetch the associated secret value.
 </dd>
 </dl>
 </dd>
@@ -1473,8 +1500,15 @@ List the secret groups associated with a user along with the associated secrets 
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-response = client.secret_groups.list(limit=10, offset=0, )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.secret_groups.list(
+    limit=10,
+    offset=0,
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -1511,31 +1545,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**secret_group_id:** `typing.Optional[str]` — Secret Group Id of secret group.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**secret_group_fqn:** `typing.Optional[str]` — Fqn of secret group.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**secret_attributes:** `typing.Optional[str]` — Attributes to return for secret object provided as comma separated values (`secretAttributes=id,fqn`)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**secret_group_attributes:** `typing.Optional[str]` — Attributes returned for secret group object provided as comma separated values (`secretGroupAttributes=id,fqn`)
+**fqn:** `typing.Optional[str]` — Fqn of secret group.
     
 </dd>
 </dl>
@@ -1575,7 +1585,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-Creates a secret group with secrets in it. A secret version for each of the created secret is created with version number as 1. The returned secret group does not have any secrets in the <em>associatedSecrets</em> field. A separate API call should be made to fetch the associated secrets.
+Creates a secret group with secrets in it. A secret version for each of the created secret is created with version number as 1. The returned secret group does not have any secret values in the <em>associatedSecrets</em> field. A separate API call to `/v1/secrets/{id}` should be made to fetch the associated secret value.
 </dd>
 </dl>
 </dd>
@@ -1590,10 +1600,22 @@ Creates a secret group with secrets in it. A secret version for each of the crea
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk import SecretInput
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.secret_groups.create(name='name', integration_id='integrationId', secrets=[SecretInput(key='key', value='value', )], )
+from truefoundry_sdk import SecretInput, TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.secret_groups.create(
+    name="name",
+    integration_id="integrationId",
+    secrets=[
+        SecretInput(
+            key="key",
+            value="value",
+        )
+    ],
+)
 
 ```
 </dd>
@@ -1657,7 +1679,7 @@ client.secret_groups.create(name='name', integration_id='integrationId', secrets
 <dl>
 <dd>
 
-Get Secret Group associated with provided secretGroup id
+Get Secret Group by id. This method does not return the secret values of the <em>associatedSecrets</em> in the response. A separate API call to `/v1/secrets/{id}` should be made to fetch the associated secret value.
 </dd>
 </dl>
 </dd>
@@ -1673,8 +1695,14 @@ Get Secret Group associated with provided secretGroup id
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.secret_groups.get(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.secret_groups.get(
+    id="id",
+)
 
 ```
 </dd>
@@ -1722,7 +1750,7 @@ client.secret_groups.get(id='id', )
 <dl>
 <dd>
 
-Updates the secrets in a secret group with new values. A new secret version is created for every secret that has a modified value. Returns the updated secret group. The returned secret group does not have any secrets in the <em>associatedSecrets</em> field. A separate API call should be made to fetch the associated secrets.
+Updates the secrets in a secret group with new values. A new secret version is created for every secret that has a modified value and any omitted secrets are deleted. The returned updated secret group does not have any secret values in the <em>associatedSecrets</em> field. A separate API call to `/v1/secrets/{id}` should be made to fetch the associated secret value.
 </dd>
 </dl>
 </dd>
@@ -1737,10 +1765,21 @@ Updates the secrets in a secret group with new values. A new secret version is c
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk import UpdateSecretInput
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.secret_groups.update(id='id', secrets=[UpdateSecretInput(key='key', value='value', )], )
+from truefoundry_sdk import TrueFoundry, UpdateSecretInput
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.secret_groups.update(
+    id="id",
+    secrets=[
+        UpdateSecretInput(
+            key="key",
+            value="value",
+        )
+    ],
+)
 
 ```
 </dd>
@@ -1812,73 +1851,14 @@ Deletes the secret group, its associated secrets and secret versions of those se
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.secret_groups.delete(id='id', )
 
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `str` — Secret Id of the secret group.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.secret_groups.<a href="src/truefoundry_sdk/secret_groups/client.py">list_secrets</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List Secrets associated with a Secret Group.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.secret_groups.list_secrets(id='id', )
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.secret_groups.delete(
+    id="id",
+)
 
 ```
 </dd>
@@ -1943,8 +1923,15 @@ Retrieves a list of all latest Clusters. Pagination is available based on query 
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-response = client.clusters.list(limit=10, offset=0, )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.clusters.list(
+    limit=10,
+    offset=0,
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -2020,12 +2007,30 @@ Create or Update cluster with provided manifest
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk import ClusterManifest
-from truefoundry_sdk import ClusterManifestClusterType
-from truefoundry_sdk import Collaborator
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.clusters.create_or_update(manifest=ClusterManifest(name='name', cluster_type=ClusterManifestClusterType.AWS_EKS, environment_names=['environment_names'], collaborators=[Collaborator(subject='subject', role_id='role_id', )], ), )
+from truefoundry_sdk import (
+    ClusterManifest,
+    ClusterManifestClusterType,
+    Collaborator,
+    TrueFoundry,
+)
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.clusters.create_or_update(
+    manifest=ClusterManifest(
+        name="name",
+        cluster_type=ClusterManifestClusterType.AWS_EKS,
+        environment_names=["environment_names"],
+        collaborators=[
+            Collaborator(
+                subject="subject",
+                role_id="role_id",
+            )
+        ],
+    ),
+)
 
 ```
 </dd>
@@ -2097,8 +2102,14 @@ Get cluster associated with provided id
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.clusters.get(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.clusters.get(
+    id="id",
+)
 
 ```
 </dd>
@@ -2162,8 +2173,14 @@ Delete cluster associated with provided cluster id
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.clusters.delete(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.clusters.delete(
+    id="id",
+)
 
 ```
 </dd>
@@ -2227,8 +2244,16 @@ List addons for the provided cluster.Pagination is available based on query para
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.clusters.get_addons(id='id', limit=10, offset=0, )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.clusters.get_addons(
+    id="id",
+    limit=10,
+    offset=0,
+)
 
 ```
 </dd>
@@ -2308,8 +2333,14 @@ Get the status of provided cluster
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.clusters.is_connected(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.clusters.is_connected(
+    id="id",
+)
 
 ```
 </dd>
@@ -2374,8 +2405,15 @@ List environments, if no environments are found, default environments are create
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-response = client.environments.list(limit=10, offset=0, )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.environments.list(
+    limit=10,
+    offset=0,
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -2451,12 +2489,25 @@ Creates a new Environment or updates an existing Environment.
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk import EnvironmentManifest
-from truefoundry_sdk import EnvironmentColor
-from truefoundry_sdk import EnvironmentOptimizeFor
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.environments.create_or_update(manifest=EnvironmentManifest(name='name', color=EnvironmentColor(), is_production=True, optimize_for=EnvironmentOptimizeFor.COST, ), )
+from truefoundry_sdk import (
+    EnvironmentColor,
+    EnvironmentManifest,
+    EnvironmentOptimizeFor,
+    TrueFoundry,
+)
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.environments.create_or_update(
+    manifest=EnvironmentManifest(
+        name="name",
+        color=EnvironmentColor(),
+        is_production=True,
+        optimize_for=EnvironmentOptimizeFor.COST,
+    ),
+)
 
 ```
 </dd>
@@ -2528,8 +2579,14 @@ Get Environment associated with the provided id.
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.environments.get(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.environments.get(
+    id="id",
+)
 
 ```
 </dd>
@@ -2593,8 +2650,14 @@ Delete Environment associated with the provided id.
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.environments.delete(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.environments.delete(
+    id="id",
+)
 
 ```
 </dd>
@@ -2659,8 +2722,15 @@ Retrieves a list of all latest applications. Supports filtering by application I
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-response = client.applications.list(limit=10, offset=0, )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.applications.list(
+    limit=10,
+    offset=0,
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -2809,7 +2879,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**is_recommendation_present:** `typing.Optional[bool]` — Filter out applications with recommendations
+**is_recommendation_present_and_visible:** `typing.Optional[bool]` — Filter out applications with recommendations that are allowed to be shown
     
 </dd>
 </dl>
@@ -2857,9 +2927,14 @@ Create a new Application Deployment based on the provided manifest.
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.applications.create_or_update(manifest={'key': 'value'
-}, )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.applications.create_or_update(
+    manifest={"key": "value"},
+)
 
 ```
 </dd>
@@ -2892,6 +2967,14 @@ client.applications.create_or_update(manifest={'key': 'value'
 <dd>
 
 **force_deploy:** `typing.Optional[bool]` — Cancels any ongoing deployments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**trigger_on_deploy:** `typing.Optional[bool]` — Trigger on deploy
     
 </dd>
 </dl>
@@ -2971,8 +3054,14 @@ Get Application associated with the provided application ID.
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.applications.get(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.applications.get(
+    id="id",
+)
 
 ```
 </dd>
@@ -3036,8 +3125,14 @@ Delete Application associated with the provided application ID.
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.applications.delete(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.applications.delete(
+    id="id",
+)
 
 ```
 </dd>
@@ -3101,8 +3196,14 @@ Pause a running application by scaling to 0 replicas
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.applications.scale_to_zero(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.applications.scale_to_zero(
+    id="id",
+)
 
 ```
 </dd>
@@ -3166,8 +3267,14 @@ Resume a paused application by scaling back to the original number of replicas
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.applications.scale_to_original(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.applications.scale_to_original(
+    id="id",
+)
 
 ```
 </dd>
@@ -3231,8 +3338,15 @@ Cancel an ongoing deployment associated with the provided application ID and dep
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.applications.cancel_deployment(id='id', deployment_id='deploymentId', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.applications.cancel_deployment(
+    id="id",
+    deployment_id="deploymentId",
+)
 
 ```
 </dd>
@@ -3305,8 +3419,18 @@ Fetch all deployments for a given application ID with optional filters such as d
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-response = client.application_versions.list(id='id', limit=10, offset=0, version='1', deployment_id='deployment123', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.application_versions.list(
+    id="id",
+    limit=10,
+    offset=0,
+    version="1",
+    deployment_id="deployment123",
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -3407,8 +3531,15 @@ Get Deployment associated with the provided application ID and deployment ID.
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.application_versions.get(id='id', deployment_id='deploymentId', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.application_versions.get(
+    id="id",
+    deployment_id="deploymentId",
+)
 
 ```
 </dd>
@@ -3481,8 +3612,16 @@ List Job Runs for provided Job Id. Filter the data based on parameters passed in
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-response = client.jobs.list_runs(job_id='jobId', limit=10, offset=0, )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.jobs.list_runs(
+    job_id="jobId",
+    limit=10,
+    offset=0,
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -3607,8 +3746,15 @@ Get Job Run for provided jobRunName and jobId
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.jobs.get_run(job_id='jobId', job_run_name='jobRunName', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.jobs.get_run(
+    job_id="jobId",
+    job_run_name="jobRunName",
+)
 
 ```
 </dd>
@@ -3680,8 +3826,15 @@ Delete Job Run for provided jobRunName and jobId
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.jobs.delete_run(job_id='jobId', job_run_name='jobRunName', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.jobs.delete_run(
+    job_id="jobId",
+    job_run_name="jobRunName",
+)
 
 ```
 </dd>
@@ -3753,7 +3906,11 @@ Trigger Job for provided deploymentId or applicationId
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
 client.jobs.trigger()
 
 ```
@@ -3834,8 +3991,15 @@ Terminate Job for provided deploymentId and jobRunName
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.jobs.terminate(deployment_id='deploymentId', job_run_name='jobRunName', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.jobs.terminate(
+    deployment_id="deploymentId",
+    job_run_name="jobRunName",
+)
 
 ```
 </dd>
@@ -3908,8 +4072,15 @@ List workspaces associated with the user. Optional filters include clusterId, fq
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-response = client.workspaces.list(limit=10, offset=0, )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.workspaces.list(
+    limit=10,
+    offset=0,
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -4009,10 +4180,18 @@ Creates a new workspace or updates an existing one based on the provided manifes
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk import WorkspaceManifest
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.workspaces.create_or_update(manifest=WorkspaceManifest(cluster_fqn='cluster_fqn', name='name', ), )
+from truefoundry_sdk import TrueFoundry, WorkspaceManifest
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.workspaces.create_or_update(
+    manifest=WorkspaceManifest(
+        cluster_fqn="cluster_fqn",
+        name="name",
+    ),
+)
 
 ```
 </dd>
@@ -4084,8 +4263,14 @@ Get workspace associated with provided workspace id
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.workspaces.get(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.workspaces.get(
+    id="id",
+)
 
 ```
 </dd>
@@ -4151,8 +4336,14 @@ Deletes the workspace with the given workspace ID.
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.workspaces.delete(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.workspaces.delete(
+    id="id",
+)
 
 ```
 </dd>
@@ -4217,7 +4408,11 @@ Get Events for Pod, Job Run, Application. The events are sourced from Kubernetes
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
 client.events.get()
 
 ```
@@ -4323,7 +4518,11 @@ Get alerts for a given application or cluster filtered by start and end timestam
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
 client.alerts.list()
 
 ```
@@ -4421,7 +4620,11 @@ Fetch logs for various workload components, including Services, Jobs, Workflows,
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
 client.logs.get()
 
 ```
@@ -4607,9 +4810,14 @@ Creates or updates an MLRepo entity based on the provided manifest.
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.ml_repos.create_or_update(manifest={'key': 'value'
-}, )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.ml_repos.create_or_update(
+    manifest={"key": "value"},
+)
 
 ```
 </dd>
@@ -4679,8 +4887,14 @@ Returns:
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.ml_repos.get(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.ml_repos.get(
+    id="id",
+)
 
 ```
 </dd>
@@ -4750,8 +4964,14 @@ Returns:
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.ml_repos.delete(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.ml_repos.delete(
+    id="id",
+)
 
 ```
 </dd>
@@ -4821,7 +5041,11 @@ Returns:
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
 response = client.ml_repos.list()
 for item in response:
     yield item
@@ -4894,8 +5118,14 @@ for page in response.iter_pages():
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.artifacts.get(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.artifacts.get(
+    id="id",
+)
 
 ```
 </dd>
@@ -4945,8 +5175,14 @@ client.artifacts.get(id='id', )
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.artifacts.delete(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.artifacts.delete(
+    id="id",
+)
 
 ```
 </dd>
@@ -4996,7 +5232,11 @@ client.artifacts.delete(id='id', )
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
 response = client.artifacts.list()
 for item in response:
     yield item
@@ -5083,12 +5323,24 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk import ArtifactManifest
-from truefoundry_sdk import TrueFoundryManagedSource
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.artifacts.create_or_update(manifest=ArtifactManifest(name='name', metadata={'key': 'value'
-}, ml_repo='ml_repo', source=TrueFoundryManagedSource(), ), )
+from truefoundry_sdk import (
+    ArtifactManifest,
+    TrueFoundry,
+    TrueFoundryManagedSource,
+)
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.artifacts.create_or_update(
+    manifest=ArtifactManifest(
+        name="name",
+        metadata={"key": "value"},
+        ml_repo="ml_repo",
+        source=TrueFoundryManagedSource(),
+    ),
+)
 
 ```
 </dd>
@@ -5139,8 +5391,14 @@ client.artifacts.create_or_update(manifest=ArtifactManifest(name='name', metadat
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.agents.get(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.agents.get(
+    id="id",
+)
 
 ```
 </dd>
@@ -5190,8 +5448,14 @@ client.agents.get(id='id', )
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.agents.delete(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.agents.delete(
+    id="id",
+)
 
 ```
 </dd>
@@ -5241,7 +5505,11 @@ client.agents.delete(id='id', )
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
 response = client.agents.list()
 for item in response:
     yield item
@@ -5320,11 +5588,23 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk import AgentManifest
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.agents.create_or_update(manifest=AgentManifest(name='name', metadata={'key': 'value'
-}, ml_repo='ml_repo', goal='goal', instruction='instruction', available_tools=['available_tools'], model_id='model_id', ), )
+from truefoundry_sdk import AgentManifest, TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.agents.create_or_update(
+    manifest=AgentManifest(
+        name="name",
+        metadata={"key": "value"},
+        ml_repo="ml_repo",
+        goal="goal",
+        instruction="instruction",
+        available_tools=["available_tools"],
+        model_id="model_id",
+    ),
+)
 
 ```
 </dd>
@@ -5375,8 +5655,14 @@ client.agents.create_or_update(manifest=AgentManifest(name='name', metadata={'ke
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.prompts.get(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.prompts.get(
+    id="id",
+)
 
 ```
 </dd>
@@ -5426,8 +5712,14 @@ client.prompts.get(id='id', )
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.prompts.delete(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.prompts.delete(
+    id="id",
+)
 
 ```
 </dd>
@@ -5477,7 +5769,11 @@ client.prompts.delete(id='id', )
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
 response = client.prompts.list()
 for item in response:
     yield item
@@ -5556,12 +5852,24 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk import ChatPromptManifest
-from truefoundry_sdk import SystemMessage
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.prompts.create_or_update(manifest=ChatPromptManifest(name='name', metadata={'key': 'value'
-}, ml_repo='ml_repo', messages=[SystemMessage(content='content', )], ), )
+from truefoundry_sdk import ChatPromptManifest, SystemMessage, TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.prompts.create_or_update(
+    manifest=ChatPromptManifest(
+        name="name",
+        metadata={"key": "value"},
+        ml_repo="ml_repo",
+        messages=[
+            SystemMessage(
+                content="content",
+            )
+        ],
+    ),
+)
 
 ```
 </dd>
@@ -5612,8 +5920,14 @@ client.prompts.create_or_update(manifest=ChatPromptManifest(name='name', metadat
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.tools.get(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.tools.get(
+    id="id",
+)
 
 ```
 </dd>
@@ -5663,8 +5977,14 @@ client.tools.get(id='id', )
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.tools.delete(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.tools.delete(
+    id="id",
+)
 
 ```
 </dd>
@@ -5714,7 +6034,11 @@ client.tools.delete(id='id', )
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
 response = client.tools.list()
 for item in response:
     yield item
@@ -5793,14 +6117,32 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk import AgentOpenApiToolManifest
-from truefoundry_sdk import BlobStorageReference
-from truefoundry_sdk import MimeType
-from truefoundry_sdk import Method
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.tools.create_or_update(manifest=AgentOpenApiToolManifest(name='name', metadata={'key': 'value'
-}, ml_repo='ml_repo', openapi_spec=BlobStorageReference(path='path', mime_type=MimeType.TEXT_PLAIN, ), base_url='base_url', path='path', method=Method.GET, ), )
+from truefoundry_sdk import (
+    AgentOpenApiToolManifest,
+    BlobStorageReference,
+    Method,
+    MimeType,
+    TrueFoundry,
+)
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.tools.create_or_update(
+    manifest=AgentOpenApiToolManifest(
+        name="name",
+        metadata={"key": "value"},
+        ml_repo="ml_repo",
+        openapi_spec=BlobStorageReference(
+            path="path",
+            mime_type=MimeType.TEXT_PLAIN,
+        ),
+        base_url="base_url",
+        path="path",
+        method=Method.GET,
+    ),
+)
 
 ```
 </dd>
@@ -5851,8 +6193,14 @@ client.tools.create_or_update(manifest=AgentOpenApiToolManifest(name='name', met
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.models.get(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.models.get(
+    id="id",
+)
 
 ```
 </dd>
@@ -5902,8 +6250,14 @@ client.models.get(id='id', )
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.models.delete(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.models.delete(
+    id="id",
+)
 
 ```
 </dd>
@@ -5953,7 +6307,11 @@ client.models.delete(id='id', )
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
 response = client.models.list()
 for item in response:
     yield item
@@ -6040,12 +6398,20 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk import ModelManifest
-from truefoundry_sdk import TrueFoundryManagedSource
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.models.create_or_update(manifest=ModelManifest(name='name', metadata={'key': 'value'
-}, ml_repo='ml_repo', source=TrueFoundryManagedSource(), ), )
+from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.models.create_or_update(
+    manifest=ModelManifest(
+        name="name",
+        metadata={"key": "value"},
+        ml_repo="ml_repo",
+        source=TrueFoundryManagedSource(),
+    ),
+)
 
 ```
 </dd>
@@ -6110,8 +6476,14 @@ Get artifact version API
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.artifact_versions.get(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.artifact_versions.get(
+    id="id",
+)
 
 ```
 </dd>
@@ -6175,8 +6547,14 @@ Delete artifact versions API
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.artifact_versions.delete(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.artifact_versions.delete(
+    id="id",
+)
 
 ```
 </dd>
@@ -6240,7 +6618,11 @@ List artifact version API
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
 response = client.artifact_versions.list()
 for item in response:
     yield item
@@ -6343,10 +6725,17 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk import Operation
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.artifact_versions.get_signed_urls(id='id', paths=['paths'], operation=Operation.READ, )
+from truefoundry_sdk import Operation, TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.artifact_versions.get_signed_urls(
+    id="id",
+    paths=["paths"],
+    operation=Operation.READ,
+)
 
 ```
 </dd>
@@ -6412,8 +6801,16 @@ client.artifact_versions.get_signed_urls(id='id', paths=['paths'], operation=Ope
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.artifact_versions.create_multi_part_upload(id='id', path='path', num_parts=1, )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.artifact_versions.create_multi_part_upload(
+    id="id",
+    path="path",
+    num_parts=1,
+)
 
 ```
 </dd>
@@ -6478,12 +6875,20 @@ client.artifact_versions.create_multi_part_upload(id='id', path='path', num_part
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk import ModelManifest
-from truefoundry_sdk import TrueFoundryManagedSource
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.artifact_versions.stage(manifest=ModelManifest(name='name', metadata={'key': 'value'
-}, ml_repo='ml_repo', source=TrueFoundryManagedSource(), ), )
+from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.artifact_versions.stage(
+    manifest=ModelManifest(
+        name="name",
+        metadata={"key": "value"},
+        ml_repo="ml_repo",
+        source=TrueFoundryManagedSource(),
+    ),
+)
 
 ```
 </dd>
@@ -6533,8 +6938,14 @@ client.artifact_versions.stage(manifest=ModelManifest(name='name', metadata={'ke
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-response = client.artifact_versions.list_files(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.artifact_versions.list_files(
+    id="id",
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -6613,8 +7024,14 @@ for page in response.iter_pages():
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.artifact_versions.mark_stage_failure(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.artifact_versions.mark_stage_failure(
+    id="id",
+)
 
 ```
 </dd>
@@ -6679,8 +7096,14 @@ Get model version API
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.model_versions.get(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.model_versions.get(
+    id="id",
+)
 
 ```
 </dd>
@@ -6744,8 +7167,14 @@ Delete model versions API
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.model_versions.delete(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.model_versions.delete(
+    id="id",
+)
 
 ```
 </dd>
@@ -6809,7 +7238,11 @@ List model version API
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
 response = client.model_versions.list()
 for item in response:
     yield item
@@ -6928,8 +7361,14 @@ Get prompt version API
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.prompt_versions.get(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.prompt_versions.get(
+    id="id",
+)
 
 ```
 </dd>
@@ -6993,8 +7432,14 @@ Delete prompt versions API
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.prompt_versions.delete(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.prompt_versions.delete(
+    id="id",
+)
 
 ```
 </dd>
@@ -7058,7 +7503,11 @@ List prompt version API
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
 response = client.prompt_versions.list()
 for item in response:
     yield item
@@ -7153,8 +7602,14 @@ Get tool version API
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.tool_versions.get(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.tool_versions.get(
+    id="id",
+)
 
 ```
 </dd>
@@ -7218,8 +7673,14 @@ Delete tool versions API
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.tool_versions.delete(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.tool_versions.delete(
+    id="id",
+)
 
 ```
 </dd>
@@ -7283,7 +7744,11 @@ List tool versions API
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
 response = client.tool_versions.list()
 for item in response:
     yield item
@@ -7364,8 +7829,14 @@ for page in response.iter_pages():
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.agent_versions.resolve(fqn='fqn', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.agent_versions.resolve(
+    fqn="fqn",
+)
 
 ```
 </dd>
@@ -7429,8 +7900,14 @@ Get agent version API
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.agent_versions.get(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.agent_versions.get(
+    id="id",
+)
 
 ```
 </dd>
@@ -7494,8 +7971,14 @@ Delete agent versions API
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.agent_versions.delete(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.agent_versions.delete(
+    id="id",
+)
 
 ```
 </dd>
@@ -7559,7 +8042,11 @@ List agent versions API
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
 response = client.agent_versions.list()
 for item in response:
     yield item
@@ -7661,8 +8148,14 @@ Returns:
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.data_directories.get(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.data_directories.get(
+    id="id",
+)
 
 ```
 </dd>
@@ -7734,8 +8227,14 @@ Returns:
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.data_directories.delete(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.data_directories.delete(
+    id="id",
+)
 
 ```
 </dd>
@@ -7818,7 +8317,11 @@ Returns:
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
 response = client.data_directories.list()
 for item in response:
     yield item
@@ -7897,12 +8400,24 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk import DataDirectoryManifest
-from truefoundry_sdk import TrueFoundryManagedSource
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.data_directories.create_or_update(manifest=DataDirectoryManifest(name='name', ml_repo='ml_repo', metadata={'key': 'value'
-}, source=TrueFoundryManagedSource(), ), )
+from truefoundry_sdk import (
+    DataDirectoryManifest,
+    TrueFoundry,
+    TrueFoundryManagedSource,
+)
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.data_directories.create_or_update(
+    manifest=DataDirectoryManifest(
+        name="name",
+        ml_repo="ml_repo",
+        metadata={"key": "value"},
+        source=TrueFoundryManagedSource(),
+    ),
+)
 
 ```
 </dd>
@@ -7973,8 +8488,14 @@ Returns:
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-response = client.data_directories.list_files(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.data_directories.list_files(
+    id="id",
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -8074,8 +8595,15 @@ Returns:
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.data_directories.delete_files(id='id', paths=['paths'], )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.data_directories.delete_files(
+    id="id",
+    paths=["paths"],
+)
 
 ```
 </dd>
@@ -8153,10 +8681,17 @@ Returns:
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk import Operation
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.data_directories.get_signed_urls(id='id', paths=['paths'], operation=Operation.READ, )
+from truefoundry_sdk import Operation, TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.data_directories.get_signed_urls(
+    id="id",
+    paths=["paths"],
+    operation=Operation.READ,
+)
 
 ```
 </dd>
@@ -8243,8 +8778,16 @@ Returns:
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.data_directories.create_multipart_upload(id='id', path='path', num_parts=1, )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.data_directories.create_multipart_upload(
+    id="id",
+    path="path",
+    num_parts=1,
+)
 
 ```
 </dd>
@@ -8311,7 +8854,11 @@ client.data_directories.create_multipart_upload(id='id', path='path', num_parts=
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
 response = client.tracing_projects.list()
 for item in response:
     yield item
@@ -8398,10 +8945,17 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk import TracingProjectManifest
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.tracing_projects.create_or_update(manifest=TracingProjectManifest(name='name', ), )
+from truefoundry_sdk import TracingProjectManifest, TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.tracing_projects.create_or_update(
+    manifest=TracingProjectManifest(
+        name="name",
+    ),
+)
 
 ```
 </dd>
@@ -8451,8 +9005,14 @@ client.tracing_projects.create_or_update(manifest=TracingProjectManifest(name='n
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.tracing_projects.get(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.tracing_projects.get(
+    id="id",
+)
 
 ```
 </dd>
@@ -8502,8 +9062,14 @@ client.tracing_projects.get(id='id', )
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.tracing_projects.delete(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.tracing_projects.delete(
+    id="id",
+)
 
 ```
 </dd>
@@ -8568,7 +9134,11 @@ Get the user session details for the currently authenticated user
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
 client.internal.users.get_info()
 
 ```
@@ -8626,8 +9196,14 @@ Get the auto provisioning status for the provided cluster
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.internal.clusters.get_autoprovisioning_state(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.internal.clusters.get_autoprovisioning_state(
+    id="id",
+)
 
 ```
 </dd>
@@ -8692,8 +9268,15 @@ This endpoint returns all build details associated with a specific deployment in
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.internal.deployments.get_builds(id='id', deployment_id='deploymentId', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.internal.deployments.get_builds(
+    id="id",
+    deployment_id="deploymentId",
+)
 
 ```
 </dd>
@@ -8765,8 +9348,15 @@ Generate presigned URL to upload code for given serviceName and workspaceFqn
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.internal.deployments.get_code_upload_url(service_name='serviceName', workspace_fqn='workspaceFqn', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.internal.deployments.get_code_upload_url(
+    service_name="serviceName",
+    workspace_fqn="workspaceFqn",
+)
 
 ```
 </dd>
@@ -8837,10 +9427,17 @@ Generate deployment endpoint based on the provided query parameters.
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk import ApplicationType
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.internal.deployments.get_suggested_endpoint(application_type=ApplicationType.ASYNC_SERVICE, application_name='applicationName', workspace_id='workspaceId', )
+from truefoundry_sdk import ApplicationType, TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.internal.deployments.get_suggested_endpoint(
+    application_type=ApplicationType.ASYNC_SERVICE,
+    application_name="applicationName",
+    workspace_id="workspaceId",
+)
 
 ```
 </dd>
@@ -8945,8 +9542,14 @@ This endpoint fetches the pod template hash to deployment version map for a spec
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.internal.applications.get_pod_template_hash_to_deployment_version(id='id', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.internal.applications.get_pod_template_hash_to_deployment_version(
+    id="id",
+)
 
 ```
 </dd>
@@ -9005,8 +9608,14 @@ client.internal.applications.get_pod_template_hash_to_deployment_version(id='id'
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.internal.vcs.get_repository_details(repo_url='repoURL', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.internal.vcs.get_repository_details(
+    repo_url="repoURL",
+)
 
 ```
 </dd>
@@ -9064,8 +9673,14 @@ client.internal.vcs.get_repository_details(repo_url='repoURL', )
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.internal.vcs.get_authenticated_url(repo_url='repoURL', )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.internal.vcs.get_authenticated_url(
+    repo_url="repoURL",
+)
 
 ```
 </dd>
@@ -9131,8 +9746,16 @@ List charts for a given Application based on parameters passed in the query.
 ```python
 from truefoundry_sdk import TrueFoundry
 from truefoundry_sdk.internal.metrics import MetricsGetChartsRequestFilterEntity
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.internal.metrics.get_charts(workspace_id='workspaceId', application_id='applicationId', filter_entity=MetricsGetChartsRequestFilterEntity.APPLICATION, )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.internal.metrics.get_charts(
+    workspace_id="workspaceId",
+    application_id="applicationId",
+    filter_entity=MetricsGetChartsRequestFilterEntity.APPLICATION,
+)
 
 ```
 </dd>
@@ -9237,7 +9860,11 @@ List artifact version API
 
 ```python
 from truefoundry_sdk import TrueFoundry
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
 response = client.internal.artifact_versions.list()
 for item in response:
     yield item
@@ -9349,12 +9976,20 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk import ModelManifest
-from truefoundry_sdk import TrueFoundryManagedSource
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.internal.ml.apply(manifest=ModelManifest(name='name', metadata={'key': 'value'
-}, ml_repo='ml_repo', source=TrueFoundryManagedSource(), ), )
+from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.internal.ml.apply(
+    manifest=ModelManifest(
+        name="name",
+        metadata={"key": "value"},
+        ml_repo="ml_repo",
+        source=TrueFoundryManagedSource(),
+    ),
+)
 
 ```
 </dd>
@@ -9403,12 +10038,20 @@ client.internal.ml.apply(manifest=ModelManifest(name='name', metadata={'key': 'v
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk import ModelManifest
-from truefoundry_sdk import TrueFoundryManagedSource
-client = TrueFoundry(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
-client.internal.ml.delete(manifest=ModelManifest(name='name', metadata={'key': 'value'
-}, ml_repo='ml_repo', source=TrueFoundryManagedSource(), ), )
+from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.internal.ml.delete(
+    manifest=ModelManifest(
+        name="name",
+        metadata={"key": "value"},
+        ml_repo="ml_repo",
+        source=TrueFoundryManagedSource(),
+    ),
+)
 
 ```
 </dd>
