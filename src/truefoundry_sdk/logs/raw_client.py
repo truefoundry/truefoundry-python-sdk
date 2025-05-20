@@ -88,8 +88,10 @@ class RawLogsClient:
             String that needs to be matched
 
         search_type : typing.Optional[LogsSearchFilterType]
+            Query filter type, `regex` or `substring`
 
         search_operator : typing.Optional[LogsSearchOperatorType]
+            Comparison operator for filter. `equal` or `not_equal`
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -222,8 +224,10 @@ class AsyncRawLogsClient:
             String that needs to be matched
 
         search_type : typing.Optional[LogsSearchFilterType]
+            Query filter type, `regex` or `substring`
 
         search_operator : typing.Optional[LogsSearchOperatorType]
+            Comparison operator for filter. `equal` or `not_equal`
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

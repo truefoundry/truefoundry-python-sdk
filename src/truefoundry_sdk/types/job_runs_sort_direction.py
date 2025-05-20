@@ -7,10 +7,6 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class JobRunsSortDirection(str, enum.Enum):
-    """
-    Sorting order
-    """
-
     ASC = "asc"
     DESC = "desc"
 

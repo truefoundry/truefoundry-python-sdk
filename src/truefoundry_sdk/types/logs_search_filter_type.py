@@ -7,10 +7,6 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class LogsSearchFilterType(str, enum.Enum):
-    """
-    Query filter type, `regex` or `substring`
-    """
-
     REGEX = "regex"
     SUBSTRING = "substring"
 

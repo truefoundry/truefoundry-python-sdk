@@ -3674,7 +3674,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**sort_by:** `typing.Optional[JobRunsSortBy]` 
+**sort_by:** `typing.Optional[JobRunsSortBy]` — Attribute to sort by
     
 </dd>
 </dl>
@@ -3682,7 +3682,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**order:** `typing.Optional[JobRunsSortDirection]` 
+**order:** `typing.Optional[JobRunsSortDirection]` — Sorting order
     
 </dd>
 </dl>
@@ -4753,7 +4753,7 @@ client.logs.get()
 <dl>
 <dd>
 
-**search_type:** `typing.Optional[LogsSearchFilterType]` 
+**search_type:** `typing.Optional[LogsSearchFilterType]` — Query filter type, `regex` or `substring`
     
 </dd>
 </dl>
@@ -4761,7 +4761,7 @@ client.logs.get()
 <dl>
 <dd>
 
-**search_operator:** `typing.Optional[LogsSearchOperatorType]` 
+**search_operator:** `typing.Optional[LogsSearchOperatorType]` — Comparison operator for filter. `equal` or `not_equal`
     
 </dd>
 </dl>

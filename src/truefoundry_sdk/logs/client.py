@@ -95,8 +95,10 @@ class LogsClient:
             String that needs to be matched
 
         search_type : typing.Optional[LogsSearchFilterType]
+            Query filter type, `regex` or `substring`
 
         search_operator : typing.Optional[LogsSearchOperatorType]
+            Comparison operator for filter. `equal` or `not_equal`
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -222,8 +224,10 @@ class AsyncLogsClient:
             String that needs to be matched
 
         search_type : typing.Optional[LogsSearchFilterType]
+            Query filter type, `regex` or `substring`
 
         search_operator : typing.Optional[LogsSearchOperatorType]
+            Comparison operator for filter. `equal` or `not_equal`
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

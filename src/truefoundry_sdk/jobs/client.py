@@ -66,8 +66,10 @@ class JobsClient:
             Prefix used to search for job runs by name or identifier
 
         sort_by : typing.Optional[JobRunsSortBy]
+            Attribute to sort by
 
         order : typing.Optional[JobRunsSortDirection]
+            Sorting order
 
         triggered_by : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Array of subject slugs
@@ -322,8 +324,10 @@ class AsyncJobsClient:
             Prefix used to search for job runs by name or identifier
 
         sort_by : typing.Optional[JobRunsSortBy]
+            Attribute to sort by
 
         order : typing.Optional[JobRunsSortDirection]
+            Sorting order
 
         triggered_by : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Array of subject slugs
