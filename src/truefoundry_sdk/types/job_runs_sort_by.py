@@ -7,6 +7,10 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class JobRunsSortBy(str, enum.Enum):
+    """
+    Attribute to sort by
+    """
+
     START_TIME = "startTime"
     DURATION = "duration"
     DEPLOYMENT_VERSION = "deploymentVersion"
