@@ -6,6 +6,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.application_type import ApplicationType
 from ...types.deployment_build import DeploymentBuild
+from ...types.deployment_status import DeploymentStatus
 from ...types.get_suggested_deployment_endpoint_response import GetSuggestedDeploymentEndpointResponse
 from ...types.presigned_url_object import PresignedUrlObject
 from .raw_client import AsyncRawDeploymentsClient, RawDeploymentsClient
@@ -28,6 +29,44 @@ class DeploymentsClient:
         RawDeploymentsClient
         """
         return self._raw_client
+
+    def get_deployment_statuses(
+        self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[DeploymentStatus]:
+        """
+        This endpoint returns all statuses for a specific deployment in a given application.
+
+        Parameters
+        ----------
+        id : str
+            Application id of the application
+
+        deployment_id : str
+            Deployment id of the deployment
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[DeploymentStatus]
+            Deployment statuses returned successfully.
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.internal.deployments.get_deployment_statuses(
+            id="id",
+            deployment_id="deploymentId",
+        )
+        """
+        _response = self._raw_client.get_deployment_statuses(id, deployment_id, request_options=request_options)
+        return _response.data
 
     def get_builds(
         self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -189,6 +228,52 @@ class AsyncDeploymentsClient:
         AsyncRawDeploymentsClient
         """
         return self._raw_client
+
+    async def get_deployment_statuses(
+        self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[DeploymentStatus]:
+        """
+        This endpoint returns all statuses for a specific deployment in a given application.
+
+        Parameters
+        ----------
+        id : str
+            Application id of the application
+
+        deployment_id : str
+            Deployment id of the deployment
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[DeploymentStatus]
+            Deployment statuses returned successfully.
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.internal.deployments.get_deployment_statuses(
+                id="id",
+                deployment_id="deploymentId",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_deployment_statuses(id, deployment_id, request_options=request_options)
+        return _response.data
 
     async def get_builds(
         self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None

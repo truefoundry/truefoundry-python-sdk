@@ -3,56 +3,77 @@
 import typing
 from json.decoder import JSONDecodeError
 
-from ..core.api_error import ApiError
-from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pydantic_utilities import parse_obj_as
-from ..core.request_options import RequestOptions
-from ..errors.bad_request_error import BadRequestError
-from ..errors.not_found_error import NotFoundError
+from ...core.api_error import ApiError
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.http_response import AsyncHttpResponse, HttpResponse
+from ...core.jsonable_encoder import jsonable_encoder
+from ...core.pydantic_utilities import parse_obj_as
+from ...core.request_options import RequestOptions
+from ...core.serialization import convert_and_respect_annotation_metadata
+from ...errors.bad_request_error import BadRequestError
+from ...errors.not_found_error import NotFoundError
+from ...types.literal_map import LiteralMap
+from .types.workflows_execute_workflow_response import WorkflowsExecuteWorkflowResponse
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
-class RawInternalClient:
+class RawWorkflowsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_id_from_fqn(
-        self, type: str, *, fqn: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[typing.Dict[str, typing.Optional[typing.Any]]]:
+    def execute_workflow(
+        self,
+        application_id: str,
+        *,
+        inputs: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        inputs_literal_map: typing.Optional[LiteralMap] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[WorkflowsExecuteWorkflowResponse]:
         """
-        Get IDs associated with the FQN for various entity types, such as deployment, application, workspace, or cluster.
+        Execute a workflow for the specified application
 
         Parameters
         ----------
-        type : str
-            Entity Type
+        application_id : str
+            Id of the application
 
-        fqn : str
-            Entity FQN
+        inputs : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+            Workflow inputs
+
+        inputs_literal_map : typing.Optional[LiteralMap]
+            Workflow inputs literal map
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[typing.Dict[str, typing.Optional[typing.Any]]]
-            Returns the IDs for the specified entity type based on the provided FQN. For example, deploymentId, applicationId, and workspaceId for type deployment, or applicationId and workspaceId for type app.
+        HttpResponse[WorkflowsExecuteWorkflowResponse]
+            Returns execution name of the workflow
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/fqn/{jsonable_encoder(type)}",
-            method="GET",
-            params={
-                "fqn": fqn,
+            f"api/svc/v1/workflow/{jsonable_encoder(application_id)}/executions",
+            method="POST",
+            json={
+                "inputs": inputs,
+                "inputsLiteralMap": convert_and_respect_annotation_metadata(
+                    object_=inputs_literal_map, annotation=LiteralMap, direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.Dict[str, typing.Optional[typing.Any]],
+                    WorkflowsExecuteWorkflowResponse,
                     parse_obj_as(
-                        type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
+                        type_=WorkflowsExecuteWorkflowResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -85,46 +106,61 @@ class RawInternalClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
-class AsyncRawInternalClient:
+class AsyncRawWorkflowsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_id_from_fqn(
-        self, type: str, *, fqn: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[typing.Dict[str, typing.Optional[typing.Any]]]:
+    async def execute_workflow(
+        self,
+        application_id: str,
+        *,
+        inputs: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        inputs_literal_map: typing.Optional[LiteralMap] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[WorkflowsExecuteWorkflowResponse]:
         """
-        Get IDs associated with the FQN for various entity types, such as deployment, application, workspace, or cluster.
+        Execute a workflow for the specified application
 
         Parameters
         ----------
-        type : str
-            Entity Type
+        application_id : str
+            Id of the application
 
-        fqn : str
-            Entity FQN
+        inputs : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+            Workflow inputs
+
+        inputs_literal_map : typing.Optional[LiteralMap]
+            Workflow inputs literal map
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[typing.Dict[str, typing.Optional[typing.Any]]]
-            Returns the IDs for the specified entity type based on the provided FQN. For example, deploymentId, applicationId, and workspaceId for type deployment, or applicationId and workspaceId for type app.
+        AsyncHttpResponse[WorkflowsExecuteWorkflowResponse]
+            Returns execution name of the workflow
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/fqn/{jsonable_encoder(type)}",
-            method="GET",
-            params={
-                "fqn": fqn,
+            f"api/svc/v1/workflow/{jsonable_encoder(application_id)}/executions",
+            method="POST",
+            json={
+                "inputs": inputs,
+                "inputsLiteralMap": convert_and_respect_annotation_metadata(
+                    object_=inputs_literal_map, annotation=LiteralMap, direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.Dict[str, typing.Optional[typing.Any]],
+                    WorkflowsExecuteWorkflowResponse,
                     parse_obj_as(
-                        type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
+                        type_=WorkflowsExecuteWorkflowResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

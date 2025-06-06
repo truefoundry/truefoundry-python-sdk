@@ -90,6 +90,7 @@ class BaseTrueFoundry:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self.internal = InternalClient(client_wrapper=self._client_wrapper)
         self.users = UsersClient(client_wrapper=self._client_wrapper)
         self.teams = TeamsClient(client_wrapper=self._client_wrapper)
         self.personal_access_tokens = PersonalAccessTokensClient(client_wrapper=self._client_wrapper)
@@ -118,7 +119,6 @@ class BaseTrueFoundry:
         self.agent_versions = AgentVersionsClient(client_wrapper=self._client_wrapper)
         self.data_directories = DataDirectoriesClient(client_wrapper=self._client_wrapper)
         self.tracing_projects = TracingProjectsClient(client_wrapper=self._client_wrapper)
-        self.internal = InternalClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncBaseTrueFoundry:
@@ -174,6 +174,7 @@ class AsyncBaseTrueFoundry:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self.internal = AsyncInternalClient(client_wrapper=self._client_wrapper)
         self.users = AsyncUsersClient(client_wrapper=self._client_wrapper)
         self.teams = AsyncTeamsClient(client_wrapper=self._client_wrapper)
         self.personal_access_tokens = AsyncPersonalAccessTokensClient(client_wrapper=self._client_wrapper)
@@ -202,4 +203,3 @@ class AsyncBaseTrueFoundry:
         self.agent_versions = AsyncAgentVersionsClient(client_wrapper=self._client_wrapper)
         self.data_directories = AsyncDataDirectoriesClient(client_wrapper=self._client_wrapper)
         self.tracing_projects = AsyncTracingProjectsClient(client_wrapper=self._client_wrapper)
-        self.internal = AsyncInternalClient(client_wrapper=self._client_wrapper)

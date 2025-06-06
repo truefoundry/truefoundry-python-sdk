@@ -250,6 +250,7 @@ from .list_personal_access_token_response import ListPersonalAccessTokenResponse
 from .list_prompt_versions_response import ListPromptVersionsResponse
 from .list_prompts_response import ListPromptsResponse
 from .list_secret_group_response import ListSecretGroupResponse
+from .list_secrets_response import ListSecretsResponse
 from .list_teams_response import ListTeamsResponse
 from .list_tool_versions_response import ListToolVersionsResponse
 from .list_tools_response import ListToolsResponse
@@ -257,6 +258,7 @@ from .list_tracing_projects_response import ListTracingProjectsResponse
 from .list_users_response import ListUsersResponse
 from .list_virtual_account_response import ListVirtualAccountResponse
 from .list_workspaces_response import ListWorkspacesResponse
+from .literal_map import LiteralMap
 from .local_artifact_source import LocalArtifactSource
 from .local_model_source import LocalModelSource
 from .local_source import LocalSource
@@ -310,6 +312,7 @@ from .port import Port
 from .port_app_protocol import PortAppProtocol
 from .port_auth import PortAuth
 from .port_protocol import PortProtocol
+from .pre_register_users_response import PreRegisterUsersResponse
 from .presigned_url_object import PresignedUrlObject
 from .prompt import Prompt
 from .prompt_version import PromptVersion
@@ -346,6 +349,7 @@ from .sklearn_serialization_format import SklearnSerializationFormat
 from .slack_bot import SlackBot
 from .slack_webhook import SlackWebhook
 from .spa_cy_framework import SpaCyFramework
+from .spark_config import SparkConfig
 from .spark_driver_config import SparkDriverConfig
 from .spark_executor_config import SparkExecutorConfig
 from .spark_executor_config_instances import SparkExecutorConfigInstances
@@ -669,6 +673,7 @@ __all__ = [
     "ListPromptVersionsResponse",
     "ListPromptsResponse",
     "ListSecretGroupResponse",
+    "ListSecretsResponse",
     "ListTeamsResponse",
     "ListToolVersionsResponse",
     "ListToolsResponse",
@@ -676,6 +681,7 @@ __all__ = [
     "ListUsersResponse",
     "ListVirtualAccountResponse",
     "ListWorkspacesResponse",
+    "LiteralMap",
     "LocalArtifactSource",
     "LocalModelSource",
     "LocalSource",
@@ -729,6 +735,7 @@ __all__ = [
     "PortAppProtocol",
     "PortAuth",
     "PortProtocol",
+    "PreRegisterUsersResponse",
     "PresignedUrlObject",
     "Prompt",
     "PromptVersion",
@@ -768,6 +775,7 @@ __all__ = [
     "SlackBot",
     "SlackWebhook",
     "SpaCyFramework",
+    "SparkConfig",
     "SparkDriverConfig",
     "SparkExecutorConfig",
     "SparkExecutorConfigInstances",

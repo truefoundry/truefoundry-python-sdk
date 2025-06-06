@@ -10,6 +10,7 @@ from .cluster_manifest_node_label_keys import ClusterManifestNodeLabelKeys
 from .cluster_manifest_workbench_config import ClusterManifestWorkbenchConfig
 from .collaborator import Collaborator
 from .nodepool import Nodepool
+from .spark_config import SparkConfig
 
 
 class ClusterManifest(UniversalBaseModel):
@@ -72,6 +73,7 @@ class ClusterManifest(UniversalBaseModel):
     +sort=70
     """
 
+    spark_config: typing.Optional[SparkConfig] = None
     cluster_integration_fqn: typing.Optional[str] = pydantic.Field(default=None)
     """
     +label=Cluster Integration FQN

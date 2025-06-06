@@ -6,17 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class UpdateSecretInput(UniversalBaseModel):
-    key: str = pydantic.Field()
-    """
-    Key of the secret.
-    """
-
-    value: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Value of the secret.
-    """
-
+class LiteralMap(UniversalBaseModel):
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
