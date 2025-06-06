@@ -7,6 +7,10 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class LogsSearchOperatorType(str, enum.Enum):
+    """
+    Comparison operator logs search
+    """
+
     EQUAL = "equal"
     NOT_EQUAL = "not_equal"
 

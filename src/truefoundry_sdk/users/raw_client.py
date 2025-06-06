@@ -21,6 +21,7 @@ from ..types.get_user_response import GetUserResponse
 from ..types.http_error import HttpError
 from ..types.invite_user_response import InviteUserResponse
 from ..types.list_users_response import ListUsersResponse
+from ..types.pre_register_users_response import PreRegisterUsersResponse
 from ..types.update_user_roles_response import UpdateUserRolesResponse
 from ..types.user import User
 
@@ -98,6 +99,93 @@ class RawUsersClient:
                 )
                 return SyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def pre_register_users(
+        self,
+        *,
+        emails: typing.Sequence[str],
+        dry_run: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[PreRegisterUsersResponse]:
+        """
+        This endpoint allows tenant administrators to pre-register users within their tenant.
+
+        Parameters
+        ----------
+        emails : typing.Sequence[str]
+            Emails of the users
+
+        dry_run : typing.Optional[bool]
+            Dry run
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[PreRegisterUsersResponse]
+            The users have been successfully pre-registered.
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/svc/v1/users",
+            method="POST",
+            json={
+                "emails": emails,
+                "dryRun": dry_run,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    PreRegisterUsersResponse,
+                    parse_obj_as(
+                        type_=PreRegisterUsersResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -528,6 +616,93 @@ class AsyncRawUsersClient:
 
                 return AsyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def pre_register_users(
+        self,
+        *,
+        emails: typing.Sequence[str],
+        dry_run: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[PreRegisterUsersResponse]:
+        """
+        This endpoint allows tenant administrators to pre-register users within their tenant.
+
+        Parameters
+        ----------
+        emails : typing.Sequence[str]
+            Emails of the users
+
+        dry_run : typing.Optional[bool]
+            Dry run
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[PreRegisterUsersResponse]
+            The users have been successfully pre-registered.
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/svc/v1/users",
+            method="POST",
+            json={
+                "emails": emails,
+                "dryRun": dry_run,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    PreRegisterUsersResponse,
+                    parse_obj_as(
+                        type_=PreRegisterUsersResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
                 )
             _response_json = _response.json()
         except JSONDecodeError:

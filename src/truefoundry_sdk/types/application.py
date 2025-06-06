@@ -64,6 +64,7 @@ class Application(UniversalBaseModel):
     """
 
     autopilot: typing.Dict[str, typing.Optional[typing.Any]]
+    workspace_fqn: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="workspaceFqn")] = None
     created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = None
     deployment: typing.Optional["Deployment"] = None
     active_deployment_id: typing_extensions.Annotated[

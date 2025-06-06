@@ -6,15 +6,12 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class UpdateSecretInput(UniversalBaseModel):
-    key: str = pydantic.Field()
+class SparkConfig(UniversalBaseModel):
+    ui_base_domain: str = pydantic.Field()
     """
-    Key of the secret.
-    """
-
-    value: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Value of the secret.
+    +label=Spark UI Base Domain
+    +usage=The base domain for the cluster with which you can access your Spark UI
+    +message=Must not contain any spaces.
     """
 
     if IS_PYDANTIC_V2:

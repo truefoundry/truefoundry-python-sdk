@@ -211,7 +211,6 @@ class SecretGroupsClient:
             secrets=[
                 UpdateSecretInput(
                     key="key",
-                    value="value",
                 )
             ],
         )
@@ -477,7 +476,6 @@ class AsyncSecretGroupsClient:
                 secrets=[
                     UpdateSecretInput(
                         key="key",
-                        value="value",
                     )
                 ],
             )

@@ -9,6 +9,7 @@ from ..types.activate_user_response import ActivateUserResponse
 from ..types.deactivate_user_response import DeactivateUserResponse
 from ..types.get_user_response import GetUserResponse
 from ..types.invite_user_response import InviteUserResponse
+from ..types.pre_register_users_response import PreRegisterUsersResponse
 from ..types.update_user_roles_response import UpdateUserRolesResponse
 from ..types.user import User
 from .raw_client import AsyncRawUsersClient, RawUsersClient
@@ -90,6 +91,47 @@ class UsersClient:
             show_invalid_users=show_invalid_users,
             request_options=request_options,
         )
+
+    def pre_register_users(
+        self,
+        *,
+        emails: typing.Sequence[str],
+        dry_run: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PreRegisterUsersResponse:
+        """
+        This endpoint allows tenant administrators to pre-register users within their tenant.
+
+        Parameters
+        ----------
+        emails : typing.Sequence[str]
+            Emails of the users
+
+        dry_run : typing.Optional[bool]
+            Dry run
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PreRegisterUsersResponse
+            The users have been successfully pre-registered.
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.users.pre_register_users(
+            emails=["emails"],
+        )
+        """
+        _response = self._raw_client.pre_register_users(emails=emails, dry_run=dry_run, request_options=request_options)
+        return _response.data
 
     def update_roles(
         self, *, email: str, roles: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
@@ -350,6 +392,57 @@ class AsyncUsersClient:
             show_invalid_users=show_invalid_users,
             request_options=request_options,
         )
+
+    async def pre_register_users(
+        self,
+        *,
+        emails: typing.Sequence[str],
+        dry_run: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PreRegisterUsersResponse:
+        """
+        This endpoint allows tenant administrators to pre-register users within their tenant.
+
+        Parameters
+        ----------
+        emails : typing.Sequence[str]
+            Emails of the users
+
+        dry_run : typing.Optional[bool]
+            Dry run
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PreRegisterUsersResponse
+            The users have been successfully pre-registered.
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.users.pre_register_users(
+                emails=["emails"],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.pre_register_users(
+            emails=emails, dry_run=dry_run, request_options=request_options
+        )
+        return _response.data
 
     async def update_roles(
         self, *, email: str, roles: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None

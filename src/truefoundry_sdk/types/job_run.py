@@ -84,11 +84,11 @@ class JobRun(UniversalBaseModel):
     Exit Code
     """
 
-    external_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="externalId")] = pydantic.Field(
+    spark_ui: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="sparkUi")] = pydantic.Field(
         default=None
     )
     """
-    External Id
+    Spark UI Url
     """
 
     if IS_PYDANTIC_V2:

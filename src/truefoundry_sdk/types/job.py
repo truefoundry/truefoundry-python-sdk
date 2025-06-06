@@ -44,7 +44,7 @@ class Job(UniversalBaseModel):
     +sort=300
     """
 
-    trigger_on_deploy: typing.Optional[bool] = pydantic.Field(default=False)
+    trigger_on_deploy: typing.Optional[bool] = pydantic.Field(default=None)
     """
     +docs=Trigger on deploy
     +sort=350

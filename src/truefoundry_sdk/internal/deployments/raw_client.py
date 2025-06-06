@@ -13,6 +13,7 @@ from ...errors.bad_request_error import BadRequestError
 from ...errors.not_found_error import NotFoundError
 from ...types.application_type import ApplicationType
 from ...types.deployment_build import DeploymentBuild
+from ...types.deployment_status import DeploymentStatus
 from ...types.get_suggested_deployment_endpoint_response import GetSuggestedDeploymentEndpointResponse
 from ...types.presigned_url_object import PresignedUrlObject
 
@@ -23,6 +24,59 @@ OMIT = typing.cast(typing.Any, ...)
 class RawDeploymentsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    def get_deployment_statuses(
+        self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[typing.List[DeploymentStatus]]:
+        """
+        This endpoint returns all statuses for a specific deployment in a given application.
+
+        Parameters
+        ----------
+        id : str
+            Application id of the application
+
+        deployment_id : str
+            Deployment id of the deployment
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[typing.List[DeploymentStatus]]
+            Deployment statuses returned successfully.
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/statuses",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.List[DeploymentStatus],
+                    parse_obj_as(
+                        type_=typing.List[DeploymentStatus],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_builds(
         self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -212,6 +266,59 @@ class RawDeploymentsClient:
 class AsyncRawDeploymentsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    async def get_deployment_statuses(
+        self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[typing.List[DeploymentStatus]]:
+        """
+        This endpoint returns all statuses for a specific deployment in a given application.
+
+        Parameters
+        ----------
+        id : str
+            Application id of the application
+
+        deployment_id : str
+            Deployment id of the deployment
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[typing.List[DeploymentStatus]]
+            Deployment statuses returned successfully.
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/statuses",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.List[DeploymentStatus],
+                    parse_obj_as(
+                        type_=typing.List[DeploymentStatus],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_builds(
         self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None

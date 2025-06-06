@@ -74,7 +74,7 @@ class RawSecretGroupsClient:
             params={
                 "limit": limit,
                 "offset": offset,
-                "secretGroupFqn": fqn,
+                "fqn": fqn,
                 "search": search,
             },
             request_options=request_options,
@@ -455,7 +455,7 @@ class AsyncRawSecretGroupsClient:
             params={
                 "limit": limit,
                 "offset": offset,
-                "secretGroupFqn": fqn,
+                "fqn": fqn,
                 "search": search,
             },
             request_options=request_options,
