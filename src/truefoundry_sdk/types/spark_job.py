@@ -6,8 +6,8 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .spark_driver_config import SparkDriverConfig
 from .spark_executor_config import SparkExecutorConfig
-from .spark_image import SparkImage
 from .spark_job_entrypoint import SparkJobEntrypoint
+from .spark_job_image import SparkJobImage
 from .volume_mount import VolumeMount
 
 
@@ -26,7 +26,13 @@ class SparkJob(UniversalBaseModel):
     +sort=2
     """
 
-    image: SparkImage
+    image: SparkJobImage = pydantic.Field()
+    """
+    +label=Deploy a Docker image & Specify Spark Version
+    +usage=The image to use for driver and executors. Must have spark installed. Spark version must match the version in the image.
+    +sort=500
+    """
+
     entrypoint: SparkJobEntrypoint = pydantic.Field()
     """
     +label=Entrypoint

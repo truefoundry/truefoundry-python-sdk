@@ -6,18 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class BuildInfo(UniversalBaseModel):
-    name: str
-    status: float = pydantic.Field()
-    """
-    
-          Status of the build:
-            STARTED = 20,
-            SUCCEEDED = 30,
-            FAILED = 40
-        
-    """
-
+class ChangePasswordResponse(UniversalBaseModel):
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:

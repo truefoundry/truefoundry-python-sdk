@@ -16,6 +16,10 @@ class UpgradeData(UniversalBaseModel):
     current_manifest: typing_extensions.Annotated[typing.Optional[Helm], FieldMetadata(alias="currentManifest")] = None
     desired_manifest: typing_extensions.Annotated[typing.Optional[Helm], FieldMetadata(alias="desiredManifest")] = None
     upgrade_possible: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="upgradePossible")] = None
+    conflict_fields: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]], FieldMetadata(alias="conflictFields")
+    ] = None
+    has_conflict: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="hasConflict")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

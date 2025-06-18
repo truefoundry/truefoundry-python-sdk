@@ -6,14 +6,14 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class SparkJobPythonEntrypoint(UniversalBaseModel):
+class SparkJobPythonNotebookEntrypoint(UniversalBaseModel):
     """
-    +label=python
+    +label=python notebook
     """
 
-    type: typing.Literal["python"] = pydantic.Field(default="python")
+    type: typing.Literal["python-notebook"] = pydantic.Field(default="python-notebook")
     """
-    +value=python
+    +value=python-notebook
     """
 
     main_application_file: str = pydantic.Field()
@@ -23,13 +23,6 @@ class SparkJobPythonEntrypoint(UniversalBaseModel):
     +message=Filename should have .py extension
     +sort=5
     +placeholder=For example: local:///path/to/file.py, s3:///bucket/path/to/file.py, etc.
-    """
-
-    arguments: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    +label=Arguments
-    +usage=Arguments to be passed to the main application file.
-    +sort=6
     """
 
     if IS_PYDANTIC_V2:

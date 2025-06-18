@@ -634,6 +634,95 @@ client.users.activate(
 </dl>
 </details>
 
+<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">change_password</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Change password for the authenticated user. Requires clientId and loginId in the request body.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.users.change_password(
+    login_id="loginId",
+    new_password="newPassword",
+    old_password="oldPassword",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**login_id:** `str` — login id of the user(email)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**new_password:** `str` — New password
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**old_password:** `str` — Old password
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Teams
 <details><summary><code>client.teams.<a href="src/truefoundry_sdk/teams/client.py">list</a>(...)</code></summary>
 <dl>
