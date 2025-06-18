@@ -6,6 +6,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.activate_user_response import ActivateUserResponse
+from ..types.change_password_response import ChangePasswordResponse
 from ..types.deactivate_user_response import DeactivateUserResponse
 from ..types.get_user_response import GetUserResponse
 from ..types.invite_user_response import InviteUserResponse
@@ -307,6 +308,55 @@ class UsersClient:
         )
         """
         _response = self._raw_client.activate(email=email, request_options=request_options)
+        return _response.data
+
+    def change_password(
+        self,
+        *,
+        login_id: str,
+        new_password: str,
+        old_password: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ChangePasswordResponse:
+        """
+        Change password for the authenticated user. Requires clientId and loginId in the request body.
+
+        Parameters
+        ----------
+        login_id : str
+            login id of the user(email)
+
+        new_password : str
+            New password
+
+        old_password : str
+            Old password
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ChangePasswordResponse
+            Password has been changed successfully.
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.users.change_password(
+            login_id="loginId",
+            new_password="newPassword",
+            old_password="oldPassword",
+        )
+        """
+        _response = self._raw_client.change_password(
+            login_id=login_id, new_password=new_password, old_password=old_password, request_options=request_options
+        )
         return _response.data
 
 
@@ -660,4 +710,61 @@ class AsyncUsersClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.activate(email=email, request_options=request_options)
+        return _response.data
+
+    async def change_password(
+        self,
+        *,
+        login_id: str,
+        new_password: str,
+        old_password: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ChangePasswordResponse:
+        """
+        Change password for the authenticated user. Requires clientId and loginId in the request body.
+
+        Parameters
+        ----------
+        login_id : str
+            login id of the user(email)
+
+        new_password : str
+            New password
+
+        old_password : str
+            Old password
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ChangePasswordResponse
+            Password has been changed successfully.
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.users.change_password(
+                login_id="loginId",
+                new_password="newPassword",
+                old_password="oldPassword",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.change_password(
+            login_id=login_id, new_password=new_password, old_password=old_password, request_options=request_options
+        )
         return _response.data

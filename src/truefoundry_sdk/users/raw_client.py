@@ -16,6 +16,7 @@ from ..errors.not_found_error import NotFoundError
 from ..errors.unauthorized_error import UnauthorizedError
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.activate_user_response import ActivateUserResponse
+from ..types.change_password_response import ChangePasswordResponse
 from ..types.deactivate_user_response import DeactivateUserResponse
 from ..types.get_user_response import GetUserResponse
 from ..types.http_error import HttpError
@@ -542,6 +543,65 @@ class RawUsersClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def change_password(
+        self,
+        *,
+        login_id: str,
+        new_password: str,
+        old_password: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[ChangePasswordResponse]:
+        """
+        Change password for the authenticated user. Requires clientId and loginId in the request body.
+
+        Parameters
+        ----------
+        login_id : str
+            login id of the user(email)
+
+        new_password : str
+            New password
+
+        old_password : str
+            Old password
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ChangePasswordResponse]
+            Password has been changed successfully.
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/svc/v1/users/change-password",
+            method="POST",
+            json={
+                "loginId": login_id,
+                "newPassword": new_password,
+                "oldPassword": old_password,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ChangePasswordResponse,
+                    parse_obj_as(
+                        type_=ChangePasswordResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawUsersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -1056,6 +1116,65 @@ class AsyncRawUsersClient:
                         ),
                     ),
                 )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def change_password(
+        self,
+        *,
+        login_id: str,
+        new_password: str,
+        old_password: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[ChangePasswordResponse]:
+        """
+        Change password for the authenticated user. Requires clientId and loginId in the request body.
+
+        Parameters
+        ----------
+        login_id : str
+            login id of the user(email)
+
+        new_password : str
+            New password
+
+        old_password : str
+            Old password
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ChangePasswordResponse]
+            Password has been changed successfully.
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/svc/v1/users/change-password",
+            method="POST",
+            json={
+                "loginId": login_id,
+                "newPassword": new_password,
+                "oldPassword": old_password,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ChangePasswordResponse,
+                    parse_obj_as(
+                        type_=ChangePasswordResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

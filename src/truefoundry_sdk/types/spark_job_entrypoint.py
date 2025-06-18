@@ -4,6 +4,9 @@ import typing
 
 from .spark_job_java_entrypoint import SparkJobJavaEntrypoint
 from .spark_job_python_entrypoint import SparkJobPythonEntrypoint
+from .spark_job_python_notebook_entrypoint import SparkJobPythonNotebookEntrypoint
 from .spark_job_scala_entrypoint import SparkJobScalaEntrypoint
 
-SparkJobEntrypoint = typing.Union[SparkJobPythonEntrypoint, SparkJobScalaEntrypoint, SparkJobJavaEntrypoint]
+SparkJobEntrypoint = typing.Union[
+    SparkJobPythonEntrypoint, SparkJobScalaEntrypoint, SparkJobJavaEntrypoint, SparkJobPythonNotebookEntrypoint
+]

@@ -12,18 +12,26 @@ class GraphChartType(str, enum.Enum):
     """
 
     LINE = "line"
+    VERTICAL_LINE = "vertical_line"
     STACKED_BAR = "stacked_bar"
     STACKED_AREA = "stacked_area"
+    BUBBLE = "bubble"
 
     def visit(
         self,
         line: typing.Callable[[], T_Result],
+        vertical_line: typing.Callable[[], T_Result],
         stacked_bar: typing.Callable[[], T_Result],
         stacked_area: typing.Callable[[], T_Result],
+        bubble: typing.Callable[[], T_Result],
     ) -> T_Result:
         if self is GraphChartType.LINE:
             return line()
+        if self is GraphChartType.VERTICAL_LINE:
+            return vertical_line()
         if self is GraphChartType.STACKED_BAR:
             return stacked_bar()
         if self is GraphChartType.STACKED_AREA:
             return stacked_area()
+        if self is GraphChartType.BUBBLE:
+            return bubble()

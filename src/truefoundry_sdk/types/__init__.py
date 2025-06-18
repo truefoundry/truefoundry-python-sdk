@@ -72,6 +72,7 @@ from .build_info import BuildInfo
 from .build_status import BuildStatus
 from .canary import Canary
 from .canary_step import CanaryStep
+from .change_password_response import ChangePasswordResponse
 from .chat_prompt_manifest import ChatPromptManifest
 from .chat_prompt_manifest_messages_item import ChatPromptManifestMessagesItem
 from .cluster import Cluster
@@ -349,6 +350,7 @@ from .sklearn_serialization_format import SklearnSerializationFormat
 from .slack_bot import SlackBot
 from .slack_webhook import SlackWebhook
 from .spa_cy_framework import SpaCyFramework
+from .spark_build import SparkBuild
 from .spark_config import SparkConfig
 from .spark_driver_config import SparkDriverConfig
 from .spark_executor_config import SparkExecutorConfig
@@ -356,10 +358,14 @@ from .spark_executor_config_instances import SparkExecutorConfigInstances
 from .spark_executor_dynamic_scaling import SparkExecutorDynamicScaling
 from .spark_executor_fixed_instances import SparkExecutorFixedInstances
 from .spark_image import SparkImage
+from .spark_image_build import SparkImageBuild
+from .spark_image_build_build_source import SparkImageBuildBuildSource
 from .spark_job import SparkJob
 from .spark_job_entrypoint import SparkJobEntrypoint
+from .spark_job_image import SparkJobImage
 from .spark_job_java_entrypoint import SparkJobJavaEntrypoint
 from .spark_job_python_entrypoint import SparkJobPythonEntrypoint
+from .spark_job_python_notebook_entrypoint import SparkJobPythonNotebookEntrypoint
 from .spark_job_scala_entrypoint import SparkJobScalaEntrypoint
 from .spark_job_trigger_input import SparkJobTriggerInput
 from .sqs_input_config import SqsInputConfig
@@ -495,6 +501,7 @@ __all__ = [
     "BuildStatus",
     "Canary",
     "CanaryStep",
+    "ChangePasswordResponse",
     "ChatPromptManifest",
     "ChatPromptManifestMessagesItem",
     "Cluster",
@@ -775,6 +782,7 @@ __all__ = [
     "SlackBot",
     "SlackWebhook",
     "SpaCyFramework",
+    "SparkBuild",
     "SparkConfig",
     "SparkDriverConfig",
     "SparkExecutorConfig",
@@ -782,10 +790,14 @@ __all__ = [
     "SparkExecutorDynamicScaling",
     "SparkExecutorFixedInstances",
     "SparkImage",
+    "SparkImageBuild",
+    "SparkImageBuildBuildSource",
     "SparkJob",
     "SparkJobEntrypoint",
+    "SparkJobImage",
     "SparkJobJavaEntrypoint",
     "SparkJobPythonEntrypoint",
+    "SparkJobPythonNotebookEntrypoint",
     "SparkJobScalaEntrypoint",
     "SparkJobTriggerInput",
     "SqsInputConfig",

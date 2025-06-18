@@ -4,36 +4,21 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .spark_build import SparkBuild
+from .spark_image_build_build_source import SparkImageBuildBuildSource
 
 
-class SparkImage(UniversalBaseModel):
+class SparkImageBuild(UniversalBaseModel):
     """
-    +docs=Describes that we are using a pre-built image stored in a Docker Image registry
-    +label=Deploy an existing image
+    +docs=Describes that we are building a new image based on the spec
+    +label=Build a new image
     +icon=fa-brands fa-docker:#0db7ed
+    TODO (gw): Fix sorting for this such that it looks similar to SparkImage
     """
 
-    type: typing.Literal["spark-image"] = pydantic.Field(default="spark-image")
+    type: typing.Literal["spark-image-build"] = pydantic.Field(default="spark-image-build")
     """
-    +value=spark-image
-    """
-
-    spark_version: str = pydantic.Field(default="3.5.2")
-    """
-    --- Spark Specific Field ---
-    +label=Spark Version
-    +usage=Spark version should match the spark version installed in the image.
-    +sort=1000
-    """
-
-    image_uri: str = pydantic.Field()
-    """
-    +label=Image URI
-    +usage=The image URI. Specify the name of the image and the tag.
-    If the image is in Dockerhub, you can skip registry-url (for e.g. `tensorflow/tensorflow`).
-    You can use an image from a private registry using Advanced fields
-    +placeholder=registry-url/account/image:version (e.g. docker.io/tensorflow/tensorflow)
-    +sort=1001
+    +value=spark-image-build
     """
 
     docker_registry: typing.Optional[str] = pydantic.Field(default=None)
@@ -45,6 +30,15 @@ class SparkImage(UniversalBaseModel):
     add it through the [Integrations](/integrations?tab=docker-registry) page
     +sort=1002
     """
+
+    build_source: SparkImageBuildBuildSource = pydantic.Field()
+    """
+    TODO (gw): The following is a hack till the uiType GitSelect is fixed fron frontend
+    +label=Fetch source code
+    +sort=1003
+    """
+
+    build_spec: SparkBuild
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
