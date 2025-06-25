@@ -18,6 +18,11 @@ class ClusterManifestMonitoring(UniversalBaseModel):
     +label=Cluster Loki URL
     """
 
+    victoria_logs_url: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    +label=Cluster VictoriaLogs URL
+    """
+
     prometheus_url: typing.Optional[str] = pydantic.Field(default=None)
     """
     +label=Cluster Prometheus URL
