@@ -12,20 +12,10 @@ class ArtifactManifest(UniversalBaseModel):
     Artifact Version manifest.
     """
 
-    name: str = pydantic.Field()
-    """
-    Name of the entity
-    """
-
     description: typing.Optional[str] = None
     metadata: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
     """
     Key value metadata. Should be valid JSON. For e.g. `{"business-unit": "sales", "quality": "good", "rating": 4.5}`
-    """
-
-    version_alias: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Version alias is alternate, ideally human readable, version string to reference an artifact version. It should start with `v` followed by alphanumeric and it can include `.` and `-` in between (e.g. `v1.0.0`, `v1-prod`, `v3-dev`, etc)
     """
 
     ml_repo: str = pydantic.Field()
@@ -33,21 +23,31 @@ class ArtifactManifest(UniversalBaseModel):
     Name of the ML Repo
     """
 
-    version: typing.Optional[int] = pydantic.Field(default=None)
+    name: str = pydantic.Field()
     """
-    Version of the entity
+    Name of the entity
     """
 
-    type: typing.Literal["artifact-version"] = "artifact-version"
+    run_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    ID of the MLRepo Run that generated the artifact version
+    """
+
     source: ArtifactManifestSource
     step: typing.Optional[int] = pydantic.Field(default=0)
     """
     Step/Epoch number in an iterative training loop the artifact version was created. Generally useful when logging a model version from a MLRepo Run
     """
 
-    run_id: typing.Optional[str] = pydantic.Field(default=None)
+    type: typing.Literal["artifact-version"] = "artifact-version"
+    version: typing.Optional[int] = pydantic.Field(default=None)
     """
-    ID of the MLRepo Run that generated the artifact version
+    Version of the entity
+    """
+
+    version_alias: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Version alias is alternate, ideally human readable, version string to reference an artifact version. It should start with `v` followed by alphanumeric and it can include `.` and `-` in between (e.g. `v1.0.0`, `v1-prod`, `v3-dev`, etc)
     """
 
     if IS_PYDANTIC_V2:

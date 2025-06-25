@@ -14,9 +14,12 @@ class PythonTaskConfig(UniversalBaseModel):
     +docs=Describes the configuration for the python function task
     """
 
-    type: typing.Literal["python-task-config"] = pydantic.Field(default="python-task-config")
+    env: typing.Optional[typing.Dict[str, typing.Optional[str]]] = pydantic.Field(default=None)
     """
-    +value=python-task-config
+    +label=Environment Variables
+    +usage=Configure environment variables to be injected in the task either as plain text or secrets. [Docs](https://docs.truefoundry.com/docs/env-variables)
+    +icon=fa-globe
+    +sort=200
     """
 
     image: PythonTaskConfigImage = pydantic.Field()
@@ -27,25 +30,22 @@ class PythonTaskConfig(UniversalBaseModel):
     +usage=Specify the image spec for the task
     """
 
-    env: typing.Optional[typing.Dict[str, typing.Optional[str]]] = pydantic.Field(default=None)
-    """
-    +label=Environment Variables
-    +usage=Configure environment variables to be injected in the task either as plain text or secrets. [Docs](https://docs.truefoundry.com/docs/env-variables)
-    +icon=fa-globe
-    +sort=200
-    """
-
-    resources: typing.Optional[Resources] = None
     mounts: typing.Optional[typing.List[PythonTaskConfigMountsItem]] = pydantic.Field(default=None)
     """
     +usage=Configure data to be mounted to Workflow pod(s) as a volume.
     +sort=400
     """
 
+    resources: typing.Optional[Resources] = None
     service_account: typing.Optional[str] = pydantic.Field(default=None)
     """
     +label=Service Account
     +sort=500
+    """
+
+    type: typing.Literal["python-task-config"] = pydantic.Field(default="python-task-config")
+    """
+    +value=python-task-config
     """
 
     if IS_PYDANTIC_V2:

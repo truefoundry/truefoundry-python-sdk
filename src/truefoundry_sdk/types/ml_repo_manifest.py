@@ -13,14 +13,12 @@ class MlRepoManifest(UniversalBaseModel):
     +usage=MLRepo is a repository ML training runs that log params, metrics, plots, images and versioned entities like artifacts, models, prompts, tools, agents
     """
 
-    type: typing.Literal["ml-repo"] = "ml-repo"
-    name: str = pydantic.Field()
+    collaborators: typing.List[Collaborator] = pydantic.Field()
     """
-    +label=Name
-    +icon=fa-desktop:#black
-    +usage=Name of the ML Repo.
-    +message=Alphanumeric word, may contain '-' with a maximum length of 100 characters
-    +sort=1
+    +label=Collaborators
+    +sort=5
+    +usage=Users and Teams that have access to MLRepo
+    +uiType=Collaborators
     """
 
     description: typing.Optional[str] = pydantic.Field(default=None)
@@ -34,6 +32,15 @@ class MlRepoManifest(UniversalBaseModel):
     +uiProps={"descriptionInline":true}
     """
 
+    name: str = pydantic.Field()
+    """
+    +label=Name
+    +icon=fa-desktop:#black
+    +usage=Name of the ML Repo.
+    +message=Alphanumeric word, may contain '-' with a maximum length of 100 characters
+    +sort=1
+    """
+
     storage_integration_fqn: str = pydantic.Field()
     """
     +label=Storage Integration
@@ -44,13 +51,7 @@ class MlRepoManifest(UniversalBaseModel):
     +sort=4
     """
 
-    collaborators: typing.List[Collaborator] = pydantic.Field()
-    """
-    +label=Collaborators
-    +sort=5
-    +usage=Users and Teams that have access to MLRepo
-    +uiType=Collaborators
-    """
+    type: typing.Literal["ml-repo"] = "ml-repo"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -30,6 +30,52 @@ class TeamsClient:
         """
         return self._raw_client
 
+    def create_or_update(
+        self,
+        *,
+        manifest: TeamManifest,
+        dry_run: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetTeamResponse:
+        """
+        Creates a new team or updates an existing team. It ensures that the team name is unique, valid, and that the team has at least one member. The members of the team are added or updated based on the provided emails.
+
+        Parameters
+        ----------
+        manifest : TeamManifest
+            Team manifest
+
+        dry_run : typing.Optional[bool]
+            Dry run
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetTeamResponse
+            Returns the created or updated team.
+
+        Examples
+        --------
+        from truefoundry_sdk import TeamManifest, TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.teams.create_or_update(
+            manifest=TeamManifest(
+                members=["members"],
+                name="name",
+            ),
+        )
+        """
+        _response = self._raw_client.create_or_update(
+            manifest=manifest, dry_run=dry_run, request_options=request_options
+        )
+        return _response.data
+
     def list(
         self,
         *,
@@ -75,52 +121,6 @@ class TeamsClient:
             yield page
         """
         return self._raw_client.list(limit=limit, offset=offset, request_options=request_options)
-
-    def create_or_update(
-        self,
-        *,
-        manifest: TeamManifest,
-        dry_run: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetTeamResponse:
-        """
-        Creates a new team or updates an existing team. It ensures that the team name is unique, valid, and that the team has at least one member. The members of the team are added or updated based on the provided emails.
-
-        Parameters
-        ----------
-        manifest : TeamManifest
-            Team manifest
-
-        dry_run : typing.Optional[bool]
-            Dry run
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetTeamResponse
-            Returns the created or updated team.
-
-        Examples
-        --------
-        from truefoundry_sdk import TeamManifest, TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.teams.create_or_update(
-            manifest=TeamManifest(
-                name="name",
-                members=["members"],
-            ),
-        )
-        """
-        _response = self._raw_client.create_or_update(
-            manifest=manifest, dry_run=dry_run, request_options=request_options
-        )
-        return _response.data
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetTeamResponse:
         """
@@ -202,6 +202,60 @@ class AsyncTeamsClient:
         """
         return self._raw_client
 
+    async def create_or_update(
+        self,
+        *,
+        manifest: TeamManifest,
+        dry_run: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetTeamResponse:
+        """
+        Creates a new team or updates an existing team. It ensures that the team name is unique, valid, and that the team has at least one member. The members of the team are added or updated based on the provided emails.
+
+        Parameters
+        ----------
+        manifest : TeamManifest
+            Team manifest
+
+        dry_run : typing.Optional[bool]
+            Dry run
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetTeamResponse
+            Returns the created or updated team.
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry, TeamManifest
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.teams.create_or_update(
+                manifest=TeamManifest(
+                    members=["members"],
+                    name="name",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.create_or_update(
+            manifest=manifest, dry_run=dry_run, request_options=request_options
+        )
+        return _response.data
+
     async def list(
         self,
         *,
@@ -256,60 +310,6 @@ class AsyncTeamsClient:
         asyncio.run(main())
         """
         return await self._raw_client.list(limit=limit, offset=offset, request_options=request_options)
-
-    async def create_or_update(
-        self,
-        *,
-        manifest: TeamManifest,
-        dry_run: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetTeamResponse:
-        """
-        Creates a new team or updates an existing team. It ensures that the team name is unique, valid, and that the team has at least one member. The members of the team are added or updated based on the provided emails.
-
-        Parameters
-        ----------
-        manifest : TeamManifest
-            Team manifest
-
-        dry_run : typing.Optional[bool]
-            Dry run
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetTeamResponse
-            Returns the created or updated team.
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry, TeamManifest
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.teams.create_or_update(
-                manifest=TeamManifest(
-                    name="name",
-                    members=["members"],
-                ),
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.create_or_update(
-            manifest=manifest, dry_run=dry_run, request_options=request_options
-        )
-        return _response.data
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetTeamResponse:
         """

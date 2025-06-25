@@ -16,18 +16,18 @@ class WorkerConfig(UniversalBaseModel):
     +sort=1
     """
 
-    output_config: typing.Optional[WorkerConfigOutputConfig] = pydantic.Field(default=None)
-    """
-    +label=Output Config
-    +usage=Output Config
-    +sort=2
-    """
-
     num_concurrent_workers: int = pydantic.Field(default=1)
     """
     +label=Number of Concurrent Workers
     +usage=Number of concurrent workers to spawn for the processor
     +sort=3
+    """
+
+    output_config: typing.Optional[WorkerConfigOutputConfig] = pydantic.Field(default=None)
+    """
+    +label=Output Config
+    +usage=Output Config
+    +sort=2
     """
 
     if IS_PYDANTIC_V2:

@@ -13,23 +13,12 @@ class KafkaInputConfig(UniversalBaseModel):
     +label=Kafka
     """
 
-    type: typing.Literal["kafka"] = pydantic.Field(default="kafka")
-    """
-    +value=kafka
-    """
-
+    auth: typing.Optional[KafkaSaslAuth] = None
     bootstrap_servers: str = pydantic.Field()
     """
     +label=Bootstrap servers
     +usage='Kafka Bootstrap servers - Comma separated list of Kafka brokers "hostname:port" to connect to for bootstrap'
     +sort=1
-    """
-
-    topic_name: str = pydantic.Field()
-    """
-    +label=Topic Name
-    +usage=Kafka topic to subscribe to
-    +sort=2
     """
 
     consumer_group: str = pydantic.Field()
@@ -45,13 +34,23 @@ class KafkaInputConfig(UniversalBaseModel):
     +usage=TLS configuration for SASL authentication
     """
 
+    topic_name: str = pydantic.Field()
+    """
+    +label=Topic Name
+    +usage=Kafka topic to subscribe to
+    +sort=2
+    """
+
+    type: typing.Literal["kafka"] = pydantic.Field(default="kafka")
+    """
+    +value=kafka
+    """
+
     wait_time_seconds: typing.Optional[int] = pydantic.Field(default=10)
     """
     +label=Wait Time Seconds
     +usage=Wait timeout for long polling.
     """
-
-    auth: typing.Optional[KafkaSaslAuth] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

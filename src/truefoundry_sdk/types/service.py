@@ -15,11 +15,14 @@ class Service(BaseService):
     +docs=Describes the configuration for the service
     """
 
-    type: typing.Optional[typing.Literal["service"]] = pydantic.Field(default=None)
+    allow_interception: typing.Optional[bool] = pydantic.Field(default=False)
     """
-    +value=service
+    +label=Allow intercepts
+    +usage=Whether to allow intercepts to be applied for this service.
+    This would inject an additional sidecar in each pod of the service. Not recommended on production
     """
 
+    auto_shutdown: typing.Optional[Autoshutdown] = None
     replicas: typing.Optional[ServiceReplicas] = pydantic.Field(default=None)
     """
     +label=Replicas
@@ -28,18 +31,15 @@ class Service(BaseService):
     +sort=4
     """
 
-    auto_shutdown: typing.Optional[Autoshutdown] = None
-    allow_interception: typing.Optional[bool] = pydantic.Field(default=False)
-    """
-    +label=Allow intercepts
-    +usage=Whether to allow intercepts to be applied for this service.
-    This would inject an additional sidecar in each pod of the service. Not recommended on production
-    """
-
     rollout_strategy: typing.Optional[ServiceRolloutStrategy] = pydantic.Field(default=None)
     """
     +label=Rollout strategy
     +usage=Strategy to dictate how a rollout should happen when a new release for this service is made [Docs](https://docs.truefoundry.com/docs/rollout-strategy)
+    """
+
+    type: typing.Optional[typing.Literal["service"]] = pydantic.Field(default=None)
+    """
+    +value=service
     """
 
     if IS_PYDANTIC_V2:

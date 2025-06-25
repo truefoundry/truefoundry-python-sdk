@@ -14,12 +14,13 @@ from .resources import Resources
 
 
 class BaseService(UniversalBaseModel):
-    name: str = pydantic.Field()
+    artifacts_download: typing.Optional[ArtifactsDownload] = None
+    env: typing.Optional[typing.Dict[str, typing.Optional[str]]] = pydantic.Field(default=None)
     """
-    +usage=Name of the service. This uniquely identifies this service in the workspace.
-    > Name can only contain alphanumeric characters and '-' and can be atmost 25 characters long
-    +sort=1
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
+    +label=Environment Variables
+    +usage=Configure environment variables to be injected in the service either as plain text or secrets. [Docs](https://docs.truefoundry.com/docs/env-variables)
+    +icon=fa-globe
+    +sort=6
     """
 
     image: BaseServiceImage = pydantic.Field()
@@ -30,14 +31,25 @@ class BaseService(UniversalBaseModel):
     +sort=2
     """
 
-    artifacts_download: typing.Optional[ArtifactsDownload] = None
-    resources: typing.Optional[Resources] = None
-    env: typing.Optional[typing.Dict[str, typing.Optional[str]]] = pydantic.Field(default=None)
+    kustomize: typing.Optional[Kustomize] = None
+    labels: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
     """
-    +label=Environment Variables
-    +usage=Configure environment variables to be injected in the service either as plain text or secrets. [Docs](https://docs.truefoundry.com/docs/env-variables)
-    +icon=fa-globe
-    +sort=6
+    +label=Labels
+    """
+
+    liveness_probe: typing.Optional[HealthProbe] = None
+    mounts: typing.Optional[typing.List[BaseServiceMountsItem]] = pydantic.Field(default=None)
+    """
+    +usage=Configure data to be mounted to service pod(s) as a string, secret or volume. [Docs](https://docs.truefoundry.com/docs/mounting-volumes-service)
+    +sort=10011
+    """
+
+    name: str = pydantic.Field()
+    """
+    +usage=Name of the service. This uniquely identifies this service in the workspace.
+    > Name can only contain alphanumeric characters and '-' and can be atmost 25 characters long
+    +sort=1
+    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
     """
 
     ports: typing.List[Port] = pydantic.Field()
@@ -49,21 +61,9 @@ class BaseService(UniversalBaseModel):
     +sort=4
     """
 
-    service_account: typing.Optional[str] = None
-    mounts: typing.Optional[typing.List[BaseServiceMountsItem]] = pydantic.Field(default=None)
-    """
-    +usage=Configure data to be mounted to service pod(s) as a string, secret or volume. [Docs](https://docs.truefoundry.com/docs/mounting-volumes-service)
-    +sort=10011
-    """
-
-    labels: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
-    """
-    +label=Labels
-    """
-
-    kustomize: typing.Optional[Kustomize] = None
-    liveness_probe: typing.Optional[HealthProbe] = None
     readiness_probe: typing.Optional[HealthProbe] = None
+    resources: typing.Optional[Resources] = None
+    service_account: typing.Optional[str] = None
     workspace_fqn: typing.Optional[str] = pydantic.Field(default=None)
     """
     +label=Workspace FQN

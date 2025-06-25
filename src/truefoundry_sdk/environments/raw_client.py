@@ -119,10 +119,10 @@ class RawEnvironmentsClient:
             "api/svc/v1/environments",
             method="PUT",
             json={
+                "dryRun": dry_run,
                 "manifest": convert_and_respect_annotation_metadata(
                     object_=manifest, annotation=EnvironmentManifest, direction="write"
                 ),
-                "dryRun": dry_run,
             },
             headers={
                 "content-type": "application/json",
@@ -353,10 +353,10 @@ class AsyncRawEnvironmentsClient:
             "api/svc/v1/environments",
             method="PUT",
             json={
+                "dryRun": dry_run,
                 "manifest": convert_and_respect_annotation_metadata(
                     object_=manifest, annotation=EnvironmentManifest, direction="write"
                 ),
-                "dryRun": dry_run,
             },
             headers={
                 "content-type": "application/json",

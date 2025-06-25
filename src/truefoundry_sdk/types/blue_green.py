@@ -13,9 +13,10 @@ class BlueGreen(UniversalBaseModel):
     +label=Blue Green strategy
     """
 
-    type: typing.Literal["blue_green"] = pydantic.Field(default="blue_green")
+    auto_promotion_seconds: typing.Optional[int] = pydantic.Field(default=30)
     """
-    +value=blue_green
+    +docs=Promote the new release to handle the complete traffic after waiting for these many seconds
+    +label=Auto-promotion seconds
     """
 
     enable_auto_promotion: typing.Optional[bool] = pydantic.Field(default=False)
@@ -24,10 +25,9 @@ class BlueGreen(UniversalBaseModel):
     +label=Auto-promotion
     """
 
-    auto_promotion_seconds: typing.Optional[int] = pydantic.Field(default=30)
+    type: typing.Literal["blue_green"] = pydantic.Field(default="blue_green")
     """
-    +docs=Promote the new release to handle the complete traffic after waiting for these many seconds
-    +label=Auto-promotion seconds
+    +value=blue_green
     """
 
     if IS_PYDANTIC_V2:

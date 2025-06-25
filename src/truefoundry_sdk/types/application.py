@@ -19,24 +19,10 @@ from .subject import Subject
 
 
 class Application(UniversalBaseModel):
-    id: typing.Optional[str] = None
-    fqn: typing.Optional[str] = None
-    name: typing.Optional[str] = None
-    type: typing.Optional[ApplicationType] = None
-    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")]
-    tenant_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="tenantName")] = None
-    metadata: typing.Optional[ApplicationMetadata] = None
-    lifecycle_stage: typing_extensions.Annotated[ApplicationLifecycleStage, FieldMetadata(alias="lifecycleStage")]
-    workspace_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="workspaceId")] = None
-    last_version: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="lastVersion")] = None
+    active_deployment_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="activeDeploymentId")
+    ] = None
     active_version: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="activeVersion")] = None
-    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None
-    updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = None
-    recommendations: typing.Optional[typing.List[Recommendation]] = pydantic.Field(default=None)
-    """
-    Recommendations for this application
-    """
-
     alerts: typing.Optional[typing.List[Alert]] = pydantic.Field(default=None)
     """
     Alerts for this application
@@ -56,6 +42,20 @@ class Application(UniversalBaseModel):
     Debug infos for this application
     """
 
+    autopilot: typing.Dict[str, typing.Optional[typing.Any]]
+    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None
+    created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = None
+    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")]
+    deployment: typing.Optional["Deployment"] = None
+    fqn: typing.Optional[str] = None
+    id: typing.Optional[str] = None
+    last_deployment_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="lastDeploymentId")] = (
+        None
+    )
+    last_version: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="lastVersion")] = None
+    lifecycle_stage: typing_extensions.Annotated[ApplicationLifecycleStage, FieldMetadata(alias="lifecycleStage")]
+    metadata: typing.Optional[ApplicationMetadata] = None
+    name: typing.Optional[str] = None
     potential_problems: typing_extensions.Annotated[
         typing.Optional[typing.List[ApplicationProblem]], FieldMetadata(alias="potentialProblems")
     ] = pydantic.Field(default=None)
@@ -63,16 +63,16 @@ class Application(UniversalBaseModel):
     Potential problems with the application
     """
 
-    autopilot: typing.Dict[str, typing.Optional[typing.Any]]
+    recommendations: typing.Optional[typing.List[Recommendation]] = pydantic.Field(default=None)
+    """
+    Recommendations for this application
+    """
+
+    tenant_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="tenantName")] = None
+    type: typing.Optional[ApplicationType] = None
+    updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = None
     workspace_fqn: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="workspaceFqn")] = None
-    created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = None
-    deployment: typing.Optional["Deployment"] = None
-    active_deployment_id: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="activeDeploymentId")
-    ] = None
-    last_deployment_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="lastDeploymentId")] = (
-        None
-    )
+    workspace_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="workspaceId")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

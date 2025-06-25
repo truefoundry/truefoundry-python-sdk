@@ -11,16 +11,16 @@ class TrueFoundryInteractiveLogin(UniversalBaseModel):
     +label=Login with truefoundry
     """
 
-    type: typing.Literal["truefoundry_oauth"] = pydantic.Field(default="truefoundry_oauth")
-    """
-    +value=truefoundry_oauth
-    """
-
     bypass_auth_paths: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     +label=Paths that will bypass auth
     +usage=List of paths that will bypass auth.
     needs to start with a forward slash(/) and should not contain wildcards(*)
+    """
+
+    type: typing.Literal["truefoundry_oauth"] = pydantic.Field(default="truefoundry_oauth")
+    """
+    +value=truefoundry_oauth
     """
 
     if IS_PYDANTIC_V2:

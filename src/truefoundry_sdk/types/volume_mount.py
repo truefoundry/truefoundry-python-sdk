@@ -7,11 +7,6 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class VolumeMount(UniversalBaseModel):
-    type: typing.Literal["volume"] = pydantic.Field(default="volume")
-    """
-    +value=volume
-    """
-
     mount_path: str = pydantic.Field()
     """
     +label=Volume mount path
@@ -23,6 +18,11 @@ class VolumeMount(UniversalBaseModel):
     """
     +label=Sub Path
     +usage=Sub path within the volume to mount. Defaults to root of the volume.
+    """
+
+    type: typing.Literal["volume"] = pydantic.Field(default="volume")
+    """
+    +value=volume
     """
 
     volume_fqn: str = pydantic.Field()

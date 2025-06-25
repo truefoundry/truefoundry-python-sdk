@@ -11,9 +11,11 @@ class SparkExecutorDynamicScaling(UniversalBaseModel):
     +label=Dynamic Scaling
     """
 
-    type: typing.Literal["dynamic"] = pydantic.Field(default="dynamic")
+    max: int = pydantic.Field(default=1)
     """
-    +value=dynamic
+    +label=Max Instances
+    +usage=Maximum number of instances to scale up to
+    +sort=200
     """
 
     min: int = pydantic.Field(default=1)
@@ -23,11 +25,9 @@ class SparkExecutorDynamicScaling(UniversalBaseModel):
     +sort=100
     """
 
-    max: int = pydantic.Field(default=1)
+    type: typing.Literal["dynamic"] = pydantic.Field(default="dynamic")
     """
-    +label=Max Instances
-    +usage=Maximum number of instances to scale up to
-    +sort=200
+    +value=dynamic
     """
 
     if IS_PYDANTIC_V2:

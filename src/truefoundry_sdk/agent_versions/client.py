@@ -27,6 +27,55 @@ class AgentVersionsClient:
         """
         return self._raw_client
 
+    def list(
+        self,
+        *,
+        agent_id: typing.Optional[str] = None,
+        fqn: typing.Optional[str] = None,
+        offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = 100,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncPager[AgentVersion]:
+        """
+        List agent versions API
+
+        Parameters
+        ----------
+        agent_id : typing.Optional[str]
+
+        fqn : typing.Optional[str]
+
+        offset : typing.Optional[int]
+
+        limit : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[AgentVersion]
+            Successful Response
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.agent_versions.list()
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
+        """
+        return self._raw_client.list(
+            agent_id=agent_id, fqn=fqn, offset=offset, limit=limit, request_options=request_options
+        )
+
     def resolve(self, *, fqn: str, request_options: typing.Optional[RequestOptions] = None) -> ResolveAgentAppResponse:
         """
         Parameters
@@ -118,7 +167,23 @@ class AgentVersionsClient:
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
 
-    def list(
+
+class AsyncAgentVersionsClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._raw_client = AsyncRawAgentVersionsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawAgentVersionsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawAgentVersionsClient
+        """
+        return self._raw_client
+
+    async def list(
         self,
         *,
         agent_id: typing.Optional[str] = None,
@@ -126,7 +191,7 @@ class AgentVersionsClient:
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[AgentVersion]:
+    ) -> AsyncPager[AgentVersion]:
         """
         List agent versions API
 
@@ -145,43 +210,36 @@ class AgentVersionsClient:
 
         Returns
         -------
-        SyncPager[AgentVersion]
+        AsyncPager[AgentVersion]
             Successful Response
 
         Examples
         --------
-        from truefoundry_sdk import TrueFoundry
+        import asyncio
 
-        client = TrueFoundry(
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = client.agent_versions.list()
-        for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        for page in response.iter_pages():
-            yield page
+
+
+        async def main() -> None:
+            response = await client.agent_versions.list()
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
         """
-        return self._raw_client.list(
+        return await self._raw_client.list(
             agent_id=agent_id, fqn=fqn, offset=offset, limit=limit, request_options=request_options
         )
-
-
-class AsyncAgentVersionsClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawAgentVersionsClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawAgentVersionsClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawAgentVersionsClient
-        """
-        return self._raw_client
 
     async def resolve(
         self, *, fqn: str, request_options: typing.Optional[RequestOptions] = None
@@ -299,61 +357,3 @@ class AsyncAgentVersionsClient:
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
         return _response.data
-
-    async def list(
-        self,
-        *,
-        agent_id: typing.Optional[str] = None,
-        fqn: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[AgentVersion]:
-        """
-        List agent versions API
-
-        Parameters
-        ----------
-        agent_id : typing.Optional[str]
-
-        fqn : typing.Optional[str]
-
-        offset : typing.Optional[int]
-
-        limit : typing.Optional[int]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncPager[AgentVersion]
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            response = await client.agent_versions.list()
-            async for item in response:
-                yield item
-
-            # alternatively, you can paginate page-by-page
-            async for page in response.iter_pages():
-                yield page
-
-
-        asyncio.run(main())
-        """
-        return await self._raw_client.list(
-            agent_id=agent_id, fqn=fqn, offset=offset, limit=limit, request_options=request_options
-        )

@@ -13,9 +13,26 @@ class JwtAuthConfig(UniversalBaseModel):
     +usage=Configure JWT-based authentication using JWKS
     """
 
-    type: typing.Literal["jwt_auth"] = pydantic.Field(default="jwt_auth")
+    bypass_auth_paths: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +value=jwt_auth
+    +label=Paths that will bypass auth
+    +usage=List of paths that will bypass auth.
+    needs to start with a forward slash(/) and should not contain wildcards(*)
+    +sort=500
+    """
+
+    claims: typing.Optional[typing.List[JwtAuthConfigClaimsItem]] = pydantic.Field(default=None)
+    """
+    +label=Claims
+    +usage=List of key-value pairs of claims to verify in the JWT token
+    +sort=400
+    """
+
+    enable_login: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    +label=Enable Login
+    +usage=Enable login for the service
+    +sort=300
     """
 
     integration_fqn: str = pydantic.Field()
@@ -30,26 +47,9 @@ class JwtAuthConfig(UniversalBaseModel):
     +uiProps={"integrationType":"jwt-auth"}
     """
 
-    enable_login: typing.Optional[bool] = pydantic.Field(default=None)
+    type: typing.Literal["jwt_auth"] = pydantic.Field(default="jwt_auth")
     """
-    +label=Enable Login
-    +usage=Enable login for the service
-    +sort=300
-    """
-
-    claims: typing.Optional[typing.List[JwtAuthConfigClaimsItem]] = pydantic.Field(default=None)
-    """
-    +label=Claims
-    +usage=List of key-value pairs of claims to verify in the JWT token
-    +sort=400
-    """
-
-    bypass_auth_paths: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
-    """
-    +label=Paths that will bypass auth
-    +usage=List of paths that will bypass auth.
-    needs to start with a forward slash(/) and should not contain wildcards(*)
-    +sort=500
+    +value=jwt_auth
     """
 
     if IS_PYDANTIC_V2:

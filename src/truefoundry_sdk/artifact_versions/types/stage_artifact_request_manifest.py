@@ -5,4 +5,4 @@ import typing
 from ...types.artifact_manifest import ArtifactManifest
 from ...types.model_manifest import ModelManifest
 
-StageArtifactRequestManifest = typing.Union[ModelManifest, ArtifactManifest]
+StageArtifactRequestManifest = typing.Union[ArtifactManifest, ModelManifest]

@@ -12,17 +12,17 @@ from .subject import Subject
 
 
 class Cluster(UniversalBaseModel):
-    id: str
-    fqn: str
-    name: str
-    manifest: ClusterManifest
-    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]
+    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
+    created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = None
     created_by_subject: typing_extensions.Annotated[
         typing.Optional[Subject], FieldMetadata(alias="createdBySubject")
     ] = None
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
+    fqn: str
+    id: str
+    manifest: ClusterManifest
+    name: str
+    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]
     updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
-    created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

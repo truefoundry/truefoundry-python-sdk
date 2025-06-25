@@ -134,10 +134,10 @@ class RawClustersClient:
             "api/svc/v1/clusters",
             method="PUT",
             json={
+                "dryRun": dry_run,
                 "manifest": convert_and_respect_annotation_metadata(
                     object_=manifest, annotation=ClusterManifest, direction="write"
                 ),
-                "dryRun": dry_run,
             },
             headers={
                 "content-type": "application/json",
@@ -551,10 +551,10 @@ class AsyncRawClustersClient:
             "api/svc/v1/clusters",
             method="PUT",
             json={
+                "dryRun": dry_run,
                 "manifest": convert_and_respect_annotation_metadata(
                     object_=manifest, annotation=ClusterManifest, direction="write"
                 ),
-                "dryRun": dry_run,
             },
             headers={
                 "content-type": "application/json",

@@ -142,10 +142,10 @@ class RawWorkspacesClient:
             "api/svc/v1/workspaces",
             method="PUT",
             json={
+                "dryRun": dry_run,
                 "manifest": convert_and_respect_annotation_metadata(
                     object_=manifest, annotation=WorkspaceManifest, direction="write"
                 ),
-                "dryRun": dry_run,
             },
             headers={
                 "content-type": "application/json",
@@ -444,10 +444,10 @@ class AsyncRawWorkspacesClient:
             "api/svc/v1/workspaces",
             method="PUT",
             json={
+                "dryRun": dry_run,
                 "manifest": convert_and_respect_annotation_metadata(
                     object_=manifest, annotation=WorkspaceManifest, direction="write"
                 ),
-                "dryRun": dry_run,
             },
             headers={
                 "content-type": "application/json",

@@ -12,9 +12,9 @@ class ModelConfiguration(UniversalBaseModel):
     Add a model from Gateway along with parameters to be used for chat completion
     """
 
-    provider: str = pydantic.Field()
+    extra_parameters: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
     """
-    Name of the provider, must be one of the integration providers configured for the Gateway
+    Arbitrary extra parameters to pass to the model when generating
     """
 
     model: str = pydantic.Field()
@@ -27,9 +27,9 @@ class ModelConfiguration(UniversalBaseModel):
     Parameters to pass to the model when generating
     """
 
-    extra_parameters: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    provider: str = pydantic.Field()
     """
-    Arbitrary extra parameters to pass to the model when generating
+    Name of the provider, must be one of the integration providers configured for the Gateway
     """
 
     if IS_PYDANTIC_V2:

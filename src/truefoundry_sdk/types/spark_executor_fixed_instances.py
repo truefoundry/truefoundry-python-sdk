@@ -11,15 +11,15 @@ class SparkExecutorFixedInstances(UniversalBaseModel):
     +label=Fixed Instances
     """
 
-    type: typing.Literal["fixed"] = pydantic.Field(default="fixed")
-    """
-    +value=fixed
-    """
-
     count: int = pydantic.Field(default=1)
     """
     +label=Instances Count
     +usage=Number of instances to start
+    """
+
+    type: typing.Literal["fixed"] = pydantic.Field(default="fixed")
+    """
+    +value=fixed
     """
 
     if IS_PYDANTIC_V2:

@@ -13,9 +13,22 @@ class TaskPythonBuild(UniversalBaseModel):
     +icon=fa-brands fa-python:#306998
     """
 
-    type: typing.Literal["task-python-build"] = pydantic.Field(default="task-python-build")
+    apt_packages: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +value=task-python-build
+    +label=List of Debian packages to install.
+    +usage=Debian packages to install via `apt get`.
+    In Python/YAML E.g. ["git", "ffmpeg", "htop"]
+    +placeholder=Enter a debian package name E.g. ffmpeg
+    """
+
+    cuda_version: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    +label=CUDA Version
+    +usage=Version of CUDA Toolkit and CUDNN to install in the image
+    These combinations are based off of publically available docker images on docker hub
+    You can also specify a valid tag of the form {cuda_version_number}-cudnn{cudnn_version_number}-{runtime|devel}-ubuntu{ubuntu_version}
+    Refer https://hub.docker.com/r/nvidia/cuda/tags for valid set of values
+    Note: We use deadsnakes ubuntu ppa to add Python that currently supports only Ubuntu 18.04, 20.04 and 22.04
     """
 
     docker_registry: typing.Optional[str] = pydantic.Field(default=None)
@@ -25,6 +38,14 @@ class TaskPythonBuild(UniversalBaseModel):
     +label=Docker Registry
     +usage=FQN of the container registry. If you can't find your registry here,
     add it through the [Integrations](/integrations?tab=docker-registry) page
+    """
+
+    pip_packages: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    +label=Pip packages to install
+    +usage=Define pip package requirements.
+    In Python/YAML E.g. ["fastapi>=0.90,<1.0", "uvicorn"]
+    +placeholder=Enter a pip package name E.g. fastapi>=0.90,<1.0
     """
 
     python_version: typing.Optional[str] = pydantic.Field(default=None)
@@ -42,30 +63,9 @@ class TaskPythonBuild(UniversalBaseModel):
     `Path to build context`
     """
 
-    pip_packages: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    type: typing.Literal["task-python-build"] = pydantic.Field(default="task-python-build")
     """
-    +label=Pip packages to install
-    +usage=Define pip package requirements.
-    In Python/YAML E.g. ["fastapi>=0.90,<1.0", "uvicorn"]
-    +placeholder=Enter a pip package name E.g. fastapi>=0.90,<1.0
-    """
-
-    apt_packages: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
-    """
-    +label=List of Debian packages to install.
-    +usage=Debian packages to install via `apt get`.
-    In Python/YAML E.g. ["git", "ffmpeg", "htop"]
-    +placeholder=Enter a debian package name E.g. ffmpeg
-    """
-
-    cuda_version: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    +label=CUDA Version
-    +usage=Version of CUDA Toolkit and CUDNN to install in the image
-    These combinations are based off of publically available docker images on docker hub
-    You can also specify a valid tag of the form {cuda_version_number}-cudnn{cudnn_version_number}-{runtime|devel}-ubuntu{ubuntu_version}
-    Refer https://hub.docker.com/r/nvidia/cuda/tags for valid set of values
-    Note: We use deadsnakes ubuntu ppa to add Python that currently supports only Ubuntu 18.04, 20.04 and 22.04
+    +value=task-python-build
     """
 
     if IS_PYDANTIC_V2:

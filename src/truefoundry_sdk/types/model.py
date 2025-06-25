@@ -10,16 +10,16 @@ from .subject import Subject
 
 
 class Model(UniversalBaseModel):
-    id: str
-    ml_repo_id: str
-    type: typing.Optional[typing.Literal["model"]] = None
-    name: str
-    fqn: str
-    created_by_subject: Subject
     created_at: typing.Optional[dt.datetime] = None
-    updated_at: typing.Optional[dt.datetime] = None
+    created_by_subject: Subject
+    fqn: str
+    id: str
     latest_version: typing.Optional[ModelVersion] = None
+    ml_repo_id: str
+    name: str
     run_steps: typing.Optional[typing.List[int]] = None
+    type: typing.Optional[typing.Literal["model"]] = None
+    updated_at: typing.Optional[dt.datetime] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

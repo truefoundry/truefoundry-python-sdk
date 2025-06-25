@@ -13,11 +13,7 @@ class SqsInputConfig(UniversalBaseModel):
     +label=SQS
     """
 
-    type: typing.Literal["sqs"] = pydantic.Field(default="sqs")
-    """
-    +value=sqs
-    """
-
+    auth: AwsAccessKeyAuth
     queue_url: str = pydantic.Field()
     """
     +label=Queue URL
@@ -32,6 +28,11 @@ class SqsInputConfig(UniversalBaseModel):
     +sort=2
     """
 
+    type: typing.Literal["sqs"] = pydantic.Field(default="sqs")
+    """
+    +value=sqs
+    """
+
     visibility_timeout: int = pydantic.Field()
     """
     +label=Visibility Timeout (seconds)
@@ -44,8 +45,6 @@ class SqsInputConfig(UniversalBaseModel):
     +label=Wait Time Seconds
     +usage=Wait timeout for long polling. For more information, see [here](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-short-and-long-polling.html)
     """
-
-    auth: AwsAccessKeyAuth
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

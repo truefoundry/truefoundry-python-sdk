@@ -7,9 +7,16 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class MirrorAction(UniversalBaseModel):
-    type: typing.Literal["mirror"] = pydantic.Field(default="mirror")
+    percentage: int = pydantic.Field()
     """
-    +value=mirror
+    +docs=Percentage of requests to mirror
+    +label=Percentage
+    """
+
+    port: int = pydantic.Field()
+    """
+    +docs=Port to redirect the service traffic to
+    +label=Target port
     """
 
     service_uri: str = pydantic.Field()
@@ -19,16 +26,9 @@ class MirrorAction(UniversalBaseModel):
     +label=Service URI
     """
 
-    port: int = pydantic.Field()
+    type: typing.Literal["mirror"] = pydantic.Field(default="mirror")
     """
-    +docs=Port to redirect the service traffic to
-    +label=Target port
-    """
-
-    percentage: int = pydantic.Field()
-    """
-    +docs=Percentage of requests to mirror
-    +label=Percentage
+    +value=mirror
     """
 
     if IS_PYDANTIC_V2:

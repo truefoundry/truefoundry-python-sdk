@@ -13,12 +13,11 @@ class RStudio(BaseWorkbenchInput):
     +docs=Describes the configuration for the Rstudio server
     """
 
+    image: typing.Optional[WorkbenchImage] = None
     type: typing.Optional[typing.Literal["rstudio"]] = pydantic.Field(default=None)
     """
     +value=rstudio
     """
-
-    image: typing.Optional[WorkbenchImage] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

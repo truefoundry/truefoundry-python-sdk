@@ -14,18 +14,12 @@ class Image(UniversalBaseModel):
     +icon=fa-brands fa-docker:#0db7ed
     """
 
-    type: typing.Literal["image"] = pydantic.Field(default="image")
+    command: typing.Optional[ImageCommand] = pydantic.Field(default=None)
     """
-    +value=image
-    """
-
-    image_uri: str = pydantic.Field()
-    """
-    +label=Image URI
-    +usage=The image URI. Specify the name of the image and the tag.
-    If the image is in Dockerhub, you can skip registry-url (for e.g. `tensorflow/tensorflow`).
-    You can use an image from a private registry using Advanced fields
-    +placeholder=registry-url/account/image:version (e.g. docker.io/tensorflow/tensorflow)
+    +label=Command Override
+    +usage=Override the command to run when container starts.
+    When deploying a Job, the command can be templatized by defining `params` and referencing them in command
+    E.g. `python main.py --learning_rate {{learning_rate}}`
     """
 
     docker_registry: typing.Optional[str] = pydantic.Field(default=None)
@@ -37,12 +31,18 @@ class Image(UniversalBaseModel):
     add it through the [Integrations](/integrations?tab=docker-registry) page
     """
 
-    command: typing.Optional[ImageCommand] = pydantic.Field(default=None)
+    image_uri: str = pydantic.Field()
     """
-    +label=Command Override
-    +usage=Override the command to run when container starts.
-    When deploying a Job, the command can be templatized by defining `params` and referencing them in command
-    E.g. `python main.py --learning_rate {{learning_rate}}`
+    +label=Image URI
+    +usage=The image URI. Specify the name of the image and the tag.
+    If the image is in Dockerhub, you can skip registry-url (for e.g. `tensorflow/tensorflow`).
+    You can use an image from a private registry using Advanced fields
+    +placeholder=registry-url/account/image:version (e.g. docker.io/tensorflow/tensorflow)
+    """
+
+    type: typing.Literal["image"] = pydantic.Field(default="image")
+    """
+    +value=image
     """
 
     if IS_PYDANTIC_V2:

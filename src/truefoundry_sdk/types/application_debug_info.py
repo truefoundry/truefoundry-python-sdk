@@ -12,13 +12,13 @@ from ..core.serialization import FieldMetadata
 
 
 class ApplicationDebugInfo(UniversalBaseModel):
-    id: typing.Optional[str] = None
-    application_id: typing_extensions.Annotated[str, FieldMetadata(alias="applicationId")]
     application: typing.Optional["Application"] = None
+    application_id: typing_extensions.Annotated[str, FieldMetadata(alias="applicationId")]
+    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None
     debug_info: typing_extensions.Annotated[
         typing.Dict[str, typing.Optional[typing.Any]], FieldMetadata(alias="debugInfo")
     ]
-    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None
+    id: typing.Optional[str] = None
     updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = None
 
     if IS_PYDANTIC_V2:

@@ -8,9 +8,9 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class ListFilesRequest(UniversalBaseModel):
     id: str
-    path: typing.Optional[str] = None
     limit: typing.Optional[int] = None
     page_token: typing.Optional[str] = None
+    path: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

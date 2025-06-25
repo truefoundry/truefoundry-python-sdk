@@ -14,6 +14,11 @@ class DockerRegistriesGetCredentialsResponse(UniversalBaseModel):
     Docker registry FQN
     """
 
+    password: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Password
+    """
+
     registry_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="registryUrl")] = (
         pydantic.Field(default=None)
     )
@@ -24,11 +29,6 @@ class DockerRegistriesGetCredentialsResponse(UniversalBaseModel):
     username: typing.Optional[str] = pydantic.Field(default=None)
     """
     Username
-    """
-
-    password: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Password
     """
 
     if IS_PYDANTIC_V2:

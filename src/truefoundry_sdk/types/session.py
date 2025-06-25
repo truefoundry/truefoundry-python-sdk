@@ -11,19 +11,19 @@ from .user_metadata import UserMetadata
 
 
 class Session(UniversalBaseModel):
+    email: typing.Optional[str] = None
     id: str
-    user_name: typing_extensions.Annotated[str, FieldMetadata(alias="userName")]
-    subject_slug: typing_extensions.Annotated[str, FieldMetadata(alias="subjectSlug")]
+    metadata: typing.Optional[UserMetadata] = None
+    roles: typing.List[str]
     subject_controller_name: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="subjectControllerName")
     ] = None
     subject_pat_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="subjectPatName")] = None
-    email: typing.Optional[str] = None
+    subject_slug: typing_extensions.Annotated[str, FieldMetadata(alias="subjectSlug")]
     subject_type: typing_extensions.Annotated[SubjectType, FieldMetadata(alias="subjectType")]
-    tenant_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="tenantName")] = None
-    roles: typing.List[str]
     teams: typing.List[str]
-    metadata: typing.Optional[UserMetadata] = None
+    tenant_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="tenantName")] = None
+    user_name: typing_extensions.Annotated[str, FieldMetadata(alias="userName")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

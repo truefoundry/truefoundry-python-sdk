@@ -119,15 +119,15 @@ class ClustersClient:
         )
         client.clusters.create_or_update(
             manifest=ClusterManifest(
-                name="name",
                 cluster_type=ClusterManifestClusterType.AWS_EKS,
-                environment_names=["environment_names"],
                 collaborators=[
                     Collaborator(
-                        subject="subject",
                         role_id="role_id",
+                        subject="subject",
                     )
                 ],
+                environment_names=["environment_names"],
+                name="name",
             ),
         )
         """
@@ -398,15 +398,15 @@ class AsyncClustersClient:
         async def main() -> None:
             await client.clusters.create_or_update(
                 manifest=ClusterManifest(
-                    name="name",
                     cluster_type=ClusterManifestClusterType.AWS_EKS,
-                    environment_names=["environment_names"],
                     collaborators=[
                         Collaborator(
-                            subject="subject",
                             role_id="role_id",
+                            subject="subject",
                         )
                     ],
+                    environment_names=["environment_names"],
+                    name="name",
                 ),
             )
 

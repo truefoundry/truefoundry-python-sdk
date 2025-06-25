@@ -12,16 +12,16 @@ class NodepoolSelector(UniversalBaseModel):
     +usage=Specify one or more nodepools to run your application on.
     """
 
-    type: typing.Literal["nodepool_selector"] = pydantic.Field(default="nodepool_selector")
-    """
-    +value=nodepool_selector
-    """
-
     nodepools: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     +label=Nodepools
     +usage=Nodepools where you want to run your workload. Multiple nodepools can be selected.
      The workload is guaranteed to be scheduled on one of the nodepool
+    """
+
+    type: typing.Literal["nodepool_selector"] = pydantic.Field(default="nodepool_selector")
+    """
+    +value=nodepool_selector
     """
 
     if IS_PYDANTIC_V2:

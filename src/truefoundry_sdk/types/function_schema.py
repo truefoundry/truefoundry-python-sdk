@@ -11,14 +11,14 @@ class FunctionSchema(UniversalBaseModel):
     Schema defining a function for tool calls
     """
 
-    name: str = pydantic.Field()
-    """
-    Name of the function
-    """
-
     description: str = pydantic.Field()
     """
     Description of the function
+    """
+
+    name: str = pydantic.Field()
+    """
+    Name of the function
     """
 
     parameters: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)

@@ -11,33 +11,12 @@ class AgentManifest(UniversalBaseModel):
     Agent manifest.
     """
 
-    name: str = pydantic.Field()
+    available_tools: typing.List[str] = pydantic.Field()
     """
-    Name of the entity
+    Tools available to the agent
     """
 
     description: typing.Optional[str] = None
-    metadata: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
-    """
-    Key value metadata. Should be valid JSON. For e.g. `{"business-unit": "sales", "quality": "good", "rating": 4.5}`
-    """
-
-    version_alias: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Version alias is alternate, ideally human readable, version string to reference an artifact version. It should start with `v` followed by alphanumeric and it can include `.` and `-` in between (e.g. `v1.0.0`, `v1-prod`, `v3-dev`, etc)
-    """
-
-    ml_repo: str = pydantic.Field()
-    """
-    Name of the ML Repo
-    """
-
-    version: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Version of the entity
-    """
-
-    type: typing.Literal["agent"] = "agent"
     goal: str = pydantic.Field()
     """
     Short form description. Will be used as `description` when this agent is used as a tool.
@@ -48,14 +27,35 @@ class AgentManifest(UniversalBaseModel):
     Instructions for the agent to follow to achieve the goal
     """
 
-    available_tools: typing.List[str] = pydantic.Field()
+    metadata: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
     """
-    Tools available to the agent
+    Key value metadata. Should be valid JSON. For e.g. `{"business-unit": "sales", "quality": "good", "rating": 4.5}`
+    """
+
+    ml_repo: str = pydantic.Field()
+    """
+    Name of the ML Repo
     """
 
     model_id: str = pydantic.Field()
     """
     Model to use when running the agent
+    """
+
+    name: str = pydantic.Field()
+    """
+    Name of the entity
+    """
+
+    type: typing.Literal["agent"] = "agent"
+    version: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Version of the entity
+    """
+
+    version_alias: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Version alias is alternate, ideally human readable, version string to reference an artifact version. It should start with `v` followed by alphanumeric and it can include `.` and `-` in between (e.g. `v1.0.0`, `v1-prod`, `v3-dev`, etc)
     """
 
     if IS_PYDANTIC_V2:

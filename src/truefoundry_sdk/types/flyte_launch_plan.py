@@ -9,9 +9,9 @@ from .flyte_launch_plan_spec import FlyteLaunchPlanSpec
 
 
 class FlyteLaunchPlan(UniversalBaseModel):
+    closure: typing.Optional[typing.Any] = None
     id: FlyteLaunchPlanId
     spec: FlyteLaunchPlanSpec
-    closure: typing.Optional[typing.Any] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

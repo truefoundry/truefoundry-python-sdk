@@ -13,16 +13,16 @@ from .subject import Subject
 
 
 class SecretGroup(UniversalBaseModel):
-    id: typing.Optional[str] = None
+    associated_secrets: typing_extensions.Annotated[typing.List["Secret"], FieldMetadata(alias="associatedSecrets")]
+    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
+    created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = None
+    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")]
     fqn: typing.Optional[str] = None
+    id: typing.Optional[str] = None
+    integration_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="integrationId")] = None
     name: str
     tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]
-    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")]
-    associated_secrets: typing_extensions.Annotated[typing.List["Secret"], FieldMetadata(alias="associatedSecrets")]
-    integration_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="integrationId")] = None
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
     updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
-    created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

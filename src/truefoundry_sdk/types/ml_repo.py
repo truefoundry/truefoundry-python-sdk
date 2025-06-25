@@ -10,16 +10,16 @@ from .subject import Subject
 
 
 class MlRepo(UniversalBaseModel):
-    tenant_name: str = pydantic.Field()
-    """
-    Tenant Name
-    """
-
-    manifest: MlRepoManifest
-    created_by_subject: Subject
+    artifact_type_counts: typing.Optional[typing.Dict[str, int]] = None
     created_at: dt.datetime = pydantic.Field()
     """
     Created At
+    """
+
+    created_by_subject: Subject
+    datasets_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of datasets
     """
 
     id: str = pydantic.Field()
@@ -27,15 +27,15 @@ class MlRepo(UniversalBaseModel):
     Experiment Id
     """
 
+    manifest: MlRepoManifest
     num_runs: typing.Optional[int] = pydantic.Field(default=None)
     """
     Number of runs
     """
 
-    artifact_type_counts: typing.Optional[typing.Dict[str, int]] = None
-    datasets_count: typing.Optional[int] = pydantic.Field(default=None)
+    tenant_name: str = pydantic.Field()
     """
-    Number of datasets
+    Tenant Name
     """
 
     if IS_PYDANTIC_V2:

@@ -8,8 +8,8 @@ from .flyte_task_template import FlyteTaskTemplate
 
 
 class FlyteTask(UniversalBaseModel):
-    template: FlyteTaskTemplate
     description: typing.Optional[typing.Optional[typing.Any]] = None
+    template: FlyteTaskTemplate
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

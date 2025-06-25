@@ -8,10 +8,11 @@ from .param_param_type import ParamParamType
 
 
 class Param(UniversalBaseModel):
-    name: str = pydantic.Field()
+    default: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +usage=Name of the param
-    +message=name can contain lower case alphabets, digits, underscore (_) and hypen (-). It can be 32 characters long, should start with an alphabet, and should end with either an alphabet or digit.
+    +usage=Default value or placeholder
+    +message=default value cannot be longer than 127 characters
+    +label=Default value
     """
 
     description: typing.Optional[str] = pydantic.Field(default=None)
@@ -20,11 +21,10 @@ class Param(UniversalBaseModel):
     +message=description cannot be longer than 127 characters
     """
 
-    default: typing.Optional[str] = pydantic.Field(default=None)
+    name: str = pydantic.Field()
     """
-    +usage=Default value or placeholder
-    +message=default value cannot be longer than 127 characters
-    +label=Default value
+    +usage=Name of the param
+    +message=name can contain lower case alphabets, digits, underscore (_) and hypen (-). It can be 32 characters long, should start with an alphabet, and should end with either an alphabet or digit.
     """
 
     param_type: typing.Optional[ParamParamType] = None

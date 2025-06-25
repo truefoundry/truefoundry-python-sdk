@@ -26,6 +26,55 @@ class PromptVersionsClient:
         """
         return self._raw_client
 
+    def list(
+        self,
+        *,
+        prompt_id: typing.Optional[str] = None,
+        fqn: typing.Optional[str] = None,
+        offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = 100,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncPager[PromptVersion]:
+        """
+        List prompt version API
+
+        Parameters
+        ----------
+        prompt_id : typing.Optional[str]
+
+        fqn : typing.Optional[str]
+
+        offset : typing.Optional[int]
+
+        limit : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[PromptVersion]
+            Successful Response
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.prompt_versions.list()
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
+        """
+        return self._raw_client.list(
+            prompt_id=prompt_id, fqn=fqn, offset=offset, limit=limit, request_options=request_options
+        )
+
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetPromptVersionResponse:
         """
         Get prompt version API
@@ -88,7 +137,23 @@ class PromptVersionsClient:
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
 
-    def list(
+
+class AsyncPromptVersionsClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._raw_client = AsyncRawPromptVersionsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawPromptVersionsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawPromptVersionsClient
+        """
+        return self._raw_client
+
+    async def list(
         self,
         *,
         prompt_id: typing.Optional[str] = None,
@@ -96,7 +161,7 @@ class PromptVersionsClient:
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[PromptVersion]:
+    ) -> AsyncPager[PromptVersion]:
         """
         List prompt version API
 
@@ -115,43 +180,36 @@ class PromptVersionsClient:
 
         Returns
         -------
-        SyncPager[PromptVersion]
+        AsyncPager[PromptVersion]
             Successful Response
 
         Examples
         --------
-        from truefoundry_sdk import TrueFoundry
+        import asyncio
 
-        client = TrueFoundry(
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = client.prompt_versions.list()
-        for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        for page in response.iter_pages():
-            yield page
+
+
+        async def main() -> None:
+            response = await client.prompt_versions.list()
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
         """
-        return self._raw_client.list(
+        return await self._raw_client.list(
             prompt_id=prompt_id, fqn=fqn, offset=offset, limit=limit, request_options=request_options
         )
-
-
-class AsyncPromptVersionsClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawPromptVersionsClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawPromptVersionsClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawPromptVersionsClient
-        """
-        return self._raw_client
 
     async def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -232,61 +290,3 @@ class AsyncPromptVersionsClient:
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
         return _response.data
-
-    async def list(
-        self,
-        *,
-        prompt_id: typing.Optional[str] = None,
-        fqn: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[PromptVersion]:
-        """
-        List prompt version API
-
-        Parameters
-        ----------
-        prompt_id : typing.Optional[str]
-
-        fqn : typing.Optional[str]
-
-        offset : typing.Optional[int]
-
-        limit : typing.Optional[int]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncPager[PromptVersion]
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            response = await client.prompt_versions.list()
-            async for item in response:
-                yield item
-
-            # alternatively, you can paginate page-by-page
-            async for page in response.iter_pages():
-                yield page
-
-
-        asyncio.run(main())
-        """
-        return await self._raw_client.list(
-            prompt_id=prompt_id, fqn=fqn, offset=offset, limit=limit, request_options=request_options
-        )

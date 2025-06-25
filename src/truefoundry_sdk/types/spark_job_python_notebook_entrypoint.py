@@ -11,11 +11,6 @@ class SparkJobPythonNotebookEntrypoint(UniversalBaseModel):
     +label=python notebook
     """
 
-    type: typing.Literal["python-notebook"] = pydantic.Field(default="python-notebook")
-    """
-    +value=python-notebook
-    """
-
     main_application_file: str = pydantic.Field()
     """
     +label=Main Application File
@@ -23,6 +18,11 @@ class SparkJobPythonNotebookEntrypoint(UniversalBaseModel):
     +message=Filename should have .py extension
     +sort=5
     +placeholder=For example: local:///path/to/file.py, s3:///bucket/path/to/file.py, etc.
+    """
+
+    type: typing.Literal["python-notebook"] = pydantic.Field(default="python-notebook")
+    """
+    +value=python-notebook
     """
 
     if IS_PYDANTIC_V2:

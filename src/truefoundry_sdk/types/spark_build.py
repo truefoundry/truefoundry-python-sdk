@@ -13,19 +13,6 @@ class SparkBuild(UniversalBaseModel):
     +icon=fa-brands fa-python:#306998
     """
 
-    type: typing.Literal["tfy-spark-buildpack"] = pydantic.Field(default="tfy-spark-buildpack")
-    """
-    +value=tfy-spark-buildpack
-    """
-
-    spark_version: str = pydantic.Field(default="3.5.2")
-    """
-    --- Spark Specific Field ---
-    +label=Spark Version
-    +usage=Spark version should match the spark version installed in the image.
-    +sort=1001
-    """
-
     build_context_path: str = pydantic.Field(default="./")
     """
     +label=Path to build context
@@ -38,6 +25,19 @@ class SparkBuild(UniversalBaseModel):
     +label=Path to requirements
     +usage=Path to `requirements.txt` relative to
     `Path to build context`
+    """
+
+    spark_version: str = pydantic.Field(default="3.5.2")
+    """
+    --- Spark Specific Field ---
+    +label=Spark Version
+    +usage=Spark version should match the spark version installed in the image.
+    +sort=1001
+    """
+
+    type: typing.Literal["tfy-spark-buildpack"] = pydantic.Field(default="tfy-spark-buildpack")
+    """
+    +value=tfy-spark-buildpack
     """
 
     if IS_PYDANTIC_V2:

@@ -7,15 +7,6 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class CanaryStep(UniversalBaseModel):
-    weight_percentage: int = pydantic.Field()
-    """
-    +docs=Percentage of total traffic to be shifted to the canary release.
-    The rest will continue to go to the existing deployment
-    +label=Canary weight percentage
-    +unit=%
-    +placeholder=Weight
-    """
-
     pause_duration: typing.Optional[int] = pydantic.Field(default=30)
     """
     +docs=Duration for which to pause the release. The release process will wait for these seconds before proceeding to the next step.
@@ -23,6 +14,15 @@ class CanaryStep(UniversalBaseModel):
     +label=Pause duration
     +unit=seconds
     +placeholder=Duration
+    """
+
+    weight_percentage: int = pydantic.Field()
+    """
+    +docs=Percentage of total traffic to be shifted to the canary release.
+    The rest will continue to go to the existing deployment
+    +label=Canary weight percentage
+    +unit=%
+    +placeholder=Weight
     """
 
     if IS_PYDANTIC_V2:

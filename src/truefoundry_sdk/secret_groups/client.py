@@ -90,8 +90,8 @@ class SecretGroupsClient:
     def create(
         self,
         *,
-        name: str,
         integration_id: str,
+        name: str,
         secrets: typing.Sequence[SecretInput],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSecretGroupResponse:
@@ -100,11 +100,11 @@ class SecretGroupsClient:
 
         Parameters
         ----------
-        name : str
-            Name of the secret group.
-
         integration_id : str
             Id of the provider integration.
+
+        name : str
+            Name of the secret group.
 
         secrets : typing.Sequence[SecretInput]
             The secrets to be associated with the secret group
@@ -126,8 +126,8 @@ class SecretGroupsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.secret_groups.create(
-            name="name",
             integration_id="integrationId",
+            name="name",
             secrets=[
                 SecretInput(
                     key="key",
@@ -137,7 +137,7 @@ class SecretGroupsClient:
         )
         """
         _response = self._raw_client.create(
-            name=name, integration_id=integration_id, secrets=secrets, request_options=request_options
+            integration_id=integration_id, name=name, secrets=secrets, request_options=request_options
         )
         return _response.data
 
@@ -334,8 +334,8 @@ class AsyncSecretGroupsClient:
     async def create(
         self,
         *,
-        name: str,
         integration_id: str,
+        name: str,
         secrets: typing.Sequence[SecretInput],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSecretGroupResponse:
@@ -344,11 +344,11 @@ class AsyncSecretGroupsClient:
 
         Parameters
         ----------
-        name : str
-            Name of the secret group.
-
         integration_id : str
             Id of the provider integration.
+
+        name : str
+            Name of the secret group.
 
         secrets : typing.Sequence[SecretInput]
             The secrets to be associated with the secret group
@@ -375,8 +375,8 @@ class AsyncSecretGroupsClient:
 
         async def main() -> None:
             await client.secret_groups.create(
-                name="name",
                 integration_id="integrationId",
+                name="name",
                 secrets=[
                     SecretInput(
                         key="key",
@@ -389,7 +389,7 @@ class AsyncSecretGroupsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
-            name=name, integration_id=integration_id, secrets=secrets, request_options=request_options
+            integration_id=integration_id, name=name, secrets=secrets, request_options=request_options
         )
         return _response.data
 

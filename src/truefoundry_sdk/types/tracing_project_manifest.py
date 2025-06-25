@@ -11,16 +11,17 @@ class TracingProjectManifest(UniversalBaseModel):
     Tracing Project manifest.
     """
 
-    type: typing.Literal["tracing-project"] = "tracing-project"
+    ml_repo: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Name of the ML Repo
+    """
+
     name: str = pydantic.Field()
     """
     Name of the tracing project
     """
 
-    ml_repo: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Name of the ML Repo
-    """
+    type: typing.Literal["tracing-project"] = "tracing-project"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

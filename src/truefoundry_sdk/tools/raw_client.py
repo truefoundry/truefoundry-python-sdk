@@ -27,78 +27,42 @@ class RawToolsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[GetToolResponse]:
+    def create_or_update(
+        self, *, manifest: AgentOpenApiToolManifest, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[GetToolVersionResponse]:
         """
         Parameters
         ----------
-        id : str
+        manifest : AgentOpenApiToolManifest
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[GetToolResponse]
+        HttpResponse[GetToolVersionResponse]
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/tools/{jsonable_encoder(id)}",
-            method="GET",
+            "api/ml/v1/tool-versions",
+            method="PUT",
+            json={
+                "manifest": convert_and_respect_annotation_metadata(
+                    object_=manifest, annotation=AgentOpenApiToolManifest, direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    GetToolResponse,
+                    GetToolVersionResponse,
                     parse_obj_as(
-                        type_=GetToolResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def delete(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[EmptyResponse]:
-        """
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[EmptyResponse]
-            Successful Response
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/tools/{jsonable_encoder(id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    EmptyResponse,
-                    parse_obj_as(
-                        type_=EmptyResponse,  # type: ignore
+                        type_=GetToolVersionResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -197,42 +161,78 @@ class RawToolsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def create_or_update(
-        self, *, manifest: AgentOpenApiToolManifest, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[GetToolVersionResponse]:
+    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[GetToolResponse]:
         """
         Parameters
         ----------
-        manifest : AgentOpenApiToolManifest
+        id : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[GetToolVersionResponse]
+        HttpResponse[GetToolResponse]
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/tool-versions",
-            method="PUT",
-            json={
-                "manifest": convert_and_respect_annotation_metadata(
-                    object_=manifest, annotation=AgentOpenApiToolManifest, direction="write"
-                ),
-            },
-            headers={
-                "content-type": "application/json",
-            },
+            f"api/ml/v1/tools/{jsonable_encoder(id)}",
+            method="GET",
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    GetToolVersionResponse,
+                    GetToolResponse,
                     parse_obj_as(
-                        type_=GetToolVersionResponse,  # type: ignore
+                        type_=GetToolResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def delete(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[EmptyResponse]:
+        """
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[EmptyResponse]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/ml/v1/tools/{jsonable_encoder(id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    EmptyResponse,
+                    parse_obj_as(
+                        type_=EmptyResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -258,80 +258,42 @@ class AsyncRawToolsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[GetToolResponse]:
+    async def create_or_update(
+        self, *, manifest: AgentOpenApiToolManifest, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[GetToolVersionResponse]:
         """
         Parameters
         ----------
-        id : str
+        manifest : AgentOpenApiToolManifest
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[GetToolResponse]
+        AsyncHttpResponse[GetToolVersionResponse]
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/tools/{jsonable_encoder(id)}",
-            method="GET",
+            "api/ml/v1/tool-versions",
+            method="PUT",
+            json={
+                "manifest": convert_and_respect_annotation_metadata(
+                    object_=manifest, annotation=AgentOpenApiToolManifest, direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    GetToolResponse,
+                    GetToolVersionResponse,
                     parse_obj_as(
-                        type_=GetToolResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def delete(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[EmptyResponse]:
-        """
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[EmptyResponse]
-            Successful Response
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/tools/{jsonable_encoder(id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    EmptyResponse,
-                    parse_obj_as(
-                        type_=EmptyResponse,  # type: ignore
+                        type_=GetToolVersionResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -433,42 +395,80 @@ class AsyncRawToolsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def create_or_update(
-        self, *, manifest: AgentOpenApiToolManifest, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[GetToolVersionResponse]:
+    async def get(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[GetToolResponse]:
         """
         Parameters
         ----------
-        manifest : AgentOpenApiToolManifest
+        id : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[GetToolVersionResponse]
+        AsyncHttpResponse[GetToolResponse]
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/tool-versions",
-            method="PUT",
-            json={
-                "manifest": convert_and_respect_annotation_metadata(
-                    object_=manifest, annotation=AgentOpenApiToolManifest, direction="write"
-                ),
-            },
-            headers={
-                "content-type": "application/json",
-            },
+            f"api/ml/v1/tools/{jsonable_encoder(id)}",
+            method="GET",
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    GetToolVersionResponse,
+                    GetToolResponse,
                     parse_obj_as(
-                        type_=GetToolVersionResponse,  # type: ignore
+                        type_=GetToolResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def delete(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[EmptyResponse]:
+        """
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[EmptyResponse]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/ml/v1/tools/{jsonable_encoder(id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    EmptyResponse,
+                    parse_obj_as(
+                        type_=EmptyResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

@@ -8,8 +8,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class TokenPagination(UniversalBaseModel):
     limit: typing.Optional[int] = None
-    previous_page_token: typing.Optional[str] = None
     next_page_token: typing.Optional[str] = None
+    previous_page_token: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

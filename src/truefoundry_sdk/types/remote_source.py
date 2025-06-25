@@ -14,15 +14,15 @@ class RemoteSource(UniversalBaseModel):
     +sort=200
     """
 
-    type: typing.Literal["remote"] = pydantic.Field(default="remote")
-    """
-    +value=remote
-    """
-
     remote_uri: str = pydantic.Field()
     """
     +docs=Remote repository URI
     +label=Remote URI
+    """
+
+    type: typing.Literal["remote"] = pydantic.Field(default="remote")
+    """
+    +value=remote
     """
 
     if IS_PYDANTIC_V2:

@@ -11,9 +11,11 @@ class SparkJobPythonEntrypoint(UniversalBaseModel):
     +label=python
     """
 
-    type: typing.Literal["python"] = pydantic.Field(default="python")
+    arguments: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +value=python
+    +label=Arguments
+    +usage=Arguments to be passed to the main application file.
+    +sort=6
     """
 
     main_application_file: str = pydantic.Field()
@@ -25,11 +27,9 @@ class SparkJobPythonEntrypoint(UniversalBaseModel):
     +placeholder=For example: local:///path/to/file.py, s3:///bucket/path/to/file.py, etc.
     """
 
-    arguments: typing.Optional[str] = pydantic.Field(default=None)
+    type: typing.Literal["python"] = pydantic.Field(default="python")
     """
-    +label=Arguments
-    +usage=Arguments to be passed to the main application file.
-    +sort=6
+    +value=python
     """
 
     if IS_PYDANTIC_V2:

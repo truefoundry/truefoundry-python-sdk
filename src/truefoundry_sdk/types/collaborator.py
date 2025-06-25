@@ -7,16 +7,16 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class Collaborator(UniversalBaseModel):
-    subject: str = pydantic.Field()
-    """
-    +label=Subject FQN
-    +usage=Fully Qualified Name of the subject. eg: user:email or team:teamname
-    """
-
     role_id: str = pydantic.Field()
     """
     +label=Role ID
     +usage=Role ID for the resource
+    """
+
+    subject: str = pydantic.Field()
+    """
+    +label=Subject FQN
+    +usage=Fully Qualified Name of the subject. eg: user:email or team:teamname
     """
 
     if IS_PYDANTIC_V2:

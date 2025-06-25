@@ -11,15 +11,6 @@ class WorkbenchImage(UniversalBaseModel):
     +usage=Workbench Image with persistent environment (Python 3.11.6)
     """
 
-    image_uri: str = pydantic.Field()
-    """
-    +label=Image URI
-    +usage=The image URI. Specify the name of the image and the tag.
-    If the image is in Dockerhub, you can skip registry-url (for e.g. `tensorflow/tensorflow`).
-    You can use an image from a private registry using Advanced fields
-    +placeholder=registry-url/account/image:version
-    """
-
     build_script: typing.Optional[str] = pydantic.Field(default=None)
     """
     +label=Build Script
@@ -39,6 +30,15 @@ class WorkbenchImage(UniversalBaseModel):
     +uiProps={"integrationType":"docker-registry"}
     +usage=FQN of the container registry. If you can't find your registry here,
     add it through the [Integrations](/integrations?tab=docker-registry) page
+    """
+
+    image_uri: str = pydantic.Field()
+    """
+    +label=Image URI
+    +usage=The image URI. Specify the name of the image and the tag.
+    If the image is in Dockerhub, you can skip registry-url (for e.g. `tensorflow/tensorflow`).
+    You can use an image from a private registry using Advanced fields
+    +placeholder=registry-url/account/image:version
     """
 
     if IS_PYDANTIC_V2:

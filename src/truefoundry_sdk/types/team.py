@@ -12,15 +12,15 @@ from .team_manifest import TeamManifest
 
 
 class Team(UniversalBaseModel):
-    id: str
-    team_name: typing_extensions.Annotated[str, FieldMetadata(alias="teamName")]
-    description: str
-    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]
-    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")]
-    members: typing.Optional[typing.List[str]] = None
     created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
+    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")]
+    description: str
+    id: str
     manifest: TeamManifest
+    members: typing.Optional[typing.List[str]] = None
+    team_name: typing_extensions.Annotated[str, FieldMetadata(alias="teamName")]
+    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]
+    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

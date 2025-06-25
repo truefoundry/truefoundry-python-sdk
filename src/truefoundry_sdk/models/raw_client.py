@@ -27,80 +27,42 @@ class RawModelsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[GetModelResponse]:
+    def create_or_update(
+        self, *, manifest: ModelManifest, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[GetModelVersionResponse]:
         """
         Parameters
         ----------
-        id : str
+        manifest : ModelManifest
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[GetModelResponse]
+        HttpResponse[GetModelVersionResponse]
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/models/{jsonable_encoder(id)}",
-            method="GET",
+            "api/ml/v1/model-versions",
+            method="PUT",
+            json={
+                "manifest": convert_and_respect_annotation_metadata(
+                    object_=manifest, annotation=ModelManifest, direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    GetModelResponse,
+                    GetModelVersionResponse,
                     parse_obj_as(
-                        type_=GetModelResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def delete(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[EmptyResponse]:
-        """
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[EmptyResponse]
-            Successful Response
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/models/{jsonable_encoder(id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    EmptyResponse,
-                    parse_obj_as(
-                        type_=EmptyResponse,  # type: ignore
+                        type_=GetModelVersionResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -204,42 +166,80 @@ class RawModelsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def create_or_update(
-        self, *, manifest: ModelManifest, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[GetModelVersionResponse]:
+    def get(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[GetModelResponse]:
         """
         Parameters
         ----------
-        manifest : ModelManifest
+        id : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[GetModelVersionResponse]
+        HttpResponse[GetModelResponse]
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/model-versions",
-            method="PUT",
-            json={
-                "manifest": convert_and_respect_annotation_metadata(
-                    object_=manifest, annotation=ModelManifest, direction="write"
-                ),
-            },
-            headers={
-                "content-type": "application/json",
-            },
+            f"api/ml/v1/models/{jsonable_encoder(id)}",
+            method="GET",
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    GetModelVersionResponse,
+                    GetModelResponse,
                     parse_obj_as(
-                        type_=GetModelVersionResponse,  # type: ignore
+                        type_=GetModelResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def delete(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[EmptyResponse]:
+        """
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[EmptyResponse]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/ml/v1/models/{jsonable_encoder(id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    EmptyResponse,
+                    parse_obj_as(
+                        type_=EmptyResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -265,80 +265,42 @@ class AsyncRawModelsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[GetModelResponse]:
+    async def create_or_update(
+        self, *, manifest: ModelManifest, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[GetModelVersionResponse]:
         """
         Parameters
         ----------
-        id : str
+        manifest : ModelManifest
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[GetModelResponse]
+        AsyncHttpResponse[GetModelVersionResponse]
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/models/{jsonable_encoder(id)}",
-            method="GET",
+            "api/ml/v1/model-versions",
+            method="PUT",
+            json={
+                "manifest": convert_and_respect_annotation_metadata(
+                    object_=manifest, annotation=ModelManifest, direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    GetModelResponse,
+                    GetModelVersionResponse,
                     parse_obj_as(
-                        type_=GetModelResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def delete(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[EmptyResponse]:
-        """
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[EmptyResponse]
-            Successful Response
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/models/{jsonable_encoder(id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    EmptyResponse,
-                    parse_obj_as(
-                        type_=EmptyResponse,  # type: ignore
+                        type_=GetModelVersionResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -445,42 +407,80 @@ class AsyncRawModelsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def create_or_update(
-        self, *, manifest: ModelManifest, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[GetModelVersionResponse]:
+    async def get(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[GetModelResponse]:
         """
         Parameters
         ----------
-        manifest : ModelManifest
+        id : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[GetModelVersionResponse]
+        AsyncHttpResponse[GetModelResponse]
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/model-versions",
-            method="PUT",
-            json={
-                "manifest": convert_and_respect_annotation_metadata(
-                    object_=manifest, annotation=ModelManifest, direction="write"
-                ),
-            },
-            headers={
-                "content-type": "application/json",
-            },
+            f"api/ml/v1/models/{jsonable_encoder(id)}",
+            method="GET",
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    GetModelVersionResponse,
+                    GetModelResponse,
                     parse_obj_as(
-                        type_=GetModelVersionResponse,  # type: ignore
+                        type_=GetModelResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def delete(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[EmptyResponse]:
+        """
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[EmptyResponse]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/ml/v1/models/{jsonable_encoder(id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    EmptyResponse,
+                    parse_obj_as(
+                        type_=EmptyResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

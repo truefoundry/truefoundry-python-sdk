@@ -163,13 +163,13 @@ class ApplicationsClient:
         self,
         *,
         manifest: typing.Dict[str, typing.Optional[typing.Any]],
+        application_id: typing.Optional[str] = OMIT,
+        application_set_id: typing.Optional[str] = OMIT,
         dry_run: typing.Optional[bool] = OMIT,
         force_deploy: typing.Optional[bool] = OMIT,
+        name: typing.Optional[str] = OMIT,
         trigger_on_deploy: typing.Optional[bool] = OMIT,
         workspace_id: typing.Optional[str] = OMIT,
-        application_id: typing.Optional[str] = OMIT,
-        name: typing.Optional[str] = OMIT,
-        application_set_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetApplicationDeploymentResponse:
         """
@@ -180,26 +180,26 @@ class ApplicationsClient:
         manifest : typing.Dict[str, typing.Optional[typing.Any]]
             Manifest of application
 
+        application_id : typing.Optional[str]
+            Id of the application
+
+        application_set_id : typing.Optional[str]
+            Application Set Id
+
         dry_run : typing.Optional[bool]
             Dry run
 
         force_deploy : typing.Optional[bool]
             Cancels any ongoing deployments
 
+        name : typing.Optional[str]
+            Name of application
+
         trigger_on_deploy : typing.Optional[bool]
             Trigger on deploy
 
         workspace_id : typing.Optional[str]
             workspace id of the workspace
-
-        application_id : typing.Optional[str]
-            Id of the application
-
-        name : typing.Optional[str]
-            Name of application
-
-        application_set_id : typing.Optional[str]
-            Application Set Id
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -226,13 +226,13 @@ class ApplicationsClient:
         """
         _response = self._raw_client.create_or_update(
             manifest=manifest,
+            application_id=application_id,
+            application_set_id=application_set_id,
             dry_run=dry_run,
             force_deploy=force_deploy,
+            name=name,
             trigger_on_deploy=trigger_on_deploy,
             workspace_id=workspace_id,
-            application_id=application_id,
-            name=name,
-            application_set_id=application_set_id,
             request_options=request_options,
         )
         return _response.data
@@ -301,69 +301,6 @@ class ApplicationsClient:
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
 
-    def scale_to_zero(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
-        """
-        Pause a running application by scaling to 0 replicas
-
-        Parameters
-        ----------
-        id : str
-            Id of the application
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.applications.scale_to_zero(
-            id="id",
-        )
-        """
-        _response = self._raw_client.scale_to_zero(id, request_options=request_options)
-        return _response.data
-
-    def scale_to_original(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Deployment:
-        """
-        Resume a paused application by scaling back to the original number of replicas
-
-        Parameters
-        ----------
-        id : str
-            Id of the application
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        Deployment
-            Scales back a paused applicaion to the original number of replicas
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.applications.scale_to_original(
-            id="id",
-        )
-        """
-        _response = self._raw_client.scale_to_original(id, request_options=request_options)
-        return _response.data
-
     def cancel_deployment(
         self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ApplicationsCancelDeploymentResponse:
@@ -400,6 +337,69 @@ class ApplicationsClient:
         )
         """
         _response = self._raw_client.cancel_deployment(id, deployment_id, request_options=request_options)
+        return _response.data
+
+    def scale_to_original(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Deployment:
+        """
+        Resume a paused application by scaling back to the original number of replicas
+
+        Parameters
+        ----------
+        id : str
+            Id of the application
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Deployment
+            Scales back a paused applicaion to the original number of replicas
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.applications.scale_to_original(
+            id="id",
+        )
+        """
+        _response = self._raw_client.scale_to_original(id, request_options=request_options)
+        return _response.data
+
+    def scale_to_zero(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Pause a running application by scaling to 0 replicas
+
+        Parameters
+        ----------
+        id : str
+            Id of the application
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.applications.scale_to_zero(
+            id="id",
+        )
+        """
+        _response = self._raw_client.scale_to_zero(id, request_options=request_options)
         return _response.data
 
 
@@ -556,13 +556,13 @@ class AsyncApplicationsClient:
         self,
         *,
         manifest: typing.Dict[str, typing.Optional[typing.Any]],
+        application_id: typing.Optional[str] = OMIT,
+        application_set_id: typing.Optional[str] = OMIT,
         dry_run: typing.Optional[bool] = OMIT,
         force_deploy: typing.Optional[bool] = OMIT,
+        name: typing.Optional[str] = OMIT,
         trigger_on_deploy: typing.Optional[bool] = OMIT,
         workspace_id: typing.Optional[str] = OMIT,
-        application_id: typing.Optional[str] = OMIT,
-        name: typing.Optional[str] = OMIT,
-        application_set_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetApplicationDeploymentResponse:
         """
@@ -573,26 +573,26 @@ class AsyncApplicationsClient:
         manifest : typing.Dict[str, typing.Optional[typing.Any]]
             Manifest of application
 
+        application_id : typing.Optional[str]
+            Id of the application
+
+        application_set_id : typing.Optional[str]
+            Application Set Id
+
         dry_run : typing.Optional[bool]
             Dry run
 
         force_deploy : typing.Optional[bool]
             Cancels any ongoing deployments
 
+        name : typing.Optional[str]
+            Name of application
+
         trigger_on_deploy : typing.Optional[bool]
             Trigger on deploy
 
         workspace_id : typing.Optional[str]
             workspace id of the workspace
-
-        application_id : typing.Optional[str]
-            Id of the application
-
-        name : typing.Optional[str]
-            Name of application
-
-        application_set_id : typing.Optional[str]
-            Application Set Id
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -627,13 +627,13 @@ class AsyncApplicationsClient:
         """
         _response = await self._raw_client.create_or_update(
             manifest=manifest,
+            application_id=application_id,
+            application_set_id=application_set_id,
             dry_run=dry_run,
             force_deploy=force_deploy,
+            name=name,
             trigger_on_deploy=trigger_on_deploy,
             workspace_id=workspace_id,
-            application_id=application_id,
-            name=name,
-            application_set_id=application_set_id,
             request_options=request_options,
         )
         return _response.data
@@ -720,87 +720,6 @@ class AsyncApplicationsClient:
         _response = await self._raw_client.delete(id, request_options=request_options)
         return _response.data
 
-    async def scale_to_zero(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
-        """
-        Pause a running application by scaling to 0 replicas
-
-        Parameters
-        ----------
-        id : str
-            Id of the application
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.applications.scale_to_zero(
-                id="id",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.scale_to_zero(id, request_options=request_options)
-        return _response.data
-
-    async def scale_to_original(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> Deployment:
-        """
-        Resume a paused application by scaling back to the original number of replicas
-
-        Parameters
-        ----------
-        id : str
-            Id of the application
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        Deployment
-            Scales back a paused applicaion to the original number of replicas
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.applications.scale_to_original(
-                id="id",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.scale_to_original(id, request_options=request_options)
-        return _response.data
-
     async def cancel_deployment(
         self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ApplicationsCancelDeploymentResponse:
@@ -845,4 +764,85 @@ class AsyncApplicationsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.cancel_deployment(id, deployment_id, request_options=request_options)
+        return _response.data
+
+    async def scale_to_original(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> Deployment:
+        """
+        Resume a paused application by scaling back to the original number of replicas
+
+        Parameters
+        ----------
+        id : str
+            Id of the application
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Deployment
+            Scales back a paused applicaion to the original number of replicas
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.applications.scale_to_original(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.scale_to_original(id, request_options=request_options)
+        return _response.data
+
+    async def scale_to_zero(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Pause a running application by scaling to 0 replicas
+
+        Parameters
+        ----------
+        id : str
+            Id of the application
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.applications.scale_to_zero(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.scale_to_zero(id, request_options=request_options)
         return _response.data

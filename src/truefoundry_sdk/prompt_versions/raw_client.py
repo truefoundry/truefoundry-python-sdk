@@ -21,6 +21,86 @@ class RawPromptVersionsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
+    def list(
+        self,
+        *,
+        prompt_id: typing.Optional[str] = None,
+        fqn: typing.Optional[str] = None,
+        offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = 100,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncPager[PromptVersion]:
+        """
+        List prompt version API
+
+        Parameters
+        ----------
+        prompt_id : typing.Optional[str]
+
+        fqn : typing.Optional[str]
+
+        offset : typing.Optional[int]
+
+        limit : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[PromptVersion]
+            Successful Response
+        """
+        offset = offset if offset is not None else 0
+
+        _response = self._client_wrapper.httpx_client.request(
+            "api/ml/v1/prompt-versions",
+            method="GET",
+            params={
+                "prompt_id": prompt_id,
+                "fqn": fqn,
+                "offset": offset,
+                "limit": limit,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    ListPromptVersionsResponse,
+                    parse_obj_as(
+                        type_=ListPromptVersionsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                _items = _parsed_response.data
+                _has_next = True
+                _get_next = lambda: self.list(
+                    prompt_id=prompt_id,
+                    fqn=fqn,
+                    offset=offset + len(_items),
+                    limit=limit,
+                    request_options=request_options,
+                )
+                return SyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetPromptVersionResponse]:
@@ -119,7 +199,12 @@ class RawPromptVersionsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def list(
+
+class AsyncRawPromptVersionsClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._client_wrapper = client_wrapper
+
+    async def list(
         self,
         *,
         prompt_id: typing.Optional[str] = None,
@@ -127,7 +212,7 @@ class RawPromptVersionsClient:
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[PromptVersion]:
+    ) -> AsyncPager[PromptVersion]:
         """
         List prompt version API
 
@@ -146,12 +231,12 @@ class RawPromptVersionsClient:
 
         Returns
         -------
-        SyncPager[PromptVersion]
+        AsyncPager[PromptVersion]
             Successful Response
         """
         offset = offset if offset is not None else 0
 
-        _response = self._client_wrapper.httpx_client.request(
+        _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/prompt-versions",
             method="GET",
             params={
@@ -173,14 +258,17 @@ class RawPromptVersionsClient:
                 )
                 _items = _parsed_response.data
                 _has_next = True
-                _get_next = lambda: self.list(
-                    prompt_id=prompt_id,
-                    fqn=fqn,
-                    offset=offset + len(_items),
-                    limit=limit,
-                    request_options=request_options,
-                )
-                return SyncPager(
+
+                async def _get_next():
+                    return await self.list(
+                        prompt_id=prompt_id,
+                        fqn=fqn,
+                        offset=offset + len(_items),
+                        limit=limit,
+                        request_options=request_options,
+                    )
+
+                return AsyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             if _response.status_code == 422:
@@ -198,11 +286,6 @@ class RawPromptVersionsClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-
-class AsyncRawPromptVersionsClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
 
     async def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -286,89 +369,6 @@ class AsyncRawPromptVersionsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def list(
-        self,
-        *,
-        prompt_id: typing.Optional[str] = None,
-        fqn: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[PromptVersion]:
-        """
-        List prompt version API
-
-        Parameters
-        ----------
-        prompt_id : typing.Optional[str]
-
-        fqn : typing.Optional[str]
-
-        offset : typing.Optional[int]
-
-        limit : typing.Optional[int]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncPager[PromptVersion]
-            Successful Response
-        """
-        offset = offset if offset is not None else 0
-
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/prompt-versions",
-            method="GET",
-            params={
-                "prompt_id": prompt_id,
-                "fqn": fqn,
-                "offset": offset,
-                "limit": limit,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _parsed_response = typing.cast(
-                    ListPromptVersionsResponse,
-                    parse_obj_as(
-                        type_=ListPromptVersionsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                _items = _parsed_response.data
-                _has_next = True
-
-                async def _get_next():
-                    return await self.list(
-                        prompt_id=prompt_id,
-                        fqn=fqn,
-                        offset=offset + len(_items),
-                        limit=limit,
-                        request_options=request_options,
-                    )
-
-                return AsyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),

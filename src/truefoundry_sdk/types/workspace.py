@@ -12,18 +12,18 @@ from .workspace_manifest import WorkspaceManifest
 
 
 class Workspace(UniversalBaseModel):
-    id: str
+    cluster_id: typing_extensions.Annotated[str, FieldMetadata(alias="clusterId")]
+    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
+    created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = None
+    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")]
+    environment_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="environmentId")] = None
     fqn: str
+    id: str
+    is_system_ws: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isSystemWs")] = None
+    manifest: WorkspaceManifest
     name: str
     tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]
-    cluster_id: typing_extensions.Annotated[str, FieldMetadata(alias="clusterId")]
-    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")]
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
     updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
-    environment_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="environmentId")] = None
-    manifest: WorkspaceManifest
-    is_system_ws: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isSystemWs")] = None
-    created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

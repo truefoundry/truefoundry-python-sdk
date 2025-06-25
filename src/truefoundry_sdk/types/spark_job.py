@@ -12,35 +12,13 @@ from .volume_mount import VolumeMount
 
 
 class SparkJob(UniversalBaseModel):
-    type: typing.Literal["spark-job"] = pydantic.Field(default="spark-job")
-    """
-    +value=spark-job
-    +sort=1
-    """
-
-    name: str = pydantic.Field()
-    """
-    +label=Name
-    +usage=Name of the job
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
-    +sort=2
-    """
-
-    image: SparkJobImage = pydantic.Field()
-    """
-    +label=Deploy a Docker image & Specify Spark Version
-    +usage=The image to use for driver and executors. Must have spark installed. Spark version must match the version in the image.
-    +sort=500
-    """
-
+    driver_config: SparkDriverConfig
     entrypoint: SparkJobEntrypoint = pydantic.Field()
     """
     +label=Entrypoint
     +sort=1000
     """
 
-    driver_config: SparkDriverConfig
-    executor_config: SparkExecutorConfig
     env: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
     """
     +label=Environment Variables
@@ -49,12 +27,12 @@ class SparkJob(UniversalBaseModel):
     +sort=21000
     """
 
-    spark_conf: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    executor_config: SparkExecutorConfig
+    image: SparkJobImage = pydantic.Field()
     """
-    +label=Spark Config Properties
-    +usage=Extra configuration properties to be passed to the spark job. [Docs](https://spark.apache.org/docs/latest/configuration.html)
-    +icon=fa-gear:#68BBE3
-    +sort=21500
+    +label=Deploy a Docker image & Specify Spark Version
+    +usage=The image to use for driver and executors. Must have spark installed. Spark version must match the version in the image.
+    +sort=500
     """
 
     mounts: typing.Optional[typing.List[VolumeMount]] = pydantic.Field(default=None)
@@ -63,6 +41,14 @@ class SparkJob(UniversalBaseModel):
     +usage=Configure volumes to be mounted to driver and executors. [Docs](https://docs.truefoundry.com/docs/mounting-volumes-job)
     +sort=22000
     +uiType=Mounts
+    """
+
+    name: str = pydantic.Field()
+    """
+    +label=Name
+    +usage=Name of the job
+    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
+    +sort=2
     """
 
     retries: typing.Optional[int] = pydantic.Field(default=0)
@@ -77,6 +63,20 @@ class SparkJob(UniversalBaseModel):
     """
     +label=Service Account
     +sort=24000
+    """
+
+    spark_conf: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    """
+    +label=Spark Config Properties
+    +usage=Extra configuration properties to be passed to the spark job. [Docs](https://spark.apache.org/docs/latest/configuration.html)
+    +icon=fa-gear:#68BBE3
+    +sort=21500
+    """
+
+    type: typing.Literal["spark-job"] = pydantic.Field(default="spark-job")
+    """
+    +value=spark-job
+    +sort=1
     """
 
     workspace_fqn: typing.Optional[str] = pydantic.Field(default=None)

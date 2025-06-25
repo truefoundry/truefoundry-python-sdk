@@ -7,14 +7,14 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class Function(UniversalBaseModel):
-    name: str = pydantic.Field()
-    """
-    Name of the tool/function being called
-    """
-
     arguments: str = pydantic.Field()
     """
     Arguments passed to the tool/function
+    """
+
+    name: str = pydantic.Field()
+    """
+    Name of the tool/function being called
     """
 
     if IS_PYDANTIC_V2:

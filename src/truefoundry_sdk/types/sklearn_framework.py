@@ -9,18 +9,17 @@ from .sklearn_serialization_format import SklearnSerializationFormat
 
 
 class SklearnFramework(UniversalBaseModel):
-    type: typing.Literal["sklearn"] = pydantic.Field(default="sklearn")
-    """
-    Type of the framework
-    """
-
     model_filepath: typing.Optional[str] = pydantic.Field(default=None)
     """
     Relative path to the model file in the model version contents
     """
 
-    serialization_format: typing.Optional[SklearnSerializationFormat] = None
     model_schema: typing.Optional[SklearnModelSchema] = None
+    serialization_format: typing.Optional[SklearnSerializationFormat] = None
+    type: typing.Literal["sklearn"] = pydantic.Field(default="sklearn")
+    """
+    Type of the framework
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

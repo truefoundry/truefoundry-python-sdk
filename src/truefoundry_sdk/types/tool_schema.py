@@ -12,12 +12,11 @@ class ToolSchema(UniversalBaseModel):
     Schema defining a tool for the chat prompt
     """
 
+    function: FunctionSchema
     type: typing.Literal["function"] = pydantic.Field(default="function")
     """
     Type of the tool
     """
-
-    function: FunctionSchema
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

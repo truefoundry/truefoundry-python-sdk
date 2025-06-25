@@ -7,9 +7,13 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class TeamManifest(UniversalBaseModel):
-    type: typing.Literal["team"] = pydantic.Field(default="team")
+    members: typing.List[str] = pydantic.Field()
     """
-    +value=volume
+    +sort=2
+    +label=Team Members
+    +message=Enter email of each of the user you want to add in the team.
+    +uiType=UserSelect
+    +uiProps={"optionTypes": ["users"]}
     """
 
     name: str = pydantic.Field()
@@ -19,13 +23,9 @@ class TeamManifest(UniversalBaseModel):
     +usage=Name of the Team
     """
 
-    members: typing.List[str] = pydantic.Field()
+    type: typing.Literal["team"] = pydantic.Field(default="team")
     """
-    +sort=2
-    +label=Team Members
-    +message=Enter email of each of the user you want to add in the team.
-    +uiType=UserSelect
-    +uiProps={"optionTypes": ["users"]}
+    +value=volume
     """
 
     if IS_PYDANTIC_V2:

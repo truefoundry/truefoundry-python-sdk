@@ -7,9 +7,10 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class StringDataMount(UniversalBaseModel):
-    type: typing.Literal["string"] = pydantic.Field(default="string")
+    data: str = pydantic.Field()
     """
-    +value=string
+    +label=Data
+    +usage=The file content.
     """
 
     mount_path: str = pydantic.Field()
@@ -19,10 +20,9 @@ class StringDataMount(UniversalBaseModel):
     +message=Please enter a valid file path
     """
 
-    data: str = pydantic.Field()
+    type: typing.Literal["string"] = pydantic.Field(default="string")
     """
-    +label=Data
-    +usage=The file content.
+    +value=string
     """
 
     if IS_PYDANTIC_V2:

@@ -12,14 +12,14 @@ from .helm import Helm
 
 
 class UpgradeData(UniversalBaseModel):
-    diff: typing.Optional[typing.List["IChange"]] = None
-    current_manifest: typing_extensions.Annotated[typing.Optional[Helm], FieldMetadata(alias="currentManifest")] = None
-    desired_manifest: typing_extensions.Annotated[typing.Optional[Helm], FieldMetadata(alias="desiredManifest")] = None
-    upgrade_possible: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="upgradePossible")] = None
     conflict_fields: typing_extensions.Annotated[
         typing.Optional[typing.List[str]], FieldMetadata(alias="conflictFields")
     ] = None
+    current_manifest: typing_extensions.Annotated[typing.Optional[Helm], FieldMetadata(alias="currentManifest")] = None
+    desired_manifest: typing_extensions.Annotated[typing.Optional[Helm], FieldMetadata(alias="desiredManifest")] = None
+    diff: typing.Optional[typing.List["IChange"]] = None
     has_conflict: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="hasConflict")] = None
+    upgrade_possible: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="upgradePossible")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

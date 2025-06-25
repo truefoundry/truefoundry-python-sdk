@@ -7,9 +7,10 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class ForwardAction(UniversalBaseModel):
-    type: typing.Literal["forward"] = pydantic.Field(default="forward")
+    port: int = pydantic.Field()
     """
-    +value=forward
+    +docs=Port to redirect the service traffic to
+    +label=Target port
     """
 
     service_uri: str = pydantic.Field()
@@ -19,10 +20,9 @@ class ForwardAction(UniversalBaseModel):
     +label=Service URI
     """
 
-    port: int = pydantic.Field()
+    type: typing.Literal["forward"] = pydantic.Field(default="forward")
     """
-    +docs=Port to redirect the service traffic to
-    +label=Target port
+    +value=forward
     """
 
     if IS_PYDANTIC_V2:

@@ -16,16 +16,16 @@ class AddonComponentStatus(UniversalBaseModel):
     Health status of the addon
     """
 
+    installed: bool = pydantic.Field()
+    """
+    Indicates whether the addon is installed
+    """
+
     sync_status: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="syncStatus")] = pydantic.Field(
         default=None
     )
     """
     Sync status of the addon
-    """
-
-    installed: bool = pydantic.Field()
-    """
-    Indicates whether the addon is installed
     """
 
     if IS_PYDANTIC_V2:

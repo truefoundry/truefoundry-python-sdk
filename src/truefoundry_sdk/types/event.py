@@ -11,9 +11,14 @@ from .event_involved_object import EventInvolvedObject
 
 
 class Event(UniversalBaseModel):
-    name: typing.Optional[str] = pydantic.Field(default=None)
+    chart: EventChart = pydantic.Field()
     """
-    Name of the event
+    Chart of the event
+    """
+
+    count: int = pydantic.Field()
+    """
+    Number of occurrences of the event
     """
 
     first_timestamp: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="firstTimestamp")] = (
@@ -23,11 +28,6 @@ class Event(UniversalBaseModel):
     Timestamp when the event was first observed
     """
 
-    last_timestamp: typing_extensions.Annotated[str, FieldMetadata(alias="lastTimestamp")] = pydantic.Field()
-    """
-    Timestamp when the event was last observed
-    """
-
     involved_object: typing_extensions.Annotated[EventInvolvedObject, FieldMetadata(alias="involvedObject")] = (
         pydantic.Field()
     )
@@ -35,19 +35,9 @@ class Event(UniversalBaseModel):
     Details of the involved object
     """
 
-    type: str = pydantic.Field()
+    last_timestamp: typing_extensions.Annotated[str, FieldMetadata(alias="lastTimestamp")] = pydantic.Field()
     """
-    Type of the event
-    """
-
-    count: int = pydantic.Field()
-    """
-    Number of occurrences of the event
-    """
-
-    reason: str = pydantic.Field()
-    """
-    Reason for the event
+    Timestamp when the event was last observed
     """
 
     message: str = pydantic.Field()
@@ -55,14 +45,24 @@ class Event(UniversalBaseModel):
     Message describing the event
     """
 
+    name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Name of the event
+    """
+
     namespace: typing.Optional[str] = pydantic.Field(default=None)
     """
     Namespace of the event
     """
 
-    chart: EventChart = pydantic.Field()
+    reason: str = pydantic.Field()
     """
-    Chart of the event
+    Reason for the event
+    """
+
+    type: str = pydantic.Field()
+    """
+    Type of the event
     """
 
     if IS_PYDANTIC_V2:

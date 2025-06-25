@@ -21,16 +21,15 @@ class JobAlert(UniversalBaseModel):
     +sort=660
     """
 
-    to_emails: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    notification_target: typing.Optional[NotificationTarget] = None
+    on_completion: typing.Optional[bool] = False
+    on_failure: typing.Optional[bool] = pydantic.Field(default=True)
     """
-    +label=To Emails
-    +usage=List of recipients' email addresses if the notification channel is Email.
-    +docs=Specify the emails to send alerts to
-    +uiType=Hidden
-    +sort=665
+    +label=On Failure
+    +usage=Send an alert when the job fails
+    +sort=690
     """
 
-    notification_target: typing.Optional[NotificationTarget] = None
     on_start: typing.Optional[bool] = pydantic.Field(default=False)
     """
     +label=On Start
@@ -38,12 +37,13 @@ class JobAlert(UniversalBaseModel):
     +sort=670
     """
 
-    on_completion: typing.Optional[bool] = False
-    on_failure: typing.Optional[bool] = pydantic.Field(default=True)
+    to_emails: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +label=On Failure
-    +usage=Send an alert when the job fails
-    +sort=690
+    +label=To Emails
+    +usage=List of recipients' email addresses if the notification channel is Email.
+    +docs=Specify the emails to send alerts to
+    +uiType=Hidden
+    +sort=665
     """
 
     if IS_PYDANTIC_V2:

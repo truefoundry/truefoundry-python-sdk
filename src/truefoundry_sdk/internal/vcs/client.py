@@ -27,6 +27,38 @@ class VcsClient:
         """
         return self._raw_client
 
+    def get_authenticated_url(
+        self, *, repo_url: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetAuthenticatedVcsurlResponse:
+        """
+        Parameters
+        ----------
+        repo_url : str
+            Repository URL (e.g., https://github.com/user/repo, https://bitbucket.org/user/repo)
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetAuthenticatedVcsurlResponse
+            Returns an authenticated VCS URL for the repository
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.internal.vcs.get_authenticated_url(
+            repo_url="repoURL",
+        )
+        """
+        _response = self._raw_client.get_authenticated_url(repo_url=repo_url, request_options=request_options)
+        return _response.data
+
     def get_repository_details(
         self, *, repo_url: str, id: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> GitRepositoryExistsResponse:
@@ -62,7 +94,23 @@ class VcsClient:
         _response = self._raw_client.get_repository_details(repo_url=repo_url, id=id, request_options=request_options)
         return _response.data
 
-    def get_authenticated_url(
+
+class AsyncVcsClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._raw_client = AsyncRawVcsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawVcsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawVcsClient
+        """
+        return self._raw_client
+
+    async def get_authenticated_url(
         self, *, repo_url: str, request_options: typing.Optional[RequestOptions] = None
     ) -> GetAuthenticatedVcsurlResponse:
         """
@@ -81,34 +129,26 @@ class VcsClient:
 
         Examples
         --------
-        from truefoundry_sdk import TrueFoundry
+        import asyncio
 
-        client = TrueFoundry(
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.internal.vcs.get_authenticated_url(
-            repo_url="repoURL",
-        )
+
+
+        async def main() -> None:
+            await client.internal.vcs.get_authenticated_url(
+                repo_url="repoURL",
+            )
+
+
+        asyncio.run(main())
         """
-        _response = self._raw_client.get_authenticated_url(repo_url=repo_url, request_options=request_options)
+        _response = await self._raw_client.get_authenticated_url(repo_url=repo_url, request_options=request_options)
         return _response.data
-
-
-class AsyncVcsClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawVcsClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawVcsClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawVcsClient
-        """
-        return self._raw_client
 
     async def get_repository_details(
         self, *, repo_url: str, id: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
@@ -153,44 +193,4 @@ class AsyncVcsClient:
         _response = await self._raw_client.get_repository_details(
             repo_url=repo_url, id=id, request_options=request_options
         )
-        return _response.data
-
-    async def get_authenticated_url(
-        self, *, repo_url: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetAuthenticatedVcsurlResponse:
-        """
-        Parameters
-        ----------
-        repo_url : str
-            Repository URL (e.g., https://github.com/user/repo, https://bitbucket.org/user/repo)
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetAuthenticatedVcsurlResponse
-            Returns an authenticated VCS URL for the repository
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.internal.vcs.get_authenticated_url(
-                repo_url="repoURL",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.get_authenticated_url(repo_url=repo_url, request_options=request_options)
         return _response.data

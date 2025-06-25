@@ -13,11 +13,7 @@ class NatsOutputConfig(UniversalBaseModel):
     +label=NATS
     """
 
-    type: typing.Literal["nats"] = pydantic.Field(default="nats")
-    """
-    +value=nats
-    """
-
+    auth: typing.Optional[NatsUserPasswordAuth] = None
     nats_url: str = pydantic.Field()
     """
     +label=NATS URL
@@ -33,7 +29,10 @@ class NatsOutputConfig(UniversalBaseModel):
     +sort=2
     """
 
-    auth: typing.Optional[NatsUserPasswordAuth] = None
+    type: typing.Literal["nats"] = pydantic.Field(default="nats")
+    """
+    +value=nats
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

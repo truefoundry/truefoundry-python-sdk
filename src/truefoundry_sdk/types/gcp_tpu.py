@@ -7,11 +7,6 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class GcpTpu(UniversalBaseModel):
-    type: typing.Literal["gcp_tpu"] = pydantic.Field(default="gcp_tpu")
-    """
-    +value=gcp_tpu
-    """
-
     name: str = pydantic.Field()
     """
     +label=TPU Type name
@@ -31,6 +26,11 @@ class GcpTpu(UniversalBaseModel):
        - `2x2x1` for `tpu-v4-podslice`
        - One of `1x1`, `2x2`, `2x4` for `tpu-v5-lite-device` and `tpu-v5-lite-podslice`
        - `2x2x1` for `tpu-v5p-slice`
+    """
+
+    type: typing.Literal["gcp_tpu"] = pydantic.Field(default="gcp_tpu")
+    """
+    +value=gcp_tpu
     """
 
     if IS_PYDANTIC_V2:

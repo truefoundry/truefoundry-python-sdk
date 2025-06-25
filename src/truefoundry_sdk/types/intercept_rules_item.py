@@ -9,17 +9,17 @@ from .intercept_rules_item_action import InterceptRulesItemAction
 
 
 class InterceptRulesItem(UniversalBaseModel):
-    port: int = pydantic.Field()
-    """
-    +docs=Port of service to be intercepted
-    +label=Service port
-    """
-
-    match: typing.Optional[HeaderMatch] = None
     action: InterceptRulesItemAction = pydantic.Field()
     """
     +docs=Action to take on succesful match
     +label=Action
+    """
+
+    match: typing.Optional[HeaderMatch] = None
+    port: int = pydantic.Field()
+    """
+    +docs=Port of service to be intercepted
+    +label=Service port
     """
 
     if IS_PYDANTIC_V2:

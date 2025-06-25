@@ -15,20 +15,6 @@ class Build(UniversalBaseModel):
     +icon=fa-code
     """
 
-    type: typing.Literal["build"] = pydantic.Field(default="build")
-    """
-    +value=build
-    """
-
-    docker_registry: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    +docs=FQN of the container registry. You can the FQN of your desired container registry (or add one)
-    in the  Integrations page[Integrations](https://app.truefoundry.tech/integrations?tab=docker-registry) page
-    +label=Docker Registry
-    +usage=FQN of the container registry. If you can't find your registry here,
-    add it through the [Integrations](/integrations?tab=docker-registry) page
-    """
-
     build_source: BuildBuildSource = pydantic.Field()
     """
     +docs=Source code location.
@@ -43,6 +29,20 @@ class Build(UniversalBaseModel):
     +label=Build using DockerFile or using Buildpack
     +icon=fa-wrench
     +sort=2
+    """
+
+    docker_registry: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    +docs=FQN of the container registry. You can the FQN of your desired container registry (or add one)
+    in the  Integrations page[Integrations](https://app.truefoundry.tech/integrations?tab=docker-registry) page
+    +label=Docker Registry
+    +usage=FQN of the container registry. If you can't find your registry here,
+    add it through the [Integrations](/integrations?tab=docker-registry) page
+    """
+
+    type: typing.Literal["build"] = pydantic.Field(default="build")
+    """
+    +value=build
     """
 
     if IS_PYDANTIC_V2:

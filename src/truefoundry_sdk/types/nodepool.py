@@ -12,8 +12,8 @@ class Nodepool(UniversalBaseModel):
     +usage=The nodepools that are already created in your cluster. This will be used to schedule your workloads on particular nodepools.
     """
 
-    name: str
     description: typing.Optional[str] = None
+    name: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

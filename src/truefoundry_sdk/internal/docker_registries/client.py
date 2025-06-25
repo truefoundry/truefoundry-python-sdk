@@ -30,8 +30,8 @@ class DockerRegistriesClient:
     def create_repository(
         self,
         *,
-        fqn: str,
         application_name: str,
+        fqn: str,
         workspace_fqn: str,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DockerRegistriesCreateRepositoryResponse:
@@ -40,11 +40,11 @@ class DockerRegistriesClient:
 
         Parameters
         ----------
-        fqn : str
-            Docker registry FQN
-
         application_name : str
             Application Name for the image being built
+
+        fqn : str
+            Docker registry FQN
 
         workspace_fqn : str
             FQN for the workspace of application
@@ -66,13 +66,13 @@ class DockerRegistriesClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.internal.docker_registries.create_repository(
-            fqn="fqn",
             application_name="applicationName",
+            fqn="fqn",
             workspace_fqn="workspaceFqn",
         )
         """
         _response = self._raw_client.create_repository(
-            fqn=fqn, application_name=application_name, workspace_fqn=workspace_fqn, request_options=request_options
+            application_name=application_name, fqn=fqn, workspace_fqn=workspace_fqn, request_options=request_options
         )
         return _response.data
 
@@ -134,8 +134,8 @@ class AsyncDockerRegistriesClient:
     async def create_repository(
         self,
         *,
-        fqn: str,
         application_name: str,
+        fqn: str,
         workspace_fqn: str,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DockerRegistriesCreateRepositoryResponse:
@@ -144,11 +144,11 @@ class AsyncDockerRegistriesClient:
 
         Parameters
         ----------
-        fqn : str
-            Docker registry FQN
-
         application_name : str
             Application Name for the image being built
+
+        fqn : str
+            Docker registry FQN
 
         workspace_fqn : str
             FQN for the workspace of application
@@ -175,8 +175,8 @@ class AsyncDockerRegistriesClient:
 
         async def main() -> None:
             await client.internal.docker_registries.create_repository(
-                fqn="fqn",
                 application_name="applicationName",
+                fqn="fqn",
                 workspace_fqn="workspaceFqn",
             )
 
@@ -184,7 +184,7 @@ class AsyncDockerRegistriesClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create_repository(
-            fqn=fqn, application_name=application_name, workspace_fqn=workspace_fqn, request_options=request_options
+            application_name=application_name, fqn=fqn, workspace_fqn=workspace_fqn, request_options=request_options
         )
         return _response.data
 

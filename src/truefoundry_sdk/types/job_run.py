@@ -11,14 +11,19 @@ from .subject import Subject
 
 
 class JobRun(UniversalBaseModel):
-    name: str = pydantic.Field()
-    """
-    JobRun Name
-    """
-
     application_name: typing_extensions.Annotated[str, FieldMetadata(alias="applicationName")] = pydantic.Field()
     """
     Application Name
+    """
+
+    command: str = pydantic.Field()
+    """
+    Command
+    """
+
+    created_at: typing_extensions.Annotated[float, FieldMetadata(alias="createdAt")] = pydantic.Field()
+    """
+    Created At
     """
 
     deployment_version: typing_extensions.Annotated[str, FieldMetadata(alias="deploymentVersion")] = pydantic.Field()
@@ -26,9 +31,9 @@ class JobRun(UniversalBaseModel):
     Deployment Version
     """
 
-    created_at: typing_extensions.Annotated[float, FieldMetadata(alias="createdAt")] = pydantic.Field()
+    duration: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Created At
+    Duration of JobRun
     """
 
     end_time: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="endTime")] = pydantic.Field(
@@ -38,29 +43,38 @@ class JobRun(UniversalBaseModel):
     End Time of JobRun
     """
 
-    duration: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Duration of JobRun
-    """
-
-    command: str = pydantic.Field()
-    """
-    Command
-    """
-
-    total_retries: typing_extensions.Annotated[int, FieldMetadata(alias="totalRetries")] = pydantic.Field()
-    """
-    Total Retries
-    """
-
     error: typing.Optional[str] = pydantic.Field(default=None)
     """
     Error
     """
 
+    exit_code: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="exitCode")] = pydantic.Field(
+        default=None
+    )
+    """
+    Exit Code
+    """
+
+    name: str = pydantic.Field()
+    """
+    JobRun Name
+    """
+
+    spark_ui: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="sparkUi")] = pydantic.Field(
+        default=None
+    )
+    """
+    Spark UI Url
+    """
+
     status: JobRunStatus = pydantic.Field()
     """
     Status of JobRun
+    """
+
+    total_retries: typing_extensions.Annotated[int, FieldMetadata(alias="totalRetries")] = pydantic.Field()
+    """
+    Total Retries
     """
 
     triggered_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="triggeredBy")] = (
@@ -75,20 +89,6 @@ class JobRun(UniversalBaseModel):
     ] = pydantic.Field(default=None)
     """
     Triggered By Subject
-    """
-
-    exit_code: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="exitCode")] = pydantic.Field(
-        default=None
-    )
-    """
-    Exit Code
-    """
-
-    spark_ui: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="sparkUi")] = pydantic.Field(
-        default=None
-    )
-    """
-    Spark UI Url
     """
 
     if IS_PYDANTIC_V2:

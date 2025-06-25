@@ -119,10 +119,10 @@ class RawVirtualAccountsClient:
             "api/svc/v1/virtual-accounts",
             method="PUT",
             json={
+                "dryRun": dry_run,
                 "manifest": convert_and_respect_annotation_metadata(
                     object_=manifest, annotation=VirtualAccountManifest, direction="write"
                 ),
-                "dryRun": dry_run,
             },
             headers={
                 "content-type": "application/json",
@@ -366,10 +366,10 @@ class AsyncRawVirtualAccountsClient:
             "api/svc/v1/virtual-accounts",
             method="PUT",
             json={
+                "dryRun": dry_run,
                 "manifest": convert_and_respect_annotation_metadata(
                     object_=manifest, annotation=VirtualAccountManifest, direction="write"
                 ),
-                "dryRun": dry_run,
             },
             headers={
                 "content-type": "application/json",

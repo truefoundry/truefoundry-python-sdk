@@ -31,6 +31,101 @@ class ToolsClient:
         """
         return self._raw_client
 
+    def create_or_update(
+        self, *, manifest: AgentOpenApiToolManifest, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetToolVersionResponse:
+        """
+        Parameters
+        ----------
+        manifest : AgentOpenApiToolManifest
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetToolVersionResponse
+            Successful Response
+
+        Examples
+        --------
+        from truefoundry_sdk import (
+            AgentOpenApiToolManifest,
+            BlobStorageReference,
+            Method,
+            MimeType,
+            TrueFoundry,
+        )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.tools.create_or_update(
+            manifest=AgentOpenApiToolManifest(
+                base_url="base_url",
+                metadata={"key": "value"},
+                method=Method.GET,
+                ml_repo="ml_repo",
+                name="name",
+                openapi_spec=BlobStorageReference(
+                    mime_type=MimeType.TEXT_PLAIN,
+                    path="path",
+                ),
+                path="path",
+            ),
+        )
+        """
+        _response = self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
+        return _response.data
+
+    def list(
+        self,
+        *,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
+        offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = 100,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncPager[Tool]:
+        """
+        Parameters
+        ----------
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
+
+        offset : typing.Optional[int]
+
+        limit : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[Tool]
+            Successful Response
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.tools.list()
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
+        """
+        return self._raw_client.list(
+            ml_repo_id=ml_repo_id, name=name, offset=offset, limit=limit, request_options=request_options
+        )
+
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetToolResponse:
         """
         Parameters
@@ -89,54 +184,23 @@ class ToolsClient:
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
 
-    def list(
-        self,
-        *,
-        ml_repo_id: typing.Optional[str] = None,
-        name: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Tool]:
+
+class AsyncToolsClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._raw_client = AsyncRawToolsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawToolsClient:
         """
-        Parameters
-        ----------
-        ml_repo_id : typing.Optional[str]
-
-        name : typing.Optional[str]
-
-        offset : typing.Optional[int]
-
-        limit : typing.Optional[int]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+        Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        SyncPager[Tool]
-            Successful Response
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        response = client.tools.list()
-        for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        for page in response.iter_pages():
-            yield page
+        AsyncRawToolsClient
         """
-        return self._raw_client.list(
-            ml_repo_id=ml_repo_id, name=name, offset=offset, limit=limit, request_options=request_options
-        )
+        return self._raw_client
 
-    def create_or_update(
+    async def create_or_update(
         self, *, manifest: AgentOpenApiToolManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetToolVersionResponse:
         """
@@ -154,51 +218,99 @@ class ToolsClient:
 
         Examples
         --------
+        import asyncio
+
         from truefoundry_sdk import (
             AgentOpenApiToolManifest,
+            AsyncTrueFoundry,
             BlobStorageReference,
             Method,
             MimeType,
-            TrueFoundry,
         )
 
-        client = TrueFoundry(
+        client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.tools.create_or_update(
-            manifest=AgentOpenApiToolManifest(
-                name="name",
-                metadata={"key": "value"},
-                ml_repo="ml_repo",
-                openapi_spec=BlobStorageReference(
+
+
+        async def main() -> None:
+            await client.tools.create_or_update(
+                manifest=AgentOpenApiToolManifest(
+                    base_url="base_url",
+                    metadata={"key": "value"},
+                    method=Method.GET,
+                    ml_repo="ml_repo",
+                    name="name",
+                    openapi_spec=BlobStorageReference(
+                        mime_type=MimeType.TEXT_PLAIN,
+                        path="path",
+                    ),
                     path="path",
-                    mime_type=MimeType.TEXT_PLAIN,
                 ),
-                base_url="base_url",
-                path="path",
-                method=Method.GET,
-            ),
-        )
+            )
+
+
+        asyncio.run(main())
         """
-        _response = self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
+        _response = await self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
         return _response.data
 
-
-class AsyncToolsClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawToolsClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawToolsClient:
+    async def list(
+        self,
+        *,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
+        offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = 100,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncPager[Tool]:
         """
-        Retrieves a raw implementation of this client that returns raw responses.
+        Parameters
+        ----------
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
+
+        offset : typing.Optional[int]
+
+        limit : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
 
         Returns
         -------
-        AsyncRawToolsClient
+        AsyncPager[Tool]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.tools.list()
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
         """
-        return self._raw_client
+        return await self._raw_client.list(
+            ml_repo_id=ml_repo_id, name=name, offset=offset, limit=limit, request_options=request_options
+        )
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetToolResponse:
         """
@@ -272,116 +384,4 @@ class AsyncToolsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
-        return _response.data
-
-    async def list(
-        self,
-        *,
-        ml_repo_id: typing.Optional[str] = None,
-        name: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Tool]:
-        """
-        Parameters
-        ----------
-        ml_repo_id : typing.Optional[str]
-
-        name : typing.Optional[str]
-
-        offset : typing.Optional[int]
-
-        limit : typing.Optional[int]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncPager[Tool]
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            response = await client.tools.list()
-            async for item in response:
-                yield item
-
-            # alternatively, you can paginate page-by-page
-            async for page in response.iter_pages():
-                yield page
-
-
-        asyncio.run(main())
-        """
-        return await self._raw_client.list(
-            ml_repo_id=ml_repo_id, name=name, offset=offset, limit=limit, request_options=request_options
-        )
-
-    async def create_or_update(
-        self, *, manifest: AgentOpenApiToolManifest, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetToolVersionResponse:
-        """
-        Parameters
-        ----------
-        manifest : AgentOpenApiToolManifest
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetToolVersionResponse
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import (
-            AgentOpenApiToolManifest,
-            AsyncTrueFoundry,
-            BlobStorageReference,
-            Method,
-            MimeType,
-        )
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.tools.create_or_update(
-                manifest=AgentOpenApiToolManifest(
-                    name="name",
-                    metadata={"key": "value"},
-                    ml_repo="ml_repo",
-                    openapi_spec=BlobStorageReference(
-                        path="path",
-                        mime_type=MimeType.TEXT_PLAIN,
-                    ),
-                    base_url="base_url",
-                    path="path",
-                    method=Method.GET,
-                ),
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
         return _response.data

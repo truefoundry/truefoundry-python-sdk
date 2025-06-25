@@ -9,10 +9,10 @@ from ..core.serialization import FieldMetadata
 
 
 class FlyteWorkflowId(UniversalBaseModel):
+    name: str
     resource_type: typing_extensions.Annotated[typing.Literal["WORKFLOW"], FieldMetadata(alias="resourceType")] = (
         "WORKFLOW"
     )
-    name: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

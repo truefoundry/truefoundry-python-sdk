@@ -35,6 +35,91 @@ class JobsClient:
         """
         return self._raw_client
 
+    def terminate(
+        self, *, deployment_id: str, job_run_name: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> TerminateJobResponse:
+        """
+        Terminate Job for provided deploymentId and jobRunName
+
+        Parameters
+        ----------
+        deployment_id : str
+            Deployment Id of the Deployment
+
+        job_run_name : str
+            Job Run name
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TerminateJobResponse
+            Returns object with message and JobRun Status on successful termination of Job
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.jobs.terminate(
+            deployment_id="deploymentId",
+            job_run_name="jobRunName",
+        )
+        """
+        _response = self._raw_client.terminate(
+            deployment_id=deployment_id, job_run_name=job_run_name, request_options=request_options
+        )
+        return _response.data
+
+    def trigger(
+        self,
+        *,
+        application_id: typing.Optional[str] = OMIT,
+        deployment_id: typing.Optional[str] = OMIT,
+        input: typing.Optional[TriggerJobRequestInput] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> TriggerJobRunResponse:
+        """
+        Trigger Job for provided deploymentId or applicationId
+
+        Parameters
+        ----------
+        application_id : typing.Optional[str]
+            Application Id of the job
+
+        deployment_id : typing.Optional[str]
+            Deployment Id of the job
+
+        input : typing.Optional[TriggerJobRequestInput]
+            Job trigger input
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TriggerJobRunResponse
+            Returns object with message, JobRun Name And Job Details on successful creation of Job
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.jobs.trigger()
+        """
+        _response = self._raw_client.trigger(
+            application_id=application_id, deployment_id=deployment_id, input=input, request_options=request_options
+        )
+        return _response.data
+
     def list_runs(
         self,
         job_id: str,
@@ -192,52 +277,23 @@ class JobsClient:
         _response = self._raw_client.delete_run(job_id, job_run_name, request_options=request_options)
         return _response.data
 
-    def trigger(
-        self,
-        *,
-        deployment_id: typing.Optional[str] = OMIT,
-        application_id: typing.Optional[str] = OMIT,
-        input: typing.Optional[TriggerJobRequestInput] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> TriggerJobRunResponse:
+
+class AsyncJobsClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._raw_client = AsyncRawJobsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawJobsClient:
         """
-        Trigger Job for provided deploymentId or applicationId
-
-        Parameters
-        ----------
-        deployment_id : typing.Optional[str]
-            Deployment Id of the job
-
-        application_id : typing.Optional[str]
-            Application Id of the job
-
-        input : typing.Optional[TriggerJobRequestInput]
-            Job trigger input
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+        Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        TriggerJobRunResponse
-            Returns object with message, JobRun Name And Job Details on successful creation of Job
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.jobs.trigger()
+        AsyncRawJobsClient
         """
-        _response = self._raw_client.trigger(
-            deployment_id=deployment_id, application_id=application_id, input=input, request_options=request_options
-        )
-        return _response.data
+        return self._raw_client
 
-    def terminate(
+    async def terminate(
         self, *, deployment_id: str, job_run_name: str, request_options: typing.Optional[RequestOptions] = None
     ) -> TerminateJobResponse:
         """
@@ -261,37 +317,82 @@ class JobsClient:
 
         Examples
         --------
-        from truefoundry_sdk import TrueFoundry
+        import asyncio
 
-        client = TrueFoundry(
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.jobs.terminate(
-            deployment_id="deploymentId",
-            job_run_name="jobRunName",
-        )
+
+
+        async def main() -> None:
+            await client.jobs.terminate(
+                deployment_id="deploymentId",
+                job_run_name="jobRunName",
+            )
+
+
+        asyncio.run(main())
         """
-        _response = self._raw_client.terminate(
+        _response = await self._raw_client.terminate(
             deployment_id=deployment_id, job_run_name=job_run_name, request_options=request_options
         )
         return _response.data
 
-
-class AsyncJobsClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawJobsClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawJobsClient:
+    async def trigger(
+        self,
+        *,
+        application_id: typing.Optional[str] = OMIT,
+        deployment_id: typing.Optional[str] = OMIT,
+        input: typing.Optional[TriggerJobRequestInput] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> TriggerJobRunResponse:
         """
-        Retrieves a raw implementation of this client that returns raw responses.
+        Trigger Job for provided deploymentId or applicationId
+
+        Parameters
+        ----------
+        application_id : typing.Optional[str]
+            Application Id of the job
+
+        deployment_id : typing.Optional[str]
+            Deployment Id of the job
+
+        input : typing.Optional[TriggerJobRequestInput]
+            Job trigger input
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
 
         Returns
         -------
-        AsyncRawJobsClient
+        TriggerJobRunResponse
+            Returns object with message, JobRun Name And Job Details on successful creation of Job
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.trigger()
+
+
+        asyncio.run(main())
         """
-        return self._raw_client
+        _response = await self._raw_client.trigger(
+            application_id=application_id, deployment_id=deployment_id, input=input, request_options=request_options
+        )
+        return _response.data
 
     async def list_runs(
         self,
@@ -473,105 +574,4 @@ class AsyncJobsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.delete_run(job_id, job_run_name, request_options=request_options)
-        return _response.data
-
-    async def trigger(
-        self,
-        *,
-        deployment_id: typing.Optional[str] = OMIT,
-        application_id: typing.Optional[str] = OMIT,
-        input: typing.Optional[TriggerJobRequestInput] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> TriggerJobRunResponse:
-        """
-        Trigger Job for provided deploymentId or applicationId
-
-        Parameters
-        ----------
-        deployment_id : typing.Optional[str]
-            Deployment Id of the job
-
-        application_id : typing.Optional[str]
-            Application Id of the job
-
-        input : typing.Optional[TriggerJobRequestInput]
-            Job trigger input
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        TriggerJobRunResponse
-            Returns object with message, JobRun Name And Job Details on successful creation of Job
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.jobs.trigger()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.trigger(
-            deployment_id=deployment_id, application_id=application_id, input=input, request_options=request_options
-        )
-        return _response.data
-
-    async def terminate(
-        self, *, deployment_id: str, job_run_name: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> TerminateJobResponse:
-        """
-        Terminate Job for provided deploymentId and jobRunName
-
-        Parameters
-        ----------
-        deployment_id : str
-            Deployment Id of the Deployment
-
-        job_run_name : str
-            Job Run name
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        TerminateJobResponse
-            Returns object with message and JobRun Status on successful termination of Job
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.jobs.terminate(
-                deployment_id="deploymentId",
-                job_run_name="jobRunName",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.terminate(
-            deployment_id=deployment_id, job_run_name=job_run_name, request_options=request_options
-        )
         return _response.data

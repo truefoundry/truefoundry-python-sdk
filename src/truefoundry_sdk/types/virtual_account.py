@@ -12,15 +12,15 @@ from .virtual_account_manifest import VirtualAccountManifest
 
 
 class VirtualAccount(UniversalBaseModel):
-    id: str
-    name: str
-    type: str
-    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]
-    manifest: typing.Optional[VirtualAccountManifest] = None
-    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")]
     created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
     created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = None
+    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")]
+    id: str
+    manifest: typing.Optional[VirtualAccountManifest] = None
+    name: str
+    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]
+    type: str
+    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

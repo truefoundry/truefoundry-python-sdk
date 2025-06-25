@@ -13,12 +13,6 @@ class Notebook(BaseWorkbenchInput):
     +docs=Describes the configuration for the service
     """
 
-    type: typing.Optional[typing.Literal["notebook"]] = pydantic.Field(default=None)
-    """
-    +value=notebook
-    """
-
-    image: typing.Optional[WorkbenchImage] = None
     cull_timeout: typing.Optional[int] = pydantic.Field(default=30)
     """
     +label=Stop after (minutes of inactivity)
@@ -26,6 +20,12 @@ class Notebook(BaseWorkbenchInput):
     The notebook instance will be stopped even if the notebook is open in your browser, but nothing is running on the notebook.
     +sort=5
     +uiProps={"descriptionInline":true}
+    """
+
+    image: typing.Optional[WorkbenchImage] = None
+    type: typing.Optional[typing.Literal["notebook"]] = pydantic.Field(default=None)
+    """
+    +value=notebook
     """
 
     if IS_PYDANTIC_V2:

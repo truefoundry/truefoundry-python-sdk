@@ -12,9 +12,16 @@ class HuggingfaceArtifactSource(UniversalBaseModel):
     +label=Huggingface Model Source
     """
 
-    type: typing.Literal["huggingface-hub"] = pydantic.Field(default="huggingface-hub")
+    download_path_env_variable: str = pydantic.Field()
     """
-    +value=huggingface-hub
+    +label=Download Path Environment Variable
+    +usage=Environment variable which will contain the download path of the artifact
+    """
+
+    ignore_patterns: typing.List[str] = pydantic.Field()
+    """
+    +label=Ignore Patterns
+    +usage=List of patterns to ignore while downloading the artifact
     """
 
     model_id: str = pydantic.Field()
@@ -29,16 +36,9 @@ class HuggingfaceArtifactSource(UniversalBaseModel):
     +usage=Revision of the artifact to be downloaded
     """
 
-    ignore_patterns: typing.List[str] = pydantic.Field()
+    type: typing.Literal["huggingface-hub"] = pydantic.Field(default="huggingface-hub")
     """
-    +label=Ignore Patterns
-    +usage=List of patterns to ignore while downloading the artifact
-    """
-
-    download_path_env_variable: str = pydantic.Field()
-    """
-    +label=Download Path Environment Variable
-    +usage=Environment variable which will contain the download path of the artifact
+    +value=huggingface-hub
     """
 
     if IS_PYDANTIC_V2:

@@ -9,12 +9,12 @@ from ..core.serialization import FieldMetadata
 
 
 class EnvironmentColor(UniversalBaseModel):
-    color_hex: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="colorHex")] = None
+    background_color: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="backgroundColor")] = None
     background_color_hex: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="backgroundColorHex")
     ] = None
     color: typing.Optional[str] = None
-    background_color: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="backgroundColor")] = None
+    color_hex: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="colorHex")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

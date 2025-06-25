@@ -11,6 +11,13 @@ class BasicAuthCreds(UniversalBaseModel):
     +label=Username and password
     """
 
+    password: str = pydantic.Field()
+    """
+    +label=Password for service auth
+    +message=Password for the user to authenticate with
+    +sort=2
+    """
+
     type: typing.Literal["basic_auth"] = pydantic.Field(default="basic_auth")
     """
     +value=basic_auth
@@ -21,13 +28,6 @@ class BasicAuthCreds(UniversalBaseModel):
     +label=Username for service auth
     +message=Username for the user to authenticate with
     +sort=1
-    """
-
-    password: str = pydantic.Field()
-    """
-    +label=Password for service auth
-    +message=Password for the user to authenticate with
-    +sort=2
     """
 
     if IS_PYDANTIC_V2:

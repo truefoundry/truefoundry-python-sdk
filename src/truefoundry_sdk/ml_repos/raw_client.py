@@ -28,82 +28,70 @@ class RawMlReposClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def create_or_update(
+    def list(
         self,
         *,
-        manifest: typing.Dict[str, typing.Optional[typing.Any]],
+        name: typing.Optional[str] = None,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[GetMlRepoResponse]:
+    ) -> SyncPager[MlRepo]:
         """
-        Creates or updates an MLRepo entity based on the provided manifest.
+        List ml repos
+        Args:
+            filters: Filters for the ml repos
+            user_info: Authenticated user information
+
+        Returns:
+            ListMLReposResponse: List of ml repos
 
         Parameters
         ----------
-        manifest : typing.Dict[str, typing.Optional[typing.Any]]
-            MLRepo manifest
+        name : typing.Optional[str]
+
+        limit : typing.Optional[int]
+
+        offset : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[GetMlRepoResponse]
-            Returns the created or updated MLRepo entity based on the provided manifest.
+        SyncPager[MlRepo]
+            Successful Response
         """
+        offset = offset if offset is not None else 0
+
         _response = self._client_wrapper.httpx_client.request(
-            "api/svc/v1/ml-repos",
-            method="PUT",
-            json={
-                "manifest": manifest,
-            },
-            headers={
-                "content-type": "application/json",
+            "api/ml/v1/ml-repos",
+            method="GET",
+            params={
+                "name": name,
+                "limit": limit,
+                "offset": offset,
             },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    GetMlRepoResponse,
+                _parsed_response = typing.cast(
+                    ListMlReposResponse,
                     parse_obj_as(
-                        type_=GetMlRepoResponse,  # type: ignore
+                        type_=ListMlReposResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 400:
-                raise BadRequestError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
+                _items = _parsed_response.data
+                _has_next = True
+                _get_next = lambda: self.list(
+                    name=name,
+                    limit=limit,
+                    offset=offset + len(_items),
+                    request_options=request_options,
                 )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 409:
-                raise ConflictError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
+                return SyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
@@ -231,98 +219,12 @@ class RawMlReposClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def list(
-        self,
-        *,
-        name: typing.Optional[str] = None,
-        limit: typing.Optional[int] = 100,
-        offset: typing.Optional[int] = 0,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[MlRepo]:
-        """
-        List ml repos
-        Args:
-            filters: Filters for the ml repos
-            user_info: Authenticated user information
-
-        Returns:
-            ListMLReposResponse: List of ml repos
-
-        Parameters
-        ----------
-        name : typing.Optional[str]
-
-        limit : typing.Optional[int]
-
-        offset : typing.Optional[int]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SyncPager[MlRepo]
-            Successful Response
-        """
-        offset = offset if offset is not None else 0
-
-        _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/ml-repos",
-            method="GET",
-            params={
-                "name": name,
-                "limit": limit,
-                "offset": offset,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _parsed_response = typing.cast(
-                    ListMlReposResponse,
-                    parse_obj_as(
-                        type_=ListMlReposResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                _items = _parsed_response.data
-                _has_next = True
-                _get_next = lambda: self.list(
-                    name=name,
-                    limit=limit,
-                    offset=offset + len(_items),
-                    request_options=request_options,
-                )
-                return SyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-
-class AsyncRawMlReposClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
-
-    async def create_or_update(
+    def create_or_update(
         self,
         *,
         manifest: typing.Dict[str, typing.Optional[typing.Any]],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[GetMlRepoResponse]:
+    ) -> HttpResponse[GetMlRepoResponse]:
         """
         Creates or updates an MLRepo entity based on the provided manifest.
 
@@ -336,10 +238,10 @@ class AsyncRawMlReposClient:
 
         Returns
         -------
-        AsyncHttpResponse[GetMlRepoResponse]
+        HttpResponse[GetMlRepoResponse]
             Returns the created or updated MLRepo entity based on the provided manifest.
         """
-        _response = await self._client_wrapper.httpx_client.request(
+        _response = self._client_wrapper.httpx_client.request(
             "api/svc/v1/ml-repos",
             method="PUT",
             json={
@@ -360,7 +262,7 @@ class AsyncRawMlReposClient:
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=_data)
+                return HttpResponse(response=_response, data=_data)
             if _response.status_code == 400:
                 raise BadRequestError(
                     headers=dict(_response.headers),
@@ -393,6 +295,95 @@ class AsyncRawMlReposClient:
                             object_=_response.json(),
                         ),
                     ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+
+class AsyncRawMlReposClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._client_wrapper = client_wrapper
+
+    async def list(
+        self,
+        *,
+        name: typing.Optional[str] = None,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncPager[MlRepo]:
+        """
+        List ml repos
+        Args:
+            filters: Filters for the ml repos
+            user_info: Authenticated user information
+
+        Returns:
+            ListMLReposResponse: List of ml repos
+
+        Parameters
+        ----------
+        name : typing.Optional[str]
+
+        limit : typing.Optional[int]
+
+        offset : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[MlRepo]
+            Successful Response
+        """
+        offset = offset if offset is not None else 0
+
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/ml/v1/ml-repos",
+            method="GET",
+            params={
+                "name": name,
+                "limit": limit,
+                "offset": offset,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    ListMlReposResponse,
+                    parse_obj_as(
+                        type_=ListMlReposResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                _items = _parsed_response.data
+                _has_next = True
+
+                async def _get_next():
+                    return await self.list(
+                        name=name,
+                        limit=limit,
+                        offset=offset + len(_items),
+                        request_options=request_options,
+                    )
+
+                return AsyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
@@ -520,73 +511,82 @@ class AsyncRawMlReposClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def list(
+    async def create_or_update(
         self,
         *,
-        name: typing.Optional[str] = None,
-        limit: typing.Optional[int] = 100,
-        offset: typing.Optional[int] = 0,
+        manifest: typing.Dict[str, typing.Optional[typing.Any]],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[MlRepo]:
+    ) -> AsyncHttpResponse[GetMlRepoResponse]:
         """
-        List ml repos
-        Args:
-            filters: Filters for the ml repos
-            user_info: Authenticated user information
-
-        Returns:
-            ListMLReposResponse: List of ml repos
+        Creates or updates an MLRepo entity based on the provided manifest.
 
         Parameters
         ----------
-        name : typing.Optional[str]
-
-        limit : typing.Optional[int]
-
-        offset : typing.Optional[int]
+        manifest : typing.Dict[str, typing.Optional[typing.Any]]
+            MLRepo manifest
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncPager[MlRepo]
-            Successful Response
+        AsyncHttpResponse[GetMlRepoResponse]
+            Returns the created or updated MLRepo entity based on the provided manifest.
         """
-        offset = offset if offset is not None else 0
-
         _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/ml-repos",
-            method="GET",
-            params={
-                "name": name,
-                "limit": limit,
-                "offset": offset,
+            "api/svc/v1/ml-repos",
+            method="PUT",
+            json={
+                "manifest": manifest,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                _parsed_response = typing.cast(
-                    ListMlReposResponse,
+                _data = typing.cast(
+                    GetMlRepoResponse,
                     parse_obj_as(
-                        type_=ListMlReposResponse,  # type: ignore
+                        type_=GetMlRepoResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                _items = _parsed_response.data
-                _has_next = True
-
-                async def _get_next():
-                    return await self.list(
-                        name=name,
-                        limit=limit,
-                        offset=offset + len(_items),
-                        request_options=request_options,
-                    )
-
-                return AsyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
                 )
             if _response.status_code == 422:
                 raise UnprocessableEntityError(

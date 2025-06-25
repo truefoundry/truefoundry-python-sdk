@@ -7,9 +7,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class NvidiaGpu(UniversalBaseModel):
-    type: typing.Literal["nvidia_gpu"] = pydantic.Field(default="nvidia_gpu")
+    count: int = pydantic.Field()
     """
-    +value=nvidia_gpu
+    +label=GPU Count
+    +usage=Count of GPUs to provide to the application
+    Note the exact count and max count available for a given GPU type depends on cloud provider and cluster type.
     """
 
     name: typing.Optional[str] = pydantic.Field(default=None)
@@ -21,11 +23,9 @@ class NvidiaGpu(UniversalBaseModel):
     P4: 8 GB, P100: 16 GB, V100: 16 GB, T4: 16 GB, A10G: 24 GB, A100_40GB: 40GB, A100_80GB: 80 GB
     """
 
-    count: int = pydantic.Field()
+    type: typing.Literal["nvidia_gpu"] = pydantic.Field(default="nvidia_gpu")
     """
-    +label=GPU Count
-    +usage=Count of GPUs to provide to the application
-    Note the exact count and max count available for a given GPU type depends on cloud provider and cluster type.
+    +value=nvidia_gpu
     """
 
     if IS_PYDANTIC_V2:

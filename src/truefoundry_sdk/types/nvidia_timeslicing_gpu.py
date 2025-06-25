@@ -7,9 +7,10 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class NvidiaTimeslicingGpu(UniversalBaseModel):
-    type: typing.Literal["nvidia_timeslicing_gpu"] = pydantic.Field(default="nvidia_timeslicing_gpu")
+    gpu_memory: int = pydantic.Field()
     """
-    +value=nvidia_timeslicing_gpu
+    +label=GPU Memory (MB)
+    +usage=Amount of GPU memory (in MB) to allocate. Please note, this limit is not being enforced today but will be in future. Applications are expected to operate in co-opertative mode
     """
 
     name: typing.Optional[str] = pydantic.Field(default=None)
@@ -21,10 +22,9 @@ class NvidiaTimeslicingGpu(UniversalBaseModel):
     P4: 8 GB, P100: 16 GB, V100: 16 GB, T4: 16 GB, A10G: 24 GB, A100_40GB: 40GB, A100_80GB: 80 GB
     """
 
-    gpu_memory: int = pydantic.Field()
+    type: typing.Literal["nvidia_timeslicing_gpu"] = pydantic.Field(default="nvidia_timeslicing_gpu")
     """
-    +label=GPU Memory (MB)
-    +usage=Amount of GPU memory (in MB) to allocate. Please note, this limit is not being enforced today but will be in future. Applications are expected to operate in co-opertative mode
+    +value=nvidia_timeslicing_gpu
     """
 
     if IS_PYDANTIC_V2:

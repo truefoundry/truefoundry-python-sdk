@@ -11,9 +11,11 @@ class SparkJobScalaEntrypoint(UniversalBaseModel):
     +label=scala
     """
 
-    type: typing.Literal["scala"] = pydantic.Field(default="scala")
+    arguments: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +value=scala
+    +label=Arguments
+    +usage=Arguments to be passed to the main application file.
+    +sort=7
     """
 
     main_application_file: str = pydantic.Field()
@@ -34,11 +36,9 @@ class SparkJobScalaEntrypoint(UniversalBaseModel):
     +message=The main class must be a valid Java class name.
     """
 
-    arguments: typing.Optional[str] = pydantic.Field(default=None)
+    type: typing.Literal["scala"] = pydantic.Field(default="scala")
     """
-    +label=Arguments
-    +usage=Arguments to be passed to the main application file.
-    +sort=7
+    +value=scala
     """
 
     if IS_PYDANTIC_V2:

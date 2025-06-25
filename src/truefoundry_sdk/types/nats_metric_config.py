@@ -7,15 +7,15 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class NatsMetricConfig(UniversalBaseModel):
-    type: typing.Literal["nats"] = pydantic.Field(default="nats")
-    """
-    +value=nats
-    """
-
     lag_threshold: int = pydantic.Field()
     """
     +label=Lag Threshold
     +usage=Upper limit of the number of backlog messages the auto-scaler will try to maintain per replica. If you set this number to 10 and have 30 messages in the stream and one replica, the auto-scaler will scale the number of replicas to 3.
+    """
+
+    type: typing.Literal["nats"] = pydantic.Field(default="nats")
+    """
+    +value=nats
     """
 
     if IS_PYDANTIC_V2:

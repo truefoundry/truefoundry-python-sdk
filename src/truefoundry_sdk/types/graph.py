@@ -10,16 +10,6 @@ from .graph_chart_type import GraphChartType
 
 
 class Graph(UniversalBaseModel):
-    name: str = pydantic.Field()
-    """
-    Name
-    """
-
-    description: str = pydantic.Field()
-    """
-    Description
-    """
-
     chart: str = pydantic.Field()
     """
     Chart name
@@ -28,6 +18,16 @@ class Graph(UniversalBaseModel):
     chart_type: typing_extensions.Annotated[GraphChartType, FieldMetadata(alias="chartType")] = pydantic.Field()
     """
     Chart type
+    """
+
+    description: str = pydantic.Field()
+    """
+    Description
+    """
+
+    name: str = pydantic.Field()
+    """
+    Name
     """
 
     params: str = pydantic.Field()

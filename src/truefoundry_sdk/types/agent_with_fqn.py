@@ -7,35 +7,15 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class AgentWithFqn(UniversalBaseModel):
-    name: typing.Optional[str] = pydantic.Field(default=None)
+    available_tools: typing.List[str] = pydantic.Field()
     """
-    Name of the entity
+    Tools available to the agent
     """
 
     description: typing.Optional[str] = None
-    metadata: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
+    fqn: str = pydantic.Field()
     """
-    Key value metadata. Should be valid JSON. For e.g. `{"business-unit": "sales", "quality": "good", "rating": 4.5}`
-    """
-
-    version_alias: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Version alias is alternate, ideally human readable, version string to reference an artifact version. It should start with `v` followed by alphanumeric and it can include `.` and `-` in between (e.g. `v1.0.0`, `v1-prod`, `v3-dev`, etc)
-    """
-
-    ml_repo: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Name of the ML Repo
-    """
-
-    version: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Version of the entity
-    """
-
-    type: typing.Literal["agent"] = pydantic.Field(default="agent")
-    """
-    Type of the entity
+    FQN of the agent
     """
 
     goal: str = pydantic.Field()
@@ -43,14 +23,24 @@ class AgentWithFqn(UniversalBaseModel):
     Short form description. Will be used as `description` when this agent is used as a tool.
     """
 
+    id: str = pydantic.Field()
+    """
+    ID of the agent
+    """
+
     instruction: str = pydantic.Field()
     """
     Instructions for the agent to follow to achieve the goal
     """
 
-    available_tools: typing.List[str] = pydantic.Field()
+    metadata: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
     """
-    Tools available to the agent
+    Key value metadata. Should be valid JSON. For e.g. `{"business-unit": "sales", "quality": "good", "rating": 4.5}`
+    """
+
+    ml_repo: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Name of the ML Repo
     """
 
     model_id: str = pydantic.Field()
@@ -58,14 +48,24 @@ class AgentWithFqn(UniversalBaseModel):
     Model to use when running the agent
     """
 
-    id: str = pydantic.Field()
+    name: typing.Optional[str] = pydantic.Field(default=None)
     """
-    ID of the agent
+    Name of the entity
     """
 
-    fqn: str = pydantic.Field()
+    type: typing.Literal["agent"] = pydantic.Field(default="agent")
     """
-    FQN of the agent
+    Type of the entity
+    """
+
+    version: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Version of the entity
+    """
+
+    version_alias: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Version alias is alternate, ideally human readable, version string to reference an artifact version. It should start with `v` followed by alphanumeric and it can include `.` and `-` in between (e.g. `v1.0.0`, `v1-prod`, `v3-dev`, etc)
     """
 
     if IS_PYDANTIC_V2:

@@ -10,22 +10,22 @@ from ..core.serialization import FieldMetadata
 
 
 class Recommendation(UniversalBaseModel):
-    id: typing.Optional[str] = None
-    cluster_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="clusterId")] = None
     application_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="applicationId")] = None
-    deployment_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="deploymentId")] = None
     application_version: typing_extensions.Annotated[
         typing.Optional[int], FieldMetadata(alias="applicationVersion")
     ] = None
+    applied_deployment_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="appliedDeploymentId")
+    ] = None
+    cluster_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="clusterId")] = None
+    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None
+    deployment_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="deploymentId")] = None
+    expiry_timestamp: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="expiryTimestamp")]
+    id: typing.Optional[str] = None
     recommendation_data: typing_extensions.Annotated[
         typing.Dict[str, typing.Optional[typing.Any]], FieldMetadata(alias="recommendationData")
     ]
     recommendation_type: typing_extensions.Annotated[str, FieldMetadata(alias="recommendationType")]
-    applied_deployment_id: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="appliedDeploymentId")
-    ] = None
-    expiry_timestamp: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="expiryTimestamp")]
-    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None
     updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = None
 
     if IS_PYDANTIC_V2:

@@ -11,11 +11,6 @@ class Email(UniversalBaseModel):
     +label=Email
     """
 
-    type: typing.Literal["email"] = pydantic.Field(default="email")
-    """
-    +value=email
-    """
-
     notification_channel: str = pydantic.Field()
     """
     +label=Notification Channel
@@ -31,6 +26,11 @@ class Email(UniversalBaseModel):
     +usage=List of recipients' email addresses if the notification channel is Email.
     +docs=Specify the emails to send alerts to
     +sort=665
+    """
+
+    type: typing.Literal["email"] = pydantic.Field(default="email")
+    """
+    +value=email
     """
 
     if IS_PYDANTIC_V2:

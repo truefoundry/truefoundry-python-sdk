@@ -8,11 +8,6 @@ from .nvidia_miggpu_profile import NvidiaMiggpuProfile
 
 
 class NvidiaMiggpu(UniversalBaseModel):
-    type: typing.Literal["nvidia_mig_gpu"] = pydantic.Field(default="nvidia_mig_gpu")
-    """
-    +value=nvidia_mig_gpu
-    """
-
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     +label=GPU Name
@@ -32,6 +27,11 @@ class NvidiaMiggpu(UniversalBaseModel):
     H100 94 GB - [1g.12gb, 1g.24gb, 2g.24gb, 3g.47gb, 4g.47gb]
     H100 96 GB - [1g.12gb, 1g.24gb, 2g.24gb, 3g.48gb, 4g.48gb]
     H200 141 GB - [1g.18gb, 1g.35gb, 2g.35gb, 3g.71gb, 4g.71gb]
+    """
+
+    type: typing.Literal["nvidia_mig_gpu"] = pydantic.Field(default="nvidia_mig_gpu")
+    """
+    +value=nvidia_mig_gpu
     """
 
     if IS_PYDANTIC_V2:

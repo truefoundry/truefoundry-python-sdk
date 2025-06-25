@@ -26,68 +26,6 @@ class ModelVersionsClient:
         """
         return self._raw_client
 
-    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetModelVersionResponse:
-        """
-        Get model version API
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetModelVersionResponse
-            Successful Response
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.model_versions.get(
-            id="id",
-        )
-        """
-        _response = self._raw_client.get(id, request_options=request_options)
-        return _response.data
-
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
-        """
-        Delete model versions API
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        EmptyResponse
-            Successful Response
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.model_versions.delete(
-            id="id",
-        )
-        """
-        _response = self._raw_client.delete(id, request_options=request_options)
-        return _response.data
-
     def list(
         self,
         *,
@@ -153,6 +91,68 @@ class ModelVersionsClient:
             request_options=request_options,
         )
 
+    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetModelVersionResponse:
+        """
+        Get model version API
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetModelVersionResponse
+            Successful Response
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.model_versions.get(
+            id="id",
+        )
+        """
+        _response = self._raw_client.get(id, request_options=request_options)
+        return _response.data
+
+    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
+        """
+        Delete model versions API
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EmptyResponse
+            Successful Response
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.model_versions.delete(
+            id="id",
+        )
+        """
+        _response = self._raw_client.delete(id, request_options=request_options)
+        return _response.data
+
 
 class AsyncModelVersionsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -168,6 +168,80 @@ class AsyncModelVersionsClient:
         AsyncRawModelVersionsClient
         """
         return self._raw_client
+
+    async def list(
+        self,
+        *,
+        model_id: typing.Optional[str] = None,
+        fqn: typing.Optional[str] = None,
+        offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = 100,
+        run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        include_internal_metadata: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncPager[ModelVersion]:
+        """
+        List model version API
+
+        Parameters
+        ----------
+        model_id : typing.Optional[str]
+
+        fqn : typing.Optional[str]
+
+        offset : typing.Optional[int]
+
+        limit : typing.Optional[int]
+
+        run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+
+        run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+
+        include_internal_metadata : typing.Optional[bool]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[ModelVersion]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.model_versions.list()
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
+        """
+        return await self._raw_client.list(
+            model_id=model_id,
+            fqn=fqn,
+            offset=offset,
+            limit=limit,
+            run_ids=run_ids,
+            run_steps=run_steps,
+            include_internal_metadata=include_internal_metadata,
+            request_options=request_options,
+        )
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetModelVersionResponse:
         """
@@ -246,77 +320,3 @@ class AsyncModelVersionsClient:
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
         return _response.data
-
-    async def list(
-        self,
-        *,
-        model_id: typing.Optional[str] = None,
-        fqn: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
-        run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
-        include_internal_metadata: typing.Optional[bool] = False,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[ModelVersion]:
-        """
-        List model version API
-
-        Parameters
-        ----------
-        model_id : typing.Optional[str]
-
-        fqn : typing.Optional[str]
-
-        offset : typing.Optional[int]
-
-        limit : typing.Optional[int]
-
-        run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-
-        run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
-
-        include_internal_metadata : typing.Optional[bool]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncPager[ModelVersion]
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            response = await client.model_versions.list()
-            async for item in response:
-                yield item
-
-            # alternatively, you can paginate page-by-page
-            async for page in response.iter_pages():
-                yield page
-
-
-        asyncio.run(main())
-        """
-        return await self._raw_client.list(
-            model_id=model_id,
-            fqn=fqn,
-            offset=offset,
-            limit=limit,
-            run_ids=run_ids,
-            run_steps=run_steps,
-            include_internal_metadata=include_internal_metadata,
-            request_options=request_options,
-        )

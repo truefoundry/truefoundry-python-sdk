@@ -12,6 +12,13 @@ class AmqpInputConfig(UniversalBaseModel):
     +label=AMQP
     """
 
+    queue_name: str = pydantic.Field()
+    """
+    +label=Queue Name
+    +usage=AMQP Queue Name
+    +sort=2
+    """
+
     type: typing.Literal["amqp"] = pydantic.Field(default="amqp")
     """
     +value=amqp
@@ -22,13 +29,6 @@ class AmqpInputConfig(UniversalBaseModel):
     +label=Queue URL
     +usage=AMQP Queue URL of Subscriber
     +sort=1
-    """
-
-    queue_name: str = pydantic.Field()
-    """
-    +label=Queue Name
-    +usage=AMQP Queue Name
-    +sort=2
     """
 
     wait_time_seconds: int = pydantic.Field(default=5)

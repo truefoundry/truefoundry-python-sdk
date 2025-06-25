@@ -11,9 +11,15 @@ from .kustomize import Kustomize
 
 
 class Helm(UniversalBaseModel):
-    type: typing.Literal["helm"] = pydantic.Field(default="helm")
+    ignore_differences: typing_extensions.Annotated[
+        typing.Optional[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]],
+        FieldMetadata(alias="ignoreDifferences"),
+    ] = None
+    kustomize: typing.Optional[Kustomize] = None
+    labels: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
     """
-    +value=helm
+    +label=Labels
+    +usage=Add labels to base argo app
     """
 
     name: str = pydantic.Field()
@@ -23,16 +29,15 @@ class Helm(UniversalBaseModel):
     +usage=Name of the Helm deployment. This will be set as the release name of the chart you are deploying.
     """
 
-    labels: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
-    """
-    +label=Labels
-    +usage=Add labels to base argo app
-    """
-
     source: HelmSource = pydantic.Field()
     """
     +label=Source helm repository
     +sort=2
+    """
+
+    type: typing.Literal["helm"] = pydantic.Field(default="helm")
+    """
+    +value=helm
     """
 
     values: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
@@ -41,11 +46,6 @@ class Helm(UniversalBaseModel):
     +usage=Values file as block file
     """
 
-    kustomize: typing.Optional[Kustomize] = None
-    ignore_differences: typing_extensions.Annotated[
-        typing.Optional[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]],
-        FieldMetadata(alias="ignoreDifferences"),
-    ] = None
     workspace_fqn: typing.Optional[str] = pydantic.Field(default=None)
     """
     +label=Workspace FQN

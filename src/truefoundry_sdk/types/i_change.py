@@ -12,13 +12,13 @@ from .i_change_operation import IChangeOperation
 
 
 class IChange(UniversalBaseModel):
-    type: IChangeOperation
+    changes: typing.Optional[typing.List["IChange"]] = None
     key: str
-    value: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
     old_value: typing_extensions.Annotated[
         typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="oldValue")
     ] = None
-    changes: typing.Optional[typing.List["IChange"]] = None
+    type: IChangeOperation
+    value: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

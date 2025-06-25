@@ -10,16 +10,6 @@ from .http_error_code import HttpErrorCode
 
 
 class HttpError(UniversalBaseModel):
-    status_code: typing_extensions.Annotated[int, FieldMetadata(alias="statusCode")] = pydantic.Field()
-    """
-    HTTP Status Code
-    """
-
-    message: str = pydantic.Field()
-    """
-    Error Message
-    """
-
     code: typing.Optional[HttpErrorCode] = pydantic.Field(default=None)
     """
     Error code
@@ -28,6 +18,16 @@ class HttpError(UniversalBaseModel):
     details: typing.Optional[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]] = pydantic.Field(default=None)
     """
     Error details
+    """
+
+    message: str = pydantic.Field()
+    """
+    Error Message
+    """
+
+    status_code: typing_extensions.Annotated[int, FieldMetadata(alias="statusCode")] = pydantic.Field()
+    """
+    HTTP Status Code
     """
 
     if IS_PYDANTIC_V2:

@@ -11,9 +11,11 @@ class SparkJobJavaEntrypoint(UniversalBaseModel):
     +label=java
     """
 
-    type: typing.Literal["java"] = pydantic.Field(default="java")
+    arguments: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +value=java
+    +label=Arguments
+    +usage=Arguments to be passed to the main application file.
+    +sort=7
     """
 
     main_application_file: str = pydantic.Field()
@@ -34,11 +36,9 @@ class SparkJobJavaEntrypoint(UniversalBaseModel):
     +message=The main class must be a valid Java class name.
     """
 
-    arguments: typing.Optional[str] = pydantic.Field(default=None)
+    type: typing.Literal["java"] = pydantic.Field(default="java")
     """
-    +label=Arguments
-    +usage=Arguments to be passed to the main application file.
-    +sort=7
+    +value=java
     """
 
     if IS_PYDANTIC_V2:

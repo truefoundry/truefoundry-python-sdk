@@ -12,11 +12,6 @@ class TrueFoundryArtifactSource(UniversalBaseModel):
     +label=TrueFoundry Artifact Source
     """
 
-    type: typing.Literal["truefoundry-artifact"] = pydantic.Field(default="truefoundry-artifact")
-    """
-    +value=truefoundry-artifact
-    """
-
     artifact_version_fqn: str = pydantic.Field()
     """
     +label=Artifact or Model Version FQN
@@ -27,6 +22,11 @@ class TrueFoundryArtifactSource(UniversalBaseModel):
     """
     +label=Download Path Environment Variable
     +usage=Environment variable which will contain the download path of the artifact
+    """
+
+    type: typing.Literal["truefoundry-artifact"] = pydantic.Field(default="truefoundry-artifact")
+    """
+    +value=truefoundry-artifact
     """
 
     if IS_PYDANTIC_V2:

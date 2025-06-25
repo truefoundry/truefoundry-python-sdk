@@ -13,11 +13,10 @@ class HttpProbe(UniversalBaseModel):
     +label=Instructions for assessing container health by executing an HTTP GET request.
     """
 
-    type: typing.Literal["http"] = pydantic.Field(default="http")
+    host: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +sort=1
-    +label=Request Type
-    +value=http
+    +sort=4
+    +usage=Host name to connect to, defaults to the pod IP
     """
 
     path: str = pydantic.Field()
@@ -32,16 +31,17 @@ class HttpProbe(UniversalBaseModel):
     +sort=3
     """
 
-    host: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    +sort=4
-    +usage=Host name to connect to, defaults to the pod IP
-    """
-
     scheme: typing.Optional[str] = pydantic.Field(default="HTTP")
     """
     +sort=5
     +usage=Scheme to use for connecting to the host
+    """
+
+    type: typing.Literal["http"] = pydantic.Field(default="http")
+    """
+    +sort=1
+    +label=Request Type
+    +value=http
     """
 
     if IS_PYDANTIC_V2:

@@ -10,14 +10,14 @@ from .subject import Subject
 
 
 class DataDirectory(UniversalBaseModel):
+    created_at: dt.datetime
+    created_by_subject: Subject
+    fqn: str
     id: str
+    manifest: DataDirectoryManifest
     ml_repo_id: str
     name: str
-    fqn: str
-    created_by_subject: Subject
-    created_at: dt.datetime
     updated_at: dt.datetime
-    manifest: DataDirectoryManifest
     usage_code_snippet: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

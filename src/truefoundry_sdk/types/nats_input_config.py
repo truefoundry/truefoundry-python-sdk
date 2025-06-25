@@ -13,9 +13,20 @@ class NatsInputConfig(UniversalBaseModel):
     +label=NATS
     """
 
-    type: typing.Literal["nats"] = pydantic.Field(default="nats")
+    auth: typing.Optional[NatsUserPasswordAuth] = None
+    consumer_name: str = pydantic.Field()
     """
-    +value=nats
+    +label=Consumer Name
+    +usage=Consumer name of input NATS
+    +message=Consumer name should only contain alphanumeric letters, dashes(-), and underscores(_)
+    +sort=4
+    """
+
+    nats_metrics_url: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    +label=NATS metrics URL
+    +usage=URL for the NATS metrics endpoint. It is compulsory if you want to use NATS autoscaling.
+    +message=NATS Metrics URL should be a valid HTTP/HTTPS URL
     """
 
     nats_url: str = pydantic.Field()
@@ -23,13 +34,6 @@ class NatsInputConfig(UniversalBaseModel):
     +label=NATS URL
     +usage=Input NATS URL
     +sort=1
-    """
-
-    stream_name: str = pydantic.Field()
-    """
-    +label=Stream Name
-    +usage=Name of the NATS stream
-    +sort=2
     """
 
     root_subject: str = pydantic.Field()
@@ -40,12 +44,16 @@ class NatsInputConfig(UniversalBaseModel):
     +sort=3
     """
 
-    consumer_name: str = pydantic.Field()
+    stream_name: str = pydantic.Field()
     """
-    +label=Consumer Name
-    +usage=Consumer name of input NATS
-    +message=Consumer name should only contain alphanumeric letters, dashes(-), and underscores(_)
-    +sort=4
+    +label=Stream Name
+    +usage=Name of the NATS stream
+    +sort=2
+    """
+
+    type: typing.Literal["nats"] = pydantic.Field(default="nats")
+    """
+    +value=nats
     """
 
     wait_time_seconds: int = pydantic.Field(default=19)
@@ -54,15 +62,6 @@ class NatsInputConfig(UniversalBaseModel):
     +usage=Wait timeout for long polling.
     +sort=5
     """
-
-    nats_metrics_url: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    +label=NATS metrics URL
-    +usage=URL for the NATS metrics endpoint. It is compulsory if you want to use NATS autoscaling.
-    +message=NATS Metrics URL should be a valid HTTP/HTTPS URL
-    """
-
-    auth: typing.Optional[NatsUserPasswordAuth] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

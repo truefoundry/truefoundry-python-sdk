@@ -9,9 +9,11 @@ from .volume_config import VolumeConfig
 
 
 class Volume(UniversalBaseModel):
-    type: typing.Literal["volume"] = pydantic.Field(default="volume")
+    config: VolumeConfig = pydantic.Field()
     """
-    +value=volume
+    +sort=2
+    +label=Volume Config
+    +message=Volume Configuration, can be either Dynamically provisioned or statically provisioned.
     """
 
     name: str = pydantic.Field()
@@ -21,11 +23,9 @@ class Volume(UniversalBaseModel):
     +usage=Name of the Volume. This will be set as the volume name.
     """
 
-    config: VolumeConfig = pydantic.Field()
+    type: typing.Literal["volume"] = pydantic.Field(default="volume")
     """
-    +sort=2
-    +label=Volume Config
-    +message=Volume Configuration, can be either Dynamically provisioned or statically provisioned.
+    +value=volume
     """
 
     volume_browser: typing.Optional[VolumeBrowser] = None

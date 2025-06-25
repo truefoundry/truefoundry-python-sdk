@@ -18,9 +18,12 @@ class Rolling(UniversalBaseModel):
     +label=Rolling update strategy
     """
 
-    type: typing.Literal["rolling_update"] = pydantic.Field(default="rolling_update")
+    max_surge_percentage: int = pydantic.Field(default=25)
     """
-    +value=rolling_update
+    +label=Max Surge(%)
+    +usage=Percentage of total replicas of updated image that can be brought up over the total replicas count.
+    For a value of 25 when replicas are set to 12 this would mean (12+(25% of 12) = 15) pods might be running at one time.
+    Setting this to a higher value can help in speeding up the deployment process.
     """
 
     max_unavailable_percentage: int = pydantic.Field(default=25)
@@ -31,12 +34,9 @@ class Rolling(UniversalBaseModel):
     Setting this to a higher value can help in speeding up the deployment process.
     """
 
-    max_surge_percentage: int = pydantic.Field(default=25)
+    type: typing.Literal["rolling_update"] = pydantic.Field(default="rolling_update")
     """
-    +label=Max Surge(%)
-    +usage=Percentage of total replicas of updated image that can be brought up over the total replicas count.
-    For a value of 25 when replicas are set to 12 this would mean (12+(25% of 12) = 15) pods might be running at one time.
-    Setting this to a higher value can help in speeding up the deployment process.
+    +value=rolling_update
     """
 
     if IS_PYDANTIC_V2:

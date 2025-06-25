@@ -12,6 +12,20 @@ class AmqpOutputConfig(UniversalBaseModel):
     +label=AMQP
     """
 
+    exchange_name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    +label=Exchange Name
+    +usage=AMQP Exchange Name
+    +sort=3
+    """
+
+    routing_key: str = pydantic.Field()
+    """
+    +label=Routing Key
+    +usage=AMQP Routing Key to publish to.
+    +sort=2
+    """
+
     type: typing.Literal["amqp"] = pydantic.Field(default="amqp")
     """
     +value=amqp
@@ -22,20 +36,6 @@ class AmqpOutputConfig(UniversalBaseModel):
     +label=Queue URL
     +usage=AMQP Queue URL of Publisher
     +sort=1
-    """
-
-    routing_key: str = pydantic.Field()
-    """
-    +label=Routing Key
-    +usage=AMQP Routing Key to publish to.
-    +sort=2
-    """
-
-    exchange_name: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    +label=Exchange Name
-    +usage=AMQP Exchange Name
-    +sort=3
     """
 
     if IS_PYDANTIC_V2:

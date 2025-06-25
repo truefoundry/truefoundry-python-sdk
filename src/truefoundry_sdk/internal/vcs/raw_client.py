@@ -19,54 +19,6 @@ class RawVcsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_repository_details(
-        self, *, repo_url: str, id: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[GitRepositoryExistsResponse]:
-        """
-        Parameters
-        ----------
-        repo_url : str
-            The URL of the repository
-
-        id : typing.Optional[str]
-            The integration id of the repository
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[GitRepositoryExistsResponse]
-            Returns git repository details if git repository exists and is accessible
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/svc/v1/vcs/repository/details",
-            method="POST",
-            json={
-                "repoURL": repo_url,
-                "id": id,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    GitRepositoryExistsResponse,
-                    parse_obj_as(
-                        type_=GitRepositoryExistsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
     def get_authenticated_url(
         self, *, repo_url: str, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetAuthenticatedVcsurlResponse]:
@@ -111,14 +63,9 @@ class RawVcsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-
-class AsyncRawVcsClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
-
-    async def get_repository_details(
+    def get_repository_details(
         self, *, repo_url: str, id: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[GitRepositoryExistsResponse]:
+    ) -> HttpResponse[GitRepositoryExistsResponse]:
         """
         Parameters
         ----------
@@ -133,15 +80,15 @@ class AsyncRawVcsClient:
 
         Returns
         -------
-        AsyncHttpResponse[GitRepositoryExistsResponse]
+        HttpResponse[GitRepositoryExistsResponse]
             Returns git repository details if git repository exists and is accessible
         """
-        _response = await self._client_wrapper.httpx_client.request(
+        _response = self._client_wrapper.httpx_client.request(
             "api/svc/v1/vcs/repository/details",
             method="POST",
             json={
-                "repoURL": repo_url,
                 "id": id,
+                "repoURL": repo_url,
             },
             headers={
                 "content-type": "application/json",
@@ -158,11 +105,16 @@ class AsyncRawVcsClient:
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=_data)
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+
+class AsyncRawVcsClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._client_wrapper = client_wrapper
 
     async def get_authenticated_url(
         self, *, repo_url: str, request_options: typing.Optional[RequestOptions] = None
@@ -199,6 +151,54 @@ class AsyncRawVcsClient:
                     GetAuthenticatedVcsurlResponse,
                     parse_obj_as(
                         type_=GetAuthenticatedVcsurlResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_repository_details(
+        self, *, repo_url: str, id: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[GitRepositoryExistsResponse]:
+        """
+        Parameters
+        ----------
+        repo_url : str
+            The URL of the repository
+
+        id : typing.Optional[str]
+            The integration id of the repository
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GitRepositoryExistsResponse]
+            Returns git repository details if git repository exists and is accessible
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/svc/v1/vcs/repository/details",
+            method="POST",
+            json={
+                "id": id,
+                "repoURL": repo_url,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GitRepositoryExistsResponse,
+                    parse_obj_as(
+                        type_=GitRepositoryExistsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

@@ -12,14 +12,14 @@ class ToolMessage(UniversalBaseModel):
     Tool message for the chat
     """
 
-    role: typing.Literal["tool"] = pydantic.Field(default="tool")
-    """
-    Role of the message
-    """
-
     content: ToolMessageContent = pydantic.Field()
     """
     Content of the tool call result
+    """
+
+    role: typing.Literal["tool"] = pydantic.Field(default="tool")
+    """
+    Role of the message
     """
 
     tool_call_id: str = pydantic.Field()

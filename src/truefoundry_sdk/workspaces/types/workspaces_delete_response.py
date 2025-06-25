@@ -8,11 +8,12 @@ from ...types.workspace import Workspace
 
 
 class WorkspacesDeleteResponse(UniversalBaseModel):
-    workspace: typing.Optional[Workspace] = None
     message: typing.Optional[str] = pydantic.Field(default=None)
     """
     Destroyed the workspace
     """
+
+    workspace: typing.Optional[Workspace] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

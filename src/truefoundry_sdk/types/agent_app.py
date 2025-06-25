@@ -9,12 +9,6 @@ from .agent_with_fqn import AgentWithFqn
 
 
 class AgentApp(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["agent-app"]] = None
-    tools: typing.List[AgentOpenApiToolWithFqn] = pydantic.Field()
-    """
-    Tools available to the Agent app
-    """
-
     agents: typing.List[AgentWithFqn] = pydantic.Field()
     """
     Agents available to the Agent app
@@ -24,6 +18,13 @@ class AgentApp(UniversalBaseModel):
     """
     Root Agent for the app. This will be the first agent invoked
     """
+
+    tools: typing.List[AgentOpenApiToolWithFqn] = pydantic.Field()
+    """
+    Tools available to the Agent app
+    """
+
+    type: typing.Optional[typing.Literal["agent-app"]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

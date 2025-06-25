@@ -12,14 +12,14 @@ from .deployment_transition import DeploymentTransition
 
 
 class DeploymentStatus(UniversalBaseModel):
-    id: typing.Optional[str] = None
+    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None
     deployment_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="deploymentId")] = None
-    status: typing.Optional[DeploymentStatusValue] = None
-    state: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
-    transition: typing.Optional[DeploymentTransition] = None
+    id: typing.Optional[str] = None
     message: typing.Optional[str] = None
     retry_count: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="retryCount")] = None
-    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None
+    state: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    status: typing.Optional[DeploymentStatusValue] = None
+    transition: typing.Optional[DeploymentTransition] = None
     updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = None
 
     if IS_PYDANTIC_V2:

@@ -7,18 +7,18 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class KafkaSaslAuth(UniversalBaseModel):
-    username: str = pydantic.Field()
-    """
-    +label=Username
-    +usage=Username for SASL authentication
-    +sort=1
-    """
-
     password: str = pydantic.Field()
     """
     +label=Password
     +usage=Password for SASL authentication
     +sort=2
+    """
+
+    username: str = pydantic.Field()
+    """
+    +label=Username
+    +usage=Username for SASL authentication
+    +sort=1
     """
 
     if IS_PYDANTIC_V2:

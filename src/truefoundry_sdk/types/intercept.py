@@ -8,11 +8,6 @@ from .intercept_rules_item import InterceptRulesItem
 
 
 class Intercept(UniversalBaseModel):
-    type: typing.Literal["intercept"] = pydantic.Field(default="intercept")
-    """
-    +value=intercept
-    """
-
     name: str = pydantic.Field()
     """
     +sort=1
@@ -21,6 +16,10 @@ class Intercept(UniversalBaseModel):
     """
 
     rules: typing.List[InterceptRulesItem]
+    type: typing.Literal["intercept"] = pydantic.Field(default="intercept")
+    """
+    +value=intercept
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

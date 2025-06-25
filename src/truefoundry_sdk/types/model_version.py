@@ -11,17 +11,17 @@ from .subject import Subject
 
 
 class ModelVersion(UniversalBaseModel):
-    id: str
-    fqn: str
-    created_by_subject: Subject
     created_at: typing.Optional[dt.datetime] = None
-    updated_at: typing.Optional[dt.datetime] = None
+    created_by_subject: Subject
+    deployable: typing.Optional[bool] = False
+    fqn: str
+    id: str
     manifest: ModelManifest
-    usage_code_snippet: typing.Optional[str] = None
+    metrics: typing.Optional[typing.List[Metric]] = None
     ml_repo_id: str
     model_id: str
-    metrics: typing.Optional[typing.List[Metric]] = None
-    deployable: typing.Optional[bool] = False
+    updated_at: typing.Optional[dt.datetime] = None
+    usage_code_snippet: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

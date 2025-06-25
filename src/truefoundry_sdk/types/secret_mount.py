@@ -7,11 +7,6 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class SecretMount(UniversalBaseModel):
-    type: typing.Literal["secret"] = pydantic.Field(default="secret")
-    """
-    +value=secret
-    """
-
     mount_path: str = pydantic.Field()
     """
     +label=File path
@@ -23,6 +18,11 @@ class SecretMount(UniversalBaseModel):
     """
     +label=Secret
     +usage=The TrueFoundry secret whose value will be the file content.
+    """
+
+    type: typing.Literal["secret"] = pydantic.Field(default="secret")
+    """
+    +value=secret
     """
 
     if IS_PYDANTIC_V2:

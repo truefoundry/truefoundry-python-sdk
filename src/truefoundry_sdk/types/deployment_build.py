@@ -12,18 +12,18 @@ from .build_status import BuildStatus
 
 
 class DeploymentBuild(UniversalBaseModel):
-    id: typing.Optional[str] = None
-    deployment_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="deploymentId")] = None
-    component_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="componentName")] = None
     build: typing.Optional[BuildInfo] = None
     build_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="buildId")] = None
+    component_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="componentName")] = None
+    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None
+    deployment_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="deploymentId")] = None
+    get_logs_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="getLogsUrl")] = None
+    id: typing.Optional[str] = None
     image_uri: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="imageUri")] = None
+    logs_start_ts: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="logsStartTs")] = None
     name: typing.Optional[str] = None
     status: typing.Optional[BuildStatus] = None
-    get_logs_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="getLogsUrl")] = None
     tail_logs_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="tailLogsUrl")] = None
-    logs_start_ts: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="logsStartTs")] = None
-    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None
     updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = None
 
     if IS_PYDANTIC_V2:

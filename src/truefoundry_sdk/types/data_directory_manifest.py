@@ -12,17 +12,6 @@ class DataDirectoryManifest(UniversalBaseModel):
     Data Directory manifest.
     """
 
-    type: typing.Literal["data-dir"] = "data-dir"
-    name: str = pydantic.Field()
-    """
-    Name of the data directory
-    """
-
-    ml_repo: str = pydantic.Field()
-    """
-    Name of the ML Repo to create the data directory under
-    """
-
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     Description for the data directory
@@ -33,7 +22,18 @@ class DataDirectoryManifest(UniversalBaseModel):
     Key Value metadata. Should be valid JSON. For e.g. `{"business-unit": "sales", "quality": "good", "rating": 4.5}`
     """
 
+    ml_repo: str = pydantic.Field()
+    """
+    Name of the ML Repo to create the data directory under
+    """
+
+    name: str = pydantic.Field()
+    """
+    Name of the data directory
+    """
+
     source: DataDirectoryManifestSource
+    type: typing.Literal["data-dir"] = "data-dir"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

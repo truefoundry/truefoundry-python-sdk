@@ -20,25 +20,25 @@ from .workflows.client import AsyncWorkflowsClient, WorkflowsClient
 class InternalClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawInternalClient(client_wrapper=client_wrapper)
-        self.users = UsersClient(client_wrapper=client_wrapper)
+        self.ml = MlClient(client_wrapper=client_wrapper)
 
-        self.clusters = ClustersClient(client_wrapper=client_wrapper)
+        self.artifact_versions = ArtifactVersionsClient(client_wrapper=client_wrapper)
 
         self.deployments = DeploymentsClient(client_wrapper=client_wrapper)
 
         self.applications = ApplicationsClient(client_wrapper=client_wrapper)
 
-        self.vcs = VcsClient(client_wrapper=client_wrapper)
+        self.clusters = ClustersClient(client_wrapper=client_wrapper)
 
         self.docker_registries = DockerRegistriesClient(client_wrapper=client_wrapper)
 
         self.metrics = MetricsClient(client_wrapper=client_wrapper)
 
+        self.users = UsersClient(client_wrapper=client_wrapper)
+
+        self.vcs = VcsClient(client_wrapper=client_wrapper)
+
         self.workflows = WorkflowsClient(client_wrapper=client_wrapper)
-
-        self.artifact_versions = ArtifactVersionsClient(client_wrapper=client_wrapper)
-
-        self.ml = MlClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> RawInternalClient:
@@ -93,25 +93,25 @@ class InternalClient:
 class AsyncInternalClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawInternalClient(client_wrapper=client_wrapper)
-        self.users = AsyncUsersClient(client_wrapper=client_wrapper)
+        self.ml = AsyncMlClient(client_wrapper=client_wrapper)
 
-        self.clusters = AsyncClustersClient(client_wrapper=client_wrapper)
+        self.artifact_versions = AsyncArtifactVersionsClient(client_wrapper=client_wrapper)
 
         self.deployments = AsyncDeploymentsClient(client_wrapper=client_wrapper)
 
         self.applications = AsyncApplicationsClient(client_wrapper=client_wrapper)
 
-        self.vcs = AsyncVcsClient(client_wrapper=client_wrapper)
+        self.clusters = AsyncClustersClient(client_wrapper=client_wrapper)
 
         self.docker_registries = AsyncDockerRegistriesClient(client_wrapper=client_wrapper)
 
         self.metrics = AsyncMetricsClient(client_wrapper=client_wrapper)
 
+        self.users = AsyncUsersClient(client_wrapper=client_wrapper)
+
+        self.vcs = AsyncVcsClient(client_wrapper=client_wrapper)
+
         self.workflows = AsyncWorkflowsClient(client_wrapper=client_wrapper)
-
-        self.artifact_versions = AsyncArtifactVersionsClient(client_wrapper=client_wrapper)
-
-        self.ml = AsyncMlClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> AsyncRawInternalClient:

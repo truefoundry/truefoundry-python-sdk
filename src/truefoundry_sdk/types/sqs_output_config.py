@@ -13,11 +13,7 @@ class SqsOutputConfig(UniversalBaseModel):
     +label=SQS
     """
 
-    type: typing.Literal["sqs"] = pydantic.Field(default="sqs")
-    """
-    +value=sqs
-    """
-
+    auth: AwsAccessKeyAuth
     queue_url: str = pydantic.Field()
     """
     +label=Queue URL
@@ -32,7 +28,10 @@ class SqsOutputConfig(UniversalBaseModel):
     +sort=2
     """
 
-    auth: AwsAccessKeyAuth
+    type: typing.Literal["sqs"] = pydantic.Field(default="sqs")
+    """
+    +value=sqs
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -8,9 +8,9 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class Metric(UniversalBaseModel):
     key: str
-    value: typing.Optional[float] = None
-    timestamp: typing.Optional[int] = None
     step: typing.Optional[int] = 0
+    timestamp: typing.Optional[int] = None
+    value: typing.Optional[float] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

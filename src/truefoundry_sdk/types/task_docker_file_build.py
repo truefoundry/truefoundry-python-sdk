@@ -13,9 +13,9 @@ class TaskDockerFileBuild(UniversalBaseModel):
     +icon=fa-brands fa-docker:#0db7ed
     """
 
-    type: typing.Literal["task-dockerfile-build"] = pydantic.Field(default="task-dockerfile-build")
+    build_args: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
     """
-    +value=dockerfile
+    +label=Build arguments to pass to docker build
     """
 
     docker_registry: typing.Optional[str] = pydantic.Field(default=None)
@@ -33,9 +33,9 @@ class TaskDockerFileBuild(UniversalBaseModel):
     +usage=The file path of the Dockerfile relative to project root path.
     """
 
-    build_args: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
+    type: typing.Literal["task-dockerfile-build"] = pydantic.Field(default="task-dockerfile-build")
     """
-    +label=Build arguments to pass to docker build
+    +value=dockerfile
     """
 
     if IS_PYDANTIC_V2:

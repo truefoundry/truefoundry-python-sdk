@@ -10,13 +10,13 @@ from .tracing_project_manifest import TracingProjectManifest
 
 
 class TracingProject(UniversalBaseModel):
-    id: str
-    name: str
-    fqn: str
-    ml_repo_id: int
-    manifest: TracingProjectManifest
-    created_by_subject: Subject
     created_at: dt.datetime
+    created_by_subject: Subject
+    fqn: str
+    id: str
+    manifest: TracingProjectManifest
+    ml_repo_id: int
+    name: str
     updated_at: dt.datetime
 
     if IS_PYDANTIC_V2:

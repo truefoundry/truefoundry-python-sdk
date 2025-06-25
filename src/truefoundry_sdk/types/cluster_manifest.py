@@ -14,35 +14,6 @@ from .spark_config import SparkConfig
 
 
 class ClusterManifest(UniversalBaseModel):
-    type: typing.Literal["cluster"] = pydantic.Field(default="cluster")
-    """
-    +value=cluster
-    """
-
-    name: str = pydantic.Field()
-    """
-    +label=Name
-    +icon=fa-desktop:#black
-    +sort=10
-    +message=3 to 35 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
-    """
-
-    cluster_type: ClusterManifestClusterType = pydantic.Field()
-    """
-    +label=Cluster Type
-    +icon=fa-cloud:#7EC8E3
-    +sort=20
-    +usage=The cluster type of this cluster
-    """
-
-    environment_names: typing.List[str] = pydantic.Field()
-    """
-    +label=Environments
-    +icon=fa-tags:#black
-    +usage=Tag the environment like dev, staging or production. You will need to [create environments](https://docs.truefoundry.com/docs/key-concepts#creating-environments) if you don't have already.
-    +sort=30
-    """
-
     base_domains: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     +label=Base Domain URLs
@@ -54,26 +25,6 @@ class ClusterManifest(UniversalBaseModel):
     +message=Domain URL should be valid domain or IP address
     """
 
-    monitoring: typing.Optional[ClusterManifestMonitoring] = pydantic.Field(default=None)
-    """
-    +label=Monitoring
-    +icon=fa-gear:#68BBE3
-    +sort=50
-    """
-
-    default_registry_fqn: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    +label=Cluster Default Registry
-    +sort=60
-    """
-
-    workbench_config: typing.Optional[ClusterManifestWorkbenchConfig] = pydantic.Field(default=None)
-    """
-    +label=Workbench Config
-    +sort=70
-    """
-
-    spark_config: typing.Optional[SparkConfig] = None
     cluster_integration_fqn: typing.Optional[str] = pydantic.Field(default=None)
     """
     +label=Cluster Integration FQN
@@ -82,20 +33,48 @@ class ClusterManifest(UniversalBaseModel):
     +uiProps={"descriptionKey": "cluster_name","integrationType": "cluster"}
     """
 
-    workflow_storage_integration_fqn: typing.Optional[str] = pydantic.Field(default=None)
+    cluster_type: ClusterManifestClusterType = pydantic.Field()
     """
-    +label=Workflow Storage Integration
-    +sort=80
-    +uiType=IntegrationSelect
-    +uiProps={"descriptionKey": "cluster_name","integrationType": "blob-storage"}
+    +label=Cluster Type
+    +icon=fa-cloud:#7EC8E3
+    +sort=20
+    +usage=The cluster type of this cluster
     """
 
-    supported_nodepools: typing.Optional[typing.List[Nodepool]] = pydantic.Field(default=None)
+    collaborators: typing.List[Collaborator] = pydantic.Field()
     """
-    +label=Nodepools
-    +usage=Add nodepools that are already created in your cluster.
-    When deploying, applications can choose to schedule from these nodepools.
-    +sort=90
+    +label=Collaborators
+    +usage=Collaborators who can access this cluster
+    +sort=110
+    """
+
+    default_registry_fqn: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    +label=Cluster Default Registry
+    +sort=60
+    """
+
+    environment_names: typing.List[str] = pydantic.Field()
+    """
+    +label=Environments
+    +icon=fa-tags:#black
+    +usage=Tag the environment like dev, staging or production. You will need to [create environments](https://docs.truefoundry.com/docs/key-concepts#creating-environments) if you don't have already.
+    +sort=30
+    """
+
+    monitoring: typing.Optional[ClusterManifestMonitoring] = pydantic.Field(default=None)
+    """
+    +label=Monitoring
+    +icon=fa-gear:#68BBE3
+    +sort=50
+    """
+
+    name: str = pydantic.Field()
+    """
+    +label=Name
+    +icon=fa-desktop:#black
+    +sort=10
+    +message=3 to 35 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
     """
 
     node_label_keys: typing.Optional[ClusterManifestNodeLabelKeys] = pydantic.Field(default=None)
@@ -107,11 +86,32 @@ class ClusterManifest(UniversalBaseModel):
     +sort=100
     """
 
-    collaborators: typing.List[Collaborator] = pydantic.Field()
+    spark_config: typing.Optional[SparkConfig] = None
+    supported_nodepools: typing.Optional[typing.List[Nodepool]] = pydantic.Field(default=None)
     """
-    +label=Collaborators
-    +usage=Collaborators who can access this cluster
-    +sort=110
+    +label=Nodepools
+    +usage=Add nodepools that are already created in your cluster.
+    When deploying, applications can choose to schedule from these nodepools.
+    +sort=90
+    """
+
+    type: typing.Literal["cluster"] = pydantic.Field(default="cluster")
+    """
+    +value=cluster
+    """
+
+    workbench_config: typing.Optional[ClusterManifestWorkbenchConfig] = pydantic.Field(default=None)
+    """
+    +label=Workbench Config
+    +sort=70
+    """
+
+    workflow_storage_integration_fqn: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    +label=Workflow Storage Integration
+    +sort=80
+    +uiType=IntegrationSelect
+    +uiProps={"descriptionKey": "cluster_name","integrationType": "blob-storage"}
     """
 
     if IS_PYDANTIC_V2:

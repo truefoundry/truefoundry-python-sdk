@@ -13,17 +13,14 @@ class SparkImage(UniversalBaseModel):
     +icon=fa-brands fa-docker:#0db7ed
     """
 
-    type: typing.Literal["spark-image"] = pydantic.Field(default="spark-image")
+    docker_registry: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +value=spark-image
-    """
-
-    spark_version: str = pydantic.Field(default="3.5.2")
-    """
-    --- Spark Specific Field ---
-    +label=Spark Version
-    +usage=Spark version should match the spark version installed in the image.
-    +sort=1000
+    +docs=FQN of the container registry. You can the FQN of your desired container registry (or add one)
+    in the  Integrations page[Integrations](https://app.truefoundry.tech/integrations?tab=docker-registry) page
+    +label=Docker Registry
+    +usage=FQN of the container registry. If you can't find your registry here,
+    add it through the [Integrations](/integrations?tab=docker-registry) page
+    +sort=1002
     """
 
     image_uri: str = pydantic.Field()
@@ -36,14 +33,17 @@ class SparkImage(UniversalBaseModel):
     +sort=1001
     """
 
-    docker_registry: typing.Optional[str] = pydantic.Field(default=None)
+    spark_version: str = pydantic.Field(default="3.5.2")
     """
-    +docs=FQN of the container registry. You can the FQN of your desired container registry (or add one)
-    in the  Integrations page[Integrations](https://app.truefoundry.tech/integrations?tab=docker-registry) page
-    +label=Docker Registry
-    +usage=FQN of the container registry. If you can't find your registry here,
-    add it through the [Integrations](/integrations?tab=docker-registry) page
-    +sort=1002
+    --- Spark Specific Field ---
+    +label=Spark Version
+    +usage=Spark version should match the spark version installed in the image.
+    +sort=1000
+    """
+
+    type: typing.Literal["spark-image"] = pydantic.Field(default="spark-image")
+    """
+    +value=spark-image
     """
 
     if IS_PYDANTIC_V2:

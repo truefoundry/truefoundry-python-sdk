@@ -13,6 +13,11 @@ class ClusterManifestMonitoring(UniversalBaseModel):
     +sort=50
     """
 
+    kubecost_url: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    +label=Cluster Kubecost URL
+    """
+
     loki_url: typing.Optional[str] = pydantic.Field(default=None)
     """
     +label=Cluster Loki URL
@@ -23,9 +28,9 @@ class ClusterManifestMonitoring(UniversalBaseModel):
     +label=Cluster Prometheus URL
     """
 
-    kubecost_url: typing.Optional[str] = pydantic.Field(default=None)
+    victoria_logs_url: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Cluster Kubecost URL
+    +label=Cluster VictoriaLogs URL
     """
 
     if IS_PYDANTIC_V2:

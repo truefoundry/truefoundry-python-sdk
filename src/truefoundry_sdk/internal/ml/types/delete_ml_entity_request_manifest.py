@@ -11,11 +11,11 @@ from ....types.ml_repo_manifest import MlRepoManifest
 from ....types.model_manifest import ModelManifest
 
 DeleteMlEntityRequestManifest = typing.Union[
-    ModelManifest,
-    ChatPromptManifest,
-    AgentOpenApiToolManifest,
     AgentManifest,
     ArtifactManifest,
+    ChatPromptManifest,
     DataDirectoryManifest,
     MlRepoManifest,
+    ModelManifest,
+    AgentOpenApiToolManifest,
 ]

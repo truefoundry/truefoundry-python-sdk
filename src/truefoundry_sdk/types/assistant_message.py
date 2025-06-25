@@ -13,24 +13,24 @@ class AssistantMessage(UniversalBaseModel):
     Assistant message turn
     """
 
-    role: typing.Literal["assistant"] = pydantic.Field(default="assistant")
-    """
-    Role of the message
-    """
-
     content: typing.Optional[AssistantMessageContent] = pydantic.Field(default=None)
     """
     Text content for the assistant message
     """
 
-    tool_calls: typing.Optional[typing.List[ToolCall]] = pydantic.Field(default=None)
-    """
-    List of tool calls made by the assistant
-    """
-
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     Name of the assistant this message is from
+    """
+
+    role: typing.Literal["assistant"] = pydantic.Field(default="assistant")
+    """
+    Role of the message
+    """
+
+    tool_calls: typing.Optional[typing.List[ToolCall]] = pydantic.Field(default=None)
+    """
+    List of tool calls made by the assistant
     """
 
     if IS_PYDANTIC_V2:

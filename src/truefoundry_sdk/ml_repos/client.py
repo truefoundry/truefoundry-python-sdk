@@ -29,27 +29,38 @@ class MlReposClient:
         """
         return self._raw_client
 
-    def create_or_update(
+    def list(
         self,
         *,
-        manifest: typing.Dict[str, typing.Optional[typing.Any]],
+        name: typing.Optional[str] = None,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetMlRepoResponse:
+    ) -> SyncPager[MlRepo]:
         """
-        Creates or updates an MLRepo entity based on the provided manifest.
+        List ml repos
+        Args:
+            filters: Filters for the ml repos
+            user_info: Authenticated user information
+
+        Returns:
+            ListMLReposResponse: List of ml repos
 
         Parameters
         ----------
-        manifest : typing.Dict[str, typing.Optional[typing.Any]]
-            MLRepo manifest
+        name : typing.Optional[str]
+
+        limit : typing.Optional[int]
+
+        offset : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        GetMlRepoResponse
-            Returns the created or updated MLRepo entity based on the provided manifest.
+        SyncPager[MlRepo]
+            Successful Response
 
         Examples
         --------
@@ -59,12 +70,14 @@ class MlReposClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.ml_repos.create_or_update(
-            manifest={"key": "value"},
-        )
+        response = client.ml_repos.list()
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
         """
-        _response = self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
-        return _response.data
+        return self._raw_client.list(name=name, limit=limit, offset=offset, request_options=request_options)
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetMlRepoResponse:
         """
@@ -140,73 +153,7 @@ class MlReposClient:
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
 
-    def list(
-        self,
-        *,
-        name: typing.Optional[str] = None,
-        limit: typing.Optional[int] = 100,
-        offset: typing.Optional[int] = 0,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[MlRepo]:
-        """
-        List ml repos
-        Args:
-            filters: Filters for the ml repos
-            user_info: Authenticated user information
-
-        Returns:
-            ListMLReposResponse: List of ml repos
-
-        Parameters
-        ----------
-        name : typing.Optional[str]
-
-        limit : typing.Optional[int]
-
-        offset : typing.Optional[int]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SyncPager[MlRepo]
-            Successful Response
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        response = client.ml_repos.list()
-        for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        for page in response.iter_pages():
-            yield page
-        """
-        return self._raw_client.list(name=name, limit=limit, offset=offset, request_options=request_options)
-
-
-class AsyncMlReposClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawMlReposClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawMlReposClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawMlReposClient
-        """
-        return self._raw_client
-
-    async def create_or_update(
+    def create_or_update(
         self,
         *,
         manifest: typing.Dict[str, typing.Optional[typing.Any]],
@@ -230,6 +177,70 @@ class AsyncMlReposClient:
 
         Examples
         --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.ml_repos.create_or_update(
+            manifest={"key": "value"},
+        )
+        """
+        _response = self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
+        return _response.data
+
+
+class AsyncMlReposClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._raw_client = AsyncRawMlReposClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawMlReposClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawMlReposClient
+        """
+        return self._raw_client
+
+    async def list(
+        self,
+        *,
+        name: typing.Optional[str] = None,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncPager[MlRepo]:
+        """
+        List ml repos
+        Args:
+            filters: Filters for the ml repos
+            user_info: Authenticated user information
+
+        Returns:
+            ListMLReposResponse: List of ml repos
+
+        Parameters
+        ----------
+        name : typing.Optional[str]
+
+        limit : typing.Optional[int]
+
+        offset : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[MlRepo]
+            Successful Response
+
+        Examples
+        --------
         import asyncio
 
         from truefoundry_sdk import AsyncTrueFoundry
@@ -241,15 +252,18 @@ class AsyncMlReposClient:
 
 
         async def main() -> None:
-            await client.ml_repos.create_or_update(
-                manifest={"key": "value"},
-            )
+            response = await client.ml_repos.list()
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
-        return _response.data
+        return await self._raw_client.list(name=name, limit=limit, offset=offset, request_options=request_options)
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetMlRepoResponse:
         """
@@ -341,38 +355,27 @@ class AsyncMlReposClient:
         _response = await self._raw_client.delete(id, request_options=request_options)
         return _response.data
 
-    async def list(
+    async def create_or_update(
         self,
         *,
-        name: typing.Optional[str] = None,
-        limit: typing.Optional[int] = 100,
-        offset: typing.Optional[int] = 0,
+        manifest: typing.Dict[str, typing.Optional[typing.Any]],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[MlRepo]:
+    ) -> GetMlRepoResponse:
         """
-        List ml repos
-        Args:
-            filters: Filters for the ml repos
-            user_info: Authenticated user information
-
-        Returns:
-            ListMLReposResponse: List of ml repos
+        Creates or updates an MLRepo entity based on the provided manifest.
 
         Parameters
         ----------
-        name : typing.Optional[str]
-
-        limit : typing.Optional[int]
-
-        offset : typing.Optional[int]
+        manifest : typing.Dict[str, typing.Optional[typing.Any]]
+            MLRepo manifest
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncPager[MlRepo]
-            Successful Response
+        GetMlRepoResponse
+            Returns the created or updated MLRepo entity based on the provided manifest.
 
         Examples
         --------
@@ -387,15 +390,12 @@ class AsyncMlReposClient:
 
 
         async def main() -> None:
-            response = await client.ml_repos.list()
-            async for item in response:
-                yield item
-
-            # alternatively, you can paginate page-by-page
-            async for page in response.iter_pages():
-                yield page
+            await client.ml_repos.create_or_update(
+                manifest={"key": "value"},
+            )
 
 
         asyncio.run(main())
         """
-        return await self._raw_client.list(name=name, limit=limit, offset=offset, request_options=request_options)
+        _response = await self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
+        return _response.data

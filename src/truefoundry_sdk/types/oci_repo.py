@@ -11,17 +11,6 @@ class OciRepo(UniversalBaseModel):
     +label=OCIRepo
     """
 
-    type: typing.Literal["oci-repo"] = pydantic.Field(default="oci-repo")
-    """
-    +value=oci-repo
-    """
-
-    oci_chart_url: str = pydantic.Field()
-    """
-    +label=OCI chart URL
-    +message=Need to be a valid URL.
-    """
-
     integration_fqn: typing.Optional[str] = pydantic.Field(default=None)
     """
     +docs=FQN of the container registry. You can use the FQN of your desired container registry (or add one)
@@ -31,6 +20,17 @@ class OciRepo(UniversalBaseModel):
     add it through the [Integrations](/integrations) page
     +uiType=IntegrationSelect
     +uiProps={"integrationType":"docker-registry"}
+    """
+
+    oci_chart_url: str = pydantic.Field()
+    """
+    +label=OCI chart URL
+    +message=Need to be a valid URL.
+    """
+
+    type: typing.Literal["oci-repo"] = pydantic.Field(default="oci-repo")
+    """
+    +value=oci-repo
     """
 
     version: str = pydantic.Field()

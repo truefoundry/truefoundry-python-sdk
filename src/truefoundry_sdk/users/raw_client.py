@@ -136,8 +136,8 @@ class RawUsersClient:
             "api/svc/v1/users",
             method="POST",
             json={
-                "emails": emails,
                 "dryRun": dry_run,
+                "emails": emails,
             },
             headers={
                 "content-type": "application/json",
@@ -179,288 +179,6 @@ class RawUsersClient:
                 )
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def update_roles(
-        self, *, email: str, roles: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[UpdateUserRolesResponse]:
-        """
-        This endpoint allows tenant administrators to update the roles of a user within their tenant.
-
-        Parameters
-        ----------
-        email : str
-            Email of the user
-
-        roles : typing.Sequence[str]
-            Roles for the user
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[UpdateUserRolesResponse]
-            The user roles have been successfully updated.
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/svc/v1/users/roles",
-            method="PATCH",
-            json={
-                "email": email,
-                "roles": roles,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    UpdateUserRolesResponse,
-                    parse_obj_as(
-                        type_=UpdateUserRolesResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[GetUserResponse]:
-        """
-        Get User associated with provided User id
-
-        Parameters
-        ----------
-        id : str
-            User Id
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[GetUserResponse]
-            Returns the User associated with provided User id
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/users/{jsonable_encoder(id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    GetUserResponse,
-                    parse_obj_as(
-                        type_=GetUserResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def invite_user(
-        self, *, accept_invite_client_url: str, email: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[InviteUserResponse]:
-        """
-        Invite a user to the tenant
-
-        Parameters
-        ----------
-        accept_invite_client_url : str
-            Url to redirect when invite is accepted
-
-        email : str
-            Email of user
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[InviteUserResponse]
-            User has been successfully invited.
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/svc/v1/users/invite",
-            method="POST",
-            json={
-                "acceptInviteClientUrl": accept_invite_client_url,
-                "email": email,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    InviteUserResponse,
-                    parse_obj_as(
-                        type_=InviteUserResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 409:
-                raise ConflictError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def deactivate(
-        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[DeactivateUserResponse]:
-        """
-        Deactivate user associated with the provided email within the tenant.
-
-        Parameters
-        ----------
-        email : str
-            Email of the user
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[DeactivateUserResponse]
-            User has been successfully deactivated.
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/svc/v1/users/deactivate",
-            method="PATCH",
-            json={
-                "email": email,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    DeactivateUserResponse,
-                    parse_obj_as(
-                        type_=DeactivateUserResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Optional[typing.Any],
@@ -602,6 +320,288 @@ class RawUsersClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def deactivate(
+        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[DeactivateUserResponse]:
+        """
+        Deactivate user associated with the provided email within the tenant.
+
+        Parameters
+        ----------
+        email : str
+            Email of the user
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[DeactivateUserResponse]
+            User has been successfully deactivated.
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/svc/v1/users/deactivate",
+            method="PATCH",
+            json={
+                "email": email,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    DeactivateUserResponse,
+                    parse_obj_as(
+                        type_=DeactivateUserResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def invite_user(
+        self, *, accept_invite_client_url: str, email: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[InviteUserResponse]:
+        """
+        Invite a user to the tenant
+
+        Parameters
+        ----------
+        accept_invite_client_url : str
+            Url to redirect when invite is accepted
+
+        email : str
+            Email of user
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[InviteUserResponse]
+            User has been successfully invited.
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/svc/v1/users/invite",
+            method="POST",
+            json={
+                "acceptInviteClientUrl": accept_invite_client_url,
+                "email": email,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    InviteUserResponse,
+                    parse_obj_as(
+                        type_=InviteUserResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def update_roles(
+        self, *, email: str, roles: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[UpdateUserRolesResponse]:
+        """
+        This endpoint allows tenant administrators to update the roles of a user within their tenant.
+
+        Parameters
+        ----------
+        email : str
+            Email of the user
+
+        roles : typing.Sequence[str]
+            Roles for the user
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[UpdateUserRolesResponse]
+            The user roles have been successfully updated.
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/svc/v1/users/roles",
+            method="PATCH",
+            json={
+                "email": email,
+                "roles": roles,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    UpdateUserRolesResponse,
+                    parse_obj_as(
+                        type_=UpdateUserRolesResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[GetUserResponse]:
+        """
+        Get User associated with provided User id
+
+        Parameters
+        ----------
+        id : str
+            User Id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetUserResponse]
+            Returns the User associated with provided User id
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/users/{jsonable_encoder(id)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetUserResponse,
+                    parse_obj_as(
+                        type_=GetUserResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawUsersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -712,8 +712,8 @@ class AsyncRawUsersClient:
             "api/svc/v1/users",
             method="POST",
             json={
-                "emails": emails,
                 "dryRun": dry_run,
+                "emails": emails,
             },
             headers={
                 "content-type": "application/json",
@@ -760,6 +760,284 @@ class AsyncRawUsersClient:
                         typing.Optional[typing.Any],
                         parse_obj_as(
                             type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def activate(
+        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[ActivateUserResponse]:
+        """
+        Activate user associated with the provided email within the tenant.
+
+        Parameters
+        ----------
+        email : str
+            Email of the user
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ActivateUserResponse]
+            User has been successfully activated.
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/svc/v1/users/activate",
+            method="PATCH",
+            json={
+                "email": email,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ActivateUserResponse,
+                    parse_obj_as(
+                        type_=ActivateUserResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def change_password(
+        self,
+        *,
+        login_id: str,
+        new_password: str,
+        old_password: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[ChangePasswordResponse]:
+        """
+        Change password for the authenticated user. Requires clientId and loginId in the request body.
+
+        Parameters
+        ----------
+        login_id : str
+            login id of the user(email)
+
+        new_password : str
+            New password
+
+        old_password : str
+            Old password
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ChangePasswordResponse]
+            Password has been changed successfully.
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/svc/v1/users/change-password",
+            method="POST",
+            json={
+                "loginId": login_id,
+                "newPassword": new_password,
+                "oldPassword": old_password,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ChangePasswordResponse,
+                    parse_obj_as(
+                        type_=ChangePasswordResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def deactivate(
+        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[DeactivateUserResponse]:
+        """
+        Deactivate user associated with the provided email within the tenant.
+
+        Parameters
+        ----------
+        email : str
+            Email of the user
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[DeactivateUserResponse]
+            User has been successfully deactivated.
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/svc/v1/users/deactivate",
+            method="PATCH",
+            json={
+                "email": email,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    DeactivateUserResponse,
+                    parse_obj_as(
+                        type_=DeactivateUserResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def invite_user(
+        self, *, accept_invite_client_url: str, email: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[InviteUserResponse]:
+        """
+        Invite a user to the tenant
+
+        Parameters
+        ----------
+        accept_invite_client_url : str
+            Url to redirect when invite is accepted
+
+        email : str
+            Email of user
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[InviteUserResponse]
+            User has been successfully invited.
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/svc/v1/users/invite",
+            method="POST",
+            json={
+                "acceptInviteClientUrl": accept_invite_client_url,
+                "email": email,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    InviteUserResponse,
+                    parse_obj_as(
+                        type_=InviteUserResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -897,284 +1175,6 @@ class AsyncRawUsersClient:
                         ),
                     ),
                 )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def invite_user(
-        self, *, accept_invite_client_url: str, email: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[InviteUserResponse]:
-        """
-        Invite a user to the tenant
-
-        Parameters
-        ----------
-        accept_invite_client_url : str
-            Url to redirect when invite is accepted
-
-        email : str
-            Email of user
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[InviteUserResponse]
-            User has been successfully invited.
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/svc/v1/users/invite",
-            method="POST",
-            json={
-                "acceptInviteClientUrl": accept_invite_client_url,
-                "email": email,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    InviteUserResponse,
-                    parse_obj_as(
-                        type_=InviteUserResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 409:
-                raise ConflictError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def deactivate(
-        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[DeactivateUserResponse]:
-        """
-        Deactivate user associated with the provided email within the tenant.
-
-        Parameters
-        ----------
-        email : str
-            Email of the user
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[DeactivateUserResponse]
-            User has been successfully deactivated.
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/svc/v1/users/deactivate",
-            method="PATCH",
-            json={
-                "email": email,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    DeactivateUserResponse,
-                    parse_obj_as(
-                        type_=DeactivateUserResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def activate(
-        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[ActivateUserResponse]:
-        """
-        Activate user associated with the provided email within the tenant.
-
-        Parameters
-        ----------
-        email : str
-            Email of the user
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[ActivateUserResponse]
-            User has been successfully activated.
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/svc/v1/users/activate",
-            method="PATCH",
-            json={
-                "email": email,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    ActivateUserResponse,
-                    parse_obj_as(
-                        type_=ActivateUserResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        HttpError,
-                        parse_obj_as(
-                            type_=HttpError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def change_password(
-        self,
-        *,
-        login_id: str,
-        new_password: str,
-        old_password: str,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[ChangePasswordResponse]:
-        """
-        Change password for the authenticated user. Requires clientId and loginId in the request body.
-
-        Parameters
-        ----------
-        login_id : str
-            login id of the user(email)
-
-        new_password : str
-            New password
-
-        old_password : str
-            Old password
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[ChangePasswordResponse]
-            Password has been changed successfully.
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/svc/v1/users/change-password",
-            method="POST",
-            json={
-                "loginId": login_id,
-                "newPassword": new_password,
-                "oldPassword": old_password,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    ChangePasswordResponse,
-                    parse_obj_as(
-                        type_=ChangePasswordResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

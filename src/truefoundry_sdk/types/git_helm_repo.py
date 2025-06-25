@@ -7,9 +7,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class GitHelmRepo(UniversalBaseModel):
-    type: typing.Literal["git-helm-repo"] = pydantic.Field(default="git-helm-repo")
+    path: str = pydantic.Field()
     """
-    +value=git-helm-repo
+    +label=Path
+    +sort=3
+    +usage=Path to the chart.
     """
 
     repo_url: str = pydantic.Field()
@@ -27,11 +29,9 @@ class GitHelmRepo(UniversalBaseModel):
     +usage=Branch/Commit SHA/Tag of the git repo.
     """
 
-    path: str = pydantic.Field()
+    type: typing.Literal["git-helm-repo"] = pydantic.Field(default="git-helm-repo")
     """
-    +label=Path
-    +sort=3
-    +usage=Path to the chart.
+    +value=git-helm-repo
     """
 
     value_files: typing.Optional[typing.List[str]] = pydantic.Field(default=None)

@@ -9,9 +9,9 @@ from .permissions import Permissions
 
 
 class WorkspaceManifest(UniversalBaseModel):
-    type: typing.Literal["workspace"] = pydantic.Field(default="workspace")
+    annotations: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
     """
-    +value=workspace
+    +sort=750
     """
 
     cluster_fqn: str = pydantic.Field()
@@ -22,12 +22,10 @@ class WorkspaceManifest(UniversalBaseModel):
     +uiProps={"disableCloudProvider": true}
     """
 
-    name: str = pydantic.Field()
+    collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    +label=Name
-    +sort=200
-    +icon=fa-desktop:#black
-    +message=3 to 25 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
+    +label=Collaborators
+    +sort=500
     """
 
     environment_name: typing.Optional[str] = pydantic.Field(default=None)
@@ -43,15 +41,12 @@ class WorkspaceManifest(UniversalBaseModel):
     +sort=700
     """
 
-    annotations: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
+    name: str = pydantic.Field()
     """
-    +sort=750
-    """
-
-    collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
-    """
-    +label=Collaborators
-    +sort=500
+    +label=Name
+    +sort=200
+    +icon=fa-desktop:#black
+    +message=3 to 25 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
     """
 
     permissions: typing.Optional[typing.List[Permissions]] = pydantic.Field(default=None)
@@ -60,6 +55,11 @@ class WorkspaceManifest(UniversalBaseModel):
     +sort=500
     +uiType=Permissions
     +uiProps={"allowedResources": {"mlf-project": {"title": "ML Repo", "description": "ML Repos are used to store models and artifacts like git repos. MLRepos are backed by S3 / GCS / Azure bucket and you can have different ml repos with different set of permissions. [View Docs](https://docs.truefoundry.com/docs/introduction-to-ml-repo)"}}}
+    """
+
+    type: typing.Literal["workspace"] = pydantic.Field(default="workspace")
+    """
+    +value=workspace
     """
 
     if IS_PYDANTIC_V2:

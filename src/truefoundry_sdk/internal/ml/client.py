@@ -47,18 +47,21 @@ class MlClient:
 
         Examples
         --------
-        from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
+        from truefoundry_sdk import AgentManifest, TrueFoundry
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
         client.internal.ml.apply(
-            manifest=ModelManifest(
-                name="name",
+            manifest=AgentManifest(
+                available_tools=["available_tools"],
+                goal="goal",
+                instruction="instruction",
                 metadata={"key": "value"},
                 ml_repo="ml_repo",
-                source=TrueFoundryManagedSource(),
+                model_id="model_id",
+                name="name",
             ),
         )
         """
@@ -83,18 +86,21 @@ class MlClient:
 
         Examples
         --------
-        from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
+        from truefoundry_sdk import AgentManifest, TrueFoundry
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
         client.internal.ml.delete(
-            manifest=ModelManifest(
-                name="name",
+            manifest=AgentManifest(
+                available_tools=["available_tools"],
+                goal="goal",
+                instruction="instruction",
                 metadata={"key": "value"},
                 ml_repo="ml_repo",
-                source=TrueFoundryManagedSource(),
+                model_id="model_id",
+                name="name",
             ),
         )
         """
@@ -137,11 +143,7 @@ class AsyncMlClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import (
-            AsyncTrueFoundry,
-            ModelManifest,
-            TrueFoundryManagedSource,
-        )
+        from truefoundry_sdk import AgentManifest, AsyncTrueFoundry
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -151,11 +153,14 @@ class AsyncMlClient:
 
         async def main() -> None:
             await client.internal.ml.apply(
-                manifest=ModelManifest(
-                    name="name",
+                manifest=AgentManifest(
+                    available_tools=["available_tools"],
+                    goal="goal",
+                    instruction="instruction",
                     metadata={"key": "value"},
                     ml_repo="ml_repo",
-                    source=TrueFoundryManagedSource(),
+                    model_id="model_id",
+                    name="name",
                 ),
             )
 
@@ -185,11 +190,7 @@ class AsyncMlClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import (
-            AsyncTrueFoundry,
-            ModelManifest,
-            TrueFoundryManagedSource,
-        )
+        from truefoundry_sdk import AgentManifest, AsyncTrueFoundry
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -199,11 +200,14 @@ class AsyncMlClient:
 
         async def main() -> None:
             await client.internal.ml.delete(
-                manifest=ModelManifest(
-                    name="name",
+                manifest=AgentManifest(
+                    available_tools=["available_tools"],
+                    goal="goal",
+                    instruction="instruction",
                     metadata={"key": "value"},
                     ml_repo="ml_repo",
-                    source=TrueFoundryManagedSource(),
+                    model_id="model_id",
+                    name="name",
                 ),
             )
 

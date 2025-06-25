@@ -14,15 +14,15 @@ class Canary(UniversalBaseModel):
     +label=Canary strategy
     """
 
-    type: typing.Literal["canary"] = pydantic.Field(default="canary")
-    """
-    +value=canary
-    """
-
     steps: typing.List[CanaryStep] = pydantic.Field()
     """
     +docs=These steps would be executed in order to enable shifting of traffic slowly from stable to canary version
     +label=Steps
+    """
+
+    type: typing.Literal["canary"] = pydantic.Field(default="canary")
+    """
+    +value=canary
     """
 
     if IS_PYDANTIC_V2:

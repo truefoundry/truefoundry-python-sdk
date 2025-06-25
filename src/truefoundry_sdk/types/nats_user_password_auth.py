@@ -19,18 +19,18 @@ class NatsUserPasswordAuth(UniversalBaseModel):
     +sort=1
     """
 
-    user: str = pydantic.Field()
-    """
-    +label=User
-    +usage=User for NATS authentication
-    +sort=2
-    """
-
     password: str = pydantic.Field()
     """
     +label=Password
     +usage=Password for NATS authentication
     +sort=3
+    """
+
+    user: str = pydantic.Field()
+    """
+    +label=User
+    +usage=User for NATS authentication
+    +sort=2
     """
 
     if IS_PYDANTIC_V2:

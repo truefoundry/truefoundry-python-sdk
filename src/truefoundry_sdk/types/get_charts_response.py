@@ -8,12 +8,11 @@ from .graph import Graph
 
 
 class GetChartsResponse(UniversalBaseModel):
+    graphs: typing.List[Graph]
     step: str = pydantic.Field()
     """
     Step size
     """
-
-    graphs: typing.List[Graph]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

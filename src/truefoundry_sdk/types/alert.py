@@ -10,20 +10,20 @@ from ..core.serialization import FieldMetadata
 
 
 class Alert(UniversalBaseModel):
-    id: typing.Optional[str] = None
-    name: str
-    timestamps: typing.List[dt.datetime]
-    start_time: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="startTime")]
-    resolved_time: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="resolvedTime")] = None
-    application_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="applicationId")] = None
-    cluster_id: typing_extensions.Annotated[str, FieldMetadata(alias="clusterId")]
-    tenant_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="tenantName")] = None
-    fingerprint: str
-    updated_at: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="updatedAt")] = None
-    created_at: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdAt")] = None
     application_debug_info_id: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="applicationDebugInfoId")
     ] = None
+    application_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="applicationId")] = None
+    cluster_id: typing_extensions.Annotated[str, FieldMetadata(alias="clusterId")]
+    created_at: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdAt")] = None
+    fingerprint: str
+    id: typing.Optional[str] = None
+    name: str
+    resolved_time: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="resolvedTime")] = None
+    start_time: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="startTime")]
+    tenant_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="tenantName")] = None
+    timestamps: typing.List[dt.datetime]
+    updated_at: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="updatedAt")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

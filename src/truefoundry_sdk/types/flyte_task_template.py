@@ -9,8 +9,8 @@ from .flyte_task_id import FlyteTaskId
 
 
 class FlyteTaskTemplate(UniversalBaseModel):
-    id: FlyteTaskId
     custom: FlyteTaskCustom
+    id: FlyteTaskId
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

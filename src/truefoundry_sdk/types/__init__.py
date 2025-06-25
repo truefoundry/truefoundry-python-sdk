@@ -3,8 +3,8 @@
 # isort: skip_file
 
 from .resources import Resources
-from .resources_devices_item import ResourcesDevicesItem
 from .resources_node import ResourcesNode
+from .resources_devices_item import ResourcesDevicesItem
 from .activate_user_response import ActivateUserResponse
 from .add_on_component_source import AddOnComponentSource
 from .addon_component import AddonComponent

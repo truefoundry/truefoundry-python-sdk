@@ -11,18 +11,6 @@ from .environment_optimize_for import EnvironmentOptimizeFor
 
 
 class EnvironmentManifest(UniversalBaseModel):
-    type: typing.Literal["environment"] = pydantic.Field(default="environment")
-    """
-    +value=environment
-    """
-
-    name: str = pydantic.Field()
-    """
-    +sort=100
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
-    +usage=Environment Name
-    """
-
     color: EnvironmentColor
     is_production: typing_extensions.Annotated[bool, FieldMetadata(alias="isProduction")] = pydantic.Field()
     """
@@ -33,7 +21,18 @@ class EnvironmentManifest(UniversalBaseModel):
     +uiProps={"hideRadioIcon":true}
     """
 
+    name: str = pydantic.Field()
+    """
+    +sort=100
+    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
+    +usage=Environment Name
+    """
+
     optimize_for: typing_extensions.Annotated[EnvironmentOptimizeFor, FieldMetadata(alias="optimizeFor")]
+    type: typing.Literal["environment"] = pydantic.Field(default="environment")
+    """
+    +value=environment
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

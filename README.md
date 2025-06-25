@@ -100,10 +100,7 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.users.list(
-    limit=10,
-    offset=0,
-)
+response = client.agent_versions.list()
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -127,7 +124,7 @@ client = TrueFoundry(
 response = client.applications.with_raw_response.list(...)
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
-pager = client.users.list(...)
+pager = client.agent_versions.list(...)
 print(pager.response.headers)  # access the response headers for the first page
 for item in pager:
     print(item)  # access the underlying object(s)

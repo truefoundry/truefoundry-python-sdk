@@ -7,9 +7,10 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class HeaderMatch(UniversalBaseModel):
-    type: typing.Literal["header"] = pydantic.Field(default="header")
+    exact_match: str = pydantic.Field(default="")
     """
-    +value=header
+    +docs=Header value to match on
+    +label=Value
     """
 
     name: str = pydantic.Field()
@@ -18,10 +19,9 @@ class HeaderMatch(UniversalBaseModel):
     +label=Name
     """
 
-    exact_match: str = pydantic.Field(default="")
+    type: typing.Literal["header"] = pydantic.Field(default="header")
     """
-    +docs=Header value to match on
-    +label=Value
+    +value=header
     """
 
     if IS_PYDANTIC_V2:

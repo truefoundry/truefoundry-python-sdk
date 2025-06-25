@@ -31,6 +31,92 @@ class ModelsClient:
         """
         return self._raw_client
 
+    def create_or_update(
+        self, *, manifest: ModelManifest, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetModelVersionResponse:
+        """
+        Parameters
+        ----------
+        manifest : ModelManifest
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetModelVersionResponse
+            Successful Response
+
+        Examples
+        --------
+        from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.models.create_or_update(
+            manifest=ModelManifest(
+                metadata={"key": "value"},
+                ml_repo="ml_repo",
+                name="name",
+                source=TrueFoundryManagedSource(),
+            ),
+        )
+        """
+        _response = self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
+        return _response.data
+
+    def list(
+        self,
+        *,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
+        offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = 100,
+        run_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncPager[Model]:
+        """
+        Parameters
+        ----------
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
+
+        offset : typing.Optional[int]
+
+        limit : typing.Optional[int]
+
+        run_id : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[Model]
+            Successful Response
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.models.list()
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
+        """
+        return self._raw_client.list(
+            ml_repo_id=ml_repo_id, name=name, offset=offset, limit=limit, run_id=run_id, request_options=request_options
+        )
+
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetModelResponse:
         """
         Parameters
@@ -89,7 +175,71 @@ class ModelsClient:
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
 
-    def list(
+
+class AsyncModelsClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._raw_client = AsyncRawModelsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawModelsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawModelsClient
+        """
+        return self._raw_client
+
+    async def create_or_update(
+        self, *, manifest: ModelManifest, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetModelVersionResponse:
+        """
+        Parameters
+        ----------
+        manifest : ModelManifest
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetModelVersionResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import (
+            AsyncTrueFoundry,
+            ModelManifest,
+            TrueFoundryManagedSource,
+        )
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.models.create_or_update(
+                manifest=ModelManifest(
+                    metadata={"key": "value"},
+                    ml_repo="ml_repo",
+                    name="name",
+                    source=TrueFoundryManagedSource(),
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
+        return _response.data
+
+    async def list(
         self,
         *,
         ml_repo_id: typing.Optional[str] = None,
@@ -98,7 +248,7 @@ class ModelsClient:
         limit: typing.Optional[int] = 100,
         run_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Model]:
+    ) -> AsyncPager[Model]:
         """
         Parameters
         ----------
@@ -117,79 +267,36 @@ class ModelsClient:
 
         Returns
         -------
-        SyncPager[Model]
+        AsyncPager[Model]
             Successful Response
 
         Examples
         --------
-        from truefoundry_sdk import TrueFoundry
+        import asyncio
 
-        client = TrueFoundry(
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = client.models.list()
-        for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        for page in response.iter_pages():
-            yield page
+
+
+        async def main() -> None:
+            response = await client.models.list()
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
         """
-        return self._raw_client.list(
+        return await self._raw_client.list(
             ml_repo_id=ml_repo_id, name=name, offset=offset, limit=limit, run_id=run_id, request_options=request_options
         )
-
-    def create_or_update(
-        self, *, manifest: ModelManifest, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetModelVersionResponse:
-        """
-        Parameters
-        ----------
-        manifest : ModelManifest
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetModelVersionResponse
-            Successful Response
-
-        Examples
-        --------
-        from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.models.create_or_update(
-            manifest=ModelManifest(
-                name="name",
-                metadata={"key": "value"},
-                ml_repo="ml_repo",
-                source=TrueFoundryManagedSource(),
-            ),
-        )
-        """
-        _response = self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
-        return _response.data
-
-
-class AsyncModelsClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawModelsClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawModelsClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawModelsClient
-        """
-        return self._raw_client
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetModelResponse:
         """
@@ -263,111 +370,4 @@ class AsyncModelsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
-        return _response.data
-
-    async def list(
-        self,
-        *,
-        ml_repo_id: typing.Optional[str] = None,
-        name: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
-        run_id: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Model]:
-        """
-        Parameters
-        ----------
-        ml_repo_id : typing.Optional[str]
-
-        name : typing.Optional[str]
-
-        offset : typing.Optional[int]
-
-        limit : typing.Optional[int]
-
-        run_id : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncPager[Model]
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            response = await client.models.list()
-            async for item in response:
-                yield item
-
-            # alternatively, you can paginate page-by-page
-            async for page in response.iter_pages():
-                yield page
-
-
-        asyncio.run(main())
-        """
-        return await self._raw_client.list(
-            ml_repo_id=ml_repo_id, name=name, offset=offset, limit=limit, run_id=run_id, request_options=request_options
-        )
-
-    async def create_or_update(
-        self, *, manifest: ModelManifest, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetModelVersionResponse:
-        """
-        Parameters
-        ----------
-        manifest : ModelManifest
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetModelVersionResponse
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import (
-            AsyncTrueFoundry,
-            ModelManifest,
-            TrueFoundryManagedSource,
-        )
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.models.create_or_update(
-                manifest=ModelManifest(
-                    name="name",
-                    metadata={"key": "value"},
-                    ml_repo="ml_repo",
-                    source=TrueFoundryManagedSource(),
-                ),
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
         return _response.data

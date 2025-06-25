@@ -12,11 +12,6 @@ class UserMessage(UniversalBaseModel):
     User message turn
     """
 
-    role: typing.Literal["user"] = pydantic.Field(default="user")
-    """
-    Role of the message
-    """
-
     content: UserMessageContent = pydantic.Field()
     """
     Content of the user message. can be a mix of text and images
@@ -25,6 +20,11 @@ class UserMessage(UniversalBaseModel):
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     Name of the user this message is from
+    """
+
+    role: typing.Literal["user"] = pydantic.Field(default="user")
+    """
+    Role of the message
     """
 
     if IS_PYDANTIC_V2:

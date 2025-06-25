@@ -10,17 +10,17 @@ from .subject import Subject
 
 
 class InternalArtifactVersion(UniversalBaseModel):
-    id: str
-    fqn: str
-    created_by_subject: Subject
-    created_at: typing.Optional[dt.datetime] = None
-    updated_at: typing.Optional[dt.datetime] = None
-    manifest: ArtifactManifest
-    usage_code_snippet: typing.Optional[str] = None
-    ml_repo_id: str
-    artifact_id: str
     artifact_fqn: str
+    artifact_id: str
     artifact_size: typing.Optional[int] = None
+    created_at: typing.Optional[dt.datetime] = None
+    created_by_subject: Subject
+    fqn: str
+    id: str
+    manifest: ArtifactManifest
+    ml_repo_id: str
+    updated_at: typing.Optional[dt.datetime] = None
+    usage_code_snippet: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

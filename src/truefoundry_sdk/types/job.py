@@ -18,9 +18,47 @@ class Job(UniversalBaseModel):
     +docs=Describes the configuration for the job
     """
 
-    type: typing.Literal["job"] = pydantic.Field(default="job")
+    alerts: typing.Optional[typing.List[JobAlert]] = pydantic.Field(default=None)
     """
-    +value=job
+    +label=Alerts
+    +usage=Configure alerts to be sent when the job starts/fails/completes
+    +icon=fa-bell
+    +sort=650
+    """
+
+    concurrency_limit: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    +label=Concurrency Limit
+    +usage=Number of runs that can run concurrently
+    +icon=fa-copy
+    +sort=900
+    """
+
+    env: typing.Optional[typing.Dict[str, typing.Optional[str]]] = pydantic.Field(default=None)
+    """
+    +label=Environment Variables
+    +usage=Configure environment variables to be injected in the service either as plain text or secrets. [Docs](https://docs.truefoundry.com/docs/env-variables)
+    +icon=fa-globe
+    +sort=500
+    """
+
+    image: JobImage = pydantic.Field()
+    """
+    +docs=Specify whether you want to deploy a Docker image or build and deploy from source code
+    +label=Deploy a Docker image or build and deploy from source code
+    +icon=fa-solid fa-cloud-arrow-up:#21B6A8
+    +sort=200
+    """
+
+    kustomize: typing.Optional[Kustomize] = None
+    labels: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
+    """
+    +label=Labels
+    """
+
+    mounts: typing.Optional[typing.List[JobMountsItem]] = pydantic.Field(default=None)
+    """
+    +usage=Configure data to be mounted to job pod(s) as a string, secret or volume. [Docs](https://docs.truefoundry.com/docs/mounting-volumes-job)
     """
 
     name: str = pydantic.Field()
@@ -30,12 +68,33 @@ class Job(UniversalBaseModel):
     +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
     """
 
-    image: JobImage = pydantic.Field()
+    params: typing.Optional[typing.List[Param]] = pydantic.Field(default=None)
     """
-    +docs=Specify whether you want to deploy a Docker image or build and deploy from source code
-    +label=Deploy a Docker image or build and deploy from source code
-    +icon=fa-solid fa-cloud-arrow-up:#21B6A8
-    +sort=200
+    +label=Params for input
+    +usage=Configure params and pass it to create different job runs
+    +sort=400
+    """
+
+    resources: typing.Optional[Resources] = None
+    retries: typing.Optional[int] = pydantic.Field(default=0)
+    """
+    +label=Retries
+    +usage=Specify the maximum number of attempts to retry a job before it is marked as failed.
+    +icon=fa-repeat
+    +sort=700
+    """
+
+    service_account: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    +sort=1000
+    """
+
+    timeout: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    +label=Timeout
+    +usage=Job timeout in seconds.
+    +icon=fa-clock
+    +sort=800
     """
 
     trigger: JobTrigger = pydantic.Field()
@@ -51,70 +110,11 @@ class Job(UniversalBaseModel):
     +usage=Trigger the job after deploy immediately
     """
 
-    params: typing.Optional[typing.List[Param]] = pydantic.Field(default=None)
+    type: typing.Literal["job"] = pydantic.Field(default="job")
     """
-    +label=Params for input
-    +usage=Configure params and pass it to create different job runs
-    +sort=400
+    +value=job
     """
 
-    env: typing.Optional[typing.Dict[str, typing.Optional[str]]] = pydantic.Field(default=None)
-    """
-    +label=Environment Variables
-    +usage=Configure environment variables to be injected in the service either as plain text or secrets. [Docs](https://docs.truefoundry.com/docs/env-variables)
-    +icon=fa-globe
-    +sort=500
-    """
-
-    resources: typing.Optional[Resources] = None
-    alerts: typing.Optional[typing.List[JobAlert]] = pydantic.Field(default=None)
-    """
-    +label=Alerts
-    +usage=Configure alerts to be sent when the job starts/fails/completes
-    +icon=fa-bell
-    +sort=650
-    """
-
-    retries: typing.Optional[int] = pydantic.Field(default=0)
-    """
-    +label=Retries
-    +usage=Specify the maximum number of attempts to retry a job before it is marked as failed.
-    +icon=fa-repeat
-    +sort=700
-    """
-
-    timeout: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    +label=Timeout
-    +usage=Job timeout in seconds.
-    +icon=fa-clock
-    +sort=800
-    """
-
-    concurrency_limit: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    +label=Concurrency Limit
-    +usage=Number of runs that can run concurrently
-    +icon=fa-copy
-    +sort=900
-    """
-
-    service_account: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    +sort=1000
-    """
-
-    mounts: typing.Optional[typing.List[JobMountsItem]] = pydantic.Field(default=None)
-    """
-    +usage=Configure data to be mounted to job pod(s) as a string, secret or volume. [Docs](https://docs.truefoundry.com/docs/mounting-volumes-job)
-    """
-
-    labels: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
-    """
-    +label=Labels
-    """
-
-    kustomize: typing.Optional[Kustomize] = None
     workspace_fqn: typing.Optional[str] = pydantic.Field(default=None)
     """
     +label=Workspace FQN

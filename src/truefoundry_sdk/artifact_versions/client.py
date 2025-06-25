@@ -35,68 +35,6 @@ class ArtifactVersionsClient:
         """
         return self._raw_client
 
-    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetArtifactVersionResponse:
-        """
-        Get artifact version API
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetArtifactVersionResponse
-            Successful Response
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.artifact_versions.get(
-            id="id",
-        )
-        """
-        _response = self._raw_client.get(id, request_options=request_options)
-        return _response.data
-
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
-        """
-        Delete artifact versions API
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        EmptyResponse
-            Successful Response
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.artifact_versions.delete(
-            id="id",
-        )
-        """
-        _response = self._raw_client.delete(id, request_options=request_options)
-        return _response.data
-
     def list(
         self,
         *,
@@ -162,132 +100,13 @@ class ArtifactVersionsClient:
             request_options=request_options,
         )
 
-    def get_signed_urls(
-        self,
-        *,
-        id: str,
-        paths: typing.Sequence[str],
-        operation: Operation,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetSignedUrLsResponse:
-        """
-        Parameters
-        ----------
-        id : str
-
-        paths : typing.Sequence[str]
-
-        operation : Operation
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetSignedUrLsResponse
-            Successful Response
-
-        Examples
-        --------
-        from truefoundry_sdk import Operation, TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.artifact_versions.get_signed_urls(
-            id="id",
-            paths=["paths"],
-            operation=Operation.READ,
-        )
-        """
-        _response = self._raw_client.get_signed_urls(
-            id=id, paths=paths, operation=operation, request_options=request_options
-        )
-        return _response.data
-
-    def create_multi_part_upload(
-        self, *, id: str, path: str, num_parts: int, request_options: typing.Optional[RequestOptions] = None
-    ) -> MultiPartUploadResponse:
-        """
-        Parameters
-        ----------
-        id : str
-
-        path : str
-
-        num_parts : int
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        MultiPartUploadResponse
-            Successful Response
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.artifact_versions.create_multi_part_upload(
-            id="id",
-            path="path",
-            num_parts=1,
-        )
-        """
-        _response = self._raw_client.create_multi_part_upload(
-            id=id, path=path, num_parts=num_parts, request_options=request_options
-        )
-        return _response.data
-
-    def stage(
-        self, *, manifest: StageArtifactRequestManifest, request_options: typing.Optional[RequestOptions] = None
-    ) -> StageArtifactResponse:
-        """
-        Parameters
-        ----------
-        manifest : StageArtifactRequestManifest
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        StageArtifactResponse
-            Successful Response
-
-        Examples
-        --------
-        from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.artifact_versions.stage(
-            manifest=ModelManifest(
-                name="name",
-                metadata={"key": "value"},
-                ml_repo="ml_repo",
-                source=TrueFoundryManagedSource(),
-            ),
-        )
-        """
-        _response = self._raw_client.stage(manifest=manifest, request_options=request_options)
-        return _response.data
-
     def list_files(
         self,
         *,
         id: str,
-        path: typing.Optional[str] = OMIT,
         limit: typing.Optional[int] = OMIT,
         page_token: typing.Optional[str] = OMIT,
+        path: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[FileInfo]:
         """
@@ -295,11 +114,11 @@ class ArtifactVersionsClient:
         ----------
         id : str
 
-        path : typing.Optional[str]
-
         limit : typing.Optional[int]
 
         page_token : typing.Optional[str]
+
+        path : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -327,7 +146,7 @@ class ArtifactVersionsClient:
             yield page
         """
         return self._raw_client.list_files(
-            id=id, path=path, limit=limit, page_token=page_token, request_options=request_options
+            id=id, limit=limit, page_token=page_token, path=path, request_options=request_options
         )
 
     def mark_stage_failure(self, *, id: str, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
@@ -359,6 +178,191 @@ class ArtifactVersionsClient:
         _response = self._raw_client.mark_stage_failure(id=id, request_options=request_options)
         return _response.data
 
+    def get_signed_urls(
+        self,
+        *,
+        id: str,
+        operation: Operation,
+        paths: typing.Sequence[str],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetSignedUrLsResponse:
+        """
+        Parameters
+        ----------
+        id : str
+
+        operation : Operation
+
+        paths : typing.Sequence[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetSignedUrLsResponse
+            Successful Response
+
+        Examples
+        --------
+        from truefoundry_sdk import Operation, TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.artifact_versions.get_signed_urls(
+            id="id",
+            operation=Operation.READ,
+            paths=["paths"],
+        )
+        """
+        _response = self._raw_client.get_signed_urls(
+            id=id, operation=operation, paths=paths, request_options=request_options
+        )
+        return _response.data
+
+    def create_multi_part_upload(
+        self, *, id: str, num_parts: int, path: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> MultiPartUploadResponse:
+        """
+        Parameters
+        ----------
+        id : str
+
+        num_parts : int
+
+        path : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MultiPartUploadResponse
+            Successful Response
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.artifact_versions.create_multi_part_upload(
+            id="id",
+            num_parts=1,
+            path="path",
+        )
+        """
+        _response = self._raw_client.create_multi_part_upload(
+            id=id, num_parts=num_parts, path=path, request_options=request_options
+        )
+        return _response.data
+
+    def stage(
+        self, *, manifest: StageArtifactRequestManifest, request_options: typing.Optional[RequestOptions] = None
+    ) -> StageArtifactResponse:
+        """
+        Parameters
+        ----------
+        manifest : StageArtifactRequestManifest
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        StageArtifactResponse
+            Successful Response
+
+        Examples
+        --------
+        from truefoundry_sdk import (
+            ArtifactManifest,
+            TrueFoundry,
+            TrueFoundryManagedSource,
+        )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.artifact_versions.stage(
+            manifest=ArtifactManifest(
+                metadata={"key": "value"},
+                ml_repo="ml_repo",
+                name="name",
+                source=TrueFoundryManagedSource(),
+            ),
+        )
+        """
+        _response = self._raw_client.stage(manifest=manifest, request_options=request_options)
+        return _response.data
+
+    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetArtifactVersionResponse:
+        """
+        Get artifact version API
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetArtifactVersionResponse
+            Successful Response
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.artifact_versions.get(
+            id="id",
+        )
+        """
+        _response = self._raw_client.get(id, request_options=request_options)
+        return _response.data
+
+    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
+        """
+        Delete artifact versions API
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EmptyResponse
+            Successful Response
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.artifact_versions.delete(
+            id="id",
+        )
+        """
+        _response = self._raw_client.delete(id, request_options=request_options)
+        return _response.data
+
 
 class AsyncArtifactVersionsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -374,6 +378,324 @@ class AsyncArtifactVersionsClient:
         AsyncRawArtifactVersionsClient
         """
         return self._raw_client
+
+    async def list(
+        self,
+        *,
+        artifact_id: typing.Optional[str] = None,
+        fqn: typing.Optional[str] = None,
+        offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = 100,
+        run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        include_internal_metadata: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncPager[ArtifactVersion]:
+        """
+        List artifact version API
+
+        Parameters
+        ----------
+        artifact_id : typing.Optional[str]
+
+        fqn : typing.Optional[str]
+
+        offset : typing.Optional[int]
+
+        limit : typing.Optional[int]
+
+        run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+
+        run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+
+        include_internal_metadata : typing.Optional[bool]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[ArtifactVersion]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.artifact_versions.list()
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
+        """
+        return await self._raw_client.list(
+            artifact_id=artifact_id,
+            fqn=fqn,
+            offset=offset,
+            limit=limit,
+            run_ids=run_ids,
+            run_steps=run_steps,
+            include_internal_metadata=include_internal_metadata,
+            request_options=request_options,
+        )
+
+    async def list_files(
+        self,
+        *,
+        id: str,
+        limit: typing.Optional[int] = OMIT,
+        page_token: typing.Optional[str] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncPager[FileInfo]:
+        """
+        Parameters
+        ----------
+        id : str
+
+        limit : typing.Optional[int]
+
+        page_token : typing.Optional[str]
+
+        path : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[FileInfo]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.artifact_versions.list_files(
+                id="id",
+            )
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
+        """
+        return await self._raw_client.list_files(
+            id=id, limit=limit, page_token=page_token, path=path, request_options=request_options
+        )
+
+    async def mark_stage_failure(
+        self, *, id: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> EmptyResponse:
+        """
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EmptyResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.artifact_versions.mark_stage_failure(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.mark_stage_failure(id=id, request_options=request_options)
+        return _response.data
+
+    async def get_signed_urls(
+        self,
+        *,
+        id: str,
+        operation: Operation,
+        paths: typing.Sequence[str],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetSignedUrLsResponse:
+        """
+        Parameters
+        ----------
+        id : str
+
+        operation : Operation
+
+        paths : typing.Sequence[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetSignedUrLsResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry, Operation
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.artifact_versions.get_signed_urls(
+                id="id",
+                operation=Operation.READ,
+                paths=["paths"],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_signed_urls(
+            id=id, operation=operation, paths=paths, request_options=request_options
+        )
+        return _response.data
+
+    async def create_multi_part_upload(
+        self, *, id: str, num_parts: int, path: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> MultiPartUploadResponse:
+        """
+        Parameters
+        ----------
+        id : str
+
+        num_parts : int
+
+        path : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MultiPartUploadResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.artifact_versions.create_multi_part_upload(
+                id="id",
+                num_parts=1,
+                path="path",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.create_multi_part_upload(
+            id=id, num_parts=num_parts, path=path, request_options=request_options
+        )
+        return _response.data
+
+    async def stage(
+        self, *, manifest: StageArtifactRequestManifest, request_options: typing.Optional[RequestOptions] = None
+    ) -> StageArtifactResponse:
+        """
+        Parameters
+        ----------
+        manifest : StageArtifactRequestManifest
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        StageArtifactResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import (
+            ArtifactManifest,
+            AsyncTrueFoundry,
+            TrueFoundryManagedSource,
+        )
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.artifact_versions.stage(
+                manifest=ArtifactManifest(
+                    metadata={"key": "value"},
+                    ml_repo="ml_repo",
+                    name="name",
+                    source=TrueFoundryManagedSource(),
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.stage(manifest=manifest, request_options=request_options)
+        return _response.data
 
     async def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -453,322 +775,4 @@ class AsyncArtifactVersionsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
-        return _response.data
-
-    async def list(
-        self,
-        *,
-        artifact_id: typing.Optional[str] = None,
-        fqn: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
-        run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
-        include_internal_metadata: typing.Optional[bool] = False,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[ArtifactVersion]:
-        """
-        List artifact version API
-
-        Parameters
-        ----------
-        artifact_id : typing.Optional[str]
-
-        fqn : typing.Optional[str]
-
-        offset : typing.Optional[int]
-
-        limit : typing.Optional[int]
-
-        run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-
-        run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
-
-        include_internal_metadata : typing.Optional[bool]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncPager[ArtifactVersion]
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            response = await client.artifact_versions.list()
-            async for item in response:
-                yield item
-
-            # alternatively, you can paginate page-by-page
-            async for page in response.iter_pages():
-                yield page
-
-
-        asyncio.run(main())
-        """
-        return await self._raw_client.list(
-            artifact_id=artifact_id,
-            fqn=fqn,
-            offset=offset,
-            limit=limit,
-            run_ids=run_ids,
-            run_steps=run_steps,
-            include_internal_metadata=include_internal_metadata,
-            request_options=request_options,
-        )
-
-    async def get_signed_urls(
-        self,
-        *,
-        id: str,
-        paths: typing.Sequence[str],
-        operation: Operation,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetSignedUrLsResponse:
-        """
-        Parameters
-        ----------
-        id : str
-
-        paths : typing.Sequence[str]
-
-        operation : Operation
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetSignedUrLsResponse
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry, Operation
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.artifact_versions.get_signed_urls(
-                id="id",
-                paths=["paths"],
-                operation=Operation.READ,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.get_signed_urls(
-            id=id, paths=paths, operation=operation, request_options=request_options
-        )
-        return _response.data
-
-    async def create_multi_part_upload(
-        self, *, id: str, path: str, num_parts: int, request_options: typing.Optional[RequestOptions] = None
-    ) -> MultiPartUploadResponse:
-        """
-        Parameters
-        ----------
-        id : str
-
-        path : str
-
-        num_parts : int
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        MultiPartUploadResponse
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.artifact_versions.create_multi_part_upload(
-                id="id",
-                path="path",
-                num_parts=1,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.create_multi_part_upload(
-            id=id, path=path, num_parts=num_parts, request_options=request_options
-        )
-        return _response.data
-
-    async def stage(
-        self, *, manifest: StageArtifactRequestManifest, request_options: typing.Optional[RequestOptions] = None
-    ) -> StageArtifactResponse:
-        """
-        Parameters
-        ----------
-        manifest : StageArtifactRequestManifest
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        StageArtifactResponse
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import (
-            AsyncTrueFoundry,
-            ModelManifest,
-            TrueFoundryManagedSource,
-        )
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.artifact_versions.stage(
-                manifest=ModelManifest(
-                    name="name",
-                    metadata={"key": "value"},
-                    ml_repo="ml_repo",
-                    source=TrueFoundryManagedSource(),
-                ),
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.stage(manifest=manifest, request_options=request_options)
-        return _response.data
-
-    async def list_files(
-        self,
-        *,
-        id: str,
-        path: typing.Optional[str] = OMIT,
-        limit: typing.Optional[int] = OMIT,
-        page_token: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[FileInfo]:
-        """
-        Parameters
-        ----------
-        id : str
-
-        path : typing.Optional[str]
-
-        limit : typing.Optional[int]
-
-        page_token : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncPager[FileInfo]
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            response = await client.artifact_versions.list_files(
-                id="id",
-            )
-            async for item in response:
-                yield item
-
-            # alternatively, you can paginate page-by-page
-            async for page in response.iter_pages():
-                yield page
-
-
-        asyncio.run(main())
-        """
-        return await self._raw_client.list_files(
-            id=id, path=path, limit=limit, page_token=page_token, request_options=request_options
-        )
-
-    async def mark_stage_failure(
-        self, *, id: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> EmptyResponse:
-        """
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        EmptyResponse
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.artifact_versions.mark_stage_failure(
-                id="id",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.mark_stage_failure(id=id, request_options=request_options)
         return _response.data

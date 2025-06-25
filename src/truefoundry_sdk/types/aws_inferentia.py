@@ -7,9 +7,10 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class AwsInferentia(UniversalBaseModel):
-    type: typing.Literal["aws_inferentia"] = pydantic.Field(default="aws_inferentia")
+    count: int = pydantic.Field()
     """
-    +value=aws_inferentia
+    +label=Count
+    +usage=Count of Inferentia accelerator chips to provide to the application
     """
 
     name: typing.Optional[str] = pydantic.Field(default=None)
@@ -19,10 +20,9 @@ class AwsInferentia(UniversalBaseModel):
     This field is required for Node Selector and can be ignored in Nodepool Selector.
     """
 
-    count: int = pydantic.Field()
+    type: typing.Literal["aws_inferentia"] = pydantic.Field(default="aws_inferentia")
     """
-    +label=Count
-    +usage=Count of Inferentia accelerator chips to provide to the application
+    +value=aws_inferentia
     """
 
     if IS_PYDANTIC_V2:

@@ -8,8 +8,8 @@ from .flyte_workflow_template import FlyteWorkflowTemplate
 
 
 class FlyteWorkflow(UniversalBaseModel):
-    template: FlyteWorkflowTemplate
     description: typing.Optional[typing.Optional[typing.Any]] = None
+    template: FlyteWorkflowTemplate
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

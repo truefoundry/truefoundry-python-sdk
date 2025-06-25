@@ -7,9 +7,9 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class Pagination(UniversalBaseModel):
-    total: int = pydantic.Field()
+    limit: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Total number of items
+    Number of items per page
     """
 
     offset: typing.Optional[int] = pydantic.Field(default=None)
@@ -17,9 +17,9 @@ class Pagination(UniversalBaseModel):
     Number of items skipped
     """
 
-    limit: typing.Optional[int] = pydantic.Field(default=None)
+    total: int = pydantic.Field()
     """
-    Number of items per page
+    Total number of items
     """
 
     if IS_PYDANTIC_V2:

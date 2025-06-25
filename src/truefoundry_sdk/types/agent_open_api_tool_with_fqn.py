@@ -9,55 +9,15 @@ from .method import Method
 
 
 class AgentOpenApiToolWithFqn(UniversalBaseModel):
-    name: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Name of the entity
-    """
-
-    description: typing.Optional[str] = None
-    metadata: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
-    """
-    Key value metadata. Should be valid JSON. For e.g. `{"business-unit": "sales", "quality": "good", "rating": 4.5}`
-    """
-
-    version_alias: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Version alias is alternate, ideally human readable, version string to reference an artifact version. It should start with `v` followed by alphanumeric and it can include `.` and `-` in between (e.g. `v1.0.0`, `v1-prod`, `v3-dev`, etc)
-    """
-
-    ml_repo: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Name of the ML Repo
-    """
-
-    version: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Version of the entity
-    """
-
-    type: typing.Literal["openapi-tool"] = pydantic.Field(default="openapi-tool")
-    """
-    Type of the agent
-    """
-
-    openapi_spec: AgentOpenApiToolWithFqnOpenapiSpec = pydantic.Field()
-    """
-    OpenAPI Spec for the tool describing the API, endpoints and parameters. [Sample OpenAPI Spec Link](https://assets.production.truefoundry.com/sample-openapi.json)
-    """
-
     base_url: str = pydantic.Field()
     """
     HTTP endpoint where the API is hosted for the tools. E.g. `https://api.example.com/v1`
     """
 
-    path: str = pydantic.Field()
+    description: typing.Optional[str] = None
+    fqn: str = pydantic.Field()
     """
-    API Route Path for the tool call HTTP request. E.g. `GET /weather`
-    """
-
-    method: Method = pydantic.Field()
-    """
-    HTTP Method for the tool call HTTP request
+    FQN of the agent tool
     """
 
     headers: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
@@ -70,9 +30,49 @@ class AgentOpenApiToolWithFqn(UniversalBaseModel):
     ID of the agent tool
     """
 
-    fqn: str = pydantic.Field()
+    metadata: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
     """
-    FQN of the agent tool
+    Key value metadata. Should be valid JSON. For e.g. `{"business-unit": "sales", "quality": "good", "rating": 4.5}`
+    """
+
+    method: Method = pydantic.Field()
+    """
+    HTTP Method for the tool call HTTP request
+    """
+
+    ml_repo: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Name of the ML Repo
+    """
+
+    name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Name of the entity
+    """
+
+    openapi_spec: AgentOpenApiToolWithFqnOpenapiSpec = pydantic.Field()
+    """
+    OpenAPI Spec for the tool describing the API, endpoints and parameters. [Sample OpenAPI Spec Link](https://assets.production.truefoundry.com/sample-openapi.json)
+    """
+
+    path: str = pydantic.Field()
+    """
+    API Route Path for the tool call HTTP request. E.g. `GET /weather`
+    """
+
+    type: typing.Literal["openapi-tool"] = pydantic.Field(default="openapi-tool")
+    """
+    Type of the agent
+    """
+
+    version: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Version of the entity
+    """
+
+    version_alias: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Version alias is alternate, ideally human readable, version string to reference an artifact version. It should start with `v` followed by alphanumeric and it can include `.` and `-` in between (e.g. `v1.0.0`, `v1-prod`, `v3-dev`, etc)
     """
 
     if IS_PYDANTIC_V2:

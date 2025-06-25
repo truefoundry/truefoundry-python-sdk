@@ -14,9 +14,9 @@ class LocalSource(UniversalBaseModel):
     +sort=100
     """
 
-    type: typing.Literal["local"] = pydantic.Field(default="local")
+    local_build: bool = pydantic.Field(default=True)
     """
-    +value=local
+    run docker build locally
     """
 
     project_root_path: str = pydantic.Field(default="./")
@@ -24,9 +24,9 @@ class LocalSource(UniversalBaseModel):
     +usage=Local project root path.
     """
 
-    local_build: bool = pydantic.Field(default=True)
+    type: typing.Literal["local"] = pydantic.Field(default="local")
     """
-    run docker build locally
+    +value=local
     """
 
     if IS_PYDANTIC_V2:

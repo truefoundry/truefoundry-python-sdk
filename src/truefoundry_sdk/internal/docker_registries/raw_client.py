@@ -23,8 +23,8 @@ class RawDockerRegistriesClient:
     def create_repository(
         self,
         *,
-        fqn: str,
         application_name: str,
+        fqn: str,
         workspace_fqn: str,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DockerRegistriesCreateRepositoryResponse]:
@@ -33,11 +33,11 @@ class RawDockerRegistriesClient:
 
         Parameters
         ----------
-        fqn : str
-            Docker registry FQN
-
         application_name : str
             Application Name for the image being built
+
+        fqn : str
+            Docker registry FQN
 
         workspace_fqn : str
             FQN for the workspace of application
@@ -54,8 +54,8 @@ class RawDockerRegistriesClient:
             "api/svc/v1/docker-registry/create-repo",
             method="POST",
             json={
-                "fqn": fqn,
                 "applicationName": application_name,
+                "fqn": fqn,
                 "workspaceFqn": workspace_fqn,
             },
             headers={
@@ -148,8 +148,8 @@ class AsyncRawDockerRegistriesClient:
     async def create_repository(
         self,
         *,
-        fqn: str,
         application_name: str,
+        fqn: str,
         workspace_fqn: str,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DockerRegistriesCreateRepositoryResponse]:
@@ -158,11 +158,11 @@ class AsyncRawDockerRegistriesClient:
 
         Parameters
         ----------
-        fqn : str
-            Docker registry FQN
-
         application_name : str
             Application Name for the image being built
+
+        fqn : str
+            Docker registry FQN
 
         workspace_fqn : str
             FQN for the workspace of application
@@ -179,8 +179,8 @@ class AsyncRawDockerRegistriesClient:
             "api/svc/v1/docker-registry/create-repo",
             method="POST",
             json={
-                "fqn": fqn,
                 "applicationName": application_name,
+                "fqn": fqn,
                 "workspaceFqn": workspace_fqn,
             },
             headers={

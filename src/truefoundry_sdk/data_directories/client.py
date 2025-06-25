@@ -34,91 +34,6 @@ class DataDirectoriesClient:
         """
         return self._raw_client
 
-    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetDataDirectoryResponse:
-        """
-        Get a data directory by its ID.
-
-        Args:
-            id (str): The ID of the data directory to retrieve
-            user_info: Current authenticated user info
-
-        Returns:
-            DataDirectoryResponse: Response containing the retrieved data directory
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetDataDirectoryResponse
-            Successful Response
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.data_directories.get(
-            id="id",
-        )
-        """
-        _response = self._raw_client.get(id, request_options=request_options)
-        return _response.data
-
-    def delete(
-        self,
-        id: str,
-        *,
-        delete_contents: typing.Optional[bool] = False,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> EmptyResponse:
-        """
-        Delete a data directory and optionally its contents.
-
-        Args:
-            id: Unique identifier of the data directory to delete
-            delete_contents: If True, also deletes the data directory's contents
-            user_info: Authenticated user information
-
-        Returns:
-            EmptyResponse: Empty response indicating successful deletion
-
-        Parameters
-        ----------
-        id : str
-
-        delete_contents : typing.Optional[bool]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        EmptyResponse
-            Successful Response
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.data_directories.delete(
-            id="id",
-        )
-        """
-        _response = self._raw_client.delete(id, delete_contents=delete_contents, request_options=request_options)
-        return _response.data
-
     def list(
         self,
         *,
@@ -209,9 +124,9 @@ class DataDirectoriesClient:
         )
         client.data_directories.create_or_update(
             manifest=DataDirectoryManifest(
-                name="name",
-                ml_repo="ml_repo",
                 metadata={"key": "value"},
+                ml_repo="ml_repo",
+                name="name",
                 source=TrueFoundryManagedSource(),
             ),
         )
@@ -223,9 +138,9 @@ class DataDirectoriesClient:
         self,
         *,
         id: str,
-        path: typing.Optional[str] = OMIT,
         limit: typing.Optional[int] = OMIT,
         page_token: typing.Optional[str] = OMIT,
+        path: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[FileInfo]:
         """
@@ -242,11 +157,11 @@ class DataDirectoriesClient:
         ----------
         id : str
 
-        path : typing.Optional[str]
-
         limit : typing.Optional[int]
 
         page_token : typing.Optional[str]
+
+        path : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -274,7 +189,7 @@ class DataDirectoriesClient:
             yield page
         """
         return self._raw_client.list_files(
-            id=id, path=path, limit=limit, page_token=page_token, request_options=request_options
+            id=id, limit=limit, page_token=page_token, path=path, request_options=request_options
         )
 
     def delete_files(
@@ -324,8 +239,8 @@ class DataDirectoriesClient:
         self,
         *,
         id: str,
-        paths: typing.Sequence[str],
         operation: Operation,
+        paths: typing.Sequence[str],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSignedUrLsResponse:
         """
@@ -342,9 +257,9 @@ class DataDirectoriesClient:
         ----------
         id : str
 
-        paths : typing.Sequence[str]
-
         operation : Operation
+
+        paths : typing.Sequence[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -364,17 +279,17 @@ class DataDirectoriesClient:
         )
         client.data_directories.get_signed_urls(
             id="id",
-            paths=["paths"],
             operation=Operation.READ,
+            paths=["paths"],
         )
         """
         _response = self._raw_client.get_signed_urls(
-            id=id, paths=paths, operation=operation, request_options=request_options
+            id=id, operation=operation, paths=paths, request_options=request_options
         )
         return _response.data
 
     def create_multipart_upload(
-        self, *, id: str, path: str, num_parts: int, request_options: typing.Optional[RequestOptions] = None
+        self, *, id: str, num_parts: int, path: str, request_options: typing.Optional[RequestOptions] = None
     ) -> MultiPartUploadResponse:
         """
         Create a multipart upload for a dataset
@@ -390,9 +305,9 @@ class DataDirectoriesClient:
         ----------
         id : str
 
-        path : str
-
         num_parts : int
+
+        path : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -412,34 +327,16 @@ class DataDirectoriesClient:
         )
         client.data_directories.create_multipart_upload(
             id="id",
-            path="path",
             num_parts=1,
+            path="path",
         )
         """
         _response = self._raw_client.create_multipart_upload(
-            id=id, path=path, num_parts=num_parts, request_options=request_options
+            id=id, num_parts=num_parts, path=path, request_options=request_options
         )
         return _response.data
 
-
-class AsyncDataDirectoriesClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawDataDirectoriesClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawDataDirectoriesClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawDataDirectoriesClient
-        """
-        return self._raw_client
-
-    async def get(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetDataDirectoryResponse:
+    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetDataDirectoryResponse:
         """
         Get a data directory by its ID.
 
@@ -464,28 +361,20 @@ class AsyncDataDirectoriesClient:
 
         Examples
         --------
-        import asyncio
+        from truefoundry_sdk import TrueFoundry
 
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
+        client = TrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-
-
-        async def main() -> None:
-            await client.data_directories.get(
-                id="id",
-            )
-
-
-        asyncio.run(main())
+        client.data_directories.get(
+            id="id",
+        )
         """
-        _response = await self._raw_client.get(id, request_options=request_options)
+        _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
 
-    async def delete(
+    def delete(
         self,
         id: str,
         *,
@@ -519,26 +408,34 @@ class AsyncDataDirectoriesClient:
 
         Examples
         --------
-        import asyncio
+        from truefoundry_sdk import TrueFoundry
 
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
+        client = TrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-
-
-        async def main() -> None:
-            await client.data_directories.delete(
-                id="id",
-            )
-
-
-        asyncio.run(main())
+        client.data_directories.delete(
+            id="id",
+        )
         """
-        _response = await self._raw_client.delete(id, delete_contents=delete_contents, request_options=request_options)
+        _response = self._raw_client.delete(id, delete_contents=delete_contents, request_options=request_options)
         return _response.data
+
+
+class AsyncDataDirectoriesClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._raw_client = AsyncRawDataDirectoriesClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawDataDirectoriesClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawDataDirectoriesClient
+        """
+        return self._raw_client
 
     async def list(
         self,
@@ -644,9 +541,9 @@ class AsyncDataDirectoriesClient:
         async def main() -> None:
             await client.data_directories.create_or_update(
                 manifest=DataDirectoryManifest(
-                    name="name",
-                    ml_repo="ml_repo",
                     metadata={"key": "value"},
+                    ml_repo="ml_repo",
+                    name="name",
                     source=TrueFoundryManagedSource(),
                 ),
             )
@@ -661,9 +558,9 @@ class AsyncDataDirectoriesClient:
         self,
         *,
         id: str,
-        path: typing.Optional[str] = OMIT,
         limit: typing.Optional[int] = OMIT,
         page_token: typing.Optional[str] = OMIT,
+        path: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[FileInfo]:
         """
@@ -680,11 +577,11 @@ class AsyncDataDirectoriesClient:
         ----------
         id : str
 
-        path : typing.Optional[str]
-
         limit : typing.Optional[int]
 
         page_token : typing.Optional[str]
+
+        path : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -721,7 +618,7 @@ class AsyncDataDirectoriesClient:
         asyncio.run(main())
         """
         return await self._raw_client.list_files(
-            id=id, path=path, limit=limit, page_token=page_token, request_options=request_options
+            id=id, limit=limit, page_token=page_token, path=path, request_options=request_options
         )
 
     async def delete_files(
@@ -779,8 +676,8 @@ class AsyncDataDirectoriesClient:
         self,
         *,
         id: str,
-        paths: typing.Sequence[str],
         operation: Operation,
+        paths: typing.Sequence[str],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSignedUrLsResponse:
         """
@@ -797,9 +694,9 @@ class AsyncDataDirectoriesClient:
         ----------
         id : str
 
-        paths : typing.Sequence[str]
-
         operation : Operation
+
+        paths : typing.Sequence[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -824,20 +721,20 @@ class AsyncDataDirectoriesClient:
         async def main() -> None:
             await client.data_directories.get_signed_urls(
                 id="id",
-                paths=["paths"],
                 operation=Operation.READ,
+                paths=["paths"],
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.get_signed_urls(
-            id=id, paths=paths, operation=operation, request_options=request_options
+            id=id, operation=operation, paths=paths, request_options=request_options
         )
         return _response.data
 
     async def create_multipart_upload(
-        self, *, id: str, path: str, num_parts: int, request_options: typing.Optional[RequestOptions] = None
+        self, *, id: str, num_parts: int, path: str, request_options: typing.Optional[RequestOptions] = None
     ) -> MultiPartUploadResponse:
         """
         Create a multipart upload for a dataset
@@ -853,9 +750,9 @@ class AsyncDataDirectoriesClient:
         ----------
         id : str
 
-        path : str
-
         num_parts : int
+
+        path : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -880,14 +777,117 @@ class AsyncDataDirectoriesClient:
         async def main() -> None:
             await client.data_directories.create_multipart_upload(
                 id="id",
-                path="path",
                 num_parts=1,
+                path="path",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.create_multipart_upload(
-            id=id, path=path, num_parts=num_parts, request_options=request_options
+            id=id, num_parts=num_parts, path=path, request_options=request_options
         )
+        return _response.data
+
+    async def get(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetDataDirectoryResponse:
+        """
+        Get a data directory by its ID.
+
+        Args:
+            id (str): The ID of the data directory to retrieve
+            user_info: Current authenticated user info
+
+        Returns:
+            DataDirectoryResponse: Response containing the retrieved data directory
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetDataDirectoryResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.data_directories.get(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get(id, request_options=request_options)
+        return _response.data
+
+    async def delete(
+        self,
+        id: str,
+        *,
+        delete_contents: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> EmptyResponse:
+        """
+        Delete a data directory and optionally its contents.
+
+        Args:
+            id: Unique identifier of the data directory to delete
+            delete_contents: If True, also deletes the data directory's contents
+            user_info: Authenticated user information
+
+        Returns:
+            EmptyResponse: Empty response indicating successful deletion
+
+        Parameters
+        ----------
+        id : str
+
+        delete_contents : typing.Optional[bool]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EmptyResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.data_directories.delete(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete(id, delete_contents=delete_contents, request_options=request_options)
         return _response.data

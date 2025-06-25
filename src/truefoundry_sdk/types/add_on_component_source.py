@@ -7,14 +7,14 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class AddOnComponentSource(UniversalBaseModel):
-    repo_url: str = pydantic.Field()
-    """
-    Repository URL of the source
-    """
-
     chart: str = pydantic.Field()
     """
     Chart of the source
+    """
+
+    repo_url: str = pydantic.Field()
+    """
+    Repository URL of the source
     """
 
     if IS_PYDANTIC_V2:

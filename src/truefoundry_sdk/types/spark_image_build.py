@@ -16,11 +16,14 @@ class SparkImageBuild(UniversalBaseModel):
     TODO (gw): Fix sorting for this such that it looks similar to SparkImage
     """
 
-    type: typing.Literal["spark-image-build"] = pydantic.Field(default="spark-image-build")
+    build_source: SparkImageBuildBuildSource = pydantic.Field()
     """
-    +value=spark-image-build
+    TODO (gw): The following is a hack till the uiType GitSelect is fixed fron frontend
+    +label=Fetch source code
+    +sort=1003
     """
 
+    build_spec: SparkBuild
     docker_registry: typing.Optional[str] = pydantic.Field(default=None)
     """
     +docs=FQN of the container registry. You can the FQN of your desired container registry (or add one)
@@ -31,14 +34,10 @@ class SparkImageBuild(UniversalBaseModel):
     +sort=1002
     """
 
-    build_source: SparkImageBuildBuildSource = pydantic.Field()
+    type: typing.Literal["spark-image-build"] = pydantic.Field(default="spark-image-build")
     """
-    TODO (gw): The following is a hack till the uiType GitSelect is fixed fron frontend
-    +label=Fetch source code
-    +sort=1003
+    +value=spark-image-build
     """
-
-    build_spec: SparkBuild
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -10,9 +10,9 @@ from .job_run import JobRun
 
 
 class TriggerJobRunResponse(UniversalBaseModel):
-    message: str = pydantic.Field()
+    data: JobRun = pydantic.Field()
     """
-    Job triggered
+    Details of the triggered job run
     """
 
     job_run_name: typing_extensions.Annotated[str, FieldMetadata(alias="jobRunName")] = pydantic.Field()
@@ -20,9 +20,9 @@ class TriggerJobRunResponse(UniversalBaseModel):
     Name of the job run
     """
 
-    data: JobRun = pydantic.Field()
+    message: str = pydantic.Field()
     """
-    Details of the triggered job run
+    Job triggered
     """
 
     if IS_PYDANTIC_V2:

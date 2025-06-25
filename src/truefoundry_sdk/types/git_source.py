@@ -14,9 +14,18 @@ class GitSource(UniversalBaseModel):
     +sort=300
     """
 
-    type: typing.Literal["git"] = pydantic.Field(default="git")
+    branch_name: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +value=git
+    +label=Branch Name
+    +usage=Selecting branch will select latest commit SHA of the branch.
+    +sort=3
+    """
+
+    ref: str = pydantic.Field()
+    """
+    +label=Commit SHA
+    +usage=The commit SHA.
+    +sort=2
     """
 
     repo_url: str = pydantic.Field()
@@ -27,18 +36,9 @@ class GitSource(UniversalBaseModel):
     +message=Needs to be a valid Github, Bitbucket, Azure Repos or Gitlab link
     """
 
-    ref: str = pydantic.Field()
+    type: typing.Literal["git"] = pydantic.Field(default="git")
     """
-    +label=Commit SHA
-    +usage=The commit SHA.
-    +sort=2
-    """
-
-    branch_name: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    +label=Branch Name
-    +usage=Selecting branch will select latest commit SHA of the branch.
-    +sort=3
+    +value=git
     """
 
     if IS_PYDANTIC_V2:

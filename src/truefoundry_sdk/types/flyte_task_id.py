@@ -9,8 +9,8 @@ from ..core.serialization import FieldMetadata
 
 
 class FlyteTaskId(UniversalBaseModel):
-    resource_type: typing_extensions.Annotated[typing.Literal["TASK"], FieldMetadata(alias="resourceType")] = "TASK"
     name: str
+    resource_type: typing_extensions.Annotated[typing.Literal["TASK"], FieldMetadata(alias="resourceType")] = "TASK"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

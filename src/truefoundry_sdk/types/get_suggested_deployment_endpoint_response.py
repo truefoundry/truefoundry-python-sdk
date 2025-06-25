@@ -8,6 +8,11 @@ from .cluster_gateway import ClusterGateway
 
 
 class GetSuggestedDeploymentEndpointResponse(UniversalBaseModel):
+    gateway: typing.Optional[ClusterGateway] = pydantic.Field(default=None)
+    """
+    Gateway configuration
+    """
+
     host: str = pydantic.Field()
     """
     Host name
@@ -16,11 +21,6 @@ class GetSuggestedDeploymentEndpointResponse(UniversalBaseModel):
     path: typing.Optional[str] = pydantic.Field(default=None)
     """
     Path
-    """
-
-    gateway: typing.Optional[ClusterGateway] = pydantic.Field(default=None)
-    """
-    Gateway configuration
     """
 
     if IS_PYDANTIC_V2:

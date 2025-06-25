@@ -14,46 +14,18 @@ class PythonBuild(UniversalBaseModel):
     +icon=fa-brands fa-python:#306998
     """
 
-    type: typing.Literal["tfy-python-buildpack"] = pydantic.Field(default="tfy-python-buildpack")
-    """
-    +value=tfy-python-buildpack
-    """
-
-    python_version: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    +label=Python version
-    +usage=Python version to run your application. Should be one of the tags listed on [Official Python Docker Page](https://hub.docker.com/_/python)
-    +message=Please enter a valid Python version tag
-    """
-
-    build_context_path: str = pydantic.Field(default="./")
-    """
-    +label=Path to build context
-    +usage=Build path relative to project root path.
-    """
-
-    requirements_path: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    `Path to build context`
-    +label=Path to requirements
-    +usage=Path to `requirements.txt` relative to
-    `Path to build context`
-    """
-
-    pip_packages: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
-    """
-    +label=Pip packages to install
-    +usage=Define pip package requirements.
-    In Python/YAML E.g. ["fastapi>=0.90,<1.0", "uvicorn"]
-    +placeholder=Enter a pip package name E.g. fastapi>=0.90,<1.0
-    """
-
     apt_packages: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     +label=List of Debian packages to install.
     +usage=Debian packages to install via `apt get`.
     In Python/YAML E.g. ["git", "ffmpeg", "htop"]
     +placeholder=Enter a debian package name E.g. ffmpeg
+    """
+
+    build_context_path: str = pydantic.Field(default="./")
+    """
+    +label=Path to build context
+    +usage=Build path relative to project root path.
     """
 
     command: PythonBuildCommand = pydantic.Field()
@@ -75,6 +47,34 @@ class PythonBuild(UniversalBaseModel):
     You can also specify a valid tag of the form {cuda_version_number}-cudnn{cudnn_version_number}-{runtime|devel}-ubuntu{ubuntu_version}
     Refer https://hub.docker.com/r/nvidia/cuda/tags for valid set of values
     Note: We use deadsnakes ubuntu ppa to add Python that currently supports only Ubuntu 18.04, 20.04 and 22.04
+    """
+
+    pip_packages: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    +label=Pip packages to install
+    +usage=Define pip package requirements.
+    In Python/YAML E.g. ["fastapi>=0.90,<1.0", "uvicorn"]
+    +placeholder=Enter a pip package name E.g. fastapi>=0.90,<1.0
+    """
+
+    python_version: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    +label=Python version
+    +usage=Python version to run your application. Should be one of the tags listed on [Official Python Docker Page](https://hub.docker.com/_/python)
+    +message=Please enter a valid Python version tag
+    """
+
+    requirements_path: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    `Path to build context`
+    +label=Path to requirements
+    +usage=Path to `requirements.txt` relative to
+    `Path to build context`
+    """
+
+    type: typing.Literal["tfy-python-buildpack"] = pydantic.Field(default="tfy-python-buildpack")
+    """
+    +value=tfy-python-buildpack
     """
 
     if IS_PYDANTIC_V2:

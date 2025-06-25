@@ -108,8 +108,8 @@ class RawSecretGroupsClient:
     def create(
         self,
         *,
-        name: str,
         integration_id: str,
+        name: str,
         secrets: typing.Sequence[SecretInput],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetSecretGroupResponse]:
@@ -118,11 +118,11 @@ class RawSecretGroupsClient:
 
         Parameters
         ----------
-        name : str
-            Name of the secret group.
-
         integration_id : str
             Id of the provider integration.
+
+        name : str
+            Name of the secret group.
 
         secrets : typing.Sequence[SecretInput]
             The secrets to be associated with the secret group
@@ -139,8 +139,8 @@ class RawSecretGroupsClient:
             "api/svc/v1/secret-groups",
             method="POST",
             json={
-                "name": name,
                 "integrationId": integration_id,
+                "name": name,
                 "secrets": convert_and_respect_annotation_metadata(
                     object_=secrets, annotation=typing.Sequence[SecretInput], direction="write"
                 ),
@@ -492,8 +492,8 @@ class AsyncRawSecretGroupsClient:
     async def create(
         self,
         *,
-        name: str,
         integration_id: str,
+        name: str,
         secrets: typing.Sequence[SecretInput],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetSecretGroupResponse]:
@@ -502,11 +502,11 @@ class AsyncRawSecretGroupsClient:
 
         Parameters
         ----------
-        name : str
-            Name of the secret group.
-
         integration_id : str
             Id of the provider integration.
+
+        name : str
+            Name of the secret group.
 
         secrets : typing.Sequence[SecretInput]
             The secrets to be associated with the secret group
@@ -523,8 +523,8 @@ class AsyncRawSecretGroupsClient:
             "api/svc/v1/secret-groups",
             method="POST",
             json={
-                "name": name,
                 "integrationId": integration_id,
+                "name": name,
                 "secrets": convert_and_respect_annotation_metadata(
                     object_=secrets, annotation=typing.Sequence[SecretInput], direction="write"
                 ),

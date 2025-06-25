@@ -16,6 +16,11 @@ class HealthProbe(UniversalBaseModel):
     """
 
     config: HttpProbe
+    failure_threshold: typing.Optional[int] = pydantic.Field(default=3)
+    """
+    +usage=Number of consecutive failures before the container is considered down
+    """
+
     initial_delay_seconds: typing.Optional[int] = pydantic.Field(default=0)
     """
     +usage=Time to wait after container has started before checking the endpoint
@@ -26,19 +31,14 @@ class HealthProbe(UniversalBaseModel):
     +usage=How often to check the endpoint
     """
 
-    timeout_seconds: typing.Optional[int] = pydantic.Field(default=1)
-    """
-    +usage=Time to wait for a response from the endpoint before considering it down
-    """
-
     success_threshold: typing.Optional[int] = pydantic.Field(default=1)
     """
     +usage=Number of successful responses from the endpoint before container is considered healthy
     """
 
-    failure_threshold: typing.Optional[int] = pydantic.Field(default=3)
+    timeout_seconds: typing.Optional[int] = pydantic.Field(default=1)
     """
-    +usage=Number of consecutive failures before the container is considered down
+    +usage=Time to wait for a response from the endpoint before considering it down
     """
 
     if IS_PYDANTIC_V2:

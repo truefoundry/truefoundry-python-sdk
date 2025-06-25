@@ -116,9 +116,9 @@ class EnvironmentsClient:
         )
         client.environments.create_or_update(
             manifest=EnvironmentManifest(
-                name="name",
                 color=EnvironmentColor(),
                 is_production=True,
+                name="name",
                 optimize_for=EnvironmentOptimizeFor.COST,
             ),
         )
@@ -309,9 +309,9 @@ class AsyncEnvironmentsClient:
         async def main() -> None:
             await client.environments.create_or_update(
                 manifest=EnvironmentManifest(
-                    name="name",
                     color=EnvironmentColor(),
                     is_production=True,
+                    name="name",
                     optimize_for=EnvironmentOptimizeFor.COST,
                 ),
             )

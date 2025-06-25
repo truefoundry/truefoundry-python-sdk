@@ -11,11 +11,11 @@ from ....types.model_manifest import ModelManifest
 from ....types.tracing_project_manifest import TracingProjectManifest
 
 ApplyMlEntityRequestManifest = typing.Union[
-    ModelManifest,
-    ChatPromptManifest,
-    AgentOpenApiToolManifest,
     AgentManifest,
     ArtifactManifest,
+    ChatPromptManifest,
     DataDirectoryManifest,
+    ModelManifest,
+    AgentOpenApiToolManifest,
     TracingProjectManifest,
 ]

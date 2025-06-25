@@ -12,11 +12,6 @@ class SystemMessage(UniversalBaseModel):
     System message for the chat
     """
 
-    role: typing.Literal["system"] = pydantic.Field(default="system")
-    """
-    Role of the message
-    """
-
     content: SystemMessageContent = pydantic.Field()
     """
     Text content for the system message
@@ -25,6 +20,11 @@ class SystemMessage(UniversalBaseModel):
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     Name of the system
+    """
+
+    role: typing.Literal["system"] = pydantic.Field(default="system")
+    """
+    Role of the message
     """
 
     if IS_PYDANTIC_V2:

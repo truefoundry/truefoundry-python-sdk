@@ -10,14 +10,16 @@ from .subject_type import SubjectType
 
 
 class Subject(UniversalBaseModel):
+    subject_display_name: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="subjectDisplayName")
+    ] = pydantic.Field(default=None)
+    """
+    Subject display name
+    """
+
     subject_id: typing_extensions.Annotated[str, FieldMetadata(alias="subjectId")] = pydantic.Field()
     """
     Subject ID
-    """
-
-    subject_type: typing_extensions.Annotated[SubjectType, FieldMetadata(alias="subjectType")] = pydantic.Field()
-    """
-    Subject type
     """
 
     subject_slug: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="subjectSlug")] = (
@@ -27,11 +29,9 @@ class Subject(UniversalBaseModel):
     Subject slug
     """
 
-    subject_display_name: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="subjectDisplayName")
-    ] = pydantic.Field(default=None)
+    subject_type: typing_extensions.Annotated[SubjectType, FieldMetadata(alias="subjectType")] = pydantic.Field()
     """
-    Subject display name
+    Subject type
     """
 
     if IS_PYDANTIC_V2:

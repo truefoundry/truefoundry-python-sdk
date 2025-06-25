@@ -7,16 +7,13 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class HelmRepo(UniversalBaseModel):
-    type: typing.Literal["helm-repo"] = pydantic.Field(default="helm-repo")
+    chart: str = pydantic.Field()
     """
-    +value=helm-repo
-    """
-
-    repo_url: str = pydantic.Field()
-    """
-    +label=Helm repository URL
-    +sort=1
-    +message=Needs to be a valid URL.
+    +label=Chart name
+    +sort=3
+    +usage=The helm chart name
+    +uiType=InputSelect
+    +uiProps={"creatable":true, "searchable":true}
     """
 
     integration_fqn: typing.Optional[str] = pydantic.Field(default=None)
@@ -31,13 +28,16 @@ class HelmRepo(UniversalBaseModel):
     +uiProps={"integrationType":"helm-repo"}
     """
 
-    chart: str = pydantic.Field()
+    repo_url: str = pydantic.Field()
     """
-    +label=Chart name
-    +sort=3
-    +usage=The helm chart name
-    +uiType=InputSelect
-    +uiProps={"creatable":true, "searchable":true}
+    +label=Helm repository URL
+    +sort=1
+    +message=Needs to be a valid URL.
+    """
+
+    type: typing.Literal["helm-repo"] = pydantic.Field(default="helm-repo")
+    """
+    +value=helm-repo
     """
 
     version: str = pydantic.Field()

@@ -14,21 +14,6 @@ class Port(UniversalBaseModel):
     +docs=Describes the ports the service should be exposed to.
     """
 
-    port: int = pydantic.Field(default=80)
-    """
-    +usage=Port number to expose.
-    """
-
-    protocol: PortProtocol = pydantic.Field()
-    """
-    +usage=Protocol for the port.
-    """
-
-    expose: bool = pydantic.Field(default=True)
-    """
-    +usage=Expose the port
-    """
-
     app_protocol: typing.Optional[PortAppProtocol] = pydantic.Field(default=None)
     """
     +label=Application Protocol
@@ -36,6 +21,16 @@ class Port(UniversalBaseModel):
     Select the application protocol used by your service. For most use cases, this should be `http`(HTTP/1.1).
     If you are running a gRPC server, select the `grpc` option.
     This is only applicable if `expose=true`.
+    """
+
+    auth: typing.Optional[PortAuth] = pydantic.Field(default=None)
+    """
+    +usage=Authentication method for inbound traffic
+    """
+
+    expose: bool = pydantic.Field(default=True)
+    """
+    +usage=Expose the port
     """
 
     host: typing.Optional[str] = pydantic.Field(default=None)
@@ -50,6 +45,16 @@ class Port(UniversalBaseModel):
     +message=Should begin and end with a forward slash (/). Each part can can contain alphabets, digits and hypen, must begin and end with an alphanumeric characters. Parts should be separated by forward slashes (/)
     """
 
+    port: int = pydantic.Field(default=80)
+    """
+    +usage=Port number to expose.
+    """
+
+    protocol: PortProtocol = pydantic.Field()
+    """
+    +usage=Protocol for the port.
+    """
+
     rewrite_path_to: typing.Optional[str] = pydantic.Field(default=None)
     """
     +label=Rewrite Path to
@@ -58,11 +63,6 @@ class Port(UniversalBaseModel):
     Defaults to `/`.
     This is only applicable if `path` is given.
     +message=Should begin and end with a forward slash (/). Each part can can contain alphabets, digits and hypen, must begin and end with an alphanumeric characters. Parts should be separated by forward slashes (/)
-    """
-
-    auth: typing.Optional[PortAuth] = pydantic.Field(default=None)
-    """
-    +usage=Authentication method for inbound traffic
     """
 
     if IS_PYDANTIC_V2:

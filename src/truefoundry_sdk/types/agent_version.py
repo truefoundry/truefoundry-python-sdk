@@ -10,15 +10,15 @@ from .subject import Subject
 
 
 class AgentVersion(UniversalBaseModel):
-    id: str
-    fqn: str
-    created_by_subject: Subject
-    created_at: typing.Optional[dt.datetime] = None
-    updated_at: typing.Optional[dt.datetime] = None
-    manifest: AgentManifest
-    usage_code_snippet: typing.Optional[str] = None
-    ml_repo_id: str
     agent_id: str
+    created_at: typing.Optional[dt.datetime] = None
+    created_by_subject: Subject
+    fqn: str
+    id: str
+    manifest: AgentManifest
+    ml_repo_id: str
+    updated_at: typing.Optional[dt.datetime] = None
+    usage_code_snippet: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

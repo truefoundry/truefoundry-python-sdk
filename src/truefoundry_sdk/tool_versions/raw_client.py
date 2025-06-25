@@ -21,6 +21,86 @@ class RawToolVersionsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
+    def list(
+        self,
+        *,
+        tool_id: typing.Optional[str] = None,
+        fqn: typing.Optional[str] = None,
+        offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = 100,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncPager[ToolVersion]:
+        """
+        List tool versions API
+
+        Parameters
+        ----------
+        tool_id : typing.Optional[str]
+
+        fqn : typing.Optional[str]
+
+        offset : typing.Optional[int]
+
+        limit : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[ToolVersion]
+            Successful Response
+        """
+        offset = offset if offset is not None else 0
+
+        _response = self._client_wrapper.httpx_client.request(
+            "api/ml/v1/tool-versions",
+            method="GET",
+            params={
+                "tool_id": tool_id,
+                "fqn": fqn,
+                "offset": offset,
+                "limit": limit,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    ListToolVersionsResponse,
+                    parse_obj_as(
+                        type_=ListToolVersionsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                _items = _parsed_response.data
+                _has_next = True
+                _get_next = lambda: self.list(
+                    tool_id=tool_id,
+                    fqn=fqn,
+                    offset=offset + len(_items),
+                    limit=limit,
+                    request_options=request_options,
+                )
+                return SyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetToolVersionResponse]:
@@ -119,7 +199,12 @@ class RawToolVersionsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def list(
+
+class AsyncRawToolVersionsClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._client_wrapper = client_wrapper
+
+    async def list(
         self,
         *,
         tool_id: typing.Optional[str] = None,
@@ -127,7 +212,7 @@ class RawToolVersionsClient:
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[ToolVersion]:
+    ) -> AsyncPager[ToolVersion]:
         """
         List tool versions API
 
@@ -146,12 +231,12 @@ class RawToolVersionsClient:
 
         Returns
         -------
-        SyncPager[ToolVersion]
+        AsyncPager[ToolVersion]
             Successful Response
         """
         offset = offset if offset is not None else 0
 
-        _response = self._client_wrapper.httpx_client.request(
+        _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/tool-versions",
             method="GET",
             params={
@@ -173,14 +258,17 @@ class RawToolVersionsClient:
                 )
                 _items = _parsed_response.data
                 _has_next = True
-                _get_next = lambda: self.list(
-                    tool_id=tool_id,
-                    fqn=fqn,
-                    offset=offset + len(_items),
-                    limit=limit,
-                    request_options=request_options,
-                )
-                return SyncPager(
+
+                async def _get_next():
+                    return await self.list(
+                        tool_id=tool_id,
+                        fqn=fqn,
+                        offset=offset + len(_items),
+                        limit=limit,
+                        request_options=request_options,
+                    )
+
+                return AsyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             if _response.status_code == 422:
@@ -198,11 +286,6 @@ class RawToolVersionsClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-
-class AsyncRawToolVersionsClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
 
     async def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -286,89 +369,6 @@ class AsyncRawToolVersionsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def list(
-        self,
-        *,
-        tool_id: typing.Optional[str] = None,
-        fqn: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[ToolVersion]:
-        """
-        List tool versions API
-
-        Parameters
-        ----------
-        tool_id : typing.Optional[str]
-
-        fqn : typing.Optional[str]
-
-        offset : typing.Optional[int]
-
-        limit : typing.Optional[int]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncPager[ToolVersion]
-            Successful Response
-        """
-        offset = offset if offset is not None else 0
-
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/tool-versions",
-            method="GET",
-            params={
-                "tool_id": tool_id,
-                "fqn": fqn,
-                "offset": offset,
-                "limit": limit,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _parsed_response = typing.cast(
-                    ListToolVersionsResponse,
-                    parse_obj_as(
-                        type_=ListToolVersionsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                _items = _parsed_response.data
-                _has_next = True
-
-                async def _get_next():
-                    return await self.list(
-                        tool_id=tool_id,
-                        fqn=fqn,
-                        offset=offset + len(_items),
-                        limit=limit,
-                        request_options=request_options,
-                    )
-
-                return AsyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),

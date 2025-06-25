@@ -8,9 +8,9 @@ from .library_name import LibraryName
 
 
 class TransformersFramework(UniversalBaseModel):
-    type: typing.Literal["transformers"] = pydantic.Field(default="transformers")
+    base_model: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Type of the framework
+    Base model Id from HuggingFace Hub. If this is a finetuned model, this points to the base model id used for finetuning.
     """
 
     library_name: typing.Optional[LibraryName] = pydantic.Field(default=None)
@@ -23,9 +23,9 @@ class TransformersFramework(UniversalBaseModel):
     The `pipeline()` task this model can be used with e.g. `text-generation`. See [huggingface docs](https://huggingface.co/docs/transformers/main/en/main_classes/pipelines#transformers.pipeline.task) for all possible values
     """
 
-    base_model: typing.Optional[str] = pydantic.Field(default=None)
+    type: typing.Literal["transformers"] = pydantic.Field(default="transformers")
     """
-    Base model Id from HuggingFace Hub. If this is a finetuned model, this points to the base model id used for finetuning.
+    Type of the framework
     """
 
     if IS_PYDANTIC_V2:

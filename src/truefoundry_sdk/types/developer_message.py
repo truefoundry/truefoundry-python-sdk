@@ -12,11 +12,6 @@ class DeveloperMessage(UniversalBaseModel):
     Developer message for the chat
     """
 
-    role: typing.Literal["developer"] = pydantic.Field(default="developer")
-    """
-    The role of the messages author, in this case developer.
-    """
-
     content: DeveloperMessageContent = pydantic.Field()
     """
     The contents of the developer message.
@@ -25,6 +20,11 @@ class DeveloperMessage(UniversalBaseModel):
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     An optional name for the participant.
+    """
+
+    role: typing.Literal["developer"] = pydantic.Field(default="developer")
+    """
+    The role of the messages author, in this case developer.
     """
 
     if IS_PYDANTIC_V2:

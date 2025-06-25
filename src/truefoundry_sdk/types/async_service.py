@@ -16,11 +16,6 @@ class AsyncService(BaseService):
     +docs=Describes the configuration for the async-service
     """
 
-    type: typing.Optional[typing.Literal["async-service"]] = pydantic.Field(default=None)
-    """
-    +value=async-service
-    """
-
     replicas: typing.Optional[AsyncServiceReplicas] = pydantic.Field(default=None)
     """
     +label=Replicas
@@ -29,8 +24,13 @@ class AsyncService(BaseService):
     """
 
     rollout_strategy: typing.Optional[Rolling] = None
-    worker_config: typing.Optional[WorkerConfig] = None
     sidecar: typing.Optional[AsyncProcessorSidecar] = None
+    type: typing.Optional[typing.Literal["async-service"]] = pydantic.Field(default=None)
+    """
+    +value=async-service
+    """
+
+    worker_config: typing.Optional[WorkerConfig] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

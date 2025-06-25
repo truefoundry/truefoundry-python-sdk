@@ -8,19 +8,6 @@ from .permissions import Permissions
 
 
 class VirtualAccountManifest(UniversalBaseModel):
-    name: str = pydantic.Field()
-    """
-    +label=Name
-    +sort=1
-    +message=3 to 25 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
-    +usage=Virtual Account Name
-    """
-
-    type: typing.Literal["virtual-account"] = pydantic.Field(default="virtual-account")
-    """
-    +value=virtual-account
-    """
-
     expiration_date: typing.Optional[str] = pydantic.Field(default=None)
     """
     +label=Expiration Date (UTC)
@@ -30,11 +17,24 @@ class VirtualAccountManifest(UniversalBaseModel):
     +uiType=DatePicker
     """
 
+    name: str = pydantic.Field()
+    """
+    +label=Name
+    +sort=1
+    +message=3 to 25 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
+    +usage=Virtual Account Name
+    """
+
     permissions: typing.List[Permissions] = pydantic.Field()
     """
     +label=Permissions
     +sort=3
     +uiType=ServiceAccountPermissions
+    """
+
+    type: typing.Literal["virtual-account"] = pydantic.Field(default="virtual-account")
+    """
+    +value=virtual-account
     """
 
     if IS_PYDANTIC_V2:

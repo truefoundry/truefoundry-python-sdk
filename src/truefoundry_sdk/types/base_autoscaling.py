@@ -7,18 +7,18 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class BaseAutoscaling(UniversalBaseModel):
-    min_replicas: int = pydantic.Field(default=1)
-    """
-    +label=Minimum replicas
-    +usage=Minimum number of replicas to keep available
-    +sort=1
-    """
-
     max_replicas: int = pydantic.Field()
     """
     +label=Maximum replicas
     +usage=Maximum number of replicas allowed for the component.
     +sort=2
+    """
+
+    min_replicas: int = pydantic.Field(default=1)
+    """
+    +label=Minimum replicas
+    +usage=Minimum number of replicas to keep available
+    +sort=1
     """
 
     polling_interval: typing.Optional[int] = pydantic.Field(default=30)

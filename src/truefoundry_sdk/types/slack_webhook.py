@@ -11,11 +11,6 @@ class SlackWebhook(UniversalBaseModel):
     +label=Slack Webhook
     """
 
-    type: typing.Literal["slack-webhook"] = pydantic.Field(default="slack-webhook")
-    """
-    +value=slack-webhook
-    """
-
     notification_channel: str = pydantic.Field()
     """
     +label=Notification Channel
@@ -23,6 +18,11 @@ class SlackWebhook(UniversalBaseModel):
     +uiType=AlertNotificationChannel
     +uiProps={"integrationType":"notification-channel"}
     +sort=660
+    """
+
+    type: typing.Literal["slack-webhook"] = pydantic.Field(default="slack-webhook")
+    """
+    +value=slack-webhook
     """
 
     if IS_PYDANTIC_V2:

@@ -9,6 +9,13 @@ from ..core.serialization import FieldMetadata
 
 
 class Log(UniversalBaseModel):
+    container_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="containerName")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    Container Name
+    """
+
     job_name: typing.Optional[str] = pydantic.Field(default=None)
     """
     Job Name
@@ -27,13 +34,6 @@ class Log(UniversalBaseModel):
     time: str = pydantic.Field()
     """
     Log Time
-    """
-
-    container_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="containerName")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Container Name
     """
 
     if IS_PYDANTIC_V2:

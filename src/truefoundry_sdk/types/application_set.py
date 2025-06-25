@@ -12,9 +12,19 @@ class ApplicationSet(UniversalBaseModel):
     +docs=Describes the configuration for the application set
     """
 
-    type: typing.Literal["application-set"] = pydantic.Field(default="application-set")
+    components: typing.Optional[typing.List[ApplicationSetComponentsItem]] = pydantic.Field(default=None)
     """
-    +value=application-set
+    +label=Components
+    +usage=Array of components with their specifications.
+    +icon=fa-puzzle-piece
+    +uiType=AppComponents
+    """
+
+    convert_template_manifest: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    +label=Convert Template Manifest
+    +docs=Flag to indicate if the template manifest should be converted to TrueFoundry manifest
+    +uiType=Hidden
     """
 
     name: str = pydantic.Field()
@@ -24,20 +34,17 @@ class ApplicationSet(UniversalBaseModel):
     +icon=fa-font
     """
 
-    components: typing.Optional[typing.List[ApplicationSetComponentsItem]] = pydantic.Field(default=None)
-    """
-    +label=Components
-    +usage=Array of components with their specifications.
-    +icon=fa-puzzle-piece
-    +uiType=AppComponents
-    """
-
     template: typing.Optional[str] = pydantic.Field(default=None)
     """
     +label=Template
     +usage=Template to be used for the application set.
     +icon=fa-file
     +uiType=Hidden
+    """
+
+    type: typing.Literal["application-set"] = pydantic.Field(default="application-set")
+    """
+    +value=application-set
     """
 
     values: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
@@ -53,13 +60,6 @@ class ApplicationSet(UniversalBaseModel):
     """
     +label=Workspace FQN
     +docs=Fully qualified name of the workspace
-    +uiType=Hidden
-    """
-
-    convert_template_manifest: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    +label=Convert Template Manifest
-    +docs=Flag to indicate if the template manifest should be converted to TrueFoundry manifest
     +uiType=Hidden
     """
 

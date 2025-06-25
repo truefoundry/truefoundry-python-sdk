@@ -201,13 +201,13 @@ class RawApplicationsClient:
         self,
         *,
         manifest: typing.Dict[str, typing.Optional[typing.Any]],
+        application_id: typing.Optional[str] = OMIT,
+        application_set_id: typing.Optional[str] = OMIT,
         dry_run: typing.Optional[bool] = OMIT,
         force_deploy: typing.Optional[bool] = OMIT,
+        name: typing.Optional[str] = OMIT,
         trigger_on_deploy: typing.Optional[bool] = OMIT,
         workspace_id: typing.Optional[str] = OMIT,
-        application_id: typing.Optional[str] = OMIT,
-        name: typing.Optional[str] = OMIT,
-        application_set_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetApplicationDeploymentResponse]:
         """
@@ -218,26 +218,26 @@ class RawApplicationsClient:
         manifest : typing.Dict[str, typing.Optional[typing.Any]]
             Manifest of application
 
+        application_id : typing.Optional[str]
+            Id of the application
+
+        application_set_id : typing.Optional[str]
+            Application Set Id
+
         dry_run : typing.Optional[bool]
             Dry run
 
         force_deploy : typing.Optional[bool]
             Cancels any ongoing deployments
 
+        name : typing.Optional[str]
+            Name of application
+
         trigger_on_deploy : typing.Optional[bool]
             Trigger on deploy
 
         workspace_id : typing.Optional[str]
             workspace id of the workspace
-
-        application_id : typing.Optional[str]
-            Id of the application
-
-        name : typing.Optional[str]
-            Name of application
-
-        application_set_id : typing.Optional[str]
-            Application Set Id
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -254,14 +254,14 @@ class RawApplicationsClient:
             "api/svc/v1/apps",
             method="PUT",
             json={
-                "manifest": manifest,
+                "applicationId": application_id,
+                "applicationSetId": application_set_id,
                 "dryRun": dry_run,
                 "forceDeploy": force_deploy,
+                "manifest": manifest,
+                "name": name,
                 "triggerOnDeploy": trigger_on_deploy,
                 "workspaceId": workspace_id,
-                "applicationId": application_id,
-                "name": name,
-                "applicationSetId": application_set_id,
             },
             headers={
                 "content-type": "application/json",
@@ -450,30 +450,43 @@ class RawApplicationsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def scale_to_zero(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
+    def cancel_deployment(
+        self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[ApplicationsCancelDeploymentResponse]:
         """
-        Pause a running application by scaling to 0 replicas
+        Cancel an ongoing deployment associated with the provided application ID and deployment ID.
 
         Parameters
         ----------
         id : str
-            Id of the application
+            Application id of the application
+
+        deployment_id : str
+            Deployment id of the deployment
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[None]
+        HttpResponse[ApplicationsCancelDeploymentResponse]
+            Deployment cancelled successfully.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}/scale-to-zero",
-            method="PATCH",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/cancel",
+            method="POST",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return HttpResponse(response=_response, data=None)
+                _data = typing.cast(
+                    ApplicationsCancelDeploymentResponse,
+                    parse_obj_as(
+                        type_=ApplicationsCancelDeploymentResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
             if _response.status_code == 403:
                 raise ForbiddenError(
                     headers=dict(_response.headers),
@@ -496,19 +509,8 @@ class RawApplicationsClient:
                         ),
                     ),
                 )
-            if _response.status_code == 405:
-                raise MethodNotAllowedError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 501:
-                raise NotImplementedError(
+            if _response.status_code == 409:
+                raise ConflictError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         HttpError,
@@ -595,43 +597,30 @@ class RawApplicationsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def cancel_deployment(
-        self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[ApplicationsCancelDeploymentResponse]:
+    def scale_to_zero(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
         """
-        Cancel an ongoing deployment associated with the provided application ID and deployment ID.
+        Pause a running application by scaling to 0 replicas
 
         Parameters
         ----------
         id : str
-            Application id of the application
-
-        deployment_id : str
-            Deployment id of the deployment
+            Id of the application
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[ApplicationsCancelDeploymentResponse]
-            Deployment cancelled successfully.
+        HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/cancel",
-            method="POST",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/scale-to-zero",
+            method="PATCH",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    ApplicationsCancelDeploymentResponse,
-                    parse_obj_as(
-                        type_=ApplicationsCancelDeploymentResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
+                return HttpResponse(response=_response, data=None)
             if _response.status_code == 403:
                 raise ForbiddenError(
                     headers=dict(_response.headers),
@@ -654,8 +643,19 @@ class RawApplicationsClient:
                         ),
                     ),
                 )
-            if _response.status_code == 409:
-                raise ConflictError(
+            if _response.status_code == 405:
+                raise MethodNotAllowedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 501:
+                raise NotImplementedError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         HttpError,
@@ -844,13 +844,13 @@ class AsyncRawApplicationsClient:
         self,
         *,
         manifest: typing.Dict[str, typing.Optional[typing.Any]],
+        application_id: typing.Optional[str] = OMIT,
+        application_set_id: typing.Optional[str] = OMIT,
         dry_run: typing.Optional[bool] = OMIT,
         force_deploy: typing.Optional[bool] = OMIT,
+        name: typing.Optional[str] = OMIT,
         trigger_on_deploy: typing.Optional[bool] = OMIT,
         workspace_id: typing.Optional[str] = OMIT,
-        application_id: typing.Optional[str] = OMIT,
-        name: typing.Optional[str] = OMIT,
-        application_set_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetApplicationDeploymentResponse]:
         """
@@ -861,26 +861,26 @@ class AsyncRawApplicationsClient:
         manifest : typing.Dict[str, typing.Optional[typing.Any]]
             Manifest of application
 
+        application_id : typing.Optional[str]
+            Id of the application
+
+        application_set_id : typing.Optional[str]
+            Application Set Id
+
         dry_run : typing.Optional[bool]
             Dry run
 
         force_deploy : typing.Optional[bool]
             Cancels any ongoing deployments
 
+        name : typing.Optional[str]
+            Name of application
+
         trigger_on_deploy : typing.Optional[bool]
             Trigger on deploy
 
         workspace_id : typing.Optional[str]
             workspace id of the workspace
-
-        application_id : typing.Optional[str]
-            Id of the application
-
-        name : typing.Optional[str]
-            Name of application
-
-        application_set_id : typing.Optional[str]
-            Application Set Id
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -897,14 +897,14 @@ class AsyncRawApplicationsClient:
             "api/svc/v1/apps",
             method="PUT",
             json={
-                "manifest": manifest,
+                "applicationId": application_id,
+                "applicationSetId": application_set_id,
                 "dryRun": dry_run,
                 "forceDeploy": force_deploy,
+                "manifest": manifest,
+                "name": name,
                 "triggerOnDeploy": trigger_on_deploy,
                 "workspaceId": workspace_id,
-                "applicationId": application_id,
-                "name": name,
-                "applicationSetId": application_set_id,
             },
             headers={
                 "content-type": "application/json",
@@ -1093,32 +1093,43 @@ class AsyncRawApplicationsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def scale_to_zero(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[None]:
+    async def cancel_deployment(
+        self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[ApplicationsCancelDeploymentResponse]:
         """
-        Pause a running application by scaling to 0 replicas
+        Cancel an ongoing deployment associated with the provided application ID and deployment ID.
 
         Parameters
         ----------
         id : str
-            Id of the application
+            Application id of the application
+
+        deployment_id : str
+            Deployment id of the deployment
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[None]
+        AsyncHttpResponse[ApplicationsCancelDeploymentResponse]
+            Deployment cancelled successfully.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}/scale-to-zero",
-            method="PATCH",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/cancel",
+            method="POST",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return AsyncHttpResponse(response=_response, data=None)
+                _data = typing.cast(
+                    ApplicationsCancelDeploymentResponse,
+                    parse_obj_as(
+                        type_=ApplicationsCancelDeploymentResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
             if _response.status_code == 403:
                 raise ForbiddenError(
                     headers=dict(_response.headers),
@@ -1141,19 +1152,8 @@ class AsyncRawApplicationsClient:
                         ),
                     ),
                 )
-            if _response.status_code == 405:
-                raise MethodNotAllowedError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Optional[typing.Any],
-                        parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 501:
-                raise NotImplementedError(
+            if _response.status_code == 409:
+                raise ConflictError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         HttpError,
@@ -1240,43 +1240,32 @@ class AsyncRawApplicationsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def cancel_deployment(
-        self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[ApplicationsCancelDeploymentResponse]:
+    async def scale_to_zero(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[None]:
         """
-        Cancel an ongoing deployment associated with the provided application ID and deployment ID.
+        Pause a running application by scaling to 0 replicas
 
         Parameters
         ----------
         id : str
-            Application id of the application
-
-        deployment_id : str
-            Deployment id of the deployment
+            Id of the application
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[ApplicationsCancelDeploymentResponse]
-            Deployment cancelled successfully.
+        AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/cancel",
-            method="POST",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/scale-to-zero",
+            method="PATCH",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    ApplicationsCancelDeploymentResponse,
-                    parse_obj_as(
-                        type_=ApplicationsCancelDeploymentResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
+                return AsyncHttpResponse(response=_response, data=None)
             if _response.status_code == 403:
                 raise ForbiddenError(
                     headers=dict(_response.headers),
@@ -1299,8 +1288,19 @@ class AsyncRawApplicationsClient:
                         ),
                     ),
                 )
-            if _response.status_code == 409:
-                raise ConflictError(
+            if _response.status_code == 405:
+                raise MethodNotAllowedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 501:
+                raise NotImplementedError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         HttpError,

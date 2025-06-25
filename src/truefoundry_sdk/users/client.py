@@ -134,150 +134,6 @@ class UsersClient:
         _response = self._raw_client.pre_register_users(emails=emails, dry_run=dry_run, request_options=request_options)
         return _response.data
 
-    def update_roles(
-        self, *, email: str, roles: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
-    ) -> UpdateUserRolesResponse:
-        """
-        This endpoint allows tenant administrators to update the roles of a user within their tenant.
-
-        Parameters
-        ----------
-        email : str
-            Email of the user
-
-        roles : typing.Sequence[str]
-            Roles for the user
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        UpdateUserRolesResponse
-            The user roles have been successfully updated.
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.users.update_roles(
-            email="email",
-            roles=["roles"],
-        )
-        """
-        _response = self._raw_client.update_roles(email=email, roles=roles, request_options=request_options)
-        return _response.data
-
-    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetUserResponse:
-        """
-        Get User associated with provided User id
-
-        Parameters
-        ----------
-        id : str
-            User Id
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetUserResponse
-            Returns the User associated with provided User id
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.users.get(
-            id="id",
-        )
-        """
-        _response = self._raw_client.get(id, request_options=request_options)
-        return _response.data
-
-    def invite_user(
-        self, *, accept_invite_client_url: str, email: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> InviteUserResponse:
-        """
-        Invite a user to the tenant
-
-        Parameters
-        ----------
-        accept_invite_client_url : str
-            Url to redirect when invite is accepted
-
-        email : str
-            Email of user
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        InviteUserResponse
-            User has been successfully invited.
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.users.invite_user(
-            accept_invite_client_url="<control plane url>/invite-accept",
-            email="email",
-        )
-        """
-        _response = self._raw_client.invite_user(
-            accept_invite_client_url=accept_invite_client_url, email=email, request_options=request_options
-        )
-        return _response.data
-
-    def deactivate(
-        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> DeactivateUserResponse:
-        """
-        Deactivate user associated with the provided email within the tenant.
-
-        Parameters
-        ----------
-        email : str
-            Email of the user
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        DeactivateUserResponse
-            User has been successfully deactivated.
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.users.deactivate(
-            email="email",
-        )
-        """
-        _response = self._raw_client.deactivate(email=email, request_options=request_options)
-        return _response.data
-
     def activate(self, *, email: str, request_options: typing.Optional[RequestOptions] = None) -> ActivateUserResponse:
         """
         Activate user associated with the provided email within the tenant.
@@ -357,6 +213,150 @@ class UsersClient:
         _response = self._raw_client.change_password(
             login_id=login_id, new_password=new_password, old_password=old_password, request_options=request_options
         )
+        return _response.data
+
+    def deactivate(
+        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> DeactivateUserResponse:
+        """
+        Deactivate user associated with the provided email within the tenant.
+
+        Parameters
+        ----------
+        email : str
+            Email of the user
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DeactivateUserResponse
+            User has been successfully deactivated.
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.users.deactivate(
+            email="email",
+        )
+        """
+        _response = self._raw_client.deactivate(email=email, request_options=request_options)
+        return _response.data
+
+    def invite_user(
+        self, *, accept_invite_client_url: str, email: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> InviteUserResponse:
+        """
+        Invite a user to the tenant
+
+        Parameters
+        ----------
+        accept_invite_client_url : str
+            Url to redirect when invite is accepted
+
+        email : str
+            Email of user
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        InviteUserResponse
+            User has been successfully invited.
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.users.invite_user(
+            accept_invite_client_url="<control plane url>/invite-accept",
+            email="email",
+        )
+        """
+        _response = self._raw_client.invite_user(
+            accept_invite_client_url=accept_invite_client_url, email=email, request_options=request_options
+        )
+        return _response.data
+
+    def update_roles(
+        self, *, email: str, roles: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
+    ) -> UpdateUserRolesResponse:
+        """
+        This endpoint allows tenant administrators to update the roles of a user within their tenant.
+
+        Parameters
+        ----------
+        email : str
+            Email of the user
+
+        roles : typing.Sequence[str]
+            Roles for the user
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        UpdateUserRolesResponse
+            The user roles have been successfully updated.
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.users.update_roles(
+            email="email",
+            roles=["roles"],
+        )
+        """
+        _response = self._raw_client.update_roles(email=email, roles=roles, request_options=request_options)
+        return _response.data
+
+    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetUserResponse:
+        """
+        Get User associated with provided User id
+
+        Parameters
+        ----------
+        id : str
+            User Id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetUserResponse
+            Returns the User associated with provided User id
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.users.get(
+            id="id",
+        )
+        """
+        _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
 
 
@@ -494,182 +494,6 @@ class AsyncUsersClient:
         )
         return _response.data
 
-    async def update_roles(
-        self, *, email: str, roles: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
-    ) -> UpdateUserRolesResponse:
-        """
-        This endpoint allows tenant administrators to update the roles of a user within their tenant.
-
-        Parameters
-        ----------
-        email : str
-            Email of the user
-
-        roles : typing.Sequence[str]
-            Roles for the user
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        UpdateUserRolesResponse
-            The user roles have been successfully updated.
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.users.update_roles(
-                email="email",
-                roles=["roles"],
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.update_roles(email=email, roles=roles, request_options=request_options)
-        return _response.data
-
-    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetUserResponse:
-        """
-        Get User associated with provided User id
-
-        Parameters
-        ----------
-        id : str
-            User Id
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetUserResponse
-            Returns the User associated with provided User id
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.users.get(
-                id="id",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.get(id, request_options=request_options)
-        return _response.data
-
-    async def invite_user(
-        self, *, accept_invite_client_url: str, email: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> InviteUserResponse:
-        """
-        Invite a user to the tenant
-
-        Parameters
-        ----------
-        accept_invite_client_url : str
-            Url to redirect when invite is accepted
-
-        email : str
-            Email of user
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        InviteUserResponse
-            User has been successfully invited.
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.users.invite_user(
-                accept_invite_client_url="<control plane url>/invite-accept",
-                email="email",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.invite_user(
-            accept_invite_client_url=accept_invite_client_url, email=email, request_options=request_options
-        )
-        return _response.data
-
-    async def deactivate(
-        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> DeactivateUserResponse:
-        """
-        Deactivate user associated with the provided email within the tenant.
-
-        Parameters
-        ----------
-        email : str
-            Email of the user
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        DeactivateUserResponse
-            User has been successfully deactivated.
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.users.deactivate(
-                email="email",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.deactivate(email=email, request_options=request_options)
-        return _response.data
-
     async def activate(
         self, *, email: str, request_options: typing.Optional[RequestOptions] = None
     ) -> ActivateUserResponse:
@@ -767,4 +591,180 @@ class AsyncUsersClient:
         _response = await self._raw_client.change_password(
             login_id=login_id, new_password=new_password, old_password=old_password, request_options=request_options
         )
+        return _response.data
+
+    async def deactivate(
+        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> DeactivateUserResponse:
+        """
+        Deactivate user associated with the provided email within the tenant.
+
+        Parameters
+        ----------
+        email : str
+            Email of the user
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DeactivateUserResponse
+            User has been successfully deactivated.
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.users.deactivate(
+                email="email",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.deactivate(email=email, request_options=request_options)
+        return _response.data
+
+    async def invite_user(
+        self, *, accept_invite_client_url: str, email: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> InviteUserResponse:
+        """
+        Invite a user to the tenant
+
+        Parameters
+        ----------
+        accept_invite_client_url : str
+            Url to redirect when invite is accepted
+
+        email : str
+            Email of user
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        InviteUserResponse
+            User has been successfully invited.
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.users.invite_user(
+                accept_invite_client_url="<control plane url>/invite-accept",
+                email="email",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.invite_user(
+            accept_invite_client_url=accept_invite_client_url, email=email, request_options=request_options
+        )
+        return _response.data
+
+    async def update_roles(
+        self, *, email: str, roles: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
+    ) -> UpdateUserRolesResponse:
+        """
+        This endpoint allows tenant administrators to update the roles of a user within their tenant.
+
+        Parameters
+        ----------
+        email : str
+            Email of the user
+
+        roles : typing.Sequence[str]
+            Roles for the user
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        UpdateUserRolesResponse
+            The user roles have been successfully updated.
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.users.update_roles(
+                email="email",
+                roles=["roles"],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update_roles(email=email, roles=roles, request_options=request_options)
+        return _response.data
+
+    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetUserResponse:
+        """
+        Get User associated with provided User id
+
+        Parameters
+        ----------
+        id : str
+            User Id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetUserResponse
+            Returns the User associated with provided User id
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.users.get(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get(id, request_options=request_options)
         return _response.data

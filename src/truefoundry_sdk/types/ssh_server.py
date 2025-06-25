@@ -13,9 +13,12 @@ class SshServer(BaseWorkbenchInput):
     +docs=Describes the configuration for the ssh server
     """
 
-    type: typing.Optional[typing.Literal["ssh-server"]] = pydantic.Field(default=None)
+    cull_timeout: typing.Optional[int] = pydantic.Field(default=None)
     """
-    +value=ssh-server
+    +label=Stop after (minutes of inactivity)
+    +usage=Stop the SSH Server instance after this much time in minutes of inactivity. The instance is considered active if there is at least one active SSH connection (a client connected to the SSH server), or if a background job is running using tmux or screen, or if the pod has restarted.
+    +sort=5
+    +uiProps={"descriptionInline":true, "warningMessage":"Please note that stop after inactivity is only available for images with tag(including custom images) >= v0.3.10"}
     """
 
     image: typing.Optional[WorkbenchImage] = None
@@ -29,12 +32,9 @@ class SshServer(BaseWorkbenchInput):
     +sort=4
     """
 
-    cull_timeout: typing.Optional[int] = pydantic.Field(default=None)
+    type: typing.Optional[typing.Literal["ssh-server"]] = pydantic.Field(default=None)
     """
-    +label=Stop after (minutes of inactivity)
-    +usage=Stop the SSH Server instance after this much time in minutes of inactivity. The instance is considered active if there is at least one active SSH connection (a client connected to the SSH server), or if a background job is running using tmux or screen, or if the pod has restarted.
-    +sort=5
-    +uiProps={"descriptionInline":true, "warningMessage":"Please note that stop after inactivity is only available for images with tag(including custom images) >= v0.3.10"}
+    +value=ssh-server
     """
 
     if IS_PYDANTIC_V2:

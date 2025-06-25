@@ -7,9 +7,12 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class SlackBot(UniversalBaseModel):
-    type: typing.Literal["slack-bot"] = pydantic.Field(default="slack-bot")
+    channels: typing.List[str] = pydantic.Field()
     """
-    +value=slack-bot
+    +label=Slack Channel Names
+    +usage=List of channels to send messages to.
+    +message=3 to 81 lower case characters long alphanumeric word, may contain - or _ in between, must start with #
+    +sort=665
     """
 
     notification_channel: str = pydantic.Field()
@@ -21,12 +24,9 @@ class SlackBot(UniversalBaseModel):
     +sort=660
     """
 
-    channels: typing.List[str] = pydantic.Field()
+    type: typing.Literal["slack-bot"] = pydantic.Field(default="slack-bot")
     """
-    +label=Slack Channel Names
-    +usage=List of channels to send messages to.
-    +message=3 to 81 lower case characters long alphanumeric word, may contain - or _ in between, must start with #
-    +sort=665
+    +value=slack-bot
     """
 
     if IS_PYDANTIC_V2:

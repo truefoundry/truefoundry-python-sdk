@@ -9,15 +9,15 @@ from ..core.serialization import FieldMetadata
 
 
 class UserMetadata(UniversalBaseModel):
-    sub: typing.Optional[str] = None
-    image_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="imageURL")] = None
     display_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="displayName")] = None
+    image_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="imageURL")] = None
+    invite_accepted: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="inviteAccepted")] = None
+    preference: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    registered_in_idp: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="registeredInIdp")] = None
+    sub: typing.Optional[str] = None
     user_object: typing_extensions.Annotated[
         typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="userObject")
     ] = None
-    invite_accepted: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="inviteAccepted")] = None
-    registered_in_idp: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="registeredInIdp")] = None
-    preference: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

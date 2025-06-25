@@ -12,12 +12,11 @@ class ImageUrl(UniversalBaseModel):
     Image URL linking to the image
     """
 
+    detail: typing.Optional[str] = None
     url: ImageUrlUrl = pydantic.Field()
     """
     Image URL linking to the image
     """
-
-    detail: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

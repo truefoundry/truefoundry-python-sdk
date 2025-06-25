@@ -14,9 +14,14 @@ class Workflow(UniversalBaseModel):
     +docs=Describes the configuration for the worflow
     """
 
-    type: typing.Literal["workflow"] = pydantic.Field(default="workflow")
+    alerts: typing.Optional[typing.List[WorkflowAlert]] = pydantic.Field(default=None)
     """
-    +value=workflow
+    +label=Alerts
+    """
+
+    flyte_entities: typing.Optional[typing.List[WorkflowFlyteEntitiesItem]] = pydantic.Field(default=None)
+    """
+    +label=Flyte Entities
     """
 
     name: str = pydantic.Field()
@@ -34,21 +39,16 @@ class Workflow(UniversalBaseModel):
     +sort=200
     """
 
+    type: typing.Literal["workflow"] = pydantic.Field(default="workflow")
+    """
+    +value=workflow
+    """
+
     workflow_file_path: str = pydantic.Field()
     """
     +label=Workflow File Path
     +docs=Path to the workflow file relative to the project root path
     +sort=550
-    """
-
-    flyte_entities: typing.Optional[typing.List[WorkflowFlyteEntitiesItem]] = pydantic.Field(default=None)
-    """
-    +label=Flyte Entities
-    """
-
-    alerts: typing.Optional[typing.List[WorkflowAlert]] = pydantic.Field(default=None)
-    """
-    +label=Alerts
     """
 
     if IS_PYDANTIC_V2:

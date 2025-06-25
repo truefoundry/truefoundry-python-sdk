@@ -11,11 +11,11 @@ class DynamicVolumeConfig(UniversalBaseModel):
     +label=Dynamic Volume Config
     """
 
-    type: typing.Literal["dynamic"] = pydantic.Field(default="dynamic")
+    size: int = pydantic.Field()
     """
-    +label=Volume Type
-    +value=dynamic
-    +usage=Volume Type for the volume.
+    +label=Size
+    +unit=Gi
+    +usage=Size of volume in Gi
     """
 
     storage_class: str = pydantic.Field()
@@ -24,11 +24,11 @@ class DynamicVolumeConfig(UniversalBaseModel):
     +usage=Name of the storage class to be used for the volume.
     """
 
-    size: int = pydantic.Field()
+    type: typing.Literal["dynamic"] = pydantic.Field(default="dynamic")
     """
-    +label=Size
-    +unit=Gi
-    +usage=Size of volume in Gi
+    +label=Volume Type
+    +value=dynamic
+    +usage=Volume Type for the volume.
     """
 
     if IS_PYDANTIC_V2:

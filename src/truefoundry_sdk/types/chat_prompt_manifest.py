@@ -14,20 +14,15 @@ class ChatPromptManifest(UniversalBaseModel):
     Chat Prompt manifest.
     """
 
-    name: str = pydantic.Field()
+    description: typing.Optional[str] = None
+    messages: typing.List[ChatPromptManifestMessagesItem] = pydantic.Field()
     """
-    Name of the entity
+    List of messages in the chat conversation, must be non-empty
     """
 
-    description: typing.Optional[str] = None
     metadata: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
     """
     Key value metadata. Should be valid JSON. For e.g. `{"business-unit": "sales", "quality": "good", "rating": 4.5}`
-    """
-
-    version_alias: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Version alias is alternate, ideally human readable, version string to reference an artifact version. It should start with `v` followed by alphanumeric and it can include `.` and `-` in between (e.g. `v1.0.0`, `v1-prod`, `v3-dev`, etc)
     """
 
     ml_repo: str = pydantic.Field()
@@ -35,26 +30,31 @@ class ChatPromptManifest(UniversalBaseModel):
     Name of the ML Repo
     """
 
-    version: typing.Optional[int] = pydantic.Field(default=None)
+    model_configuration: typing.Optional[ModelConfiguration] = None
+    name: str = pydantic.Field()
     """
-    Version of the entity
+    Name of the entity
+    """
+
+    tools: typing.Optional[typing.List[ToolSchema]] = pydantic.Field(default=None)
+    """
+    List of tools to be used in the chat prompt
     """
 
     type: typing.Literal["chat_prompt"] = "chat_prompt"
-    messages: typing.List[ChatPromptManifestMessagesItem] = pydantic.Field()
-    """
-    List of messages in the chat conversation, must be non-empty
-    """
-
     variables: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
     """
     Variables referenced in messages and that can be replaced when running generation
     """
 
-    model_configuration: typing.Optional[ModelConfiguration] = None
-    tools: typing.Optional[typing.List[ToolSchema]] = pydantic.Field(default=None)
+    version: typing.Optional[int] = pydantic.Field(default=None)
     """
-    List of tools to be used in the chat prompt
+    Version of the entity
+    """
+
+    version_alias: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Version alias is alternate, ideally human readable, version string to reference an artifact version. It should start with `v` followed by alphanumeric and it can include `.` and `-` in between (e.g. `v1.0.0`, `v1-prod`, `v3-dev`, etc)
     """
 
     if IS_PYDANTIC_V2:

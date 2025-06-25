@@ -10,14 +10,14 @@ from .job_run_status import JobRunStatus
 
 
 class TerminateJobResponse(UniversalBaseModel):
-    message: str = pydantic.Field()
-    """
-    Terminate Job Message
-    """
-
     job_run_status: typing_extensions.Annotated[JobRunStatus, FieldMetadata(alias="jobRunStatus")] = pydantic.Field()
     """
     Job run status
+    """
+
+    message: str = pydantic.Field()
+    """
+    Terminate Job Message
     """
 
     if IS_PYDANTIC_V2:

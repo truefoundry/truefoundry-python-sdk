@@ -15,12 +15,13 @@ class ArtifactsDownload(UniversalBaseModel):
     +usage=Download and cache models in a volume to enhance loading speeds and reduce costs by avoiding repeated downloads. [Docs](https://docs.truefoundry.com/docs/download-and-cache-models)
     """
 
-    cache_volume: typing.Optional[ArtifactsCacheVolume] = None
     artifacts: typing.List[ArtifactsDownloadArtifactsItem] = pydantic.Field()
     """
     +label=Artifacts
     +usage=List of artifacts to be cached
     """
+
+    cache_volume: typing.Optional[ArtifactsCacheVolume] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

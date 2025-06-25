@@ -11,15 +11,15 @@ from .user_metadata import UserMetadata
 
 
 class User(UniversalBaseModel):
-    id: str
-    email: str
-    user_name: typing_extensions.Annotated[str, FieldMetadata(alias="userName")]
-    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]
-    metadata: UserMetadata
-    roles: typing.Optional[typing.List[str]] = None
     active: bool
     created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
+    email: str
+    id: str
+    metadata: UserMetadata
+    roles: typing.Optional[typing.List[str]] = None
+    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]
     updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
+    user_name: typing_extensions.Annotated[str, FieldMetadata(alias="userName")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

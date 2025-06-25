@@ -13,10 +13,10 @@ class Parameters(UniversalBaseModel):
     """
 
     max_tokens: typing.Optional[int] = None
+    stop: typing.Optional[ParametersStop] = None
     temperature: typing.Optional[float] = None
     top_k: typing.Optional[float] = None
     top_p: typing.Optional[float] = None
-    stop: typing.Optional[ParametersStop] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

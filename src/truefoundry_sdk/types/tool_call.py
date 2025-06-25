@@ -8,17 +8,16 @@ from .function import Function
 
 
 class ToolCall(UniversalBaseModel):
-    type: typing.Literal["function"] = pydantic.Field(default="function")
-    """
-    Type of the tool call
-    """
-
+    function: Function
     id: str = pydantic.Field()
     """
     Unique identifier for the tool call
     """
 
-    function: Function
+    type: typing.Literal["function"] = pydantic.Field(default="function")
+    """
+    Type of the tool call
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

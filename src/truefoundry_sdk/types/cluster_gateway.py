@@ -9,8 +9,6 @@ from ..core.serialization import FieldMetadata
 
 
 class ClusterGateway(UniversalBaseModel):
-    uid: typing.Optional[str] = None
-    name: str
     hosts: typing.List[str]
     is_tie_breaker: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isTieBreaker")] = (
         pydantic.Field(default=None)
@@ -19,7 +17,9 @@ class ClusterGateway(UniversalBaseModel):
     Used when there are 2 gateways with same host
     """
 
+    name: str
     selector: typing.Dict[str, str]
+    uid: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -31,6 +31,93 @@ class PromptsClient:
         """
         return self._raw_client
 
+    def create_or_update(
+        self, *, manifest: ChatPromptManifest, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetPromptVersionResponse:
+        """
+        Parameters
+        ----------
+        manifest : ChatPromptManifest
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetPromptVersionResponse
+            Successful Response
+
+        Examples
+        --------
+        from truefoundry_sdk import ChatPromptManifest, SystemMessage, TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.prompts.create_or_update(
+            manifest=ChatPromptManifest(
+                messages=[
+                    SystemMessage(
+                        content="content",
+                    )
+                ],
+                metadata={"key": "value"},
+                ml_repo="ml_repo",
+                name="name",
+            ),
+        )
+        """
+        _response = self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
+        return _response.data
+
+    def list(
+        self,
+        *,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
+        offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = 100,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncPager[Prompt]:
+        """
+        Parameters
+        ----------
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
+
+        offset : typing.Optional[int]
+
+        limit : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[Prompt]
+            Successful Response
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.prompts.list()
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
+        """
+        return self._raw_client.list(
+            ml_repo_id=ml_repo_id, name=name, offset=offset, limit=limit, request_options=request_options
+        )
+
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetPromptResponse:
         """
         Parameters
@@ -89,54 +176,23 @@ class PromptsClient:
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
 
-    def list(
-        self,
-        *,
-        ml_repo_id: typing.Optional[str] = None,
-        name: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Prompt]:
+
+class AsyncPromptsClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._raw_client = AsyncRawPromptsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawPromptsClient:
         """
-        Parameters
-        ----------
-        ml_repo_id : typing.Optional[str]
-
-        name : typing.Optional[str]
-
-        offset : typing.Optional[int]
-
-        limit : typing.Optional[int]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+        Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        SyncPager[Prompt]
-            Successful Response
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        response = client.prompts.list()
-        for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        for page in response.iter_pages():
-            yield page
+        AsyncRawPromptsClient
         """
-        return self._raw_client.list(
-            ml_repo_id=ml_repo_id, name=name, offset=offset, limit=limit, request_options=request_options
-        )
+        return self._raw_client
 
-    def create_or_update(
+    async def create_or_update(
         self, *, manifest: ChatPromptManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetPromptVersionResponse:
         """
@@ -154,43 +210,91 @@ class PromptsClient:
 
         Examples
         --------
-        from truefoundry_sdk import ChatPromptManifest, SystemMessage, TrueFoundry
+        import asyncio
 
-        client = TrueFoundry(
+        from truefoundry_sdk import AsyncTrueFoundry, ChatPromptManifest, SystemMessage
+
+        client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.prompts.create_or_update(
-            manifest=ChatPromptManifest(
-                name="name",
-                metadata={"key": "value"},
-                ml_repo="ml_repo",
-                messages=[
-                    SystemMessage(
-                        content="content",
-                    )
-                ],
-            ),
-        )
+
+
+        async def main() -> None:
+            await client.prompts.create_or_update(
+                manifest=ChatPromptManifest(
+                    messages=[
+                        SystemMessage(
+                            content="content",
+                        )
+                    ],
+                    metadata={"key": "value"},
+                    ml_repo="ml_repo",
+                    name="name",
+                ),
+            )
+
+
+        asyncio.run(main())
         """
-        _response = self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
+        _response = await self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
         return _response.data
 
-
-class AsyncPromptsClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawPromptsClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawPromptsClient:
+    async def list(
+        self,
+        *,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
+        offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = 100,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncPager[Prompt]:
         """
-        Retrieves a raw implementation of this client that returns raw responses.
+        Parameters
+        ----------
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
+
+        offset : typing.Optional[int]
+
+        limit : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
 
         Returns
         -------
-        AsyncRawPromptsClient
+        AsyncPager[Prompt]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.prompts.list()
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
         """
-        return self._raw_client
+        return await self._raw_client.list(
+            ml_repo_id=ml_repo_id, name=name, offset=offset, limit=limit, request_options=request_options
+        )
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetPromptResponse:
         """
@@ -264,108 +368,4 @@ class AsyncPromptsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
-        return _response.data
-
-    async def list(
-        self,
-        *,
-        ml_repo_id: typing.Optional[str] = None,
-        name: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Prompt]:
-        """
-        Parameters
-        ----------
-        ml_repo_id : typing.Optional[str]
-
-        name : typing.Optional[str]
-
-        offset : typing.Optional[int]
-
-        limit : typing.Optional[int]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncPager[Prompt]
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            response = await client.prompts.list()
-            async for item in response:
-                yield item
-
-            # alternatively, you can paginate page-by-page
-            async for page in response.iter_pages():
-                yield page
-
-
-        asyncio.run(main())
-        """
-        return await self._raw_client.list(
-            ml_repo_id=ml_repo_id, name=name, offset=offset, limit=limit, request_options=request_options
-        )
-
-    async def create_or_update(
-        self, *, manifest: ChatPromptManifest, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetPromptVersionResponse:
-        """
-        Parameters
-        ----------
-        manifest : ChatPromptManifest
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetPromptVersionResponse
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry, ChatPromptManifest, SystemMessage
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.prompts.create_or_update(
-                manifest=ChatPromptManifest(
-                    name="name",
-                    metadata={"key": "value"},
-                    ml_repo="ml_repo",
-                    messages=[
-                        SystemMessage(
-                            content="content",
-                        )
-                    ],
-                ),
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
         return _response.data

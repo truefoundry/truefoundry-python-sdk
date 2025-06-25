@@ -8,11 +8,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class FileInfo(UniversalBaseModel):
-    path: str
-    is_dir: bool
     file_size: typing.Optional[int] = None
-    signed_url: typing.Optional[str] = None
+    is_dir: bool
     last_modified: typing.Optional[dt.datetime] = None
+    path: str
+    signed_url: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

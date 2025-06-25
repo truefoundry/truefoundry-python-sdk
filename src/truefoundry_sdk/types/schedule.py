@@ -14,9 +14,11 @@ class Schedule(UniversalBaseModel):
     +usage=Run the job on a schedule. [Docs](https://docs.truefoundry.com/docs/deploy-a-cron-job)
     """
 
-    type: typing.Literal["scheduled"] = pydantic.Field(default="scheduled")
+    concurrency_policy: ScheduleConcurrencyPolicy = pydantic.Field()
     """
-    +value=scheduled
+    +usage=Choose whether to allow this job to run while another instance of the job is running, or to replace the currently running instance. Allow
+    will enable multiple instances of this job to run. Forbid will keep the current instance of the job running and stop a new instance from being run.
+    Replace will terminate any currently running instance of the job and start a new one.
     """
 
     schedule: str = pydantic.Field()
@@ -34,17 +36,15 @@ class Schedule(UniversalBaseModel):
     ```
     """
 
-    concurrency_policy: ScheduleConcurrencyPolicy = pydantic.Field()
-    """
-    +usage=Choose whether to allow this job to run while another instance of the job is running, or to replace the currently running instance. Allow
-    will enable multiple instances of this job to run. Forbid will keep the current instance of the job running and stop a new instance from being run.
-    Replace will terminate any currently running instance of the job and start a new one.
-    """
-
     timezone: typing.Optional[str] = pydantic.Field(default=None)
     """
     +usage=Timezone against which the cron schedule will be calculated, e.g. "Asia/Tokyo". Default is machine's local time.
     https://docs.truefoundry.com/docs/list-of-supported-timezones
+    """
+
+    type: typing.Literal["scheduled"] = pydantic.Field(default="scheduled")
+    """
+    +value=scheduled
     """
 
     if IS_PYDANTIC_V2:
