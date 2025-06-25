@@ -4,23 +4,31 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .mime_type import MimeType
+from .blob_storage_reference_mime_type import BlobStorageReferenceMimeType
 
 
 class BlobStorageReference(UniversalBaseModel):
     """
-    A reference to content offloaded to blob storage
+    +label=Blob Storage Reference
+    +usage=A reference to content offloaded to blob storage
+    +docs=Defines the structure for blob storage content references, including type, path, and mime_type
     """
 
-    type: typing.Literal["blob-storage"] = "blob-storage"
+    type: typing.Literal["blob-storage"] = pydantic.Field(default="blob-storage")
+    """
+    +value=blob-storage
+    """
+
     path: str = pydantic.Field()
     """
-    Path to the content in blob storage
+    +label=Path
+    +usage=Path to the content in blob storage
     """
 
-    mime_type: MimeType = pydantic.Field()
+    mime_type: BlobStorageReferenceMimeType = pydantic.Field()
     """
-    MIME type of the content
+    +label=MIME Type
+    +usage=MIME type of the content
     """
 
     if IS_PYDANTIC_V2:

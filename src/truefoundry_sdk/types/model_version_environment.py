@@ -8,17 +8,21 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class ModelVersionEnvironment(UniversalBaseModel):
     """
-    Runtime environment describing python version and dependencies for running the model
+    +label=Environment
+    +usage=Runtime environment describing python version and dependencies for running the model
+    +uiProps={"descriptionInline":true}
     """
 
     python_version: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Python version to use when running the model
+    +label=Python Version
+    +usage=Python version to use when running the model
     """
 
     pip_packages: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    pip dependencies needed for running the model
+    +label=PIP Packages
+    +usage=pip dependencies needed for running the model
     """
 
     if IS_PYDANTIC_V2:

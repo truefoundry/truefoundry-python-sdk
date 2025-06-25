@@ -1,4 +1,172 @@
 # Reference
+<details><summary><code>client.<a href="src/truefoundry_sdk/base_client.py">apply</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Applies a given manifest to create or update resources of specific types, such as provider-account, cluster, workspace, or ml-repo.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import Collaborator, MlRepoManifest, TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.apply(
+    manifest=MlRepoManifest(
+        name="name",
+        storage_integration_fqn="storage_integration_fqn",
+        collaborators=[
+            Collaborator(
+                subject="subject",
+                role_id="role_id",
+            )
+        ],
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**manifest:** `TfyApplyRequestManifest` — manifest of the resource to be created or updated
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dry_run:** `typing.Optional[bool]` — Dry run the apply operation without actually applying
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/truefoundry_sdk/base_client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes resources of specific types, such as provider-account, cluster, workspace, or application.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import Collaborator, MlRepoManifest, TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.delete(
+    manifest=MlRepoManifest(
+        name="name",
+        storage_integration_fqn="storage_integration_fqn",
+        collaborators=[
+            Collaborator(
+                subject="subject",
+                role_id="role_id",
+            )
+        ],
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**manifest:** `TfyDeleteRequestManifest` — manifest of the resource to be deleted
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Internal
 <details><summary><code>client.internal.<a href="src/truefoundry_sdk/internal/client.py">get_id_from_fqn</a>(...)</code></summary>
 <dl>
@@ -6474,8 +6642,8 @@ for page in response.iter_pages():
 from truefoundry_sdk import (
     AgentOpenApiToolManifest,
     BlobStorageReference,
+    BlobStorageReferenceMimeType,
     Method,
-    MimeType,
     TrueFoundry,
 )
 
@@ -6490,7 +6658,7 @@ client.tools.create_or_update(
         ml_repo="ml_repo",
         openapi_spec=BlobStorageReference(
             path="path",
-            mime_type=MimeType.TEXT_PLAIN,
+            mime_type=BlobStorageReferenceMimeType.TEXT_PLAIN,
         ),
         base_url="base_url",
         path="path",

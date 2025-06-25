@@ -157,8 +157,8 @@ class ToolsClient:
         from truefoundry_sdk import (
             AgentOpenApiToolManifest,
             BlobStorageReference,
+            BlobStorageReferenceMimeType,
             Method,
-            MimeType,
             TrueFoundry,
         )
 
@@ -173,7 +173,7 @@ class ToolsClient:
                 ml_repo="ml_repo",
                 openapi_spec=BlobStorageReference(
                     path="path",
-                    mime_type=MimeType.TEXT_PLAIN,
+                    mime_type=BlobStorageReferenceMimeType.TEXT_PLAIN,
                 ),
                 base_url="base_url",
                 path="path",
@@ -354,8 +354,8 @@ class AsyncToolsClient:
             AgentOpenApiToolManifest,
             AsyncTrueFoundry,
             BlobStorageReference,
+            BlobStorageReferenceMimeType,
             Method,
-            MimeType,
         )
 
         client = AsyncTrueFoundry(
@@ -372,7 +372,7 @@ class AsyncToolsClient:
                     ml_repo="ml_repo",
                     openapi_spec=BlobStorageReference(
                         path="path",
-                        mime_type=MimeType.TEXT_PLAIN,
+                        mime_type=BlobStorageReferenceMimeType.TEXT_PLAIN,
                     ),
                     base_url="base_url",
                     path="path",
