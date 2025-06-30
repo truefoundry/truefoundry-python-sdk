@@ -33,6 +33,7 @@ class AddonComponentName(str, enum.Enum):
     TRUEFOUNDRY = "TRUEFOUNDRY"
     TFY_PROMETHEUS_CONFIG = "TFY_PROMETHEUS_CONFIG"
     SPARK_OPERATOR = "SPARK_OPERATOR"
+    TFY_LOGS = "TFY_LOGS"
 
     def visit(
         self,
@@ -62,6 +63,7 @@ class AddonComponentName(str, enum.Enum):
         truefoundry: typing.Callable[[], T_Result],
         tfy_prometheus_config: typing.Callable[[], T_Result],
         spark_operator: typing.Callable[[], T_Result],
+        tfy_logs: typing.Callable[[], T_Result],
     ) -> T_Result:
         if self is AddonComponentName.ARGOCD:
             return argocd()
@@ -115,3 +117,5 @@ class AddonComponentName(str, enum.Enum):
             return tfy_prometheus_config()
         if self is AddonComponentName.SPARK_OPERATOR:
             return spark_operator()
+        if self is AddonComponentName.TFY_LOGS:
+            return tfy_logs()

@@ -4,4 +4,6 @@ import typing
 
 from .blob_storage_reference import BlobStorageReference
 
-AgentOpenApiToolWithFqnOpenapiSpec = typing.Union[BlobStorageReference, typing.Dict[str, typing.Optional[typing.Any]]]
+AgentOpenApiToolManifestWithFqnOpenapiSpec = typing.Union[
+    BlobStorageReference, typing.Dict[str, typing.Optional[typing.Any]]
+]
