@@ -14,6 +14,7 @@ from .artifacts.client import ArtifactsClient, AsyncArtifactsClient
 from .clusters.client import AsyncClustersClient, ClustersClient
 from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from .core.request_options import RequestOptions
 from .data_directories.client import AsyncDataDirectoriesClient, DataDirectoriesClient
 from .environments.client import AsyncEnvironmentsClient, EnvironmentsClient
 from .events.client import AsyncEventsClient, EventsClient
@@ -26,15 +27,22 @@ from .models.client import AsyncModelsClient, ModelsClient
 from .personal_access_tokens.client import AsyncPersonalAccessTokensClient, PersonalAccessTokensClient
 from .prompt_versions.client import AsyncPromptVersionsClient, PromptVersionsClient
 from .prompts.client import AsyncPromptsClient, PromptsClient
+from .raw_base_client import AsyncRawBaseTrueFoundry, RawBaseTrueFoundry
 from .secret_groups.client import AsyncSecretGroupsClient, SecretGroupsClient
 from .secrets.client import AsyncSecretsClient, SecretsClient
 from .teams.client import AsyncTeamsClient, TeamsClient
 from .tool_versions.client import AsyncToolVersionsClient, ToolVersionsClient
 from .tools.client import AsyncToolsClient, ToolsClient
 from .tracing_projects.client import AsyncTracingProjectsClient, TracingProjectsClient
+from .types.true_foundry_apply_request_manifest import TrueFoundryApplyRequestManifest
+from .types.true_foundry_apply_response import TrueFoundryApplyResponse
+from .types.true_foundry_delete_request_manifest import TrueFoundryDeleteRequestManifest
 from .users.client import AsyncUsersClient, UsersClient
 from .virtual_accounts.client import AsyncVirtualAccountsClient, VirtualAccountsClient
 from .workspaces.client import AsyncWorkspacesClient, WorkspacesClient
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class BaseTrueFoundry:
@@ -95,6 +103,7 @@ class BaseTrueFoundry:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self._raw_client = RawBaseTrueFoundry(client_wrapper=self._client_wrapper)
         self.internal = InternalClient(client_wrapper=self._client_wrapper)
         self.users = UsersClient(client_wrapper=self._client_wrapper)
         self.teams = TeamsClient(client_wrapper=self._client_wrapper)
@@ -124,6 +133,109 @@ class BaseTrueFoundry:
         self.agent_versions = AgentVersionsClient(client_wrapper=self._client_wrapper)
         self.data_directories = DataDirectoriesClient(client_wrapper=self._client_wrapper)
         self.tracing_projects = TracingProjectsClient(client_wrapper=self._client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawBaseTrueFoundry:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawBaseTrueFoundry
+        """
+        return self._raw_client
+
+    def apply(
+        self,
+        *,
+        manifest: TrueFoundryApplyRequestManifest,
+        dry_run: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> TrueFoundryApplyResponse:
+        """
+        Applies a given manifest to create or update resources of specific types, such as provider-account, cluster, workspace, or ml-repo.
+
+        Parameters
+        ----------
+        manifest : TrueFoundryApplyRequestManifest
+            manifest of the resource to be created or updated
+
+        dry_run : typing.Optional[bool]
+            Dry run the apply operation without actually applying
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TrueFoundryApplyResponse
+            The resource has been successfully created or updated.
+
+        Examples
+        --------
+        from truefoundry_sdk import Collaborator, MlRepoManifest, TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.apply(
+            manifest=MlRepoManifest(
+                name="name",
+                storage_integration_fqn="storage_integration_fqn",
+                collaborators=[
+                    Collaborator(
+                        subject="subject",
+                        role_id="role_id",
+                    )
+                ],
+            ),
+        )
+        """
+        _response = self._raw_client.apply(manifest=manifest, dry_run=dry_run, request_options=request_options)
+        return _response.data
+
+    def delete(
+        self, *, manifest: TrueFoundryDeleteRequestManifest, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Deletes resources of specific types, such as provider-account, cluster, workspace, or application.
+
+        Parameters
+        ----------
+        manifest : TrueFoundryDeleteRequestManifest
+            manifest of the resource to be deleted
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from truefoundry_sdk import Collaborator, MlRepoManifest, TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.delete(
+            manifest=MlRepoManifest(
+                name="name",
+                storage_integration_fqn="storage_integration_fqn",
+                collaborators=[
+                    Collaborator(
+                        subject="subject",
+                        role_id="role_id",
+                    )
+                ],
+            ),
+        )
+        """
+        _response = self._raw_client.delete(manifest=manifest, request_options=request_options)
+        return _response.data
 
 
 class AsyncBaseTrueFoundry:
@@ -184,6 +296,7 @@ class AsyncBaseTrueFoundry:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self._raw_client = AsyncRawBaseTrueFoundry(client_wrapper=self._client_wrapper)
         self.internal = AsyncInternalClient(client_wrapper=self._client_wrapper)
         self.users = AsyncUsersClient(client_wrapper=self._client_wrapper)
         self.teams = AsyncTeamsClient(client_wrapper=self._client_wrapper)
@@ -213,3 +326,122 @@ class AsyncBaseTrueFoundry:
         self.agent_versions = AsyncAgentVersionsClient(client_wrapper=self._client_wrapper)
         self.data_directories = AsyncDataDirectoriesClient(client_wrapper=self._client_wrapper)
         self.tracing_projects = AsyncTracingProjectsClient(client_wrapper=self._client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawBaseTrueFoundry:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawBaseTrueFoundry
+        """
+        return self._raw_client
+
+    async def apply(
+        self,
+        *,
+        manifest: TrueFoundryApplyRequestManifest,
+        dry_run: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> TrueFoundryApplyResponse:
+        """
+        Applies a given manifest to create or update resources of specific types, such as provider-account, cluster, workspace, or ml-repo.
+
+        Parameters
+        ----------
+        manifest : TrueFoundryApplyRequestManifest
+            manifest of the resource to be created or updated
+
+        dry_run : typing.Optional[bool]
+            Dry run the apply operation without actually applying
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TrueFoundryApplyResponse
+            The resource has been successfully created or updated.
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry, Collaborator, MlRepoManifest
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.apply(
+                manifest=MlRepoManifest(
+                    name="name",
+                    storage_integration_fqn="storage_integration_fqn",
+                    collaborators=[
+                        Collaborator(
+                            subject="subject",
+                            role_id="role_id",
+                        )
+                    ],
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.apply(manifest=manifest, dry_run=dry_run, request_options=request_options)
+        return _response.data
+
+    async def delete(
+        self, *, manifest: TrueFoundryDeleteRequestManifest, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Deletes resources of specific types, such as provider-account, cluster, workspace, or application.
+
+        Parameters
+        ----------
+        manifest : TrueFoundryDeleteRequestManifest
+            manifest of the resource to be deleted
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry, Collaborator, MlRepoManifest
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.delete(
+                manifest=MlRepoManifest(
+                    name="name",
+                    storage_integration_fqn="storage_integration_fqn",
+                    collaborators=[
+                        Collaborator(
+                            subject="subject",
+                            role_id="role_id",
+                        )
+                    ],
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete(manifest=manifest, request_options=request_options)
+        return _response.data

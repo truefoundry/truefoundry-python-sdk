@@ -4,11 +4,9 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .agent_open_api_tool_with_fqn_openapi_spec import AgentOpenApiToolWithFqnOpenapiSpec
-from .method import Method
 
 
-class AgentOpenApiToolWithFqn(UniversalBaseModel):
+class AgentManifestWithFqn(UniversalBaseModel):
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     Name of the entity
@@ -35,44 +33,39 @@ class AgentOpenApiToolWithFqn(UniversalBaseModel):
     Version of the entity
     """
 
-    type: typing.Literal["openapi-tool"] = pydantic.Field(default="openapi-tool")
+    type: typing.Literal["agent"] = pydantic.Field(default="agent")
     """
-    Type of the agent
-    """
-
-    openapi_spec: AgentOpenApiToolWithFqnOpenapiSpec = pydantic.Field()
-    """
-    OpenAPI Spec for the tool describing the API, endpoints and parameters. [Sample OpenAPI Spec Link](https://assets.production.truefoundry.com/sample-openapi.json)
+    Type of the entity
     """
 
-    base_url: str = pydantic.Field()
+    goal: str = pydantic.Field()
     """
-    HTTP endpoint where the API is hosted for the tools. E.g. `https://api.example.com/v1`
-    """
-
-    path: str = pydantic.Field()
-    """
-    API Route Path for the tool call HTTP request. E.g. `GET /weather`
+    Short form description. Will be used as `description` when this agent is used as a tool.
     """
 
-    method: Method = pydantic.Field()
+    instruction: str = pydantic.Field()
     """
-    HTTP Method for the tool call HTTP request
+    Instructions for the agent to follow to achieve the goal
     """
 
-    headers: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
+    available_tools: typing.List[str] = pydantic.Field()
     """
-    HTTP Headers for the tool call HTTP request. E.g. `Authorization: Bearer <token>`
+    Tools available to the agent
+    """
+
+    model_id: str = pydantic.Field()
+    """
+    Model to use when running the agent
     """
 
     id: str = pydantic.Field()
     """
-    ID of the agent tool
+    ID of the agent
     """
 
     fqn: str = pydantic.Field()
     """
-    FQN of the agent tool
+    FQN of the agent
     """
 
     if IS_PYDANTIC_V2:
