@@ -263,7 +263,7 @@ class ArtifactVersionsClient:
 
         Examples
         --------
-        from truefoundry_sdk import ModelManifest, TrueFoundry
+        from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -271,7 +271,10 @@ class ArtifactVersionsClient:
         )
         client.artifact_versions.stage(
             manifest=ModelManifest(
+                name="name",
                 metadata={"key": "value"},
+                ml_repo="ml_repo",
+                source=TrueFoundryManagedSource(),
             ),
         )
         """
@@ -645,7 +648,11 @@ class AsyncArtifactVersionsClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import AsyncTrueFoundry, ModelManifest
+        from truefoundry_sdk import (
+            AsyncTrueFoundry,
+            ModelManifest,
+            TrueFoundryManagedSource,
+        )
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -656,7 +663,10 @@ class AsyncArtifactVersionsClient:
         async def main() -> None:
             await client.artifact_versions.stage(
                 manifest=ModelManifest(
+                    name="name",
                     metadata={"key": "value"},
+                    ml_repo="ml_repo",
+                    source=TrueFoundryManagedSource(),
                 ),
             )
 

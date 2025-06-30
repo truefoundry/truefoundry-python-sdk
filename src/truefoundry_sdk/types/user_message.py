@@ -9,29 +9,22 @@ from .user_message_content import UserMessageContent
 
 class UserMessage(UniversalBaseModel):
     """
-    +label=User Message
-    +usage=User message turn
+    User message turn
     """
 
     role: typing.Literal["user"] = pydantic.Field(default="user")
     """
-    +value=user
-    +usage=Role of the message
-    +uiType=Ignore
+    Role of the message
     """
 
     content: UserMessageContent = pydantic.Field()
     """
-    +label=Content
-    +usage=Content of the user message. can be a mix of text and images
-    +uiType=CodeEditor
-    +uiProps={"language": "text"}
+    Content of the user message. can be a mix of text and images
     """
 
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Name
-    +usage=Name of the user this message is from
+    Name of the user this message is from
     """
 
     if IS_PYDANTIC_V2:

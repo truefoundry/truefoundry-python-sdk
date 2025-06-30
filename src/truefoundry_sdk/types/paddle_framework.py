@@ -7,16 +7,9 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class PaddleFramework(UniversalBaseModel):
-    """
-    +label=Paddle
-    +icon=paddle
-    """
-
     type: typing.Literal["paddle"] = pydantic.Field(default="paddle")
     """
-    +label=Type
-    +usage=Type of the framework
-    +value=paddle
+    Type of the framework
     """
 
     if IS_PYDANTIC_V2:

@@ -4,21 +4,20 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .function import Function
+from .image_url_url import ImageUrlUrl
 
 
-class ToolCall(UniversalBaseModel):
-    type: typing.Literal["function"] = pydantic.Field(default="function")
+class ImageUrl(UniversalBaseModel):
     """
-    Type of the tool call
-    """
-
-    id: str = pydantic.Field()
-    """
-    Unique identifier for the tool call
+    Image URL linking to the image
     """
 
-    function: Function
+    url: ImageUrlUrl = pydantic.Field()
+    """
+    Image URL linking to the image
+    """
+
+    detail: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -154,7 +154,7 @@ class PromptsClient:
 
         Examples
         --------
-        from truefoundry_sdk import ChatPromptManifest, TrueFoundry
+        from truefoundry_sdk import ChatPromptManifest, SystemMessage, TrueFoundry
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -162,7 +162,14 @@ class PromptsClient:
         )
         client.prompts.create_or_update(
             manifest=ChatPromptManifest(
+                name="name",
                 metadata={"key": "value"},
+                ml_repo="ml_repo",
+                messages=[
+                    SystemMessage(
+                        content="content",
+                    )
+                ],
             ),
         )
         """
@@ -335,7 +342,7 @@ class AsyncPromptsClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import AsyncTrueFoundry, ChatPromptManifest
+        from truefoundry_sdk import AsyncTrueFoundry, ChatPromptManifest, SystemMessage
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -346,7 +353,14 @@ class AsyncPromptsClient:
         async def main() -> None:
             await client.prompts.create_or_update(
                 manifest=ChatPromptManifest(
+                    name="name",
                     metadata={"key": "value"},
+                    ml_repo="ml_repo",
+                    messages=[
+                        SystemMessage(
+                            content="content",
+                        )
+                    ],
                 ),
             )
 

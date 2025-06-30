@@ -9,20 +9,17 @@ from .text_content_part_text import TextContentPartText
 
 class TextContentPart(UniversalBaseModel):
     """
-    +label=Text Content
-    +usage=Text content for the message
+    Text content for the message
     """
 
     type: typing.Literal["text"] = pydantic.Field(default="text")
     """
-    +value=text
-    +usage=Type of the content part
+    Type of the content part
     """
 
     text: TextContentPartText = pydantic.Field()
     """
-    +label=Text
-    +usage=Text content for the message
+    Text content for the message
     """
 
     if IS_PYDANTIC_V2:

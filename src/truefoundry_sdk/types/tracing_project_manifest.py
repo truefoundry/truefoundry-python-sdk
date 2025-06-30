@@ -7,19 +7,19 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class TracingProjectManifest(UniversalBaseModel):
+    """
+    Tracing Project manifest.
+    """
+
     type: typing.Literal["tracing-project"] = "tracing-project"
     name: str = pydantic.Field()
     """
-    +label=Name
-    +usage=Name of the tracing project
-    +message=The name should start with lowercase alphabets  and can contain alphanumeric and can include '-' in between
+    Name of the tracing project
     """
 
     ml_repo: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=ML Repo
-    +usage=Name of the ML Repo
-    +uiType=Hidden
+    Name of the ML Repo
     """
 
     if IS_PYDANTIC_V2:

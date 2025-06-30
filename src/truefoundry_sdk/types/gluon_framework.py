@@ -7,16 +7,9 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class GluonFramework(UniversalBaseModel):
-    """
-    +label=Gluon
-    +icon=gluon
-    """
-
     type: typing.Literal["gluon"] = pydantic.Field(default="gluon")
     """
-    +label=Type
-    +usage=Type of the framework
-    +value=gluon
+    Type of the framework
     """
 
     if IS_PYDANTIC_V2:

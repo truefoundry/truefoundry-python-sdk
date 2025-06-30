@@ -4,25 +4,19 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .image_content_part_image_url_url import ImageContentPartImageUrlUrl
+from .parameters_stop import ParametersStop
 
 
-class ImageContentPartImageUrl(UniversalBaseModel):
+class Parameters(UniversalBaseModel):
     """
-    +label=Image URL
-    +usage=Image URL linking to the image
-    """
-
-    url: ImageContentPartImageUrlUrl = pydantic.Field()
-    """
-    +label=URL
-    +usage=Image URL linking to the image
+    Parameters to pass to the model when generating
     """
 
-    detail: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    +label=Details
-    """
+    max_tokens: typing.Optional[int] = None
+    temperature: typing.Optional[float] = None
+    top_k: typing.Optional[float] = None
+    top_p: typing.Optional[float] = None
+    stop: typing.Optional[ParametersStop] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

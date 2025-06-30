@@ -8,4 +8,6 @@ from .system_message import SystemMessage
 from .tool_message import ToolMessage
 from .user_message import UserMessage
 
-ChatMessageTurn = typing.Union[SystemMessage, AssistantMessage, UserMessage, ToolMessage, DeveloperMessage]
+ChatPromptManifestMessagesItem = typing.Union[
+    SystemMessage, AssistantMessage, UserMessage, ToolMessage, DeveloperMessage
+]

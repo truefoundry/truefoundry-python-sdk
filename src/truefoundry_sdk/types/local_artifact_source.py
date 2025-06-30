@@ -10,15 +10,12 @@ from .artifact_path import ArtifactPath
 class LocalArtifactSource(UniversalBaseModel):
     type: typing.Literal["local"] = pydantic.Field(default="local")
     """
-    +label=Type
-    +usage=Type of the source
-    +value=local
+    Type of the source
     """
 
     paths: typing.List[ArtifactPath] = pydantic.Field()
     """
-    +label=Paths
-    +usage=Array of ArtifactPath objects representing the source and destination paths
+    Array of ArtifactPath objects representing the source and destination paths
     """
 
     if IS_PYDANTIC_V2:

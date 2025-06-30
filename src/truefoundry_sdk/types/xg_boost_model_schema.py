@@ -8,28 +8,22 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class XgBoostModelSchema(UniversalBaseModel):
     """
-    +label=XGBoost Model Schema
-    +usage=Schema of the XGBoost model
+    Schema of the XGBoost model
     """
 
     infer_method_name: typing.Literal["predict"] = pydantic.Field(default="predict")
     """
-    +label=Inference Method Name
-    +usage=Name of the method used for inference
+    Name of the method used for inference
     """
 
     inputs: typing.List[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field()
     """
-    +label= Input Schema
-    +usage=Schema of the input
-    +uiProps={"descriptionInline":true}
+    Schema of the input
     """
 
     outputs: typing.List[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field()
     """
-    +label= Output Schema
-    +usage=Schema of the output
-    +uiProps={"descriptionInline":true}
+    Schema of the output
     """
 
     if IS_PYDANTIC_V2:

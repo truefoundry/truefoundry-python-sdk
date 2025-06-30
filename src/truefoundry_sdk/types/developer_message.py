@@ -9,27 +9,22 @@ from .developer_message_content import DeveloperMessageContent
 
 class DeveloperMessage(UniversalBaseModel):
     """
-    +label=Developer Message
-    +usage=Developer message for the chat
+    Developer message for the chat
     """
 
     role: typing.Literal["developer"] = pydantic.Field(default="developer")
     """
-    +value=Developer
-    +label=Role
-    +usage=The role of the messages author, in this case developer.
+    The role of the messages author, in this case developer.
     """
 
     content: DeveloperMessageContent = pydantic.Field()
     """
-    +label=Content
-    +usage=The contents of the developer message.
+    The contents of the developer message.
     """
 
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Name
-    +usage=An optional name for the participant.
+    An optional name for the participant.
     """
 
     if IS_PYDANTIC_V2:

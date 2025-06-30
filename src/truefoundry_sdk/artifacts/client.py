@@ -157,7 +157,11 @@ class ArtifactsClient:
 
         Examples
         --------
-        from truefoundry_sdk import ArtifactManifest, TrueFoundry
+        from truefoundry_sdk import (
+            ArtifactManifest,
+            TrueFoundry,
+            TrueFoundryManagedSource,
+        )
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -165,7 +169,10 @@ class ArtifactsClient:
         )
         client.artifacts.create_or_update(
             manifest=ArtifactManifest(
+                name="name",
                 metadata={"key": "value"},
+                ml_repo="ml_repo",
+                source=TrueFoundryManagedSource(),
             ),
         )
         """
@@ -341,7 +348,11 @@ class AsyncArtifactsClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import ArtifactManifest, AsyncTrueFoundry
+        from truefoundry_sdk import (
+            ArtifactManifest,
+            AsyncTrueFoundry,
+            TrueFoundryManagedSource,
+        )
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -352,7 +363,10 @@ class AsyncArtifactsClient:
         async def main() -> None:
             await client.artifacts.create_or_update(
                 manifest=ArtifactManifest(
+                    name="name",
                     metadata={"key": "value"},
+                    ml_repo="ml_repo",
+                    source=TrueFoundryManagedSource(),
                 ),
             )
 

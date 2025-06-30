@@ -6,10 +6,9 @@ import typing
 T_Result = typing.TypeVar("T_Result")
 
 
-class TransformersFrameworkLibraryName(str, enum.Enum):
+class LibraryName(str, enum.Enum):
     """
-    +label=Library Name
-    +usage=Name of the library for the framework
+    Name of the library for the framework
     """
 
     TRANSFORMERS = "transformers"
@@ -22,9 +21,9 @@ class TransformersFrameworkLibraryName(str, enum.Enum):
         sentence_transformers: typing.Callable[[], T_Result],
         diffusers: typing.Callable[[], T_Result],
     ) -> T_Result:
-        if self is TransformersFrameworkLibraryName.TRANSFORMERS:
+        if self is LibraryName.TRANSFORMERS:
             return transformers()
-        if self is TransformersFrameworkLibraryName.SENTENCE_TRANSFORMERS:
+        if self is LibraryName.SENTENCE_TRANSFORMERS:
             return sentence_transformers()
-        if self is TransformersFrameworkLibraryName.DIFFUSERS:
+        if self is LibraryName.DIFFUSERS:
             return diffusers()

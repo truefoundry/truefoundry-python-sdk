@@ -8,8 +8,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class XgBoostSerializationFormat(str, enum.Enum):
     """
-    +label=Serialization format
-    +usage=Serialization format used to save the xgboost model
+    Serialization format used to save the xgboost model
     """
 
     CLOUDPICKLE = "cloudpickle"

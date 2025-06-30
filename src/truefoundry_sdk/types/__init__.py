@@ -15,7 +15,6 @@ from .agent_app import AgentApp
 from .agent_manifest import AgentManifest
 from .agent_manifest_with_fqn import AgentManifestWithFqn
 from .agent_open_api_tool_manifest import AgentOpenApiToolManifest
-from .agent_open_api_tool_manifest_method import AgentOpenApiToolManifestMethod
 from .agent_open_api_tool_manifest_openapi_spec import AgentOpenApiToolManifestOpenapiSpec
 from .agent_open_api_tool_manifest_with_fqn import AgentOpenApiToolManifestWithFqn
 from .agent_open_api_tool_manifest_with_fqn_openapi_spec import AgentOpenApiToolManifestWithFqnOpenapiSpec
@@ -105,6 +104,7 @@ from .azure_provider_account import AzureProviderAccount
 from .azure_repos_integration import AzureReposIntegration
 from .azure_vault import AzureVault
 from .base_artifact_version import BaseArtifactVersion
+from .base_artifact_version_manifest import BaseArtifactVersionManifest
 from .base_autoscaling import BaseAutoscaling
 from .base_o_auth2login import BaseOAuth2Login
 from .base_o_auth2login_jwt_source import BaseOAuth2LoginJwtSource
@@ -121,7 +121,6 @@ from .bedrock_model_v2 import BedrockModelV2
 from .bitbucket_integration import BitbucketIntegration
 from .bitbucket_provider_account import BitbucketProviderAccount
 from .blob_storage_reference import BlobStorageReference
-from .blob_storage_reference_mime_type import BlobStorageReferenceMimeType
 from .blue_green import BlueGreen
 from .budget_config import BudgetConfig
 from .budget_limit_unit import BudgetLimitUnit
@@ -135,8 +134,8 @@ from .build_status import BuildStatus
 from .canary import Canary
 from .canary_step import CanaryStep
 from .change_password_response import ChangePasswordResponse
-from .chat_message_turn import ChatMessageTurn
 from .chat_prompt_manifest import ChatPromptManifest
+from .chat_prompt_manifest_messages_item import ChatPromptManifestMessagesItem
 from .cluster import Cluster
 from .cluster_gateway import ClusterGateway
 from .cluster_manifest import ClusterManifest
@@ -174,7 +173,6 @@ from .custom_username_password_artifacts_registry import CustomUsernamePasswordA
 from .data_directory import DataDirectory
 from .data_directory_manifest import DataDirectoryManifest
 from .data_directory_manifest_source import DataDirectoryManifestSource
-from .data_directory_source import DataDirectorySource
 from .databricks_api_key_auth import DatabricksApiKeyAuth
 from .databricks_integrations import DatabricksIntegrations
 from .databricks_model import DatabricksModel
@@ -326,8 +324,9 @@ from .i_change_operation import IChangeOperation
 from .image import Image
 from .image_command import ImageCommand
 from .image_content_part import ImageContentPart
-from .image_content_part_image_url import ImageContentPartImageUrl
-from .image_content_part_image_url_url import ImageContentPartImageUrlUrl
+from .image_url import ImageUrl
+from .image_url_url import ImageUrlUrl
+from .infer_method_name import InferMethodName
 from .infra_provider_account import InfraProviderAccount
 from .input_output_based_cost_metric_value import InputOutputBasedCostMetricValue
 from .intercept import Intercept
@@ -364,6 +363,7 @@ from .keras_framework import KerasFramework
 from .kustomize import Kustomize
 from .latency_based_load_balance_target import LatencyBasedLoadBalanceTarget
 from .latency_based_load_balancing_rule import LatencyBasedLoadBalancingRule
+from .library_name import LibraryName
 from .light_gbm_framework import LightGbmFramework
 from .list_agent_versions_response import ListAgentVersionsResponse
 from .list_agents_response import ListAgentsResponse
@@ -414,6 +414,7 @@ from .mcp_server_o_auth2 import McpServerOAuth2
 from .mcp_server_provider_account import McpServerProviderAccount
 from .method import Method
 from .metric import Metric
+from .mime_type import MimeType
 from .mirror_action import MirrorAction
 from .mistral_ai_integrations import MistralAiIntegrations
 from .mistral_ai_key_auth import MistralAiKeyAuth
@@ -424,8 +425,6 @@ from .ml_repo_manifest import MlRepoManifest
 from .model import Model
 from .model_config import ModelConfig
 from .model_configuration import ModelConfiguration
-from .model_configuration_parameters import ModelConfigurationParameters
-from .model_configuration_parameters_stop import ModelConfigurationParametersStop
 from .model_cost_metric import ModelCostMetric
 from .model_manifest import ModelManifest
 from .model_manifest_framework import ModelManifestFramework
@@ -482,6 +481,8 @@ from .palm_model import PalmModel
 from .palm_provider_account import PalmProviderAccount
 from .param import Param
 from .param_param_type import ParamParamType
+from .parameters import Parameters
+from .parameters_stop import ParametersStop
 from .per_thousand_embedding_tokens_cost_metric import PerThousandEmbeddingTokensCostMetric
 from .per_thousand_tokens_cost_metric import PerThousandTokensCostMetric
 from .permissions import Permissions
@@ -550,7 +551,6 @@ from .session import Session
 from .signed_url import SignedUrl
 from .sklearn_framework import SklearnFramework
 from .sklearn_model_schema import SklearnModelSchema
-from .sklearn_model_schema_infer_method_name import SklearnModelSchemaInferMethodName
 from .sklearn_serialization_format import SklearnSerializationFormat
 from .slack_bot import SlackBot
 from .slack_bot_auth import SlackBotAuth
@@ -615,7 +615,6 @@ from .tool_version import ToolVersion
 from .tracing_project import TracingProject
 from .tracing_project_manifest import TracingProjectManifest
 from .transformers_framework import TransformersFramework
-from .transformers_framework_library_name import TransformersFrameworkLibraryName
 from .trigger_job_run_response import TriggerJobRunResponse
 from .true_foundry_apply_request_manifest import TrueFoundryApplyRequestManifest
 from .true_foundry_apply_response import TrueFoundryApplyResponse
@@ -682,7 +681,6 @@ __all__ = [
     "AgentManifest",
     "AgentManifestWithFqn",
     "AgentOpenApiToolManifest",
-    "AgentOpenApiToolManifestMethod",
     "AgentOpenApiToolManifestOpenapiSpec",
     "AgentOpenApiToolManifestWithFqn",
     "AgentOpenApiToolManifestWithFqnOpenapiSpec",
@@ -772,6 +770,7 @@ __all__ = [
     "AzureReposIntegration",
     "AzureVault",
     "BaseArtifactVersion",
+    "BaseArtifactVersionManifest",
     "BaseAutoscaling",
     "BaseOAuth2Login",
     "BaseOAuth2LoginJwtSource",
@@ -788,7 +787,6 @@ __all__ = [
     "BitbucketIntegration",
     "BitbucketProviderAccount",
     "BlobStorageReference",
-    "BlobStorageReferenceMimeType",
     "BlueGreen",
     "BudgetConfig",
     "BudgetLimitUnit",
@@ -802,8 +800,8 @@ __all__ = [
     "Canary",
     "CanaryStep",
     "ChangePasswordResponse",
-    "ChatMessageTurn",
     "ChatPromptManifest",
+    "ChatPromptManifestMessagesItem",
     "Cluster",
     "ClusterGateway",
     "ClusterManifest",
@@ -841,7 +839,6 @@ __all__ = [
     "DataDirectory",
     "DataDirectoryManifest",
     "DataDirectoryManifestSource",
-    "DataDirectorySource",
     "DatabricksApiKeyAuth",
     "DatabricksIntegrations",
     "DatabricksModel",
@@ -993,8 +990,9 @@ __all__ = [
     "Image",
     "ImageCommand",
     "ImageContentPart",
-    "ImageContentPartImageUrl",
-    "ImageContentPartImageUrlUrl",
+    "ImageUrl",
+    "ImageUrlUrl",
+    "InferMethodName",
     "InfraProviderAccount",
     "InputOutputBasedCostMetricValue",
     "Intercept",
@@ -1031,6 +1029,7 @@ __all__ = [
     "Kustomize",
     "LatencyBasedLoadBalanceTarget",
     "LatencyBasedLoadBalancingRule",
+    "LibraryName",
     "LightGbmFramework",
     "ListAgentVersionsResponse",
     "ListAgentsResponse",
@@ -1081,6 +1080,7 @@ __all__ = [
     "McpServerProviderAccount",
     "Method",
     "Metric",
+    "MimeType",
     "MirrorAction",
     "MistralAiIntegrations",
     "MistralAiKeyAuth",
@@ -1091,8 +1091,6 @@ __all__ = [
     "Model",
     "ModelConfig",
     "ModelConfiguration",
-    "ModelConfigurationParameters",
-    "ModelConfigurationParametersStop",
     "ModelCostMetric",
     "ModelManifest",
     "ModelManifestFramework",
@@ -1149,6 +1147,8 @@ __all__ = [
     "PalmProviderAccount",
     "Param",
     "ParamParamType",
+    "Parameters",
+    "ParametersStop",
     "PerThousandEmbeddingTokensCostMetric",
     "PerThousandTokensCostMetric",
     "Permissions",
@@ -1220,7 +1220,6 @@ __all__ = [
     "SignedUrl",
     "SklearnFramework",
     "SklearnModelSchema",
-    "SklearnModelSchemaInferMethodName",
     "SklearnSerializationFormat",
     "SlackBot",
     "SlackBotAuth",
@@ -1285,7 +1284,6 @@ __all__ = [
     "TracingProject",
     "TracingProjectManifest",
     "TransformersFramework",
-    "TransformersFrameworkLibraryName",
     "TriggerJobRunResponse",
     "TrueFoundryApplyRequestManifest",
     "TrueFoundryApplyResponse",

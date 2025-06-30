@@ -162,7 +162,13 @@ class AgentsClient:
         )
         client.agents.create_or_update(
             manifest=AgentManifest(
+                name="name",
                 metadata={"key": "value"},
+                ml_repo="ml_repo",
+                goal="goal",
+                instruction="instruction",
+                available_tools=["available_tools"],
+                model_id="model_id",
             ),
         )
         """
@@ -346,7 +352,13 @@ class AsyncAgentsClient:
         async def main() -> None:
             await client.agents.create_or_update(
                 manifest=AgentManifest(
+                    name="name",
                     metadata={"key": "value"},
+                    ml_repo="ml_repo",
+                    goal="goal",
+                    instruction="instruction",
+                    available_tools=["available_tools"],
+                    model_id="model_id",
                 ),
             )
 

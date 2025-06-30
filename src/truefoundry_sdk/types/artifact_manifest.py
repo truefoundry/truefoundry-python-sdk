@@ -3,36 +3,51 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .artifact_manifest_source import ArtifactManifestSource
-from .base_artifact_version import BaseArtifactVersion
 
 
-class ArtifactManifest(BaseArtifactVersion):
+class ArtifactManifest(UniversalBaseModel):
     """
-    +label=Artifact Version
-    +usage=Log a new Artifact Version containing files and folders with metadata
+    Artifact Version manifest.
+    """
+
+    name: str = pydantic.Field()
+    """
+    Name of the entity
+    """
+
+    description: typing.Optional[str] = None
+    metadata: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
+    """
+    Key value metadata. Should be valid JSON. For e.g. `{"business-unit": "sales", "quality": "good", "rating": 4.5}`
+    """
+
+    version_alias: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Version alias is alternate, ideally human readable, version string to reference an artifact version. It should start with `v` followed by alphanumeric and it can include `.` and `-` in between (e.g. `v1.0.0`, `v1-prod`, `v3-dev`, etc)
+    """
+
+    ml_repo: str = pydantic.Field()
+    """
+    Name of the ML Repo
+    """
+
+    version: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Version of the entity
     """
 
     type: typing.Literal["artifact-version"] = "artifact-version"
-    source: typing.Optional[ArtifactManifestSource] = pydantic.Field(default=None)
-    """
-    +label=Artifact Source
-    +uiType=Group
-    """
-
+    source: ArtifactManifestSource
     step: typing.Optional[int] = pydantic.Field(default=0)
     """
-    +label=Step
-    +usage=Step/Epoch number in an iterative training loop the artifact version was created. Generally useful when logging a model version from a MLRepo Run
-    +uiProps={"descriptionInline":true}
+    Step/Epoch number in an iterative training loop the artifact version was created. Generally useful when logging a model version from a MLRepo Run
     """
 
     run_id: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Run ID
-    +usage=ID of the MLRepo Run that generated the artifact version
-    +uiType=Hidden
+    ID of the MLRepo Run that generated the artifact version
     """
 
     if IS_PYDANTIC_V2:

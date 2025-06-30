@@ -7,16 +7,9 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class KerasFramework(UniversalBaseModel):
-    """
-    +label=Keras
-    +icon=keras
-    """
-
     type: typing.Literal["keras"] = pydantic.Field(default="keras")
     """
-    +label=Type
-    +usage=Type of the framework
-    +value=keras
+    Type of the framework
     """
 
     if IS_PYDANTIC_V2:

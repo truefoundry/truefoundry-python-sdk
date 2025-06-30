@@ -6,17 +6,16 @@ import typing
 T_Result = typing.TypeVar("T_Result")
 
 
-class SklearnModelSchemaInferMethodName(str, enum.Enum):
+class InferMethodName(str, enum.Enum):
     """
-    +label=Inference Method Name
-    +usage=Name of the method used for inference
+    Name of the method used for inference
     """
 
     PREDICT = "predict"
     PREDICT_PROBA = "predict_proba"
 
     def visit(self, predict: typing.Callable[[], T_Result], predict_proba: typing.Callable[[], T_Result]) -> T_Result:
-        if self is SklearnModelSchemaInferMethodName.PREDICT:
+        if self is InferMethodName.PREDICT:
             return predict()
-        if self is SklearnModelSchemaInferMethodName.PREDICT_PROBA:
+        if self is InferMethodName.PREDICT_PROBA:
             return predict_proba()
