@@ -7,9 +7,16 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class StatsModelsFramework(UniversalBaseModel):
+    """
+    +label=StatsModels
+    +icon=statsmodel
+    """
+
     type: typing.Literal["statsmodels"] = pydantic.Field(default="statsmodels")
     """
-    Type of the framework
+    +label=Type
+    +usage=Type of the framework
+    +value=statsmodels
     """
 
     if IS_PYDANTIC_V2:

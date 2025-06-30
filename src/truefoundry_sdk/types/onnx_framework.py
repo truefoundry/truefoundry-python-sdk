@@ -7,9 +7,16 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class OnnxFramework(UniversalBaseModel):
+    """
+    +label=ONNX
+    +icon=onnx
+    """
+
     type: typing.Literal["onnx"] = pydantic.Field(default="onnx")
     """
-    Type of the framework
+    +label=Type
+    +usage=Type of the framework
+    +value=onnx
     """
 
     if IS_PYDANTIC_V2:

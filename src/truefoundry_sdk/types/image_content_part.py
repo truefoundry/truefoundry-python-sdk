@@ -4,22 +4,25 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .image_url import ImageUrl
+from .image_content_part_image_url import ImageContentPartImageUrl
 
 
 class ImageContentPart(UniversalBaseModel):
     """
-    Image content for the message
+    +label=Image Content
+    +usage=Image content for the message
     """
 
     type: typing.Literal["image_url"] = pydantic.Field(default="image_url")
     """
-    Type of the content part
+    +value=image_url
+    +usage=Type of the content part
     """
 
-    image_url: ImageUrl = pydantic.Field()
+    image_url: ImageContentPartImageUrl = pydantic.Field()
     """
-    Image URL linking to the image
+    +label=Image URL
+    +usage=Image URL linking to the image
     """
 
     if IS_PYDANTIC_V2:

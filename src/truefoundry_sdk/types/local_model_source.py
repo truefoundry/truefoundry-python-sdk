@@ -9,12 +9,15 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 class LocalModelSource(UniversalBaseModel):
     type: typing.Literal["local"] = pydantic.Field(default="local")
     """
-    Type of the source
+    +label=Type
+    +usage=Type of the source
+    +value=local
     """
 
     file_or_folder: str = pydantic.Field()
     """
-    Path to the model file or folder
+    +label=Path to the model file or folder
+    +usage=Path to the model file or folder
     """
 
     if IS_PYDANTIC_V2:

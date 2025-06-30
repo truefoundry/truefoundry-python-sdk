@@ -8,7 +8,8 @@ T_Result = typing.TypeVar("T_Result")
 
 class SklearnSerializationFormat(str, enum.Enum):
     """
-    Serialization format used to save the sklearn model
+    +label=Scikit Learn Serialization Format
+    +usage=Serialization format used to save the sklearn model
     """
 
     CLOUDPICKLE = "cloudpickle"

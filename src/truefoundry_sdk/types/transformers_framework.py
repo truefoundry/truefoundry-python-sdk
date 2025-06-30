@@ -4,28 +4,40 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .library_name import LibraryName
+from .transformers_framework_library_name import TransformersFrameworkLibraryName
 
 
 class TransformersFramework(UniversalBaseModel):
-    type: typing.Literal["transformers"] = pydantic.Field(default="transformers")
     """
-    Type of the framework
+    +label=Transformers
+    +icon=transformers
     """
 
-    library_name: typing.Optional[LibraryName] = pydantic.Field(default=None)
+    type: typing.Literal["transformers"] = pydantic.Field(default="transformers")
     """
-    Name of the library for the framework
+    +label=Type
+    +usage=Type of the framework
+    +value=transformers
+    """
+
+    library_name: typing.Optional[TransformersFrameworkLibraryName] = pydantic.Field(default=None)
+    """
+    +label=Library Name
+    +usage=Name of the library for the framework
     """
 
     pipeline_tag: typing.Optional[str] = pydantic.Field(default=None)
     """
-    The `pipeline()` task this model can be used with e.g. `text-generation`. See [huggingface docs](https://huggingface.co/docs/transformers/main/en/main_classes/pipelines#transformers.pipeline.task) for all possible values
+    +label=Pipeline Tag
+    +usage=The `pipeline()` task this model can be used with e.g. `text-generation`. See [huggingface docs](https://huggingface.co/docs/transformers/main/en/main_classes/pipelines#transformers.pipeline.task) for all possible values
+    +uiProps={"descriptionInline":true}
     """
 
     base_model: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Base model Id from HuggingFace Hub. If this is a finetuned model, this points to the base model id used for finetuning.
+    +label=Base Model
+    +usage=Base model Id from HuggingFace Hub. If this is a finetuned model, this points to the base model id used for finetuning.
+    +uiProps={"descriptionInline":true}
     """
 
     if IS_PYDANTIC_V2:

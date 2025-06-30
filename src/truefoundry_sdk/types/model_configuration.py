@@ -4,32 +4,44 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .parameters import Parameters
+from .model_configuration_parameters import ModelConfigurationParameters
 
 
 class ModelConfiguration(UniversalBaseModel):
     """
-    Add a model from Gateway along with parameters to be used for chat completion
+    +label=Model Configuration
+    +icon=fa-cogs:#326ce5
+    +usage=Add a model from Gateway along with parameters to be used for chat completion
     """
 
     provider: str = pydantic.Field()
     """
-    Name of the provider, must be one of the integration providers configured for the Gateway
+    +sort=1000
+    +uiType=SelectModelAndProvider
+    +uiProps={"isModel": false,"providerJsonKey": "model_configuration.provider","searchable": true}
+    +label=Provider Name
+    +usage=Name of the provider, must be one of the integration providers configured for the Gateway
     """
 
     model: str = pydantic.Field()
     """
-    Name of the model to be used for generations. This model should be available in the provider
+    +sort=1001
+    +uiType=SelectModelAndProvider
+    +uiProps={"isModel": true,"providerJsonKey": "model_configuration.provider","searchable": true}
+    +label=Model Name
+    +usage=Name of the model to be used for generations. This model should be available in the provider
     """
 
-    parameters: typing.Optional[Parameters] = pydantic.Field(default=None)
+    parameters: typing.Optional[ModelConfigurationParameters] = pydantic.Field(default=None)
     """
-    Parameters to pass to the model when generating
+    +label=Parameters
+    +usage=Parameters to pass to the model when generating
     """
 
     extra_parameters: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
     """
-    Arbitrary extra parameters to pass to the model when generating
+    +label=Extra Parameters
+    +usage=Arbitrary extra parameters to pass to the model when generating
     """
 
     if IS_PYDANTIC_V2:

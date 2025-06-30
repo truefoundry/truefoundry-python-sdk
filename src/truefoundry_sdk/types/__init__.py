@@ -13,17 +13,30 @@ from .addon_component_status import AddonComponentStatus
 from .agent import Agent
 from .agent_app import AgentApp
 from .agent_manifest import AgentManifest
+from .agent_open_api_tool import AgentOpenApiTool
 from .agent_open_api_tool_manifest import AgentOpenApiToolManifest
 from .agent_open_api_tool_manifest_openapi_spec import AgentOpenApiToolManifestOpenapiSpec
+from .agent_open_api_tool_method import AgentOpenApiToolMethod
+from .agent_open_api_tool_openapi_spec import AgentOpenApiToolOpenapiSpec
 from .agent_open_api_tool_with_fqn import AgentOpenApiToolWithFqn
 from .agent_open_api_tool_with_fqn_openapi_spec import AgentOpenApiToolWithFqnOpenapiSpec
 from .agent_version import AgentVersion
 from .agent_with_fqn import AgentWithFqn
+from .ai21integrations import Ai21Integrations
+from .ai21key_auth import Ai21KeyAuth
+from .ai21model import Ai21Model
+from .ai21provider_account import Ai21ProviderAccount
 from .alert import Alert
+from .alert_config import AlertConfig
+from .alert_severity import AlertSeverity
 from .alert_status import AlertStatus
 from .amqp_input_config import AmqpInputConfig
 from .amqp_metric_config import AmqpMetricConfig
 from .amqp_output_config import AmqpOutputConfig
+from .anthropic_integrations import AnthropicIntegrations
+from .anthropic_key_auth import AnthropicKeyAuth
+from .anthropic_model import AnthropicModel
+from .anthropic_provider_account import AnthropicProviderAccount
 from .application import Application
 from .application_debug_info import ApplicationDebugInfo
 from .application_lifecycle_stage import ApplicationLifecycleStage
@@ -40,6 +53,7 @@ from .artifact_manifest_source import ArtifactManifestSource
 from .artifact_path import ArtifactPath
 from .artifact_type import ArtifactType
 from .artifact_version import ArtifactVersion
+from .artifact_version_source import ArtifactVersionSource
 from .artifacts_cache_volume import ArtifactsCacheVolume
 from .artifacts_download import ArtifactsDownload
 from .artifacts_download_artifacts_item import ArtifactsDownloadArtifactsItem
@@ -53,18 +67,69 @@ from .async_service_autoscaling_metrics import AsyncServiceAutoscalingMetrics
 from .async_service_replicas import AsyncServiceReplicas
 from .autoshutdown import Autoshutdown
 from .aws_access_key_auth import AwsAccessKeyAuth
+from .aws_access_key_based_auth import AwsAccessKeyBasedAuth
+from .aws_assumed_role_based_auth import AwsAssumedRoleBasedAuth
+from .aws_bedrock_provider_account import AwsBedrockProviderAccount
+from .aws_bedrock_provider_account_auth_data import AwsBedrockProviderAccountAuthData
+from .aws_ecr import AwsEcr
+from .aws_ecr_auth_data import AwsEcrAuthData
+from .aws_eks_integration import AwsEksIntegration
+from .aws_eks_integration_auth_data import AwsEksIntegrationAuthData
 from .aws_inferentia import AwsInferentia
+from .aws_integrations import AwsIntegrations
+from .aws_parameter_store import AwsParameterStore
+from .aws_parameter_store_auth_data import AwsParameterStoreAuthData
+from .aws_provider_account import AwsProviderAccount
+from .aws_provider_account_auth_data import AwsProviderAccountAuthData
+from .aws_region import AwsRegion
+from .aws_s3 import AwsS3
+from .aws_s3auth_data import AwsS3AuthData
+from .aws_secrets_manager import AwsSecretsManager
+from .aws_secrets_manager_auth_data import AwsSecretsManagerAuthData
+from .azure_ai_inference_model import AzureAiInferenceModel
+from .azure_ai_inference_model_deployment_details import AzureAiInferenceModelDeploymentDetails
+from .azure_ai_managed_deployment import AzureAiManagedDeployment
+from .azure_ai_serverless_deployment import AzureAiServerlessDeployment
+from .azure_aks_integration import AzureAksIntegration
+from .azure_basic_auth import AzureBasicAuth
+from .azure_blob_storage import AzureBlobStorage
+from .azure_connection_string_auth import AzureConnectionStringAuth
+from .azure_container_registry import AzureContainerRegistry
+from .azure_foundry_model import AzureFoundryModel
+from .azure_foundry_model_v2 import AzureFoundryModelV2
+from .azure_foundry_provider_account import AzureFoundryProviderAccount
+from .azure_integrations import AzureIntegrations
+from .azure_key_auth import AzureKeyAuth
+from .azure_o_auth import AzureOAuth
+from .azure_open_ai_model import AzureOpenAiModel
+from .azure_open_ai_model_v2 import AzureOpenAiModelV2
+from .azure_open_ai_provider_account import AzureOpenAiProviderAccount
+from .azure_provider_account import AzureProviderAccount
+from .azure_repos_integration import AzureReposIntegration
+from .azure_vault import AzureVault
 from .base_artifact_version import BaseArtifactVersion
-from .base_artifact_version_manifest import BaseArtifactVersionManifest
 from .base_autoscaling import BaseAutoscaling
+from .base_o_auth2login import BaseOAuth2Login
+from .base_o_auth2login_jwt_source import BaseOAuth2LoginJwtSource
 from .base_service import BaseService
 from .base_service_image import BaseServiceImage
 from .base_service_mounts_item import BaseServiceMountsItem
 from .base_workbench_input import BaseWorkbenchInput
 from .base_workbench_input_mounts_item import BaseWorkbenchInputMountsItem
 from .basic_auth_creds import BasicAuthCreds
+from .bedrock_key_auth import BedrockKeyAuth
+from .bedrock_model import BedrockModel
+from .bedrock_model_auth_data import BedrockModelAuthData
+from .bedrock_model_v2 import BedrockModelV2
+from .bitbucket_integration import BitbucketIntegration
+from .bitbucket_provider_account import BitbucketProviderAccount
 from .blob_storage_reference import BlobStorageReference
+from .blob_storage_reference_mime_type import BlobStorageReferenceMimeType
 from .blue_green import BlueGreen
+from .budget_config import BudgetConfig
+from .budget_limit_unit import BudgetLimitUnit
+from .budget_rule import BudgetRule
+from .budget_when import BudgetWhen
 from .build import Build
 from .build_build_source import BuildBuildSource
 from .build_build_spec import BuildBuildSpec
@@ -73,6 +138,8 @@ from .build_status import BuildStatus
 from .canary import Canary
 from .canary_step import CanaryStep
 from .change_password_response import ChangePasswordResponse
+from .chat_message_turn import ChatMessageTurn
+from .chat_prompt import ChatPrompt
 from .chat_prompt_manifest import ChatPromptManifest
 from .chat_prompt_manifest_messages_item import ChatPromptManifestMessagesItem
 from .cluster import Cluster
@@ -84,6 +151,10 @@ from .cluster_manifest_node_label_keys import ClusterManifestNodeLabelKeys
 from .cluster_manifest_workbench_config import ClusterManifestWorkbenchConfig
 from .cluster_type import ClusterType
 from .codeserver import Codeserver
+from .cohere_integrations import CohereIntegrations
+from .cohere_key_auth import CohereKeyAuth
+from .cohere_model import CohereModel
+from .cohere_provider_account import CohereProviderAccount
 from .collaborator import Collaborator
 from .container_task_config import ContainerTaskConfig
 from .container_task_config_image import ContainerTaskConfigImage
@@ -93,10 +164,33 @@ from .cpu_utilization_metric import CpuUtilizationMetric
 from .create_multi_part_upload_request import CreateMultiPartUploadRequest
 from .create_personal_access_token_response import CreatePersonalAccessTokenResponse
 from .cron_metric import CronMetric
+from .custom_basic_auth import CustomBasicAuth
+from .custom_bearer_auth import CustomBearerAuth
+from .custom_blob_storage import CustomBlobStorage
+from .custom_helm_repo import CustomHelmRepo
+from .custom_integrations import CustomIntegrations
+from .custom_jwt_auth_integration import CustomJwtAuthIntegration
+from .custom_mcp_server_integration import CustomMcpServerIntegration
+from .custom_model import CustomModel
+from .custom_model_auth_data import CustomModelAuthData
+from .custom_model_model_server import CustomModelModelServer
+from .custom_provider_account import CustomProviderAccount
+from .custom_username_password_artifacts_registry import CustomUsernamePasswordArtifactsRegistry
 from .data_directory import DataDirectory
 from .data_directory_manifest import DataDirectoryManifest
 from .data_directory_manifest_source import DataDirectoryManifestSource
+from .data_directory_source import DataDirectorySource
+from .databricks_api_key_auth import DatabricksApiKeyAuth
+from .databricks_integrations import DatabricksIntegrations
+from .databricks_model import DatabricksModel
+from .databricks_provider_account import DatabricksProviderAccount
+from .databricks_provider_account_auth_data import DatabricksProviderAccountAuthData
+from .databricks_service_principal_auth import DatabricksServicePrincipalAuth
 from .deactivate_user_response import DeactivateUserResponse
+from .deepinfra_integrations import DeepinfraIntegrations
+from .deepinfra_key_auth import DeepinfraKeyAuth
+from .deepinfra_model import DeepinfraModel
+from .deepinfra_provider_account import DeepinfraProviderAccount
 from .delete_application_response import DeleteApplicationResponse
 from .delete_job_run_response import DeleteJobRunResponse
 from .delete_personal_access_token_response import DeletePersonalAccessTokenResponse
@@ -113,8 +207,13 @@ from .developer_message import DeveloperMessage
 from .developer_message_content import DeveloperMessageContent
 from .docker_file_build import DockerFileBuild
 from .docker_file_build_command import DockerFileBuildCommand
+from .dockerhub_basic_auth import DockerhubBasicAuth
+from .dockerhub_integrations import DockerhubIntegrations
+from .dockerhub_provider_account import DockerhubProviderAccount
+from .dockerhub_registry import DockerhubRegistry
 from .dynamic_volume_config import DynamicVolumeConfig
 from .email import Email
+from .email_notification_channel import EmailNotificationChannel
 from .empty_response import EmptyResponse
 from .endpoint import Endpoint
 from .environment import Environment
@@ -126,6 +225,11 @@ from .event_chart import EventChart
 from .event_chart_category import EventChartCategory
 from .event_involved_object import EventInvolvedObject
 from .external_blob_storage_source import ExternalBlobStorageSource
+from .failure_tolerance_config import FailureToleranceConfig
+from .fallback_config import FallbackConfig
+from .fallback_model import FallbackModel
+from .fallback_rule import FallbackRule
+from .fallback_when import FallbackWhen
 from .fast_ai_framework import FastAiFramework
 from .file_info import FileInfo
 from .flyte_launch_plan import FlyteLaunchPlan
@@ -142,7 +246,19 @@ from .flyte_workflow_template import FlyteWorkflowTemplate
 from .forward_action import ForwardAction
 from .function import Function
 from .function_schema import FunctionSchema
+from .gateway_config import GatewayConfig
+from .gcp_api_key_auth import GcpApiKeyAuth
+from .gcp_gcr import GcpGcr
+from .gcp_gcs import GcpGcs
+from .gcp_gke_integration import GcpGkeIntegration
+from .gcp_gsm import GcpGsm
+from .gcp_integrations import GcpIntegrations
+from .gcp_key_file_auth import GcpKeyFileAuth
+from .gcp_provider_account import GcpProviderAccount
+from .gcp_provider_account_auth_data import GcpProviderAccountAuthData
+from .gcp_region import GcpRegion
 from .gcp_tpu import GcpTpu
+from .gemini_model_v2 import GeminiModelV2
 from .get_agent_response import GetAgentResponse
 from .get_agent_version_response import GetAgentVersionResponse
 from .get_alerts_response import GetAlertsResponse
@@ -179,9 +295,26 @@ from .get_workspace_response import GetWorkspaceResponse
 from .git_helm_repo import GitHelmRepo
 from .git_repository_exists_response import GitRepositoryExistsResponse
 from .git_source import GitSource
+from .github_integration import GithubIntegration
+from .github_provider_account import GithubProviderAccount
+from .gitlab_integration import GitlabIntegration
+from .gitlab_provider_account import GitlabProviderAccount
 from .gluon_framework import GluonFramework
+from .google_gemini_provider_account import GoogleGeminiProviderAccount
+from .google_model import GoogleModel
+from .google_vertex_provider_account import GoogleVertexProviderAccount
 from .graph import Graph
 from .graph_chart_type import GraphChartType
+from .groq_integrations import GroqIntegrations
+from .groq_key_auth import GroqKeyAuth
+from .groq_model import GroqModel
+from .groq_provider_account import GroqProviderAccount
+from .guardrail_config import GuardrailConfig
+from .guardrail_config_action import GuardrailConfigAction
+from .guardrails_config import GuardrailsConfig
+from .guardrails_options import GuardrailsOptions
+from .guardrails_rule import GuardrailsRule
+from .guardrails_when import GuardrailsWhen
 from .h2o_framework import H2OFramework
 from .header_match import HeaderMatch
 from .health_probe import HealthProbe
@@ -198,9 +331,10 @@ from .i_change_operation import IChangeOperation
 from .image import Image
 from .image_command import ImageCommand
 from .image_content_part import ImageContentPart
-from .image_url import ImageUrl
-from .image_url_url import ImageUrlUrl
-from .infer_method_name import InferMethodName
+from .image_content_part_image_url import ImageContentPartImageUrl
+from .image_content_part_image_url_url import ImageContentPartImageUrlUrl
+from .infra_provider_account import InfraProviderAccount
+from .input_output_based_cost_metric_value import InputOutputBasedCostMetricValue
 from .intercept import Intercept
 from .intercept_rules_item import InterceptRulesItem
 from .intercept_rules_item_action import InterceptRulesItemAction
@@ -210,6 +344,10 @@ from .internal_list_artifact_version_response_data_item import InternalListArtif
 from .internal_model_version import InternalModelVersion
 from .invite_user_response import InviteUserResponse
 from .is_cluster_connected_response import IsClusterConnectedResponse
+from .j_frog_integrations import JFrogIntegrations
+from .jfrog_artifacts_registry import JfrogArtifactsRegistry
+from .jfrog_basic_auth import JfrogBasicAuth
+from .jfrog_provider_account import JfrogProviderAccount
 from .job import Job
 from .job_alert import JobAlert
 from .job_image import JobImage
@@ -229,7 +367,8 @@ from .kafka_output_config import KafkaOutputConfig
 from .kafka_sasl_auth import KafkaSaslAuth
 from .keras_framework import KerasFramework
 from .kustomize import Kustomize
-from .library_name import LibraryName
+from .latency_based_load_balance_target import LatencyBasedLoadBalanceTarget
+from .latency_based_load_balancing_rule import LatencyBasedLoadBalancingRule
 from .light_gbm_framework import LightGbmFramework
 from .list_agent_versions_response import ListAgentVersionsResponse
 from .list_agents_response import ListAgentsResponse
@@ -260,6 +399,10 @@ from .list_users_response import ListUsersResponse
 from .list_virtual_account_response import ListVirtualAccountResponse
 from .list_workspaces_response import ListWorkspacesResponse
 from .literal_map import LiteralMap
+from .load_balance_target import LoadBalanceTarget
+from .load_balancing_config import LoadBalancingConfig
+from .load_balancing_rule import LoadBalancingRule
+from .load_balancing_when import LoadBalancingWhen
 from .local_artifact_source import LocalArtifactSource
 from .local_model_source import LocalModelSource
 from .local_source import LocalSource
@@ -268,19 +411,36 @@ from .logs_search_filter_type import LogsSearchFilterType
 from .logs_search_operator_type import LogsSearchOperatorType
 from .logs_sorting_direction import LogsSortingDirection
 from .manual import Manual
+from .mcp_server_auth import McpServerAuth
+from .mcp_server_header_auth import McpServerHeaderAuth
+from .mcp_server_integration import McpServerIntegration
+from .mcp_server_integrations import McpServerIntegrations
+from .mcp_server_o_auth2 import McpServerOAuth2
+from .mcp_server_provider_account import McpServerProviderAccount
 from .method import Method
 from .metric import Metric
-from .mime_type import MimeType
 from .mirror_action import MirrorAction
+from .mistral_ai_integrations import MistralAiIntegrations
+from .mistral_ai_key_auth import MistralAiKeyAuth
+from .mistral_ai_model import MistralAiModel
+from .mistral_ai_provider_account import MistralAiProviderAccount
 from .ml_repo import MlRepo
 from .ml_repo_manifest import MlRepoManifest
 from .model import Model
+from .model_config import ModelConfig
 from .model_configuration import ModelConfiguration
+from .model_configuration_parameters import ModelConfigurationParameters
+from .model_configuration_parameters_stop import ModelConfigurationParametersStop
+from .model_cost_metric import ModelCostMetric
 from .model_manifest import ModelManifest
 from .model_manifest_framework import ModelManifestFramework
 from .model_manifest_source import ModelManifestSource
+from .model_provider_account import ModelProviderAccount
+from .model_type import ModelType
 from .model_version import ModelVersion
 from .model_version_environment import ModelVersionEnvironment
+from .model_version_framework import ModelVersionFramework
+from .model_version_source import ModelVersionSource
 from .multi_part_upload import MultiPartUpload
 from .multi_part_upload_response import MultiPartUploadResponse
 from .multi_part_upload_storage_provider import MultiPartUploadStorageProvider
@@ -292,38 +452,84 @@ from .node_selector import NodeSelector
 from .node_selector_capacity_type import NodeSelectorCapacityType
 from .nodepool import Nodepool
 from .nodepool_selector import NodepoolSelector
+from .nomic_integrations import NomicIntegrations
+from .nomic_key_auth import NomicKeyAuth
+from .nomic_model import NomicModel
+from .nomic_provider_account import NomicProviderAccount
 from .notebook import Notebook
 from .notebook_config import NotebookConfig
 from .notification_target import NotificationTarget
+from .notification_target_for_alert_rule import NotificationTargetForAlertRule
 from .nvidia_gpu import NvidiaGpu
 from .nvidia_miggpu import NvidiaMiggpu
 from .nvidia_miggpu_profile import NvidiaMiggpuProfile
 from .nvidia_timeslicing_gpu import NvidiaTimeslicingGpu
+from .o_auth2login_provider import OAuth2LoginProvider
 from .oci_repo import OciRepo
+from .ollama_integrations import OllamaIntegrations
+from .ollama_key_auth import OllamaKeyAuth
+from .ollama_model import OllamaModel
+from .ollama_provider_account import OllamaProviderAccount
 from .onnx_framework import OnnxFramework
+from .open_ai_integrations import OpenAiIntegrations
+from .open_ai_model import OpenAiModel
+from .openai_api_key_auth import OpenaiApiKeyAuth
+from .openai_provider_account import OpenaiProviderAccount
 from .operation import Operation
 from .paddle_framework import PaddleFramework
+from .pager_duty import PagerDuty
+from .pager_duty_integration import PagerDutyIntegration
+from .pager_duty_integration_key_auth import PagerDutyIntegrationKeyAuth
+from .pager_duty_integrations import PagerDutyIntegrations
+from .pager_duty_provider_account import PagerDutyProviderAccount
 from .pagination import Pagination
+from .palm_integrations import PalmIntegrations
+from .palm_key_auth import PalmKeyAuth
+from .palm_model import PalmModel
+from .palm_provider_account import PalmProviderAccount
 from .param import Param
 from .param_param_type import ParamParamType
-from .parameters import Parameters
-from .parameters_stop import ParametersStop
+from .per_thousand_embedding_tokens_cost_metric import PerThousandEmbeddingTokensCostMetric
+from .per_thousand_tokens_cost_metric import PerThousandTokensCostMetric
 from .permissions import Permissions
+from .perplexity_ai_key_auth import PerplexityAiKeyAuth
+from .perplexity_ai_model import PerplexityAiModel
+from .perplexity_ai_provider_account import PerplexityAiProviderAccount
+from .perplexity_integrations import PerplexityIntegrations
+from .policy_actions import PolicyActions
+from .policy_entity_types import PolicyEntityTypes
+from .policy_filters import PolicyFilters
+from .policy_manifest import PolicyManifest
+from .policy_manifest_mode import PolicyManifestMode
+from .policy_manifest_operation import PolicyManifestOperation
+from .policy_mutation_operation import PolicyMutationOperation
+from .policy_validation_operation import PolicyValidationOperation
 from .port import Port
 from .port_app_protocol import PortAppProtocol
 from .port_auth import PortAuth
 from .port_protocol import PortProtocol
 from .pre_register_users_response import PreRegisterUsersResponse
 from .presigned_url_object import PresignedUrlObject
+from .prometheus_alert_rule import PrometheusAlertRule
 from .prompt import Prompt
 from .prompt_version import PromptVersion
+from .provider_accounts import ProviderAccounts
+from .public_cost_metric import PublicCostMetric
 from .py_torch_framework import PyTorchFramework
 from .python_build import PythonBuild
 from .python_build_command import PythonBuildCommand
 from .python_task_config import PythonTaskConfig
 from .python_task_config_image import PythonTaskConfigImage
 from .python_task_config_mounts_item import PythonTaskConfigMountsItem
+from .quay_artifacts_registry import QuayArtifactsRegistry
+from .quay_basic_auth import QuayBasicAuth
+from .quay_integrations import QuayIntegrations
+from .quay_provider_account import QuayProviderAccount
 from .r_studio import RStudio
+from .rate_limit_config import RateLimitConfig
+from .rate_limit_rule import RateLimitRule
+from .rate_limit_unit import RateLimitUnit
+from .rate_limit_when import RateLimitWhen
 from .recommendation import Recommendation
 from .refusal_content_part import RefusalContentPart
 from .remote_source import RemoteSource
@@ -337,6 +543,11 @@ from .secret_group import SecretGroup
 from .secret_input import SecretInput
 from .secret_mount import SecretMount
 from .secret_version import SecretVersion
+from .self_hosted_model import SelfHostedModel
+from .self_hosted_model_auth_data import SelfHostedModelAuthData
+from .self_hosted_model_integrations import SelfHostedModelIntegrations
+from .self_hosted_model_model_server import SelfHostedModelModelServer
+from .self_hosted_model_provider_account import SelfHostedModelProviderAccount
 from .service import Service
 from .service_autoscaling import ServiceAutoscaling
 from .service_autoscaling_metrics import ServiceAutoscalingMetrics
@@ -346,9 +557,17 @@ from .session import Session
 from .signed_url import SignedUrl
 from .sklearn_framework import SklearnFramework
 from .sklearn_model_schema import SklearnModelSchema
+from .sklearn_model_schema_infer_method_name import SklearnModelSchemaInferMethodName
 from .sklearn_serialization_format import SklearnSerializationFormat
 from .slack_bot import SlackBot
+from .slack_bot_auth import SlackBotAuth
+from .slack_bot_integration import SlackBotIntegration
+from .slack_integrations import SlackIntegrations
+from .slack_provider_account import SlackProviderAccount
 from .slack_webhook import SlackWebhook
+from .slack_webhook_auth import SlackWebhookAuth
+from .slack_webhook_integration import SlackWebhookIntegration
+from .smtp_credentials import SmtpCredentials
 from .spa_cy_framework import SpaCyFramework
 from .spark_build import SparkBuild
 from .spark_config import SparkConfig
@@ -389,6 +608,15 @@ from .tensor_flow_framework import TensorFlowFramework
 from .terminate_job_response import TerminateJobResponse
 from .text_content_part import TextContentPart
 from .text_content_part_text import TextContentPartText
+from .tfy_apply_request_manifest import TfyApplyRequestManifest
+from .tfy_apply_response import TfyApplyResponse
+from .tfy_apply_response_action import TfyApplyResponseAction
+from .tfy_apply_response_existing_manifest import TfyApplyResponseExistingManifest
+from .tfy_delete_request_manifest import TfyDeleteRequestManifest
+from .together_ai_integrations import TogetherAiIntegrations
+from .together_ai_key_auth import TogetherAiKeyAuth
+from .together_ai_model import TogetherAiModel
+from .together_ai_provider_account import TogetherAiProviderAccount
 from .token_pagination import TokenPagination
 from .tool import Tool
 from .tool_call import ToolCall
@@ -399,13 +627,21 @@ from .tool_version import ToolVersion
 from .tracing_project import TracingProject
 from .tracing_project_manifest import TracingProjectManifest
 from .transformers_framework import TransformersFramework
+from .transformers_framework_library_name import TransformersFrameworkLibraryName
 from .trigger_job_run_response import TriggerJobRunResponse
 from .true_foundry_artifact_source import TrueFoundryArtifactSource
+from .true_foundry_dbssm import TrueFoundryDbssm
+from .true_foundry_integrations import TrueFoundryIntegrations
 from .true_foundry_interactive_login import TrueFoundryInteractiveLogin
 from .true_foundry_managed_source import TrueFoundryManagedSource
+from .true_foundry_provider_account import TrueFoundryProviderAccount
+from .ttl_integrations import TtlIntegrations
+from .ttl_provider_account import TtlProviderAccount
+from .ttl_registry import TtlRegistry
 from .update_secret_input import UpdateSecretInput
 from .update_user_roles_response import UpdateUserRolesResponse
 from .upgrade_data import UpgradeData
+from .usage_limits import UsageLimits
 from .user import User
 from .user_message import UserMessage
 from .user_message_content import UserMessageContent
@@ -413,12 +649,21 @@ from .user_message_content_item import UserMessageContentItem
 from .user_metadata import UserMetadata
 from .validation_error import ValidationError
 from .validation_error_loc_item import ValidationErrorLocItem
+from .vertex_model import VertexModel
+from .vertex_model_v2 import VertexModelV2
 from .virtual_account import VirtualAccount
 from .virtual_account_manifest import VirtualAccountManifest
 from .volume import Volume
 from .volume_browser import VolumeBrowser
 from .volume_config import VolumeConfig
 from .volume_mount import VolumeMount
+from .webhook_basic_auth import WebhookBasicAuth
+from .webhook_bearer_auth import WebhookBearerAuth
+from .webhook_integration import WebhookIntegration
+from .webhook_integration_auth_data import WebhookIntegrationAuthData
+from .webhook_integrations import WebhookIntegrations
+from .webhook_provider_account import WebhookProviderAccount
+from .weight_based_load_balancing_rule import WeightBasedLoadBalancingRule
 from .workbench_image import WorkbenchImage
 from .worker_config import WorkerConfig
 from .worker_config_input_config import WorkerConfigInputConfig
@@ -442,17 +687,30 @@ __all__ = [
     "Agent",
     "AgentApp",
     "AgentManifest",
+    "AgentOpenApiTool",
     "AgentOpenApiToolManifest",
     "AgentOpenApiToolManifestOpenapiSpec",
+    "AgentOpenApiToolMethod",
+    "AgentOpenApiToolOpenapiSpec",
     "AgentOpenApiToolWithFqn",
     "AgentOpenApiToolWithFqnOpenapiSpec",
     "AgentVersion",
     "AgentWithFqn",
+    "Ai21Integrations",
+    "Ai21KeyAuth",
+    "Ai21Model",
+    "Ai21ProviderAccount",
     "Alert",
+    "AlertConfig",
+    "AlertSeverity",
     "AlertStatus",
     "AmqpInputConfig",
     "AmqpMetricConfig",
     "AmqpOutputConfig",
+    "AnthropicIntegrations",
+    "AnthropicKeyAuth",
+    "AnthropicModel",
+    "AnthropicProviderAccount",
     "Application",
     "ApplicationDebugInfo",
     "ApplicationLifecycleStage",
@@ -469,6 +727,7 @@ __all__ = [
     "ArtifactPath",
     "ArtifactType",
     "ArtifactVersion",
+    "ArtifactVersionSource",
     "ArtifactsCacheVolume",
     "ArtifactsDownload",
     "ArtifactsDownloadArtifactsItem",
@@ -482,18 +741,69 @@ __all__ = [
     "AsyncServiceReplicas",
     "Autoshutdown",
     "AwsAccessKeyAuth",
+    "AwsAccessKeyBasedAuth",
+    "AwsAssumedRoleBasedAuth",
+    "AwsBedrockProviderAccount",
+    "AwsBedrockProviderAccountAuthData",
+    "AwsEcr",
+    "AwsEcrAuthData",
+    "AwsEksIntegration",
+    "AwsEksIntegrationAuthData",
     "AwsInferentia",
+    "AwsIntegrations",
+    "AwsParameterStore",
+    "AwsParameterStoreAuthData",
+    "AwsProviderAccount",
+    "AwsProviderAccountAuthData",
+    "AwsRegion",
+    "AwsS3",
+    "AwsS3AuthData",
+    "AwsSecretsManager",
+    "AwsSecretsManagerAuthData",
+    "AzureAiInferenceModel",
+    "AzureAiInferenceModelDeploymentDetails",
+    "AzureAiManagedDeployment",
+    "AzureAiServerlessDeployment",
+    "AzureAksIntegration",
+    "AzureBasicAuth",
+    "AzureBlobStorage",
+    "AzureConnectionStringAuth",
+    "AzureContainerRegistry",
+    "AzureFoundryModel",
+    "AzureFoundryModelV2",
+    "AzureFoundryProviderAccount",
+    "AzureIntegrations",
+    "AzureKeyAuth",
+    "AzureOAuth",
+    "AzureOpenAiModel",
+    "AzureOpenAiModelV2",
+    "AzureOpenAiProviderAccount",
+    "AzureProviderAccount",
+    "AzureReposIntegration",
+    "AzureVault",
     "BaseArtifactVersion",
-    "BaseArtifactVersionManifest",
     "BaseAutoscaling",
+    "BaseOAuth2Login",
+    "BaseOAuth2LoginJwtSource",
     "BaseService",
     "BaseServiceImage",
     "BaseServiceMountsItem",
     "BaseWorkbenchInput",
     "BaseWorkbenchInputMountsItem",
     "BasicAuthCreds",
+    "BedrockKeyAuth",
+    "BedrockModel",
+    "BedrockModelAuthData",
+    "BedrockModelV2",
+    "BitbucketIntegration",
+    "BitbucketProviderAccount",
     "BlobStorageReference",
+    "BlobStorageReferenceMimeType",
     "BlueGreen",
+    "BudgetConfig",
+    "BudgetLimitUnit",
+    "BudgetRule",
+    "BudgetWhen",
     "Build",
     "BuildBuildSource",
     "BuildBuildSpec",
@@ -502,6 +812,8 @@ __all__ = [
     "Canary",
     "CanaryStep",
     "ChangePasswordResponse",
+    "ChatMessageTurn",
+    "ChatPrompt",
     "ChatPromptManifest",
     "ChatPromptManifestMessagesItem",
     "Cluster",
@@ -513,6 +825,10 @@ __all__ = [
     "ClusterManifestWorkbenchConfig",
     "ClusterType",
     "Codeserver",
+    "CohereIntegrations",
+    "CohereKeyAuth",
+    "CohereModel",
+    "CohereProviderAccount",
     "Collaborator",
     "ContainerTaskConfig",
     "ContainerTaskConfigImage",
@@ -522,10 +838,33 @@ __all__ = [
     "CreateMultiPartUploadRequest",
     "CreatePersonalAccessTokenResponse",
     "CronMetric",
+    "CustomBasicAuth",
+    "CustomBearerAuth",
+    "CustomBlobStorage",
+    "CustomHelmRepo",
+    "CustomIntegrations",
+    "CustomJwtAuthIntegration",
+    "CustomMcpServerIntegration",
+    "CustomModel",
+    "CustomModelAuthData",
+    "CustomModelModelServer",
+    "CustomProviderAccount",
+    "CustomUsernamePasswordArtifactsRegistry",
     "DataDirectory",
     "DataDirectoryManifest",
     "DataDirectoryManifestSource",
+    "DataDirectorySource",
+    "DatabricksApiKeyAuth",
+    "DatabricksIntegrations",
+    "DatabricksModel",
+    "DatabricksProviderAccount",
+    "DatabricksProviderAccountAuthData",
+    "DatabricksServicePrincipalAuth",
     "DeactivateUserResponse",
+    "DeepinfraIntegrations",
+    "DeepinfraKeyAuth",
+    "DeepinfraModel",
+    "DeepinfraProviderAccount",
     "DeleteApplicationResponse",
     "DeleteJobRunResponse",
     "DeletePersonalAccessTokenResponse",
@@ -542,8 +881,13 @@ __all__ = [
     "DeveloperMessageContent",
     "DockerFileBuild",
     "DockerFileBuildCommand",
+    "DockerhubBasicAuth",
+    "DockerhubIntegrations",
+    "DockerhubProviderAccount",
+    "DockerhubRegistry",
     "DynamicVolumeConfig",
     "Email",
+    "EmailNotificationChannel",
     "EmptyResponse",
     "Endpoint",
     "Environment",
@@ -555,6 +899,11 @@ __all__ = [
     "EventChartCategory",
     "EventInvolvedObject",
     "ExternalBlobStorageSource",
+    "FailureToleranceConfig",
+    "FallbackConfig",
+    "FallbackModel",
+    "FallbackRule",
+    "FallbackWhen",
     "FastAiFramework",
     "FileInfo",
     "FlyteLaunchPlan",
@@ -571,7 +920,19 @@ __all__ = [
     "ForwardAction",
     "Function",
     "FunctionSchema",
+    "GatewayConfig",
+    "GcpApiKeyAuth",
+    "GcpGcr",
+    "GcpGcs",
+    "GcpGkeIntegration",
+    "GcpGsm",
+    "GcpIntegrations",
+    "GcpKeyFileAuth",
+    "GcpProviderAccount",
+    "GcpProviderAccountAuthData",
+    "GcpRegion",
     "GcpTpu",
+    "GeminiModelV2",
     "GetAgentResponse",
     "GetAgentVersionResponse",
     "GetAlertsResponse",
@@ -608,9 +969,26 @@ __all__ = [
     "GitHelmRepo",
     "GitRepositoryExistsResponse",
     "GitSource",
+    "GithubIntegration",
+    "GithubProviderAccount",
+    "GitlabIntegration",
+    "GitlabProviderAccount",
     "GluonFramework",
+    "GoogleGeminiProviderAccount",
+    "GoogleModel",
+    "GoogleVertexProviderAccount",
     "Graph",
     "GraphChartType",
+    "GroqIntegrations",
+    "GroqKeyAuth",
+    "GroqModel",
+    "GroqProviderAccount",
+    "GuardrailConfig",
+    "GuardrailConfigAction",
+    "GuardrailsConfig",
+    "GuardrailsOptions",
+    "GuardrailsRule",
+    "GuardrailsWhen",
     "H2OFramework",
     "HeaderMatch",
     "HealthProbe",
@@ -627,9 +1005,10 @@ __all__ = [
     "Image",
     "ImageCommand",
     "ImageContentPart",
-    "ImageUrl",
-    "ImageUrlUrl",
-    "InferMethodName",
+    "ImageContentPartImageUrl",
+    "ImageContentPartImageUrlUrl",
+    "InfraProviderAccount",
+    "InputOutputBasedCostMetricValue",
     "Intercept",
     "InterceptRulesItem",
     "InterceptRulesItemAction",
@@ -639,6 +1018,10 @@ __all__ = [
     "InternalModelVersion",
     "InviteUserResponse",
     "IsClusterConnectedResponse",
+    "JFrogIntegrations",
+    "JfrogArtifactsRegistry",
+    "JfrogBasicAuth",
+    "JfrogProviderAccount",
     "Job",
     "JobAlert",
     "JobImage",
@@ -658,7 +1041,8 @@ __all__ = [
     "KafkaSaslAuth",
     "KerasFramework",
     "Kustomize",
-    "LibraryName",
+    "LatencyBasedLoadBalanceTarget",
+    "LatencyBasedLoadBalancingRule",
     "LightGbmFramework",
     "ListAgentVersionsResponse",
     "ListAgentsResponse",
@@ -689,6 +1073,10 @@ __all__ = [
     "ListVirtualAccountResponse",
     "ListWorkspacesResponse",
     "LiteralMap",
+    "LoadBalanceTarget",
+    "LoadBalancingConfig",
+    "LoadBalancingRule",
+    "LoadBalancingWhen",
     "LocalArtifactSource",
     "LocalModelSource",
     "LocalSource",
@@ -697,19 +1085,36 @@ __all__ = [
     "LogsSearchOperatorType",
     "LogsSortingDirection",
     "Manual",
+    "McpServerAuth",
+    "McpServerHeaderAuth",
+    "McpServerIntegration",
+    "McpServerIntegrations",
+    "McpServerOAuth2",
+    "McpServerProviderAccount",
     "Method",
     "Metric",
-    "MimeType",
     "MirrorAction",
+    "MistralAiIntegrations",
+    "MistralAiKeyAuth",
+    "MistralAiModel",
+    "MistralAiProviderAccount",
     "MlRepo",
     "MlRepoManifest",
     "Model",
+    "ModelConfig",
     "ModelConfiguration",
+    "ModelConfigurationParameters",
+    "ModelConfigurationParametersStop",
+    "ModelCostMetric",
     "ModelManifest",
     "ModelManifestFramework",
     "ModelManifestSource",
+    "ModelProviderAccount",
+    "ModelType",
     "ModelVersion",
     "ModelVersionEnvironment",
+    "ModelVersionFramework",
+    "ModelVersionSource",
     "MultiPartUpload",
     "MultiPartUploadResponse",
     "MultiPartUploadStorageProvider",
@@ -721,38 +1126,84 @@ __all__ = [
     "NodeSelectorCapacityType",
     "Nodepool",
     "NodepoolSelector",
+    "NomicIntegrations",
+    "NomicKeyAuth",
+    "NomicModel",
+    "NomicProviderAccount",
     "Notebook",
     "NotebookConfig",
     "NotificationTarget",
+    "NotificationTargetForAlertRule",
     "NvidiaGpu",
     "NvidiaMiggpu",
     "NvidiaMiggpuProfile",
     "NvidiaTimeslicingGpu",
+    "OAuth2LoginProvider",
     "OciRepo",
+    "OllamaIntegrations",
+    "OllamaKeyAuth",
+    "OllamaModel",
+    "OllamaProviderAccount",
     "OnnxFramework",
+    "OpenAiIntegrations",
+    "OpenAiModel",
+    "OpenaiApiKeyAuth",
+    "OpenaiProviderAccount",
     "Operation",
     "PaddleFramework",
+    "PagerDuty",
+    "PagerDutyIntegration",
+    "PagerDutyIntegrationKeyAuth",
+    "PagerDutyIntegrations",
+    "PagerDutyProviderAccount",
     "Pagination",
+    "PalmIntegrations",
+    "PalmKeyAuth",
+    "PalmModel",
+    "PalmProviderAccount",
     "Param",
     "ParamParamType",
-    "Parameters",
-    "ParametersStop",
+    "PerThousandEmbeddingTokensCostMetric",
+    "PerThousandTokensCostMetric",
     "Permissions",
+    "PerplexityAiKeyAuth",
+    "PerplexityAiModel",
+    "PerplexityAiProviderAccount",
+    "PerplexityIntegrations",
+    "PolicyActions",
+    "PolicyEntityTypes",
+    "PolicyFilters",
+    "PolicyManifest",
+    "PolicyManifestMode",
+    "PolicyManifestOperation",
+    "PolicyMutationOperation",
+    "PolicyValidationOperation",
     "Port",
     "PortAppProtocol",
     "PortAuth",
     "PortProtocol",
     "PreRegisterUsersResponse",
     "PresignedUrlObject",
+    "PrometheusAlertRule",
     "Prompt",
     "PromptVersion",
+    "ProviderAccounts",
+    "PublicCostMetric",
     "PyTorchFramework",
     "PythonBuild",
     "PythonBuildCommand",
     "PythonTaskConfig",
     "PythonTaskConfigImage",
     "PythonTaskConfigMountsItem",
+    "QuayArtifactsRegistry",
+    "QuayBasicAuth",
+    "QuayIntegrations",
+    "QuayProviderAccount",
     "RStudio",
+    "RateLimitConfig",
+    "RateLimitRule",
+    "RateLimitUnit",
+    "RateLimitWhen",
     "Recommendation",
     "RefusalContentPart",
     "RemoteSource",
@@ -769,6 +1220,11 @@ __all__ = [
     "SecretInput",
     "SecretMount",
     "SecretVersion",
+    "SelfHostedModel",
+    "SelfHostedModelAuthData",
+    "SelfHostedModelIntegrations",
+    "SelfHostedModelModelServer",
+    "SelfHostedModelProviderAccount",
     "Service",
     "ServiceAutoscaling",
     "ServiceAutoscalingMetrics",
@@ -778,9 +1234,17 @@ __all__ = [
     "SignedUrl",
     "SklearnFramework",
     "SklearnModelSchema",
+    "SklearnModelSchemaInferMethodName",
     "SklearnSerializationFormat",
     "SlackBot",
+    "SlackBotAuth",
+    "SlackBotIntegration",
+    "SlackIntegrations",
+    "SlackProviderAccount",
     "SlackWebhook",
+    "SlackWebhookAuth",
+    "SlackWebhookIntegration",
+    "SmtpCredentials",
     "SpaCyFramework",
     "SparkBuild",
     "SparkConfig",
@@ -821,6 +1285,15 @@ __all__ = [
     "TerminateJobResponse",
     "TextContentPart",
     "TextContentPartText",
+    "TfyApplyRequestManifest",
+    "TfyApplyResponse",
+    "TfyApplyResponseAction",
+    "TfyApplyResponseExistingManifest",
+    "TfyDeleteRequestManifest",
+    "TogetherAiIntegrations",
+    "TogetherAiKeyAuth",
+    "TogetherAiModel",
+    "TogetherAiProviderAccount",
     "TokenPagination",
     "Tool",
     "ToolCall",
@@ -831,13 +1304,21 @@ __all__ = [
     "TracingProject",
     "TracingProjectManifest",
     "TransformersFramework",
+    "TransformersFrameworkLibraryName",
     "TriggerJobRunResponse",
     "TrueFoundryArtifactSource",
+    "TrueFoundryDbssm",
+    "TrueFoundryIntegrations",
     "TrueFoundryInteractiveLogin",
     "TrueFoundryManagedSource",
+    "TrueFoundryProviderAccount",
+    "TtlIntegrations",
+    "TtlProviderAccount",
+    "TtlRegistry",
     "UpdateSecretInput",
     "UpdateUserRolesResponse",
     "UpgradeData",
+    "UsageLimits",
     "User",
     "UserMessage",
     "UserMessageContent",
@@ -845,12 +1326,21 @@ __all__ = [
     "UserMetadata",
     "ValidationError",
     "ValidationErrorLocItem",
+    "VertexModel",
+    "VertexModelV2",
     "VirtualAccount",
     "VirtualAccountManifest",
     "Volume",
     "VolumeBrowser",
     "VolumeConfig",
     "VolumeMount",
+    "WebhookBasicAuth",
+    "WebhookBearerAuth",
+    "WebhookIntegration",
+    "WebhookIntegrationAuthData",
+    "WebhookIntegrations",
+    "WebhookProviderAccount",
+    "WeightBasedLoadBalancingRule",
     "WorkbenchImage",
     "WorkerConfig",
     "WorkerConfigInputConfig",
