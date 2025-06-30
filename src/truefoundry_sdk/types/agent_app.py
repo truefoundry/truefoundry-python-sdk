@@ -4,18 +4,18 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .agent_open_api_tool_with_fqn import AgentOpenApiToolWithFqn
-from .agent_with_fqn import AgentWithFqn
+from .agent_manifest_with_fqn import AgentManifestWithFqn
+from .agent_open_api_tool_manifest_with_fqn import AgentOpenApiToolManifestWithFqn
 
 
 class AgentApp(UniversalBaseModel):
     type: typing.Optional[typing.Literal["agent-app"]] = None
-    tools: typing.List[AgentOpenApiToolWithFqn] = pydantic.Field()
+    tools: typing.List[AgentOpenApiToolManifestWithFqn] = pydantic.Field()
     """
     Tools available to the Agent app
     """
 
-    agents: typing.List[AgentWithFqn] = pydantic.Field()
+    agents: typing.List[AgentManifestWithFqn] = pydantic.Field()
     """
     Agents available to the Agent app
     """

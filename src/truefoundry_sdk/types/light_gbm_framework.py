@@ -7,9 +7,16 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class LightGbmFramework(UniversalBaseModel):
+    """
+    +label=LightGBM
+    +icon=lightbgm
+    """
+
     type: typing.Literal["lightgbm"] = pydantic.Field(default="lightgbm")
     """
-    Type of the framework
+    +label=Type
+    +usage=Type of the framework
+    +value=lightgbm
     """
 
     if IS_PYDANTIC_V2:

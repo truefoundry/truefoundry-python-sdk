@@ -26,7 +26,7 @@ class DynamicVolumeConfig(UniversalBaseModel):
 
     size: int = pydantic.Field()
     """
-    +label=Size
+    +label=Size(Gi)
     +unit=Gi
     +usage=Size of volume in Gi
     """

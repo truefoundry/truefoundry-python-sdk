@@ -157,7 +157,7 @@ class ModelsClient:
 
         Examples
         --------
-        from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
+        from truefoundry_sdk import ModelManifest, TrueFoundry
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -165,10 +165,7 @@ class ModelsClient:
         )
         client.models.create_or_update(
             manifest=ModelManifest(
-                name="name",
                 metadata={"key": "value"},
-                ml_repo="ml_repo",
-                source=TrueFoundryManagedSource(),
             ),
         )
         """
@@ -344,11 +341,7 @@ class AsyncModelsClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import (
-            AsyncTrueFoundry,
-            ModelManifest,
-            TrueFoundryManagedSource,
-        )
+        from truefoundry_sdk import AsyncTrueFoundry, ModelManifest
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -359,10 +352,7 @@ class AsyncModelsClient:
         async def main() -> None:
             await client.models.create_or_update(
                 manifest=ModelManifest(
-                    name="name",
                     metadata={"key": "value"},
-                    ml_repo="ml_repo",
-                    source=TrueFoundryManagedSource(),
                 ),
             )
 

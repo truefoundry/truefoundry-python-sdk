@@ -54,6 +54,7 @@ class Job(UniversalBaseModel):
     params: typing.Optional[typing.List[Param]] = pydantic.Field(default=None)
     """
     +label=Params for input
+    +uiType=ParamsInput
     +usage=Configure params and pass it to create different job runs
     +sort=400
     """

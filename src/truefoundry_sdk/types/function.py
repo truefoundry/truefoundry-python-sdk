@@ -9,12 +9,14 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 class Function(UniversalBaseModel):
     name: str = pydantic.Field()
     """
-    Name of the tool/function being called
+    +label=Name
+    +usage=Name of the tool/function being called
     """
 
     arguments: str = pydantic.Field()
     """
-    Arguments passed to the tool/function
+    +label=Arguments
+    +usage=Arguments passed to the tool/function
     """
 
     if IS_PYDANTIC_V2:

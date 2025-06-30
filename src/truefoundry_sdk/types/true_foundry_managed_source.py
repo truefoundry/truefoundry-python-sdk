@@ -7,12 +7,23 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class TrueFoundryManagedSource(UniversalBaseModel):
-    type: typing.Literal["truefoundry"] = pydantic.Field(default="truefoundry")
     """
-    Type of the source
+    +label=TrueFoundry Managed Source
     """
 
-    uri: typing.Optional[str] = None
+    type: typing.Literal["truefoundry"] = pydantic.Field(default="truefoundry")
+    """
+    +label=Type
+    +usage=Type of the source
+    +value=truefoundry
+    """
+
+    uri: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    +label=URI
+    +uiType=ModelUploadInput
+    +uiProps={"hideClear":true}
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

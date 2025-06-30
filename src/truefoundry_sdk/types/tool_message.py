@@ -9,22 +9,26 @@ from .tool_message_content import ToolMessageContent
 
 class ToolMessage(UniversalBaseModel):
     """
-    Tool message for the chat
+    +label=Tool Message
+    +usage=Tool message for the chat
     """
 
     role: typing.Literal["tool"] = pydantic.Field(default="tool")
     """
-    Role of the message
+    +label=Role
+    +usage=Role of the message
     """
 
     content: ToolMessageContent = pydantic.Field()
     """
-    Content of the tool call result
+    +label=Content
+    +usage=Content of the tool call result
     """
 
     tool_call_id: str = pydantic.Field()
     """
-    Unique identifier for the tool call
+    +label=Tool Call ID
+    +usage=Unique identifier for the tool call
     """
 
     if IS_PYDANTIC_V2:

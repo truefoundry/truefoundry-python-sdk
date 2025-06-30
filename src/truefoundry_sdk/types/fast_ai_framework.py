@@ -7,9 +7,16 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class FastAiFramework(UniversalBaseModel):
+    """
+    +label=FastAI
+    +icon=fastai
+    """
+
     type: typing.Literal["fastai"] = pydantic.Field(default="fastai")
     """
-    Type of the framework
+    +label=Type
+    +usage=Type of the framework
+    +value=fastai
     """
 
     if IS_PYDANTIC_V2:

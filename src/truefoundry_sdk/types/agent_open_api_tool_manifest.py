@@ -3,66 +3,58 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from .agent_open_api_tool_manifest_method import AgentOpenApiToolManifestMethod
 from .agent_open_api_tool_manifest_openapi_spec import AgentOpenApiToolManifestOpenapiSpec
-from .method import Method
+from .base_artifact_version import BaseArtifactVersion
 
 
-class AgentOpenApiToolManifest(UniversalBaseModel):
-    """
-    Agent OpenAPI Tool manifest.
-    """
-
-    name: str = pydantic.Field()
-    """
-    Name of the entity
-    """
-
-    description: typing.Optional[str] = None
-    metadata: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
-    """
-    Key value metadata. Should be valid JSON. For e.g. `{"business-unit": "sales", "quality": "good", "rating": 4.5}`
-    """
-
-    version_alias: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Version alias is alternate, ideally human readable, version string to reference an artifact version. It should start with `v` followed by alphanumeric and it can include `.` and `-` in between (e.g. `v1.0.0`, `v1-prod`, `v3-dev`, etc)
-    """
-
-    ml_repo: str = pydantic.Field()
-    """
-    Name of the ML Repo
-    """
-
-    version: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Version of the entity
-    """
-
+class AgentOpenApiToolManifest(BaseArtifactVersion):
     type: typing.Literal["openapi-tool"] = "openapi-tool"
-    openapi_spec: AgentOpenApiToolManifestOpenapiSpec = pydantic.Field()
+    openapi_spec: typing.Optional[AgentOpenApiToolManifestOpenapiSpec] = pydantic.Field(default=None)
     """
-    OpenAPI Spec for the tool describing the API, endpoints and parameters. [Sample OpenAPI Spec Link](https://assets.production.truefoundry.com/sample-openapi.json)
-    """
-
-    base_url: str = pydantic.Field()
-    """
-    HTTP endpoint where the API is hosted for the tools. E.g. `https://api.example.com/v1`
-    """
-
-    path: str = pydantic.Field()
-    """
-    API Route Path for the tool call HTTP request. E.g. `GET /weather`
+    +sort=20
+    +uiType=OpenapiSchema
+    +label=OpenAPI Spec
+    +usage=OpenAPI Spec for the tool describing the API, endpoints and parameters. [Sample OpenAPI Spec Link](https://assets.production.truefoundry.com/sample-openapi.json)
+    +uiProps={"descriptionInline":true}
+    +placeholder={"openapi":"3.0.0","info":{"title":"LLM Agent Tools API","version":"1.0.0"},"servers":[{"url":"https://api.example.com/v1"}],"paths":{"/weather":{"get":{"summary":"Get current weather","description":"Fetches the current weather for a given location.","parameters":[{"name":"location","in":"query","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Successful response","content":{"application/json":{"schema":{"type":"object","properties":{"location":{"type":"string"},"temperature":{"type":"number"},"condition":{"type":"string"}}}}}}}}}}}
     """
 
-    method: Method = pydantic.Field()
+    base_url: typing.Optional[str] = pydantic.Field(default=None)
     """
-    HTTP Method for the tool call HTTP request
+    +sort=30
+    +label=Base URL
+    +usage=HTTP endpoint where the API is hosted for the tools. E.g. `https://api.example.com/v1`
+    +uiProps={"descriptionInline":true}
+    +placeholder=https://api.example.com/v1
+    """
+
+    path: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    +sort=40
+    +uiType=MethodPathSelector
+    +label=API Route Path
+    +usage=API Route Path for the tool call HTTP request. E.g. `GET /weather`
+    +uiProps={"descriptionInline":true}
+    """
+
+    method: typing.Optional[AgentOpenApiToolManifestMethod] = pydantic.Field(default=None)
+    """
+    +sort=50
+    +uiType=Hidden
+    +label=API HTTP Method
+    +usage=HTTP Method for the tool call HTTP request
     """
 
     headers: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
     """
-    HTTP Headers for the tool call HTTP request. E.g. `Authorization: Bearer <token>`
+    +sort=60
+    +uiType=KV
+    +uiProps={"allowSecrets":true,"secretConfig":{"enableNew":true,"hideOptions":true}}
+    +label=Headers
+    +usage=HTTP Headers for the tool call HTTP request. E.g. `Authorization: Bearer <token>`
+    +uiProps={"descriptionInline":true}
     """
 
     if IS_PYDANTIC_V2:

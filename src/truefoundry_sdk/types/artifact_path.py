@@ -9,12 +9,14 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 class ArtifactPath(UniversalBaseModel):
     src: str = pydantic.Field()
     """
-    Local file or folder path
+    +label=Source path
+    +usage=Local file or folder path
     """
 
     dest: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Relative path where the file or folder will be uploaded to in the artifact
+    +label=Destination path
+    +usage=Relative path where the file or folder will be uploaded to in the artifact
     """
 
     if IS_PYDANTIC_V2:

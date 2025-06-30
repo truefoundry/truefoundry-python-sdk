@@ -3,59 +3,48 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from .base_artifact_version import BaseArtifactVersion
 
 
-class AgentManifest(UniversalBaseModel):
-    """
-    Agent manifest.
-    """
-
-    name: str = pydantic.Field()
-    """
-    Name of the entity
-    """
-
-    description: typing.Optional[str] = None
-    metadata: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
-    """
-    Key value metadata. Should be valid JSON. For e.g. `{"business-unit": "sales", "quality": "good", "rating": 4.5}`
-    """
-
-    version_alias: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Version alias is alternate, ideally human readable, version string to reference an artifact version. It should start with `v` followed by alphanumeric and it can include `.` and `-` in between (e.g. `v1.0.0`, `v1-prod`, `v3-dev`, etc)
-    """
-
-    ml_repo: str = pydantic.Field()
-    """
-    Name of the ML Repo
-    """
-
-    version: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Version of the entity
-    """
-
+class AgentManifest(BaseArtifactVersion):
     type: typing.Literal["agent"] = "agent"
-    goal: str = pydantic.Field()
+    goal: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Short form description. Will be used as `description` when this agent is used as a tool.
-    """
-
-    instruction: str = pydantic.Field()
-    """
-    Instructions for the agent to follow to achieve the goal
-    """
-
-    available_tools: typing.List[str] = pydantic.Field()
-    """
-    Tools available to the agent
+    +sort=100
+    +uiType=TextArea
+    +label=Goal
+    +usage=Short form description. Will be used as `description` when this agent is used as a tool.
+    +uiProps={"descriptionInline":true}
     """
 
-    model_id: str = pydantic.Field()
+    instruction: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Model to use when running the agent
+    `instruction` is the system prompt for now. (2.5 * 1024)
+    +sort=150
+    +uiType=AgentInstructions
+    +uiProps={"helpText":"Use the syntax ${Tool FQN} to reference a tool, and ${AGENT FQN} to reference another agent"}
+    +label=Instructions
+    +usage=Instructions for the agent to follow to achieve the goal
+    +uiProps={"descriptionInline":true}
+    """
+
+    available_tools: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    +sort=200
+    +uiType=Hidden
+    +label=Tools
+    +usage=Tools available to the agent
+    +uiProps={"descriptionInline":true}
+    """
+
+    model_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    +sort=300
+    +uiType=EnabledModelSelector
+    +uiProps={"searchable":true,"modelType":"chat","providerType":"openai"}
+    +label=Model
+    +usage=Model to use when running the agent
     """
 
     if IS_PYDANTIC_V2:

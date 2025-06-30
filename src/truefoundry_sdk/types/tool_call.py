@@ -10,12 +10,14 @@ from .function import Function
 class ToolCall(UniversalBaseModel):
     type: typing.Literal["function"] = pydantic.Field(default="function")
     """
-    Type of the tool call
+    +label=Type
+    +usage=Type of the tool call
     """
 
     id: str = pydantic.Field()
     """
-    Unique identifier for the tool call
+    +label=ID
+    +usage=Unique identifier for the tool call
     """
 
     function: Function

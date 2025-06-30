@@ -7,9 +7,16 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class TensorFlowFramework(UniversalBaseModel):
+    """
+    +label=Tensorflow
+    +icon=tensorflow
+    """
+
     type: typing.Literal["tensorflow"] = pydantic.Field(default="tensorflow")
     """
-    Type of the framework
+    +label=Type
+    +usage=Type of the framework
+    +value=tensorflow
     """
 
     if IS_PYDANTIC_V2:

@@ -1,4 +1,172 @@
 # Reference
+<details><summary><code>client.<a href="src/truefoundry_sdk/base_client.py">apply</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Applies a given manifest to create or update resources of specific types, such as provider-account, cluster, workspace, or ml-repo.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import Collaborator, MlRepoManifest, TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.apply(
+    manifest=MlRepoManifest(
+        name="name",
+        storage_integration_fqn="storage_integration_fqn",
+        collaborators=[
+            Collaborator(
+                subject="subject",
+                role_id="role_id",
+            )
+        ],
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**manifest:** `TrueFoundryApplyRequestManifest` — manifest of the resource to be created or updated
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dry_run:** `typing.Optional[bool]` — Dry run the apply operation without actually applying
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/truefoundry_sdk/base_client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes resources of specific types, such as provider-account, cluster, workspace, or application.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import Collaborator, MlRepoManifest, TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.delete(
+    manifest=MlRepoManifest(
+        name="name",
+        storage_integration_fqn="storage_integration_fqn",
+        collaborators=[
+            Collaborator(
+                subject="subject",
+                role_id="role_id",
+            )
+        ],
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**manifest:** `TrueFoundryDeleteRequestManifest` — manifest of the resource to be deleted
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Internal
 <details><summary><code>client.internal.<a href="src/truefoundry_sdk/internal/client.py">get_id_from_fqn</a>(...)</code></summary>
 <dl>
@@ -5677,11 +5845,7 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry_sdk import (
-    ArtifactManifest,
-    TrueFoundry,
-    TrueFoundryManagedSource,
-)
+from truefoundry_sdk import ArtifactManifest, TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -5689,10 +5853,7 @@ client = TrueFoundry(
 )
 client.artifacts.create_or_update(
     manifest=ArtifactManifest(
-        name="name",
         metadata={"key": "value"},
-        ml_repo="ml_repo",
-        source=TrueFoundryManagedSource(),
     ),
 )
 
@@ -5950,13 +6111,7 @@ client = TrueFoundry(
 )
 client.agents.create_or_update(
     manifest=AgentManifest(
-        name="name",
         metadata={"key": "value"},
-        ml_repo="ml_repo",
-        goal="goal",
-        instruction="instruction",
-        available_tools=["available_tools"],
-        model_id="model_id",
     ),
 )
 
@@ -6206,7 +6361,7 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry_sdk import ChatPromptManifest, SystemMessage, TrueFoundry
+from truefoundry_sdk import ChatPromptManifest, TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -6214,14 +6369,7 @@ client = TrueFoundry(
 )
 client.prompts.create_or_update(
     manifest=ChatPromptManifest(
-        name="name",
         metadata={"key": "value"},
-        ml_repo="ml_repo",
-        messages=[
-            SystemMessage(
-                content="content",
-            )
-        ],
     ),
 )
 
@@ -6471,13 +6619,7 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry_sdk import (
-    AgentOpenApiToolManifest,
-    BlobStorageReference,
-    Method,
-    MimeType,
-    TrueFoundry,
-)
+from truefoundry_sdk import AgentOpenApiToolManifest, TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -6485,16 +6627,7 @@ client = TrueFoundry(
 )
 client.tools.create_or_update(
     manifest=AgentOpenApiToolManifest(
-        name="name",
         metadata={"key": "value"},
-        ml_repo="ml_repo",
-        openapi_spec=BlobStorageReference(
-            path="path",
-            mime_type=MimeType.TEXT_PLAIN,
-        ),
-        base_url="base_url",
-        path="path",
-        method=Method.GET,
     ),
 )
 
@@ -6752,7 +6885,7 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
+from truefoundry_sdk import ModelManifest, TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -6760,10 +6893,7 @@ client = TrueFoundry(
 )
 client.models.create_or_update(
     manifest=ModelManifest(
-        name="name",
         metadata={"key": "value"},
-        ml_repo="ml_repo",
-        source=TrueFoundryManagedSource(),
     ),
 )
 
@@ -7229,7 +7359,7 @@ client.artifact_versions.create_multi_part_upload(
 <dd>
 
 ```python
-from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
+from truefoundry_sdk import ModelManifest, TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -7237,10 +7367,7 @@ client = TrueFoundry(
 )
 client.artifact_versions.stage(
     manifest=ModelManifest(
-        name="name",
         metadata={"key": "value"},
-        ml_repo="ml_repo",
-        source=TrueFoundryManagedSource(),
     ),
 )
 
@@ -10665,7 +10792,7 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
+from truefoundry_sdk import ModelManifest, TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -10673,10 +10800,7 @@ client = TrueFoundry(
 )
 client.internal.ml.apply(
     manifest=ModelManifest(
-        name="name",
         metadata={"key": "value"},
-        ml_repo="ml_repo",
-        source=TrueFoundryManagedSource(),
     ),
 )
 
@@ -10727,7 +10851,7 @@ client.internal.ml.apply(
 <dd>
 
 ```python
-from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
+from truefoundry_sdk import ModelManifest, TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -10735,10 +10859,7 @@ client = TrueFoundry(
 )
 client.internal.ml.delete(
     manifest=ModelManifest(
-        name="name",
         metadata={"key": "value"},
-        ml_repo="ml_repo",
-        source=TrueFoundryManagedSource(),
     ),
 )
 
