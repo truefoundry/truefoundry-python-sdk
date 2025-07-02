@@ -10,6 +10,7 @@ from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pagination import AsyncPager, BaseHttpResponse, SyncPager
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
+from ..core.serialization import convert_and_respect_annotation_metadata
 from ..errors.bad_request_error import BadRequestError
 from ..errors.conflict_error import ConflictError
 from ..errors.not_found_error import NotFoundError
@@ -19,6 +20,7 @@ from ..types.get_ml_repo_response import GetMlRepoResponse
 from ..types.http_error import HttpError
 from ..types.list_ml_repos_response import ListMlReposResponse
 from ..types.ml_repo import MlRepo
+from ..types.ml_repo_manifest import MlRepoManifest
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -29,17 +31,14 @@ class RawMlReposClient:
         self._client_wrapper = client_wrapper
 
     def create_or_update(
-        self,
-        *,
-        manifest: typing.Dict[str, typing.Optional[typing.Any]],
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, manifest: MlRepoManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetMlRepoResponse]:
         """
         Creates or updates an MLRepo entity based on the provided manifest.
 
         Parameters
         ----------
-        manifest : typing.Dict[str, typing.Optional[typing.Any]]
+        manifest : MlRepoManifest
             MLRepo manifest
 
         request_options : typing.Optional[RequestOptions]
@@ -54,7 +53,9 @@ class RawMlReposClient:
             "api/svc/v1/ml-repos",
             method="PUT",
             json={
-                "manifest": manifest,
+                "manifest": convert_and_respect_annotation_metadata(
+                    object_=manifest, annotation=MlRepoManifest, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -318,17 +319,14 @@ class AsyncRawMlReposClient:
         self._client_wrapper = client_wrapper
 
     async def create_or_update(
-        self,
-        *,
-        manifest: typing.Dict[str, typing.Optional[typing.Any]],
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, manifest: MlRepoManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetMlRepoResponse]:
         """
         Creates or updates an MLRepo entity based on the provided manifest.
 
         Parameters
         ----------
-        manifest : typing.Dict[str, typing.Optional[typing.Any]]
+        manifest : MlRepoManifest
             MLRepo manifest
 
         request_options : typing.Optional[RequestOptions]
@@ -343,7 +341,9 @@ class AsyncRawMlReposClient:
             "api/svc/v1/ml-repos",
             method="PUT",
             json={
-                "manifest": manifest,
+                "manifest": convert_and_respect_annotation_metadata(
+                    object_=manifest, annotation=MlRepoManifest, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",

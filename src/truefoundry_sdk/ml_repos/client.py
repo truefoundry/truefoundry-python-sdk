@@ -8,6 +8,7 @@ from ..core.request_options import RequestOptions
 from ..types.empty_response import EmptyResponse
 from ..types.get_ml_repo_response import GetMlRepoResponse
 from ..types.ml_repo import MlRepo
+from ..types.ml_repo_manifest import MlRepoManifest
 from .raw_client import AsyncRawMlReposClient, RawMlReposClient
 
 # this is used as the default value for optional parameters
@@ -30,17 +31,14 @@ class MlReposClient:
         return self._raw_client
 
     def create_or_update(
-        self,
-        *,
-        manifest: typing.Dict[str, typing.Optional[typing.Any]],
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, manifest: MlRepoManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetMlRepoResponse:
         """
         Creates or updates an MLRepo entity based on the provided manifest.
 
         Parameters
         ----------
-        manifest : typing.Dict[str, typing.Optional[typing.Any]]
+        manifest : MlRepoManifest
             MLRepo manifest
 
         request_options : typing.Optional[RequestOptions]
@@ -53,14 +51,23 @@ class MlReposClient:
 
         Examples
         --------
-        from truefoundry_sdk import TrueFoundry
+        from truefoundry_sdk import Collaborator, MlRepoManifest, TrueFoundry
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
         client.ml_repos.create_or_update(
-            manifest={"key": "value"},
+            manifest=MlRepoManifest(
+                name="name",
+                storage_integration_fqn="storage_integration_fqn",
+                collaborators=[
+                    Collaborator(
+                        subject="subject",
+                        role_id="role_id",
+                    )
+                ],
+            ),
         )
         """
         _response = self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
@@ -207,17 +214,14 @@ class AsyncMlReposClient:
         return self._raw_client
 
     async def create_or_update(
-        self,
-        *,
-        manifest: typing.Dict[str, typing.Optional[typing.Any]],
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, manifest: MlRepoManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetMlRepoResponse:
         """
         Creates or updates an MLRepo entity based on the provided manifest.
 
         Parameters
         ----------
-        manifest : typing.Dict[str, typing.Optional[typing.Any]]
+        manifest : MlRepoManifest
             MLRepo manifest
 
         request_options : typing.Optional[RequestOptions]
@@ -232,7 +236,7 @@ class AsyncMlReposClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import AsyncTrueFoundry
+        from truefoundry_sdk import AsyncTrueFoundry, Collaborator, MlRepoManifest
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -242,7 +246,16 @@ class AsyncMlReposClient:
 
         async def main() -> None:
             await client.ml_repos.create_or_update(
-                manifest={"key": "value"},
+                manifest=MlRepoManifest(
+                    name="name",
+                    storage_integration_fqn="storage_integration_fqn",
+                    collaborators=[
+                        Collaborator(
+                            subject="subject",
+                            role_id="role_id",
+                        )
+                    ],
+                ),
             )
 
 

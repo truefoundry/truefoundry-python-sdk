@@ -5331,14 +5331,23 @@ Creates or updates an MLRepo entity based on the provided manifest.
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
+from truefoundry_sdk import Collaborator, MlRepoManifest, TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
 client.ml_repos.create_or_update(
-    manifest={"key": "value"},
+    manifest=MlRepoManifest(
+        name="name",
+        storage_integration_fqn="storage_integration_fqn",
+        collaborators=[
+            Collaborator(
+                subject="subject",
+                role_id="role_id",
+            )
+        ],
+    ),
 )
 
 ```
@@ -5355,7 +5364,7 @@ client.ml_repos.create_or_update(
 <dl>
 <dd>
 
-**manifest:** `typing.Dict[str, typing.Optional[typing.Any]]` — MLRepo manifest
+**manifest:** `MlRepoManifest` — MLRepo manifest
     
 </dd>
 </dl>
