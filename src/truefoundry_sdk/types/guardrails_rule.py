@@ -4,7 +4,6 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .guardrail_config import GuardrailConfig
 from .guardrails_when import GuardrailsWhen
 
 
@@ -15,14 +14,14 @@ class GuardrailsRule(UniversalBaseModel):
     """
 
     when: GuardrailsWhen
-    input_guardrails: typing.List[GuardrailConfig] = pydantic.Field()
+    input_guardrails: typing.List[str] = pydantic.Field()
     """
-    +usage=Guardrails to apply to the input
+    +usage=Guardrail Integration FQNs of the guardrails to apply to the input
     """
 
-    output_guardrails: typing.List[GuardrailConfig] = pydantic.Field()
+    output_guardrails: typing.List[str] = pydantic.Field()
     """
-    +usage=Guardrails to apply to the output
+    +usage=Guardrail Integration FQNs of the guardrails to apply to the output
     """
 
     if IS_PYDANTIC_V2:

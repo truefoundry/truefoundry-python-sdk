@@ -4,22 +4,17 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .guardrail_config_action import GuardrailConfigAction
-from .guardrails_options import GuardrailsOptions
 
 
-class GuardrailConfig(UniversalBaseModel):
-    type: str = pydantic.Field()
+class BaseGuardrailConfig(UniversalBaseModel):
+    name: str = pydantic.Field()
     """
-    +usage=Type of the guardrail
+    +label=Name
+    +sort=50
+    +usage=The name of the Guardrail Config.
+    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
+    +uiProps={"disableEdit":true}
     """
-
-    action: GuardrailConfigAction = pydantic.Field()
-    """
-    +usage=Action to perform with the guardrail
-    """
-
-    options: GuardrailsOptions
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
