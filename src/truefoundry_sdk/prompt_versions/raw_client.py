@@ -122,8 +122,10 @@ class RawPromptVersionsClient:
     def list(
         self,
         *,
-        prompt_id: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
+        prompt_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
@@ -133,9 +135,13 @@ class RawPromptVersionsClient:
 
         Parameters
         ----------
+        fqn : typing.Optional[str]
+
         prompt_id : typing.Optional[str]
 
-        fqn : typing.Optional[str]
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
 
         offset : typing.Optional[int]
 
@@ -155,8 +161,10 @@ class RawPromptVersionsClient:
             "api/ml/v1/prompt-versions",
             method="GET",
             params={
-                "prompt_id": prompt_id,
                 "fqn": fqn,
+                "prompt_id": prompt_id,
+                "ml_repo_id": ml_repo_id,
+                "name": name,
                 "offset": offset,
                 "limit": limit,
             },
@@ -174,8 +182,10 @@ class RawPromptVersionsClient:
                 _items = _parsed_response.data
                 _has_next = True
                 _get_next = lambda: self.list(
-                    prompt_id=prompt_id,
                     fqn=fqn,
+                    prompt_id=prompt_id,
+                    ml_repo_id=ml_repo_id,
+                    name=name,
                     offset=offset + len(_items),
                     limit=limit,
                     request_options=request_options,
@@ -305,8 +315,10 @@ class AsyncRawPromptVersionsClient:
     async def list(
         self,
         *,
-        prompt_id: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
+        prompt_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
@@ -316,9 +328,13 @@ class AsyncRawPromptVersionsClient:
 
         Parameters
         ----------
+        fqn : typing.Optional[str]
+
         prompt_id : typing.Optional[str]
 
-        fqn : typing.Optional[str]
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
 
         offset : typing.Optional[int]
 
@@ -338,8 +354,10 @@ class AsyncRawPromptVersionsClient:
             "api/ml/v1/prompt-versions",
             method="GET",
             params={
-                "prompt_id": prompt_id,
                 "fqn": fqn,
+                "prompt_id": prompt_id,
+                "ml_repo_id": ml_repo_id,
+                "name": name,
                 "offset": offset,
                 "limit": limit,
             },
@@ -359,8 +377,10 @@ class AsyncRawPromptVersionsClient:
 
                 async def _get_next():
                     return await self.list(
-                        prompt_id=prompt_id,
                         fqn=fqn,
+                        prompt_id=prompt_id,
+                        ml_repo_id=ml_repo_id,
+                        name=name,
                         offset=offset + len(_items),
                         limit=limit,
                         request_options=request_options,

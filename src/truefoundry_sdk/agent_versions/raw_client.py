@@ -173,8 +173,10 @@ class RawAgentVersionsClient:
     def list(
         self,
         *,
-        agent_id: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
+        agent_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
@@ -184,9 +186,13 @@ class RawAgentVersionsClient:
 
         Parameters
         ----------
+        fqn : typing.Optional[str]
+
         agent_id : typing.Optional[str]
 
-        fqn : typing.Optional[str]
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
 
         offset : typing.Optional[int]
 
@@ -206,8 +212,10 @@ class RawAgentVersionsClient:
             "api/ml/v1/agent-versions",
             method="GET",
             params={
-                "agent_id": agent_id,
                 "fqn": fqn,
+                "agent_id": agent_id,
+                "ml_repo_id": ml_repo_id,
+                "name": name,
                 "offset": offset,
                 "limit": limit,
             },
@@ -225,8 +233,10 @@ class RawAgentVersionsClient:
                 _items = _parsed_response.data
                 _has_next = True
                 _get_next = lambda: self.list(
-                    agent_id=agent_id,
                     fqn=fqn,
+                    agent_id=agent_id,
+                    ml_repo_id=ml_repo_id,
+                    name=name,
                     offset=offset + len(_items),
                     limit=limit,
                     request_options=request_options,
@@ -406,8 +416,10 @@ class AsyncRawAgentVersionsClient:
     async def list(
         self,
         *,
-        agent_id: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
+        agent_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
@@ -417,9 +429,13 @@ class AsyncRawAgentVersionsClient:
 
         Parameters
         ----------
+        fqn : typing.Optional[str]
+
         agent_id : typing.Optional[str]
 
-        fqn : typing.Optional[str]
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
 
         offset : typing.Optional[int]
 
@@ -439,8 +455,10 @@ class AsyncRawAgentVersionsClient:
             "api/ml/v1/agent-versions",
             method="GET",
             params={
-                "agent_id": agent_id,
                 "fqn": fqn,
+                "agent_id": agent_id,
+                "ml_repo_id": ml_repo_id,
+                "name": name,
                 "offset": offset,
                 "limit": limit,
             },
@@ -460,8 +478,10 @@ class AsyncRawAgentVersionsClient:
 
                 async def _get_next():
                     return await self.list(
-                        agent_id=agent_id,
                         fqn=fqn,
+                        agent_id=agent_id,
+                        ml_repo_id=ml_repo_id,
+                        name=name,
                         offset=offset + len(_items),
                         limit=limit,
                         request_options=request_options,

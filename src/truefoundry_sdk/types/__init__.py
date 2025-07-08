@@ -65,6 +65,8 @@ from .autoshutdown import Autoshutdown
 from .aws_access_key_auth import AwsAccessKeyAuth
 from .aws_access_key_based_auth import AwsAccessKeyBasedAuth
 from .aws_assumed_role_based_auth import AwsAssumedRoleBasedAuth
+from .aws_bedrock_guardrail_config import AwsBedrockGuardrailConfig
+from .aws_bedrock_guardrail_config_auth_data import AwsBedrockGuardrailConfigAuthData
 from .aws_bedrock_provider_account import AwsBedrockProviderAccount
 from .aws_bedrock_provider_account_auth_data import AwsBedrockProviderAccountAuthData
 from .aws_ecr import AwsEcr
@@ -106,6 +108,7 @@ from .azure_vault import AzureVault
 from .base_artifact_version import BaseArtifactVersion
 from .base_artifact_version_manifest import BaseArtifactVersionManifest
 from .base_autoscaling import BaseAutoscaling
+from .base_guardrail_config import BaseGuardrailConfig
 from .base_o_auth2login import BaseOAuth2Login
 from .base_o_auth2login_jwt_source import BaseOAuth2LoginJwtSource
 from .base_service import BaseService
@@ -161,6 +164,8 @@ from .cron_metric import CronMetric
 from .custom_basic_auth import CustomBasicAuth
 from .custom_bearer_auth import CustomBearerAuth
 from .custom_blob_storage import CustomBlobStorage
+from .custom_guardrail_config import CustomGuardrailConfig
+from .custom_guardrail_config_auth_data import CustomGuardrailConfigAuthData
 from .custom_helm_repo import CustomHelmRepo
 from .custom_integrations import CustomIntegrations
 from .custom_jwt_auth_integration import CustomJwtAuthIntegration
@@ -302,10 +307,9 @@ from .groq_integrations import GroqIntegrations
 from .groq_key_auth import GroqKeyAuth
 from .groq_model import GroqModel
 from .groq_provider_account import GroqProviderAccount
-from .guardrail_config import GuardrailConfig
-from .guardrail_config_action import GuardrailConfigAction
+from .guardrail_config_group import GuardrailConfigGroup
+from .guardrail_config_integrations import GuardrailConfigIntegrations
 from .guardrails_config import GuardrailsConfig
-from .guardrails_options import GuardrailsOptions
 from .guardrails_rule import GuardrailsRule
 from .guardrails_when import GuardrailsWhen
 from .h2o_framework import H2OFramework
@@ -333,8 +337,8 @@ from .intercept import Intercept
 from .intercept_rules_item import InterceptRulesItem
 from .intercept_rules_item_action import InterceptRulesItemAction
 from .internal_artifact_version import InternalArtifactVersion
-from .internal_list_artifact_version_response import InternalListArtifactVersionResponse
-from .internal_list_artifact_version_response_data_item import InternalListArtifactVersionResponseDataItem
+from .internal_list_artifact_versions_response import InternalListArtifactVersionsResponse
+from .internal_list_artifact_versions_response_data_item import InternalListArtifactVersionsResponseDataItem
 from .internal_model_version import InternalModelVersion
 from .invite_user_response import InviteUserResponse
 from .is_cluster_connected_response import IsClusterConnectedResponse
@@ -369,7 +373,7 @@ from .list_agent_versions_response import ListAgentVersionsResponse
 from .list_agents_response import ListAgentsResponse
 from .list_application_deployments_response import ListApplicationDeploymentsResponse
 from .list_applications_response import ListApplicationsResponse
-from .list_artifact_version_response import ListArtifactVersionResponse
+from .list_artifact_versions_response import ListArtifactVersionsResponse
 from .list_artifacts_response import ListArtifactsResponse
 from .list_cluster_addons_response import ListClusterAddonsResponse
 from .list_clusters_response import ListClustersResponse
@@ -465,6 +469,13 @@ from .ollama_provider_account import OllamaProviderAccount
 from .onnx_framework import OnnxFramework
 from .open_ai_integrations import OpenAiIntegrations
 from .open_ai_model import OpenAiModel
+from .open_ai_moderations_guardrail_config import OpenAiModerationsGuardrailConfig
+from .open_ai_moderations_guardrail_config_category_thresholds_value import (
+    OpenAiModerationsGuardrailConfigCategoryThresholdsValue,
+)
+from .open_ai_moderations_guardrail_config_category_thresholds_value_harassment import (
+    OpenAiModerationsGuardrailConfigCategoryThresholdsValueHarassment,
+)
 from .openai_api_key_auth import OpenaiApiKeyAuth
 from .openai_provider_account import OpenaiProviderAccount
 from .operation import Operation
@@ -731,6 +742,8 @@ __all__ = [
     "AwsAccessKeyAuth",
     "AwsAccessKeyBasedAuth",
     "AwsAssumedRoleBasedAuth",
+    "AwsBedrockGuardrailConfig",
+    "AwsBedrockGuardrailConfigAuthData",
     "AwsBedrockProviderAccount",
     "AwsBedrockProviderAccountAuthData",
     "AwsEcr",
@@ -772,6 +785,7 @@ __all__ = [
     "BaseArtifactVersion",
     "BaseArtifactVersionManifest",
     "BaseAutoscaling",
+    "BaseGuardrailConfig",
     "BaseOAuth2Login",
     "BaseOAuth2LoginJwtSource",
     "BaseService",
@@ -827,6 +841,8 @@ __all__ = [
     "CustomBasicAuth",
     "CustomBearerAuth",
     "CustomBlobStorage",
+    "CustomGuardrailConfig",
+    "CustomGuardrailConfigAuthData",
     "CustomHelmRepo",
     "CustomIntegrations",
     "CustomJwtAuthIntegration",
@@ -968,10 +984,9 @@ __all__ = [
     "GroqKeyAuth",
     "GroqModel",
     "GroqProviderAccount",
-    "GuardrailConfig",
-    "GuardrailConfigAction",
+    "GuardrailConfigGroup",
+    "GuardrailConfigIntegrations",
     "GuardrailsConfig",
-    "GuardrailsOptions",
     "GuardrailsRule",
     "GuardrailsWhen",
     "H2OFramework",
@@ -999,8 +1014,8 @@ __all__ = [
     "InterceptRulesItem",
     "InterceptRulesItemAction",
     "InternalArtifactVersion",
-    "InternalListArtifactVersionResponse",
-    "InternalListArtifactVersionResponseDataItem",
+    "InternalListArtifactVersionsResponse",
+    "InternalListArtifactVersionsResponseDataItem",
     "InternalModelVersion",
     "InviteUserResponse",
     "IsClusterConnectedResponse",
@@ -1035,7 +1050,7 @@ __all__ = [
     "ListAgentsResponse",
     "ListApplicationDeploymentsResponse",
     "ListApplicationsResponse",
-    "ListArtifactVersionResponse",
+    "ListArtifactVersionsResponse",
     "ListArtifactsResponse",
     "ListClusterAddonsResponse",
     "ListClustersResponse",
@@ -1131,6 +1146,9 @@ __all__ = [
     "OnnxFramework",
     "OpenAiIntegrations",
     "OpenAiModel",
+    "OpenAiModerationsGuardrailConfig",
+    "OpenAiModerationsGuardrailConfigCategoryThresholdsValue",
+    "OpenAiModerationsGuardrailConfigCategoryThresholdsValueHarassment",
     "OpenaiApiKeyAuth",
     "OpenaiProviderAccount",
     "Operation",

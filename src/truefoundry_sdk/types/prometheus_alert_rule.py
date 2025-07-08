@@ -18,6 +18,7 @@ class PrometheusAlertRule(UniversalBaseModel):
     """
     +label=Type
     +value=prometheus-alert-rule
+    +uiType=Hidden
     """
 
     name: str = pydantic.Field()

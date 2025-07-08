@@ -156,6 +156,7 @@ class RawDataDirectoriesClient:
     def list(
         self,
         *,
+        fqn: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
         limit: typing.Optional[int] = 100,
@@ -178,6 +179,8 @@ class RawDataDirectoriesClient:
 
         Parameters
         ----------
+        fqn : typing.Optional[str]
+
         ml_repo_id : typing.Optional[str]
 
         name : typing.Optional[str]
@@ -200,6 +203,7 @@ class RawDataDirectoriesClient:
             "api/ml/v1/data-directories",
             method="GET",
             params={
+                "fqn": fqn,
                 "ml_repo_id": ml_repo_id,
                 "name": name,
                 "limit": limit,
@@ -219,6 +223,7 @@ class RawDataDirectoriesClient:
                 _items = _parsed_response.data
                 _has_next = True
                 _get_next = lambda: self.list(
+                    fqn=fqn,
                     ml_repo_id=ml_repo_id,
                     name=name,
                     limit=limit,
@@ -732,6 +737,7 @@ class AsyncRawDataDirectoriesClient:
     async def list(
         self,
         *,
+        fqn: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
         limit: typing.Optional[int] = 100,
@@ -754,6 +760,8 @@ class AsyncRawDataDirectoriesClient:
 
         Parameters
         ----------
+        fqn : typing.Optional[str]
+
         ml_repo_id : typing.Optional[str]
 
         name : typing.Optional[str]
@@ -776,6 +784,7 @@ class AsyncRawDataDirectoriesClient:
             "api/ml/v1/data-directories",
             method="GET",
             params={
+                "fqn": fqn,
                 "ml_repo_id": ml_repo_id,
                 "name": name,
                 "limit": limit,
@@ -797,6 +806,7 @@ class AsyncRawDataDirectoriesClient:
 
                 async def _get_next():
                     return await self.list(
+                        fqn=fqn,
                         ml_repo_id=ml_repo_id,
                         name=name,
                         limit=limit,

@@ -100,12 +100,14 @@ class ArtifactVersionsClient:
     def list(
         self,
         *,
-        artifact_id: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
+        artifact_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = 100,
         include_internal_metadata: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[ArtifactVersion]:
@@ -114,17 +116,21 @@ class ArtifactVersionsClient:
 
         Parameters
         ----------
-        artifact_id : typing.Optional[str]
-
         fqn : typing.Optional[str]
 
-        offset : typing.Optional[int]
+        artifact_id : typing.Optional[str]
 
-        limit : typing.Optional[int]
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
         run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+
+        offset : typing.Optional[int]
+
+        limit : typing.Optional[int]
 
         include_internal_metadata : typing.Optional[bool]
 
@@ -152,12 +158,14 @@ class ArtifactVersionsClient:
             yield page
         """
         return self._raw_client.list(
-            artifact_id=artifact_id,
             fqn=fqn,
-            offset=offset,
-            limit=limit,
+            artifact_id=artifact_id,
+            ml_repo_id=ml_repo_id,
+            name=name,
             run_ids=run_ids,
             run_steps=run_steps,
+            offset=offset,
+            limit=limit,
             include_internal_metadata=include_internal_metadata,
             request_options=request_options,
         )
@@ -458,12 +466,14 @@ class AsyncArtifactVersionsClient:
     async def list(
         self,
         *,
-        artifact_id: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
+        artifact_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = 100,
         include_internal_metadata: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[ArtifactVersion]:
@@ -472,17 +482,21 @@ class AsyncArtifactVersionsClient:
 
         Parameters
         ----------
-        artifact_id : typing.Optional[str]
-
         fqn : typing.Optional[str]
 
-        offset : typing.Optional[int]
+        artifact_id : typing.Optional[str]
 
-        limit : typing.Optional[int]
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
         run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+
+        offset : typing.Optional[int]
+
+        limit : typing.Optional[int]
 
         include_internal_metadata : typing.Optional[bool]
 
@@ -519,12 +533,14 @@ class AsyncArtifactVersionsClient:
         asyncio.run(main())
         """
         return await self._raw_client.list(
-            artifact_id=artifact_id,
             fqn=fqn,
-            offset=offset,
-            limit=limit,
+            artifact_id=artifact_id,
+            ml_repo_id=ml_repo_id,
+            name=name,
             run_ids=run_ids,
             run_steps=run_steps,
+            offset=offset,
+            limit=limit,
             include_internal_metadata=include_internal_metadata,
             request_options=request_options,
         )

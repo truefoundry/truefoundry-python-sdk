@@ -23,11 +23,6 @@ class GuardrailsConfig(UniversalBaseModel):
     +usage=List of guardrail rules
     """
 
-    guardrails_service_url: str = pydantic.Field()
-    """
-    +usage=URL of the guardrails service
-    """
-
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:

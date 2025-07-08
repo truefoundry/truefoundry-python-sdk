@@ -124,6 +124,7 @@ class RawAgentsClient:
     def list(
         self,
         *,
+        fqn: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
         offset: typing.Optional[int] = 0,
@@ -133,6 +134,8 @@ class RawAgentsClient:
         """
         Parameters
         ----------
+        fqn : typing.Optional[str]
+
         ml_repo_id : typing.Optional[str]
 
         name : typing.Optional[str]
@@ -155,6 +158,7 @@ class RawAgentsClient:
             "api/ml/v1/agents",
             method="GET",
             params={
+                "fqn": fqn,
                 "ml_repo_id": ml_repo_id,
                 "name": name,
                 "offset": offset,
@@ -174,6 +178,7 @@ class RawAgentsClient:
                 _items = _parsed_response.data
                 _has_next = True
                 _get_next = lambda: self.list(
+                    fqn=fqn,
                     ml_repo_id=ml_repo_id,
                     name=name,
                     offset=offset + len(_items),
@@ -357,6 +362,7 @@ class AsyncRawAgentsClient:
     async def list(
         self,
         *,
+        fqn: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
         offset: typing.Optional[int] = 0,
@@ -366,6 +372,8 @@ class AsyncRawAgentsClient:
         """
         Parameters
         ----------
+        fqn : typing.Optional[str]
+
         ml_repo_id : typing.Optional[str]
 
         name : typing.Optional[str]
@@ -388,6 +396,7 @@ class AsyncRawAgentsClient:
             "api/ml/v1/agents",
             method="GET",
             params={
+                "fqn": fqn,
                 "ml_repo_id": ml_repo_id,
                 "name": name,
                 "offset": offset,
@@ -409,6 +418,7 @@ class AsyncRawAgentsClient:
 
                 async def _get_next():
                     return await self.list(
+                        fqn=fqn,
                         ml_repo_id=ml_repo_id,
                         name=name,
                         offset=offset + len(_items),

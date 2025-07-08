@@ -92,6 +92,7 @@ class ModelsClient:
     def list(
         self,
         *,
+        fqn: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
         offset: typing.Optional[int] = 0,
@@ -102,6 +103,8 @@ class ModelsClient:
         """
         Parameters
         ----------
+        fqn : typing.Optional[str]
+
         ml_repo_id : typing.Optional[str]
 
         name : typing.Optional[str]
@@ -136,7 +139,13 @@ class ModelsClient:
             yield page
         """
         return self._raw_client.list(
-            ml_repo_id=ml_repo_id, name=name, offset=offset, limit=limit, run_id=run_id, request_options=request_options
+            fqn=fqn,
+            ml_repo_id=ml_repo_id,
+            name=name,
+            offset=offset,
+            limit=limit,
+            run_id=run_id,
+            request_options=request_options,
         )
 
     def create_or_update(
@@ -268,6 +277,7 @@ class AsyncModelsClient:
     async def list(
         self,
         *,
+        fqn: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
         offset: typing.Optional[int] = 0,
@@ -278,6 +288,8 @@ class AsyncModelsClient:
         """
         Parameters
         ----------
+        fqn : typing.Optional[str]
+
         ml_repo_id : typing.Optional[str]
 
         name : typing.Optional[str]
@@ -321,7 +333,13 @@ class AsyncModelsClient:
         asyncio.run(main())
         """
         return await self._raw_client.list(
-            ml_repo_id=ml_repo_id, name=name, offset=offset, limit=limit, run_id=run_id, request_options=request_options
+            fqn=fqn,
+            ml_repo_id=ml_repo_id,
+            name=name,
+            offset=offset,
+            limit=limit,
+            run_id=run_id,
+            request_options=request_options,
         )
 
     async def create_or_update(

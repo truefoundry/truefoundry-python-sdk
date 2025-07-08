@@ -5,4 +5,4 @@ import typing
 from .internal_artifact_version import InternalArtifactVersion
 from .internal_model_version import InternalModelVersion
 
-InternalListArtifactVersionResponseDataItem = typing.Union[InternalArtifactVersion, InternalModelVersion]
+InternalListArtifactVersionsResponseDataItem = typing.Union[InternalArtifactVersion, InternalModelVersion]

@@ -91,12 +91,14 @@ class ModelVersionsClient:
     def list(
         self,
         *,
-        model_id: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
+        model_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = 100,
         include_internal_metadata: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[ModelVersion]:
@@ -105,17 +107,21 @@ class ModelVersionsClient:
 
         Parameters
         ----------
-        model_id : typing.Optional[str]
-
         fqn : typing.Optional[str]
 
-        offset : typing.Optional[int]
+        model_id : typing.Optional[str]
 
-        limit : typing.Optional[int]
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
         run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+
+        offset : typing.Optional[int]
+
+        limit : typing.Optional[int]
 
         include_internal_metadata : typing.Optional[bool]
 
@@ -143,12 +149,14 @@ class ModelVersionsClient:
             yield page
         """
         return self._raw_client.list(
-            model_id=model_id,
             fqn=fqn,
-            offset=offset,
-            limit=limit,
+            model_id=model_id,
+            ml_repo_id=ml_repo_id,
+            name=name,
             run_ids=run_ids,
             run_steps=run_steps,
+            offset=offset,
+            limit=limit,
             include_internal_metadata=include_internal_metadata,
             request_options=request_options,
         )
@@ -250,12 +258,14 @@ class AsyncModelVersionsClient:
     async def list(
         self,
         *,
-        model_id: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
+        model_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = 100,
         include_internal_metadata: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[ModelVersion]:
@@ -264,17 +274,21 @@ class AsyncModelVersionsClient:
 
         Parameters
         ----------
-        model_id : typing.Optional[str]
-
         fqn : typing.Optional[str]
 
-        offset : typing.Optional[int]
+        model_id : typing.Optional[str]
 
-        limit : typing.Optional[int]
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
         run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+
+        offset : typing.Optional[int]
+
+        limit : typing.Optional[int]
 
         include_internal_metadata : typing.Optional[bool]
 
@@ -311,12 +325,14 @@ class AsyncModelVersionsClient:
         asyncio.run(main())
         """
         return await self._raw_client.list(
-            model_id=model_id,
             fqn=fqn,
-            offset=offset,
-            limit=limit,
+            model_id=model_id,
+            ml_repo_id=ml_repo_id,
+            name=name,
             run_ids=run_ids,
             run_steps=run_steps,
+            offset=offset,
+            limit=limit,
             include_internal_metadata=include_internal_metadata,
             request_options=request_options,
         )

@@ -92,6 +92,7 @@ class ToolsClient:
     def list(
         self,
         *,
+        fqn: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
         offset: typing.Optional[int] = 0,
@@ -101,6 +102,8 @@ class ToolsClient:
         """
         Parameters
         ----------
+        fqn : typing.Optional[str]
+
         ml_repo_id : typing.Optional[str]
 
         name : typing.Optional[str]
@@ -133,7 +136,7 @@ class ToolsClient:
             yield page
         """
         return self._raw_client.list(
-            ml_repo_id=ml_repo_id, name=name, offset=offset, limit=limit, request_options=request_options
+            fqn=fqn, ml_repo_id=ml_repo_id, name=name, offset=offset, limit=limit, request_options=request_options
         )
 
     def create_or_update(
@@ -277,6 +280,7 @@ class AsyncToolsClient:
     async def list(
         self,
         *,
+        fqn: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
         offset: typing.Optional[int] = 0,
@@ -286,6 +290,8 @@ class AsyncToolsClient:
         """
         Parameters
         ----------
+        fqn : typing.Optional[str]
+
         ml_repo_id : typing.Optional[str]
 
         name : typing.Optional[str]
@@ -327,7 +333,7 @@ class AsyncToolsClient:
         asyncio.run(main())
         """
         return await self._raw_client.list(
-            ml_repo_id=ml_repo_id, name=name, offset=offset, limit=limit, request_options=request_options
+            fqn=fqn, ml_repo_id=ml_repo_id, name=name, offset=offset, limit=limit, request_options=request_options
         )
 
     async def create_or_update(
