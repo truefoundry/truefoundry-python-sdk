@@ -121,8 +121,10 @@ class AgentVersionsClient:
     def list(
         self,
         *,
-        agent_id: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
+        agent_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
@@ -132,9 +134,13 @@ class AgentVersionsClient:
 
         Parameters
         ----------
+        fqn : typing.Optional[str]
+
         agent_id : typing.Optional[str]
 
-        fqn : typing.Optional[str]
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
 
         offset : typing.Optional[int]
 
@@ -164,7 +170,13 @@ class AgentVersionsClient:
             yield page
         """
         return self._raw_client.list(
-            agent_id=agent_id, fqn=fqn, offset=offset, limit=limit, request_options=request_options
+            fqn=fqn,
+            agent_id=agent_id,
+            ml_repo_id=ml_repo_id,
+            name=name,
+            offset=offset,
+            limit=limit,
+            request_options=request_options,
         )
 
 
@@ -303,8 +315,10 @@ class AsyncAgentVersionsClient:
     async def list(
         self,
         *,
-        agent_id: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
+        agent_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
@@ -314,9 +328,13 @@ class AsyncAgentVersionsClient:
 
         Parameters
         ----------
+        fqn : typing.Optional[str]
+
         agent_id : typing.Optional[str]
 
-        fqn : typing.Optional[str]
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
 
         offset : typing.Optional[int]
 
@@ -355,5 +373,11 @@ class AsyncAgentVersionsClient:
         asyncio.run(main())
         """
         return await self._raw_client.list(
-            agent_id=agent_id, fqn=fqn, offset=offset, limit=limit, request_options=request_options
+            fqn=fqn,
+            agent_id=agent_id,
+            ml_repo_id=ml_repo_id,
+            name=name,
+            offset=offset,
+            limit=limit,
+            request_options=request_options,
         )

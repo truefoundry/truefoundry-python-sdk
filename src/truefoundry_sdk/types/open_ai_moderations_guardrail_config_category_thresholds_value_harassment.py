@@ -4,13 +4,12 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .internal_list_artifact_version_response_data_item import InternalListArtifactVersionResponseDataItem
-from .pagination import Pagination
 
 
-class InternalListArtifactVersionResponse(UniversalBaseModel):
-    data: typing.List[InternalListArtifactVersionResponseDataItem]
-    pagination: Pagination
+class OpenAiModerationsGuardrailConfigCategoryThresholdsValueHarassment(UniversalBaseModel):
+    harassment: float
+    sexual: float
+    violence: float
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -2,8 +2,11 @@
 
 import typing
 
+from .guardrail_config_group import GuardrailConfigGroup
 from .infra_provider_account import InfraProviderAccount
 from .mcp_server_provider_account import McpServerProviderAccount
 from .model_provider_account import ModelProviderAccount
 
-ProviderAccounts = typing.Union[InfraProviderAccount, ModelProviderAccount, McpServerProviderAccount]
+ProviderAccounts = typing.Union[
+    InfraProviderAccount, ModelProviderAccount, McpServerProviderAccount, GuardrailConfigGroup
+]

@@ -5331,23 +5331,14 @@ Creates or updates an MLRepo entity based on the provided manifest.
 <dd>
 
 ```python
-from truefoundry_sdk import Collaborator, MlRepoManifest, TrueFoundry
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
 client.ml_repos.create_or_update(
-    manifest=MlRepoManifest(
-        name="name",
-        storage_integration_fqn="storage_integration_fqn",
-        collaborators=[
-            Collaborator(
-                subject="subject",
-                role_id="role_id",
-            )
-        ],
-    ),
+    manifest={"key": "value"},
 )
 
 ```
@@ -5364,7 +5355,7 @@ client.ml_repos.create_or_update(
 <dl>
 <dd>
 
-**manifest:** `MlRepoManifest` — MLRepo manifest
+**manifest:** `typing.Dict[str, typing.Optional[typing.Any]]` — MLRepo manifest
     
 </dd>
 </dl>
@@ -5789,6 +5780,14 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
+**fqn:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **ml_repo_id:** `typing.Optional[str]` 
     
 </dd>
@@ -6062,6 +6061,14 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
+**fqn:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **ml_repo_id:** `typing.Optional[str]` 
     
 </dd>
@@ -6322,6 +6329,14 @@ for page in response.iter_pages():
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**fqn:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -6587,6 +6602,14 @@ for page in response.iter_pages():
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**fqn:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -6860,6 +6883,14 @@ for page in response.iter_pages():
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**fqn:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -7175,14 +7206,6 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**artifact_id:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **fqn:** `typing.Optional[str]` 
     
 </dd>
@@ -7191,7 +7214,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**offset:** `typing.Optional[int]` 
+**artifact_id:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -7199,7 +7222,15 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` 
+**ml_repo_id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -7216,6 +7247,22 @@ for page in response.iter_pages():
 <dd>
 
 **run_steps:** `typing.Optional[typing.Union[int, typing.Sequence[int]]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**offset:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -7795,14 +7842,6 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **fqn:** `typing.Optional[str]` 
     
 </dd>
@@ -7811,7 +7850,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**offset:** `typing.Optional[int]` 
+**model_id:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -7819,7 +7858,15 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` 
+**ml_repo_id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -7836,6 +7883,22 @@ for page in response.iter_pages():
 <dd>
 
 **run_steps:** `typing.Optional[typing.Union[int, typing.Sequence[int]]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**offset:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -8060,6 +8123,14 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
+**fqn:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **prompt_id:** `typing.Optional[str]` 
     
 </dd>
@@ -8068,7 +8139,15 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**fqn:** `typing.Optional[str]` 
+**ml_repo_id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -8301,6 +8380,14 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
+**fqn:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **tool_id:** `typing.Optional[str]` 
     
 </dd>
@@ -8309,7 +8396,15 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**fqn:** `typing.Optional[str]` 
+**ml_repo_id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -8599,6 +8694,14 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
+**fqn:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **agent_id:** `typing.Optional[str]` 
     
 </dd>
@@ -8607,7 +8710,15 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**fqn:** `typing.Optional[str]` 
+**ml_repo_id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -8870,6 +8981,14 @@ for page in response.iter_pages():
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**fqn:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -10752,14 +10871,6 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**artifact_id:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **fqn:** `typing.Optional[str]` 
     
 </dd>
@@ -10768,7 +10879,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**offset:** `typing.Optional[int]` 
+**artifact_id:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -10776,7 +10887,15 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` 
+**ml_repo_id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -10793,6 +10912,22 @@ for page in response.iter_pages():
 <dd>
 
 **run_steps:** `typing.Optional[typing.Union[int, typing.Sequence[int]]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**offset:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[int]` 
     
 </dd>
 </dl>

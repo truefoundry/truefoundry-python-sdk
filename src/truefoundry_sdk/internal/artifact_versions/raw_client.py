@@ -9,8 +9,8 @@ from ...core.pagination import AsyncPager, BaseHttpResponse, SyncPager
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
-from ...types.internal_list_artifact_version_response import InternalListArtifactVersionResponse
-from ...types.internal_list_artifact_version_response_data_item import InternalListArtifactVersionResponseDataItem
+from ...types.internal_list_artifact_versions_response import InternalListArtifactVersionsResponse
+from ...types.internal_list_artifact_versions_response_data_item import InternalListArtifactVersionsResponseDataItem
 
 
 class RawArtifactVersionsClient:
@@ -20,32 +20,38 @@ class RawArtifactVersionsClient:
     def list(
         self,
         *,
-        artifact_id: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
+        artifact_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = 100,
         include_internal_metadata: typing.Optional[bool] = False,
         include_model_versions: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[InternalListArtifactVersionResponseDataItem]:
+    ) -> SyncPager[InternalListArtifactVersionsResponseDataItem]:
         """
         List artifact version API
 
         Parameters
         ----------
-        artifact_id : typing.Optional[str]
-
         fqn : typing.Optional[str]
 
-        offset : typing.Optional[int]
+        artifact_id : typing.Optional[str]
 
-        limit : typing.Optional[int]
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
         run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+
+        offset : typing.Optional[int]
+
+        limit : typing.Optional[int]
 
         include_internal_metadata : typing.Optional[bool]
 
@@ -56,7 +62,7 @@ class RawArtifactVersionsClient:
 
         Returns
         -------
-        SyncPager[InternalListArtifactVersionResponseDataItem]
+        SyncPager[InternalListArtifactVersionsResponseDataItem]
             Successful Response
         """
         offset = offset if offset is not None else 0
@@ -65,12 +71,14 @@ class RawArtifactVersionsClient:
             "api/ml/v1/x/artifact-versions",
             method="GET",
             params={
-                "artifact_id": artifact_id,
                 "fqn": fqn,
-                "offset": offset,
-                "limit": limit,
+                "artifact_id": artifact_id,
+                "ml_repo_id": ml_repo_id,
+                "name": name,
                 "run_ids": run_ids,
                 "run_steps": run_steps,
+                "offset": offset,
+                "limit": limit,
                 "include_internal_metadata": include_internal_metadata,
                 "include_model_versions": include_model_versions,
             },
@@ -79,21 +87,23 @@ class RawArtifactVersionsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
-                    InternalListArtifactVersionResponse,
+                    InternalListArtifactVersionsResponse,
                     parse_obj_as(
-                        type_=InternalListArtifactVersionResponse,  # type: ignore
+                        type_=InternalListArtifactVersionsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
                 _items = _parsed_response.data
                 _has_next = True
                 _get_next = lambda: self.list(
-                    artifact_id=artifact_id,
                     fqn=fqn,
-                    offset=offset + len(_items),
-                    limit=limit,
+                    artifact_id=artifact_id,
+                    ml_repo_id=ml_repo_id,
+                    name=name,
                     run_ids=run_ids,
                     run_steps=run_steps,
+                    offset=offset + len(_items),
+                    limit=limit,
                     include_internal_metadata=include_internal_metadata,
                     include_model_versions=include_model_versions,
                     request_options=request_options,
@@ -125,32 +135,38 @@ class AsyncRawArtifactVersionsClient:
     async def list(
         self,
         *,
-        artifact_id: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
+        artifact_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = 100,
         include_internal_metadata: typing.Optional[bool] = False,
         include_model_versions: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[InternalListArtifactVersionResponseDataItem]:
+    ) -> AsyncPager[InternalListArtifactVersionsResponseDataItem]:
         """
         List artifact version API
 
         Parameters
         ----------
-        artifact_id : typing.Optional[str]
-
         fqn : typing.Optional[str]
 
-        offset : typing.Optional[int]
+        artifact_id : typing.Optional[str]
 
-        limit : typing.Optional[int]
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
         run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+
+        offset : typing.Optional[int]
+
+        limit : typing.Optional[int]
 
         include_internal_metadata : typing.Optional[bool]
 
@@ -161,7 +177,7 @@ class AsyncRawArtifactVersionsClient:
 
         Returns
         -------
-        AsyncPager[InternalListArtifactVersionResponseDataItem]
+        AsyncPager[InternalListArtifactVersionsResponseDataItem]
             Successful Response
         """
         offset = offset if offset is not None else 0
@@ -170,12 +186,14 @@ class AsyncRawArtifactVersionsClient:
             "api/ml/v1/x/artifact-versions",
             method="GET",
             params={
-                "artifact_id": artifact_id,
                 "fqn": fqn,
-                "offset": offset,
-                "limit": limit,
+                "artifact_id": artifact_id,
+                "ml_repo_id": ml_repo_id,
+                "name": name,
                 "run_ids": run_ids,
                 "run_steps": run_steps,
+                "offset": offset,
+                "limit": limit,
                 "include_internal_metadata": include_internal_metadata,
                 "include_model_versions": include_model_versions,
             },
@@ -184,9 +202,9 @@ class AsyncRawArtifactVersionsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
-                    InternalListArtifactVersionResponse,
+                    InternalListArtifactVersionsResponse,
                     parse_obj_as(
-                        type_=InternalListArtifactVersionResponse,  # type: ignore
+                        type_=InternalListArtifactVersionsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -195,12 +213,14 @@ class AsyncRawArtifactVersionsClient:
 
                 async def _get_next():
                     return await self.list(
-                        artifact_id=artifact_id,
                         fqn=fqn,
-                        offset=offset + len(_items),
-                        limit=limit,
+                        artifact_id=artifact_id,
+                        ml_repo_id=ml_repo_id,
+                        name=name,
                         run_ids=run_ids,
                         run_steps=run_steps,
+                        offset=offset + len(_items),
+                        limit=limit,
                         include_internal_metadata=include_internal_metadata,
                         include_model_versions=include_model_versions,
                         request_options=request_options,

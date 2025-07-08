@@ -17,7 +17,7 @@ from ..types.empty_response import EmptyResponse
 from ..types.file_info import FileInfo
 from ..types.get_artifact_version_response import GetArtifactVersionResponse
 from ..types.get_signed_ur_ls_response import GetSignedUrLsResponse
-from ..types.list_artifact_version_response import ListArtifactVersionResponse
+from ..types.list_artifact_versions_response import ListArtifactVersionsResponse
 from ..types.list_files_response import ListFilesResponse
 from ..types.multi_part_upload_response import MultiPartUploadResponse
 from ..types.operation import Operation
@@ -133,12 +133,14 @@ class RawArtifactVersionsClient:
     def list(
         self,
         *,
-        artifact_id: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
+        artifact_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = 100,
         include_internal_metadata: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[ArtifactVersion]:
@@ -147,17 +149,21 @@ class RawArtifactVersionsClient:
 
         Parameters
         ----------
-        artifact_id : typing.Optional[str]
-
         fqn : typing.Optional[str]
 
-        offset : typing.Optional[int]
+        artifact_id : typing.Optional[str]
 
-        limit : typing.Optional[int]
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
         run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+
+        offset : typing.Optional[int]
+
+        limit : typing.Optional[int]
 
         include_internal_metadata : typing.Optional[bool]
 
@@ -175,12 +181,14 @@ class RawArtifactVersionsClient:
             "api/ml/v1/artifact-versions",
             method="GET",
             params={
-                "artifact_id": artifact_id,
                 "fqn": fqn,
-                "offset": offset,
-                "limit": limit,
+                "artifact_id": artifact_id,
+                "ml_repo_id": ml_repo_id,
+                "name": name,
                 "run_ids": run_ids,
                 "run_steps": run_steps,
+                "offset": offset,
+                "limit": limit,
                 "include_internal_metadata": include_internal_metadata,
             },
             request_options=request_options,
@@ -188,21 +196,23 @@ class RawArtifactVersionsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
-                    ListArtifactVersionResponse,
+                    ListArtifactVersionsResponse,
                     parse_obj_as(
-                        type_=ListArtifactVersionResponse,  # type: ignore
+                        type_=ListArtifactVersionsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
                 _items = _parsed_response.data
                 _has_next = True
                 _get_next = lambda: self.list(
-                    artifact_id=artifact_id,
                     fqn=fqn,
-                    offset=offset + len(_items),
-                    limit=limit,
+                    artifact_id=artifact_id,
+                    ml_repo_id=ml_repo_id,
+                    name=name,
                     run_ids=run_ids,
                     run_steps=run_steps,
+                    offset=offset + len(_items),
+                    limit=limit,
                     include_internal_metadata=include_internal_metadata,
                     request_options=request_options,
                 )
@@ -650,12 +660,14 @@ class AsyncRawArtifactVersionsClient:
     async def list(
         self,
         *,
-        artifact_id: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
+        artifact_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = 100,
         include_internal_metadata: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[ArtifactVersion]:
@@ -664,17 +676,21 @@ class AsyncRawArtifactVersionsClient:
 
         Parameters
         ----------
-        artifact_id : typing.Optional[str]
-
         fqn : typing.Optional[str]
 
-        offset : typing.Optional[int]
+        artifact_id : typing.Optional[str]
 
-        limit : typing.Optional[int]
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
         run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+
+        offset : typing.Optional[int]
+
+        limit : typing.Optional[int]
 
         include_internal_metadata : typing.Optional[bool]
 
@@ -692,12 +708,14 @@ class AsyncRawArtifactVersionsClient:
             "api/ml/v1/artifact-versions",
             method="GET",
             params={
-                "artifact_id": artifact_id,
                 "fqn": fqn,
-                "offset": offset,
-                "limit": limit,
+                "artifact_id": artifact_id,
+                "ml_repo_id": ml_repo_id,
+                "name": name,
                 "run_ids": run_ids,
                 "run_steps": run_steps,
+                "offset": offset,
+                "limit": limit,
                 "include_internal_metadata": include_internal_metadata,
             },
             request_options=request_options,
@@ -705,9 +723,9 @@ class AsyncRawArtifactVersionsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
-                    ListArtifactVersionResponse,
+                    ListArtifactVersionsResponse,
                     parse_obj_as(
-                        type_=ListArtifactVersionResponse,  # type: ignore
+                        type_=ListArtifactVersionsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -716,12 +734,14 @@ class AsyncRawArtifactVersionsClient:
 
                 async def _get_next():
                     return await self.list(
-                        artifact_id=artifact_id,
                         fqn=fqn,
-                        offset=offset + len(_items),
-                        limit=limit,
+                        artifact_id=artifact_id,
+                        ml_repo_id=ml_repo_id,
+                        name=name,
                         run_ids=run_ids,
                         run_steps=run_steps,
+                        offset=offset + len(_items),
+                        limit=limit,
                         include_internal_metadata=include_internal_metadata,
                         request_options=request_options,
                     )

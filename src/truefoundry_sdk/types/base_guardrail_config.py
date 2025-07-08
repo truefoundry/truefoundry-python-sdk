@@ -4,13 +4,17 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .artifact_version import ArtifactVersion
-from .pagination import Pagination
 
 
-class ListArtifactVersionResponse(UniversalBaseModel):
-    data: typing.List[ArtifactVersion]
-    pagination: Pagination
+class BaseGuardrailConfig(UniversalBaseModel):
+    name: str = pydantic.Field()
+    """
+    +label=Name
+    +sort=50
+    +usage=The name of the Guardrail Config.
+    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
+    +uiProps={"disableEdit":true}
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

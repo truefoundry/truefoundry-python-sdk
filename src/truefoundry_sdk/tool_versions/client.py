@@ -91,8 +91,10 @@ class ToolVersionsClient:
     def list(
         self,
         *,
-        tool_id: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
+        tool_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
@@ -102,9 +104,13 @@ class ToolVersionsClient:
 
         Parameters
         ----------
+        fqn : typing.Optional[str]
+
         tool_id : typing.Optional[str]
 
-        fqn : typing.Optional[str]
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
 
         offset : typing.Optional[int]
 
@@ -134,7 +140,13 @@ class ToolVersionsClient:
             yield page
         """
         return self._raw_client.list(
-            tool_id=tool_id, fqn=fqn, offset=offset, limit=limit, request_options=request_options
+            fqn=fqn,
+            tool_id=tool_id,
+            ml_repo_id=ml_repo_id,
+            name=name,
+            offset=offset,
+            limit=limit,
+            request_options=request_options,
         )
 
 
@@ -234,8 +246,10 @@ class AsyncToolVersionsClient:
     async def list(
         self,
         *,
-        tool_id: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
+        tool_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
@@ -245,9 +259,13 @@ class AsyncToolVersionsClient:
 
         Parameters
         ----------
+        fqn : typing.Optional[str]
+
         tool_id : typing.Optional[str]
 
-        fqn : typing.Optional[str]
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
 
         offset : typing.Optional[int]
 
@@ -286,5 +304,11 @@ class AsyncToolVersionsClient:
         asyncio.run(main())
         """
         return await self._raw_client.list(
-            tool_id=tool_id, fqn=fqn, offset=offset, limit=limit, request_options=request_options
+            fqn=fqn,
+            tool_id=tool_id,
+            ml_repo_id=ml_repo_id,
+            name=name,
+            offset=offset,
+            limit=limit,
+            request_options=request_options,
         )

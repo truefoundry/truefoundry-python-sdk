@@ -4,22 +4,13 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .guardrail_config_action import GuardrailConfigAction
-from .guardrails_options import GuardrailsOptions
+from .artifact_version import ArtifactVersion
+from .pagination import Pagination
 
 
-class GuardrailConfig(UniversalBaseModel):
-    type: str = pydantic.Field()
-    """
-    +usage=Type of the guardrail
-    """
-
-    action: GuardrailConfigAction = pydantic.Field()
-    """
-    +usage=Action to perform with the guardrail
-    """
-
-    options: GuardrailsOptions
+class ListArtifactVersionsResponse(UniversalBaseModel):
+    data: typing.List[ArtifactVersion]
+    pagination: Pagination
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
