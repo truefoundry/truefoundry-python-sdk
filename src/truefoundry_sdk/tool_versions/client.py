@@ -9,7 +9,6 @@ from ..types.empty_response import EmptyResponse
 from ..types.get_tool_version_response import GetToolVersionResponse
 from ..types.tool_version import ToolVersion
 from .raw_client import AsyncRawToolVersionsClient, RawToolVersionsClient
-from .types.tool_versions_list_request_version import ToolVersionsListRequestVersion
 
 
 class ToolVersionsClient:
@@ -96,7 +95,7 @@ class ToolVersionsClient:
         tool_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[ToolVersionsListRequestVersion] = None,
+        version: typing.Optional[int] = None,
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
@@ -114,7 +113,7 @@ class ToolVersionsClient:
 
         name : typing.Optional[str]
 
-        version : typing.Optional[ToolVersionsListRequestVersion]
+        version : typing.Optional[int]
 
         offset : typing.Optional[int]
 
@@ -255,7 +254,7 @@ class AsyncToolVersionsClient:
         tool_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[ToolVersionsListRequestVersion] = None,
+        version: typing.Optional[int] = None,
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
@@ -273,7 +272,7 @@ class AsyncToolVersionsClient:
 
         name : typing.Optional[str]
 
-        version : typing.Optional[ToolVersionsListRequestVersion]
+        version : typing.Optional[int]
 
         offset : typing.Optional[int]
 

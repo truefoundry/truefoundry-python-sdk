@@ -2,6 +2,3 @@
 
 # isort: skip_file
 
-from .types import ToolVersionsListRequestVersion
-
-__all__ = ["ToolVersionsListRequestVersion"]

@@ -2,6 +2,6 @@
 
 # isort: skip_file
 
-from .types import ArtifactVersionsListRequestVersion, StageArtifactRequestManifest
+from .types import StageArtifactRequestManifest
 
-__all__ = ["ArtifactVersionsListRequestVersion", "StageArtifactRequestManifest"]
+__all__ = ["StageArtifactRequestManifest"]

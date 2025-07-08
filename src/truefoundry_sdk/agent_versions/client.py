@@ -10,7 +10,6 @@ from ..types.empty_response import EmptyResponse
 from ..types.get_agent_version_response import GetAgentVersionResponse
 from ..types.resolve_agent_app_response import ResolveAgentAppResponse
 from .raw_client import AsyncRawAgentVersionsClient, RawAgentVersionsClient
-from .types.agent_versions_list_request_version import AgentVersionsListRequestVersion
 
 
 class AgentVersionsClient:
@@ -126,7 +125,7 @@ class AgentVersionsClient:
         agent_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[AgentVersionsListRequestVersion] = None,
+        version: typing.Optional[int] = None,
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
@@ -144,7 +143,7 @@ class AgentVersionsClient:
 
         name : typing.Optional[str]
 
-        version : typing.Optional[AgentVersionsListRequestVersion]
+        version : typing.Optional[int]
 
         offset : typing.Optional[int]
 
@@ -324,7 +323,7 @@ class AsyncAgentVersionsClient:
         agent_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[AgentVersionsListRequestVersion] = None,
+        version: typing.Optional[int] = None,
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
@@ -342,7 +341,7 @@ class AsyncAgentVersionsClient:
 
         name : typing.Optional[str]
 
-        version : typing.Optional[AgentVersionsListRequestVersion]
+        version : typing.Optional[int]
 
         offset : typing.Optional[int]
 

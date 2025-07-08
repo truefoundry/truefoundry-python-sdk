@@ -7,7 +7,6 @@ from ...core.pagination import AsyncPager, SyncPager
 from ...core.request_options import RequestOptions
 from ...types.internal_list_artifact_versions_response_data_item import InternalListArtifactVersionsResponseDataItem
 from .raw_client import AsyncRawArtifactVersionsClient, RawArtifactVersionsClient
-from .types.artifact_versions_list_request_version import ArtifactVersionsListRequestVersion
 
 
 class ArtifactVersionsClient:
@@ -32,7 +31,7 @@ class ArtifactVersionsClient:
         artifact_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[ArtifactVersionsListRequestVersion] = None,
+        version: typing.Optional[int] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         offset: typing.Optional[int] = 0,
@@ -54,7 +53,7 @@ class ArtifactVersionsClient:
 
         name : typing.Optional[str]
 
-        version : typing.Optional[ArtifactVersionsListRequestVersion]
+        version : typing.Optional[int]
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
@@ -129,7 +128,7 @@ class AsyncArtifactVersionsClient:
         artifact_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[ArtifactVersionsListRequestVersion] = None,
+        version: typing.Optional[int] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         offset: typing.Optional[int] = 0,
@@ -151,7 +150,7 @@ class AsyncArtifactVersionsClient:
 
         name : typing.Optional[str]
 
-        version : typing.Optional[ArtifactVersionsListRequestVersion]
+        version : typing.Optional[int]
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 

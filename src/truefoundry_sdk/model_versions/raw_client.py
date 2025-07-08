@@ -15,7 +15,6 @@ from ..types.empty_response import EmptyResponse
 from ..types.get_model_version_response import GetModelVersionResponse
 from ..types.list_model_versions_response import ListModelVersionsResponse
 from ..types.model_version import ModelVersion
-from .types.model_versions_list_request_version import ModelVersionsListRequestVersion
 
 
 class RawModelVersionsClient:
@@ -127,7 +126,7 @@ class RawModelVersionsClient:
         model_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[ModelVersionsListRequestVersion] = None,
+        version: typing.Optional[int] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         offset: typing.Optional[int] = 0,
@@ -148,7 +147,7 @@ class RawModelVersionsClient:
 
         name : typing.Optional[str]
 
-        version : typing.Optional[ModelVersionsListRequestVersion]
+        version : typing.Optional[int]
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
@@ -340,7 +339,7 @@ class AsyncRawModelVersionsClient:
         model_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[ModelVersionsListRequestVersion] = None,
+        version: typing.Optional[int] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         offset: typing.Optional[int] = 0,
@@ -361,7 +360,7 @@ class AsyncRawModelVersionsClient:
 
         name : typing.Optional[str]
 
-        version : typing.Optional[ModelVersionsListRequestVersion]
+        version : typing.Optional[int]
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 

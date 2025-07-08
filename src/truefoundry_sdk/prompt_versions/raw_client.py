@@ -15,7 +15,6 @@ from ..types.empty_response import EmptyResponse
 from ..types.get_prompt_version_response import GetPromptVersionResponse
 from ..types.list_prompt_versions_response import ListPromptVersionsResponse
 from ..types.prompt_version import PromptVersion
-from .types.prompt_versions_list_request_version import PromptVersionsListRequestVersion
 
 
 class RawPromptVersionsClient:
@@ -127,7 +126,7 @@ class RawPromptVersionsClient:
         prompt_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[PromptVersionsListRequestVersion] = None,
+        version: typing.Optional[int] = None,
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
@@ -145,7 +144,7 @@ class RawPromptVersionsClient:
 
         name : typing.Optional[str]
 
-        version : typing.Optional[PromptVersionsListRequestVersion]
+        version : typing.Optional[int]
 
         offset : typing.Optional[int]
 
@@ -325,7 +324,7 @@ class AsyncRawPromptVersionsClient:
         prompt_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[PromptVersionsListRequestVersion] = None,
+        version: typing.Optional[int] = None,
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
@@ -343,7 +342,7 @@ class AsyncRawPromptVersionsClient:
 
         name : typing.Optional[str]
 
-        version : typing.Optional[PromptVersionsListRequestVersion]
+        version : typing.Optional[int]
 
         offset : typing.Optional[int]
 
