@@ -7247,6 +7247,14 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
+**version:** `typing.Optional[ArtifactVersionsListRequestVersion]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **run_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` 
     
 </dd>
@@ -7883,6 +7891,14 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
+**version:** `typing.Optional[ModelVersionsListRequestVersion]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **run_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` 
     
 </dd>
@@ -8164,6 +8180,14 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
+**version:** `typing.Optional[PromptVersionsListRequestVersion]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **offset:** `typing.Optional[int]` 
     
 </dd>
@@ -8414,6 +8438,14 @@ for page in response.iter_pages():
 <dd>
 
 **name:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version:** `typing.Optional[ToolVersionsListRequestVersion]` 
     
 </dd>
 </dl>
@@ -8728,6 +8760,14 @@ for page in response.iter_pages():
 <dd>
 
 **name:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version:** `typing.Optional[AgentVersionsListRequestVersion]` 
     
 </dd>
 </dl>
@@ -10905,6 +10945,14 @@ for page in response.iter_pages():
 <dd>
 
 **name:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version:** `typing.Optional[ArtifactVersionsListRequestVersion]` 
     
 </dd>
 </dl>

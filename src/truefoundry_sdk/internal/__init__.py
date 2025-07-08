@@ -14,6 +14,7 @@ from . import (
     vcs,
     workflows,
 )
+from .artifact_versions import ArtifactVersionsListRequestVersion
 from .docker_registries import DockerRegistriesCreateRepositoryResponse, DockerRegistriesGetCredentialsResponse
 from .metrics import MetricsGetChartsRequestFilterEntity
 from .ml import ApplyMlEntityRequestManifest, DeleteMlEntityRequestManifest
@@ -21,6 +22,7 @@ from .workflows import WorkflowsExecuteWorkflowResponse
 
 __all__ = [
     "ApplyMlEntityRequestManifest",
+    "ArtifactVersionsListRequestVersion",
     "DeleteMlEntityRequestManifest",
     "DockerRegistriesCreateRepositoryResponse",
     "DockerRegistriesGetCredentialsResponse",

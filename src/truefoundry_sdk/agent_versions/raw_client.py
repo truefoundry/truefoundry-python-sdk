@@ -16,6 +16,7 @@ from ..types.empty_response import EmptyResponse
 from ..types.get_agent_version_response import GetAgentVersionResponse
 from ..types.list_agent_versions_response import ListAgentVersionsResponse
 from ..types.resolve_agent_app_response import ResolveAgentAppResponse
+from .types.agent_versions_list_request_version import AgentVersionsListRequestVersion
 
 
 class RawAgentVersionsClient:
@@ -177,6 +178,7 @@ class RawAgentVersionsClient:
         agent_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
+        version: typing.Optional[AgentVersionsListRequestVersion] = None,
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
@@ -193,6 +195,8 @@ class RawAgentVersionsClient:
         ml_repo_id : typing.Optional[str]
 
         name : typing.Optional[str]
+
+        version : typing.Optional[AgentVersionsListRequestVersion]
 
         offset : typing.Optional[int]
 
@@ -216,6 +220,7 @@ class RawAgentVersionsClient:
                 "agent_id": agent_id,
                 "ml_repo_id": ml_repo_id,
                 "name": name,
+                "version": version,
                 "offset": offset,
                 "limit": limit,
             },
@@ -237,6 +242,7 @@ class RawAgentVersionsClient:
                     agent_id=agent_id,
                     ml_repo_id=ml_repo_id,
                     name=name,
+                    version=version,
                     offset=offset + len(_items),
                     limit=limit,
                     request_options=request_options,
@@ -420,6 +426,7 @@ class AsyncRawAgentVersionsClient:
         agent_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
+        version: typing.Optional[AgentVersionsListRequestVersion] = None,
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
@@ -436,6 +443,8 @@ class AsyncRawAgentVersionsClient:
         ml_repo_id : typing.Optional[str]
 
         name : typing.Optional[str]
+
+        version : typing.Optional[AgentVersionsListRequestVersion]
 
         offset : typing.Optional[int]
 
@@ -459,6 +468,7 @@ class AsyncRawAgentVersionsClient:
                 "agent_id": agent_id,
                 "ml_repo_id": ml_repo_id,
                 "name": name,
+                "version": version,
                 "offset": offset,
                 "limit": limit,
             },
@@ -482,6 +492,7 @@ class AsyncRawAgentVersionsClient:
                         agent_id=agent_id,
                         ml_repo_id=ml_repo_id,
                         name=name,
+                        version=version,
                         offset=offset + len(_items),
                         limit=limit,
                         request_options=request_options,

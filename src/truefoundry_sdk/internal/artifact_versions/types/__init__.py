@@ -3,6 +3,5 @@
 # isort: skip_file
 
 from .artifact_versions_list_request_version import ArtifactVersionsListRequestVersion
-from .stage_artifact_request_manifest import StageArtifactRequestManifest
 
-__all__ = ["ArtifactVersionsListRequestVersion", "StageArtifactRequestManifest"]
+__all__ = ["ArtifactVersionsListRequestVersion"]

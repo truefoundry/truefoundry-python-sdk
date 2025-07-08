@@ -9,6 +9,7 @@ from ..types.empty_response import EmptyResponse
 from ..types.get_model_version_response import GetModelVersionResponse
 from ..types.model_version import ModelVersion
 from .raw_client import AsyncRawModelVersionsClient, RawModelVersionsClient
+from .types.model_versions_list_request_version import ModelVersionsListRequestVersion
 
 
 class ModelVersionsClient:
@@ -95,6 +96,7 @@ class ModelVersionsClient:
         model_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
+        version: typing.Optional[ModelVersionsListRequestVersion] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         offset: typing.Optional[int] = 0,
@@ -114,6 +116,8 @@ class ModelVersionsClient:
         ml_repo_id : typing.Optional[str]
 
         name : typing.Optional[str]
+
+        version : typing.Optional[ModelVersionsListRequestVersion]
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
@@ -153,6 +157,7 @@ class ModelVersionsClient:
             model_id=model_id,
             ml_repo_id=ml_repo_id,
             name=name,
+            version=version,
             run_ids=run_ids,
             run_steps=run_steps,
             offset=offset,
@@ -262,6 +267,7 @@ class AsyncModelVersionsClient:
         model_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
+        version: typing.Optional[ModelVersionsListRequestVersion] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         offset: typing.Optional[int] = 0,
@@ -281,6 +287,8 @@ class AsyncModelVersionsClient:
         ml_repo_id : typing.Optional[str]
 
         name : typing.Optional[str]
+
+        version : typing.Optional[ModelVersionsListRequestVersion]
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
@@ -329,6 +337,7 @@ class AsyncModelVersionsClient:
             model_id=model_id,
             ml_repo_id=ml_repo_id,
             name=name,
+            version=version,
             run_ids=run_ids,
             run_steps=run_steps,
             offset=offset,

@@ -2,6 +2,6 @@
 
 # isort: skip_file
 
-from .types import AgentVersionsListRequestVersion
+from .agent_versions_list_request_version import AgentVersionsListRequestVersion
 
 __all__ = ["AgentVersionsListRequestVersion"]

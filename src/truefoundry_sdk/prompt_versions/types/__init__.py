@@ -2,6 +2,6 @@
 
 # isort: skip_file
 
-from .types import PromptVersionsListRequestVersion
+from .prompt_versions_list_request_version import PromptVersionsListRequestVersion
 
 __all__ = ["PromptVersionsListRequestVersion"]

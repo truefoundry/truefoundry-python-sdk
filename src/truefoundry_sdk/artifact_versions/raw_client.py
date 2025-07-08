@@ -22,6 +22,7 @@ from ..types.list_files_response import ListFilesResponse
 from ..types.multi_part_upload_response import MultiPartUploadResponse
 from ..types.operation import Operation
 from ..types.stage_artifact_response import StageArtifactResponse
+from .types.artifact_versions_list_request_version import ArtifactVersionsListRequestVersion
 from .types.stage_artifact_request_manifest import StageArtifactRequestManifest
 
 # this is used as the default value for optional parameters
@@ -137,6 +138,7 @@ class RawArtifactVersionsClient:
         artifact_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
+        version: typing.Optional[ArtifactVersionsListRequestVersion] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         offset: typing.Optional[int] = 0,
@@ -156,6 +158,8 @@ class RawArtifactVersionsClient:
         ml_repo_id : typing.Optional[str]
 
         name : typing.Optional[str]
+
+        version : typing.Optional[ArtifactVersionsListRequestVersion]
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
@@ -185,6 +189,7 @@ class RawArtifactVersionsClient:
                 "artifact_id": artifact_id,
                 "ml_repo_id": ml_repo_id,
                 "name": name,
+                "version": version,
                 "run_ids": run_ids,
                 "run_steps": run_steps,
                 "offset": offset,
@@ -209,6 +214,7 @@ class RawArtifactVersionsClient:
                     artifact_id=artifact_id,
                     ml_repo_id=ml_repo_id,
                     name=name,
+                    version=version,
                     run_ids=run_ids,
                     run_steps=run_steps,
                     offset=offset + len(_items),
@@ -664,6 +670,7 @@ class AsyncRawArtifactVersionsClient:
         artifact_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
+        version: typing.Optional[ArtifactVersionsListRequestVersion] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         offset: typing.Optional[int] = 0,
@@ -683,6 +690,8 @@ class AsyncRawArtifactVersionsClient:
         ml_repo_id : typing.Optional[str]
 
         name : typing.Optional[str]
+
+        version : typing.Optional[ArtifactVersionsListRequestVersion]
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
@@ -712,6 +721,7 @@ class AsyncRawArtifactVersionsClient:
                 "artifact_id": artifact_id,
                 "ml_repo_id": ml_repo_id,
                 "name": name,
+                "version": version,
                 "run_ids": run_ids,
                 "run_steps": run_steps,
                 "offset": offset,
@@ -738,6 +748,7 @@ class AsyncRawArtifactVersionsClient:
                         artifact_id=artifact_id,
                         ml_repo_id=ml_repo_id,
                         name=name,
+                        version=version,
                         run_ids=run_ids,
                         run_steps=run_steps,
                         offset=offset + len(_items),

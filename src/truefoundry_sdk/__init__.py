@@ -721,15 +721,19 @@ from . import (
     virtual_accounts,
     workspaces,
 )
+from .agent_versions import AgentVersionsListRequestVersion
 from .applications import (
     ApplicationsCancelDeploymentResponse,
     ApplicationsListRequestDeviceTypeFilter,
     ApplicationsListRequestLifecycleStage,
 )
-from .artifact_versions import StageArtifactRequestManifest
+from .artifact_versions import ArtifactVersionsListRequestVersion, StageArtifactRequestManifest
 from .client import AsyncTrueFoundry, TrueFoundry
 from .clusters import ClustersDeleteResponse
 from .jobs import TriggerJobRequestInput
+from .model_versions import ModelVersionsListRequestVersion
+from .prompt_versions import PromptVersionsListRequestVersion
+from .tool_versions import ToolVersionsListRequestVersion
 from .version import __version__
 from .workspaces import WorkspacesDeleteResponse
 
@@ -748,6 +752,7 @@ __all__ = [
     "AgentOpenApiToolManifestWithFqn",
     "AgentOpenApiToolManifestWithFqnOpenapiSpec",
     "AgentVersion",
+    "AgentVersionsListRequestVersion",
     "Ai21Integrations",
     "Ai21KeyAuth",
     "Ai21Model",
@@ -782,6 +787,7 @@ __all__ = [
     "ArtifactPath",
     "ArtifactType",
     "ArtifactVersion",
+    "ArtifactVersionsListRequestVersion",
     "ArtifactsCacheVolume",
     "ArtifactsDownload",
     "ArtifactsDownloadArtifactsItem",
@@ -1177,6 +1183,7 @@ __all__ = [
     "ModelType",
     "ModelVersion",
     "ModelVersionEnvironment",
+    "ModelVersionsListRequestVersion",
     "MultiPartUpload",
     "MultiPartUploadResponse",
     "MultiPartUploadStorageProvider",
@@ -1256,6 +1263,7 @@ __all__ = [
     "PrometheusAlertRule",
     "Prompt",
     "PromptVersion",
+    "PromptVersionsListRequestVersion",
     "ProviderAccounts",
     "PublicCostMetric",
     "PyTorchFramework",
@@ -1365,6 +1373,7 @@ __all__ = [
     "ToolMessageContent",
     "ToolSchema",
     "ToolVersion",
+    "ToolVersionsListRequestVersion",
     "TracingProject",
     "TracingProjectManifest",
     "TransformersFramework",

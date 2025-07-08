@@ -15,6 +15,7 @@ from ..types.empty_response import EmptyResponse
 from ..types.get_tool_version_response import GetToolVersionResponse
 from ..types.list_tool_versions_response import ListToolVersionsResponse
 from ..types.tool_version import ToolVersion
+from .types.tool_versions_list_request_version import ToolVersionsListRequestVersion
 
 
 class RawToolVersionsClient:
@@ -126,6 +127,7 @@ class RawToolVersionsClient:
         tool_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
+        version: typing.Optional[ToolVersionsListRequestVersion] = None,
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
@@ -142,6 +144,8 @@ class RawToolVersionsClient:
         ml_repo_id : typing.Optional[str]
 
         name : typing.Optional[str]
+
+        version : typing.Optional[ToolVersionsListRequestVersion]
 
         offset : typing.Optional[int]
 
@@ -165,6 +169,7 @@ class RawToolVersionsClient:
                 "tool_id": tool_id,
                 "ml_repo_id": ml_repo_id,
                 "name": name,
+                "version": version,
                 "offset": offset,
                 "limit": limit,
             },
@@ -186,6 +191,7 @@ class RawToolVersionsClient:
                     tool_id=tool_id,
                     ml_repo_id=ml_repo_id,
                     name=name,
+                    version=version,
                     offset=offset + len(_items),
                     limit=limit,
                     request_options=request_options,
@@ -319,6 +325,7 @@ class AsyncRawToolVersionsClient:
         tool_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
+        version: typing.Optional[ToolVersionsListRequestVersion] = None,
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
@@ -335,6 +342,8 @@ class AsyncRawToolVersionsClient:
         ml_repo_id : typing.Optional[str]
 
         name : typing.Optional[str]
+
+        version : typing.Optional[ToolVersionsListRequestVersion]
 
         offset : typing.Optional[int]
 
@@ -358,6 +367,7 @@ class AsyncRawToolVersionsClient:
                 "tool_id": tool_id,
                 "ml_repo_id": ml_repo_id,
                 "name": name,
+                "version": version,
                 "offset": offset,
                 "limit": limit,
             },
@@ -381,6 +391,7 @@ class AsyncRawToolVersionsClient:
                         tool_id=tool_id,
                         ml_repo_id=ml_repo_id,
                         name=name,
+                        version=version,
                         offset=offset + len(_items),
                         limit=limit,
                         request_options=request_options,
