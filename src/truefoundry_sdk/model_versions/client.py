@@ -95,7 +95,7 @@ class ModelVersionsClient:
         model_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[int] = None,
+        version: typing.Optional[str] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         offset: typing.Optional[int] = 0,
@@ -116,7 +116,7 @@ class ModelVersionsClient:
 
         name : typing.Optional[str]
 
-        version : typing.Optional[int]
+        version : typing.Optional[str]
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
@@ -266,7 +266,7 @@ class AsyncModelVersionsClient:
         model_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[int] = None,
+        version: typing.Optional[str] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         offset: typing.Optional[int] = 0,
@@ -287,7 +287,7 @@ class AsyncModelVersionsClient:
 
         name : typing.Optional[str]
 
-        version : typing.Optional[int]
+        version : typing.Optional[str]
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
