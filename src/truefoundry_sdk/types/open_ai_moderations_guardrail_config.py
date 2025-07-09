@@ -23,21 +23,21 @@ class OpenAiModerationsGuardrailConfig(BaseGuardrailConfig):
     """
     +value=integration/guardrail-config/openai-moderations
     +sort=50
+    +uiType=Hidden
     """
 
-    auth_data: typing.Optional[OpenaiApiKeyAuth] = None
     base_url: typing.Optional[str] = pydantic.Field(default=None)
     """
     +label=Base URL
-    +sort=300
-    +usage=Optional custom base URL for OpenAI API
-    +message=Base URL must not be empty
+    +sort=100
+    +usage=Optional custom base URL for OpenAI API. If not provided, the default base URL will be used.
     """
 
+    auth_data: typing.Optional[OpenaiApiKeyAuth] = None
     model: typing.Optional[str] = pydantic.Field(default="omni-moderation-latest")
     """
     +label=OpenAI Moderation Model
-    +sort=400
+    +sort=300
     +usage=The model to use for the OpenAI Moderation API.
     """
 
@@ -46,8 +46,9 @@ class OpenAiModerationsGuardrailConfig(BaseGuardrailConfig):
     )
     """
     +label=Category Thresholds
-    +sort=500
+    +sort=400
     +usage=The thresholds for the OpenAI Moderation API.
+    +uiType=Hidden
     """
 
     if IS_PYDANTIC_V2:

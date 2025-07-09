@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from .aws_bedrock_guardrail_config_auth_data import AwsBedrockGuardrailConfigAuthData
+from .aws_bedrock_guardrail_config_operation import AwsBedrockGuardrailConfigOperation
 from .aws_region import AwsRegion
 from .base_guardrail_config import BaseGuardrailConfig
 
@@ -20,13 +21,21 @@ class AwsBedrockGuardrailConfig(BaseGuardrailConfig):
     +value=integration/guardrail-config/aws-bedrock
     """
 
+    operation: typing.Optional[AwsBedrockGuardrailConfigOperation] = pydantic.Field(default=None)
+    """
+    +label=Operation
+    +usage=The operation type to use for the Guardrail. Validate guardrails are used to validate requests and mutate can validate as well as mutate requests.
+    Validate guardrails are run in parallel while mutate guardrails are run sequentially.
+    +uiType=Select
+    +sort=50
+    """
+
     auth_data: typing.Optional[AwsBedrockGuardrailConfigAuthData] = pydantic.Field(default=None)
     """
     +label=AWS Account Auth Data
     +usage=Authentication data for the AWS account
     """
 
-    region: typing.Optional[AwsRegion] = None
     guardrail_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     +label=Guardrail ID
@@ -39,11 +48,7 @@ class AwsBedrockGuardrailConfig(BaseGuardrailConfig):
     +usage=The version of the Guardrail to use.
     """
 
-    redact_pii: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    +label=Redact PII
-    +usage=Whether to redact PII from the response. If this is true, your request will be transformed to redact PII from the response else a validation error will be returned.
-    """
+    region: typing.Optional[AwsRegion] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

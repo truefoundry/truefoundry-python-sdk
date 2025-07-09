@@ -67,6 +67,7 @@ from .aws_access_key_based_auth import AwsAccessKeyBasedAuth
 from .aws_assumed_role_based_auth import AwsAssumedRoleBasedAuth
 from .aws_bedrock_guardrail_config import AwsBedrockGuardrailConfig
 from .aws_bedrock_guardrail_config_auth_data import AwsBedrockGuardrailConfigAuthData
+from .aws_bedrock_guardrail_config_operation import AwsBedrockGuardrailConfigOperation
 from .aws_bedrock_provider_account import AwsBedrockProviderAccount
 from .aws_bedrock_provider_account_auth_data import AwsBedrockProviderAccountAuthData
 from .aws_ecr import AwsEcr
@@ -166,6 +167,8 @@ from .custom_bearer_auth import CustomBearerAuth
 from .custom_blob_storage import CustomBlobStorage
 from .custom_guardrail_config import CustomGuardrailConfig
 from .custom_guardrail_config_auth_data import CustomGuardrailConfigAuthData
+from .custom_guardrail_config_operation import CustomGuardrailConfigOperation
+from .custom_guardrail_config_target import CustomGuardrailConfigTarget
 from .custom_helm_repo import CustomHelmRepo
 from .custom_integrations import CustomIntegrations
 from .custom_jwt_auth_integration import CustomJwtAuthIntegration
@@ -744,6 +747,7 @@ __all__ = [
     "AwsAssumedRoleBasedAuth",
     "AwsBedrockGuardrailConfig",
     "AwsBedrockGuardrailConfigAuthData",
+    "AwsBedrockGuardrailConfigOperation",
     "AwsBedrockProviderAccount",
     "AwsBedrockProviderAccountAuthData",
     "AwsEcr",
@@ -843,6 +847,8 @@ __all__ = [
     "CustomBlobStorage",
     "CustomGuardrailConfig",
     "CustomGuardrailConfigAuthData",
+    "CustomGuardrailConfigOperation",
+    "CustomGuardrailConfigTarget",
     "CustomHelmRepo",
     "CustomIntegrations",
     "CustomJwtAuthIntegration",
