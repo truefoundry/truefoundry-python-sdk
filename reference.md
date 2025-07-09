@@ -7247,7 +7247,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**version:** `typing.Optional[str]` 
+**version:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -7891,7 +7891,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**version:** `typing.Optional[str]` 
+**version:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -8180,7 +8180,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**version:** `typing.Optional[str]` 
+**version:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -8445,7 +8445,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**version:** `typing.Optional[str]` 
+**version:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -8767,7 +8767,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**version:** `typing.Optional[str]` 
+**version:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -10952,7 +10952,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**version:** `typing.Optional[str]` 
+**version:** `typing.Optional[int]` 
     
 </dd>
 </dl>

@@ -126,7 +126,7 @@ class RawToolVersionsClient:
         tool_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[str] = None,
+        version: typing.Optional[int] = None,
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
@@ -144,7 +144,7 @@ class RawToolVersionsClient:
 
         name : typing.Optional[str]
 
-        version : typing.Optional[str]
+        version : typing.Optional[int]
 
         offset : typing.Optional[int]
 
@@ -324,7 +324,7 @@ class AsyncRawToolVersionsClient:
         tool_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[str] = None,
+        version: typing.Optional[int] = None,
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
@@ -342,7 +342,7 @@ class AsyncRawToolVersionsClient:
 
         name : typing.Optional[str]
 
-        version : typing.Optional[str]
+        version : typing.Optional[int]
 
         offset : typing.Optional[int]
 
