@@ -126,6 +126,7 @@ class RawModelVersionsClient:
         model_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
+        version: typing.Optional[int] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         offset: typing.Optional[int] = 0,
@@ -145,6 +146,8 @@ class RawModelVersionsClient:
         ml_repo_id : typing.Optional[str]
 
         name : typing.Optional[str]
+
+        version : typing.Optional[int]
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
@@ -174,6 +177,7 @@ class RawModelVersionsClient:
                 "model_id": model_id,
                 "ml_repo_id": ml_repo_id,
                 "name": name,
+                "version": version,
                 "run_ids": run_ids,
                 "run_steps": run_steps,
                 "offset": offset,
@@ -198,6 +202,7 @@ class RawModelVersionsClient:
                     model_id=model_id,
                     ml_repo_id=ml_repo_id,
                     name=name,
+                    version=version,
                     run_ids=run_ids,
                     run_steps=run_steps,
                     offset=offset + len(_items),
@@ -334,6 +339,7 @@ class AsyncRawModelVersionsClient:
         model_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
+        version: typing.Optional[int] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         offset: typing.Optional[int] = 0,
@@ -353,6 +359,8 @@ class AsyncRawModelVersionsClient:
         ml_repo_id : typing.Optional[str]
 
         name : typing.Optional[str]
+
+        version : typing.Optional[int]
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
@@ -382,6 +390,7 @@ class AsyncRawModelVersionsClient:
                 "model_id": model_id,
                 "ml_repo_id": ml_repo_id,
                 "name": name,
+                "version": version,
                 "run_ids": run_ids,
                 "run_steps": run_steps,
                 "offset": offset,
@@ -408,6 +417,7 @@ class AsyncRawModelVersionsClient:
                         model_id=model_id,
                         ml_repo_id=ml_repo_id,
                         name=name,
+                        version=version,
                         run_ids=run_ids,
                         run_steps=run_steps,
                         offset=offset + len(_items),
