@@ -449,7 +449,8 @@ class TrueFoundrySDKDocGenerator:
         
         return f"{node.name}({', '.join(params)})"
     
-    def _extract_type_info_from_param(self, type_str: str, all_types: Optional[Dict[str, TypeInfo]]) -> Dict[str, Any]:
+    def _extract_type_info_from_param(self, type_str: str, all_types: Dict[str, TypeInfo]) -> Optional[Dict[str, Any]]:
+
         for type_name, type_info in all_types.items():
             if type_name == type_str:
                 link = self._get_link_to_type(type_info.name, type_info.is_enum)
@@ -470,14 +471,6 @@ class TrueFoundrySDKDocGenerator:
         
         return None
         
-    
-    def _find_manifest_type_for_module(self, module_name: str, all_types: Optional[Dict[str, TypeInfo]]) -> Optional[TypeInfo]:
-        for type_name, type_info in all_types.items():
-            if type_info.is_manifest:
-                if self._is_manifest_relevant_to_module(type_name, module_name):
-                    return type_info
-        
-        return None
     
     def _is_manifest_relevant_to_module(self, manifest_type_name: str, module_name: str) -> bool:
 
