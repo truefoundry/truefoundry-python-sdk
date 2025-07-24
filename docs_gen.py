@@ -928,7 +928,7 @@ for app in applications:
     print(f"Application: {app.name}")
 ```
 
-## Available Clients
+## Available Entities
 
 <div className="space-y-0">
   <a href="{{ clients_docs_path }}main_client" className="group flex items-center justify-between py-1 px-2 bg-white border-b border-gray-200 hover:bg-gray-50 transition-colors">
