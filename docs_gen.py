@@ -45,7 +45,7 @@ class FieldInfo:
     is_required: bool = True
     is_optional: bool = False
     field_type: str = "string"  # string, number, boolean, object, array
-    enum_values: List[str] = None
+    enum_values: Optional[List[str]] = None
     nested_type: Optional[str] = None
     type_info: Optional[Dict[str, Any]] = None
 
@@ -54,13 +54,13 @@ class TypeInfo:
     name: str
     docstring: str
     enhanced_description: str
-    fields: List[FieldInfo] = None
-    enum_values: List[Dict[str, str]] = None
+    fields: Optional[List[FieldInfo]] = None
+    enum_values: Optional[List[Dict[str, str]]] = None
     is_enum: bool = False
     is_manifest: bool = False
     module: str = ""
     client_module: str = ""
-    base_classes: List[str] = None
+    base_classes: Optional[List[str]] = None
     is_response_type: bool = False
     is_input_type: bool = False
     structure_example: str = ""
@@ -74,11 +74,10 @@ class ClientModuleInfo:
     methods: List[FunctionInfo]
 
 class TrueFoundrySDKDocGenerator:
-    def __init__(self, sdk_path: str, openai_key: str = None, output_path: str = "truefoundry_sdk_docs"):
+    def __init__(self, sdk_path: str, output_path: str = "truefoundry_sdk_docs"):
         self.sdk_path = Path(sdk_path)
-        self.openai_key = openai_key
         self.output_path = Path(output_path)
-        self.types = None
+        self.types: Dict[str, TypeInfo] = {}
         self.types_docs_path =f"docs/{output_path}/types"
         self.enums_docs_path = f"docs/{output_path}/enums"
         self.clients_docs_path = f"{output_path}/"
@@ -255,7 +254,7 @@ class TrueFoundrySDKDocGenerator:
         else:
             return f"/{self.types_docs_path}#{type_name.lower()}"
     
-    def _extract_function_info(self, node: ast.FunctionDef, module_name: str, is_method: bool = False, all_types: Dict[str, TypeInfo] = None) -> Optional[FunctionInfo]:
+    def _extract_function_info(self, node: ast.FunctionDef, module_name: str, is_method: bool = False, all_types: Optional[Dict[str, TypeInfo]] = None) -> Optional[FunctionInfo]:
         """Extract detailed information about a function using numpydoc"""
         try:
             # Skip __init__ methods and with_raw_response methods
@@ -450,7 +449,7 @@ class TrueFoundrySDKDocGenerator:
         
         return f"{node.name}({', '.join(params)})"
     
-    def _extract_type_info_from_param(self, type_str: str, all_types: Dict[str, TypeInfo]) -> Dict[str, Any]:
+    def _extract_type_info_from_param(self, type_str: str, all_types: Optional[Dict[str, TypeInfo]]) -> Dict[str, Any]:
         for type_name, type_info in all_types.items():
             if type_name == type_str:
                 link = self._get_link_to_type(type_info.name, type_info.is_enum)
@@ -472,7 +471,7 @@ class TrueFoundrySDKDocGenerator:
         return None
         
     
-    def _find_manifest_type_for_module(self, module_name: str, all_types: Dict[str, TypeInfo]) -> Optional[TypeInfo]:
+    def _find_manifest_type_for_module(self, module_name: str, all_types: Optional[Dict[str, TypeInfo]]) -> Optional[TypeInfo]:
         for type_name, type_info in all_types.items():
             if type_info.is_manifest:
                 if self._is_manifest_relevant_to_module(type_name, module_name):
@@ -1185,7 +1184,6 @@ description: "{{ module_info.description }}"
 if __name__ == "__main__":
     generator = TrueFoundrySDKDocGenerator(
         sdk_path="src/truefoundry_sdk",
-        openai_key=os.getenv("OPENAI_API_KEY"),
         output_path="truefoundry_sdk_docs"
     )
     
