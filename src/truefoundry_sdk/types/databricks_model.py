@@ -41,6 +41,7 @@ class DatabricksModel(UniversalBaseModel):
     +sort=3
     +usage=Specify the type of the Databricks model
     +uiType=Select
+    +uiProps={"disableAllOption": true}
     """
 
     cost: typing.Optional[ModelCostMetric] = None

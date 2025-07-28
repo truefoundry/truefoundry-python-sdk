@@ -7,6 +7,7 @@ from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.create_personal_access_token_response import CreatePersonalAccessTokenResponse
 from ..types.delete_personal_access_token_response import DeletePersonalAccessTokenResponse
+from ..types.get_or_create_personal_access_token_response import GetOrCreatePersonalAccessTokenResponse
 from ..types.virtual_account import VirtualAccount
 from .raw_client import AsyncRawPersonalAccessTokensClient, RawPersonalAccessTokensClient
 
@@ -76,7 +77,11 @@ class PersonalAccessTokensClient:
         return self._raw_client.list(limit=limit, offset=offset, request_options=request_options)
 
     def create(
-        self, *, name: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        name: str,
+        expiration_date: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> CreatePersonalAccessTokenResponse:
         """
         Create Personal Access Token
@@ -85,6 +90,9 @@ class PersonalAccessTokensClient:
         ----------
         name : str
             serviceaccount name
+
+        expiration_date : typing.Optional[str]
+            Expiration date in ISO format (e.g. 2025-08-01T12:00)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -106,7 +114,7 @@ class PersonalAccessTokensClient:
             name="name",
         )
         """
-        _response = self._raw_client.create(name=name, request_options=request_options)
+        _response = self._raw_client.create(name=name, expiration_date=expiration_date, request_options=request_options)
         return _response.data
 
     def delete(
@@ -141,6 +149,39 @@ class PersonalAccessTokensClient:
         )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
+        return _response.data
+
+    def get(
+        self, name: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetOrCreatePersonalAccessTokenResponse:
+        """
+        Get an existing Personal Access Token by name, if it doesn't exist, it will create a new one and return the PAT data along with a fresh token.
+
+        Parameters
+        ----------
+        name : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetOrCreatePersonalAccessTokenResponse
+            Personal Access Token found successfully and returned with token
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.personal_access_tokens.get(
+            name="name",
+        )
+        """
+        _response = self._raw_client.get(name, request_options=request_options)
         return _response.data
 
 
@@ -215,7 +256,11 @@ class AsyncPersonalAccessTokensClient:
         return await self._raw_client.list(limit=limit, offset=offset, request_options=request_options)
 
     async def create(
-        self, *, name: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        name: str,
+        expiration_date: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> CreatePersonalAccessTokenResponse:
         """
         Create Personal Access Token
@@ -224,6 +269,9 @@ class AsyncPersonalAccessTokensClient:
         ----------
         name : str
             serviceaccount name
+
+        expiration_date : typing.Optional[str]
+            Expiration date in ISO format (e.g. 2025-08-01T12:00)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -253,7 +301,9 @@ class AsyncPersonalAccessTokensClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create(name=name, request_options=request_options)
+        _response = await self._raw_client.create(
+            name=name, expiration_date=expiration_date, request_options=request_options
+        )
         return _response.data
 
     async def delete(
@@ -296,4 +346,45 @@ class AsyncPersonalAccessTokensClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
+        return _response.data
+
+    async def get(
+        self, name: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetOrCreatePersonalAccessTokenResponse:
+        """
+        Get an existing Personal Access Token by name, if it doesn't exist, it will create a new one and return the PAT data along with a fresh token.
+
+        Parameters
+        ----------
+        name : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetOrCreatePersonalAccessTokenResponse
+            Personal Access Token found successfully and returned with token
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.personal_access_tokens.get(
+                name="name",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get(name, request_options=request_options)
         return _response.data

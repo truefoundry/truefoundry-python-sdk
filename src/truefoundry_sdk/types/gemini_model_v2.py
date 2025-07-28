@@ -40,6 +40,7 @@ class GeminiModelV2(UniversalBaseModel):
     +label=Model Types
     +sort=3
     +usage=Specify the type of the Gemini model (e.g., chat, text, etc.)
+    +uiProps={"disableAllOption": true}
     """
 
     cost: typing.Optional[ModelCostMetric] = None

@@ -4,7 +4,6 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
-from ...types.literal_map import LiteralMap
 from .raw_client import AsyncRawWorkflowsClient, RawWorkflowsClient
 from .types.workflows_execute_workflow_response import WorkflowsExecuteWorkflowResponse
 
@@ -32,7 +31,7 @@ class WorkflowsClient:
         application_id: str,
         *,
         inputs: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        inputs_literal_map: typing.Optional[LiteralMap] = OMIT,
+        inputs_literal_map: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> WorkflowsExecuteWorkflowResponse:
         """
@@ -46,7 +45,7 @@ class WorkflowsClient:
         inputs : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Workflow inputs
 
-        inputs_literal_map : typing.Optional[LiteralMap]
+        inputs_literal_map : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Workflow inputs literal map
 
         request_options : typing.Optional[RequestOptions]
@@ -95,7 +94,7 @@ class AsyncWorkflowsClient:
         application_id: str,
         *,
         inputs: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        inputs_literal_map: typing.Optional[LiteralMap] = OMIT,
+        inputs_literal_map: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> WorkflowsExecuteWorkflowResponse:
         """
@@ -109,7 +108,7 @@ class AsyncWorkflowsClient:
         inputs : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Workflow inputs
 
-        inputs_literal_map : typing.Optional[LiteralMap]
+        inputs_literal_map : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Workflow inputs literal map
 
         request_options : typing.Optional[RequestOptions]

@@ -9,10 +9,8 @@ from ...core.http_response import AsyncHttpResponse, HttpResponse
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
-from ...core.serialization import convert_and_respect_annotation_metadata
 from ...errors.bad_request_error import BadRequestError
 from ...errors.not_found_error import NotFoundError
-from ...types.literal_map import LiteralMap
 from .types.workflows_execute_workflow_response import WorkflowsExecuteWorkflowResponse
 
 # this is used as the default value for optional parameters
@@ -28,7 +26,7 @@ class RawWorkflowsClient:
         application_id: str,
         *,
         inputs: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        inputs_literal_map: typing.Optional[LiteralMap] = OMIT,
+        inputs_literal_map: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[WorkflowsExecuteWorkflowResponse]:
         """
@@ -42,7 +40,7 @@ class RawWorkflowsClient:
         inputs : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Workflow inputs
 
-        inputs_literal_map : typing.Optional[LiteralMap]
+        inputs_literal_map : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Workflow inputs literal map
 
         request_options : typing.Optional[RequestOptions]
@@ -58,9 +56,7 @@ class RawWorkflowsClient:
             method="POST",
             json={
                 "inputs": inputs,
-                "inputsLiteralMap": convert_and_respect_annotation_metadata(
-                    object_=inputs_literal_map, annotation=LiteralMap, direction="write"
-                ),
+                "inputsLiteralMap": inputs_literal_map,
             },
             headers={
                 "content-type": "application/json",
@@ -115,7 +111,7 @@ class AsyncRawWorkflowsClient:
         application_id: str,
         *,
         inputs: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        inputs_literal_map: typing.Optional[LiteralMap] = OMIT,
+        inputs_literal_map: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[WorkflowsExecuteWorkflowResponse]:
         """
@@ -129,7 +125,7 @@ class AsyncRawWorkflowsClient:
         inputs : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Workflow inputs
 
-        inputs_literal_map : typing.Optional[LiteralMap]
+        inputs_literal_map : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Workflow inputs literal map
 
         request_options : typing.Optional[RequestOptions]
@@ -145,9 +141,7 @@ class AsyncRawWorkflowsClient:
             method="POST",
             json={
                 "inputs": inputs,
-                "inputsLiteralMap": convert_and_respect_annotation_metadata(
-                    object_=inputs_literal_map, annotation=LiteralMap, direction="write"
-                ),
+                "inputsLiteralMap": inputs_literal_map,
             },
             headers={
                 "content-type": "application/json",

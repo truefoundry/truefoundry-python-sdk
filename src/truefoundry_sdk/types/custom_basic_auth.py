@@ -27,6 +27,7 @@ class CustomBasicAuth(UniversalBaseModel):
     """
     +label=Password
     +usage=The password for the basic authentication.
+    +uiType=Password
     +sort=200
     """
 

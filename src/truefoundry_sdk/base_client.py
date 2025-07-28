@@ -4,9 +4,6 @@ import os
 import typing
 
 import httpx
-from .agent_versions.client import AgentVersionsClient, AsyncAgentVersionsClient
-from .agents.client import AgentsClient, AsyncAgentsClient
-from .alerts.client import AlertsClient, AsyncAlertsClient
 from .application_versions.client import ApplicationVersionsClient, AsyncApplicationVersionsClient
 from .applications.client import ApplicationsClient, AsyncApplicationsClient
 from .artifact_versions.client import ArtifactVersionsClient, AsyncArtifactVersionsClient
@@ -17,7 +14,6 @@ from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.request_options import RequestOptions
 from .data_directories.client import AsyncDataDirectoriesClient, DataDirectoriesClient
 from .environments.client import AsyncEnvironmentsClient, EnvironmentsClient
-from .events.client import AsyncEventsClient, EventsClient
 from .internal.client import AsyncInternalClient, InternalClient
 from .jobs.client import AsyncJobsClient, JobsClient
 from .logs.client import AsyncLogsClient, LogsClient
@@ -31,9 +27,6 @@ from .raw_base_client import AsyncRawBaseTrueFoundry, RawBaseTrueFoundry
 from .secret_groups.client import AsyncSecretGroupsClient, SecretGroupsClient
 from .secrets.client import AsyncSecretsClient, SecretsClient
 from .teams.client import AsyncTeamsClient, TeamsClient
-from .tool_versions.client import AsyncToolVersionsClient, ToolVersionsClient
-from .tools.client import AsyncToolsClient, ToolsClient
-from .tracing_projects.client import AsyncTracingProjectsClient, TracingProjectsClient
 from .types.true_foundry_apply_request_manifest import TrueFoundryApplyRequestManifest
 from .types.true_foundry_apply_response import TrueFoundryApplyResponse
 from .types.true_foundry_delete_request_manifest import TrueFoundryDeleteRequestManifest
@@ -117,22 +110,15 @@ class BaseTrueFoundry:
         self.application_versions = ApplicationVersionsClient(client_wrapper=self._client_wrapper)
         self.jobs = JobsClient(client_wrapper=self._client_wrapper)
         self.workspaces = WorkspacesClient(client_wrapper=self._client_wrapper)
-        self.events = EventsClient(client_wrapper=self._client_wrapper)
-        self.alerts = AlertsClient(client_wrapper=self._client_wrapper)
         self.logs = LogsClient(client_wrapper=self._client_wrapper)
         self.ml_repos = MlReposClient(client_wrapper=self._client_wrapper)
         self.artifacts = ArtifactsClient(client_wrapper=self._client_wrapper)
-        self.agents = AgentsClient(client_wrapper=self._client_wrapper)
         self.prompts = PromptsClient(client_wrapper=self._client_wrapper)
-        self.tools = ToolsClient(client_wrapper=self._client_wrapper)
         self.models = ModelsClient(client_wrapper=self._client_wrapper)
         self.artifact_versions = ArtifactVersionsClient(client_wrapper=self._client_wrapper)
         self.model_versions = ModelVersionsClient(client_wrapper=self._client_wrapper)
         self.prompt_versions = PromptVersionsClient(client_wrapper=self._client_wrapper)
-        self.tool_versions = ToolVersionsClient(client_wrapper=self._client_wrapper)
-        self.agent_versions = AgentVersionsClient(client_wrapper=self._client_wrapper)
         self.data_directories = DataDirectoriesClient(client_wrapper=self._client_wrapper)
-        self.tracing_projects = TracingProjectsClient(client_wrapper=self._client_wrapper)
 
     @property
     def with_raw_response(self) -> RawBaseTrueFoundry:
@@ -310,22 +296,15 @@ class AsyncBaseTrueFoundry:
         self.application_versions = AsyncApplicationVersionsClient(client_wrapper=self._client_wrapper)
         self.jobs = AsyncJobsClient(client_wrapper=self._client_wrapper)
         self.workspaces = AsyncWorkspacesClient(client_wrapper=self._client_wrapper)
-        self.events = AsyncEventsClient(client_wrapper=self._client_wrapper)
-        self.alerts = AsyncAlertsClient(client_wrapper=self._client_wrapper)
         self.logs = AsyncLogsClient(client_wrapper=self._client_wrapper)
         self.ml_repos = AsyncMlReposClient(client_wrapper=self._client_wrapper)
         self.artifacts = AsyncArtifactsClient(client_wrapper=self._client_wrapper)
-        self.agents = AsyncAgentsClient(client_wrapper=self._client_wrapper)
         self.prompts = AsyncPromptsClient(client_wrapper=self._client_wrapper)
-        self.tools = AsyncToolsClient(client_wrapper=self._client_wrapper)
         self.models = AsyncModelsClient(client_wrapper=self._client_wrapper)
         self.artifact_versions = AsyncArtifactVersionsClient(client_wrapper=self._client_wrapper)
         self.model_versions = AsyncModelVersionsClient(client_wrapper=self._client_wrapper)
         self.prompt_versions = AsyncPromptVersionsClient(client_wrapper=self._client_wrapper)
-        self.tool_versions = AsyncToolVersionsClient(client_wrapper=self._client_wrapper)
-        self.agent_versions = AsyncAgentVersionsClient(client_wrapper=self._client_wrapper)
         self.data_directories = AsyncDataDirectoriesClient(client_wrapper=self._client_wrapper)
-        self.tracing_projects = AsyncTracingProjectsClient(client_wrapper=self._client_wrapper)
 
     @property
     def with_raw_response(self) -> AsyncRawBaseTrueFoundry:

@@ -11,6 +11,7 @@ from ..types.job_run import JobRun
 from ..types.job_run_status import JobRunStatus
 from ..types.job_runs_sort_by import JobRunsSortBy
 from ..types.job_runs_sort_direction import JobRunsSortDirection
+from ..types.metadata import Metadata
 from ..types.terminate_job_response import TerminateJobResponse
 from ..types.trigger_job_run_response import TriggerJobRunResponse
 from .raw_client import AsyncRawJobsClient, RawJobsClient
@@ -198,6 +199,7 @@ class JobsClient:
         deployment_id: typing.Optional[str] = OMIT,
         application_id: typing.Optional[str] = OMIT,
         input: typing.Optional[TriggerJobRequestInput] = OMIT,
+        metadata: typing.Optional[Metadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TriggerJobRunResponse:
         """
@@ -213,6 +215,9 @@ class JobsClient:
 
         input : typing.Optional[TriggerJobRequestInput]
             Job trigger input
+
+        metadata : typing.Optional[Metadata]
+            Metadata for the job run including job_alias_name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -233,7 +238,11 @@ class JobsClient:
         client.jobs.trigger()
         """
         _response = self._raw_client.trigger(
-            deployment_id=deployment_id, application_id=application_id, input=input, request_options=request_options
+            deployment_id=deployment_id,
+            application_id=application_id,
+            input=input,
+            metadata=metadata,
+            request_options=request_options,
         )
         return _response.data
 
@@ -481,6 +490,7 @@ class AsyncJobsClient:
         deployment_id: typing.Optional[str] = OMIT,
         application_id: typing.Optional[str] = OMIT,
         input: typing.Optional[TriggerJobRequestInput] = OMIT,
+        metadata: typing.Optional[Metadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TriggerJobRunResponse:
         """
@@ -496,6 +506,9 @@ class AsyncJobsClient:
 
         input : typing.Optional[TriggerJobRequestInput]
             Job trigger input
+
+        metadata : typing.Optional[Metadata]
+            Metadata for the job run including job_alias_name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -524,7 +537,11 @@ class AsyncJobsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.trigger(
-            deployment_id=deployment_id, application_id=application_id, input=input, request_options=request_options
+            deployment_id=deployment_id,
+            application_id=application_id,
+            input=input,
+            metadata=metadata,
+            request_options=request_options,
         )
         return _response.data
 

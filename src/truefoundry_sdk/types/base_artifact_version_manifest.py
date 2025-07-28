@@ -2,12 +2,8 @@
 
 import typing
 
-from .agent_manifest import AgentManifest
-from .agent_open_api_tool_manifest import AgentOpenApiToolManifest
 from .artifact_manifest import ArtifactManifest
 from .chat_prompt_manifest import ChatPromptManifest
 from .model_manifest import ModelManifest
 
-BaseArtifactVersionManifest = typing.Union[
-    ModelManifest, ChatPromptManifest, AgentOpenApiToolManifest, ArtifactManifest, AgentManifest
-]
+BaseArtifactVersionManifest = typing.Union[ModelManifest, ChatPromptManifest, ArtifactManifest]
