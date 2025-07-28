@@ -5,8 +5,8 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .container_task_config_image import ContainerTaskConfigImage
-from .container_task_config_mounts_item import ContainerTaskConfigMountsItem
 from .resources import Resources
+from .volume_mount import VolumeMount
 
 
 class ContainerTaskConfig(UniversalBaseModel):
@@ -32,7 +32,7 @@ class ContainerTaskConfig(UniversalBaseModel):
     """
 
     resources: typing.Optional[Resources] = None
-    mounts: typing.Optional[typing.List[ContainerTaskConfigMountsItem]] = pydantic.Field(default=None)
+    mounts: typing.Optional[typing.List[VolumeMount]] = pydantic.Field(default=None)
     """
     +usage=Configure data to be mounted to Workflow pod(s) as a volume.
     +sort=400

@@ -10,23 +10,16 @@ from .add_on_component_source import AddOnComponentSource
 from .addon_component import AddonComponent
 from .addon_component_name import AddonComponentName
 from .addon_component_status import AddonComponentStatus
-from .agent import Agent
-from .agent_app import AgentApp
-from .agent_manifest import AgentManifest
-from .agent_manifest_with_fqn import AgentManifestWithFqn
-from .agent_open_api_tool_manifest import AgentOpenApiToolManifest
-from .agent_open_api_tool_manifest_openapi_spec import AgentOpenApiToolManifestOpenapiSpec
-from .agent_open_api_tool_manifest_with_fqn import AgentOpenApiToolManifestWithFqn
-from .agent_open_api_tool_manifest_with_fqn_openapi_spec import AgentOpenApiToolManifestWithFqnOpenapiSpec
-from .agent_version import AgentVersion
 from .ai21integrations import Ai21Integrations
 from .ai21key_auth import Ai21KeyAuth
 from .ai21model import Ai21Model
 from .ai21provider_account import Ai21ProviderAccount
+from .ai_features_settings import AiFeaturesSettings
 from .alert import Alert
 from .alert_config import AlertConfig
+from .alert_config_resource import AlertConfigResource
+from .alert_config_resource_type import AlertConfigResourceType
 from .alert_severity import AlertSeverity
-from .alert_status import AlertStatus
 from .amqp_input_config import AmqpInputConfig
 from .amqp_metric_config import AmqpMetricConfig
 from .amqp_output_config import AmqpOutputConfig
@@ -67,6 +60,7 @@ from .aws_access_key_based_auth import AwsAccessKeyBasedAuth
 from .aws_assumed_role_based_auth import AwsAssumedRoleBasedAuth
 from .aws_bedrock_guardrail_config import AwsBedrockGuardrailConfig
 from .aws_bedrock_guardrail_config_auth_data import AwsBedrockGuardrailConfigAuthData
+from .aws_bedrock_guardrail_config_operation import AwsBedrockGuardrailConfigOperation
 from .aws_bedrock_provider_account import AwsBedrockProviderAccount
 from .aws_bedrock_provider_account_auth_data import AwsBedrockProviderAccountAuthData
 from .aws_ecr import AwsEcr
@@ -93,6 +87,8 @@ from .azure_basic_auth import AzureBasicAuth
 from .azure_blob_storage import AzureBlobStorage
 from .azure_connection_string_auth import AzureConnectionStringAuth
 from .azure_container_registry import AzureContainerRegistry
+from .azure_content_safety_category import AzureContentSafetyCategory
+from .azure_content_safety_guardrail_config import AzureContentSafetyGuardrailConfig
 from .azure_foundry_model import AzureFoundryModel
 from .azure_foundry_model_v2 import AzureFoundryModelV2
 from .azure_foundry_provider_account import AzureFoundryProviderAccount
@@ -102,13 +98,15 @@ from .azure_o_auth import AzureOAuth
 from .azure_open_ai_model import AzureOpenAiModel
 from .azure_open_ai_model_v2 import AzureOpenAiModelV2
 from .azure_open_ai_provider_account import AzureOpenAiProviderAccount
+from .azure_pii_category import AzurePiiCategory
+from .azure_pii_guardrail_config import AzurePiiGuardrailConfig
+from .azure_pii_guardrail_config_domain import AzurePiiGuardrailConfigDomain
 from .azure_provider_account import AzureProviderAccount
 from .azure_repos_integration import AzureReposIntegration
 from .azure_vault import AzureVault
 from .base_artifact_version import BaseArtifactVersion
 from .base_artifact_version_manifest import BaseArtifactVersionManifest
 from .base_autoscaling import BaseAutoscaling
-from .base_guardrail_config import BaseGuardrailConfig
 from .base_o_auth2login import BaseOAuth2Login
 from .base_o_auth2login_jwt_source import BaseOAuth2LoginJwtSource
 from .base_service import BaseService
@@ -138,6 +136,7 @@ from .canary import Canary
 from .canary_step import CanaryStep
 from .change_password_response import ChangePasswordResponse
 from .chat_prompt_manifest import ChatPromptManifest
+from .chat_prompt_manifest_mcp_servers_item import ChatPromptManifestMcpServersItem
 from .chat_prompt_manifest_messages_item import ChatPromptManifestMessagesItem
 from .cluster import Cluster
 from .cluster_gateway import ClusterGateway
@@ -153,9 +152,9 @@ from .cohere_key_auth import CohereKeyAuth
 from .cohere_model import CohereModel
 from .cohere_provider_account import CohereProviderAccount
 from .collaborator import Collaborator
+from .common_tools_settings import CommonToolsSettings
 from .container_task_config import ContainerTaskConfig
 from .container_task_config_image import ContainerTaskConfigImage
-from .container_task_config_mounts_item import ContainerTaskConfigMountsItem
 from .core_nats_output_config import CoreNatsOutputConfig
 from .cpu_utilization_metric import CpuUtilizationMetric
 from .create_multi_part_upload_request import CreateMultiPartUploadRequest
@@ -166,6 +165,8 @@ from .custom_bearer_auth import CustomBearerAuth
 from .custom_blob_storage import CustomBlobStorage
 from .custom_guardrail_config import CustomGuardrailConfig
 from .custom_guardrail_config_auth_data import CustomGuardrailConfigAuthData
+from .custom_guardrail_config_operation import CustomGuardrailConfigOperation
+from .custom_guardrail_config_target import CustomGuardrailConfigTarget
 from .custom_helm_repo import CustomHelmRepo
 from .custom_integrations import CustomIntegrations
 from .custom_jwt_auth_integration import CustomJwtAuthIntegration
@@ -214,14 +215,13 @@ from .email import Email
 from .email_notification_channel import EmailNotificationChannel
 from .empty_response import EmptyResponse
 from .endpoint import Endpoint
+from .enkrypt_ai_guardrail_config import EnkryptAiGuardrailConfig
+from .enkrypt_ai_guardrail_config_operation import EnkryptAiGuardrailConfigOperation
+from .enkrypt_ai_key_auth import EnkryptAiKeyAuth
 from .environment import Environment
 from .environment_color import EnvironmentColor
 from .environment_manifest import EnvironmentManifest
 from .environment_optimize_for import EnvironmentOptimizeFor
-from .event import Event
-from .event_chart import EventChart
-from .event_chart_category import EventChartCategory
-from .event_involved_object import EventInvolvedObject
 from .external_blob_storage_source import ExternalBlobStorageSource
 from .failure_tolerance_config import FailureToleranceConfig
 from .fallback_config import FallbackConfig
@@ -257,9 +257,6 @@ from .gcp_provider_account_auth_data import GcpProviderAccountAuthData
 from .gcp_region import GcpRegion
 from .gcp_tpu import GcpTpu
 from .gemini_model_v2 import GeminiModelV2
-from .get_agent_response import GetAgentResponse
-from .get_agent_version_response import GetAgentVersionResponse
-from .get_alerts_response import GetAlertsResponse
 from .get_application_deployment_response import GetApplicationDeploymentResponse
 from .get_application_response import GetApplicationResponse
 from .get_artifact_response import GetArtifactResponse
@@ -270,12 +267,12 @@ from .get_charts_response import GetChartsResponse
 from .get_cluster_response import GetClusterResponse
 from .get_data_directory_response import GetDataDirectoryResponse
 from .get_environment_response import GetEnvironmentResponse
-from .get_events_response import GetEventsResponse
 from .get_job_run_response import GetJobRunResponse
 from .get_logs_response import GetLogsResponse
 from .get_ml_repo_response import GetMlRepoResponse
 from .get_model_response import GetModelResponse
 from .get_model_version_response import GetModelVersionResponse
+from .get_or_create_personal_access_token_response import GetOrCreatePersonalAccessTokenResponse
 from .get_prompt_response import GetPromptResponse
 from .get_prompt_version_response import GetPromptVersionResponse
 from .get_secret_group_response import GetSecretGroupResponse
@@ -284,9 +281,6 @@ from .get_signed_ur_ls_request import GetSignedUrLsRequest
 from .get_signed_ur_ls_response import GetSignedUrLsResponse
 from .get_suggested_deployment_endpoint_response import GetSuggestedDeploymentEndpointResponse
 from .get_team_response import GetTeamResponse
-from .get_tool_response import GetToolResponse
-from .get_tool_version_response import GetToolVersionResponse
-from .get_tracing_project_response import GetTracingProjectResponse
 from .get_user_response import GetUserResponse
 from .get_virtual_account_response import GetVirtualAccountResponse
 from .get_workspace_response import GetWorkspaceResponse
@@ -309,6 +303,7 @@ from .groq_model import GroqModel
 from .groq_provider_account import GroqProviderAccount
 from .guardrail_config_group import GuardrailConfigGroup
 from .guardrail_config_integrations import GuardrailConfigIntegrations
+from .guardrails import Guardrails
 from .guardrails_config import GuardrailsConfig
 from .guardrails_rule import GuardrailsRule
 from .guardrails_when import GuardrailsWhen
@@ -369,8 +364,6 @@ from .latency_based_load_balance_target import LatencyBasedLoadBalanceTarget
 from .latency_based_load_balancing_rule import LatencyBasedLoadBalancingRule
 from .library_name import LibraryName
 from .light_gbm_framework import LightGbmFramework
-from .list_agent_versions_response import ListAgentVersionsResponse
-from .list_agents_response import ListAgentsResponse
 from .list_application_deployments_response import ListApplicationDeploymentsResponse
 from .list_applications_response import ListApplicationsResponse
 from .list_artifact_versions_response import ListArtifactVersionsResponse
@@ -391,13 +384,9 @@ from .list_prompts_response import ListPromptsResponse
 from .list_secret_group_response import ListSecretGroupResponse
 from .list_secrets_response import ListSecretsResponse
 from .list_teams_response import ListTeamsResponse
-from .list_tool_versions_response import ListToolVersionsResponse
-from .list_tools_response import ListToolsResponse
-from .list_tracing_projects_response import ListTracingProjectsResponse
 from .list_users_response import ListUsersResponse
 from .list_virtual_account_response import ListVirtualAccountResponse
 from .list_workspaces_response import ListWorkspacesResponse
-from .literal_map import LiteralMap
 from .load_balance_target import LoadBalanceTarget
 from .load_balancing_config import LoadBalancingConfig
 from .load_balancing_rule import LoadBalancingRule
@@ -415,8 +404,12 @@ from .mcp_server_header_auth import McpServerHeaderAuth
 from .mcp_server_integration import McpServerIntegration
 from .mcp_server_integrations import McpServerIntegrations
 from .mcp_server_o_auth2 import McpServerOAuth2
+from .mcp_server_passthrough import McpServerPassthrough
 from .mcp_server_provider_account import McpServerProviderAccount
-from .method import Method
+from .mcp_server_with_fqn import McpServerWithFqn
+from .mcp_server_with_url import McpServerWithUrl
+from .mcp_tool import McpTool
+from .metadata import Metadata
 from .metric import Metric
 from .mime_type import MimeType
 from .mirror_action import MirrorAction
@@ -513,13 +506,14 @@ from .port import Port
 from .port_app_protocol import PortAppProtocol
 from .port_auth import PortAuth
 from .port_protocol import PortProtocol
-from .pre_register_users_response import PreRegisterUsersResponse
 from .presigned_url_object import PresignedUrlObject
 from .prometheus_alert_rule import PrometheusAlertRule
 from .prompt import Prompt
 from .prompt_version import PromptVersion
 from .provider_accounts import ProviderAccounts
 from .public_cost_metric import PublicCostMetric
+from .py_spark_task_config import PySparkTaskConfig
+from .py_spark_task_config_mounts_item import PySparkTaskConfigMountsItem
 from .py_torch_framework import PyTorchFramework
 from .python_build import PythonBuild
 from .python_build_command import PythonBuildCommand
@@ -537,8 +531,8 @@ from .rate_limit_unit import RateLimitUnit
 from .rate_limit_when import RateLimitWhen
 from .recommendation import Recommendation
 from .refusal_content_part import RefusalContentPart
+from .register_users_response import RegisterUsersResponse
 from .remote_source import RemoteSource
-from .resolve_agent_app_response import ResolveAgentAppResponse
 from .rolling import Rolling
 from .rps_metric import RpsMetric
 from .schedule import Schedule
@@ -590,6 +584,7 @@ from .spark_job_java_entrypoint import SparkJobJavaEntrypoint
 from .spark_job_python_entrypoint import SparkJobPythonEntrypoint
 from .spark_job_python_notebook_entrypoint import SparkJobPythonNotebookEntrypoint
 from .spark_job_scala_entrypoint import SparkJobScalaEntrypoint
+from .spark_job_scala_notebook_entrypoint import SparkJobScalaNotebookEntrypoint
 from .spark_job_trigger_input import SparkJobTriggerInput
 from .sqs_input_config import SqsInputConfig
 from .sqs_output_config import SqsOutputConfig
@@ -605,6 +600,7 @@ from .subject_type import SubjectType
 from .system_message import SystemMessage
 from .system_message_content import SystemMessageContent
 from .task_docker_file_build import TaskDockerFileBuild
+from .task_py_spark_build import TaskPySparkBuild
 from .task_python_build import TaskPythonBuild
 from .team import Team
 from .team_manifest import TeamManifest
@@ -617,12 +613,10 @@ from .together_ai_key_auth import TogetherAiKeyAuth
 from .together_ai_model import TogetherAiModel
 from .together_ai_provider_account import TogetherAiProviderAccount
 from .token_pagination import TokenPagination
-from .tool import Tool
 from .tool_call import ToolCall
 from .tool_message import ToolMessage
 from .tool_message_content import ToolMessageContent
 from .tool_schema import ToolSchema
-from .tool_version import ToolVersion
 from .tracing_project import TracingProject
 from .tracing_project_manifest import TracingProjectManifest
 from .transformers_framework import TransformersFramework
@@ -687,23 +681,16 @@ __all__ = [
     "AddonComponent",
     "AddonComponentName",
     "AddonComponentStatus",
-    "Agent",
-    "AgentApp",
-    "AgentManifest",
-    "AgentManifestWithFqn",
-    "AgentOpenApiToolManifest",
-    "AgentOpenApiToolManifestOpenapiSpec",
-    "AgentOpenApiToolManifestWithFqn",
-    "AgentOpenApiToolManifestWithFqnOpenapiSpec",
-    "AgentVersion",
     "Ai21Integrations",
     "Ai21KeyAuth",
     "Ai21Model",
     "Ai21ProviderAccount",
+    "AiFeaturesSettings",
     "Alert",
     "AlertConfig",
+    "AlertConfigResource",
+    "AlertConfigResourceType",
     "AlertSeverity",
-    "AlertStatus",
     "AmqpInputConfig",
     "AmqpMetricConfig",
     "AmqpOutputConfig",
@@ -744,6 +731,7 @@ __all__ = [
     "AwsAssumedRoleBasedAuth",
     "AwsBedrockGuardrailConfig",
     "AwsBedrockGuardrailConfigAuthData",
+    "AwsBedrockGuardrailConfigOperation",
     "AwsBedrockProviderAccount",
     "AwsBedrockProviderAccountAuthData",
     "AwsEcr",
@@ -770,6 +758,8 @@ __all__ = [
     "AzureBlobStorage",
     "AzureConnectionStringAuth",
     "AzureContainerRegistry",
+    "AzureContentSafetyCategory",
+    "AzureContentSafetyGuardrailConfig",
     "AzureFoundryModel",
     "AzureFoundryModelV2",
     "AzureFoundryProviderAccount",
@@ -779,13 +769,15 @@ __all__ = [
     "AzureOpenAiModel",
     "AzureOpenAiModelV2",
     "AzureOpenAiProviderAccount",
+    "AzurePiiCategory",
+    "AzurePiiGuardrailConfig",
+    "AzurePiiGuardrailConfigDomain",
     "AzureProviderAccount",
     "AzureReposIntegration",
     "AzureVault",
     "BaseArtifactVersion",
     "BaseArtifactVersionManifest",
     "BaseAutoscaling",
-    "BaseGuardrailConfig",
     "BaseOAuth2Login",
     "BaseOAuth2LoginJwtSource",
     "BaseService",
@@ -815,6 +807,7 @@ __all__ = [
     "CanaryStep",
     "ChangePasswordResponse",
     "ChatPromptManifest",
+    "ChatPromptManifestMcpServersItem",
     "ChatPromptManifestMessagesItem",
     "Cluster",
     "ClusterGateway",
@@ -830,9 +823,9 @@ __all__ = [
     "CohereModel",
     "CohereProviderAccount",
     "Collaborator",
+    "CommonToolsSettings",
     "ContainerTaskConfig",
     "ContainerTaskConfigImage",
-    "ContainerTaskConfigMountsItem",
     "CoreNatsOutputConfig",
     "CpuUtilizationMetric",
     "CreateMultiPartUploadRequest",
@@ -843,6 +836,8 @@ __all__ = [
     "CustomBlobStorage",
     "CustomGuardrailConfig",
     "CustomGuardrailConfigAuthData",
+    "CustomGuardrailConfigOperation",
+    "CustomGuardrailConfigTarget",
     "CustomHelmRepo",
     "CustomIntegrations",
     "CustomJwtAuthIntegration",
@@ -891,14 +886,13 @@ __all__ = [
     "EmailNotificationChannel",
     "EmptyResponse",
     "Endpoint",
+    "EnkryptAiGuardrailConfig",
+    "EnkryptAiGuardrailConfigOperation",
+    "EnkryptAiKeyAuth",
     "Environment",
     "EnvironmentColor",
     "EnvironmentManifest",
     "EnvironmentOptimizeFor",
-    "Event",
-    "EventChart",
-    "EventChartCategory",
-    "EventInvolvedObject",
     "ExternalBlobStorageSource",
     "FailureToleranceConfig",
     "FallbackConfig",
@@ -934,9 +928,6 @@ __all__ = [
     "GcpRegion",
     "GcpTpu",
     "GeminiModelV2",
-    "GetAgentResponse",
-    "GetAgentVersionResponse",
-    "GetAlertsResponse",
     "GetApplicationDeploymentResponse",
     "GetApplicationResponse",
     "GetArtifactResponse",
@@ -947,12 +938,12 @@ __all__ = [
     "GetClusterResponse",
     "GetDataDirectoryResponse",
     "GetEnvironmentResponse",
-    "GetEventsResponse",
     "GetJobRunResponse",
     "GetLogsResponse",
     "GetMlRepoResponse",
     "GetModelResponse",
     "GetModelVersionResponse",
+    "GetOrCreatePersonalAccessTokenResponse",
     "GetPromptResponse",
     "GetPromptVersionResponse",
     "GetSecretGroupResponse",
@@ -961,9 +952,6 @@ __all__ = [
     "GetSignedUrLsResponse",
     "GetSuggestedDeploymentEndpointResponse",
     "GetTeamResponse",
-    "GetToolResponse",
-    "GetToolVersionResponse",
-    "GetTracingProjectResponse",
     "GetUserResponse",
     "GetVirtualAccountResponse",
     "GetWorkspaceResponse",
@@ -986,6 +974,7 @@ __all__ = [
     "GroqProviderAccount",
     "GuardrailConfigGroup",
     "GuardrailConfigIntegrations",
+    "Guardrails",
     "GuardrailsConfig",
     "GuardrailsRule",
     "GuardrailsWhen",
@@ -1046,8 +1035,6 @@ __all__ = [
     "LatencyBasedLoadBalancingRule",
     "LibraryName",
     "LightGbmFramework",
-    "ListAgentVersionsResponse",
-    "ListAgentsResponse",
     "ListApplicationDeploymentsResponse",
     "ListApplicationsResponse",
     "ListArtifactVersionsResponse",
@@ -1068,13 +1055,9 @@ __all__ = [
     "ListSecretGroupResponse",
     "ListSecretsResponse",
     "ListTeamsResponse",
-    "ListToolVersionsResponse",
-    "ListToolsResponse",
-    "ListTracingProjectsResponse",
     "ListUsersResponse",
     "ListVirtualAccountResponse",
     "ListWorkspacesResponse",
-    "LiteralMap",
     "LoadBalanceTarget",
     "LoadBalancingConfig",
     "LoadBalancingRule",
@@ -1092,8 +1075,12 @@ __all__ = [
     "McpServerIntegration",
     "McpServerIntegrations",
     "McpServerOAuth2",
+    "McpServerPassthrough",
     "McpServerProviderAccount",
-    "Method",
+    "McpServerWithFqn",
+    "McpServerWithUrl",
+    "McpTool",
+    "Metadata",
     "Metric",
     "MimeType",
     "MirrorAction",
@@ -1186,13 +1173,14 @@ __all__ = [
     "PortAppProtocol",
     "PortAuth",
     "PortProtocol",
-    "PreRegisterUsersResponse",
     "PresignedUrlObject",
     "PrometheusAlertRule",
     "Prompt",
     "PromptVersion",
     "ProviderAccounts",
     "PublicCostMetric",
+    "PySparkTaskConfig",
+    "PySparkTaskConfigMountsItem",
     "PyTorchFramework",
     "PythonBuild",
     "PythonBuildCommand",
@@ -1210,8 +1198,8 @@ __all__ = [
     "RateLimitWhen",
     "Recommendation",
     "RefusalContentPart",
+    "RegisterUsersResponse",
     "RemoteSource",
-    "ResolveAgentAppResponse",
     "Resources",
     "ResourcesDevicesItem",
     "ResourcesNode",
@@ -1266,6 +1254,7 @@ __all__ = [
     "SparkJobPythonEntrypoint",
     "SparkJobPythonNotebookEntrypoint",
     "SparkJobScalaEntrypoint",
+    "SparkJobScalaNotebookEntrypoint",
     "SparkJobTriggerInput",
     "SqsInputConfig",
     "SqsOutputConfig",
@@ -1281,6 +1270,7 @@ __all__ = [
     "SystemMessage",
     "SystemMessageContent",
     "TaskDockerFileBuild",
+    "TaskPySparkBuild",
     "TaskPythonBuild",
     "Team",
     "TeamManifest",
@@ -1293,12 +1283,10 @@ __all__ = [
     "TogetherAiModel",
     "TogetherAiProviderAccount",
     "TokenPagination",
-    "Tool",
     "ToolCall",
     "ToolMessage",
     "ToolMessageContent",
     "ToolSchema",
-    "ToolVersion",
     "TracingProject",
     "TracingProjectManifest",
     "TransformersFramework",

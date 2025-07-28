@@ -3,9 +3,17 @@
 import typing
 
 from .aws_bedrock_guardrail_config import AwsBedrockGuardrailConfig
+from .azure_content_safety_guardrail_config import AzureContentSafetyGuardrailConfig
+from .azure_pii_guardrail_config import AzurePiiGuardrailConfig
 from .custom_guardrail_config import CustomGuardrailConfig
+from .enkrypt_ai_guardrail_config import EnkryptAiGuardrailConfig
 from .open_ai_moderations_guardrail_config import OpenAiModerationsGuardrailConfig
 
 GuardrailConfigIntegrations = typing.Union[
-    OpenAiModerationsGuardrailConfig, AwsBedrockGuardrailConfig, CustomGuardrailConfig
+    OpenAiModerationsGuardrailConfig,
+    AwsBedrockGuardrailConfig,
+    CustomGuardrailConfig,
+    AzurePiiGuardrailConfig,
+    AzureContentSafetyGuardrailConfig,
+    EnkryptAiGuardrailConfig,
 ]

@@ -22,7 +22,7 @@ from ..types.get_user_response import GetUserResponse
 from ..types.http_error import HttpError
 from ..types.invite_user_response import InviteUserResponse
 from ..types.list_users_response import ListUsersResponse
-from ..types.pre_register_users_response import PreRegisterUsersResponse
+from ..types.register_users_response import RegisterUsersResponse
 from ..types.update_user_roles_response import UpdateUserRolesResponse
 from ..types.user import User
 
@@ -109,35 +109,50 @@ class RawUsersClient:
     def pre_register_users(
         self,
         *,
-        emails: typing.Sequence[str],
+        email: str,
+        send_invite_email: typing.Optional[bool] = False,
+        skip_if_user_exists: typing.Optional[bool] = False,
         dry_run: typing.Optional[bool] = False,
+        accept_invite_client_url: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[PreRegisterUsersResponse]:
+    ) -> HttpResponse[RegisterUsersResponse]:
         """
-        This endpoint allows tenant administrators to pre-register users within their tenant.
+        This endpoint allows tenant administrators to register users within their tenant.
 
         Parameters
         ----------
-        emails : typing.Sequence[str]
-            Emails of the users
+        email : str
+            Email of the user
+
+        send_invite_email : typing.Optional[bool]
+            Send invite email if user does not exist
+
+        skip_if_user_exists : typing.Optional[bool]
+            Fail if user exists
 
         dry_run : typing.Optional[bool]
             Dry run
+
+        accept_invite_client_url : typing.Optional[str]
+            Url to redirect when invite is accepted
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[PreRegisterUsersResponse]
-            The users have been successfully pre-registered.
+        HttpResponse[RegisterUsersResponse]
+            The users have been successfully registered.
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/svc/v1/users",
+            "api/svc/v1/users/register",
             method="POST",
             json={
-                "emails": emails,
+                "email": email,
+                "sendInviteEmail": send_invite_email,
+                "skipIfUserExists": skip_if_user_exists,
                 "dryRun": dry_run,
+                "acceptInviteClientURL": accept_invite_client_url,
             },
             headers={
                 "content-type": "application/json",
@@ -148,9 +163,9 @@ class RawUsersClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    PreRegisterUsersResponse,
+                    RegisterUsersResponse,
                     parse_obj_as(
-                        type_=PreRegisterUsersResponse,  # type: ignore
+                        type_=RegisterUsersResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -685,35 +700,50 @@ class AsyncRawUsersClient:
     async def pre_register_users(
         self,
         *,
-        emails: typing.Sequence[str],
+        email: str,
+        send_invite_email: typing.Optional[bool] = False,
+        skip_if_user_exists: typing.Optional[bool] = False,
         dry_run: typing.Optional[bool] = False,
+        accept_invite_client_url: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[PreRegisterUsersResponse]:
+    ) -> AsyncHttpResponse[RegisterUsersResponse]:
         """
-        This endpoint allows tenant administrators to pre-register users within their tenant.
+        This endpoint allows tenant administrators to register users within their tenant.
 
         Parameters
         ----------
-        emails : typing.Sequence[str]
-            Emails of the users
+        email : str
+            Email of the user
+
+        send_invite_email : typing.Optional[bool]
+            Send invite email if user does not exist
+
+        skip_if_user_exists : typing.Optional[bool]
+            Fail if user exists
 
         dry_run : typing.Optional[bool]
             Dry run
+
+        accept_invite_client_url : typing.Optional[str]
+            Url to redirect when invite is accepted
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[PreRegisterUsersResponse]
-            The users have been successfully pre-registered.
+        AsyncHttpResponse[RegisterUsersResponse]
+            The users have been successfully registered.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/svc/v1/users",
+            "api/svc/v1/users/register",
             method="POST",
             json={
-                "emails": emails,
+                "email": email,
+                "sendInviteEmail": send_invite_email,
+                "skipIfUserExists": skip_if_user_exists,
                 "dryRun": dry_run,
+                "acceptInviteClientURL": accept_invite_client_url,
             },
             headers={
                 "content-type": "application/json",
@@ -724,9 +754,9 @@ class AsyncRawUsersClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    PreRegisterUsersResponse,
+                    RegisterUsersResponse,
                     parse_obj_as(
-                        type_=PreRegisterUsersResponse,  # type: ignore
+                        type_=RegisterUsersResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

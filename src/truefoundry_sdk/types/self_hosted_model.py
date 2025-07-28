@@ -58,6 +58,7 @@ class SelfHostedModel(UniversalBaseModel):
     """
     +usage=Specify the type of the model
     +sort=4
+    +uiProps={"disableAllOption": true}
     """
 
     auth_data: typing.Optional[SelfHostedModelAuthData] = pydantic.Field(default=None)

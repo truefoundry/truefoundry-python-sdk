@@ -3,49 +3,78 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from .base_guardrail_config import BaseGuardrailConfig
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .custom_guardrail_config_auth_data import CustomGuardrailConfigAuthData
+from .custom_guardrail_config_operation import CustomGuardrailConfigOperation
+from .custom_guardrail_config_target import CustomGuardrailConfigTarget
 
 
-class CustomGuardrailConfig(BaseGuardrailConfig):
+class CustomGuardrailConfig(UniversalBaseModel):
     """
-    +label=Custom Guardrail Config
+    +label=Custom
     +icon=puzzle-piece
     """
 
-    type: typing.Optional[typing.Literal["integration/guardrail-config/custom"]] = pydantic.Field(default=None)
+    name: str = pydantic.Field()
     """
+    +label=Name
+    +sort=50
+    +usage=The name of the Guardrail Config.
+    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
+    +uiProps={"disableEdit":true}
+    """
+
+    type: typing.Literal["integration/guardrail-config/custom"] = pydantic.Field(
+        default="integration/guardrail-config/custom"
+    )
+    """
+    +uiType=Hidden
     +value=integration/guardrail-config/custom
     """
 
-    url: typing.Optional[str] = pydantic.Field(default=None)
+    operation: CustomGuardrailConfigOperation = pydantic.Field()
+    """
+    +label=Operation
+    +usage=The operation type to use for the Guardrail. Validate guardrails are used to validate requests and mutate can validate as well as mutate requests.
+    Validate guardrails are run in parallel while mutate guardrails are run sequentially.
+    +uiType=Select
+    +sort=100
+    """
+
+    target: CustomGuardrailConfigTarget = pydantic.Field()
+    """
+    +label=Target
+    +usage=Specify whether the guardrail should be applied to the request or response. Guardrails with target "Request" can be only used in input guardrails and guardrails with target "Response" can only be used in output guardrails.
+    +uiType=Select
+    +sort=200
+    """
+
+    url: str = pydantic.Field()
     """
     +label=URL
+    +sort=300
     +usage=The URL of the Guardrail to send a post request to.
     """
 
     auth_data: typing.Optional[CustomGuardrailConfigAuthData] = pydantic.Field(default=None)
     """
     +label=Auth Data
+    +sort=450
     +usage=Authentication data for the Guardrail Server.
     """
 
     headers: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
     """
     +label=Headers
+    +sort=500
     +usage=Headers for the Guardrail Server. Forwarded to the Guardrail Server as is. For example: `{"Authorization": "APIKey <token>"}`
     """
 
-    redact_pii: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    +label=Redact PII
-    +usage=Whether to redact PII from the response. If this is true, your request will be transformed to redact PII from the response else a validation error will be returned.
-    """
-
-    config: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    config: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
     """
     +label=Config
+    +sort=600
+    +uiType=JsonInput
     +usage=The config for the Guardrail Server. This is a JSON object that will be sent as a config to Guardrail Server along with the request.
     """
 

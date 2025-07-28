@@ -4,7 +4,9 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .chat_prompt_manifest_mcp_servers_item import ChatPromptManifestMcpServersItem
 from .chat_prompt_manifest_messages_item import ChatPromptManifestMessagesItem
+from .guardrails import Guardrails
 from .model_configuration import ModelConfiguration
 from .tool_schema import ToolSchema
 
@@ -56,6 +58,13 @@ class ChatPromptManifest(UniversalBaseModel):
     """
     List of tools to be used in the chat prompt
     """
+
+    mcp_servers: typing.Optional[typing.List[ChatPromptManifestMcpServersItem]] = pydantic.Field(default=None)
+    """
+    A list of MCP servers FQNs or URLs and their tools
+    """
+
+    guardrails: typing.Optional[Guardrails] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -10,7 +10,7 @@ from ..types.change_password_response import ChangePasswordResponse
 from ..types.deactivate_user_response import DeactivateUserResponse
 from ..types.get_user_response import GetUserResponse
 from ..types.invite_user_response import InviteUserResponse
-from ..types.pre_register_users_response import PreRegisterUsersResponse
+from ..types.register_users_response import RegisterUsersResponse
 from ..types.update_user_roles_response import UpdateUserRolesResponse
 from ..types.user import User
 from .raw_client import AsyncRawUsersClient, RawUsersClient
@@ -96,28 +96,40 @@ class UsersClient:
     def pre_register_users(
         self,
         *,
-        emails: typing.Sequence[str],
+        email: str,
+        send_invite_email: typing.Optional[bool] = False,
+        skip_if_user_exists: typing.Optional[bool] = False,
         dry_run: typing.Optional[bool] = False,
+        accept_invite_client_url: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> PreRegisterUsersResponse:
+    ) -> RegisterUsersResponse:
         """
-        This endpoint allows tenant administrators to pre-register users within their tenant.
+        This endpoint allows tenant administrators to register users within their tenant.
 
         Parameters
         ----------
-        emails : typing.Sequence[str]
-            Emails of the users
+        email : str
+            Email of the user
+
+        send_invite_email : typing.Optional[bool]
+            Send invite email if user does not exist
+
+        skip_if_user_exists : typing.Optional[bool]
+            Fail if user exists
 
         dry_run : typing.Optional[bool]
             Dry run
+
+        accept_invite_client_url : typing.Optional[str]
+            Url to redirect when invite is accepted
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        PreRegisterUsersResponse
-            The users have been successfully pre-registered.
+        RegisterUsersResponse
+            The users have been successfully registered.
 
         Examples
         --------
@@ -128,10 +140,17 @@ class UsersClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.users.pre_register_users(
-            emails=["emails"],
+            email="email",
         )
         """
-        _response = self._raw_client.pre_register_users(emails=emails, dry_run=dry_run, request_options=request_options)
+        _response = self._raw_client.pre_register_users(
+            email=email,
+            send_invite_email=send_invite_email,
+            skip_if_user_exists=skip_if_user_exists,
+            dry_run=dry_run,
+            accept_invite_client_url=accept_invite_client_url,
+            request_options=request_options,
+        )
         return _response.data
 
     def update_roles(
@@ -446,28 +465,40 @@ class AsyncUsersClient:
     async def pre_register_users(
         self,
         *,
-        emails: typing.Sequence[str],
+        email: str,
+        send_invite_email: typing.Optional[bool] = False,
+        skip_if_user_exists: typing.Optional[bool] = False,
         dry_run: typing.Optional[bool] = False,
+        accept_invite_client_url: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> PreRegisterUsersResponse:
+    ) -> RegisterUsersResponse:
         """
-        This endpoint allows tenant administrators to pre-register users within their tenant.
+        This endpoint allows tenant administrators to register users within their tenant.
 
         Parameters
         ----------
-        emails : typing.Sequence[str]
-            Emails of the users
+        email : str
+            Email of the user
+
+        send_invite_email : typing.Optional[bool]
+            Send invite email if user does not exist
+
+        skip_if_user_exists : typing.Optional[bool]
+            Fail if user exists
 
         dry_run : typing.Optional[bool]
             Dry run
+
+        accept_invite_client_url : typing.Optional[str]
+            Url to redirect when invite is accepted
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        PreRegisterUsersResponse
-            The users have been successfully pre-registered.
+        RegisterUsersResponse
+            The users have been successfully registered.
 
         Examples
         --------
@@ -483,14 +514,19 @@ class AsyncUsersClient:
 
         async def main() -> None:
             await client.users.pre_register_users(
-                emails=["emails"],
+                email="email",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.pre_register_users(
-            emails=emails, dry_run=dry_run, request_options=request_options
+            email=email,
+            send_invite_email=send_invite_email,
+            skip_if_user_exists=skip_if_user_exists,
+            dry_run=dry_run,
+            accept_invite_client_url=accept_invite_client_url,
+            request_options=request_options,
         )
         return _response.data
 

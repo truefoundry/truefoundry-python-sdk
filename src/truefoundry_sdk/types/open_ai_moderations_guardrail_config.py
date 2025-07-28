@@ -3,41 +3,49 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from .base_guardrail_config import BaseGuardrailConfig
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .open_ai_moderations_guardrail_config_category_thresholds_value import (
     OpenAiModerationsGuardrailConfigCategoryThresholdsValue,
 )
 from .openai_api_key_auth import OpenaiApiKeyAuth
 
 
-class OpenAiModerationsGuardrailConfig(BaseGuardrailConfig):
+class OpenAiModerationsGuardrailConfig(UniversalBaseModel):
     """
-    +label=OpenAI Moderation Guardrail Config
+    +label=OpenAI Moderation
     +icon=openai
     """
 
-    type: typing.Optional[typing.Literal["integration/guardrail-config/openai-moderations"]] = pydantic.Field(
-        default=None
+    name: str = pydantic.Field()
+    """
+    +label=Name
+    +sort=50
+    +usage=The name of the Guardrail Config.
+    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
+    +uiProps={"disableEdit":true}
+    """
+
+    type: typing.Literal["integration/guardrail-config/openai-moderations"] = pydantic.Field(
+        default="integration/guardrail-config/openai-moderations"
     )
     """
     +value=integration/guardrail-config/openai-moderations
     +sort=50
+    +uiType=Hidden
     """
 
-    auth_data: typing.Optional[OpenaiApiKeyAuth] = None
     base_url: typing.Optional[str] = pydantic.Field(default=None)
     """
     +label=Base URL
-    +sort=300
-    +usage=Optional custom base URL for OpenAI API
-    +message=Base URL must not be empty
+    +sort=100
+    +usage=Optional custom base URL for OpenAI API. If not provided, the default base URL will be used.
     """
 
-    model: typing.Optional[str] = pydantic.Field(default="omni-moderation-latest")
+    auth_data: OpenaiApiKeyAuth
+    model: str = pydantic.Field(default="omni-moderation-latest")
     """
     +label=OpenAI Moderation Model
-    +sort=400
+    +sort=300
     +usage=The model to use for the OpenAI Moderation API.
     """
 
@@ -46,8 +54,9 @@ class OpenAiModerationsGuardrailConfig(BaseGuardrailConfig):
     )
     """
     +label=Category Thresholds
-    +sort=500
+    +sort=400
     +usage=The thresholds for the OpenAI Moderation API.
+    +uiType=KV
     """
 
     if IS_PYDANTIC_V2:
