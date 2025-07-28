@@ -4,13 +4,9 @@ import typing
 import httpx
 
 from truefoundry_sdk._wrapped_clients import (
-    WrappedAgentsClient,
-    WrappedAgentVersionsClient,
     WrappedApplicationsClient,
     WrappedArtifactsClient,
     WrappedArtifactVersionsClient,
-    WrappedAsyncAgentsClient,
-    WrappedAsyncAgentVersionsClient,
     WrappedAsyncApplicationsClient,
     WrappedAsyncArtifactsClient,
     WrappedAsyncArtifactVersionsClient,
@@ -22,7 +18,6 @@ from truefoundry_sdk._wrapped_clients import (
     WrappedAsyncSecretGroupsClient,
     WrappedAsyncToolsClient,
     WrappedAsyncToolVersionsClient,
-    WrappedAsyncTracingProjectsClient,
     WrappedAsyncWorkspacesClient,
     WrappedDataDirectoriesClient,
     WrappedModelsClient,
@@ -32,7 +27,6 @@ from truefoundry_sdk._wrapped_clients import (
     WrappedSecretGroupsClient,
     WrappedToolsClient,
     WrappedToolVersionsClient,
-    WrappedTracingProjectsClient,
     WrappedWorkspacesClient,
 )
 from truefoundry_sdk.base_client import AsyncBaseTrueFoundry, BaseTrueFoundry
@@ -55,8 +49,6 @@ class TrueFoundry(BaseTrueFoundry):
             follow_redirects=follow_redirects,
             httpx_client=httpx_client,
         )
-        self.agents = WrappedAgentsClient(client_wrapper=self._client_wrapper)
-        self.agent_versions = WrappedAgentVersionsClient(client_wrapper=self._client_wrapper)
         self.applications = WrappedApplicationsClient(client_wrapper=self._client_wrapper)
         self.artifacts = WrappedArtifactsClient(client_wrapper=self._client_wrapper)
         self.artifact_versions = WrappedArtifactVersionsClient(client_wrapper=self._client_wrapper)
@@ -68,7 +60,6 @@ class TrueFoundry(BaseTrueFoundry):
         self.secret_groups = WrappedSecretGroupsClient(client_wrapper=self._client_wrapper)
         self.tools = WrappedToolsClient(client_wrapper=self._client_wrapper)
         self.tool_versions = WrappedToolVersionsClient(client_wrapper=self._client_wrapper)
-        self.tracing_projects = WrappedTracingProjectsClient(client_wrapper=self._client_wrapper)
         self.workspaces = WrappedWorkspacesClient(client_wrapper=self._client_wrapper)
 
 
@@ -89,8 +80,6 @@ class AsyncTrueFoundry(AsyncBaseTrueFoundry):
             follow_redirects=follow_redirects,
             httpx_client=httpx_client,
         )
-        self.agents = WrappedAsyncAgentsClient(client_wrapper=self._client_wrapper)
-        self.agent_versions = WrappedAsyncAgentVersionsClient(client_wrapper=self._client_wrapper)
         self.applications = WrappedAsyncApplicationsClient(client_wrapper=self._client_wrapper)
         self.artifacts = WrappedAsyncArtifactsClient(client_wrapper=self._client_wrapper)
         self.artifact_versions = WrappedAsyncArtifactVersionsClient(client_wrapper=self._client_wrapper)
@@ -102,7 +91,6 @@ class AsyncTrueFoundry(AsyncBaseTrueFoundry):
         self.secret_groups = WrappedAsyncSecretGroupsClient(client_wrapper=self._client_wrapper)
         self.tools = WrappedAsyncToolsClient(client_wrapper=self._client_wrapper)
         self.tool_versions = WrappedAsyncToolVersionsClient(client_wrapper=self._client_wrapper)
-        self.tracing_projects = WrappedAsyncTracingProjectsClient(client_wrapper=self._client_wrapper)
         self.workspaces = WrappedAsyncWorkspacesClient(client_wrapper=self._client_wrapper)
 
 

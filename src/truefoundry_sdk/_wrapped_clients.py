@@ -1,7 +1,5 @@
 from typing import Any, Optional, Protocol, TypeVar
 
-from .agent_versions.client import AgentVersionsClient, AsyncAgentVersionsClient
-from .agents.client import AgentsClient, AsyncAgentsClient
 from .applications.client import ApplicationsClient, AsyncApplicationsClient
 from .artifact_versions.client import ArtifactVersionsClient, AsyncArtifactVersionsClient
 from .artifacts.client import ArtifactsClient, AsyncArtifactsClient
@@ -15,11 +13,6 @@ from .models.client import AsyncModelsClient, ModelsClient
 from .prompt_versions.client import AsyncPromptVersionsClient, PromptVersionsClient
 from .prompts.client import AsyncPromptsClient, PromptsClient
 from .secret_groups.client import AsyncSecretGroupsClient, SecretGroupsClient
-from .tool_versions.client import AsyncToolVersionsClient, ToolVersionsClient
-from .tools.client import AsyncToolsClient, ToolsClient
-from .tracing_projects.client import AsyncTracingProjectsClient, TracingProjectsClient
-from .types.get_agent_response import GetAgentResponse
-from .types.get_agent_version_response import GetAgentVersionResponse
 from .types.get_application_response import GetApplicationResponse
 from .types.get_artifact_response import GetArtifactResponse
 from .types.get_artifact_version_response import GetArtifactVersionResponse
@@ -29,9 +22,6 @@ from .types.get_model_version_response import GetModelVersionResponse
 from .types.get_prompt_response import GetPromptResponse
 from .types.get_prompt_version_response import GetPromptVersionResponse
 from .types.get_secret_group_response import GetSecretGroupResponse
-from .types.get_tool_response import GetToolResponse
-from .types.get_tool_version_response import GetToolVersionResponse
-from .types.get_tracing_project_response import GetTracingProjectResponse
 from .types.get_workspace_response import GetWorkspaceResponse
 from .types.http_error import HttpError
 from .workspaces.client import AsyncWorkspacesClient, WorkspacesClient
@@ -82,118 +72,422 @@ async def _aget_by_fqn(
     return result
 
 
-class WrappedAgentsClient(AgentsClient):
-    def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetAgentResponse:
-        item = _get_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
-        return parse_obj_as(GetAgentResponse, {"data": item})  # type: ignore[arg-type,var-annotated]
-
-
-class WrappedAgentVersionsClient(AgentVersionsClient):
-    def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetAgentVersionResponse:
-        item = _get_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
-        return parse_obj_as(GetAgentVersionResponse, {"data": item})
-
-
 class WrappedApplicationsClient(ApplicationsClient):
     def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetApplicationResponse:
+        """
+        Get Application by FQN.
+
+        Parameters
+        ----------
+        fqn : str
+            FQN of the application
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetApplicationResponse
+            Application details
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.applications.get_by_fqn(
+            fqn="fqn",
+        )
+        """
         item = _get_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
         return parse_obj_as(GetApplicationResponse, {"data": item})
 
 
 class WrappedArtifactsClient(ArtifactsClient):
     def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetArtifactResponse:
+        """
+        Get Artifact by FQN.
+
+        Parameters
+        ----------
+        fqn : str
+            FQN of the artifact
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetArtifactResponse
+            Artifact details
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.artifacts.get_by_fqn(
+            fqn="fqn",
+        )
+        """
         item = _get_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
         return parse_obj_as(GetArtifactResponse, {"data": item})
 
 
 class WrappedArtifactVersionsClient(ArtifactVersionsClient):
     def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetArtifactVersionResponse:
+        """
+        Get Artifact Version by FQN.
+
+        Parameters
+        ----------
+        fqn : str
+            FQN of the artifact version
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetArtifactVersionResponse
+            Artifact version details
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.artifact_versions.get_by_fqn(
+            fqn="fqn",
+        )
+        """
         item = _get_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
         return parse_obj_as(GetArtifactVersionResponse, {"data": item})
 
 
 class WrappedDataDirectoriesClient(DataDirectoriesClient):
     def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetDataDirectoryResponse:
+        """
+        Get Data Directory by FQN.
+
+        Parameters
+        ----------
+        fqn : str
+            FQN of the data directory
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetDataDirectoryResponse
+            Data directory details
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.data_directories.get_by_fqn(
+            fqn="fqn",
+        )
+        """
         item = _get_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
         return parse_obj_as(GetDataDirectoryResponse, {"data": item})
 
 
 class WrappedModelsClient(ModelsClient):
     def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetModelResponse:
+        """
+        Get Model by FQN.
+
+        Parameters
+        ----------
+        fqn : str
+            FQN of the model
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetModelResponse
+            Model details
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.models.get_by_fqn(
+            fqn="fqn",
+        )
+        """
         item = _get_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
         return parse_obj_as(GetModelResponse, {"data": item})
 
 
 class WrappedModelVersionsClient(ModelVersionsClient):
     def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetModelVersionResponse:
+        """
+        Get Model Version by FQN.
+
+        Parameters
+        ----------
+        fqn : str
+            FQN of the model version
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetModelVersionResponse
+            Model version details
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.model_versions.get_by_fqn(
+            fqn="fqn",
+        )
+        """
         item = _get_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
         return parse_obj_as(GetModelVersionResponse, {"data": item})
 
 
 class WrappedPromptsClient(PromptsClient):
     def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetPromptResponse:
+        """
+        Get Prompt by FQN.
+
+        Parameters
+        ----------
+        fqn : str
+            FQN of the prompt
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetPromptResponse
+            Prompt details
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.prompts.get_by_fqn(
+            fqn="fqn",
+        )
+        """
         item = _get_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
         return parse_obj_as(GetPromptResponse, {"data": item})
 
 
 class WrappedPromptVersionsClient(PromptVersionsClient):
     def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetPromptVersionResponse:
+        """
+        Get Prompt Version by FQN.
+
+        Parameters
+        ----------
+        fqn : str
+            FQN of the prompt version
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetPromptVersionResponse
+            Prompt version details
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.prompt_versions.get_by_fqn(
+            fqn="fqn",
+        )
+        """
         item = _get_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
         return parse_obj_as(GetPromptVersionResponse, {"data": item})
 
 
 class WrappedSecretGroupsClient(SecretGroupsClient):
     def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetSecretGroupResponse:
+        """
+        Get Secret Group by FQN.
+
+        Parameters
+        ----------
+        fqn : str
+            FQN of the secret group
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetSecretGroupResponse
+            Secret group details
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.secret_groups.get_by_fqn(
+            fqn="fqn",
+        )
+        """
         item = _get_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
         return parse_obj_as(GetSecretGroupResponse, {"data": item})
 
 
-class WrappedToolsClient(ToolsClient):
-    def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetToolResponse:
-        item = _get_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
-        return parse_obj_as(GetToolResponse, {"data": item})
-
-
-class WrappedToolVersionsClient(ToolVersionsClient):
-    def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetToolVersionResponse:
-        item = _get_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
-        return parse_obj_as(GetToolVersionResponse, {"data": item})
-
-
-class WrappedTracingProjectsClient(TracingProjectsClient):
-    def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetTracingProjectResponse:
-        item = _get_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
-        return parse_obj_as(GetTracingProjectResponse, {"data": item})
-
-
 class WrappedWorkspacesClient(WorkspacesClient):
     def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetWorkspaceResponse:
+        """
+        Get Workspace by FQN.
+
+        Parameters
+        ----------
+        fqn : str
+            FQN of the workspace
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetWorkspaceResponse
+            Workspace details
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.workspaces.get_by_fqn(
+            fqn="fqn",
+        )
+        """
         item = _get_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
         return parse_obj_as(GetWorkspaceResponse, {"data": item})
 
 
-class WrappedAsyncAgentsClient(AsyncAgentsClient):
-    async def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetAgentResponse:
-        item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
-        return parse_obj_as(GetAgentResponse, {"data": item})
-
-
-class WrappedAsyncAgentVersionsClient(AsyncAgentVersionsClient):
-    async def get_by_fqn(
-        self, fqn: str, *, request_options: Optional[RequestOptions] = None
-    ) -> GetAgentVersionResponse:
-        item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
-        return parse_obj_as(GetAgentVersionResponse, {"data": item})
-
-
 class WrappedAsyncApplicationsClient(AsyncApplicationsClient):
     async def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetApplicationResponse:
+        """
+        Get Application by FQN.
+
+        Parameters
+        ----------
+        fqn : str
+            FQN of the application
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetApplicationResponse
+            Application details
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+        async def main() -> None:
+            await client.applications.get_by_fqn(
+                fqn="fqn",
+            )
+
+        asyncio.run(main())
+        """
         item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
         return parse_obj_as(GetApplicationResponse, {"data": item})
 
 
 class WrappedAsyncArtifactsClient(AsyncArtifactsClient):
     async def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetArtifactResponse:
+        """
+        Get Artifact by FQN.
+
+        Parameters
+        ----------
+        fqn : str
+            FQN of the artifact
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetArtifactResponse
+            Artifact details
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+        async def main() -> None:
+            await client.artifacts.get_by_fqn(
+                fqn="fqn",
+            )
+
+        asyncio.run(main())
+        """
         item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
         return parse_obj_as(GetArtifactResponse, {"data": item})
 
@@ -202,6 +496,40 @@ class WrappedAsyncArtifactVersionsClient(AsyncArtifactVersionsClient):
     async def get_by_fqn(
         self, fqn: str, *, request_options: Optional[RequestOptions] = None
     ) -> GetArtifactVersionResponse:
+        """
+        Get Artifact Version by FQN.
+
+        Parameters
+        ----------
+        fqn : str
+            FQN of the artifact version
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetArtifactVersionResponse
+            Artifact version details
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+        async def main() -> None:
+            await client.artifact_versions.get_by_fqn(
+                fqn="fqn",
+            )
+
+        asyncio.run(main())
+        """
         item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
         return parse_obj_as(GetArtifactVersionResponse, {"data": item})
 
@@ -210,12 +538,80 @@ class WrappedAsyncDataDirectoriesClient(AsyncDataDirectoriesClient):
     async def get_by_fqn(
         self, fqn: str, *, request_options: Optional[RequestOptions] = None
     ) -> GetDataDirectoryResponse:
+        """
+        Get Data Directory by FQN.
+
+        Parameters
+        ----------
+        fqn : str
+            FQN of the data directory
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetDataDirectoryResponse
+            Data directory details
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+        async def main() -> None:
+            await client.data_directories.get_by_fqn(
+                fqn="fqn",
+            )
+
+        asyncio.run(main())
+        """
         item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
         return parse_obj_as(GetDataDirectoryResponse, {"data": item})
 
 
 class WrappedAsyncModelsClient(AsyncModelsClient):
     async def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetModelResponse:
+        """
+        Get Model by FQN.
+
+        Parameters
+        ----------
+        fqn : str
+            FQN of the model
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetModelResponse
+            Model details
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+        async def main() -> None:
+            await client.models.get_by_fqn(
+                fqn="fqn",
+            )
+
+        asyncio.run(main())
+        """
         item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
         return parse_obj_as(GetModelResponse, {"data": item})
 
@@ -224,12 +620,80 @@ class WrappedAsyncModelVersionsClient(AsyncModelVersionsClient):
     async def get_by_fqn(
         self, fqn: str, *, request_options: Optional[RequestOptions] = None
     ) -> GetModelVersionResponse:
+        """
+        Get Model Version by FQN.
+
+        Parameters
+        ----------
+        fqn : str
+            FQN of the model version
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetModelVersionResponse
+            Model version details
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+        async def main() -> None:
+            await client.model_versions.get_by_fqn(
+                fqn="fqn",
+            )
+
+        asyncio.run(main())
+        """
         item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
         return parse_obj_as(GetModelVersionResponse, {"data": item})
 
 
 class WrappedAsyncPromptsClient(AsyncPromptsClient):
     async def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetPromptResponse:
+        """
+        Get Prompt by FQN.
+
+        Parameters
+        ----------
+        fqn : str
+            FQN of the prompt
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetPromptResponse
+            Prompt details
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+        async def main() -> None:
+            await client.prompts.get_by_fqn(
+                fqn="fqn",
+            )
+
+        asyncio.run(main())
+        """
         item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
         return parse_obj_as(GetPromptResponse, {"data": item})
 
@@ -238,37 +702,119 @@ class WrappedAsyncPromptVersionsClient(AsyncPromptVersionsClient):
     async def get_by_fqn(
         self, fqn: str, *, request_options: Optional[RequestOptions] = None
     ) -> GetPromptVersionResponse:
+        """
+        Get Prompt Version by FQN.
+
+        Parameters
+        ----------
+        fqn : str
+            FQN of the prompt version
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetPromptVersionResponse
+            Prompt version details
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+        async def main() -> None:
+            await client.prompt_versions.get_by_fqn(
+                fqn="fqn",
+            )
+
+        asyncio.run(main())
+        """
         item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
         return parse_obj_as(GetPromptVersionResponse, {"data": item})
 
 
 class WrappedAsyncSecretGroupsClient(AsyncSecretGroupsClient):
     async def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetSecretGroupResponse:
+        """
+        Get Secret Group by FQN.
+
+        Parameters
+        ----------
+        fqn : str
+            FQN of the secret group
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetSecretGroupResponse
+            Secret group details
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+        async def main() -> None:
+            await client.secret_groups.get_by_fqn(
+                fqn="fqn",
+            )
+
+        asyncio.run(main())
+        """
         item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
         return parse_obj_as(GetSecretGroupResponse, {"data": item})
 
 
-class WrappedAsyncToolsClient(AsyncToolsClient):
-    async def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetToolResponse:
-        item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
-        return parse_obj_as(GetToolResponse, {"data": item})
-
-
-class WrappedAsyncToolVersionsClient(AsyncToolVersionsClient):
-    async def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetToolVersionResponse:
-        item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
-        return parse_obj_as(GetToolVersionResponse, {"data": item})
-
-
-class WrappedAsyncTracingProjectsClient(AsyncTracingProjectsClient):
-    async def get_by_fqn(
-        self, fqn: str, *, request_options: Optional[RequestOptions] = None
-    ) -> GetTracingProjectResponse:
-        item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
-        return parse_obj_as(GetTracingProjectResponse, {"data": item})
-
-
 class WrappedAsyncWorkspacesClient(AsyncWorkspacesClient):
     async def get_by_fqn(self, fqn: str, *, request_options: Optional[RequestOptions] = None) -> GetWorkspaceResponse:
+        """
+        Get Workspace by FQN.
+
+        Parameters
+        ----------
+        fqn : str
+            FQN of the workspace
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetWorkspaceResponse
+            Workspace details
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+        async def main() -> None:
+            await client.workspaces.get_by_fqn(
+                fqn="fqn",
+            )
+
+        asyncio.run(main())
+        """
         item = await _aget_by_fqn(self, fqn=fqn, request_options=request_options)  # type: ignore[arg-type,var-annotated]
         return parse_obj_as(GetWorkspaceResponse, {"data": item})
