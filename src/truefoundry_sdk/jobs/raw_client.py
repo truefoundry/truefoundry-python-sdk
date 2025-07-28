@@ -25,6 +25,7 @@ from ..types.job_run_status import JobRunStatus
 from ..types.job_runs_sort_by import JobRunsSortBy
 from ..types.job_runs_sort_direction import JobRunsSortDirection
 from ..types.list_job_run_response import ListJobRunResponse
+from ..types.metadata import Metadata
 from ..types.terminate_job_response import TerminateJobResponse
 from ..types.trigger_job_run_response import TriggerJobRunResponse
 from .types.trigger_job_request_input import TriggerJobRequestInput
@@ -311,6 +312,7 @@ class RawJobsClient:
         deployment_id: typing.Optional[str] = OMIT,
         application_id: typing.Optional[str] = OMIT,
         input: typing.Optional[TriggerJobRequestInput] = OMIT,
+        metadata: typing.Optional[Metadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[TriggerJobRunResponse]:
         """
@@ -326,6 +328,9 @@ class RawJobsClient:
 
         input : typing.Optional[TriggerJobRequestInput]
             Job trigger input
+
+        metadata : typing.Optional[Metadata]
+            Metadata for the job run including job_alias_name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -343,6 +348,9 @@ class RawJobsClient:
                 "applicationId": application_id,
                 "input": convert_and_respect_annotation_metadata(
                     object_=input, annotation=TriggerJobRequestInput, direction="write"
+                ),
+                "metadata": convert_and_respect_annotation_metadata(
+                    object_=metadata, annotation=Metadata, direction="write"
                 ),
             },
             headers={
@@ -782,6 +790,7 @@ class AsyncRawJobsClient:
         deployment_id: typing.Optional[str] = OMIT,
         application_id: typing.Optional[str] = OMIT,
         input: typing.Optional[TriggerJobRequestInput] = OMIT,
+        metadata: typing.Optional[Metadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[TriggerJobRunResponse]:
         """
@@ -797,6 +806,9 @@ class AsyncRawJobsClient:
 
         input : typing.Optional[TriggerJobRequestInput]
             Job trigger input
+
+        metadata : typing.Optional[Metadata]
+            Metadata for the job run including job_alias_name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -814,6 +826,9 @@ class AsyncRawJobsClient:
                 "applicationId": application_id,
                 "input": convert_and_respect_annotation_metadata(
                     object_=input, annotation=TriggerJobRequestInput, direction="write"
+                ),
+                "metadata": convert_and_respect_annotation_metadata(
+                    object_=metadata, annotation=Metadata, direction="write"
                 ),
             },
             headers={

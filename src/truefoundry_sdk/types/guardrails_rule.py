@@ -16,12 +16,12 @@ class GuardrailsRule(UniversalBaseModel):
     when: GuardrailsWhen
     input_guardrails: typing.List[str] = pydantic.Field()
     """
-    +usage=Guardrail Integration FQNs of the guardrails to apply to the input
+    +usage=Guardrail selectors of the guardrails to apply to the input (format: groupName/guardrailName)
     """
 
     output_guardrails: typing.List[str] = pydantic.Field()
     """
-    +usage=Guardrail Integration FQNs of the guardrails to apply to the output
+    +usage=Guardrail selectors of the guardrails to apply to the output (format: groupName/guardrailName)
     """
 
     if IS_PYDANTIC_V2:

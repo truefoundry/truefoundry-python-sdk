@@ -41,6 +41,7 @@ class OpenAiModel(UniversalBaseModel):
     +sort=3
     +usage=Specify the type of the OpenAI model
     +uiType=Select
+    +uiProps={"disableAllOption": true}
     """
 
     cost: typing.Optional[ModelCostMetric] = None

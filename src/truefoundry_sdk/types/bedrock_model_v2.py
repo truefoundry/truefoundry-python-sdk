@@ -41,6 +41,7 @@ class BedrockModelV2(UniversalBaseModel):
     +label=Model Types
     +sort=3
     +usage=Specify the type of the Bedrock model
+    +uiProps={"disableAllOption": true}
     """
 
     region: typing.Optional[AwsRegion] = None

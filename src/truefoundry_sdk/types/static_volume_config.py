@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class StaticVolumeConfig(UniversalBaseModel):
     """
-    +label=Static Volume Config
+    +label=Use existing volume
     """
 
     type: typing.Literal["static"] = pydantic.Field(default="static")

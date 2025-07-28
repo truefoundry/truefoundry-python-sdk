@@ -48,6 +48,7 @@ class AzureOpenAiModelV2(UniversalBaseModel):
     +label=Model Types
     +sort=4
     +usage=Specify the type of the Azure OpenAI model
+    +uiProps={"disableAllOption": true}
     """
 
     cost: typing.Optional[ModelCostMetric] = None

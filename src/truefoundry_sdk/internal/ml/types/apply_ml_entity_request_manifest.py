@@ -2,8 +2,6 @@
 
 import typing
 
-from ....types.agent_manifest import AgentManifest
-from ....types.agent_open_api_tool_manifest import AgentOpenApiToolManifest
 from ....types.artifact_manifest import ArtifactManifest
 from ....types.chat_prompt_manifest import ChatPromptManifest
 from ....types.data_directory_manifest import DataDirectoryManifest
@@ -11,11 +9,5 @@ from ....types.model_manifest import ModelManifest
 from ....types.tracing_project_manifest import TracingProjectManifest
 
 ApplyMlEntityRequestManifest = typing.Union[
-    ModelManifest,
-    ChatPromptManifest,
-    AgentOpenApiToolManifest,
-    AgentManifest,
-    ArtifactManifest,
-    DataDirectoryManifest,
-    TracingProjectManifest,
+    ModelManifest, ChatPromptManifest, ArtifactManifest, DataDirectoryManifest, TracingProjectManifest
 ]

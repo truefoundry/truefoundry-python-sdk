@@ -6,7 +6,12 @@ from .spark_job_java_entrypoint import SparkJobJavaEntrypoint
 from .spark_job_python_entrypoint import SparkJobPythonEntrypoint
 from .spark_job_python_notebook_entrypoint import SparkJobPythonNotebookEntrypoint
 from .spark_job_scala_entrypoint import SparkJobScalaEntrypoint
+from .spark_job_scala_notebook_entrypoint import SparkJobScalaNotebookEntrypoint
 
 SparkJobEntrypoint = typing.Union[
-    SparkJobPythonEntrypoint, SparkJobScalaEntrypoint, SparkJobJavaEntrypoint, SparkJobPythonNotebookEntrypoint
+    SparkJobPythonEntrypoint,
+    SparkJobScalaEntrypoint,
+    SparkJobJavaEntrypoint,
+    SparkJobPythonNotebookEntrypoint,
+    SparkJobScalaNotebookEntrypoint,
 ]

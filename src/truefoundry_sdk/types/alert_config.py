@@ -4,6 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .alert_config_resource import AlertConfigResource
 from .notification_target_for_alert_rule import NotificationTargetForAlertRule
 from .prometheus_alert_rule import PrometheusAlertRule
 
@@ -23,12 +24,7 @@ class AlertConfig(UniversalBaseModel):
     +uiType=Hidden
     """
 
-    application_fqn: str = pydantic.Field()
-    """
-    +label=Application FQN
-    +uiType=Hidden
-    """
-
+    resource: AlertConfigResource
     notification_targets: typing.List[NotificationTargetForAlertRule] = pydantic.Field()
     """
     +label=Notification Targets
