@@ -16,8 +16,6 @@ from truefoundry_sdk._wrapped_clients import (
     WrappedAsyncPromptsClient,
     WrappedAsyncPromptVersionsClient,
     WrappedAsyncSecretGroupsClient,
-    WrappedAsyncToolsClient,
-    WrappedAsyncToolVersionsClient,
     WrappedAsyncWorkspacesClient,
     WrappedDataDirectoriesClient,
     WrappedModelsClient,
@@ -25,8 +23,6 @@ from truefoundry_sdk._wrapped_clients import (
     WrappedPromptsClient,
     WrappedPromptVersionsClient,
     WrappedSecretGroupsClient,
-    WrappedToolsClient,
-    WrappedToolVersionsClient,
     WrappedWorkspacesClient,
 )
 from truefoundry_sdk.base_client import AsyncBaseTrueFoundry, BaseTrueFoundry
@@ -58,8 +54,6 @@ class TrueFoundry(BaseTrueFoundry):
         self.prompts = WrappedPromptsClient(client_wrapper=self._client_wrapper)
         self.prompt_versions = WrappedPromptVersionsClient(client_wrapper=self._client_wrapper)
         self.secret_groups = WrappedSecretGroupsClient(client_wrapper=self._client_wrapper)
-        self.tools = WrappedToolsClient(client_wrapper=self._client_wrapper)
-        self.tool_versions = WrappedToolVersionsClient(client_wrapper=self._client_wrapper)
         self.workspaces = WrappedWorkspacesClient(client_wrapper=self._client_wrapper)
 
 
@@ -89,8 +83,6 @@ class AsyncTrueFoundry(AsyncBaseTrueFoundry):
         self.prompts = WrappedAsyncPromptsClient(client_wrapper=self._client_wrapper)
         self.prompt_versions = WrappedAsyncPromptVersionsClient(client_wrapper=self._client_wrapper)
         self.secret_groups = WrappedAsyncSecretGroupsClient(client_wrapper=self._client_wrapper)
-        self.tools = WrappedAsyncToolsClient(client_wrapper=self._client_wrapper)
-        self.tool_versions = WrappedAsyncToolVersionsClient(client_wrapper=self._client_wrapper)
         self.workspaces = WrappedAsyncWorkspacesClient(client_wrapper=self._client_wrapper)
 
 
