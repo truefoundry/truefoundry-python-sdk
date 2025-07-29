@@ -193,59 +193,6 @@ class TrueFoundrySDKDocGenerator:
             methods=methods,
         )
 
-    def _extract_type_info(self, node: ast.ClassDef, module_name: str, client_module: str, all_types: Dict[str, TypeInfo]) -> Optional[TypeInfo]:
-        """Extract detailed information about a type/class"""
-        try:
-            # Get docstring
-            docstring = ast.get_docstring(node) or ""
-            
-            # Get base classes
-            base_classes = []
-            for base in node.bases:
-                if isinstance(base, ast.Name):
-                    base_classes.append(base.id)
-                elif isinstance(base, ast.Attribute):
-                    base_classes.append(f"{base.value.id}.{base.attr}" if hasattr(base.value, 'id') else base.attr)
-            
-            # Check if it's an enum
-            is_enum = any("enum" in base.lower() for base in base_classes)
-            
-            # Only process enums or types with user-settable values
-            if not is_enum:
-                return None
-            
-            # Extract enum values
-            enum_values = []
-            
-            for child in node.body:
-                if isinstance(child, ast.Assign):
-                    for target in child.targets:
-                        if isinstance(target, ast.Name):
-                            attr_name = target.id
-                            attr_value = self._get_node_value(child.value)
-                            
-                            if attr_value:
-                                enum_values.append({
-                                    "name": attr_name,
-                                    "value": attr_value,
-                                    "description": ""
-                                })
-            
-            return TypeInfo(
-                name=node.name,
-                docstring=docstring,
-                enhanced_description="",
-                enum_values=enum_values if enum_values else None,
-                is_enum=is_enum,
-                module=module_name,
-                client_module=client_module,
-                link_to_type=self._get_link_to_type(node.name, is_enum)
-            )
-            
-        except Exception as e:
-            print(f"Error extracting type {node.name}: {e}")
-            return None
-        
 
     def _get_link_to_type(self, type_name: str, is_enum: bool = False) -> str:
         """Get the link to a type"""
@@ -311,7 +258,7 @@ class TrueFoundrySDKDocGenerator:
                 examples = []
                 # Create a proper Python example
                 example_lines = [
-                    "from truefoundry_sdk import TrueFoundry",
+                    "from truefoundry import TrueFoundry",
                     "",
                     "client = TrueFoundry(",
                     "    api_key=\"YOUR_API_KEY\",",
@@ -460,14 +407,23 @@ class TrueFoundrySDKDocGenerator:
                     "link": link
                 }
         
+        best_match = None
+        best_match_length = 0
+        
         for type_name, type_info in all_types.items():
             if type_name in type_str:
-                link = self._get_link_to_type(type_info.name, type_info.is_enum)
-                return {
-                    "name": type_info.name,
-                    "description": type_info.enhanced_description or "",
-                    "link": link
-                }
+                # Prefer longer type names as they're more specific
+                if len(type_name) > best_match_length:
+                    best_match = type_info
+                    best_match_length = len(type_name)
+        
+        if best_match:
+            link = self._get_link_to_type(best_match.name, best_match.is_enum)
+            return {
+                "name": best_match.name,
+                "description": best_match.enhanced_description or "",
+                "link": link
+            }
         
         return None
         
@@ -542,12 +498,70 @@ class TrueFoundrySDKDocGenerator:
                     type_info = self._extract_detailed_type_info(node, f"{module_name}.{type_file.stem}")
                     if type_info:
                         types[type_info.name] = type_info
+                elif isinstance(node, ast.Assign):
+                    # Handle type aliases like TypeName = typing.Union[...]
+                    for target in node.targets:
+                        if isinstance(target, ast.Name):
+                            type_name = target.id
+                            if isinstance(node.value, ast.Attribute) and node.value.attr == "Union":
+                                # This is a typing.Union type alias
+                                type_info = self._extract_union_type_info(type_name, node.value, f"{module_name}.{type_file.stem}")
+                                if type_info:
+                                    types[type_info.name] = type_info
+                            elif isinstance(node.value, ast.Subscript) and isinstance(node.value.value, ast.Attribute) and node.value.value.attr == "Union":
+                                # This is a typing.Union[...] type alias
+                                type_info = self._extract_union_type_info(type_name, node.value, f"{module_name}.{type_file.stem}")
+                                if type_info:
+                                    types[type_info.name] = type_info
                         
         except Exception as e:
             print(f"Error extracting types from {type_file}: {e}")
         
         return types
     
+    def _extract_union_type_info(self, type_name: str, union_node, module_name: str) -> Optional[TypeInfo]:
+        """Extract information about a union type alias"""
+        try:
+            # Get the union types
+            union_types = []
+            if isinstance(union_node, ast.Subscript):
+                # Handle typing.Union[Type1, Type2, ...]
+                if isinstance(union_node.slice, ast.Tuple):
+                    for elt in union_node.slice.elts:
+                        if isinstance(elt, ast.Name):
+                            union_types.append(elt.id)
+                        elif isinstance(elt, ast.Attribute):
+                            union_types.append(f"{elt.value.id}.{elt.attr}" if hasattr(elt.value, 'id') else elt.attr)
+                else:
+                    # Single type in Union
+                    if isinstance(union_node.slice, ast.Name):
+                        union_types.append(union_node.slice.id)
+                    elif isinstance(union_node.slice, ast.Attribute):
+                        union_types.append(f"{union_node.slice.value.id}.{union_node.slice.attr}" if hasattr(union_node.slice.value, 'id') else union_node.slice.attr)
+            
+            # Create a description for the union type
+            description = f"Union type that can be one of: {', '.join(union_types)}"
+            
+            return TypeInfo(
+                name=type_name,
+                docstring=description,
+                enhanced_description=description,
+                fields=None,
+                enum_values=None,
+                is_enum=False,
+                is_manifest="Manifest" in type_name,
+                module=module_name,
+                base_classes=union_types,
+                is_response_type=any(word in type_name.lower() for word in ["response", "get", "list", "create", "update", "delete"]),
+                is_input_type=any(word in type_name.lower() for word in ["request", "input", "manifest"]),
+                structure_example=f"One of: {', '.join(union_types)}",
+                link_to_type=self._get_link_to_type(type_name, False)
+            )
+            
+        except Exception as e:
+            print(f"Error extracting union type {type_name}: {e}")
+            return None
+
     def _extract_detailed_type_info(self, node: ast.ClassDef, module_name: str) -> Optional[TypeInfo]:
 
         try:
@@ -901,13 +915,13 @@ description: "Complete Python SDK for TrueFoundry - Build, deploy, and manage ML
 ## Installation
 
 ```bash
-pip install truefoundry_sdk
+pip install truefoundry
 ```
 
 ## Quick Example
 
 ```python
-from truefoundry_sdk import TrueFoundry
+from truefoundry import TrueFoundry
 
 # Initialize the client
 client = TrueFoundry(
@@ -992,7 +1006,7 @@ The main client for TrueFoundry SDK operations. This client provides access to a
 <CodeGroup>
 
 ```python
-from truefoundry_sdk import TrueFoundry
+from truefoundry import TrueFoundry
 
 # Initialize the client
 client = TrueFoundry(
@@ -1077,6 +1091,16 @@ description: "All input and output types in the SDK"
 </ParamField>                                                    
 
 {% endfor %}
+{% elif type_info.base_classes and not type_info.is_enum %}
+### {{ type_info.name }}
+
+{{ type_info.enhanced_description }}
+
+**Union Types:** 
+{%- for base_class in type_info.base_classes %}
+[{{ base_class }}](/docs/truefoundry_sdk_docs/types#{{ base_class.lower() }}){{ "," if not loop.last else "" }}
+{%- endfor %}
+
 {% endif %}
 {% endfor %}
 
