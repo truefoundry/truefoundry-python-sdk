@@ -1,12 +1,13 @@
 import ast
-import os
 import re
 import shutil
-from pathlib import Path
-from typing import Dict, List, Any, Optional
-from jinja2 import Template
 from dataclasses import dataclass
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
+from jinja2 import Template
 from numpydoc.docscrape import FunctionDoc
+
 
 @dataclass
 class ParameterInfo:
@@ -17,12 +18,14 @@ class ParameterInfo:
     is_required: bool = True
     type_info: Optional[Dict[str, Any]] = None
 
+
 @dataclass
 class ReturnInfo:
     name: str
     type: str
     description: str
     type_info: Optional[Dict[str, Any]] = None
+
 
 @dataclass
 class FunctionInfo:
@@ -36,6 +39,7 @@ class FunctionInfo:
     module: str
     is_method: bool = False
 
+
 @dataclass
 class FieldInfo:
     name: str
@@ -48,6 +52,7 @@ class FieldInfo:
     enum_values: Optional[List[str]] = None
     nested_type: Optional[str] = None
     type_info: Optional[Dict[str, Any]] = None
+
 
 @dataclass
 class TypeInfo:
@@ -66,6 +71,7 @@ class TypeInfo:
     structure_example: str = ""
     link_to_type: str = ""
 
+
 @dataclass
 class ClientModuleInfo:
     name: str
@@ -73,65 +79,64 @@ class ClientModuleInfo:
     description: str
     methods: List[FunctionInfo]
 
+
 class TrueFoundrySDKDocGenerator:
     def __init__(self, sdk_path: str, output_path: str = "truefoundry_sdk_docs"):
         self.sdk_path = Path(sdk_path)
         self.output_path = Path(output_path)
         self.types: Dict[str, TypeInfo] = {}
-        self.types_docs_path =f"docs/{output_path}/types"
+        self.types_docs_path = f"docs/{output_path}/types"
         self.enums_docs_path = f"docs/{output_path}/enums"
         self.clients_docs_path = f"{output_path}/"
-        
+
         # Define client modules and their categories
         # Get all directories from sdk_path as module names
         module_dirs = [
-            item.name for item in self.sdk_path.iterdir() 
-            if item.is_dir() and not item.name.startswith('_') 
-            and not item.name in ['core', 'errors', 'types']
+            item.name
+            for item in self.sdk_path.iterdir()
+            if item.is_dir() and not item.name.startswith("_") and not item.name in ["core", "errors", "types"]
         ]
-        
+
         self.client_modules = {
             module_name: {
-                "display_name": module_name.replace('_', ' ').title(),
+                "display_name": module_name.replace("_", " ").title(),
                 "description": f"Manage {module_name.replace('_', ' ')}",
             }
             for module_name in module_dirs
         }
-        
+
     def extract_all_documentation(self) -> Dict[str, ClientModuleInfo]:
         client_modules = {}
-        
+
         # Discover all types dynamically
         all_types = self._discover_all_types()
         self.types = all_types
         print(f"Discovered {len(all_types)} types")
-        
+
         # Extract main client documentation
         main_client_info = self._extract_main_client_info()
         client_modules["main_client"] = main_client_info
-        
+
         # Extract each client module
         for module_name, module_config in self.client_modules.items():
             module_info = self._extract_client_module_info(module_name, module_config, all_types)
             if module_info:
                 client_modules[module_name] = module_info
-        
+
         return client_modules
-    
+
     def _extract_main_client_info(self) -> ClientModuleInfo:
-        
         # Read the main client file
         client_file = self.sdk_path / "client.py"
-        with open(client_file, 'r', encoding='utf-8') as f:
+        with open(client_file, "r", encoding="utf-8") as f:
             content = f.read()
         tree = ast.parse(content)
 
-
         base_client_file = self.sdk_path / "base_client.py"
-        with open(base_client_file, 'r', encoding='utf-8') as f:
+        with open(base_client_file, "r", encoding="utf-8") as f:
             base_client_content = f.read()
         base_tree = ast.parse(base_client_content)
-        
+
         # Extract methods from TrueFoundry class
         methods = []
         methods_map = {}
@@ -144,7 +149,7 @@ class TrueFoundrySDKDocGenerator:
                             methods.append(method_info)
                             methods_map[method_info.name] = method_info
                 break
-        
+
         for node in ast.walk(base_tree):
             if isinstance(node, ast.ClassDef) and node.name == "BaseTrueFoundry":
                 for child in node.body:
@@ -153,42 +158,46 @@ class TrueFoundrySDKDocGenerator:
                         if method_info and method_info.name not in methods_map:
                             methods.append(method_info)
                             methods_map[method_info.name] = method_info
-        
+
         return ClientModuleInfo(
             name="main_client",
             display_name="TrueFoundry Client",
             description="Main client for TrueFoundry SDK operations",
             methods=methods,
         )
-    
-    def _extract_client_module_info(self, module_name: str, module_config: Dict, all_types: Dict[str, TypeInfo]) -> Optional[ClientModuleInfo]:
+
+    def _extract_client_module_info(
+        self, module_name: str, module_config: Dict, all_types: Dict[str, TypeInfo]
+    ) -> Optional[ClientModuleInfo]:
         """Extract documentation for a specific client module"""
-        
+
         # Read the client file
         client_file = self.sdk_path / module_name / "client.py"
         if not client_file.exists():
             return None
-        
-        with open(client_file, 'r', encoding='utf-8') as f:
+
+        with open(client_file, "r", encoding="utf-8") as f:
             content = f.read()
-        
+
         tree = ast.parse(content)
-        
+
         # Extract methods from the main client class (not Async)
         methods = []
         for node in ast.walk(tree):
             if isinstance(node, ast.ClassDef) and not node.name.startswith("Async"):
                 for child in node.body:
                     if isinstance(child, ast.FunctionDef) and not child.name.startswith("_"):
-                        method_info = self._extract_function_info(child, f"{module_name}.client", is_method=True, all_types=all_types)
+                        method_info = self._extract_function_info(
+                            child, f"{module_name}.client", is_method=True, all_types=all_types
+                        )
                         if method_info:
                             methods.append(method_info)
                 break
-        
+
         # Also extract get_by_fqn methods from wrapped clients if they exist
         wrapped_methods = self._extract_wrapped_client_methods(module_name, all_types)
         methods.extend(wrapped_methods)
-        
+
         return ClientModuleInfo(
             name=module_name,
             display_name=module_config["display_name"],
@@ -199,76 +208,76 @@ class TrueFoundrySDKDocGenerator:
     def _extract_wrapped_client_methods(self, module_name: str, all_types: Dict[str, TypeInfo]) -> List[FunctionInfo]:
         """Extract get_by_fqn methods from wrapped clients"""
         methods = []
-        
+
         # Read the wrapped clients file
         wrapped_clients_file = self.sdk_path / "_wrapped_clients.py"
         if not wrapped_clients_file.exists():
             return methods
-        
+
         try:
-            with open(wrapped_clients_file, 'r', encoding='utf-8') as f:
+            with open(wrapped_clients_file, "r", encoding="utf-8") as f:
                 content = f.read()
-            
+
             tree = ast.parse(content)
-            
+
             # Look for the wrapped client class for this module
             wrapped_class_name = f"Wrapped{module_name.replace('_', ' ').title().replace(' ', '')}Client"
-            
+
             for node in ast.walk(tree):
                 if isinstance(node, ast.ClassDef) and node.name == wrapped_class_name:
                     for child in node.body:
                         if isinstance(child, ast.FunctionDef) and child.name == "get_by_fqn":
-                            method_info = self._extract_function_info(child, f"{module_name}.client", is_method=True, all_types=all_types)
+                            method_info = self._extract_function_info(
+                                child, f"{module_name}.client", is_method=True, all_types=all_types
+                            )
                             if method_info:
                                 methods.append(method_info)
                     break
-                    
+
         except Exception as e:
             print(f"Error extracting wrapped client methods for {module_name}: {e}")
-        
+
         return methods
 
-    def _extract_type_info(self, node: ast.ClassDef, module_name: str, client_module: str, all_types: Dict[str, TypeInfo]) -> Optional[TypeInfo]:
+    def _extract_type_info(
+        self, node: ast.ClassDef, module_name: str, client_module: str, all_types: Dict[str, TypeInfo]
+    ) -> Optional[TypeInfo]:
         """Extract detailed information about a type/class"""
         try:
             # Get docstring
             docstring = ast.get_docstring(node) or ""
-            
+
             # Get base classes
             base_classes = []
             for base in node.bases:
                 if isinstance(base, ast.Name):
                     base_classes.append(base.id)
                 elif isinstance(base, ast.Attribute):
-                    if hasattr(base.value, 'id') and isinstance(base.value, ast.Name):
+                    if hasattr(base.value, "id") and isinstance(base.value, ast.Name):
                         base_classes.append(f"{base.value.id}.{base.attr}")
                     else:
                         base_classes.append(base.attr)
-            
+
             # Check if it's an enum
             is_enum = any("enum" in base.lower() for base in base_classes)
-            
+
             # Only process enums or types with user-settable values
             if not is_enum:
                 return None
-            
+
             # Extract enum values
             enum_values = []
-            
+
             for child in node.body:
                 if isinstance(child, ast.Assign):
                     for target in child.targets:
                         if isinstance(target, ast.Name):
                             attr_name = target.id
                             attr_value = self._get_node_value(child.value)
-                            
+
                             if attr_value:
-                                enum_values.append({
-                                    "name": attr_name,
-                                    "value": attr_value,
-                                    "description": ""
-                                })
-            
+                                enum_values.append({"name": attr_name, "value": attr_value, "description": ""})
+
             return TypeInfo(
                 name=node.name,
                 docstring=docstring,
@@ -277,13 +286,12 @@ class TrueFoundrySDKDocGenerator:
                 is_enum=is_enum,
                 module=module_name,
                 client_module=client_module,
-                link_to_type=self._get_link_to_type(node.name, is_enum)
+                link_to_type=self._get_link_to_type(node.name, is_enum),
             )
-            
+
         except Exception as e:
             print(f"Error extracting type {node.name}: {e}")
             return None
-        
 
     def _get_link_to_type(self, type_name: str, is_enum: bool = False) -> str:
         """Get the link to a type"""
@@ -291,49 +299,54 @@ class TrueFoundrySDKDocGenerator:
             return f"/{self.enums_docs_path}#{type_name.lower()}"
         else:
             return f"/{self.types_docs_path}#{type_name.lower()}"
-    
-    def _extract_function_info(self, node: ast.FunctionDef, module_name: str, is_method: bool = False, all_types: Optional[Dict[str, TypeInfo]] = None) -> Optional[FunctionInfo]:
+
+    def _extract_function_info(
+        self,
+        node: ast.FunctionDef,
+        module_name: str,
+        is_method: bool = False,
+        all_types: Optional[Dict[str, TypeInfo]] = None,
+    ) -> Optional[FunctionInfo]:
         """Extract detailed information about a function using numpydoc"""
         try:
             # Skip __init__ methods and with_raw_response methods
             if node.name == "__init__" or node.name == "with_raw_response":
                 return None
-            
+
             # Get docstring
             docstring = ast.get_docstring(node) or ""
-            
+
             # Create a mock function object for numpydoc
             class MockFunction:
                 def __init__(self, name, docstring, signature):
                     self.__name__ = name
                     self.__doc__ = docstring
                     self.__signature__ = signature
-            
+
             # Get function signature
             signature = self._create_signature_from_node(node)
             mock_func = MockFunction(node.name, docstring, signature)
-            
+
             # Parse with numpydoc
             try:
                 doc = FunctionDoc(mock_func)
-                
+
                 # Extract parameters
                 parameters = []
                 for param in doc["Parameters"]:
                     if param.name not in ["request_options"]:  # Skip internal parameters
                         # Extract type information and create links
                         type_info = self._extract_type_info_from_param(param.type, all_types or {})
-                        
-                        
+
                         param_info = ParameterInfo(
                             name=param.name,
                             type_annotation=param.type,
                             description="\n".join(param.desc),
                             is_required="Optional" not in param.type,
-                            type_info=type_info
+                            type_info=type_info,
                         )
                         parameters.append(param_info)
-                
+
                 # Extract returns
                 returns = []
                 for ret in doc["Returns"]:
@@ -341,10 +354,10 @@ class TrueFoundrySDKDocGenerator:
                         name=ret.type,
                         type=ret.type,
                         description="\n".join(ret.desc),
-                        type_info=self._extract_type_info_from_param(ret.type, all_types or {})
+                        type_info=self._extract_type_info_from_param(ret.type, all_types or {}),
                     )
                     returns.append(return_info)
-                
+
                 # Generate proper Python examples based on method signature
                 examples = []
                 # Create a proper Python example
@@ -352,12 +365,12 @@ class TrueFoundrySDKDocGenerator:
                     "from truefoundry import TrueFoundry",
                     "",
                     "client = TrueFoundry(",
-                    "    api_key=\"YOUR_API_KEY\",",
-                    "    base_url=\"https://yourhost.com/path/to/api\",",
+                    '    api_key="YOUR_API_KEY",',
+                    '    base_url="https://yourhost.com/path/to/api",',
                     ")",
-                    ""
+                    "",
                 ]
-                
+
                 # Add method call based on parameters
                 # For main client methods, use client.method_name
                 # For module methods, use client.module_name.method_name
@@ -365,55 +378,57 @@ class TrueFoundrySDKDocGenerator:
                     method_call = f"client.{node.name}("
                 else:
                     # Extract module name from module_name (e.g., "ml_repos.client" -> "ml_repos")
-                    module_part = module_name.split('.')[0]
+                    module_part = module_name.split(".")[0]
                     method_call = f"client.{module_part}.{node.name}("
-                
+
                 # Add parameters based on what we have
                 param_lines = []
                 for param in parameters:
                     if param.name == "manifest":
-                        param_lines.append(f"    {param.name}={{\"key\": \"value\"}},")
+                        param_lines.append(f'    {param.name}={{"key": "value"}},')
                     elif param.name in ["id", "application_id", "cluster_id", "workspace_id"]:
-                        param_lines.append(f"    {param.name}=\"{param.name}_value\",")
+                        param_lines.append(f'    {param.name}="{param.name}_value",')
                     elif param.name in ["limit", "offset"]:
                         param_lines.append(f"    {param.name}=10,")
                     elif param.name in ["dry_run", "force_deploy", "trigger_on_deploy"]:
                         param_lines.append(f"    {param.name}=False,")
                     else:
-                        param_lines.append(f"    {param.name}=\"value\",")
-                
+                        param_lines.append(f'    {param.name}="value",')
+
                 if param_lines:
                     method_call += "\n" + "\n".join(param_lines)
-                
+
                 method_call += "\n)"
                 example_lines.append(method_call)
-                
+
                 # Add response handling if it's a list method
                 if node.name == "list":
-                    example_lines.extend([
-                        "",
-                        "# Iterate through results",
-                        "for item in response:",
-                        "    print(item.name)",
-                        "",
-                        "# Or paginate page by page",
-                        "for page in response.iter_pages():",
-                        "    for item in page:",
-                        "        print(item.name)"
-                    ])
-                
+                    example_lines.extend(
+                        [
+                            "",
+                            "# Iterate through results",
+                            "for item in response:",
+                            "    print(item.name)",
+                            "",
+                            "# Or paginate page by page",
+                            "for page in response.iter_pages():",
+                            "    for item in page:",
+                            "        print(item.name)",
+                        ]
+                    )
+
                 examples.append("\n".join(example_lines))
-                
+
                 # Get signature from AST
                 signature = self._create_signature_from_node(node)
-                
+
                 # Clean up the enhanced description to avoid MDX parsing issues
                 summary_lines = doc.get("Summary", [])
                 enhanced_description = ""
                 if summary_lines:
                     # Only take the first line of summary to avoid raw docstring content
                     enhanced_description = summary_lines[0].strip()
-                
+
                 return FunctionInfo(
                     name=node.name,
                     signature=signature,
@@ -425,26 +440,26 @@ class TrueFoundrySDKDocGenerator:
                     module=module_name,
                     is_method=is_method,
                 )
-                
+
             except Exception as e:
                 # Fallback to basic extraction if numpydoc fails
                 print(f"Warning: numpydoc failed for {node.name}, using fallback: {e}")
                 # return self._extract_function_info_fallback(node, module_name, is_method, all_types)
                 return None
-            
+
         except Exception as e:
             print(f"Error extracting function {node.name}: {e}")
             return None
-    
+
     def _get_type_annotation(self, annotation) -> str:
         """Extract type annotation as string"""
         if annotation is None:
             return "Any"
-        
+
         if isinstance(annotation, ast.Name):
             return annotation.id
         elif isinstance(annotation, ast.Attribute):
-            if hasattr(annotation.value, 'id') and isinstance(annotation.value, ast.Name):
+            if hasattr(annotation.value, "id") and isinstance(annotation.value, ast.Name):
                 return f"{annotation.value.id}.{annotation.attr}"
             else:
                 return annotation.attr
@@ -459,7 +474,7 @@ class TrueFoundrySDKDocGenerator:
             return f"({', '.join(elements)})"
         else:
             return "Any"
-    
+
     def _get_node_value(self, node) -> str:
         """Get string representation of a node value"""
         if isinstance(node, ast.Constant):
@@ -467,26 +482,26 @@ class TrueFoundrySDKDocGenerator:
         elif isinstance(node, ast.Name):
             return node.id
         elif isinstance(node, ast.Attribute):
-            if hasattr(node.value, 'id') and isinstance(node.value, ast.Name):
+            if hasattr(node.value, "id") and isinstance(node.value, ast.Name):
                 return f"{node.value.id}.{node.attr}"
             else:
                 return node.attr
         else:
             return "..."
-    
+
     def _create_signature_from_node(self, node: ast.FunctionDef) -> str:
         """Create a readable function signature from AST node"""
         params = []
-        
+
         for arg in node.args.args:
             if arg.arg == "self":
                 continue
-                
+
             param_str = arg.arg
             if arg.annotation:
                 param_str += f": {self._get_type_annotation(arg.annotation)}"
             params.append(param_str)
-        
+
         # Handle defaults
         defaults = node.args.defaults
         if defaults:
@@ -497,23 +512,18 @@ class TrueFoundrySDKDocGenerator:
                 if param_index < len(params):
                     default_value = self._get_node_value(default)
                     params[param_index] += f" = {default_value}"
-        
-        return f"{node.name}({', '.join(params)})"
-    
-    def _extract_type_info_from_param(self, type_str: str, all_types: Dict[str, TypeInfo]) -> Optional[Dict[str, Any]]:
 
+        return f"{node.name}({', '.join(params)})"
+
+    def _extract_type_info_from_param(self, type_str: str, all_types: Dict[str, TypeInfo]) -> Optional[Dict[str, Any]]:
         for type_name, type_info in all_types.items():
             if type_name == type_str:
                 link = self._get_link_to_type(type_info.name, type_info.is_enum)
-                return {
-                    "name": type_info.name,
-                    "description": type_info.enhanced_description or "",
-                    "link": link
-                }
-        
+                return {"name": type_info.name, "description": type_info.enhanced_description or "", "link": link}
+
         best_match = None
         best_match_length = 0
-        
+
         for type_name, type_info in all_types.items():
             # Check if type_name is a complete word within type_str
             # This prevents "ApplyMlEntityResponse" from matching "ApplyMlEntityResponseData"
@@ -522,31 +532,25 @@ class TrueFoundrySDKDocGenerator:
                 if len(type_name) > best_match_length:
                     best_match = type_info
                     best_match_length = len(type_name)
-        
+
         if best_match:
             link = self._get_link_to_type(best_match.name, best_match.is_enum)
-            return {
-                "name": best_match.name,
-                "description": best_match.enhanced_description or "",
-                "link": link
-            }
-        
-        return None
-        
-    
-    def _is_manifest_relevant_to_module(self, manifest_type_name: str, module_name: str) -> bool:
+            return {"name": best_match.name, "description": best_match.enhanced_description or "", "link": link}
 
+        return None
+
+    def _is_manifest_relevant_to_module(self, manifest_type_name: str, module_name: str) -> bool:
         base_name = manifest_type_name.replace("Manifest", "").lower()
         module_name_lower = module_name.lower()
-        
+
         # Direct match
         if base_name == module_name_lower:
             return True
-        
+
         # Check for partial matches
         if module_name_lower in base_name or base_name in module_name_lower:
             return True
-        
+
         # Special cases for compound names
         if module_name_lower == "applications" and "application" in base_name:
             return True
@@ -558,24 +562,23 @@ class TrueFoundrySDKDocGenerator:
             return True
         elif module_name_lower == "tracing_projects" and "tracingproject" in base_name:
             return True
-        
+
         return False
-    
-    
+
     def _discover_all_types(self) -> Dict[str, TypeInfo]:
         """Dynamically discover all types from the types directory"""
         all_types = {}
-        
+
         # Discover types from main types directory
         main_types_dir = self.sdk_path / "types"
         if main_types_dir.exists():
             for type_file in main_types_dir.glob("*.py"):
                 if type_file.name.startswith("_"):
                     continue
-                
+
                 types_from_file = self._extract_types_from_file(type_file, "types")
                 all_types.update(types_from_file)
-        
+
         # Discover types from client-specific type directories
         for module_name in self.client_modules.keys():
             types_dir = self.sdk_path / module_name / "types"
@@ -583,22 +586,21 @@ class TrueFoundrySDKDocGenerator:
                 for type_file in types_dir.glob("*.py"):
                     if type_file.name.startswith("_"):
                         continue
-                    
+
                     types_from_file = self._extract_types_from_file(type_file, f"{module_name}.types")
                     all_types.update(types_from_file)
-        
-        return all_types
-    
-    def _extract_types_from_file(self, type_file: Path, module_name: str) -> Dict[str, TypeInfo]:
 
+        return all_types
+
+    def _extract_types_from_file(self, type_file: Path, module_name: str) -> Dict[str, TypeInfo]:
         types = {}
-        
+
         try:
-            with open(type_file, 'r', encoding='utf-8') as f:
+            with open(type_file, "r", encoding="utf-8") as f:
                 content = f.read()
-            
+
             tree = ast.parse(content)
-            
+
             for node in ast.walk(tree):
                 if isinstance(node, ast.ClassDef):
                     type_info = self._extract_detailed_type_info(node, f"{module_name}.{type_file.stem}")
@@ -611,20 +613,28 @@ class TrueFoundrySDKDocGenerator:
                             type_name = target.id
                             if isinstance(node.value, ast.Attribute) and node.value.attr == "Union":
                                 # This is a typing.Union type alias
-                                type_info = self._extract_union_type_info(type_name, node.value, f"{module_name}.{type_file.stem}")
+                                type_info = self._extract_union_type_info(
+                                    type_name, node.value, f"{module_name}.{type_file.stem}"
+                                )
                                 if type_info:
                                     types[type_info.name] = type_info
-                            elif isinstance(node.value, ast.Subscript) and isinstance(node.value.value, ast.Attribute) and node.value.value.attr == "Union":
+                            elif (
+                                isinstance(node.value, ast.Subscript)
+                                and isinstance(node.value.value, ast.Attribute)
+                                and node.value.value.attr == "Union"
+                            ):
                                 # This is a typing.Union[...] type alias
-                                type_info = self._extract_union_type_info(type_name, node.value, f"{module_name}.{type_file.stem}")
+                                type_info = self._extract_union_type_info(
+                                    type_name, node.value, f"{module_name}.{type_file.stem}"
+                                )
                                 if type_info:
                                     types[type_info.name] = type_info
-                        
+
         except Exception as e:
             print(f"Error extracting types from {type_file}: {e}")
-        
+
         return types
-    
+
     def _extract_union_type_info(self, type_name: str, union_node, module_name: str) -> Optional[TypeInfo]:
         """Extract information about a union type alias"""
         try:
@@ -637,17 +647,21 @@ class TrueFoundrySDKDocGenerator:
                         if isinstance(elt, ast.Name):
                             union_types.append(elt.id)
                         elif isinstance(elt, ast.Attribute):
-                            union_types.append(f"{elt.value.id}.{elt.attr}" if hasattr(elt.value, 'id') else elt.attr)
+                            union_types.append(f"{elt.value.id}.{elt.attr}" if hasattr(elt.value, "id") else elt.attr)
                 else:
                     # Single type in Union
                     if isinstance(union_node.slice, ast.Name):
                         union_types.append(union_node.slice.id)
                     elif isinstance(union_node.slice, ast.Attribute):
-                        union_types.append(f"{union_node.slice.value.id}.{union_node.slice.attr}" if hasattr(union_node.slice.value, 'id') else union_node.slice.attr)
-            
+                        union_types.append(
+                            f"{union_node.slice.value.id}.{union_node.slice.attr}"
+                            if hasattr(union_node.slice.value, "id")
+                            else union_node.slice.attr
+                        )
+
             # Create a description for the union type
             description = f"Union type that can be one of: {', '.join(union_types)}"
-            
+
             return TypeInfo(
                 name=type_name,
                 docstring=description,
@@ -658,51 +672,54 @@ class TrueFoundrySDKDocGenerator:
                 is_manifest="Manifest" in type_name,
                 module=module_name,
                 base_classes=union_types,
-                is_response_type=any(word in type_name.lower() for word in ["response", "get", "list", "create", "update", "delete"]),
+                is_response_type=any(
+                    word in type_name.lower() for word in ["response", "get", "list", "create", "update", "delete"]
+                ),
                 is_input_type=any(word in type_name.lower() for word in ["request", "input", "manifest"]),
                 structure_example=f"One of: {', '.join(union_types)}",
-                link_to_type=self._get_link_to_type(type_name, False)
+                link_to_type=self._get_link_to_type(type_name, False),
             )
-            
+
         except Exception as e:
             print(f"Error extracting union type {type_name}: {e}")
             return None
 
     def _extract_detailed_type_info(self, node: ast.ClassDef, module_name: str) -> Optional[TypeInfo]:
-
         try:
             # Get docstring
             docstring = ast.get_docstring(node) or ""
             # Clean up the docstring
             cleaned_docstring = self._clean_description(docstring)
-            
+
             # Get base classes
             base_classes = []
             for base in node.bases:
                 if isinstance(base, ast.Name):
                     base_classes.append(base.id)
                 elif isinstance(base, ast.Attribute):
-                    if hasattr(base.value, 'id') and isinstance(base.value, ast.Name):
+                    if hasattr(base.value, "id") and isinstance(base.value, ast.Name):
                         base_classes.append(f"{base.value.id}.{base.attr}")
                     else:
                         base_classes.append(base.attr)
-            
+
             # Check if it's an enum
             is_enum = any("enum" in base.lower() for base in base_classes)
-            
+
             # Check if it's a manifest type
             is_manifest = "Manifest" in node.name
-            
+
             # Check if it's a response type
-            is_response_type = any(word in node.name.lower() for word in ["response", "get", "list", "create", "update", "delete"])
-           
+            is_response_type = any(
+                word in node.name.lower() for word in ["response", "get", "list", "create", "update", "delete"]
+            )
+
             # Check if it's an input type
             is_input_type = any(word in node.name.lower() for word in ["request", "input", "manifest"])
-            
+
             # Extract fields
             fields = []
             enum_values = []
-            
+
             if is_enum:
                 # Extract enum values
                 for child in node.body:
@@ -711,13 +728,9 @@ class TrueFoundrySDKDocGenerator:
                             if isinstance(target, ast.Name):
                                 attr_name = target.id
                                 attr_value = self._get_node_value(child.value)
-                                
+
                                 if attr_value:
-                                    enum_values.append({
-                                        "name": attr_name,
-                                        "value": attr_value,
-                                        "description": ""
-                                    })
+                                    enum_values.append({"name": attr_name, "value": attr_value, "description": ""})
             else:
                 # Extract fields from class attributes
                 for child in node.body:
@@ -725,14 +738,14 @@ class TrueFoundrySDKDocGenerator:
                         field_info = self._extract_field_info(child, node)
                         if field_info:
                             fields.append(field_info)
-            
+
             # Generate a structure example for the type
             structure_example = self._generate_structure_example(fields)
-            
+
             return TypeInfo(
                 name=node.name,
                 docstring=cleaned_docstring,
-                enhanced_description=cleaned_docstring.split('.')[0] if cleaned_docstring else "",
+                enhanced_description=cleaned_docstring.split(".")[0] if cleaned_docstring else "",
                 fields=fields if fields else None,
                 enum_values=enum_values if enum_values else None,
                 is_enum=is_enum,
@@ -742,13 +755,13 @@ class TrueFoundrySDKDocGenerator:
                 is_response_type=is_response_type,
                 is_input_type=is_input_type,
                 structure_example=structure_example,
-                link_to_type=self._get_link_to_type(node.name, is_enum)
+                link_to_type=self._get_link_to_type(node.name, is_enum),
             )
-            
+
         except Exception as e:
             print(f"Error extracting type {node.name}: {e}")
             return None
-    
+
     def _is_global_constant(self, node: ast.Assign) -> bool:
         """Check if an assignment node represents a global constant (uppercase screaming ones)"""
         try:
@@ -773,10 +786,10 @@ class TrueFoundrySDKDocGenerator:
             # Check if this is a type alias assignment
             if len(node.targets) == 1 and isinstance(node.targets[0], ast.Name):
                 type_name = node.targets[0].id
-                
+
                 # Get the type annotation
                 type_annotation = self._get_type_annotation(node.value)
-                
+
                 # Create a basic TypeInfo for the type alias
                 return TypeInfo(
                     name=type_name,
@@ -791,34 +804,34 @@ class TrueFoundrySDKDocGenerator:
                     is_response_type=False,
                     is_input_type=False,
                     structure_example=type_annotation,
-                    link_to_type=self._get_link_to_type(type_name, False)
+                    link_to_type=self._get_link_to_type(type_name, False),
                 )
-                
+
         except Exception as e:
             print(f"Error extracting type alias info: {e}")
-        
+
         return None
-    
+
     def _extract_field_info(self, node: ast.AnnAssign, class_node: ast.ClassDef) -> Optional[FieldInfo]:
         """Extract detailed information about a field"""
         try:
             if not isinstance(node.target, ast.Name):
                 return None
-            
+
             field_name = node.target.id
             type_annotation = self._get_type_annotation(node.annotation)
-            
+
             # Get field description from the docstring that follows the field
             description = ""
-            
+
             # Look for docstring after this field assignment
-            if node.value and hasattr(node.value, 'keywords') and isinstance(node.value, ast.Call):
+            if node.value and hasattr(node.value, "keywords") and isinstance(node.value, ast.Call):
                 for keyword in node.value.keywords:
-                    if keyword.arg == 'description':
+                    if keyword.arg == "description":
                         raw_description = self._get_node_value(keyword.value)
                         description = self._clean_description(raw_description)
                         break
-            
+
             # If no description found in pydantic.Field, look for docstring in the class
             if not description:
                 # Find the docstring that follows this field assignment
@@ -830,42 +843,43 @@ class TrueFoundrySDKDocGenerator:
                             if isinstance(docstring, str):
                                 description = self._clean_description(docstring)
                                 break
-            
+
             # Determine field properties
             is_optional = "Optional" in type_annotation or "typing.Optional" in type_annotation
             is_required = not is_optional
-            
+
             # Determine field type
             field_type = self._determine_field_type(type_annotation)
-            
+
             # Extract nested type information
             nested_type = self._extract_nested_type(type_annotation)
-            
-           
+
             # Get default value
             default_value = None
             if node.value:
                 default_value = self._get_node_value(node.value)
-            
+
             return FieldInfo(
                 name=field_name,
                 type_annotation=type_annotation,
-                description=re.sub(r'([<>\{\}\[\]\(\)])', r'\\\1', description),
+                description=re.sub(r"([<>\{\}\[\]\(\)])", r"\\\1", description),
                 default_value=default_value,
                 is_required=is_required,
                 is_optional=is_optional,
                 field_type=field_type,
                 enum_values=[],
-                nested_type=nested_type
+                nested_type=nested_type,
             )
-            
+
         except Exception as e:
             print(f"Error extracting field info: {e}")
             return None
-    
+
     def _add_type_info_to_field(self, field: FieldInfo, all_types: Dict[str, TypeInfo]) -> FieldInfo:
         """Add type information to a field"""
-        type_info = self._extract_type_info_from_param(field.nested_type if field.nested_type else field.type_annotation, all_types)
+        type_info = self._extract_type_info_from_param(
+            field.nested_type if field.nested_type else field.type_annotation, all_types
+        )
         if type_info:
             field.type_info = type_info
         return field
@@ -874,57 +888,79 @@ class TrueFoundrySDKDocGenerator:
         """Clean up description by removing metadata and formatting"""
         if not description:
             return ""
-        
+
         # Remove metadata lines that start with +
-        lines = description.split('\n')
+        lines = description.split("\n")
         cleaned_lines = []
-        
+
         for line in lines:
             line = line.strip()
             # Skip metadata lines
-            if line.startswith('+'):
+            if line.startswith("+"):
                 continue
             # Skip empty lines
             if not line:
                 continue
             # Skip lines that are just metadata
-            if line.startswith('+label=') or line.startswith('+icon=') or line.startswith('+sort=') or line.startswith('+usage=') or line.startswith('+message=') or line.startswith('+placeholder=') or line.startswith('+uiType=') or line.startswith('+uiProps='):
+            if (
+                line.startswith("+label=")
+                or line.startswith("+icon=")
+                or line.startswith("+sort=")
+                or line.startswith("+usage=")
+                or line.startswith("+message=")
+                or line.startswith("+placeholder=")
+                or line.startswith("+uiType=")
+                or line.startswith("+uiProps=")
+            ):
                 continue
             # Skip lines that contain only metadata patterns
-            if any(pattern in line for pattern in ['+label=', '+icon=', '+sort=', '+usage=', '+message=', '+placeholder=', '+uiType=', '+uiProps=']):
+            if any(
+                pattern in line
+                for pattern in [
+                    "+label=",
+                    "+icon=",
+                    "+sort=",
+                    "+usage=",
+                    "+message=",
+                    "+placeholder=",
+                    "+uiType=",
+                    "+uiProps=",
+                ]
+            ):
                 continue
             cleaned_lines.append(line)
-        
-        result = ' '.join(cleaned_lines)
-        
+
+        result = " ".join(cleaned_lines)
+
         # Remove any remaining metadata patterns
         import re
-        result = re.sub(r'\+[a-zA-Z_]+=[^,\s]+', '', result)
-        result = re.sub(r'\+[a-zA-Z_]+=\{[^}]+\}', '', result)
-        
+
+        result = re.sub(r"\+[a-zA-Z_]+=[^,\s]+", "", result)
+        result = re.sub(r"\+[a-zA-Z_]+=\{[^}]+\}", "", result)
+
         # Clean up extra whitespace
-        result = re.sub(r'\s+', ' ', result).strip()
-        
+        result = re.sub(r"\s+", " ", result).strip()
+
         # Extract usage information if available
-        usage_match = re.search(r'\+usage=([^+]+)', description)
+        usage_match = re.search(r"\+usage=([^+]+)", description)
         if usage_match:
             usage_text = usage_match.group(1).strip()
             if usage_text:
                 result = usage_text
-        
+
         # Extract message information if available
-        message_match = re.search(r'\+message=([^+]+)', description)
+        message_match = re.search(r"\+message=([^+]+)", description)
         if message_match:
             message_text = message_match.group(1).strip()
             if message_text:
                 result = message_text
-        
+
         return result
-    
+
     def _determine_field_type(self, type_annotation: str) -> str:
         """Determine the basic field type from type annotation"""
         type_lower = type_annotation.lower()
-        
+
         if any(t in type_lower for t in ["str", "string"]):
             return "string"
         elif any(t in type_lower for t in ["int", "float", "number"]):
@@ -937,7 +973,7 @@ class TrueFoundrySDKDocGenerator:
             return "object"
         else:
             return "object"  # Default to object for complex types
-    
+
     def _extract_nested_type(self, type_annotation: str) -> Optional[str]:
         """Extract nested type from type annotation"""
         # Handle List[Type] and Optional[Type]
@@ -951,23 +987,23 @@ class TrueFoundrySDKDocGenerator:
             end = type_annotation.rfind("]")
             if start > 8 and end > start:
                 return type_annotation[start:end]
-        
+
         return None
-    
+
     def _generate_structure_example(self, fields: List[FieldInfo]) -> str:
         """Generate a more realistic structure example based on field types"""
         if not fields:
             return "{}"
-        
+
         lines = ["{"]
         for i, field in enumerate(fields):
             example_value = self._get_field_example_value(field)
             comma = "," if i < len(fields) - 1 else ""
             lines.append(f'  "{field.name}": {example_value}{comma}')
         lines.append("}")
-        
+
         return "\n".join(lines)
-    
+
     def _get_field_example_value(self, field: FieldInfo) -> str:
         """Get a realistic example value for a field"""
         if field.field_type == "string":
@@ -1019,16 +1055,16 @@ class TrueFoundrySDKDocGenerator:
                     return '{"nested_key": "nested_value"}'
             else:
                 return '{"key": "value"}'
-    
+
     def generate_mintlify_docs(self):
         """Generate comprehensive Mintlify documentation"""
         output_path = Path(self.output_path)
-        
+
         # Clean up existing directory
         if output_path.exists():
             shutil.rmtree(output_path)
         output_path.mkdir(exist_ok=True)
-        
+
         # Extract all documentation
         client_modules = self.extract_all_documentation()
 
@@ -1037,18 +1073,18 @@ class TrueFoundrySDKDocGenerator:
             if type_info.fields:
                 for field in type_info.fields:
                     field = self._add_type_info_to_field(field, self.types)
-        
+
         # Generate home page
         self._generate_home_page(client_modules, output_path)
-        
+
         # Generate main client documentation
         self._generate_main_client_docs(client_modules["main_client"], output_path)
-        
+
         # Generate documentation for each client module
         for module_name, module_info in client_modules.items():
             if module_name != "main_client":
                 self._generate_client_module_docs(module_info, output_path)
-        
+
         # Generate types documentation
         self._generate_types_docs(output_path)
 
@@ -1057,16 +1093,17 @@ class TrueFoundrySDKDocGenerator:
 
     def _generate_home_page(self, client_modules: Dict[str, ClientModuleInfo], output_path: Path):
         """Generate a beautiful home page showcasing all clients"""
-        
+
         # Define clients to ignore
         ignore_clients = ["internal"]
-        
+
         # Get all non-main clients, excluding ignored ones
         all_clients = [
-            module_info for module_name, module_info in client_modules.items() 
+            module_info
+            for module_name, module_info in client_modules.items()
             if module_name != "main_client" and module_name not in ignore_clients
         ]
-        
+
         template = Template("""---
 title: "TrueFoundry Python SDK"
 description: "Complete Python SDK for TrueFoundry - Build, deploy, and manage ML applications"
@@ -1141,19 +1178,17 @@ for app in applications:
   Built with ❤️ by the TrueFoundry team
 </div>
 """)
-        
+
         content = template.render(
             client_modules=client_modules,
             all_clients=sorted(all_clients, key=lambda x: x.name.lower()),
-            clients_docs_path=self.clients_docs_path
+            clients_docs_path=self.clients_docs_path,
         )
-        
-        with open(output_path / "index.mdx", 'w', encoding='utf-8') as f:
+
+        with open(output_path / "index.mdx", "w", encoding="utf-8") as f:
             f.write(content)
 
-    
     def _generate_main_client_docs(self, client_info: ClientModuleInfo, output_path: Path):
- 
         template = Template("""---
 title: "TrueFoundry Client"
 description: "Main client for TrueFoundry SDK operations"
@@ -1169,7 +1204,7 @@ The main client for TrueFoundry SDK operations. This client provides access to a
   {% else %}
   {{ method.docstring.split('\n')[0] if method.docstring else 'No description available.' }}
   {% endif %}
-  
+
   {%- if method.parameters %}
   #### Parameters
   {%- for parameter in method.parameters %}
@@ -1187,7 +1222,7 @@ The main client for TrueFoundry SDK operations. This client provides access to a
     </ParamField>
   {% endfor %}
   {%- endif %}
-  
+
   {%- if method.returns %}
   #### Returns
   {% for return in method.returns %}
@@ -1197,13 +1232,13 @@ The main client for TrueFoundry SDK operations. This client provides access to a
     >
       {{ return.description or 'No description' }}
       {%- if return.type_info %}
-                            
+
       **Type Details:** [{{ return.type_info.name }}]({{ return.type_info.link }})
       {%- endif %}
     </ResponseField>
   {% endfor %}
   {%- endif %}
-  
+
   {%- if method.examples %}
   #### Usage
   {% for example in method.examples %}
@@ -1216,14 +1251,13 @@ The main client for TrueFoundry SDK operations. This client provides access to a
 
 {% endfor %}
 """)
-        
+
         content = template.render(client_info=client_info)
-        
-        with open(output_path / "main_client.mdx", 'w', encoding='utf-8') as f:
+
+        with open(output_path / "main_client.mdx", "w", encoding="utf-8") as f:
             f.write(content)
 
     def _generate_types_docs(self, output_path: Path):
-   
         template = Template("""---
 title: "SDK Types"
 description: "All types in the SDK"
@@ -1242,14 +1276,14 @@ description: "All types in the SDK"
 >
     {{ field.description or 'No description' }}
     {% if field.type_info %}
-                            
+
     **Type Details:** [{{ field.type_info.name }}]({{ field.type_info.link }})
     {% endif %}
-</ParamField>                                                    
+</ParamField>
 
 {% endfor %}
 {% elif type_info.base_classes and not type_info.is_enum %}
-### {{ type_info.name }}
+## {{ type_info.name }}
 
 {{ type_info.enhanced_description }}
 
@@ -1265,18 +1299,17 @@ description: "All types in the SDK"
         # Sort types by name
         sorted_types = sorted(self.types.values(), key=lambda x: x.name.lower())
         content = template.render(types=self.types, sorted_types=sorted_types)
-        with open(output_path / "types.mdx", 'w', encoding='utf-8') as f:
+        with open(output_path / "types.mdx", "w", encoding="utf-8") as f:
             f.write(content)
 
     def _generate_enum_docs(self, output_path: Path):
-
         template = Template("""---
 title: "All enums"
 description: "All enums in the SDK"
 ---
 {% for type_info in sorted_enums %}
 {% if type_info.is_enum and type_info.enum_values %}
-### {{ type_info.name }}
+## {{ type_info.name }}
 **Available Values:**
 {% for value in type_info.enum_values %}
 - **{{ value.name }}** = `{{ value.value }}`{% if value.description %} - {{ value.description }}{% endif %}
@@ -1286,15 +1319,13 @@ description: "All enums in the SDK"
 """)
         # Sort enums by name
         sorted_enums = sorted(
-            [t for t in self.types.values() if t.is_enum and t.enum_values], 
-            key=lambda x: x.name.lower()
+            [t for t in self.types.values() if t.is_enum and t.enum_values], key=lambda x: x.name.lower()
         )
         content = template.render(types=self.types, sorted_enums=sorted_enums)
-        with open(output_path / "enums.mdx", 'w', encoding='utf-8') as f:
+        with open(output_path / "enums.mdx", "w", encoding="utf-8") as f:
             f.write(content)
-    
+
     def _generate_client_module_docs(self, module_info: ClientModuleInfo, output_path: Path):
-  
         template = Template("""---
 title: "{{ module_info.display_name }}"
 description: "{{ module_info.description }}"
@@ -1308,7 +1339,7 @@ description: "{{ module_info.description }}"
   {% else %}
   {{ method.docstring.split('\n')[0] if method.docstring else 'No description available.' }}
   {% endif %}
-  
+
   {%- if method.parameters %}
   #### Parameters
   {%- for parameter in method.parameters %}
@@ -1326,7 +1357,7 @@ description: "{{ module_info.description }}"
     </ParamField>
   {% endfor %}
   {%- endif %}
-  
+
   {%- if method.returns %}
   #### Returns
   {% for return in method.returns %}
@@ -1342,7 +1373,7 @@ description: "{{ module_info.description }}"
     </ResponseField>
   {% endfor %}
   {%- endif %}
-  
+
   {%- if method.examples %}
   #### Usage
   {% for example in method.examples %}
@@ -1355,18 +1386,15 @@ description: "{{ module_info.description }}"
 
 {% endfor %}
 """)
-        
+
         content = template.render(module_info=module_info)
-        
-        with open(output_path / f"{module_info.name}.mdx", 'w', encoding='utf-8') as f:
+
+        with open(output_path / f"{module_info.name}.mdx", "w", encoding="utf-8") as f:
             f.write(content)
-    
+
 
 if __name__ == "__main__":
-    generator = TrueFoundrySDKDocGenerator(
-        sdk_path="src/truefoundry_sdk",
-        output_path="truefoundry_sdk_docs"
-    )
-    
+    generator = TrueFoundrySDKDocGenerator(sdk_path="src/truefoundry_sdk", output_path="truefoundry_sdk_docs")
+
     generator.generate_mintlify_docs()
     print("✅ Enhanced documentation generated successfully!")
