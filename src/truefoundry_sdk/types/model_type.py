@@ -19,6 +19,7 @@ class ModelType(str, enum.Enum):
     RERANK = "rerank"
     AUDIO = "audio"
     MODERATION = "moderation"
+    IMAGE = "image"
 
     def visit(
         self,
@@ -29,6 +30,7 @@ class ModelType(str, enum.Enum):
         rerank: typing.Callable[[], T_Result],
         audio: typing.Callable[[], T_Result],
         moderation: typing.Callable[[], T_Result],
+        image: typing.Callable[[], T_Result],
     ) -> T_Result:
         if self is ModelType.CHAT:
             return chat()
@@ -44,3 +46,5 @@ class ModelType(str, enum.Enum):
             return audio()
         if self is ModelType.MODERATION:
             return moderation()
+        if self is ModelType.IMAGE:
+            return image()

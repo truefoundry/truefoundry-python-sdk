@@ -28,11 +28,11 @@ class InternalClient:
 
         self.applications = ApplicationsClient(client_wrapper=client_wrapper)
 
+        self.metrics = MetricsClient(client_wrapper=client_wrapper)
+
         self.vcs = VcsClient(client_wrapper=client_wrapper)
 
         self.docker_registries = DockerRegistriesClient(client_wrapper=client_wrapper)
-
-        self.metrics = MetricsClient(client_wrapper=client_wrapper)
 
         self.workflows = WorkflowsClient(client_wrapper=client_wrapper)
 
@@ -101,11 +101,11 @@ class AsyncInternalClient:
 
         self.applications = AsyncApplicationsClient(client_wrapper=client_wrapper)
 
+        self.metrics = AsyncMetricsClient(client_wrapper=client_wrapper)
+
         self.vcs = AsyncVcsClient(client_wrapper=client_wrapper)
 
         self.docker_registries = AsyncDockerRegistriesClient(client_wrapper=client_wrapper)
-
-        self.metrics = AsyncMetricsClient(client_wrapper=client_wrapper)
 
         self.workflows = AsyncWorkflowsClient(client_wrapper=client_wrapper)
 

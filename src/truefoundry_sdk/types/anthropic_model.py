@@ -40,6 +40,7 @@ class AnthropicModel(UniversalBaseModel):
     +label=Model Types
     +sort=3
     +usage=Specify the type of the Anthropic model
+    +uiProps={"disableAllOption": true}
     """
 
     cost: typing.Optional[ModelCostMetric] = None

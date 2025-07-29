@@ -185,6 +185,9 @@ class TrueFoundrySDKDocGenerator:
                             methods.append(method_info)
                 break
         
+        # Also extract get_by_fqn methods from wrapped clients if they exist
+        wrapped_methods = self._extract_wrapped_client_methods(module_name, all_types)
+        methods.extend(wrapped_methods)
         
         return ClientModuleInfo(
             name=module_name,
@@ -193,6 +196,94 @@ class TrueFoundrySDKDocGenerator:
             methods=methods,
         )
 
+    def _extract_wrapped_client_methods(self, module_name: str, all_types: Dict[str, TypeInfo]) -> List[FunctionInfo]:
+        """Extract get_by_fqn methods from wrapped clients"""
+        methods = []
+        
+        # Read the wrapped clients file
+        wrapped_clients_file = self.sdk_path / "_wrapped_clients.py"
+        if not wrapped_clients_file.exists():
+            return methods
+        
+        try:
+            with open(wrapped_clients_file, 'r', encoding='utf-8') as f:
+                content = f.read()
+            
+            tree = ast.parse(content)
+            
+            # Look for the wrapped client class for this module
+            wrapped_class_name = f"Wrapped{module_name.replace('_', ' ').title().replace(' ', '')}Client"
+            
+            for node in ast.walk(tree):
+                if isinstance(node, ast.ClassDef) and node.name == wrapped_class_name:
+                    for child in node.body:
+                        if isinstance(child, ast.FunctionDef) and child.name == "get_by_fqn":
+                            method_info = self._extract_function_info(child, f"{module_name}.client", is_method=True, all_types=all_types)
+                            if method_info:
+                                methods.append(method_info)
+                    break
+                    
+        except Exception as e:
+            print(f"Error extracting wrapped client methods for {module_name}: {e}")
+        
+        return methods
+
+    def _extract_type_info(self, node: ast.ClassDef, module_name: str, client_module: str, all_types: Dict[str, TypeInfo]) -> Optional[TypeInfo]:
+        """Extract detailed information about a type/class"""
+        try:
+            # Get docstring
+            docstring = ast.get_docstring(node) or ""
+            
+            # Get base classes
+            base_classes = []
+            for base in node.bases:
+                if isinstance(base, ast.Name):
+                    base_classes.append(base.id)
+                elif isinstance(base, ast.Attribute):
+                    if hasattr(base.value, 'id') and isinstance(base.value, ast.Name):
+                        base_classes.append(f"{base.value.id}.{base.attr}")
+                    else:
+                        base_classes.append(base.attr)
+            
+            # Check if it's an enum
+            is_enum = any("enum" in base.lower() for base in base_classes)
+            
+            # Only process enums or types with user-settable values
+            if not is_enum:
+                return None
+            
+            # Extract enum values
+            enum_values = []
+            
+            for child in node.body:
+                if isinstance(child, ast.Assign):
+                    for target in child.targets:
+                        if isinstance(target, ast.Name):
+                            attr_name = target.id
+                            attr_value = self._get_node_value(child.value)
+                            
+                            if attr_value:
+                                enum_values.append({
+                                    "name": attr_name,
+                                    "value": attr_value,
+                                    "description": ""
+                                })
+            
+            return TypeInfo(
+                name=node.name,
+                docstring=docstring,
+                enhanced_description="",
+                enum_values=enum_values if enum_values else None,
+                is_enum=is_enum,
+                module=module_name,
+                client_module=client_module,
+                link_to_type=self._get_link_to_type(node.name, is_enum)
+            )
+            
+        except Exception as e:
+            print(f"Error extracting type {node.name}: {e}")
+            return None
+        
 
     def _get_link_to_type(self, type_name: str, is_enum: bool = False) -> str:
         """Get the link to a type"""
@@ -231,7 +322,7 @@ class TrueFoundrySDKDocGenerator:
                 for param in doc["Parameters"]:
                     if param.name not in ["request_options"]:  # Skip internal parameters
                         # Extract type information and create links
-                        type_info = self._extract_type_info_from_param(param.type, all_types)
+                        type_info = self._extract_type_info_from_param(param.type, all_types or {})
                         
                         
                         param_info = ParameterInfo(
@@ -250,7 +341,7 @@ class TrueFoundrySDKDocGenerator:
                         name=ret.type,
                         type=ret.type,
                         description="\n".join(ret.desc),
-                        type_info=self._extract_type_info_from_param(ret.type, all_types)
+                        type_info=self._extract_type_info_from_param(ret.type, all_types or {})
                     )
                     returns.append(return_info)
                 
@@ -268,7 +359,14 @@ class TrueFoundrySDKDocGenerator:
                 ]
                 
                 # Add method call based on parameters
-                method_call = f"client.{node.name}("
+                # For main client methods, use client.method_name
+                # For module methods, use client.module_name.method_name
+                if module_name == "client":
+                    method_call = f"client.{node.name}("
+                else:
+                    # Extract module name from module_name (e.g., "ml_repos.client" -> "ml_repos")
+                    module_part = module_name.split('.')[0]
+                    method_call = f"client.{module_part}.{node.name}("
                 
                 # Add parameters based on what we have
                 param_lines = []
@@ -346,7 +444,10 @@ class TrueFoundrySDKDocGenerator:
         if isinstance(annotation, ast.Name):
             return annotation.id
         elif isinstance(annotation, ast.Attribute):
-            return f"{annotation.value.id}.{annotation.attr}" if hasattr(annotation.value, 'id') else annotation.attr
+            if hasattr(annotation.value, 'id') and isinstance(annotation.value, ast.Name):
+                return f"{annotation.value.id}.{annotation.attr}"
+            else:
+                return annotation.attr
         elif isinstance(annotation, ast.Subscript):
             # Handle generic types like List[str], Dict[str, int]
             value = self._get_type_annotation(annotation.value)
@@ -366,7 +467,10 @@ class TrueFoundrySDKDocGenerator:
         elif isinstance(node, ast.Name):
             return node.id
         elif isinstance(node, ast.Attribute):
-            return f"{node.value.id}.{node.attr}" if hasattr(node.value, 'id') else node.attr
+            if hasattr(node.value, 'id') and isinstance(node.value, ast.Name):
+                return f"{node.value.id}.{node.attr}"
+            else:
+                return node.attr
         else:
             return "..."
     
@@ -411,6 +515,8 @@ class TrueFoundrySDKDocGenerator:
         best_match_length = 0
         
         for type_name, type_info in all_types.items():
+            # Check if type_name is a complete word within type_str
+            # This prevents "ApplyMlEntityResponse" from matching "ApplyMlEntityResponseData"
             if type_name in type_str:
                 # Prefer longer type names as they're more specific
                 if len(type_name) > best_match_length:
@@ -576,7 +682,10 @@ class TrueFoundrySDKDocGenerator:
                 if isinstance(base, ast.Name):
                     base_classes.append(base.id)
                 elif isinstance(base, ast.Attribute):
-                    base_classes.append(f"{base.value.id}.{base.attr}" if hasattr(base.value, 'id') else base.attr)
+                    if hasattr(base.value, 'id') and isinstance(base.value, ast.Name):
+                        base_classes.append(f"{base.value.id}.{base.attr}")
+                    else:
+                        base_classes.append(base.attr)
             
             # Check if it's an enum
             is_enum = any("enum" in base.lower() for base in base_classes)
@@ -640,6 +749,56 @@ class TrueFoundrySDKDocGenerator:
             print(f"Error extracting type {node.name}: {e}")
             return None
     
+    def _is_global_constant(self, node: ast.Assign) -> bool:
+        """Check if an assignment node represents a global constant (uppercase screaming ones)"""
+        try:
+            # Check if all targets are uppercase names (global constants)
+            for target in node.targets:
+                if isinstance(target, ast.Name):
+                    # If the target name is all uppercase, it's likely a global constant
+                    if target.id.isupper():
+                        return True
+                elif isinstance(target, ast.Tuple):
+                    # Check all elements in a tuple assignment
+                    for elt in target.elts:
+                        if isinstance(elt, ast.Name) and elt.id.isupper():
+                            return True
+            return False
+        except Exception:
+            return False
+
+    def _extract_type_alias_info(self, node: ast.Assign, module_name: str) -> Optional[TypeInfo]:
+        """Extract information about a type alias (like Union types)"""
+        try:
+            # Check if this is a type alias assignment
+            if len(node.targets) == 1 and isinstance(node.targets[0], ast.Name):
+                type_name = node.targets[0].id
+                
+                # Get the type annotation
+                type_annotation = self._get_type_annotation(node.value)
+                
+                # Create a basic TypeInfo for the type alias
+                return TypeInfo(
+                    name=type_name,
+                    docstring="",  # Type aliases typically don't have docstrings
+                    enhanced_description=f"Type alias: {type_annotation}",
+                    fields=None,  # Type aliases don't have fields
+                    enum_values=None,
+                    is_enum=False,
+                    is_manifest=False,
+                    module=module_name,
+                    base_classes=None,
+                    is_response_type=False,
+                    is_input_type=False,
+                    structure_example=type_annotation,
+                    link_to_type=self._get_link_to_type(type_name, False)
+                )
+                
+        except Exception as e:
+            print(f"Error extracting type alias info: {e}")
+        
+        return None
+    
     def _extract_field_info(self, node: ast.AnnAssign, class_node: ast.ClassDef) -> Optional[FieldInfo]:
         """Extract detailed information about a field"""
         try:
@@ -653,7 +812,7 @@ class TrueFoundrySDKDocGenerator:
             description = ""
             
             # Look for docstring after this field assignment
-            if node.value and hasattr(node.value, 'keywords'):
+            if node.value and hasattr(node.value, 'keywords') and isinstance(node.value, ast.Call):
                 for keyword in node.value.keywords:
                     if keyword.arg == 'description':
                         raw_description = self._get_node_value(keyword.value)
@@ -900,7 +1059,7 @@ class TrueFoundrySDKDocGenerator:
         """Generate a beautiful home page showcasing all clients"""
         
         # Define clients to ignore
-        ignore_clients = ["agents", "agent_versions", "tools", "internal"]
+        ignore_clients = ["internal"]
         
         # Get all non-main clients, excluding ignored ones
         all_clients = [
@@ -935,7 +1094,7 @@ for app in applications:
     print(f"Application: {app.name}")
 ```
 
-## Available Entities
+## Available Clients
 
 <div className="space-y-0">
   <a href="{{ clients_docs_path }}main_client" className="group flex items-center justify-between py-1 px-2 bg-white border-b border-gray-200 hover:bg-gray-50 transition-colors">
@@ -985,7 +1144,7 @@ for app in applications:
         
         content = template.render(
             client_modules=client_modules,
-            all_clients=all_clients,
+            all_clients=sorted(all_clients, key=lambda x: x.name.lower()),
             clients_docs_path=self.clients_docs_path
         )
         
@@ -1001,60 +1160,59 @@ description: "Main client for TrueFoundry SDK operations"
 ---
 The main client for TrueFoundry SDK operations. This client provides access to all SDK functionality through organized sub-clients.
 
-## Initialization
-
-<CodeGroup>
-
-```python
-from truefoundry import TrueFoundry
-
-# Initialize the client
-client = TrueFoundry(
-    base_url="https://api.truefoundry.com",
-    api_key="your_api_key"
-)
-```
-
-</CodeGroup>
-
-## Client Properties
-
-Access different SDK modules through the client properties:
+## Client Methods
 
 {% for method in client_info.methods %}
-### {{ method.name }}
-
-{{ method.enhanced_description or method.docstring }}
-
-**Parameters:**
-{% for parameter in method.parameters %}
-<ParamField 
-    body="{{ parameter.name }}" type="{{ parameter.type_annotation }}" 
-    {% if parameter.default_value %}default="{{ parameter.default_value }}"{% endif %}
-    {% if parameter.is_required %}required{% endif %}
-> 
-    {{ parameter.description }}
-    {% if parameter.type_info %}
-    **Type Details:** [{{ parameter.type_info.name }}]({{ parameter.type_info.link }})
-    {% endif %}
-</ParamField>
-{% endfor %}
-
-**Returns:**
-{% for return in method.returns %}
-<ResponseField name="{{ return.name }}" type="{{ return.type }}">
-    {{ return.description }}
-    {% if return.type_info %}
-    **Type Details:** [{{ return.type_info.name }}]({{ return.type_info.link }})
-    {% endif %}
-</ResponseField>
-{% endfor %}
-{% if method.examples %}
-**Example:**
+<Accordion title="{{ method.name }}">
+  {% if method.enhanced_description and method.enhanced_description.strip() %}
+  {{ method.enhanced_description }}
+  {% else %}
+  {{ method.docstring.split('\n')[0] if method.docstring else 'No description available.' }}
+  {% endif %}
+  
+  {%- if method.parameters %}
+  #### Parameters
+  {%- for parameter in method.parameters %}
+    <ParamField 
+      body="{{ parameter.name }}"
+      type="{{ parameter.type_annotation }}"
+      {% if parameter.default_value %}default="{{ parameter.default_value }}"{% endif %}
+      {% if parameter.is_required %}required{% endif %}
+    >
+      {{ parameter.description or 'No description' }}
+      {%- if parameter.type_info %}
+      
+      **Type Details:** [{{ parameter.type_info.name }}]({{ parameter.type_info.link }})
+      {%- endif %}
+    </ParamField>
+  {% endfor %}
+  {%- endif %}
+  
+  {%- if method.returns %}
+  #### Returns
+  {% for return in method.returns %}
+    <ResponseField 
+      name="{{ return.name }}"
+      type="{{ return.type }}"
+    >
+      {{ return.description or 'No description' }}
+      {%- if return.type_info %}
+                            
+      **Type Details:** [{{ return.type_info.name }}]({{ return.type_info.link }})
+      {%- endif %}
+    </ResponseField>
+  {% endfor %}
+  {%- endif %}
+  
+  {%- if method.examples %}
+  #### Usage
+  {% for example in method.examples %}
 ```python
-{{ method.examples[0] }}
+{{ example | safe }}
 ```
-{% endif %}
+  {% endfor %}
+  {%- endif %}
+</Accordion>
 
 {% endfor %}
 """)
@@ -1067,14 +1225,13 @@ Access different SDK modules through the client properties:
     def _generate_types_docs(self, output_path: Path):
    
         template = Template("""---
-title: "All input and output types"
-description: "All input and output types in the SDK"
+title: "SDK Types"
+description: "All types in the SDK"
 ---
-{% for type_info in types.values() %}
+{% for type_info in sorted_types %}
 {% if type_info.fields %}
-### {{ type_info.name }}
-                            
-**Fields:**
+## {{ type_info.name }}
+
 {% for field in type_info.fields %}
 
 <ParamField 
@@ -1105,7 +1262,9 @@ description: "All input and output types in the SDK"
 {% endfor %}
 
 """)
-        content = template.render(types=self.types)
+        # Sort types by name
+        sorted_types = sorted(self.types.values(), key=lambda x: x.name.lower())
+        content = template.render(types=self.types, sorted_types=sorted_types)
         with open(output_path / "types.mdx", 'w', encoding='utf-8') as f:
             f.write(content)
 
@@ -1115,7 +1274,7 @@ description: "All input and output types in the SDK"
 title: "All enums"
 description: "All enums in the SDK"
 ---
-{% for type_info in types.values() %}
+{% for type_info in sorted_enums %}
 {% if type_info.is_enum and type_info.enum_values %}
 ### {{ type_info.name }}
 **Available Values:**
@@ -1125,7 +1284,12 @@ description: "All enums in the SDK"
 {% endif %}
 {% endfor %}
 """)
-        content = template.render(types=self.types)
+        # Sort enums by name
+        sorted_enums = sorted(
+            [t for t in self.types.values() if t.is_enum and t.enum_values], 
+            key=lambda x: x.name.lower()
+        )
+        content = template.render(types=self.types, sorted_enums=sorted_enums)
         with open(output_path / "enums.mdx", 'w', encoding='utf-8') as f:
             f.write(content)
     

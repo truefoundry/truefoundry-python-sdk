@@ -16,8 +16,6 @@ class ArtifactType(str, enum.Enum):
     PLOT = "plot"
     IMAGE = "image"
     CHAT_PROMPT = "chat_prompt"
-    OPENAPI_TOOL = "openapi-tool"
-    AGENT = "agent"
 
     def visit(
         self,
@@ -26,8 +24,6 @@ class ArtifactType(str, enum.Enum):
         plot: typing.Callable[[], T_Result],
         image: typing.Callable[[], T_Result],
         chat_prompt: typing.Callable[[], T_Result],
-        openapi_tool: typing.Callable[[], T_Result],
-        agent: typing.Callable[[], T_Result],
     ) -> T_Result:
         if self is ArtifactType.ARTIFACT:
             return artifact()
@@ -39,7 +35,3 @@ class ArtifactType(str, enum.Enum):
             return image()
         if self is ArtifactType.CHAT_PROMPT:
             return chat_prompt()
-        if self is ArtifactType.OPENAPI_TOOL:
-            return openapi_tool()
-        if self is ArtifactType.AGENT:
-            return agent()

@@ -34,6 +34,7 @@ class AzureFoundryModelV2(UniversalBaseModel):
     +label=Model Types
     +sort=3
     +usage=Types of models supported by this Azure AI Foundry deployment
+    +uiProps={"disableAllOption": true}
     """
 
     model_id: str = pydantic.Field()

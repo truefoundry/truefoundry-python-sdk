@@ -3,6 +3,7 @@
 import typing
 
 from .container_task_config import ContainerTaskConfig
+from .py_spark_task_config import PySparkTaskConfig
 from .python_task_config import PythonTaskConfig
 
-FlyteTaskCustomTruefoundry = typing.Union[PythonTaskConfig, ContainerTaskConfig]
+FlyteTaskCustomTruefoundry = typing.Union[PythonTaskConfig, ContainerTaskConfig, PySparkTaskConfig]

@@ -42,6 +42,7 @@ class VertexModelV2(UniversalBaseModel):
     +label=Model Types
     +sort=4
     +usage=Specify the type of the Vertex AI model (e.g., chat, text, etc.)
+    +uiProps={"disableAllOption": true}
     """
 
     cost: typing.Optional[ModelCostMetric] = None

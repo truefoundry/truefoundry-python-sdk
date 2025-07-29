@@ -18,6 +18,7 @@ class GuardrailConfigGroup(UniversalBaseModel):
         default="provider-account/guardrail-config-group"
     )
     """
+    +uiType=Hidden
     +value=provider-account/guardrail-config-group
     """
 
