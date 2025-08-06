@@ -7,8 +7,23 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class UsageLimits(UniversalBaseModel):
-    tokens_per_minute: typing.Optional[int] = None
-    requests_per_minute: typing.Optional[int] = None
+    """
+    +label=Usage Limits
+    """
+
+    tokens_per_minute: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    +usage=Maximum number of tokens processed per minute
+    +uiProps={"descriptionInline":true}
+    +label=Tokens per Minute
+    """
+
+    requests_per_minute: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    +usage=Maximum number of requests processed per minute
+    +uiProps={"descriptionInline":true}
+    +label=Requests per Minute
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -7,9 +7,31 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class LoadBalancingWhen(UniversalBaseModel):
-    subjects: typing.Optional[typing.List[str]] = None
-    models: typing.List[str]
-    metadata: typing.Optional[typing.Dict[str, str]] = None
+    """
+    +label=Rule Conditions
+    """
+
+    subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    +usage=List of subjects that this rule applies to
+    +uiProps={"descriptionInline":true}
+    +label=Subjects
+    """
+
+    models: typing.List[str] = pydantic.Field()
+    """
+    +usage=List of models that this rule applies to
+    +uiType=IntegrationSelect
+    +uiProps={"integrationType":"model"}
+    +label=Models
+    """
+
+    metadata: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
+    """
+    +usage=Metadata key-value pairs that this rule applies to
+    +uiProps={"descriptionInline":true}
+    +label=Metadata
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

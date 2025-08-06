@@ -8,19 +8,30 @@ from .guardrails_rule import GuardrailsRule
 
 
 class GuardrailsConfig(UniversalBaseModel):
+    """
+    +label=Guardrails Configuration
+    """
+
     name: str = pydantic.Field()
     """
     +usage=Name of the guardrails configuration
+    +uiProps={"descriptionInline":true}
+    +sort=1
+    +label=Configuration Name
     """
 
     type: typing.Literal["gateway-guardrails-config"] = pydantic.Field(default="gateway-guardrails-config")
     """
     +value=gateway-guardrails-config
+    +sort=2
     """
 
     rules: typing.List[GuardrailsRule] = pydantic.Field()
     """
     +usage=List of guardrail rules
+    +uiProps={"descriptionInline":true}
+    +sort=3
+    +label=Guardrail Rules
     """
 
     if IS_PYDANTIC_V2:

@@ -8,9 +8,31 @@ from .rate_limit_rule import RateLimitRule
 
 
 class RateLimitConfig(UniversalBaseModel):
-    name: str
-    type: typing.Literal["gateway-rate-limiting-config"] = "gateway-rate-limiting-config"
-    rules: typing.List[RateLimitRule]
+    """
+    +label=Rate Limit Configuration
+    """
+
+    name: str = pydantic.Field()
+    """
+    +usage=Name of the rate limiting configuration
+    +uiProps={"descriptionInline":true}
+    +sort=1
+    +label=Configuration Name
+    """
+
+    type: typing.Literal["gateway-rate-limiting-config"] = pydantic.Field(default="gateway-rate-limiting-config")
+    """
+    +value=gateway-rate-limiting-config
+    +sort=2
+    """
+
+    rules: typing.List[RateLimitRule] = pydantic.Field()
+    """
+    +usage=List of rate limit rules
+    +uiProps={"descriptionInline":true}
+    +sort=3
+    +label=Rate Limit Rules
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

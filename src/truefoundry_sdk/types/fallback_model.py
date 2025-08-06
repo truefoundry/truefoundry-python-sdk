@@ -7,8 +7,25 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class FallbackModel(UniversalBaseModel):
-    target: str
-    override_params: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    """
+    +label=Fallback Model
+    """
+
+    target: str = pydantic.Field()
+    """
+    +usage=Target model or provider FQN to use as fallback
+    +uiProps={"integrationType":"model", "valuePattern": "${providerAccount.name}/${manifest.name}"}
+    +sort=1
+    +label=Target
+    """
+
+    override_params: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    """
+    +usage=Optional parameters to override in the fallback request
+    +uiProps={"descriptionInline":true}
+    +sort=2
+    +label=Override Parameters
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -7,9 +7,33 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class LoadBalanceTarget(UniversalBaseModel):
-    target: str
-    weight: int
-    override_params: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    """
+    +label=Weight-based Target
+    """
+
+    target: str = pydantic.Field()
+    """
+    +usage=Target model or provider FQN
+    +uiProps={"integrationType":"model", "valuePattern": "${providerAccount.name}/${manifest.name}"}
+    +sort=1
+    +label=Target
+    """
+
+    weight: int = pydantic.Field()
+    """
+    +usage=Relative weight for routing decisions (higher values mean more traffic)
+    +uiProps={"descriptionInline":true}
+    +sort=2
+    +label=Weight
+    """
+
+    override_params: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    """
+    +usage=Optional parameters to override in the request
+    +uiProps={"descriptionInline":true}
+    +sort=3
+    +label=Override Parameters
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

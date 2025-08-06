@@ -20,6 +20,7 @@ from .alert_config import AlertConfig
 from .alert_config_resource import AlertConfigResource
 from .alert_config_resource_type import AlertConfigResourceType
 from .alert_severity import AlertSeverity
+from .alert_status import AlertStatus
 from .amqp_input_config import AmqpInputConfig
 from .amqp_metric_config import AmqpMetricConfig
 from .amqp_output_config import AmqpOutputConfig
@@ -109,6 +110,8 @@ from .base_artifact_version_manifest import BaseArtifactVersionManifest
 from .base_autoscaling import BaseAutoscaling
 from .base_o_auth2login import BaseOAuth2Login
 from .base_o_auth2login_jwt_source import BaseOAuth2LoginJwtSource
+from .base_o_auth2mcp_server_login import BaseOAuth2McpServerLogin
+from .base_o_auth2mcp_server_login_jwt_source import BaseOAuth2McpServerLoginJwtSource
 from .base_service import BaseService
 from .base_service_image import BaseServiceImage
 from .base_service_mounts_item import BaseServiceMountsItem
@@ -170,7 +173,6 @@ from .custom_guardrail_config_target import CustomGuardrailConfigTarget
 from .custom_helm_repo import CustomHelmRepo
 from .custom_integrations import CustomIntegrations
 from .custom_jwt_auth_integration import CustomJwtAuthIntegration
-from .custom_mcp_server_integration import CustomMcpServerIntegration
 from .custom_model import CustomModel
 from .custom_model_auth_data import CustomModelAuthData
 from .custom_model_model_server import CustomModelModelServer
@@ -222,6 +224,10 @@ from .environment import Environment
 from .environment_color import EnvironmentColor
 from .environment_manifest import EnvironmentManifest
 from .environment_optimize_for import EnvironmentOptimizeFor
+from .event import Event
+from .event_chart import EventChart
+from .event_chart_category import EventChartCategory
+from .event_involved_object import EventInvolvedObject
 from .external_blob_storage_source import ExternalBlobStorageSource
 from .failure_tolerance_config import FailureToleranceConfig
 from .fallback_config import FallbackConfig
@@ -257,6 +263,7 @@ from .gcp_provider_account_auth_data import GcpProviderAccountAuthData
 from .gcp_region import GcpRegion
 from .gcp_tpu import GcpTpu
 from .gemini_model_v2 import GeminiModelV2
+from .get_alerts_response import GetAlertsResponse
 from .get_application_deployment_response import GetApplicationDeploymentResponse
 from .get_application_response import GetApplicationResponse
 from .get_artifact_response import GetArtifactResponse
@@ -267,6 +274,7 @@ from .get_charts_response import GetChartsResponse
 from .get_cluster_response import GetClusterResponse
 from .get_data_directory_response import GetDataDirectoryResponse
 from .get_environment_response import GetEnvironmentResponse
+from .get_events_response import GetEventsResponse
 from .get_job_run_response import GetJobRunResponse
 from .get_logs_response import GetLogsResponse
 from .get_ml_repo_response import GetMlRepoResponse
@@ -494,6 +502,7 @@ from .perplexity_ai_key_auth import PerplexityAiKeyAuth
 from .perplexity_ai_model import PerplexityAiModel
 from .perplexity_ai_provider_account import PerplexityAiProviderAccount
 from .perplexity_integrations import PerplexityIntegrations
+from .personal_access_token_manifest import PersonalAccessTokenManifest
 from .policy_actions import PolicyActions
 from .policy_entity_types import PolicyEntityTypes
 from .policy_filters import PolicyFilters
@@ -533,6 +542,7 @@ from .recommendation import Recommendation
 from .refusal_content_part import RefusalContentPart
 from .register_users_response import RegisterUsersResponse
 from .remote_source import RemoteSource
+from .revoke_all_personal_access_token_response import RevokeAllPersonalAccessTokenResponse
 from .rolling import Rolling
 from .rps_metric import RpsMetric
 from .schedule import Schedule
@@ -691,6 +701,7 @@ __all__ = [
     "AlertConfigResource",
     "AlertConfigResourceType",
     "AlertSeverity",
+    "AlertStatus",
     "AmqpInputConfig",
     "AmqpMetricConfig",
     "AmqpOutputConfig",
@@ -780,6 +791,8 @@ __all__ = [
     "BaseAutoscaling",
     "BaseOAuth2Login",
     "BaseOAuth2LoginJwtSource",
+    "BaseOAuth2McpServerLogin",
+    "BaseOAuth2McpServerLoginJwtSource",
     "BaseService",
     "BaseServiceImage",
     "BaseServiceMountsItem",
@@ -841,7 +854,6 @@ __all__ = [
     "CustomHelmRepo",
     "CustomIntegrations",
     "CustomJwtAuthIntegration",
-    "CustomMcpServerIntegration",
     "CustomModel",
     "CustomModelAuthData",
     "CustomModelModelServer",
@@ -893,6 +905,10 @@ __all__ = [
     "EnvironmentColor",
     "EnvironmentManifest",
     "EnvironmentOptimizeFor",
+    "Event",
+    "EventChart",
+    "EventChartCategory",
+    "EventInvolvedObject",
     "ExternalBlobStorageSource",
     "FailureToleranceConfig",
     "FallbackConfig",
@@ -928,6 +944,7 @@ __all__ = [
     "GcpRegion",
     "GcpTpu",
     "GeminiModelV2",
+    "GetAlertsResponse",
     "GetApplicationDeploymentResponse",
     "GetApplicationResponse",
     "GetArtifactResponse",
@@ -938,6 +955,7 @@ __all__ = [
     "GetClusterResponse",
     "GetDataDirectoryResponse",
     "GetEnvironmentResponse",
+    "GetEventsResponse",
     "GetJobRunResponse",
     "GetLogsResponse",
     "GetMlRepoResponse",
@@ -1161,6 +1179,7 @@ __all__ = [
     "PerplexityAiModel",
     "PerplexityAiProviderAccount",
     "PerplexityIntegrations",
+    "PersonalAccessTokenManifest",
     "PolicyActions",
     "PolicyEntityTypes",
     "PolicyFilters",
@@ -1203,6 +1222,7 @@ __all__ = [
     "Resources",
     "ResourcesDevicesItem",
     "ResourcesNode",
+    "RevokeAllPersonalAccessTokenResponse",
     "Rolling",
     "RpsMetric",
     "Schedule",
