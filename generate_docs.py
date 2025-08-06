@@ -81,13 +81,13 @@ class ClientModuleInfo:
 
 
 class TrueFoundrySDKDocGenerator:
-    def __init__(self, sdk_path: str, output_path: str = "truefoundry_sdk_docs"):
+    def __init__(self, sdk_path: str, output_path: str, docs_path: str):
         self.sdk_path = Path(sdk_path)
         self.output_path = Path(output_path)
         self.types: Dict[str, TypeInfo] = {}
-        self.types_docs_path = f"docs/{output_path}/types"
-        self.enums_docs_path = f"docs/{output_path}/enums"
-        self.clients_docs_path = f"{output_path}/"
+        self.types_docs_path = f"{docs_path}/types"
+        self.enums_docs_path = f"{docs_path}/enums"
+        self.clients_docs_path = f"{docs_path}/"
 
         # Define client modules and their categories
         # Get all directories from sdk_path as module names
@@ -296,9 +296,9 @@ class TrueFoundrySDKDocGenerator:
     def _get_link_to_type(self, type_name: str, is_enum: bool = False) -> str:
         """Get the link to a type"""
         if is_enum:
-            return f"/{self.enums_docs_path}#{type_name.lower()}"
+            return f"{self.enums_docs_path}#{type_name.lower()}"
         else:
-            return f"/{self.types_docs_path}#{type_name.lower()}"
+            return f"{self.types_docs_path}#{type_name.lower()}"
 
     def _extract_function_info(
         self,
@@ -478,7 +478,11 @@ class TrueFoundrySDKDocGenerator:
     def _get_node_value(self, node) -> str:
         """Get string representation of a node value"""
         if isinstance(node, ast.Constant):
-            return repr(node.value)
+            # For strings, just return the value without extra quotes
+            if isinstance(node.value, str):
+                return node.value
+            else:
+                return repr(node.value)
         elif isinstance(node, ast.Name):
             return node.id
         elif isinstance(node, ast.Attribute):
@@ -660,7 +664,7 @@ class TrueFoundrySDKDocGenerator:
                         )
 
             # Create a description for the union type
-            description = f"Union type that can be one of: {', '.join(union_types)}"
+            description = ""
 
             return TypeInfo(
                 name=type_name,
@@ -812,6 +816,47 @@ class TrueFoundrySDKDocGenerator:
 
         return None
 
+    def _extract_default_value_from_field(self, node) -> Optional[str]:
+        """Extract default value from pydantic.Field call, filtering out unnecessary defaults"""
+        if not node:
+            return None
+            
+        # If it's a pydantic.Field call, extract the default argument
+        if isinstance(node, ast.Call) and hasattr(node, 'keywords'):
+            for keyword in node.keywords:
+                if keyword.arg == "default":
+                    default_value = self._get_node_value(keyword.value)
+                    # Filter out unnecessary defaults
+                    if self._is_meaningful_default(default_value):
+                        return default_value
+                    return None
+            return None
+        else:
+            # Direct assignment
+            default_value = self._get_node_value(node)
+            if self._is_meaningful_default(default_value):
+                return default_value
+            return None
+
+    def _is_meaningful_default(self, default_value: str) -> bool:
+        """Check if a default value is meaningful enough to display"""
+        if not default_value:
+            return False
+            
+        # Remove quotes for string comparison
+        clean_value = default_value.strip("'\"")
+        
+        # Filter out common unmeaningful defaults
+        unmeaningful_defaults = {
+            "None", "False", "True", "0", "", "[]", "{}", "()",
+            "pydantic.Field(default=None)", "pydantic.Field(default=False)", 
+            "pydantic.Field(default=True)", "pydantic.Field(default=0)",
+            "pydantic.Field(default='')", "pydantic.Field(default=[])", 
+            "pydantic.Field(default={})", "pydantic.Field(default=())"
+        }
+        
+        return default_value not in unmeaningful_defaults and clean_value not in unmeaningful_defaults
+
     def _extract_field_info(self, node: ast.AnnAssign, class_node: ast.ClassDef) -> Optional[FieldInfo]:
         """Extract detailed information about a field"""
         try:
@@ -854,15 +899,13 @@ class TrueFoundrySDKDocGenerator:
             # Extract nested type information
             nested_type = self._extract_nested_type(type_annotation)
 
-            # Get default value
-            default_value = None
-            if node.value:
-                default_value = self._get_node_value(node.value)
+            # Get default value - only meaningful ones
+            default_value = self._extract_default_value_from_field(node.value)
 
             return FieldInfo(
                 name=field_name,
                 type_annotation=type_annotation,
-                description=re.sub(r"([<>\{\}\[\]\(\)])", r"\\\1", description),
+                description=re.sub(r"([<>\{\}])", r"\\\1", description),
                 default_value=default_value,
                 is_required=is_required,
                 is_optional=is_optional,
@@ -1075,20 +1118,25 @@ class TrueFoundrySDKDocGenerator:
                     field = self._add_type_info_to_field(field, self.types)
 
         # Generate home page
+        print("Generating home page")
         self._generate_home_page(client_modules, output_path)
 
         # Generate main client documentation
+        print("Generating main client documentation")
         self._generate_main_client_docs(client_modules["main_client"], output_path)
 
         # Generate documentation for each client module
         for module_name, module_info in client_modules.items():
             if module_name != "main_client":
+                print(f"Generating documentation for {module_name}")
                 self._generate_client_module_docs(module_info, output_path)
 
         # Generate types documentation
+        print("Generating types documentation")
         self._generate_types_docs(output_path)
 
         # Generate enums documentation
+        print("Generating enums documentation")
         self._generate_enum_docs(output_path)
 
     def _generate_home_page(self, client_modules: Dict[str, ClientModuleInfo], output_path: Path):
@@ -1183,6 +1231,7 @@ for app in applications:
             client_modules=client_modules,
             all_clients=sorted(all_clients, key=lambda x: x.name.lower()),
             clients_docs_path=self.clients_docs_path,
+            types_docs_path=self.types_docs_path,
         )
 
         with open(output_path / "index.mdx", "w", encoding="utf-8") as f:
@@ -1201,8 +1250,8 @@ The main client for TrueFoundry SDK operations. This client provides access to a
 <Accordion title="{{ method.name }}">
   {% if method.enhanced_description and method.enhanced_description.strip() %}
   {{ method.enhanced_description }}
-  {% else %}
-  {{ method.docstring.split('\n')[0] if method.docstring else 'No description available.' }}
+  {% elif method.docstring %}
+  {{ method.docstring.split('\n')[0] }}
   {% endif %}
 
   {%- if method.parameters %}
@@ -1214,11 +1263,12 @@ The main client for TrueFoundry SDK operations. This client provides access to a
       {% if parameter.default_value %}default="{{ parameter.default_value }}"{% endif %}
       {% if parameter.is_required %}required{% endif %}
     >
-      {{ parameter.description or 'No description' }}
       {%- if parameter.type_info %}
-      
-      **Type Details:** [{{ parameter.type_info.name }}]({{ parameter.type_info.link }})
+      [🔗 {{ parameter.type_info.name }}]({{ parameter.type_info.link }})
       {%- endif %}
+      {% if parameter.description %}
+      {{ parameter.description }}
+      {% endif %}
     </ParamField>
   {% endfor %}
   {%- endif %}
@@ -1230,11 +1280,12 @@ The main client for TrueFoundry SDK operations. This client provides access to a
       name="{{ return.name }}"
       type="{{ return.type }}"
     >
-      {{ return.description or 'No description' }}
       {%- if return.type_info %}
-
-      **Type Details:** [{{ return.type_info.name }}]({{ return.type_info.link }})
+      [🔗 {{ return.type_info.name }}]({{ return.type_info.link }})
       {%- endif %}
+      {% if return.description %}
+      {{ return.description }}
+      {% endif %}
     </ResponseField>
   {% endfor %}
   {%- endif %}
@@ -1274,10 +1325,11 @@ description: "All types in the SDK"
     {% if field.default_value %}default="{{ field.default_value }}"{% endif %}
     {% if field.is_required %}required{% endif %}
 >
-    {{ field.description or 'No description' }}
     {% if field.type_info %}
-
-    **Type Details:** [{{ field.type_info.name }}]({{ field.type_info.link }})
+    [🔗 {{ field.type_info.name }}]({{ field.type_info.link }})
+    {% endif %}
+    {% if field.description %}
+    {{ field.description }}
     {% endif %}
 </ParamField>
 
@@ -1287,9 +1339,9 @@ description: "All types in the SDK"
 
 {{ type_info.enhanced_description }}
 
-**Union Types:** 
+**Union, One Of:** 
 {%- for base_class in type_info.base_classes %}
-[{{ base_class }}](/docs/truefoundry_sdk_docs/types#{{ base_class.lower() }}){{ "," if not loop.last else "" }}
+- [🔗 {{ base_class }}]({{ types_docs_path }}#{{ base_class.lower() }})
 {%- endfor %}
 
 {% endif %}
@@ -1336,8 +1388,8 @@ description: "{{ module_info.description }}"
 <Accordion title="{{ method.name }}">
   {% if method.enhanced_description and method.enhanced_description.strip() %}
   {{ method.enhanced_description }}
-  {% else %}
-  {{ method.docstring.split('\n')[0] if method.docstring else 'No description available.' }}
+  {% elif method.docstring %}
+  {{ method.docstring.split('\n')[0] }}
   {% endif %}
 
   {%- if method.parameters %}
@@ -1349,11 +1401,12 @@ description: "{{ module_info.description }}"
       {% if parameter.default_value %}default="{{ parameter.default_value }}"{% endif %}
       {% if parameter.is_required %}required{% endif %}
     >
-      {{ parameter.description or 'No description' }}
       {%- if parameter.type_info %}
-      
-      **Type Details:** [{{ parameter.type_info.name }}]({{ parameter.type_info.link }})
+      [🔗 {{ parameter.type_info.name }}]({{ parameter.type_info.link }})
       {%- endif %}
+      {% if parameter.description %}
+      {{ parameter.description }}
+      {% endif %}
     </ParamField>
   {% endfor %}
   {%- endif %}
@@ -1365,11 +1418,12 @@ description: "{{ module_info.description }}"
       name="{{ return.name }}"
       type="{{ return.type }}"
     >
-      {{ return.description or 'No description' }}
       {%- if return.type_info %}
-                            
-      **Type Details:** [{{ return.type_info.name }}]({{ return.type_info.link }})
+      [🔗 {{ return.type_info.name }}]({{ return.type_info.link }})
       {%- endif %}
+      {% if return.description %}
+      {{ return.description }}
+      {% endif %}
     </ResponseField>
   {% endfor %}
   {%- endif %}
@@ -1394,7 +1448,11 @@ description: "{{ module_info.description }}"
 
 
 if __name__ == "__main__":
-    generator = TrueFoundrySDKDocGenerator(sdk_path="src/truefoundry_sdk", output_path="truefoundry_sdk_docs")
+    generator = TrueFoundrySDKDocGenerator(
+        sdk_path="src/truefoundry_sdk",
+        output_path="../docs-mintlify/docs/truefoundry_sdk/",
+        docs_path="/docs/truefoundry_sdk",
+    )
 
     generator.generate_mintlify_docs()
     print("✅ Enhanced documentation generated successfully!")

@@ -2,3 +2,4 @@
 src/truefoundry_sdk/_wrapped_clients.py
 src/truefoundry_sdk/client.py
 .github/workflows/ci.yml
+generate_docs.py
