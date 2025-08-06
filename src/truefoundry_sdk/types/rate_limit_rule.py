@@ -9,9 +9,27 @@ from .rate_limit_when import RateLimitWhen
 
 
 class RateLimitRule(UniversalBaseModel):
-    id: str
+    """
+    +label=Rate Limit Rule
+    """
+
+    id: str = pydantic.Field()
+    """
+    +usage=Unique identifier for the rule
+    +uiProps={"descriptionInline":true}
+    +sort=1
+    +label=Rule ID
+    """
+
     when: RateLimitWhen
-    limit_to: int
+    limit_to: int = pydantic.Field()
+    """
+    +usage=Maximum number of requests or tokens allowed
+    +uiProps={"descriptionInline":true}
+    +sort=3
+    +label=Limit Value
+    """
+
     unit: RateLimitUnit
 
     if IS_PYDANTIC_V2:

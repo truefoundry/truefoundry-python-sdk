@@ -64,6 +64,7 @@ class BaseService(UniversalBaseModel):
     kustomize: typing.Optional[Kustomize] = None
     liveness_probe: typing.Optional[HealthProbe] = None
     readiness_probe: typing.Optional[HealthProbe] = None
+    startup_probe: typing.Optional[HealthProbe] = None
     workspace_fqn: typing.Optional[str] = pydantic.Field(default=None)
     """
     +label=Workspace FQN

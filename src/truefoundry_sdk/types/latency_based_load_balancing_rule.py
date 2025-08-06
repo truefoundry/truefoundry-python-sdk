@@ -9,10 +9,33 @@ from .load_balancing_when import LoadBalancingWhen
 
 
 class LatencyBasedLoadBalancingRule(UniversalBaseModel):
-    id: str
+    """
+    +label=Latency-based Load Balancing Rule
+    """
+
+    id: str = pydantic.Field()
+    """
+    +usage=Unique identifier for the rule
+    +uiProps={"descriptionInline":true}
+    +sort=1
+    +label=Rule ID
+    """
+
     when: LoadBalancingWhen
-    load_balance_targets: typing.List[LatencyBasedLoadBalanceTarget]
-    type: typing.Literal["latency-based-routing"] = "latency-based-routing"
+    load_balance_targets: typing.List[LatencyBasedLoadBalanceTarget] = pydantic.Field()
+    """
+    +usage=List of targets for latency-based load balancing
+    +uiProps={"descriptionInline":true}
+    +sort=3
+    +label=Load Balance Targets
+    """
+
+    type: typing.Literal["latency-based-routing"] = pydantic.Field(default="latency-based-routing")
+    """
+    +value=latency-based-routing
+    +sort=4
+    +label=Routing Type
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

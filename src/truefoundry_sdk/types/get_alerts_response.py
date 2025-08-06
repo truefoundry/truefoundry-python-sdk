@@ -4,25 +4,14 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .failure_tolerance_config import FailureToleranceConfig
-from .usage_limits import UsageLimits
+from .alert import Alert
 
 
-class ModelConfig(UniversalBaseModel):
+class GetAlertsResponse(UniversalBaseModel):
+    data: typing.Dict[str, typing.List[Alert]] = pydantic.Field()
     """
-    +label=Model Configuration
+    Object containing alert data grouped by alert name
     """
-
-    model: str = pydantic.Field()
-    """
-    +usage=Model identifier
-    +uiProps={"descriptionInline":true}
-    +sort=1
-    +label=Model
-    """
-
-    usage_limits: typing.Optional[UsageLimits] = None
-    failure_tolerance: typing.Optional[FailureToleranceConfig] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

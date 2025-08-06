@@ -3,20 +3,10 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from .base_o_auth2mcp_server_login import BaseOAuth2McpServerLogin
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class McpServerOAuth2(BaseOAuth2McpServerLogin):
-    """
-    +label=OAuth2
-    """
-
-    type: typing.Optional[typing.Literal["oauth2"]] = pydantic.Field(default=None)
-    """
-    +value=oauth2
-    """
-
+class RevokeAllPersonalAccessTokenResponse(UniversalBaseModel):
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:

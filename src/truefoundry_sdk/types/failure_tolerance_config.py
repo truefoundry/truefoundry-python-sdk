@@ -7,9 +7,30 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class FailureToleranceConfig(UniversalBaseModel):
-    allowed_failures_per_minute: int
-    cooldown_period_minutes: int
-    failure_status_codes: typing.List[int]
+    """
+    +label=Failure Tolerance
+    """
+
+    allowed_failures_per_minute: int = pydantic.Field()
+    """
+    +usage=Number of failures allowed per minute before cooldown
+    +uiProps={"descriptionInline":true}
+    +label=Allowed Failures per Minute
+    """
+
+    cooldown_period_minutes: int = pydantic.Field()
+    """
+    +usage=Cooldown period in minutes after failure threshold is reached
+    +uiProps={"descriptionInline":true}
+    +label=Cooldown Period (minutes)
+    """
+
+    failure_status_codes: typing.List[int] = pydantic.Field()
+    """
+    +usage=HTTP status codes considered as failures
+    +uiProps={"descriptionInline":true}
+    +label=Failure Status Codes
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

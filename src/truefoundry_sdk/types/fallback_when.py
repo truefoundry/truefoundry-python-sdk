@@ -7,10 +7,38 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class FallbackWhen(UniversalBaseModel):
-    subjects: typing.Optional[typing.List[str]] = None
-    models: typing.Optional[typing.List[str]] = None
-    metadata: typing.Optional[typing.Dict[str, str]] = None
-    response_status_codes: typing.List[int]
+    """
+    +label=Rule Conditions
+    """
+
+    subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    +usage=List of subjects that this rule applies to
+    +uiProps={"descriptionInline":true}
+    +label=Subjects
+    """
+
+    models: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    +usage=List of models that this rule applies to
+    +uiType=IntegrationSelect
+    +uiProps={"integrationType":"model", "isMultiSelect": true, "valuePattern": "${providerAccount.name}/${manifest.name}"}
+    +label=Models
+    """
+
+    metadata: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
+    """
+    +usage=Metadata key-value pairs that this rule applies to
+    +uiProps={"descriptionInline":true}
+    +label=Metadata
+    """
+
+    response_status_codes: typing.List[int] = pydantic.Field()
+    """
+    +usage=HTTP status codes that trigger fallback behavior
+    +uiProps={"descriptionInline":true}
+    +label=Response Status Codes
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

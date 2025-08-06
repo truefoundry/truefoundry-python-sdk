@@ -18,6 +18,7 @@ from ..types.delete_personal_access_token_response import DeletePersonalAccessTo
 from ..types.get_or_create_personal_access_token_response import GetOrCreatePersonalAccessTokenResponse
 from ..types.http_error import HttpError
 from ..types.list_personal_access_token_response import ListPersonalAccessTokenResponse
+from ..types.revoke_all_personal_access_token_response import RevokeAllPersonalAccessTokenResponse
 from ..types.virtual_account import VirtualAccount
 
 # this is used as the default value for optional parameters
@@ -156,6 +157,63 @@ class RawPersonalAccessTokensClient:
                         HttpError,
                         parse_obj_as(
                             type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def revoke_all(
+        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[RevokeAllPersonalAccessTokenResponse]:
+        """
+        Revoke All Personal Access Tokens for the user with the given email
+
+        Parameters
+        ----------
+        email : str
+            Email of the user to revoke all Personal Access Tokens for
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[RevokeAllPersonalAccessTokenResponse]
+            All Personal Access Tokens revoked successfully
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/svc/v1/personal-access-tokens/revoke/all",
+            method="DELETE",
+            json={
+                "email": email,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    RevokeAllPersonalAccessTokenResponse,
+                    parse_obj_as(
+                        type_=RevokeAllPersonalAccessTokenResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -400,6 +458,63 @@ class AsyncRawPersonalAccessTokensClient:
                         HttpError,
                         parse_obj_as(
                             type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def revoke_all(
+        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[RevokeAllPersonalAccessTokenResponse]:
+        """
+        Revoke All Personal Access Tokens for the user with the given email
+
+        Parameters
+        ----------
+        email : str
+            Email of the user to revoke all Personal Access Tokens for
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[RevokeAllPersonalAccessTokenResponse]
+            All Personal Access Tokens revoked successfully
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/svc/v1/personal-access-tokens/revoke/all",
+            method="DELETE",
+            json={
+                "email": email,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    RevokeAllPersonalAccessTokenResponse,
+                    parse_obj_as(
+                        type_=RevokeAllPersonalAccessTokenResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
