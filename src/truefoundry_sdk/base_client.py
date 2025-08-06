@@ -4,6 +4,7 @@ import os
 import typing
 
 import httpx
+from .alerts.client import AlertsClient, AsyncAlertsClient
 from .application_versions.client import ApplicationVersionsClient, AsyncApplicationVersionsClient
 from .applications.client import ApplicationsClient, AsyncApplicationsClient
 from .artifact_versions.client import ArtifactVersionsClient, AsyncArtifactVersionsClient
@@ -14,6 +15,7 @@ from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.request_options import RequestOptions
 from .data_directories.client import AsyncDataDirectoriesClient, DataDirectoriesClient
 from .environments.client import AsyncEnvironmentsClient, EnvironmentsClient
+from .events.client import AsyncEventsClient, EventsClient
 from .internal.client import AsyncInternalClient, InternalClient
 from .jobs.client import AsyncJobsClient, JobsClient
 from .logs.client import AsyncLogsClient, LogsClient
@@ -110,6 +112,8 @@ class BaseTrueFoundry:
         self.application_versions = ApplicationVersionsClient(client_wrapper=self._client_wrapper)
         self.jobs = JobsClient(client_wrapper=self._client_wrapper)
         self.workspaces = WorkspacesClient(client_wrapper=self._client_wrapper)
+        self.events = EventsClient(client_wrapper=self._client_wrapper)
+        self.alerts = AlertsClient(client_wrapper=self._client_wrapper)
         self.logs = LogsClient(client_wrapper=self._client_wrapper)
         self.ml_repos = MlReposClient(client_wrapper=self._client_wrapper)
         self.artifacts = ArtifactsClient(client_wrapper=self._client_wrapper)
@@ -296,6 +300,8 @@ class AsyncBaseTrueFoundry:
         self.application_versions = AsyncApplicationVersionsClient(client_wrapper=self._client_wrapper)
         self.jobs = AsyncJobsClient(client_wrapper=self._client_wrapper)
         self.workspaces = AsyncWorkspacesClient(client_wrapper=self._client_wrapper)
+        self.events = AsyncEventsClient(client_wrapper=self._client_wrapper)
+        self.alerts = AsyncAlertsClient(client_wrapper=self._client_wrapper)
         self.logs = AsyncLogsClient(client_wrapper=self._client_wrapper)
         self.ml_repos = AsyncMlReposClient(client_wrapper=self._client_wrapper)
         self.artifacts = AsyncArtifactsClient(client_wrapper=self._client_wrapper)

@@ -8,20 +8,33 @@ from .guardrails_when import GuardrailsWhen
 
 
 class GuardrailsRule(UniversalBaseModel):
+    """
+    +label=Guardrails Rule
+    """
+
     id: str = pydantic.Field()
     """
     +usage=Unique identifier for the rule
+    +uiProps={"descriptionInline":true}
+    +sort=1
+    +label=Rule ID
     """
 
     when: GuardrailsWhen
     input_guardrails: typing.List[str] = pydantic.Field()
     """
     +usage=Guardrail selectors of the guardrails to apply to the input (format: groupName/guardrailName)
+    +uiProps={"descriptionInline":true}
+    +sort=3
+    +label=Input Guardrails
     """
 
     output_guardrails: typing.List[str] = pydantic.Field()
     """
     +usage=Guardrail selectors of the guardrails to apply to the output (format: groupName/guardrailName)
+    +uiProps={"descriptionInline":true}
+    +sort=4
+    +label=Output Guardrails
     """
 
     if IS_PYDANTIC_V2:

@@ -8,9 +8,31 @@ from .fallback_rule import FallbackRule
 
 
 class FallbackConfig(UniversalBaseModel):
-    name: str
-    type: typing.Literal["gateway-fallback-config"] = "gateway-fallback-config"
-    rules: typing.List[FallbackRule]
+    """
+    +label=Fallback Configuration
+    """
+
+    name: str = pydantic.Field()
+    """
+    +usage=Name of the fallback configuration
+    +uiProps={"descriptionInline":true}
+    +sort=1
+    +label=Configuration Name
+    """
+
+    type: typing.Literal["gateway-fallback-config"] = pydantic.Field(default="gateway-fallback-config")
+    """
+    +value=gateway-fallback-config
+    +sort=2
+    """
+
+    rules: typing.List[FallbackRule] = pydantic.Field()
+    """
+    +usage=List of fallback rules
+    +uiProps={"descriptionInline":true}
+    +sort=3
+    +label=Fallback Rules
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

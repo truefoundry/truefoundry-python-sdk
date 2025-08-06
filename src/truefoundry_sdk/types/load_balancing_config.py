@@ -9,10 +9,39 @@ from .model_config import ModelConfig
 
 
 class LoadBalancingConfig(UniversalBaseModel):
-    name: str
-    type: typing.Literal["gateway-load-balancing-config"] = "gateway-load-balancing-config"
-    model_configs: typing.Optional[typing.List[ModelConfig]] = None
-    rules: typing.List[LoadBalancingRule]
+    """
+    +label=Load Balancing Configuration
+    """
+
+    name: str = pydantic.Field()
+    """
+    +usage=Name of the load balancing configuration
+    +uiProps={"descriptionInline":true}
+    +sort=1
+    +label=Configuration Name
+    """
+
+    type: typing.Literal["gateway-load-balancing-config"] = pydantic.Field(default="gateway-load-balancing-config")
+    """
+    +value=gateway-load-balancing-config
+    +sort=2
+    """
+
+    model_configs: typing.Optional[typing.List[ModelConfig]] = pydantic.Field(default=None)
+    """
+    +usage=Configuration for specific models
+    +uiProps={"descriptionInline":true}
+    +sort=3
+    +label=Model Configurations
+    """
+
+    rules: typing.List[LoadBalancingRule] = pydantic.Field()
+    """
+    +usage=List of load balancing rules
+    +uiProps={"descriptionInline":true}
+    +sort=4
+    +label=Load Balancing Rules
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -8,6 +8,7 @@ from ..core.request_options import RequestOptions
 from ..types.create_personal_access_token_response import CreatePersonalAccessTokenResponse
 from ..types.delete_personal_access_token_response import DeletePersonalAccessTokenResponse
 from ..types.get_or_create_personal_access_token_response import GetOrCreatePersonalAccessTokenResponse
+from ..types.revoke_all_personal_access_token_response import RevokeAllPersonalAccessTokenResponse
 from ..types.virtual_account import VirtualAccount
 from .raw_client import AsyncRawPersonalAccessTokensClient, RawPersonalAccessTokensClient
 
@@ -115,6 +116,40 @@ class PersonalAccessTokensClient:
         )
         """
         _response = self._raw_client.create(name=name, expiration_date=expiration_date, request_options=request_options)
+        return _response.data
+
+    def revoke_all(
+        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> RevokeAllPersonalAccessTokenResponse:
+        """
+        Revoke All Personal Access Tokens for the user with the given email
+
+        Parameters
+        ----------
+        email : str
+            Email of the user to revoke all Personal Access Tokens for
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RevokeAllPersonalAccessTokenResponse
+            All Personal Access Tokens revoked successfully
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.personal_access_tokens.revoke_all(
+            email="email",
+        )
+        """
+        _response = self._raw_client.revoke_all(email=email, request_options=request_options)
         return _response.data
 
     def delete(
@@ -304,6 +339,48 @@ class AsyncPersonalAccessTokensClient:
         _response = await self._raw_client.create(
             name=name, expiration_date=expiration_date, request_options=request_options
         )
+        return _response.data
+
+    async def revoke_all(
+        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> RevokeAllPersonalAccessTokenResponse:
+        """
+        Revoke All Personal Access Tokens for the user with the given email
+
+        Parameters
+        ----------
+        email : str
+            Email of the user to revoke all Personal Access Tokens for
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RevokeAllPersonalAccessTokenResponse
+            All Personal Access Tokens revoked successfully
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.personal_access_tokens.revoke_all(
+                email="email",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.revoke_all(email=email, request_options=request_options)
         return _response.data
 
     async def delete(

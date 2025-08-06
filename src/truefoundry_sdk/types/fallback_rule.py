@@ -9,9 +9,26 @@ from .fallback_when import FallbackWhen
 
 
 class FallbackRule(UniversalBaseModel):
-    id: str
+    """
+    +label=Fallback Rule
+    """
+
+    id: str = pydantic.Field()
+    """
+    +usage=Unique identifier for the rule
+    +uiProps={"descriptionInline":true}
+    +sort=1
+    +label=Rule ID
+    """
+
     when: FallbackWhen
-    fallback_models: typing.List[FallbackModel]
+    fallback_models: typing.List[FallbackModel] = pydantic.Field()
+    """
+    +usage=List of fallback models to try in sequence
+    +uiProps={"descriptionInline":true}
+    +sort=3
+    +label=Fallback Models
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

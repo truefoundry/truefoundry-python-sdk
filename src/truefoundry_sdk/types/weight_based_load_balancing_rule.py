@@ -9,10 +9,33 @@ from .load_balancing_when import LoadBalancingWhen
 
 
 class WeightBasedLoadBalancingRule(UniversalBaseModel):
-    id: str
+    """
+    +label=Weight-based Load Balancing Rule
+    """
+
+    id: str = pydantic.Field()
+    """
+    +usage=Unique identifier for the rule
+    +uiProps={"descriptionInline":true}
+    +sort=1
+    +label=Rule ID
+    """
+
     when: LoadBalancingWhen
-    load_balance_targets: typing.List[LoadBalanceTarget]
-    type: typing.Literal["weight-based-routing"] = "weight-based-routing"
+    load_balance_targets: typing.List[LoadBalanceTarget] = pydantic.Field()
+    """
+    +usage=List of targets for load balancing with weights
+    +uiProps={"descriptionInline":true}
+    +sort=3
+    +label=Load Balance Targets
+    """
+
+    type: typing.Literal["weight-based-routing"] = pydantic.Field(default="weight-based-routing")
+    """
+    +value=weight-based-routing
+    +sort=4
+    +label=Routing Type
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

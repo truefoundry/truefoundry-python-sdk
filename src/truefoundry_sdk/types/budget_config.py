@@ -8,9 +8,31 @@ from .budget_rule import BudgetRule
 
 
 class BudgetConfig(UniversalBaseModel):
-    name: str
-    type: typing.Literal["gateway-budget-config"] = "gateway-budget-config"
-    rules: typing.List[BudgetRule]
+    """
+    +label=Budget Configuration
+    """
+
+    name: str = pydantic.Field()
+    """
+    +usage=Name of the budget configuration
+    +uiProps={"descriptionInline":true}
+    +sort=1
+    +label=Configuration Name
+    """
+
+    type: typing.Literal["gateway-budget-config"] = pydantic.Field(default="gateway-budget-config")
+    """
+    +value=gateway-budget-config
+    +sort=2
+    """
+
+    rules: typing.List[BudgetRule] = pydantic.Field()
+    """
+    +usage=List of budget rules
+    +uiProps={"descriptionInline":true}
+    +sort=3
+    +label=Budget Rules
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

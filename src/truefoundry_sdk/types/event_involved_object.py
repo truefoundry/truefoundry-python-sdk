@@ -3,21 +3,17 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.serialization import FieldMetadata
 
 
-class McpServerHeaderAuth(UniversalBaseModel):
-    """
-    +label=Header Auth
-    +usage=Static API key or token authentication via request headers. All users share the same credentials.
-    """
-
-    type: typing.Literal["header"] = pydantic.Field(default="header")
-    """
-    +value=header
-    """
-
-    headers: typing.Dict[str, str]
+class EventInvolvedObject(UniversalBaseModel):
+    kind: str
+    name: str
+    api_version: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="apiVersion")] = None
+    namespace: typing.Optional[str] = None
+    container_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="containerName")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
