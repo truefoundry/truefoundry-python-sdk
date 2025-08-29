@@ -4,6 +4,7 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from .ai_gateway.client import AiGatewayClient, AsyncAiGatewayClient
 from .applications.client import ApplicationsClient, AsyncApplicationsClient
 from .artifact_versions.client import ArtifactVersionsClient, AsyncArtifactVersionsClient
 from .clusters.client import AsyncClustersClient, ClustersClient
@@ -35,6 +36,8 @@ class InternalClient:
         self.docker_registries = DockerRegistriesClient(client_wrapper=client_wrapper)
 
         self.workflows = WorkflowsClient(client_wrapper=client_wrapper)
+
+        self.ai_gateway = AiGatewayClient(client_wrapper=client_wrapper)
 
         self.artifact_versions = ArtifactVersionsClient(client_wrapper=client_wrapper)
 
@@ -108,6 +111,8 @@ class AsyncInternalClient:
         self.docker_registries = AsyncDockerRegistriesClient(client_wrapper=client_wrapper)
 
         self.workflows = AsyncWorkflowsClient(client_wrapper=client_wrapper)
+
+        self.ai_gateway = AsyncAiGatewayClient(client_wrapper=client_wrapper)
 
         self.artifact_versions = AsyncArtifactVersionsClient(client_wrapper=client_wrapper)
 

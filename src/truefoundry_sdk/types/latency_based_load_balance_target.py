@@ -4,6 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .retry_config import RetryConfig
 
 
 class LatencyBasedLoadBalanceTarget(UniversalBaseModel):
@@ -17,6 +18,22 @@ class LatencyBasedLoadBalanceTarget(UniversalBaseModel):
     +uiProps={"descriptionInline":true}
     +sort=1
     +label=Target
+    """
+
+    retry_config: typing.Optional[RetryConfig] = None
+    fallback_status_codes: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    +usage=Status Codes for which the request will fallback to other targets. If the status code is not present in fallback_status_codes, it fails immediately.
+    +uiProps={"descriptionInline":true}
+    +label=Fallback Status Codes
+    """
+
+    fallback_candidate: typing.Optional[bool] = pydantic.Field(default=True)
+    """
+    +usage=Whether this target is a fallback candidate.  If set to false, this model will not be considered as a fallback option for targets of this load-balance-rule
+    +uiProps={"descriptionInline":true}
+    +sort=4
+    +label=Fallback Candidate
     """
 
     override_params: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)

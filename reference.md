@@ -338,6 +338,14 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
+**include_virtual_accounts:** `typing.Optional[str]` — Include virtual accounts
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -567,6 +575,77 @@ client = TrueFoundry(
     base_url="https://yourhost.com/path/to/api",
 )
 client.users.get(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — User Id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete user if they are not a collaborator in any resource and not part of any team other than everyone.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.users.delete(
     id="id",
 )
 
@@ -896,6 +975,236 @@ client.users.change_password(
 <dd>
 
 **old_password:** `str` — Old password
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">get_resources</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all resources associated with a user.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.users.get_resources(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — User Id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">get_teams</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all teams associated with a user.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.users.get_teams(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — User Id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">create_pat_for_user</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+This endpoint allows tenant administrators to create Personal Access Tokens for any user within their tenant using the user's email. If the user doesn't exist, it will be created first. If a PAT with name "pasta-boys" already exists for the user, it will be deleted and a new one will be created.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.users.create_pat_for_user(
+    email="email",
+    name="name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**email:** `str` — Email of the user for whom to create the Personal Access Token
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `str` — Personal Access Token name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**image_url:** `typing.Optional[str]` — Image URL
     
 </dd>
 </dl>
@@ -2924,7 +3233,7 @@ client.clusters.delete(
 <dl>
 <dd>
 
-List addons for the provided cluster.Pagination is available based on query parameters.
+List addons for the provided cluster. Pagination is available based on query parameters.
 </dd>
 </dl>
 </dd>
@@ -5449,6 +5758,14 @@ client.logs.get()
 <dl>
 <dd>
 
+**search_filters:** `typing.Optional[str]` — JSON string containing array of search filters with string, type and operator
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **search_string:** `typing.Optional[str]` — String that needs to be matched
     
 </dd>
@@ -5457,7 +5774,7 @@ client.logs.get()
 <dl>
 <dd>
 
-**search_type:** `typing.Optional[LogsSearchFilterType]` — Query filter type, `regex` or `substring`
+**search_type:** `typing.Optional[LogsSearchFilterType]` — Query filter type, `regex` `substring` `ignore_case_substring`
     
 </dd>
 </dl>
@@ -5800,6 +6117,149 @@ for page in response.iter_pages():
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## LlmGateway
+<details><summary><code>client.llm_gateway.<a href="src/truefoundry_sdk/llm_gateway/client.py">svc_metrics_get_llm_playground_tables</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.llm_gateway.svc_metrics_get_llm_playground_tables()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**start_ts:** `typing.Optional[str]` — Start Timestamp in milliseconds
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end_ts:** `typing.Optional[str]` — End Timestamp in milliseconds
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_names:** `typing.Optional[typing.Sequence[str]]` — Model Names
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**usernames:** `typing.Optional[typing.Sequence[str]]` — Usernames
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**metadata:** `typing.Optional[typing.Sequence[MetadataItem]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**utc_offset_seconds:** `typing.Optional[str]` — UTC Offset in seconds
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.llm_gateway.<a href="src/truefoundry_sdk/llm_gateway/client.py">svc_inference_request_get_filter_type_and_label_values</a>()</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.llm_gateway.svc_inference_request_get_filter_type_and_label_values()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
 
 <dl>
 <dd>
@@ -9622,6 +10082,81 @@ client.internal.workflows.execute_workflow(
 <dd>
 
 **inputs_literal_map:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Workflow inputs literal map
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Internal AiGateway
+<details><summary><code>client.internal.ai_gateway.<a href="src/truefoundry_sdk/internal/ai_gateway/client.py">get_gateway_config</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get Gateway configuration based on type for the tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+from truefoundry_sdk.internal.ai_gateway import (
+    AiGatewayGetGatewayConfigRequestType,
+)
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.internal.ai_gateway.get_gateway_config(
+    type=AiGatewayGetGatewayConfigRequestType.GATEWAY_RATE_LIMITING_CONFIG,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**type:** `AiGatewayGetGatewayConfigRequestType` — Type of Config
     
 </dd>
 </dl>

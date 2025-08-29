@@ -26,7 +26,7 @@ class SelfHostedModel(UniversalBaseModel):
     name: str = pydantic.Field()
     """
     +sort=1
-    +message=2 to 62 characters long alphanumeric word, may contain - in between, cannot start with a number
+    +message=2 to 62 characters long alphanumeric word, may contain - or . in between, cannot start with a number
     """
 
     hosted_model_name: str = pydantic.Field()

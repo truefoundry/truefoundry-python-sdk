@@ -6,7 +6,7 @@ import typing
 T_Result = typing.TypeVar("T_Result")
 
 
-class BaseOAuth2McpServerLoginJwtSource(str, enum.Enum):
+class McpServerOAuth2JwtSource(str, enum.Enum):
     """
     +label=JWT Source
     +usage=Source of the JWT token to be used for verification.
@@ -17,7 +17,7 @@ class BaseOAuth2McpServerLoginJwtSource(str, enum.Enum):
     ID_TOKEN = "id_token"
 
     def visit(self, access_token: typing.Callable[[], T_Result], id_token: typing.Callable[[], T_Result]) -> T_Result:
-        if self is BaseOAuth2McpServerLoginJwtSource.ACCESS_TOKEN:
+        if self is McpServerOAuth2JwtSource.ACCESS_TOKEN:
             return access_token()
-        if self is BaseOAuth2McpServerLoginJwtSource.ID_TOKEN:
+        if self is McpServerOAuth2JwtSource.ID_TOKEN:
             return id_token()

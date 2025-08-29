@@ -3,6 +3,9 @@
 import typing
 
 from .latency_based_load_balancing_rule import LatencyBasedLoadBalancingRule
+from .priority_based_load_balancing_rule import PriorityBasedLoadBalancingRule
 from .weight_based_load_balancing_rule import WeightBasedLoadBalancingRule
 
-LoadBalancingRule = typing.Union[WeightBasedLoadBalancingRule, LatencyBasedLoadBalancingRule]
+LoadBalancingRule = typing.Union[
+    WeightBasedLoadBalancingRule, LatencyBasedLoadBalancingRule, PriorityBasedLoadBalancingRule
+]

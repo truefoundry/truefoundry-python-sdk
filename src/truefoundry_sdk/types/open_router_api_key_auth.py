@@ -4,25 +4,27 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .failure_tolerance_config import FailureToleranceConfig
-from .usage_limits import UsageLimits
 
 
-class ModelConfig(UniversalBaseModel):
+class OpenRouterApiKeyAuth(UniversalBaseModel):
     """
-    +label=Model Configuration
-    """
-
-    model: str = pydantic.Field()
-    """
-    +usage=Model identifier
-    +uiProps={"descriptionInline":true}
-    +sort=1
-    +label=Model
+    +label=OpenRouter API Key Auth
+    +icon=openrouter
     """
 
-    usage_limits: typing.Optional[UsageLimits] = None
-    failure_tolerance: typing.Optional[FailureToleranceConfig] = None
+    type: typing.Literal["api-key"] = pydantic.Field(default="api-key")
+    """
+    +value=api-key
+    """
+
+    api_key: str = pydantic.Field()
+    """
+    +label=API Key
+    +sort=100
+    +usage=Your OpenRouter API key for authentication
+    +message=API key must not be empty
+    +uiType=Password
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

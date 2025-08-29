@@ -18,6 +18,7 @@ from .environments.client import AsyncEnvironmentsClient, EnvironmentsClient
 from .events.client import AsyncEventsClient, EventsClient
 from .internal.client import AsyncInternalClient, InternalClient
 from .jobs.client import AsyncJobsClient, JobsClient
+from .llm_gateway.client import AsyncLlmGatewayClient, LlmGatewayClient
 from .logs.client import AsyncLogsClient, LogsClient
 from .ml_repos.client import AsyncMlReposClient, MlReposClient
 from .model_versions.client import AsyncModelVersionsClient, ModelVersionsClient
@@ -116,6 +117,7 @@ class BaseTrueFoundry:
         self.alerts = AlertsClient(client_wrapper=self._client_wrapper)
         self.logs = LogsClient(client_wrapper=self._client_wrapper)
         self.ml_repos = MlReposClient(client_wrapper=self._client_wrapper)
+        self.llm_gateway = LlmGatewayClient(client_wrapper=self._client_wrapper)
         self.artifacts = ArtifactsClient(client_wrapper=self._client_wrapper)
         self.prompts = PromptsClient(client_wrapper=self._client_wrapper)
         self.models = ModelsClient(client_wrapper=self._client_wrapper)
@@ -304,6 +306,7 @@ class AsyncBaseTrueFoundry:
         self.alerts = AsyncAlertsClient(client_wrapper=self._client_wrapper)
         self.logs = AsyncLogsClient(client_wrapper=self._client_wrapper)
         self.ml_repos = AsyncMlReposClient(client_wrapper=self._client_wrapper)
+        self.llm_gateway = AsyncLlmGatewayClient(client_wrapper=self._client_wrapper)
         self.artifacts = AsyncArtifactsClient(client_wrapper=self._client_wrapper)
         self.prompts = AsyncPromptsClient(client_wrapper=self._client_wrapper)
         self.models = AsyncModelsClient(client_wrapper=self._client_wrapper)

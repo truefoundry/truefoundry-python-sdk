@@ -209,7 +209,7 @@ class ClustersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListClusterAddonsResponse:
         """
-        List addons for the provided cluster.Pagination is available based on query parameters.
+        List addons for the provided cluster. Pagination is available based on query parameters.
 
         Parameters
         ----------
@@ -228,7 +228,7 @@ class ClustersClient:
         Returns
         -------
         ListClusterAddonsResponse
-            Returns the list of addons for the cluster And also response includes paginated data
+            Returns a paginated list of addons for the cluster
 
         Examples
         --------
@@ -509,7 +509,7 @@ class AsyncClustersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListClusterAddonsResponse:
         """
-        List addons for the provided cluster.Pagination is available based on query parameters.
+        List addons for the provided cluster. Pagination is available based on query parameters.
 
         Parameters
         ----------
@@ -528,7 +528,7 @@ class AsyncClustersClient:
         Returns
         -------
         ListClusterAddonsResponse
-            Returns the list of addons for the cluster And also response includes paginated data
+            Returns a paginated list of addons for the cluster
 
         Examples
         --------

@@ -6,30 +6,26 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class FailureToleranceConfig(UniversalBaseModel):
+class RetryConfig(UniversalBaseModel):
+    attempts: int = pydantic.Field()
     """
-    +label=Failure Tolerance
+    +usage=Number of attempts to retry the request
+    +uiProps={"descriptionInline":true}
+    +label=Attempts
     """
 
-    allowed_failures_per_minute: int = pydantic.Field()
+    delay: typing.Optional[int] = pydantic.Field(default=100)
     """
-    +usage=Number of failures allowed per minute before cooldown
+    +usage=Delay between retries in milliseconds
     +uiProps={"descriptionInline":true}
-    +label=Allowed Failures per Minute
+    +label=Delay
     """
 
-    cooldown_period_minutes: int = pydantic.Field()
+    on_status_codes: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +usage=Cooldown period in minutes after failure threshold is reached
+    +usage=Status codes to retry on
     +uiProps={"descriptionInline":true}
-    +label=Cooldown Period (minutes)
-    """
-
-    failure_status_codes: typing.List[int] = pydantic.Field()
-    """
-    +usage=HTTP status codes considered as failures
-    +uiProps={"descriptionInline":true}
-    +label=Failure Status Codes
+    +label=Status Codes
     """
 
     if IS_PYDANTIC_V2:

@@ -7,7 +7,10 @@ from .azure_content_safety_guardrail_config import AzureContentSafetyGuardrailCo
 from .azure_pii_guardrail_config import AzurePiiGuardrailConfig
 from .custom_guardrail_config import CustomGuardrailConfig
 from .enkrypt_ai_guardrail_config import EnkryptAiGuardrailConfig
+from .fiddler_guardrail_config import FiddlerGuardrailConfig
 from .open_ai_moderations_guardrail_config import OpenAiModerationsGuardrailConfig
+from .palo_alto_prisma_airs_guardrail_config import PaloAltoPrismaAirsGuardrailConfig
+from .prompt_foo_guardrail_config import PromptFooGuardrailConfig
 
 GuardrailConfigIntegrations = typing.Union[
     OpenAiModerationsGuardrailConfig,
@@ -16,4 +19,7 @@ GuardrailConfigIntegrations = typing.Union[
     AzurePiiGuardrailConfig,
     AzureContentSafetyGuardrailConfig,
     EnkryptAiGuardrailConfig,
+    PaloAltoPrismaAirsGuardrailConfig,
+    PromptFooGuardrailConfig,
+    FiddlerGuardrailConfig,
 ]

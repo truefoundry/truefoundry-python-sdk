@@ -19,11 +19,20 @@ class TeamManifest(UniversalBaseModel):
     +usage=Name of the Team
     """
 
+    managers: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    +sort=3
+    +label=Team Managers
+    +usage=Emails of each of the user who can manage the members of the team. Any tenant admin is by default a team manager.
+    +uiType=UserSelect
+    +uiProps={"optionTypes": ["users"]}
+    """
+
     members: typing.List[str] = pydantic.Field()
     """
-    +sort=2
+    +sort=4
     +label=Team Members
-    +message=Enter email of each of the user you want to add in the team.
+    +usage=Enter email of each of the user you want to add in the team.
     +uiType=UserSelect
     +uiProps={"optionTypes": ["users"]}
     """

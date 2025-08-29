@@ -110,8 +110,6 @@ from .base_artifact_version_manifest import BaseArtifactVersionManifest
 from .base_autoscaling import BaseAutoscaling
 from .base_o_auth2login import BaseOAuth2Login
 from .base_o_auth2login_jwt_source import BaseOAuth2LoginJwtSource
-from .base_o_auth2mcp_server_login import BaseOAuth2McpServerLogin
-from .base_o_auth2mcp_server_login_jwt_source import BaseOAuth2McpServerLoginJwtSource
 from .base_service import BaseService
 from .base_service_image import BaseServiceImage
 from .base_service_mounts_item import BaseServiceMountsItem
@@ -156,11 +154,13 @@ from .cohere_model import CohereModel
 from .cohere_provider_account import CohereProviderAccount
 from .collaborator import Collaborator
 from .common_tools_settings import CommonToolsSettings
+from .config import Config
 from .container_task_config import ContainerTaskConfig
 from .container_task_config_image import ContainerTaskConfigImage
 from .core_nats_output_config import CoreNatsOutputConfig
 from .cpu_utilization_metric import CpuUtilizationMetric
 from .create_multi_part_upload_request import CreateMultiPartUploadRequest
+from .create_pat_for_user_response import CreatePatForUserResponse
 from .create_personal_access_token_response import CreatePersonalAccessTokenResponse
 from .cron_metric import CronMetric
 from .custom_basic_auth import CustomBasicAuth
@@ -197,6 +197,7 @@ from .delete_job_run_response import DeleteJobRunResponse
 from .delete_personal_access_token_response import DeletePersonalAccessTokenResponse
 from .delete_secret_group_response import DeleteSecretGroupResponse
 from .delete_team_response import DeleteTeamResponse
+from .delete_user_response import DeleteUserResponse
 from .delete_virtual_account_response import DeleteVirtualAccountResponse
 from .deployment import Deployment
 from .deployment_build import DeploymentBuild
@@ -229,12 +230,14 @@ from .event_chart import EventChart
 from .event_chart_category import EventChartCategory
 from .event_involved_object import EventInvolvedObject
 from .external_blob_storage_source import ExternalBlobStorageSource
-from .failure_tolerance_config import FailureToleranceConfig
 from .fallback_config import FallbackConfig
 from .fallback_model import FallbackModel
 from .fallback_rule import FallbackRule
 from .fallback_when import FallbackWhen
 from .fast_ai_framework import FastAiFramework
+from .fiddler_guard_type import FiddlerGuardType
+from .fiddler_guardrail_config import FiddlerGuardrailConfig
+from .fiddler_key_auth import FiddlerKeyAuth
 from .file_info import FileInfo
 from .flyte_launch_plan import FlyteLaunchPlan
 from .flyte_launch_plan_id import FlyteLaunchPlanId
@@ -251,6 +254,7 @@ from .forward_action import ForwardAction
 from .function import Function
 from .function_schema import FunctionSchema
 from .gateway_config import GatewayConfig
+from .gateway_configuration import GatewayConfiguration
 from .gcp_api_key_auth import GcpApiKeyAuth
 from .gcp_gcr import GcpGcr
 from .gcp_gcs import GcpGcs
@@ -289,7 +293,9 @@ from .get_signed_ur_ls_request import GetSignedUrLsRequest
 from .get_signed_ur_ls_response import GetSignedUrLsResponse
 from .get_suggested_deployment_endpoint_response import GetSuggestedDeploymentEndpointResponse
 from .get_team_response import GetTeamResponse
+from .get_user_resources_response import GetUserResourcesResponse
 from .get_user_response import GetUserResponse
+from .get_user_teams_response import GetUserTeamsResponse
 from .get_virtual_account_response import GetVirtualAccountResponse
 from .get_workspace_response import GetWorkspaceResponse
 from .git_helm_repo import GitHelmRepo
@@ -412,12 +418,15 @@ from .mcp_server_header_auth import McpServerHeaderAuth
 from .mcp_server_integration import McpServerIntegration
 from .mcp_server_integrations import McpServerIntegrations
 from .mcp_server_o_auth2 import McpServerOAuth2
+from .mcp_server_o_auth2dcr import McpServerOAuth2Dcr
+from .mcp_server_o_auth2jwt_source import McpServerOAuth2JwtSource
 from .mcp_server_passthrough import McpServerPassthrough
 from .mcp_server_provider_account import McpServerProviderAccount
 from .mcp_server_with_fqn import McpServerWithFqn
 from .mcp_server_with_url import McpServerWithUrl
 from .mcp_tool import McpTool
 from .metadata import Metadata
+from .metadata_item import MetadataItem
 from .metric import Metric
 from .mime_type import MimeType
 from .mirror_action import MirrorAction
@@ -428,7 +437,6 @@ from .mistral_ai_provider_account import MistralAiProviderAccount
 from .ml_repo import MlRepo
 from .ml_repo_manifest import MlRepoManifest
 from .model import Model
-from .model_config import ModelConfig
 from .model_configuration import ModelConfiguration
 from .model_cost_metric import ModelCostMetric
 from .model_manifest import ModelManifest
@@ -477,6 +485,10 @@ from .open_ai_moderations_guardrail_config_category_thresholds_value import (
 from .open_ai_moderations_guardrail_config_category_thresholds_value_harassment import (
     OpenAiModerationsGuardrailConfigCategoryThresholdsValueHarassment,
 )
+from .open_router_api_key_auth import OpenRouterApiKeyAuth
+from .open_router_integrations import OpenRouterIntegrations
+from .open_router_model import OpenRouterModel
+from .open_router_provider_account import OpenRouterProviderAccount
 from .openai_api_key_auth import OpenaiApiKeyAuth
 from .openai_provider_account import OpenaiProviderAccount
 from .operation import Operation
@@ -491,6 +503,8 @@ from .palm_integrations import PalmIntegrations
 from .palm_key_auth import PalmKeyAuth
 from .palm_model import PalmModel
 from .palm_provider_account import PalmProviderAccount
+from .palo_alto_prisma_airs_guardrail_config import PaloAltoPrismaAirsGuardrailConfig
+from .palo_alto_prisma_airs_key_auth import PaloAltoPrismaAirsKeyAuth
 from .param import Param
 from .param_param_type import ParamParamType
 from .parameters import Parameters
@@ -516,8 +530,12 @@ from .port_app_protocol import PortAppProtocol
 from .port_auth import PortAuth
 from .port_protocol import PortProtocol
 from .presigned_url_object import PresignedUrlObject
+from .priority_based_load_balance_target import PriorityBasedLoadBalanceTarget
+from .priority_based_load_balancing_rule import PriorityBasedLoadBalancingRule
 from .prometheus_alert_rule import PrometheusAlertRule
 from .prompt import Prompt
+from .prompt_foo_guard_type import PromptFooGuardType
+from .prompt_foo_guardrail_config import PromptFooGuardrailConfig
 from .prompt_version import PromptVersion
 from .provider_accounts import ProviderAccounts
 from .public_cost_metric import PublicCostMetric
@@ -542,6 +560,7 @@ from .recommendation import Recommendation
 from .refusal_content_part import RefusalContentPart
 from .register_users_response import RegisterUsersResponse
 from .remote_source import RemoteSource
+from .retry_config import RetryConfig
 from .revoke_all_personal_access_token_response import RevokeAllPersonalAccessTokenResponse
 from .rolling import Rolling
 from .rps_metric import RpsMetric
@@ -648,12 +667,12 @@ from .ttl_registry import TtlRegistry
 from .update_secret_input import UpdateSecretInput
 from .update_user_roles_response import UpdateUserRolesResponse
 from .upgrade_data import UpgradeData
-from .usage_limits import UsageLimits
 from .user import User
 from .user_message import UserMessage
 from .user_message_content import UserMessageContent
 from .user_message_content_item import UserMessageContentItem
 from .user_metadata import UserMetadata
+from .user_resource import UserResource
 from .validation_error import ValidationError
 from .validation_error_loc_item import ValidationErrorLocItem
 from .vertex_model import VertexModel
@@ -791,8 +810,6 @@ __all__ = [
     "BaseAutoscaling",
     "BaseOAuth2Login",
     "BaseOAuth2LoginJwtSource",
-    "BaseOAuth2McpServerLogin",
-    "BaseOAuth2McpServerLoginJwtSource",
     "BaseService",
     "BaseServiceImage",
     "BaseServiceMountsItem",
@@ -837,11 +854,13 @@ __all__ = [
     "CohereProviderAccount",
     "Collaborator",
     "CommonToolsSettings",
+    "Config",
     "ContainerTaskConfig",
     "ContainerTaskConfigImage",
     "CoreNatsOutputConfig",
     "CpuUtilizationMetric",
     "CreateMultiPartUploadRequest",
+    "CreatePatForUserResponse",
     "CreatePersonalAccessTokenResponse",
     "CronMetric",
     "CustomBasicAuth",
@@ -878,6 +897,7 @@ __all__ = [
     "DeletePersonalAccessTokenResponse",
     "DeleteSecretGroupResponse",
     "DeleteTeamResponse",
+    "DeleteUserResponse",
     "DeleteVirtualAccountResponse",
     "Deployment",
     "DeploymentBuild",
@@ -910,12 +930,14 @@ __all__ = [
     "EventChartCategory",
     "EventInvolvedObject",
     "ExternalBlobStorageSource",
-    "FailureToleranceConfig",
     "FallbackConfig",
     "FallbackModel",
     "FallbackRule",
     "FallbackWhen",
     "FastAiFramework",
+    "FiddlerGuardType",
+    "FiddlerGuardrailConfig",
+    "FiddlerKeyAuth",
     "FileInfo",
     "FlyteLaunchPlan",
     "FlyteLaunchPlanId",
@@ -932,6 +954,7 @@ __all__ = [
     "Function",
     "FunctionSchema",
     "GatewayConfig",
+    "GatewayConfiguration",
     "GcpApiKeyAuth",
     "GcpGcr",
     "GcpGcs",
@@ -970,7 +993,9 @@ __all__ = [
     "GetSignedUrLsResponse",
     "GetSuggestedDeploymentEndpointResponse",
     "GetTeamResponse",
+    "GetUserResourcesResponse",
     "GetUserResponse",
+    "GetUserTeamsResponse",
     "GetVirtualAccountResponse",
     "GetWorkspaceResponse",
     "GitHelmRepo",
@@ -1093,12 +1118,15 @@ __all__ = [
     "McpServerIntegration",
     "McpServerIntegrations",
     "McpServerOAuth2",
+    "McpServerOAuth2Dcr",
+    "McpServerOAuth2JwtSource",
     "McpServerPassthrough",
     "McpServerProviderAccount",
     "McpServerWithFqn",
     "McpServerWithUrl",
     "McpTool",
     "Metadata",
+    "MetadataItem",
     "Metric",
     "MimeType",
     "MirrorAction",
@@ -1109,7 +1137,6 @@ __all__ = [
     "MlRepo",
     "MlRepoManifest",
     "Model",
-    "ModelConfig",
     "ModelConfiguration",
     "ModelCostMetric",
     "ModelManifest",
@@ -1154,6 +1181,10 @@ __all__ = [
     "OpenAiModerationsGuardrailConfig",
     "OpenAiModerationsGuardrailConfigCategoryThresholdsValue",
     "OpenAiModerationsGuardrailConfigCategoryThresholdsValueHarassment",
+    "OpenRouterApiKeyAuth",
+    "OpenRouterIntegrations",
+    "OpenRouterModel",
+    "OpenRouterProviderAccount",
     "OpenaiApiKeyAuth",
     "OpenaiProviderAccount",
     "Operation",
@@ -1168,6 +1199,8 @@ __all__ = [
     "PalmKeyAuth",
     "PalmModel",
     "PalmProviderAccount",
+    "PaloAltoPrismaAirsGuardrailConfig",
+    "PaloAltoPrismaAirsKeyAuth",
     "Param",
     "ParamParamType",
     "Parameters",
@@ -1193,8 +1226,12 @@ __all__ = [
     "PortAuth",
     "PortProtocol",
     "PresignedUrlObject",
+    "PriorityBasedLoadBalanceTarget",
+    "PriorityBasedLoadBalancingRule",
     "PrometheusAlertRule",
     "Prompt",
+    "PromptFooGuardType",
+    "PromptFooGuardrailConfig",
     "PromptVersion",
     "ProviderAccounts",
     "PublicCostMetric",
@@ -1222,6 +1259,7 @@ __all__ = [
     "Resources",
     "ResourcesDevicesItem",
     "ResourcesNode",
+    "RetryConfig",
     "RevokeAllPersonalAccessTokenResponse",
     "Rolling",
     "RpsMetric",
@@ -1328,12 +1366,12 @@ __all__ = [
     "UpdateSecretInput",
     "UpdateUserRolesResponse",
     "UpgradeData",
-    "UsageLimits",
     "User",
     "UserMessage",
     "UserMessageContent",
     "UserMessageContentItem",
     "UserMetadata",
+    "UserResource",
     "ValidationError",
     "ValidationErrorLocItem",
     "VertexModel",

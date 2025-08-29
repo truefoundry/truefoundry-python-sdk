@@ -5,7 +5,6 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .load_balancing_rule import LoadBalancingRule
-from .model_config import ModelConfig
 
 
 class LoadBalancingConfig(UniversalBaseModel):
@@ -25,14 +24,6 @@ class LoadBalancingConfig(UniversalBaseModel):
     """
     +value=gateway-load-balancing-config
     +sort=2
-    """
-
-    model_configs: typing.Optional[typing.List[ModelConfig]] = pydantic.Field(default=None)
-    """
-    +usage=Configuration for specific models
-    +uiProps={"descriptionInline":true}
-    +sort=3
-    +label=Model Configurations
     """
 
     rules: typing.List[LoadBalancingRule] = pydantic.Field()

@@ -3,26 +3,25 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.serialization import FieldMetadata
 
 
-class UsageLimits(UniversalBaseModel):
+class CreatePatForUserResponse(UniversalBaseModel):
+    token: str = pydantic.Field()
     """
-    +label=Usage Limits
-    """
-
-    tokens_per_minute: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    +usage=Maximum number of tokens processed per minute
-    +uiProps={"descriptionInline":true}
-    +label=Tokens per Minute
+    Personal Access Token
     """
 
-    requests_per_minute: typing.Optional[int] = pydantic.Field(default=None)
+    user_email: typing_extensions.Annotated[str, FieldMetadata(alias="userEmail")] = pydantic.Field()
     """
-    +usage=Maximum number of requests processed per minute
-    +uiProps={"descriptionInline":true}
-    +label=Requests per Minute
+    Email of the user for whom the PAT was created
+    """
+
+    name: str = pydantic.Field()
+    """
+    Name of the Personal Access Token
     """
 
     if IS_PYDANTIC_V2:

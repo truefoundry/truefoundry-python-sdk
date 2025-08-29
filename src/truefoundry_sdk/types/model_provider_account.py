@@ -16,6 +16,7 @@ from .groq_provider_account import GroqProviderAccount
 from .mistral_ai_provider_account import MistralAiProviderAccount
 from .nomic_provider_account import NomicProviderAccount
 from .ollama_provider_account import OllamaProviderAccount
+from .open_router_provider_account import OpenRouterProviderAccount
 from .openai_provider_account import OpenaiProviderAccount
 from .palm_provider_account import PalmProviderAccount
 from .perplexity_ai_provider_account import PerplexityAiProviderAccount
@@ -42,4 +43,5 @@ ModelProviderAccount = typing.Union[
     OpenaiProviderAccount,
     DatabricksProviderAccount,
     SelfHostedModelProviderAccount,
+    OpenRouterProviderAccount,
 ]
