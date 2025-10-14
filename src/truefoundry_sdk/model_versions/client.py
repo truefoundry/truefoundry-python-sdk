@@ -10,6 +10,9 @@ from ..types.get_model_version_response import GetModelVersionResponse
 from ..types.model_version import ModelVersion
 from .raw_client import AsyncRawModelVersionsClient, RawModelVersionsClient
 
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
+
 
 class ModelVersionsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
@@ -25,6 +28,49 @@ class ModelVersionsClient:
         RawModelVersionsClient
         """
         return self._raw_client
+
+    def apply_tags(
+        self,
+        *,
+        model_version_id: str,
+        tags: typing.Sequence[str],
+        force: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> EmptyResponse:
+        """
+        Parameters
+        ----------
+        model_version_id : str
+
+        tags : typing.Sequence[str]
+
+        force : typing.Optional[bool]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EmptyResponse
+            Successful Response
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.model_versions.apply_tags(
+            model_version_id="model_version_id",
+            tags=["tags"],
+        )
+        """
+        _response = self._raw_client.apply_tags(
+            model_version_id=model_version_id, tags=tags, force=force, request_options=request_options
+        )
+        return _response.data
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetModelVersionResponse:
         """
@@ -91,6 +137,7 @@ class ModelVersionsClient:
     def list(
         self,
         *,
+        tag: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         model_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
@@ -108,6 +155,8 @@ class ModelVersionsClient:
 
         Parameters
         ----------
+        tag : typing.Optional[str]
+
         fqn : typing.Optional[str]
 
         model_id : typing.Optional[str]
@@ -152,6 +201,7 @@ class ModelVersionsClient:
             yield page
         """
         return self._raw_client.list(
+            tag=tag,
             fqn=fqn,
             model_id=model_id,
             ml_repo_id=ml_repo_id,
@@ -180,6 +230,57 @@ class AsyncModelVersionsClient:
         AsyncRawModelVersionsClient
         """
         return self._raw_client
+
+    async def apply_tags(
+        self,
+        *,
+        model_version_id: str,
+        tags: typing.Sequence[str],
+        force: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> EmptyResponse:
+        """
+        Parameters
+        ----------
+        model_version_id : str
+
+        tags : typing.Sequence[str]
+
+        force : typing.Optional[bool]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EmptyResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.model_versions.apply_tags(
+                model_version_id="model_version_id",
+                tags=["tags"],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.apply_tags(
+            model_version_id=model_version_id, tags=tags, force=force, request_options=request_options
+        )
+        return _response.data
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetModelVersionResponse:
         """
@@ -262,6 +363,7 @@ class AsyncModelVersionsClient:
     async def list(
         self,
         *,
+        tag: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         model_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
@@ -279,6 +381,8 @@ class AsyncModelVersionsClient:
 
         Parameters
         ----------
+        tag : typing.Optional[str]
+
         fqn : typing.Optional[str]
 
         model_id : typing.Optional[str]
@@ -332,6 +436,7 @@ class AsyncModelVersionsClient:
         asyncio.run(main())
         """
         return await self._raw_client.list(
+            tag=tag,
             fqn=fqn,
             model_id=model_id,
             ml_repo_id=ml_repo_id,

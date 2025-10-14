@@ -11,98 +11,152 @@ class NvidiaMiggpuProfile(str, enum.Enum):
     +label=MIG Profile
     +usage=Name of the MIG profile to use. One of the following based on gpu type
     Please refer to https://docs.nvidia.com/datacenter/tesla/mig-user-guide/#supported-mig-profiles for more details
-    A100 40 GB - [1g.5gb, 1g.10gb, 2g.10gb, 3g.20gb, 4g.20gb]
-    A100 80 GB / H100 80 GB - [1g.10gb, 1g.20gb, 2g.20gb, 3g.40gb, 4g.40gb]
-    H100 94 GB - [1g.12gb, 1g.24gb, 2g.24gb, 3g.47gb, 4g.47gb]
-    H100 96 GB - [1g.12gb, 1g.24gb, 2g.24gb, 3g.48gb, 4g.48gb]
+    A30 - [1g.6gb, 2g.12gb, 4g.24gb]
+    A100 40 GB - [1g.5gb, 1g.10gb, 2g.10gb, 3g.20gb, 4g.20gb, 7g.40gb]
+    A100 80 GB / H100 80 GB - [1g.10gb, 1g.20gb, 2g.20gb, 3g.40gb, 4g.40gb, 7g.80gb]
+    H100 94 GB - [1g.12gb, 1g.24gb, 2g.24gb, 3g.47gb, 4g.47gb, 7g.94gb]
+    H100 96 GB - [1g.12gb, 1g.24gb, 2g.24gb, 3g.48gb, 4g.48gb, 7g.96gb]
     H200 141 GB - [1g.18gb, 1g.35gb, 2g.35gb, 3g.71gb, 4g.71gb]
+    B200 180 GB - [1g.23gb, 1g.45gb, 2g.45gb, 3g.90gb, 4g.90gb, 7g.180gb]
     """
 
+    ONE_G6GB = "1g.6gb"
+    TWO_G12GB = "2g.12gb"
     ONE_G5GB = "1g.5gb"
     ONE_G10GB = "1g.10gb"
-    ONE_G12GB = "1g.12gb"
-    ONE_G18GB = "1g.18gb"
-    ONE_G20GB = "1g.20gb"
-    ONE_G24GB = "1g.24gb"
-    ONE_G35GB = "1g.35gb"
     TWO_G10GB = "2g.10gb"
-    TWO_G20GB = "2g.20gb"
-    TWO_G24GB = "2g.24gb"
-    TWO_G35GB = "2g.35gb"
     THREE_G20GB = "3g.20gb"
-    THREE_G40GB = "3g.40gb"
-    THREE_G47GB = "3g.47gb"
-    THREE_G48GB = "3g.48gb"
-    THREE_G71GB = "3g.71gb"
     FOUR_G20GB = "4g.20gb"
+    ONE_G20GB = "1g.20gb"
+    TWO_G20GB = "2g.20gb"
+    THREE_G40GB = "3g.40gb"
     FOUR_G40GB = "4g.40gb"
+    ONE_G12GB = "1g.12gb"
+    ONE_G24GB = "1g.24gb"
+    TWO_G24GB = "2g.24gb"
+    THREE_G47GB = "3g.47gb"
     FOUR_G47GB = "4g.47gb"
+    THREE_G48GB = "3g.48gb"
     FOUR_G48GB = "4g.48gb"
+    ONE_G18GB = "1g.18gb"
+    ONE_G35GB = "1g.35gb"
+    TWO_G35GB = "2g.35gb"
+    THREE_G71GB = "3g.71gb"
     FOUR_G71GB = "4g.71gb"
+    ONE_G23GB = "1g.23gb"
+    ONE_G45GB = "1g.45gb"
+    TWO_G45GB = "2g.45gb"
+    THREE_G90GB = "3g.90gb"
+    FOUR_G90GB = "4g.90gb"
+    FOUR_G24GB = "4g.24gb"
+    SEVEN_G40GB = "7g.40gb"
+    SEVEN_G80GB = "7g.80gb"
+    SEVEN_G94GB = "7g.94gb"
+    SEVEN_G96GB = "7g.96gb"
+    SEVEN_G180GB = "7g.180gb"
 
     def visit(
         self,
+        one_g6gb: typing.Callable[[], T_Result],
+        two_g12gb: typing.Callable[[], T_Result],
         one_g5gb: typing.Callable[[], T_Result],
         one_g10gb: typing.Callable[[], T_Result],
-        one_g12gb: typing.Callable[[], T_Result],
-        one_g18gb: typing.Callable[[], T_Result],
-        one_g20gb: typing.Callable[[], T_Result],
-        one_g24gb: typing.Callable[[], T_Result],
-        one_g35gb: typing.Callable[[], T_Result],
         two_g10gb: typing.Callable[[], T_Result],
-        two_g20gb: typing.Callable[[], T_Result],
-        two_g24gb: typing.Callable[[], T_Result],
-        two_g35gb: typing.Callable[[], T_Result],
         three_g20gb: typing.Callable[[], T_Result],
-        three_g40gb: typing.Callable[[], T_Result],
-        three_g47gb: typing.Callable[[], T_Result],
-        three_g48gb: typing.Callable[[], T_Result],
-        three_g71gb: typing.Callable[[], T_Result],
         four_g20gb: typing.Callable[[], T_Result],
+        one_g20gb: typing.Callable[[], T_Result],
+        two_g20gb: typing.Callable[[], T_Result],
+        three_g40gb: typing.Callable[[], T_Result],
         four_g40gb: typing.Callable[[], T_Result],
+        one_g12gb: typing.Callable[[], T_Result],
+        one_g24gb: typing.Callable[[], T_Result],
+        two_g24gb: typing.Callable[[], T_Result],
+        three_g47gb: typing.Callable[[], T_Result],
         four_g47gb: typing.Callable[[], T_Result],
+        three_g48gb: typing.Callable[[], T_Result],
         four_g48gb: typing.Callable[[], T_Result],
+        one_g18gb: typing.Callable[[], T_Result],
+        one_g35gb: typing.Callable[[], T_Result],
+        two_g35gb: typing.Callable[[], T_Result],
+        three_g71gb: typing.Callable[[], T_Result],
         four_g71gb: typing.Callable[[], T_Result],
+        one_g23gb: typing.Callable[[], T_Result],
+        one_g45gb: typing.Callable[[], T_Result],
+        two_g45gb: typing.Callable[[], T_Result],
+        three_g90gb: typing.Callable[[], T_Result],
+        four_g90gb: typing.Callable[[], T_Result],
+        four_g24gb: typing.Callable[[], T_Result],
+        seven_g40gb: typing.Callable[[], T_Result],
+        seven_g80gb: typing.Callable[[], T_Result],
+        seven_g94gb: typing.Callable[[], T_Result],
+        seven_g96gb: typing.Callable[[], T_Result],
+        seven_g180gb: typing.Callable[[], T_Result],
     ) -> T_Result:
+        if self is NvidiaMiggpuProfile.ONE_G6GB:
+            return one_g6gb()
+        if self is NvidiaMiggpuProfile.TWO_G12GB:
+            return two_g12gb()
         if self is NvidiaMiggpuProfile.ONE_G5GB:
             return one_g5gb()
         if self is NvidiaMiggpuProfile.ONE_G10GB:
             return one_g10gb()
-        if self is NvidiaMiggpuProfile.ONE_G12GB:
-            return one_g12gb()
-        if self is NvidiaMiggpuProfile.ONE_G18GB:
-            return one_g18gb()
-        if self is NvidiaMiggpuProfile.ONE_G20GB:
-            return one_g20gb()
-        if self is NvidiaMiggpuProfile.ONE_G24GB:
-            return one_g24gb()
-        if self is NvidiaMiggpuProfile.ONE_G35GB:
-            return one_g35gb()
         if self is NvidiaMiggpuProfile.TWO_G10GB:
             return two_g10gb()
-        if self is NvidiaMiggpuProfile.TWO_G20GB:
-            return two_g20gb()
-        if self is NvidiaMiggpuProfile.TWO_G24GB:
-            return two_g24gb()
-        if self is NvidiaMiggpuProfile.TWO_G35GB:
-            return two_g35gb()
         if self is NvidiaMiggpuProfile.THREE_G20GB:
             return three_g20gb()
-        if self is NvidiaMiggpuProfile.THREE_G40GB:
-            return three_g40gb()
-        if self is NvidiaMiggpuProfile.THREE_G47GB:
-            return three_g47gb()
-        if self is NvidiaMiggpuProfile.THREE_G48GB:
-            return three_g48gb()
-        if self is NvidiaMiggpuProfile.THREE_G71GB:
-            return three_g71gb()
         if self is NvidiaMiggpuProfile.FOUR_G20GB:
             return four_g20gb()
+        if self is NvidiaMiggpuProfile.ONE_G20GB:
+            return one_g20gb()
+        if self is NvidiaMiggpuProfile.TWO_G20GB:
+            return two_g20gb()
+        if self is NvidiaMiggpuProfile.THREE_G40GB:
+            return three_g40gb()
         if self is NvidiaMiggpuProfile.FOUR_G40GB:
             return four_g40gb()
+        if self is NvidiaMiggpuProfile.ONE_G12GB:
+            return one_g12gb()
+        if self is NvidiaMiggpuProfile.ONE_G24GB:
+            return one_g24gb()
+        if self is NvidiaMiggpuProfile.TWO_G24GB:
+            return two_g24gb()
+        if self is NvidiaMiggpuProfile.THREE_G47GB:
+            return three_g47gb()
         if self is NvidiaMiggpuProfile.FOUR_G47GB:
             return four_g47gb()
+        if self is NvidiaMiggpuProfile.THREE_G48GB:
+            return three_g48gb()
         if self is NvidiaMiggpuProfile.FOUR_G48GB:
             return four_g48gb()
+        if self is NvidiaMiggpuProfile.ONE_G18GB:
+            return one_g18gb()
+        if self is NvidiaMiggpuProfile.ONE_G35GB:
+            return one_g35gb()
+        if self is NvidiaMiggpuProfile.TWO_G35GB:
+            return two_g35gb()
+        if self is NvidiaMiggpuProfile.THREE_G71GB:
+            return three_g71gb()
         if self is NvidiaMiggpuProfile.FOUR_G71GB:
             return four_g71gb()
+        if self is NvidiaMiggpuProfile.ONE_G23GB:
+            return one_g23gb()
+        if self is NvidiaMiggpuProfile.ONE_G45GB:
+            return one_g45gb()
+        if self is NvidiaMiggpuProfile.TWO_G45GB:
+            return two_g45gb()
+        if self is NvidiaMiggpuProfile.THREE_G90GB:
+            return three_g90gb()
+        if self is NvidiaMiggpuProfile.FOUR_G90GB:
+            return four_g90gb()
+        if self is NvidiaMiggpuProfile.FOUR_G24GB:
+            return four_g24gb()
+        if self is NvidiaMiggpuProfile.SEVEN_G40GB:
+            return seven_g40gb()
+        if self is NvidiaMiggpuProfile.SEVEN_G80GB:
+            return seven_g80gb()
+        if self is NvidiaMiggpuProfile.SEVEN_G94GB:
+            return seven_g94gb()
+        if self is NvidiaMiggpuProfile.SEVEN_G96GB:
+            return seven_g96gb()
+        if self is NvidiaMiggpuProfile.SEVEN_G180GB:
+            return seven_g180gb()

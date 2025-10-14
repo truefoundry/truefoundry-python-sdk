@@ -13,11 +13,9 @@ class McpServerIntegration(UniversalBaseModel):
     +icon=puzzle-piece
     """
 
-    type: typing.Literal["integration/mcp-server/hosted-mcp-server"] = pydantic.Field(
-        default="integration/mcp-server/hosted-mcp-server"
-    )
+    type: typing.Literal["integration/mcp-server/remote"] = pydantic.Field(default="integration/mcp-server/remote")
     """
-    +value=integration/mcp-server/hosted-mcp-server
+    +value=integration/mcp-server/remote
     """
 
     name: str = pydantic.Field()
@@ -45,6 +43,13 @@ class McpServerIntegration(UniversalBaseModel):
     """
 
     auth_data: typing.Optional[McpServerAuth] = None
+    authorized_subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    +label=Access Control
+    +usage=List of teams/users who can use this MCP server.
+    +sort=500
+    +uiType=AuthorizedSubjects
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

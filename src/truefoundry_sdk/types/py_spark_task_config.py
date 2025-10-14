@@ -4,10 +4,10 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .py_spark_task_config_mounts_item import PySparkTaskConfigMountsItem
 from .spark_driver_config import SparkDriverConfig
 from .spark_executor_config import SparkExecutorConfig
 from .task_py_spark_build import TaskPySparkBuild
+from .volume_mount import VolumeMount
 
 
 class PySparkTaskConfig(UniversalBaseModel):
@@ -35,7 +35,7 @@ class PySparkTaskConfig(UniversalBaseModel):
     +sort=4000
     """
 
-    mounts: typing.Optional[typing.List[PySparkTaskConfigMountsItem]] = pydantic.Field(default=None)
+    mounts: typing.Optional[typing.List[VolumeMount]] = pydantic.Field(default=None)
     """
     +usage=Configure data to be mounted to Workflow pod(s) as a volume.
     +sort=5000

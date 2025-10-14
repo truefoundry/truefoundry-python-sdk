@@ -4,6 +4,7 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from .ai_gateway.client import AiGatewayClient, AsyncAiGatewayClient
 from .applications.client import ApplicationsClient, AsyncApplicationsClient
 from .artifact_versions.client import ArtifactVersionsClient, AsyncArtifactVersionsClient
 from .clusters.client import AsyncClustersClient, ClustersClient
@@ -21,6 +22,8 @@ class InternalClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawInternalClient(client_wrapper=client_wrapper)
         self.users = UsersClient(client_wrapper=client_wrapper)
+
+        self.ai_gateway = AiGatewayClient(client_wrapper=client_wrapper)
 
         self.clusters = ClustersClient(client_wrapper=client_wrapper)
 
@@ -94,6 +97,8 @@ class AsyncInternalClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawInternalClient(client_wrapper=client_wrapper)
         self.users = AsyncUsersClient(client_wrapper=client_wrapper)
+
+        self.ai_gateway = AsyncAiGatewayClient(client_wrapper=client_wrapper)
 
         self.clusters = AsyncClustersClient(client_wrapper=client_wrapper)
 

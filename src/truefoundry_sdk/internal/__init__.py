@@ -3,6 +3,7 @@
 # isort: skip_file
 
 from . import (
+    ai_gateway,
     applications,
     artifact_versions,
     clusters,
@@ -14,18 +15,21 @@ from . import (
     vcs,
     workflows,
 )
+from .ai_gateway import AiGatewayGetGatewayConfigRequestType
 from .docker_registries import DockerRegistriesCreateRepositoryResponse, DockerRegistriesGetCredentialsResponse
 from .metrics import MetricsGetChartsRequestFilterEntity
 from .ml import ApplyMlEntityRequestManifest, DeleteMlEntityRequestManifest
 from .workflows import WorkflowsExecuteWorkflowResponse
 
 __all__ = [
+    "AiGatewayGetGatewayConfigRequestType",
     "ApplyMlEntityRequestManifest",
     "DeleteMlEntityRequestManifest",
     "DockerRegistriesCreateRepositoryResponse",
     "DockerRegistriesGetCredentialsResponse",
     "MetricsGetChartsRequestFilterEntity",
     "WorkflowsExecuteWorkflowResponse",
+    "ai_gateway",
     "applications",
     "artifact_versions",
     "clusters",

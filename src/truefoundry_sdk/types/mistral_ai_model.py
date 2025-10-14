@@ -24,7 +24,7 @@ class MistralAiModel(UniversalBaseModel):
     +label=Display Name
     +sort=1
     +usage=Name to identify this Mistral AI model in the UI
-    +message=2 to 62 characters long alphanumeric word, may contain - in between, cannot start with a number
+    +message=2 to 62 characters long alphanumeric word, may contain - or . in between, cannot start with a number
     """
 
     model_id: str = pydantic.Field()

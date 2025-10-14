@@ -14,7 +14,7 @@ class BudgetWhen(UniversalBaseModel):
     subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     +usage=List of subjects that this rule applies to
-    +uiProps={"descriptionInline":true}
+    +uiProps={"descriptionInline":true, "optionTypes": ["users","teams","virtualAccounts"]}
     +label=Subjects
     """
 

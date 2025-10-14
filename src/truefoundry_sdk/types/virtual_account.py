@@ -20,6 +20,7 @@ class VirtualAccount(UniversalBaseModel):
     created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")]
     created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
     updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
+    is_expired: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isExpired")] = None
     created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = None
 
     if IS_PYDANTIC_V2:

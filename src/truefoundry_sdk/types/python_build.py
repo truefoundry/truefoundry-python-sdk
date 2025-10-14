@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .python_build_command import PythonBuildCommand
+from .python_build_python_dependencies import PythonBuildPythonDependencies
 
 
 class PythonBuild(UniversalBaseModel):
@@ -24,12 +25,14 @@ class PythonBuild(UniversalBaseModel):
     +label=Python version
     +usage=Python version to run your application. Should be one of the tags listed on [Official Python Docker Page](https://hub.docker.com/_/python)
     +message=Please enter a valid Python version tag
+    +sort=10002
     """
 
     build_context_path: str = pydantic.Field(default="./")
     """
     +label=Path to build context
     +usage=Build path relative to project root path.
+    +sort=10000
     """
 
     requirements_path: typing.Optional[str] = pydantic.Field(default=None)
@@ -38,6 +41,8 @@ class PythonBuild(UniversalBaseModel):
     +label=Path to requirements
     +usage=Path to `requirements.txt` relative to
     `Path to build context`
+    +uiType=Hidden
+    +sort=10004
     """
 
     pip_packages: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
@@ -46,6 +51,14 @@ class PythonBuild(UniversalBaseModel):
     +usage=Define pip package requirements.
     In Python/YAML E.g. ["fastapi>=0.90,<1.0", "uvicorn"]
     +placeholder=Enter a pip package name E.g. fastapi>=0.90,<1.0
+    +uiType=Hidden
+    """
+
+    python_dependencies: typing.Optional[PythonBuildPythonDependencies] = pydantic.Field(default=None)
+    """
+    +label=Python dependencies
+    +usage=Python dependencies to install
+    +sort=10004
     """
 
     apt_packages: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
@@ -65,6 +78,7 @@ class PythonBuild(UniversalBaseModel):
     Command will be set as the Entrypoint of the generated image.
     When deploying a Job, the command can be templatized by defining `params` and referencing them in command
     E.g. `python main.py --learning_rate {{learning_rate}}`
+    +sort=10001
     """
 
     cuda_version: typing.Optional[str] = pydantic.Field(default=None)
@@ -75,6 +89,7 @@ class PythonBuild(UniversalBaseModel):
     You can also specify a valid tag of the form {cuda_version_number}-cudnn{cudnn_version_number}-{runtime|devel}-ubuntu{ubuntu_version}
     Refer https://hub.docker.com/r/nvidia/cuda/tags for valid set of values
     Note: We use deadsnakes ubuntu ppa to add Python that currently supports only Ubuntu 18.04, 20.04 and 22.04
+    +sort=10003
     """
 
     if IS_PYDANTIC_V2:

@@ -324,7 +324,7 @@ class RawClustersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListClusterAddonsResponse]:
         """
-        List addons for the provided cluster.Pagination is available based on query parameters.
+        List addons for the provided cluster. Pagination is available based on query parameters.
 
         Parameters
         ----------
@@ -343,7 +343,7 @@ class RawClustersClient:
         Returns
         -------
         HttpResponse[ListClusterAddonsResponse]
-            Returns the list of addons for the cluster And also response includes paginated data
+            Returns a paginated list of addons for the cluster
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/clusters/{jsonable_encoder(id)}/get-addons",
@@ -741,7 +741,7 @@ class AsyncRawClustersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListClusterAddonsResponse]:
         """
-        List addons for the provided cluster.Pagination is available based on query parameters.
+        List addons for the provided cluster. Pagination is available based on query parameters.
 
         Parameters
         ----------
@@ -760,7 +760,7 @@ class AsyncRawClustersClient:
         Returns
         -------
         AsyncHttpResponse[ListClusterAddonsResponse]
-            Returns the list of addons for the cluster And also response includes paginated data
+            Returns a paginated list of addons for the cluster
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/clusters/{jsonable_encoder(id)}/get-addons",

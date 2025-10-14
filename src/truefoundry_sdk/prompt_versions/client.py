@@ -10,6 +10,9 @@ from ..types.get_prompt_version_response import GetPromptVersionResponse
 from ..types.prompt_version import PromptVersion
 from .raw_client import AsyncRawPromptVersionsClient, RawPromptVersionsClient
 
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
+
 
 class PromptVersionsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
@@ -25,6 +28,49 @@ class PromptVersionsClient:
         RawPromptVersionsClient
         """
         return self._raw_client
+
+    def apply_tags(
+        self,
+        *,
+        prompt_version_id: str,
+        tags: typing.Sequence[str],
+        force: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> EmptyResponse:
+        """
+        Parameters
+        ----------
+        prompt_version_id : str
+
+        tags : typing.Sequence[str]
+
+        force : typing.Optional[bool]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EmptyResponse
+            Successful Response
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.prompt_versions.apply_tags(
+            prompt_version_id="prompt_version_id",
+            tags=["tags"],
+        )
+        """
+        _response = self._raw_client.apply_tags(
+            prompt_version_id=prompt_version_id, tags=tags, force=force, request_options=request_options
+        )
+        return _response.data
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetPromptVersionResponse:
         """
@@ -91,6 +137,7 @@ class PromptVersionsClient:
     def list(
         self,
         *,
+        tag: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         prompt_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
@@ -105,6 +152,8 @@ class PromptVersionsClient:
 
         Parameters
         ----------
+        tag : typing.Optional[str]
+
         fqn : typing.Optional[str]
 
         prompt_id : typing.Optional[str]
@@ -143,6 +192,7 @@ class PromptVersionsClient:
             yield page
         """
         return self._raw_client.list(
+            tag=tag,
             fqn=fqn,
             prompt_id=prompt_id,
             ml_repo_id=ml_repo_id,
@@ -168,6 +218,57 @@ class AsyncPromptVersionsClient:
         AsyncRawPromptVersionsClient
         """
         return self._raw_client
+
+    async def apply_tags(
+        self,
+        *,
+        prompt_version_id: str,
+        tags: typing.Sequence[str],
+        force: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> EmptyResponse:
+        """
+        Parameters
+        ----------
+        prompt_version_id : str
+
+        tags : typing.Sequence[str]
+
+        force : typing.Optional[bool]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EmptyResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.prompt_versions.apply_tags(
+                prompt_version_id="prompt_version_id",
+                tags=["tags"],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.apply_tags(
+            prompt_version_id=prompt_version_id, tags=tags, force=force, request_options=request_options
+        )
+        return _response.data
 
     async def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -252,6 +353,7 @@ class AsyncPromptVersionsClient:
     async def list(
         self,
         *,
+        tag: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         prompt_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
@@ -266,6 +368,8 @@ class AsyncPromptVersionsClient:
 
         Parameters
         ----------
+        tag : typing.Optional[str]
+
         fqn : typing.Optional[str]
 
         prompt_id : typing.Optional[str]
@@ -313,6 +417,7 @@ class AsyncPromptVersionsClient:
         asyncio.run(main())
         """
         return await self._raw_client.list(
+            tag=tag,
             fqn=fqn,
             prompt_id=prompt_id,
             ml_repo_id=ml_repo_id,

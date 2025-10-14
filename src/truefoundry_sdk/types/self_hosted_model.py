@@ -4,6 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .custom_tls_settings import CustomTlsSettings
 from .model_cost_metric import ModelCostMetric
 from .model_type import ModelType
 from .self_hosted_model_auth_data import SelfHostedModelAuthData
@@ -26,7 +27,7 @@ class SelfHostedModel(UniversalBaseModel):
     name: str = pydantic.Field()
     """
     +sort=1
-    +message=2 to 62 characters long alphanumeric word, may contain - in between, cannot start with a number
+    +message=2 to 62 characters long alphanumeric word, may contain - or . in between, cannot start with a number
     """
 
     hosted_model_name: str = pydantic.Field()
@@ -61,6 +62,7 @@ class SelfHostedModel(UniversalBaseModel):
     +uiProps={"disableAllOption": true}
     """
 
+    tls_settings: typing.Optional[CustomTlsSettings] = None
     auth_data: typing.Optional[SelfHostedModelAuthData] = pydantic.Field(default=None)
     """
     +label=Auth Data

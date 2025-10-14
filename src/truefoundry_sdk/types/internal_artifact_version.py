@@ -18,6 +18,7 @@ class InternalArtifactVersion(UniversalBaseModel):
     manifest: ArtifactManifest
     usage_code_snippet: typing.Optional[str] = None
     ml_repo_id: str
+    tags: typing.Optional[typing.List[str]] = None
     artifact_id: str
     artifact_fqn: str
     artifact_size: typing.Optional[int] = None

@@ -16,10 +16,78 @@ from ..types.get_model_version_response import GetModelVersionResponse
 from ..types.list_model_versions_response import ListModelVersionsResponse
 from ..types.model_version import ModelVersion
 
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
+
 
 class RawModelVersionsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    def apply_tags(
+        self,
+        *,
+        model_version_id: str,
+        tags: typing.Sequence[str],
+        force: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[EmptyResponse]:
+        """
+        Parameters
+        ----------
+        model_version_id : str
+
+        tags : typing.Sequence[str]
+
+        force : typing.Optional[bool]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[EmptyResponse]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/ml/v1/model-versions/tags",
+            method="PUT",
+            json={
+                "model_version_id": model_version_id,
+                "tags": tags,
+                "force": force,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    EmptyResponse,
+                    parse_obj_as(
+                        type_=EmptyResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -122,6 +190,7 @@ class RawModelVersionsClient:
     def list(
         self,
         *,
+        tag: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         model_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
@@ -139,6 +208,8 @@ class RawModelVersionsClient:
 
         Parameters
         ----------
+        tag : typing.Optional[str]
+
         fqn : typing.Optional[str]
 
         model_id : typing.Optional[str]
@@ -173,6 +244,7 @@ class RawModelVersionsClient:
             "api/ml/v1/model-versions",
             method="GET",
             params={
+                "tag": tag,
                 "fqn": fqn,
                 "model_id": model_id,
                 "ml_repo_id": ml_repo_id,
@@ -198,6 +270,7 @@ class RawModelVersionsClient:
                 _items = _parsed_response.data
                 _has_next = True
                 _get_next = lambda: self.list(
+                    tag=tag,
                     fqn=fqn,
                     model_id=model_id,
                     ml_repo_id=ml_repo_id,
@@ -233,6 +306,71 @@ class RawModelVersionsClient:
 class AsyncRawModelVersionsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    async def apply_tags(
+        self,
+        *,
+        model_version_id: str,
+        tags: typing.Sequence[str],
+        force: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[EmptyResponse]:
+        """
+        Parameters
+        ----------
+        model_version_id : str
+
+        tags : typing.Sequence[str]
+
+        force : typing.Optional[bool]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[EmptyResponse]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/ml/v1/model-versions/tags",
+            method="PUT",
+            json={
+                "model_version_id": model_version_id,
+                "tags": tags,
+                "force": force,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    EmptyResponse,
+                    parse_obj_as(
+                        type_=EmptyResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -335,6 +473,7 @@ class AsyncRawModelVersionsClient:
     async def list(
         self,
         *,
+        tag: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         model_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
@@ -352,6 +491,8 @@ class AsyncRawModelVersionsClient:
 
         Parameters
         ----------
+        tag : typing.Optional[str]
+
         fqn : typing.Optional[str]
 
         model_id : typing.Optional[str]
@@ -386,6 +527,7 @@ class AsyncRawModelVersionsClient:
             "api/ml/v1/model-versions",
             method="GET",
             params={
+                "tag": tag,
                 "fqn": fqn,
                 "model_id": model_id,
                 "ml_repo_id": ml_repo_id,
@@ -413,6 +555,7 @@ class AsyncRawModelVersionsClient:
 
                 async def _get_next():
                     return await self.list(
+                        tag=tag,
                         fqn=fqn,
                         model_id=model_id,
                         ml_repo_id=ml_repo_id,

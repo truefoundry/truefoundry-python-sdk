@@ -13,7 +13,6 @@ from .user_metadata import UserMetadata
 class User(UniversalBaseModel):
     id: str
     email: str
-    user_name: typing_extensions.Annotated[str, FieldMetadata(alias="userName")]
     tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]
     metadata: UserMetadata
     roles: typing.Optional[typing.List[str]] = None

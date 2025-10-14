@@ -27,6 +27,7 @@ class ArtifactVersionsClient:
     def list(
         self,
         *,
+        tag: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         artifact_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
@@ -45,6 +46,8 @@ class ArtifactVersionsClient:
 
         Parameters
         ----------
+        tag : typing.Optional[str]
+
         fqn : typing.Optional[str]
 
         artifact_id : typing.Optional[str]
@@ -91,6 +94,7 @@ class ArtifactVersionsClient:
             yield page
         """
         return self._raw_client.list(
+            tag=tag,
             fqn=fqn,
             artifact_id=artifact_id,
             ml_repo_id=ml_repo_id,
@@ -124,6 +128,7 @@ class AsyncArtifactVersionsClient:
     async def list(
         self,
         *,
+        tag: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         artifact_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
@@ -142,6 +147,8 @@ class AsyncArtifactVersionsClient:
 
         Parameters
         ----------
+        tag : typing.Optional[str]
+
         fqn : typing.Optional[str]
 
         artifact_id : typing.Optional[str]
@@ -197,6 +204,7 @@ class AsyncArtifactVersionsClient:
         asyncio.run(main())
         """
         return await self._raw_client.list(
+            tag=tag,
             fqn=fqn,
             artifact_id=artifact_id,
             ml_repo_id=ml_repo_id,

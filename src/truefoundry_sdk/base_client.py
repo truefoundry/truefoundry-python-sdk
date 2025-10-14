@@ -18,6 +18,7 @@ from .environments.client import AsyncEnvironmentsClient, EnvironmentsClient
 from .events.client import AsyncEventsClient, EventsClient
 from .internal.client import AsyncInternalClient, InternalClient
 from .jobs.client import AsyncJobsClient, JobsClient
+from .llm_gateway.client import AsyncLlmGatewayClient, LlmGatewayClient
 from .logs.client import AsyncLogsClient, LogsClient
 from .ml_repos.client import AsyncMlReposClient, MlReposClient
 from .model_versions.client import AsyncModelVersionsClient, ModelVersionsClient
@@ -104,6 +105,7 @@ class BaseTrueFoundry:
         self.teams = TeamsClient(client_wrapper=self._client_wrapper)
         self.personal_access_tokens = PersonalAccessTokensClient(client_wrapper=self._client_wrapper)
         self.virtual_accounts = VirtualAccountsClient(client_wrapper=self._client_wrapper)
+        self.llm_gateway = LlmGatewayClient(client_wrapper=self._client_wrapper)
         self.secrets = SecretsClient(client_wrapper=self._client_wrapper)
         self.secret_groups = SecretGroupsClient(client_wrapper=self._client_wrapper)
         self.clusters = ClustersClient(client_wrapper=self._client_wrapper)
@@ -292,6 +294,7 @@ class AsyncBaseTrueFoundry:
         self.teams = AsyncTeamsClient(client_wrapper=self._client_wrapper)
         self.personal_access_tokens = AsyncPersonalAccessTokensClient(client_wrapper=self._client_wrapper)
         self.virtual_accounts = AsyncVirtualAccountsClient(client_wrapper=self._client_wrapper)
+        self.llm_gateway = AsyncLlmGatewayClient(client_wrapper=self._client_wrapper)
         self.secrets = AsyncSecretsClient(client_wrapper=self._client_wrapper)
         self.secret_groups = AsyncSecretGroupsClient(client_wrapper=self._client_wrapper)
         self.clusters = AsyncClustersClient(client_wrapper=self._client_wrapper)

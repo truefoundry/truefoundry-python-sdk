@@ -17,7 +17,9 @@ class ModelType(str, enum.Enum):
     EMBEDDING = "embedding"
     REALTIME = "realtime"
     RERANK = "rerank"
-    AUDIO = "audio"
+    AUDIO_TRANSCRIPTION = "audio_transcription"
+    AUDIO_TRANSLATION = "audio_translation"
+    TEXT_TO_SPEECH = "text_to_speech"
     MODERATION = "moderation"
     IMAGE = "image"
 
@@ -28,7 +30,9 @@ class ModelType(str, enum.Enum):
         embedding: typing.Callable[[], T_Result],
         realtime: typing.Callable[[], T_Result],
         rerank: typing.Callable[[], T_Result],
-        audio: typing.Callable[[], T_Result],
+        audio_transcription: typing.Callable[[], T_Result],
+        audio_translation: typing.Callable[[], T_Result],
+        text_to_speech: typing.Callable[[], T_Result],
         moderation: typing.Callable[[], T_Result],
         image: typing.Callable[[], T_Result],
     ) -> T_Result:
@@ -42,8 +46,12 @@ class ModelType(str, enum.Enum):
             return realtime()
         if self is ModelType.RERANK:
             return rerank()
-        if self is ModelType.AUDIO:
-            return audio()
+        if self is ModelType.AUDIO_TRANSCRIPTION:
+            return audio_transcription()
+        if self is ModelType.AUDIO_TRANSLATION:
+            return audio_translation()
+        if self is ModelType.TEXT_TO_SPEECH:
+            return text_to_speech()
         if self is ModelType.MODERATION:
             return moderation()
         if self is ModelType.IMAGE:

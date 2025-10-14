@@ -20,6 +20,7 @@ class RawArtifactVersionsClient:
     def list(
         self,
         *,
+        tag: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         artifact_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
@@ -38,6 +39,8 @@ class RawArtifactVersionsClient:
 
         Parameters
         ----------
+        tag : typing.Optional[str]
+
         fqn : typing.Optional[str]
 
         artifact_id : typing.Optional[str]
@@ -74,6 +77,7 @@ class RawArtifactVersionsClient:
             "api/ml/v1/x/artifact-versions",
             method="GET",
             params={
+                "tag": tag,
                 "fqn": fqn,
                 "artifact_id": artifact_id,
                 "ml_repo_id": ml_repo_id,
@@ -100,6 +104,7 @@ class RawArtifactVersionsClient:
                 _items = _parsed_response.data
                 _has_next = True
                 _get_next = lambda: self.list(
+                    tag=tag,
                     fqn=fqn,
                     artifact_id=artifact_id,
                     ml_repo_id=ml_repo_id,
@@ -140,6 +145,7 @@ class AsyncRawArtifactVersionsClient:
     async def list(
         self,
         *,
+        tag: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         artifact_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
@@ -158,6 +164,8 @@ class AsyncRawArtifactVersionsClient:
 
         Parameters
         ----------
+        tag : typing.Optional[str]
+
         fqn : typing.Optional[str]
 
         artifact_id : typing.Optional[str]
@@ -194,6 +202,7 @@ class AsyncRawArtifactVersionsClient:
             "api/ml/v1/x/artifact-versions",
             method="GET",
             params={
+                "tag": tag,
                 "fqn": fqn,
                 "artifact_id": artifact_id,
                 "ml_repo_id": ml_repo_id,
@@ -222,6 +231,7 @@ class AsyncRawArtifactVersionsClient:
 
                 async def _get_next():
                     return await self.list(
+                        tag=tag,
                         fqn=fqn,
                         artifact_id=artifact_id,
                         ml_repo_id=ml_repo_id,

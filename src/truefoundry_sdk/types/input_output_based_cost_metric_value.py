@@ -9,6 +9,17 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 class InputOutputBasedCostMetricValue(UniversalBaseModel):
     input: float
     output: float
+    cache_read: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Cost for reading cached tokens (e.g., OpenAI cached prompts, Anthropic cache reads)
+    +uiProps={"allowDecimal":true}
+    """
+
+    cache_write: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Cost for writing/creating cached tokens (e.g., Anthropic cache creation)
+    +uiProps={"allowDecimal":true}
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

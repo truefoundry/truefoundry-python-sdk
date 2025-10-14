@@ -7,6 +7,7 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class GcpRegion(str, enum.Enum):
+    GLOBAL = "global"
     NORTHAMERICA_NORTHEAST1 = "northamerica-northeast1"
     NORTHAMERICA_NORTHEAST2 = "northamerica-northeast2"
     SOUTHAMERICA_EAST1 = "southamerica-east1"
@@ -43,10 +44,10 @@ class GcpRegion(str, enum.Enum):
     ME_CENTRAL1 = "me-central1"
     ME_CENTRAL2 = "me-central2"
     ME_WEST1 = "me-west1"
-    GLOBAL = "global"
 
     def visit(
         self,
+        global_: typing.Callable[[], T_Result],
         northamerica_northeast1: typing.Callable[[], T_Result],
         northamerica_northeast2: typing.Callable[[], T_Result],
         southamerica_east1: typing.Callable[[], T_Result],
@@ -83,8 +84,9 @@ class GcpRegion(str, enum.Enum):
         me_central1: typing.Callable[[], T_Result],
         me_central2: typing.Callable[[], T_Result],
         me_west1: typing.Callable[[], T_Result],
-        global_: typing.Callable[[], T_Result],
     ) -> T_Result:
+        if self is GcpRegion.GLOBAL:
+            return global_()
         if self is GcpRegion.NORTHAMERICA_NORTHEAST1:
             return northamerica_northeast1()
         if self is GcpRegion.NORTHAMERICA_NORTHEAST2:
@@ -157,5 +159,3 @@ class GcpRegion(str, enum.Enum):
             return me_central2()
         if self is GcpRegion.ME_WEST1:
             return me_west1()
-        if self is GcpRegion.GLOBAL:
-            return global_()

@@ -35,6 +35,49 @@ class ArtifactVersionsClient:
         """
         return self._raw_client
 
+    def apply_tags(
+        self,
+        *,
+        artifact_version_id: str,
+        tags: typing.Sequence[str],
+        force: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> EmptyResponse:
+        """
+        Parameters
+        ----------
+        artifact_version_id : str
+
+        tags : typing.Sequence[str]
+
+        force : typing.Optional[bool]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EmptyResponse
+            Successful Response
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.artifact_versions.apply_tags(
+            artifact_version_id="artifact_version_id",
+            tags=["tags"],
+        )
+        """
+        _response = self._raw_client.apply_tags(
+            artifact_version_id=artifact_version_id, tags=tags, force=force, request_options=request_options
+        )
+        return _response.data
+
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetArtifactVersionResponse:
         """
         Get artifact version API
@@ -100,6 +143,7 @@ class ArtifactVersionsClient:
     def list(
         self,
         *,
+        tag: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         artifact_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
@@ -117,6 +161,8 @@ class ArtifactVersionsClient:
 
         Parameters
         ----------
+        tag : typing.Optional[str]
+
         fqn : typing.Optional[str]
 
         artifact_id : typing.Optional[str]
@@ -161,6 +207,7 @@ class ArtifactVersionsClient:
             yield page
         """
         return self._raw_client.list(
+            tag=tag,
             fqn=fqn,
             artifact_id=artifact_id,
             ml_repo_id=ml_repo_id,
@@ -387,6 +434,57 @@ class AsyncArtifactVersionsClient:
         """
         return self._raw_client
 
+    async def apply_tags(
+        self,
+        *,
+        artifact_version_id: str,
+        tags: typing.Sequence[str],
+        force: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> EmptyResponse:
+        """
+        Parameters
+        ----------
+        artifact_version_id : str
+
+        tags : typing.Sequence[str]
+
+        force : typing.Optional[bool]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EmptyResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.artifact_versions.apply_tags(
+                artifact_version_id="artifact_version_id",
+                tags=["tags"],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.apply_tags(
+            artifact_version_id=artifact_version_id, tags=tags, force=force, request_options=request_options
+        )
+        return _response.data
+
     async def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetArtifactVersionResponse:
@@ -470,6 +568,7 @@ class AsyncArtifactVersionsClient:
     async def list(
         self,
         *,
+        tag: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         artifact_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
@@ -487,6 +586,8 @@ class AsyncArtifactVersionsClient:
 
         Parameters
         ----------
+        tag : typing.Optional[str]
+
         fqn : typing.Optional[str]
 
         artifact_id : typing.Optional[str]
@@ -540,6 +641,7 @@ class AsyncArtifactVersionsClient:
         asyncio.run(main())
         """
         return await self._raw_client.list(
+            tag=tag,
             fqn=fqn,
             artifact_id=artifact_id,
             ml_repo_id=ml_repo_id,
