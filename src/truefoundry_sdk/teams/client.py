@@ -8,8 +8,9 @@ from ..core.request_options import RequestOptions
 from ..types.delete_team_response import DeleteTeamResponse
 from ..types.get_team_response import GetTeamResponse
 from ..types.team import Team
-from ..types.team_manifest import TeamManifest
 from .raw_client import AsyncRawTeamsClient, RawTeamsClient
+from .types.apply_team_request_manifest import ApplyTeamRequestManifest
+from .types.teams_list_request_type import TeamsListRequestType
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -35,6 +36,7 @@ class TeamsClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
+        type: typing.Optional[TeamsListRequestType] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Team]:
         """
@@ -47,6 +49,9 @@ class TeamsClient:
 
         offset : typing.Optional[int]
             Number of items to skip
+
+        type : typing.Optional[TeamsListRequestType]
+            Filter teams by type
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -74,12 +79,12 @@ class TeamsClient:
         for page in response.iter_pages():
             yield page
         """
-        return self._raw_client.list(limit=limit, offset=offset, request_options=request_options)
+        return self._raw_client.list(limit=limit, offset=offset, type=type, request_options=request_options)
 
     def create_or_update(
         self,
         *,
-        manifest: TeamManifest,
+        manifest: ApplyTeamRequestManifest,
         dry_run: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetTeamResponse:
@@ -88,7 +93,7 @@ class TeamsClient:
 
         Parameters
         ----------
-        manifest : TeamManifest
+        manifest : ApplyTeamRequestManifest
             Team manifest
 
         dry_run : typing.Optional[bool]
@@ -207,6 +212,7 @@ class AsyncTeamsClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
+        type: typing.Optional[TeamsListRequestType] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Team]:
         """
@@ -219,6 +225,9 @@ class AsyncTeamsClient:
 
         offset : typing.Optional[int]
             Number of items to skip
+
+        type : typing.Optional[TeamsListRequestType]
+            Filter teams by type
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -255,12 +264,12 @@ class AsyncTeamsClient:
 
         asyncio.run(main())
         """
-        return await self._raw_client.list(limit=limit, offset=offset, request_options=request_options)
+        return await self._raw_client.list(limit=limit, offset=offset, type=type, request_options=request_options)
 
     async def create_or_update(
         self,
         *,
-        manifest: TeamManifest,
+        manifest: ApplyTeamRequestManifest,
         dry_run: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetTeamResponse:
@@ -269,7 +278,7 @@ class AsyncTeamsClient:
 
         Parameters
         ----------
-        manifest : TeamManifest
+        manifest : ApplyTeamRequestManifest
             Team manifest
 
         dry_run : typing.Optional[bool]

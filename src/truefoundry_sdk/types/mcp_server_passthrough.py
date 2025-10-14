@@ -8,8 +8,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class McpServerPassthrough(UniversalBaseModel):
     """
-    +label=Login with truefoundry
-    +usage=Use TrueFoundry authentication with PAT or Virtual Accounts for secure access based on your TrueFoundry identity.
+    +label=Token Passthrough
+    +usage=Authenticate using your existing TrueFoundry account (PAT or Virtual Accounts). Your credentials are automatically passed to the MCP server.
     """
 
     type: typing.Literal["passthrough"] = pydantic.Field(default="passthrough")

@@ -8,7 +8,10 @@ from ..core.request_options import RequestOptions
 from ..types.activate_user_response import ActivateUserResponse
 from ..types.change_password_response import ChangePasswordResponse
 from ..types.deactivate_user_response import DeactivateUserResponse
+from ..types.delete_user_response import DeleteUserResponse
+from ..types.get_user_resources_response import GetUserResourcesResponse
 from ..types.get_user_response import GetUserResponse
+from ..types.get_user_teams_response import GetUserTeamsResponse
 from ..types.invite_user_response import InviteUserResponse
 from ..types.register_users_response import RegisterUsersResponse
 from ..types.update_user_roles_response import UpdateUserRolesResponse
@@ -41,6 +44,7 @@ class UsersClient:
         offset: typing.Optional[int] = 0,
         query: typing.Optional[str] = None,
         show_invalid_users: typing.Optional[bool] = None,
+        include_virtual_accounts: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[User]:
         """
@@ -58,6 +62,9 @@ class UsersClient:
 
         show_invalid_users : typing.Optional[bool]
             Show Deactivated users
+
+        include_virtual_accounts : typing.Optional[str]
+            Include virtual accounts
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -90,6 +97,7 @@ class UsersClient:
             offset=offset,
             query=query,
             show_invalid_users=show_invalid_users,
+            include_virtual_accounts=include_virtual_accounts,
             request_options=request_options,
         )
 
@@ -221,6 +229,38 @@ class UsersClient:
         )
         """
         _response = self._raw_client.get(id, request_options=request_options)
+        return _response.data
+
+    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> DeleteUserResponse:
+        """
+        Delete user if they are not a collaborator in any resource and not part of any team other than everyone.
+
+        Parameters
+        ----------
+        id : str
+            User Id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DeleteUserResponse
+            User has been successfully deleted.
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.users.delete(
+            id="id",
+        )
+        """
+        _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
 
     def invite_user(
@@ -378,6 +418,72 @@ class UsersClient:
         )
         return _response.data
 
+    def get_resources(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetUserResourcesResponse:
+        """
+        Get all resources associated with a user.
+
+        Parameters
+        ----------
+        id : str
+            User Id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetUserResourcesResponse
+            Returns all resources for the user.
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.users.get_resources(
+            id="id",
+        )
+        """
+        _response = self._raw_client.get_resources(id, request_options=request_options)
+        return _response.data
+
+    def get_teams(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetUserTeamsResponse:
+        """
+        Get all manual teams associated with a user.
+
+        Parameters
+        ----------
+        id : str
+            User Id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetUserTeamsResponse
+            Returns all manual teams for the user.
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.users.get_teams(
+            id="id",
+        )
+        """
+        _response = self._raw_client.get_teams(id, request_options=request_options)
+        return _response.data
+
 
 class AsyncUsersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -401,6 +507,7 @@ class AsyncUsersClient:
         offset: typing.Optional[int] = 0,
         query: typing.Optional[str] = None,
         show_invalid_users: typing.Optional[bool] = None,
+        include_virtual_accounts: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[User]:
         """
@@ -418,6 +525,9 @@ class AsyncUsersClient:
 
         show_invalid_users : typing.Optional[bool]
             Show Deactivated users
+
+        include_virtual_accounts : typing.Optional[str]
+            Include virtual accounts
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -459,6 +569,7 @@ class AsyncUsersClient:
             offset=offset,
             query=query,
             show_invalid_users=show_invalid_users,
+            include_virtual_accounts=include_virtual_accounts,
             request_options=request_options,
         )
 
@@ -614,6 +725,46 @@ class AsyncUsersClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get(id, request_options=request_options)
+        return _response.data
+
+    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> DeleteUserResponse:
+        """
+        Delete user if they are not a collaborator in any resource and not part of any team other than everyone.
+
+        Parameters
+        ----------
+        id : str
+            User Id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DeleteUserResponse
+            User has been successfully deleted.
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.users.delete(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete(id, request_options=request_options)
         return _response.data
 
     async def invite_user(
@@ -803,4 +954,88 @@ class AsyncUsersClient:
         _response = await self._raw_client.change_password(
             login_id=login_id, new_password=new_password, old_password=old_password, request_options=request_options
         )
+        return _response.data
+
+    async def get_resources(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetUserResourcesResponse:
+        """
+        Get all resources associated with a user.
+
+        Parameters
+        ----------
+        id : str
+            User Id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetUserResourcesResponse
+            Returns all resources for the user.
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.users.get_resources(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_resources(id, request_options=request_options)
+        return _response.data
+
+    async def get_teams(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetUserTeamsResponse:
+        """
+        Get all manual teams associated with a user.
+
+        Parameters
+        ----------
+        id : str
+            User Id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetUserTeamsResponse
+            Returns all manual teams for the user.
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.users.get_teams(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_teams(id, request_options=request_options)
         return _response.data

@@ -19,7 +19,8 @@ from ..types.get_team_response import GetTeamResponse
 from ..types.http_error import HttpError
 from ..types.list_teams_response import ListTeamsResponse
 from ..types.team import Team
-from ..types.team_manifest import TeamManifest
+from .types.apply_team_request_manifest import ApplyTeamRequestManifest
+from .types.teams_list_request_type import TeamsListRequestType
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -34,6 +35,7 @@ class RawTeamsClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
+        type: typing.Optional[TeamsListRequestType] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Team]:
         """
@@ -46,6 +48,9 @@ class RawTeamsClient:
 
         offset : typing.Optional[int]
             Number of items to skip
+
+        type : typing.Optional[TeamsListRequestType]
+            Filter teams by type
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -63,6 +68,7 @@ class RawTeamsClient:
             params={
                 "limit": limit,
                 "offset": offset,
+                "type": type,
             },
             request_options=request_options,
         )
@@ -80,6 +86,7 @@ class RawTeamsClient:
                 _get_next = lambda: self.list(
                     limit=limit,
                     offset=offset + len(_items),
+                    type=type,
                     request_options=request_options,
                 )
                 return SyncPager(
@@ -93,7 +100,7 @@ class RawTeamsClient:
     def create_or_update(
         self,
         *,
-        manifest: TeamManifest,
+        manifest: ApplyTeamRequestManifest,
         dry_run: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetTeamResponse]:
@@ -102,7 +109,7 @@ class RawTeamsClient:
 
         Parameters
         ----------
-        manifest : TeamManifest
+        manifest : ApplyTeamRequestManifest
             Team manifest
 
         dry_run : typing.Optional[bool]
@@ -121,7 +128,7 @@ class RawTeamsClient:
             method="PUT",
             json={
                 "manifest": convert_and_respect_annotation_metadata(
-                    object_=manifest, annotation=TeamManifest, direction="write"
+                    object_=manifest, annotation=ApplyTeamRequestManifest, direction="write"
                 ),
                 "dryRun": dry_run,
             },
@@ -287,6 +294,7 @@ class AsyncRawTeamsClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
+        type: typing.Optional[TeamsListRequestType] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Team]:
         """
@@ -299,6 +307,9 @@ class AsyncRawTeamsClient:
 
         offset : typing.Optional[int]
             Number of items to skip
+
+        type : typing.Optional[TeamsListRequestType]
+            Filter teams by type
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -316,6 +327,7 @@ class AsyncRawTeamsClient:
             params={
                 "limit": limit,
                 "offset": offset,
+                "type": type,
             },
             request_options=request_options,
         )
@@ -335,6 +347,7 @@ class AsyncRawTeamsClient:
                     return await self.list(
                         limit=limit,
                         offset=offset + len(_items),
+                        type=type,
                         request_options=request_options,
                     )
 
@@ -349,7 +362,7 @@ class AsyncRawTeamsClient:
     async def create_or_update(
         self,
         *,
-        manifest: TeamManifest,
+        manifest: ApplyTeamRequestManifest,
         dry_run: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetTeamResponse]:
@@ -358,7 +371,7 @@ class AsyncRawTeamsClient:
 
         Parameters
         ----------
-        manifest : TeamManifest
+        manifest : ApplyTeamRequestManifest
             Team manifest
 
         dry_run : typing.Optional[bool]
@@ -377,7 +390,7 @@ class AsyncRawTeamsClient:
             method="PUT",
             json={
                 "manifest": convert_and_respect_annotation_metadata(
-                    object_=manifest, annotation=TeamManifest, direction="write"
+                    object_=manifest, annotation=ApplyTeamRequestManifest, direction="write"
                 ),
                 "dryRun": dry_run,
             },

@@ -23,6 +23,11 @@ class TrueFoundryApplyResponse(UniversalBaseModel):
     The action performed: CREATE or UPDATE
     """
 
+    data: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    """
+    The created or updated resource
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:

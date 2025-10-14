@@ -9,6 +9,7 @@ from .cluster_manifest_monitoring import ClusterManifestMonitoring
 from .cluster_manifest_node_label_keys import ClusterManifestNodeLabelKeys
 from .cluster_manifest_workbench_config import ClusterManifestWorkbenchConfig
 from .collaborator import Collaborator
+from .ingress_controller_config import IngressControllerConfig
 from .nodepool import Nodepool
 from .spark_config import SparkConfig
 
@@ -74,6 +75,7 @@ class ClusterManifest(UniversalBaseModel):
     """
 
     spark_config: typing.Optional[SparkConfig] = None
+    ingress_controller_config: typing.Optional[IngressControllerConfig] = None
     cluster_integration_fqn: typing.Optional[str] = pydantic.Field(default=None)
     """
     +label=Cluster Integration FQN

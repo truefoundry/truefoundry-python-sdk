@@ -40,6 +40,13 @@ class CustomBlobStorage(UniversalBaseModel):
     +sort=200
     """
 
+    region: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    +label=Region
+    +usage=The region where the storage is located.
+    +sort=600
+    """
+
     auth_data: CustomBasicAuth
     authorized_subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """

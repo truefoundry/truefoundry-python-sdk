@@ -6,4 +6,4 @@ from .secret_mount import SecretMount
 from .string_data_mount import StringDataMount
 from .volume_mount import VolumeMount
 
-PySparkTaskConfigMountsItem = typing.Union[SecretMount, StringDataMount, VolumeMount]
+ContainerTaskConfigMountsItem = typing.Union[SecretMount, StringDataMount, VolumeMount]

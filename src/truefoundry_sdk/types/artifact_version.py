@@ -18,6 +18,7 @@ class ArtifactVersion(UniversalBaseModel):
     manifest: ArtifactManifest
     usage_code_snippet: typing.Optional[str] = None
     ml_repo_id: str
+    tags: typing.Optional[typing.List[str]] = None
     artifact_id: str
 
     if IS_PYDANTIC_V2:

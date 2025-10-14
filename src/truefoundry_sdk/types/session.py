@@ -12,7 +12,7 @@ from .user_metadata import UserMetadata
 
 class Session(UniversalBaseModel):
     id: str
-    user_name: typing_extensions.Annotated[str, FieldMetadata(alias="userName")]
+    user_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="userName")] = None
     subject_slug: typing_extensions.Annotated[str, FieldMetadata(alias="subjectSlug")]
     subject_controller_name: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="subjectControllerName")

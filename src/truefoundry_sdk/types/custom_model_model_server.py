@@ -7,18 +7,24 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class CustomModelModelServer(str, enum.Enum):
+    OPENAI_COMPATIBLE = "openai-compatible"
     VLLM_OPENAI = "vllm-openai"
     TEI = "tei"
     INFINITY = "infinity"
     NEMO_RETRIEVER = "nemo-retriever"
+    COHERE_RERANK_V2 = "cohere-rerank-v2"
 
     def visit(
         self,
+        openai_compatible: typing.Callable[[], T_Result],
         vllm_openai: typing.Callable[[], T_Result],
         tei: typing.Callable[[], T_Result],
         infinity: typing.Callable[[], T_Result],
         nemo_retriever: typing.Callable[[], T_Result],
+        cohere_rerank_v2: typing.Callable[[], T_Result],
     ) -> T_Result:
+        if self is CustomModelModelServer.OPENAI_COMPATIBLE:
+            return openai_compatible()
         if self is CustomModelModelServer.VLLM_OPENAI:
             return vllm_openai()
         if self is CustomModelModelServer.TEI:
@@ -27,3 +33,5 @@ class CustomModelModelServer(str, enum.Enum):
             return infinity()
         if self is CustomModelModelServer.NEMO_RETRIEVER:
             return nemo_retriever()
+        if self is CustomModelModelServer.COHERE_RERANK_V2:
+            return cohere_rerank_v2()

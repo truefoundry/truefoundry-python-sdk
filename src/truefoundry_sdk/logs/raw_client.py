@@ -35,6 +35,7 @@ class RawLogsClient:
         container_name: typing.Optional[str] = None,
         pod_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         pod_names_regex: typing.Optional[str] = None,
+        search_filters: typing.Optional[str] = None,
         search_string: typing.Optional[str] = None,
         search_type: typing.Optional[LogsSearchFilterType] = None,
         search_operator: typing.Optional[LogsSearchOperatorType] = None,
@@ -84,11 +85,14 @@ class RawLogsClient:
         pod_names_regex : typing.Optional[str]
             Regex pattern for pod names to fetch logs.
 
+        search_filters : typing.Optional[str]
+            JSON string containing array of search filters with string, type and operator
+
         search_string : typing.Optional[str]
             String that needs to be matched
 
         search_type : typing.Optional[LogsSearchFilterType]
-            Query filter type, `regex` or `substring`
+            Query filter type, `regex` `substring` `ignore_case_substring`
 
         search_operator : typing.Optional[LogsSearchOperatorType]
             Comparison operator for filter. `equal` or `not_equal`
@@ -118,6 +122,7 @@ class RawLogsClient:
                 "containerName": container_name,
                 "podNames": pod_names,
                 "podNamesRegex": pod_names_regex,
+                "searchFilters": search_filters,
                 "searchString": search_string,
                 "searchType": search_type,
                 "searchOperator": search_operator,
@@ -171,6 +176,7 @@ class AsyncRawLogsClient:
         container_name: typing.Optional[str] = None,
         pod_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         pod_names_regex: typing.Optional[str] = None,
+        search_filters: typing.Optional[str] = None,
         search_string: typing.Optional[str] = None,
         search_type: typing.Optional[LogsSearchFilterType] = None,
         search_operator: typing.Optional[LogsSearchOperatorType] = None,
@@ -220,11 +226,14 @@ class AsyncRawLogsClient:
         pod_names_regex : typing.Optional[str]
             Regex pattern for pod names to fetch logs.
 
+        search_filters : typing.Optional[str]
+            JSON string containing array of search filters with string, type and operator
+
         search_string : typing.Optional[str]
             String that needs to be matched
 
         search_type : typing.Optional[LogsSearchFilterType]
-            Query filter type, `regex` or `substring`
+            Query filter type, `regex` `substring` `ignore_case_substring`
 
         search_operator : typing.Optional[LogsSearchOperatorType]
             Comparison operator for filter. `equal` or `not_equal`
@@ -254,6 +263,7 @@ class AsyncRawLogsClient:
                 "containerName": container_name,
                 "podNames": pod_names,
                 "podNamesRegex": pod_names_regex,
+                "searchFilters": search_filters,
                 "searchString": search_string,
                 "searchType": search_type,
                 "searchOperator": search_operator,

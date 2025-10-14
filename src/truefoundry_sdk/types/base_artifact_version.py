@@ -18,6 +18,7 @@ class BaseArtifactVersion(UniversalBaseModel):
     manifest: typing.Optional[BaseArtifactVersionManifest] = None
     usage_code_snippet: typing.Optional[str] = None
     ml_repo_id: str
+    tags: typing.Optional[typing.List[str]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

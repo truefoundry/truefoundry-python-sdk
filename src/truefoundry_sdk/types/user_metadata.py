@@ -6,6 +6,7 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
+from .user_metadata_tenant_role_managed_by import UserMetadataTenantRoleManagedBy
 
 
 class UserMetadata(UniversalBaseModel):
@@ -18,6 +19,11 @@ class UserMetadata(UniversalBaseModel):
     invite_accepted: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="inviteAccepted")] = None
     registered_in_idp: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="registeredInIdp")] = None
     preference: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    groups: typing.Optional[typing.List[str]] = None
+    tenant_role_managed_by: typing_extensions.Annotated[
+        typing.Optional[UserMetadataTenantRoleManagedBy], FieldMetadata(alias="tenantRoleManagedBy")
+    ] = None
+    sso_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="ssoName")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

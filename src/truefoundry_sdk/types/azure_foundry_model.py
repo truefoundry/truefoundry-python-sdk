@@ -26,7 +26,7 @@ class AzureFoundryModel(UniversalBaseModel):
     +label=Display Name
     +usage=Name to identify this Azure AI Foundry model
     +sort=1
-    +message=2 to 62 characters long alphanumeric word, may contain - in between, cannot start with a number
+    +message=2 to 62 characters long alphanumeric word, may contain - or . in between, cannot start with a number
     """
 
     model_id: str = pydantic.Field()

@@ -27,11 +27,13 @@ class NvidiaMiggpu(UniversalBaseModel):
     +label=MIG Profile
     +usage=Name of the MIG profile to use. One of the following based on gpu type
     Please refer to https://docs.nvidia.com/datacenter/tesla/mig-user-guide/#supported-mig-profiles for more details
-    A100 40 GB - [1g.5gb, 1g.10gb, 2g.10gb, 3g.20gb, 4g.20gb]
-    A100 80 GB / H100 80 GB - [1g.10gb, 1g.20gb, 2g.20gb, 3g.40gb, 4g.40gb]
-    H100 94 GB - [1g.12gb, 1g.24gb, 2g.24gb, 3g.47gb, 4g.47gb]
-    H100 96 GB - [1g.12gb, 1g.24gb, 2g.24gb, 3g.48gb, 4g.48gb]
+    A30 - [1g.6gb, 2g.12gb, 4g.24gb]
+    A100 40 GB - [1g.5gb, 1g.10gb, 2g.10gb, 3g.20gb, 4g.20gb, 7g.40gb]
+    A100 80 GB / H100 80 GB - [1g.10gb, 1g.20gb, 2g.20gb, 3g.40gb, 4g.40gb, 7g.80gb]
+    H100 94 GB - [1g.12gb, 1g.24gb, 2g.24gb, 3g.47gb, 4g.47gb, 7g.94gb]
+    H100 96 GB - [1g.12gb, 1g.24gb, 2g.24gb, 3g.48gb, 4g.48gb, 7g.96gb]
     H200 141 GB - [1g.18gb, 1g.35gb, 2g.35gb, 3g.71gb, 4g.71gb]
+    B200 180 GB - [1g.23gb, 1g.45gb, 2g.45gb, 3g.90gb, 4g.90gb, 7g.180gb]
     """
 
     if IS_PYDANTIC_V2:

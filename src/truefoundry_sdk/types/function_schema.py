@@ -16,7 +16,7 @@ class FunctionSchema(UniversalBaseModel):
     Name of the function
     """
 
-    description: str = pydantic.Field()
+    description: typing.Optional[str] = pydantic.Field(default=None)
     """
     Description of the function
     """

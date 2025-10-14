@@ -32,6 +32,71 @@ class RawArtifactVersionsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
+    def apply_tags(
+        self,
+        *,
+        artifact_version_id: str,
+        tags: typing.Sequence[str],
+        force: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[EmptyResponse]:
+        """
+        Parameters
+        ----------
+        artifact_version_id : str
+
+        tags : typing.Sequence[str]
+
+        force : typing.Optional[bool]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[EmptyResponse]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/ml/v1/artifact-versions/tags",
+            method="PUT",
+            json={
+                "artifact_version_id": artifact_version_id,
+                "tags": tags,
+                "force": force,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    EmptyResponse,
+                    parse_obj_as(
+                        type_=EmptyResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetArtifactVersionResponse]:
@@ -133,6 +198,7 @@ class RawArtifactVersionsClient:
     def list(
         self,
         *,
+        tag: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         artifact_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
@@ -150,6 +216,8 @@ class RawArtifactVersionsClient:
 
         Parameters
         ----------
+        tag : typing.Optional[str]
+
         fqn : typing.Optional[str]
 
         artifact_id : typing.Optional[str]
@@ -184,6 +252,7 @@ class RawArtifactVersionsClient:
             "api/ml/v1/artifact-versions",
             method="GET",
             params={
+                "tag": tag,
                 "fqn": fqn,
                 "artifact_id": artifact_id,
                 "ml_repo_id": ml_repo_id,
@@ -209,6 +278,7 @@ class RawArtifactVersionsClient:
                 _items = _parsed_response.data
                 _has_next = True
                 _get_next = lambda: self.list(
+                    tag=tag,
                     fqn=fqn,
                     artifact_id=artifact_id,
                     ml_repo_id=ml_repo_id,
@@ -564,6 +634,71 @@ class AsyncRawArtifactVersionsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
+    async def apply_tags(
+        self,
+        *,
+        artifact_version_id: str,
+        tags: typing.Sequence[str],
+        force: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[EmptyResponse]:
+        """
+        Parameters
+        ----------
+        artifact_version_id : str
+
+        tags : typing.Sequence[str]
+
+        force : typing.Optional[bool]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[EmptyResponse]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/ml/v1/artifact-versions/tags",
+            method="PUT",
+            json={
+                "artifact_version_id": artifact_version_id,
+                "tags": tags,
+                "force": force,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    EmptyResponse,
+                    parse_obj_as(
+                        type_=EmptyResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     async def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetArtifactVersionResponse]:
@@ -665,6 +800,7 @@ class AsyncRawArtifactVersionsClient:
     async def list(
         self,
         *,
+        tag: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         artifact_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
@@ -682,6 +818,8 @@ class AsyncRawArtifactVersionsClient:
 
         Parameters
         ----------
+        tag : typing.Optional[str]
+
         fqn : typing.Optional[str]
 
         artifact_id : typing.Optional[str]
@@ -716,6 +854,7 @@ class AsyncRawArtifactVersionsClient:
             "api/ml/v1/artifact-versions",
             method="GET",
             params={
+                "tag": tag,
                 "fqn": fqn,
                 "artifact_id": artifact_id,
                 "ml_repo_id": ml_repo_id,
@@ -743,6 +882,7 @@ class AsyncRawArtifactVersionsClient:
 
                 async def _get_next():
                     return await self.list(
+                        tag=tag,
                         fqn=fqn,
                         artifact_id=artifact_id,
                         ml_repo_id=ml_repo_id,

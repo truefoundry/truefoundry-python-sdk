@@ -49,6 +49,7 @@ class RawJobsClient:
         order: typing.Optional[JobRunsSortDirection] = None,
         triggered_by: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         status: typing.Optional[typing.Union[JobRunStatus, typing.Sequence[JobRunStatus]]] = None,
+        version_numbers: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[JobRun]:
         """
@@ -80,6 +81,9 @@ class RawJobsClient:
         status : typing.Optional[typing.Union[JobRunStatus, typing.Sequence[JobRunStatus]]]
             Status of the job run
 
+        version_numbers : typing.Optional[typing.Union[float, typing.Sequence[float]]]
+            Version number of the deployment
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -101,6 +105,7 @@ class RawJobsClient:
                 "order": order,
                 "triggeredBy": triggered_by,
                 "status": status,
+                "versionNumbers": version_numbers,
             },
             request_options=request_options,
         )
@@ -124,6 +129,7 @@ class RawJobsClient:
                     order=order,
                     triggered_by=triggered_by,
                     status=status,
+                    version_numbers=version_numbers,
                     request_options=request_options,
                 )
                 return SyncPager(
@@ -524,6 +530,7 @@ class AsyncRawJobsClient:
         order: typing.Optional[JobRunsSortDirection] = None,
         triggered_by: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         status: typing.Optional[typing.Union[JobRunStatus, typing.Sequence[JobRunStatus]]] = None,
+        version_numbers: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[JobRun]:
         """
@@ -555,6 +562,9 @@ class AsyncRawJobsClient:
         status : typing.Optional[typing.Union[JobRunStatus, typing.Sequence[JobRunStatus]]]
             Status of the job run
 
+        version_numbers : typing.Optional[typing.Union[float, typing.Sequence[float]]]
+            Version number of the deployment
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -576,6 +586,7 @@ class AsyncRawJobsClient:
                 "order": order,
                 "triggeredBy": triggered_by,
                 "status": status,
+                "versionNumbers": version_numbers,
             },
             request_options=request_options,
         )
@@ -601,6 +612,7 @@ class AsyncRawJobsClient:
                         order=order,
                         triggered_by=triggered_by,
                         status=status,
+                        version_numbers=version_numbers,
                         request_options=request_options,
                     )
 

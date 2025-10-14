@@ -19,6 +19,7 @@ class InternalModelVersion(UniversalBaseModel):
     manifest: ModelManifest
     usage_code_snippet: typing.Optional[str] = None
     ml_repo_id: str
+    tags: typing.Optional[typing.List[str]] = None
     model_id: str
     metrics: typing.Optional[typing.List[Metric]] = None
     deployable: typing.Optional[bool] = False

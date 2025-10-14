@@ -7,6 +7,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .chat_prompt_manifest import ChatPromptManifest
 from .subject import Subject
+from .usage_code_snippet import UsageCodeSnippet
 
 
 class PromptVersion(UniversalBaseModel):
@@ -18,6 +19,8 @@ class PromptVersion(UniversalBaseModel):
     manifest: ChatPromptManifest
     usage_code_snippet: typing.Optional[str] = None
     ml_repo_id: str
+    tags: typing.Optional[typing.List[str]] = None
+    usage_code_snippets: typing.Optional[typing.List[UsageCodeSnippet]] = None
     prompt_id: str
 
     if IS_PYDANTIC_V2:

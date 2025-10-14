@@ -5,8 +5,10 @@ import typing
 from .ai21provider_account import Ai21ProviderAccount
 from .anthropic_provider_account import AnthropicProviderAccount
 from .aws_bedrock_provider_account import AwsBedrockProviderAccount
+from .aws_sagemaker_provider_account import AwsSagemakerProviderAccount
 from .azure_foundry_provider_account import AzureFoundryProviderAccount
 from .azure_open_ai_provider_account import AzureOpenAiProviderAccount
+from .cerebras_provider_account import CerebrasProviderAccount
 from .cohere_provider_account import CohereProviderAccount
 from .databricks_provider_account import DatabricksProviderAccount
 from .deepinfra_provider_account import DeepinfraProviderAccount
@@ -16,9 +18,11 @@ from .groq_provider_account import GroqProviderAccount
 from .mistral_ai_provider_account import MistralAiProviderAccount
 from .nomic_provider_account import NomicProviderAccount
 from .ollama_provider_account import OllamaProviderAccount
+from .open_router_provider_account import OpenRouterProviderAccount
 from .openai_provider_account import OpenaiProviderAccount
 from .palm_provider_account import PalmProviderAccount
 from .perplexity_ai_provider_account import PerplexityAiProviderAccount
+from .samba_nova_provider_account import SambaNovaProviderAccount
 from .self_hosted_model_provider_account import SelfHostedModelProviderAccount
 from .together_ai_provider_account import TogetherAiProviderAccount
 
@@ -42,4 +46,8 @@ ModelProviderAccount = typing.Union[
     OpenaiProviderAccount,
     DatabricksProviderAccount,
     SelfHostedModelProviderAccount,
+    OpenRouterProviderAccount,
+    SambaNovaProviderAccount,
+    AwsSagemakerProviderAccount,
+    CerebrasProviderAccount,
 ]

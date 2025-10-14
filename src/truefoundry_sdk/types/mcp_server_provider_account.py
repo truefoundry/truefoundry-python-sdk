@@ -14,28 +14,29 @@ class McpServerProviderAccount(UniversalBaseModel):
     +icon=puzzle-piece
     """
 
-    type: typing.Literal["provider-account/hosted-mcp-server"] = pydantic.Field(
-        default="provider-account/hosted-mcp-server"
+    type: typing.Literal["provider-account/mcp-server-group"] = pydantic.Field(
+        default="provider-account/mcp-server-group"
     )
     """
-    +value=provider-account/hosted-mcp-server
+    +value=provider-account/mcp-server-group
     """
 
     name: str = pydantic.Field()
     """
-    +label=Name
+    +label=Group Name
     +sort=100
     +usage=The name of the MCP Server Group.
     +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
     +uiProps={"disableEdit":true}
     """
 
-    collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
+    collaborators: typing.List[Collaborator] = pydantic.Field()
     """
-    +label=Access Control
+    +label=Managers
     +sort=200
-    +usage=List of users who have access to this MCP Server Group.
+    +usage=List of teams/users who can manage this MCP Server Group. These subjects can add new MCP server integrations, can edit existing ones and can also use the MCP server.
     +uiType=Collaborators
+    +uiProps={"optionTypes": ["Manager"]}
     """
 
     integrations: typing.List[McpServerIntegrations] = pydantic.Field()

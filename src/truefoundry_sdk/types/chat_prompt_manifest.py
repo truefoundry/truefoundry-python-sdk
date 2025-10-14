@@ -6,7 +6,10 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .chat_prompt_manifest_mcp_servers_item import ChatPromptManifestMcpServersItem
 from .chat_prompt_manifest_messages_item import ChatPromptManifestMessagesItem
+from .chat_prompt_manifest_response_format import ChatPromptManifestResponseFormat
+from .chat_prompt_manifest_routing_config import ChatPromptManifestRoutingConfig
 from .guardrails import Guardrails
+from .mcp_server_tool_details import McpServerToolDetails
 from .model_configuration import ModelConfiguration
 from .tool_schema import ToolSchema
 
@@ -65,6 +68,16 @@ class ChatPromptManifest(UniversalBaseModel):
     """
 
     guardrails: typing.Optional[Guardrails] = None
+    response_format: typing.Optional[ChatPromptManifestResponseFormat] = pydantic.Field(default=None)
+    """
+    Response format configuration for structured outputs
+    """
+
+    routing_config: typing.Optional[ChatPromptManifestRoutingConfig] = None
+    tool_call_to_mcp_mapping: typing.Optional[typing.Dict[str, McpServerToolDetails]] = pydantic.Field(default=None)
+    """
+    Mapping of tool calls to MCP server integration IDs and tool names
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
