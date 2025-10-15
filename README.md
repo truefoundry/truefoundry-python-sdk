@@ -27,6 +27,10 @@ Instantiate and use the client with the following:
 
 ```python
 from truefoundry_sdk import TrueFoundry
+from truefoundry_sdk.applications import (
+    ApplicationsListRequestDeviceTypeFilter,
+    ApplicationsListRequestLifecycleStage,
+)
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -35,6 +39,21 @@ client = TrueFoundry(
 response = client.applications.list(
     limit=10,
     offset=0,
+    application_id="applicationId",
+    workspace_id="workspaceId",
+    application_name="applicationName",
+    fqn="fqn",
+    workspace_fqn="workspaceFqn",
+    application_type="applicationType",
+    name_search_query="nameSearchQuery",
+    environment_id="environmentId",
+    cluster_id="clusterId",
+    application_set_id="applicationSetId",
+    paused=True,
+    device_type_filter=ApplicationsListRequestDeviceTypeFilter.CPU,
+    last_deployed_by_subjects="lastDeployedBySubjects",
+    lifecycle_stage=ApplicationsListRequestLifecycleStage.ACTIVE,
+    is_recommendation_present_and_visible=True,
 )
 for item in response:
     yield item
@@ -45,12 +64,16 @@ for page in response.iter_pages():
 
 ## Async Client
 
-The SDK also exports an `async` client so that you can make non-blocking calls to our API.
+The SDK also exports an `async` client so that you can make non-blocking calls to our API. Note that if you are constructing an Async httpx client class to pass into this client, use `httpx.AsyncClient()` instead of `httpx.Client()` (e.g. for the `httpx_client` parameter of this client).
 
 ```python
 import asyncio
 
 from truefoundry_sdk import AsyncTrueFoundry
+from truefoundry_sdk.applications import (
+    ApplicationsListRequestDeviceTypeFilter,
+    ApplicationsListRequestLifecycleStage,
+)
 
 client = AsyncTrueFoundry(
     api_key="YOUR_API_KEY",
@@ -62,6 +85,21 @@ async def main() -> None:
     response = await client.applications.list(
         limit=10,
         offset=0,
+        application_id="applicationId",
+        workspace_id="workspaceId",
+        application_name="applicationName",
+        fqn="fqn",
+        workspace_fqn="workspaceFqn",
+        application_type="applicationType",
+        name_search_query="nameSearchQuery",
+        environment_id="environmentId",
+        cluster_id="clusterId",
+        application_set_id="applicationSetId",
+        paused=True,
+        device_type_filter=ApplicationsListRequestDeviceTypeFilter.CPU,
+        last_deployed_by_subjects="lastDeployedBySubjects",
+        lifecycle_stage=ApplicationsListRequestLifecycleStage.ACTIVE,
+        is_recommendation_present_and_visible=True,
     )
     async for item in response:
         yield item
@@ -103,6 +141,9 @@ client = TrueFoundry(
 response = client.users.list(
     limit=10,
     offset=0,
+    query="query",
+    show_invalid_users=True,
+    include_virtual_accounts="includeVirtualAccounts",
 )
 for item in response:
     yield item
@@ -189,7 +230,7 @@ from truefoundry_sdk import TrueFoundry
 client = TrueFoundry(
     ...,
     httpx_client=httpx.Client(
-        proxies="http://my.test.proxy.example.com",
+        proxy="http://my.test.proxy.example.com",
         transport=httpx.HTTPTransport(local_address="0.0.0.0"),
     ),
 )

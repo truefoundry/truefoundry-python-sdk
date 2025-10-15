@@ -110,7 +110,10 @@ class DockerRegistriesClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.internal.docker_registries.get_credentials()
+        client.internal.docker_registries.get_credentials(
+            fqn="fqn",
+            cluster_id="clusterId",
+        )
         """
         _response = self._raw_client.get_credentials(fqn=fqn, cluster_id=cluster_id, request_options=request_options)
         return _response.data
@@ -227,7 +230,10 @@ class AsyncDockerRegistriesClient:
 
 
         async def main() -> None:
-            await client.internal.docker_registries.get_credentials()
+            await client.internal.docker_registries.get_credentials(
+                fqn="fqn",
+                cluster_id="clusterId",
+            )
 
 
         asyncio.run(main())

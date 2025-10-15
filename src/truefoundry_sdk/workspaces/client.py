@@ -79,6 +79,9 @@ class WorkspacesClient:
         response = client.workspaces.list(
             limit=10,
             offset=0,
+            cluster_id="clusterId",
+            name="name",
+            fqn="fqn",
         )
         for item in response:
             yield item
@@ -274,6 +277,9 @@ class AsyncWorkspacesClient:
             response = await client.workspaces.list(
                 limit=10,
                 offset=0,
+                cluster_id="clusterId",
+                name="name",
+                fqn="fqn",
             )
             async for item in response:
                 yield item

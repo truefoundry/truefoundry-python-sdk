@@ -128,7 +128,13 @@ class PromptsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = client.prompts.list()
+        response = client.prompts.list(
+            fqn="fqn",
+            ml_repo_id="ml_repo_id",
+            name="name",
+            offset=1,
+            limit=1,
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -313,7 +319,13 @@ class AsyncPromptsClient:
 
 
         async def main() -> None:
-            response = await client.prompts.list()
+            response = await client.prompts.list(
+                fqn="fqn",
+                ml_repo_id="ml_repo_id",
+                name="name",
+                offset=1,
+                limit=1,
+            )
             async for item in response:
                 yield item
 

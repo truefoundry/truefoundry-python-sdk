@@ -4,27 +4,19 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .token_pagination import TokenPagination
+from .trace_span import TraceSpan
 
 
-class McpMetricChart(UniversalBaseModel):
-    name: str = pydantic.Field()
+class QuerySpansResponse(UniversalBaseModel):
+    data: typing.List[TraceSpan] = pydantic.Field()
     """
-    Name
-    """
-
-    display_name: str = pydantic.Field()
-    """
-    DisplayName
+    Array of flat spans
     """
 
-    description: str = pydantic.Field()
+    pagination: TokenPagination = pydantic.Field()
     """
-    Description
-    """
-
-    chart_type: str = pydantic.Field()
-    """
-    Chart type
+    Pagination information
     """
 
     if IS_PYDANTIC_V2:

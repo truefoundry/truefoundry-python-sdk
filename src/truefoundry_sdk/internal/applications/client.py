@@ -22,6 +22,43 @@ class ApplicationsClient:
         """
         return self._raw_client
 
+    def promote_rollout(
+        self, id: str, *, full: typing.Optional[bool] = False, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Promote an application rollout for canary and blue-green.
+
+        Parameters
+        ----------
+        id : str
+            Id of the application
+
+        full : typing.Optional[bool]
+            Whether to promote a rollout to full
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.internal.applications.promote_rollout(
+            id="id",
+            full=True,
+        )
+        """
+        _response = self._raw_client.promote_rollout(id, full=full, request_options=request_options)
+        return _response.data
+
     def get_pod_template_hash_to_deployment_version(
         self,
         id: str,
@@ -58,6 +95,7 @@ class ApplicationsClient:
         )
         client.internal.applications.get_pod_template_hash_to_deployment_version(
             id="id",
+            pod_template_hashes="podTemplateHashes",
         )
         """
         _response = self._raw_client.get_pod_template_hash_to_deployment_version(
@@ -80,6 +118,51 @@ class AsyncApplicationsClient:
         AsyncRawApplicationsClient
         """
         return self._raw_client
+
+    async def promote_rollout(
+        self, id: str, *, full: typing.Optional[bool] = False, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Promote an application rollout for canary and blue-green.
+
+        Parameters
+        ----------
+        id : str
+            Id of the application
+
+        full : typing.Optional[bool]
+            Whether to promote a rollout to full
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.internal.applications.promote_rollout(
+                id="id",
+                full=True,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.promote_rollout(id, full=full, request_options=request_options)
+        return _response.data
 
     async def get_pod_template_hash_to_deployment_version(
         self,
@@ -122,6 +205,7 @@ class AsyncApplicationsClient:
         async def main() -> None:
             await client.internal.applications.get_pod_template_hash_to_deployment_version(
                 id="id",
+                pod_template_hashes="podTemplateHashes",
             )
 
 

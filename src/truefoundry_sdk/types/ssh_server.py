@@ -13,13 +13,13 @@ class SshServer(BaseWorkbenchInput):
     +docs=Describes the configuration for the ssh server
     """
 
-    type: typing.Optional[typing.Literal["ssh-server"]] = pydantic.Field(default=None)
+    type: typing.Literal["ssh-server"] = pydantic.Field(default="ssh-server")
     """
     +value=ssh-server
     """
 
-    image: typing.Optional[WorkbenchImage] = None
-    ssh_public_key: typing.Optional[str] = pydantic.Field(default=None)
+    image: WorkbenchImage
+    ssh_public_key: str = pydantic.Field()
     """
     +label: SSH Public Key
     +usage=Add Your SSH Public Key, this will be used to authenticate you to the SSH Server.  \

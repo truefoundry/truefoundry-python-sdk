@@ -4,19 +4,14 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .duration_filter_operation import DurationFilterOperation
-from .duration_filter_value import DurationFilterValue
+from .priority_based_load_balance_target import PriorityBasedLoadBalanceTarget
 
 
-class DurationFilter(UniversalBaseModel):
-    operation: DurationFilterOperation = pydantic.Field()
+class PriorityBasedLoadBalancing(UniversalBaseModel):
+    type: typing.Literal["priority-based-routing"] = "priority-based-routing"
+    load_balance_targets: typing.List[PriorityBasedLoadBalanceTarget] = pydantic.Field()
     """
-    Operation type for duration filter
-    """
-
-    value: DurationFilterValue = pydantic.Field()
-    """
-    Duration value in milliseconds
+    List of targets for priority-based load balancing
     """
 
     if IS_PYDANTIC_V2:

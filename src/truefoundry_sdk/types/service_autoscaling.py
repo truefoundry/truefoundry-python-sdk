@@ -9,7 +9,7 @@ from .service_autoscaling_metrics import ServiceAutoscalingMetrics
 
 
 class ServiceAutoscaling(BaseAutoscaling):
-    metrics: typing.Optional[ServiceAutoscalingMetrics] = pydantic.Field(default=None)
+    metrics: ServiceAutoscalingMetrics = pydantic.Field()
     """
     +label=Autoscaling metrics
     +usage=Metrics to use for the autoscaler

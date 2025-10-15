@@ -23,9 +23,9 @@ from ..types.http_error import HttpError
 from ..types.job_run import JobRun
 from ..types.job_run_status import JobRunStatus
 from ..types.job_runs_sort_by import JobRunsSortBy
-from ..types.job_runs_sort_direction import JobRunsSortDirection
 from ..types.list_job_run_response import ListJobRunResponse
 from ..types.metadata import Metadata
+from ..types.sort_direction import SortDirection
 from ..types.terminate_job_response import TerminateJobResponse
 from ..types.trigger_job_run_response import TriggerJobRunResponse
 from .types.trigger_job_request_input import TriggerJobRequestInput
@@ -46,7 +46,7 @@ class RawJobsClient:
         offset: typing.Optional[int] = 0,
         search_prefix: typing.Optional[str] = None,
         sort_by: typing.Optional[JobRunsSortBy] = None,
-        order: typing.Optional[JobRunsSortDirection] = None,
+        order: typing.Optional[SortDirection] = None,
         triggered_by: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         status: typing.Optional[typing.Union[JobRunStatus, typing.Sequence[JobRunStatus]]] = None,
         version_numbers: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
@@ -72,7 +72,7 @@ class RawJobsClient:
         sort_by : typing.Optional[JobRunsSortBy]
             Attribute to sort by
 
-        order : typing.Optional[JobRunsSortDirection]
+        order : typing.Optional[SortDirection]
             Sorting order
 
         triggered_by : typing.Optional[typing.Union[str, typing.Sequence[str]]]
@@ -527,7 +527,7 @@ class AsyncRawJobsClient:
         offset: typing.Optional[int] = 0,
         search_prefix: typing.Optional[str] = None,
         sort_by: typing.Optional[JobRunsSortBy] = None,
-        order: typing.Optional[JobRunsSortDirection] = None,
+        order: typing.Optional[SortDirection] = None,
         triggered_by: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         status: typing.Optional[typing.Union[JobRunStatus, typing.Sequence[JobRunStatus]]] = None,
         version_numbers: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
@@ -553,7 +553,7 @@ class AsyncRawJobsClient:
         sort_by : typing.Optional[JobRunsSortBy]
             Attribute to sort by
 
-        order : typing.Optional[JobRunsSortDirection]
+        order : typing.Optional[SortDirection]
             Sorting order
 
         triggered_by : typing.Optional[typing.Union[str, typing.Sequence[str]]]

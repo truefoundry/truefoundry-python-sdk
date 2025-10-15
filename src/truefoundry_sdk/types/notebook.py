@@ -13,12 +13,12 @@ class Notebook(BaseWorkbenchInput):
     +docs=Describes the configuration for the service
     """
 
-    type: typing.Optional[typing.Literal["notebook"]] = pydantic.Field(default=None)
+    type: typing.Literal["notebook"] = pydantic.Field(default="notebook")
     """
     +value=notebook
     """
 
-    image: typing.Optional[WorkbenchImage] = None
+    image: WorkbenchImage
     cull_timeout: typing.Optional[int] = pydantic.Field(default=30)
     """
     +label=Stop after (minutes of inactivity)

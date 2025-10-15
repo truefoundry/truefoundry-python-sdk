@@ -526,7 +526,7 @@ class RawArtifactVersionsClient:
                 "id": id,
                 "path": path,
                 "limit": limit,
-                "page_token": page_token,
+                "pageToken": page_token,
             },
             headers={
                 "content-type": "application/json",
@@ -1131,7 +1131,7 @@ class AsyncRawArtifactVersionsClient:
                 "id": id,
                 "path": path,
                 "limit": limit,
-                "page_token": page_token,
+                "pageToken": page_token,
             },
             headers={
                 "content-type": "application/json",

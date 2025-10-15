@@ -4,13 +4,12 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .guardrail_metric_chart import GuardrailMetricChart
 
 
-class GuardrailMetricsChartsResponseDto(UniversalBaseModel):
-    charts: typing.List[GuardrailMetricChart] = pydantic.Field()
+class GetTokenForVirtualAccountResponse(UniversalBaseModel):
+    token: str = pydantic.Field()
     """
-    Charts
+    Token for the virtual account
     """
 
     if IS_PYDANTIC_V2:

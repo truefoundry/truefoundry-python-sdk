@@ -7,23 +7,16 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
-from .jwt import Jwt
-from .subject import Subject
-from .virtual_account_manifest import VirtualAccountManifest
 
 
-class VirtualAccount(UniversalBaseModel):
+class Jwt(UniversalBaseModel):
     id: str
-    name: str
-    type: str
-    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]
-    manifest: typing.Optional[VirtualAccountManifest] = None
-    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")]
+    subject_type: typing_extensions.Annotated[str, FieldMetadata(alias="subjectType")]
+    subject_id: typing_extensions.Annotated[str, FieldMetadata(alias="subjectId")]
+    metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    expiry: dt.datetime
     created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
     updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
-    is_expired: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isExpired")] = None
-    jwts: typing.Optional[typing.List[Jwt]] = None
-    created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

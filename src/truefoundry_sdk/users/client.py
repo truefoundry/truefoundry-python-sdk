@@ -85,6 +85,9 @@ class UsersClient:
         response = client.users.list(
             limit=10,
             offset=0,
+            query="query",
+            show_invalid_users=True,
+            include_virtual_accounts="includeVirtualAccounts",
         )
         for item in response:
             yield item
@@ -553,6 +556,9 @@ class AsyncUsersClient:
             response = await client.users.list(
                 limit=10,
                 offset=0,
+                query="query",
+                show_invalid_users=True,
+                include_virtual_accounts="includeVirtualAccounts",
             )
             async for item in response:
                 yield item

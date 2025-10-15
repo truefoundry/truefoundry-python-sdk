@@ -188,7 +188,11 @@ class MlReposClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = client.ml_repos.list()
+        response = client.ml_repos.list(
+            name="name",
+            limit=1,
+            offset=1,
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -400,7 +404,11 @@ class AsyncMlReposClient:
 
 
         async def main() -> None:
-            response = await client.ml_repos.list()
+            response = await client.ml_repos.list(
+                name="name",
+                limit=1,
+                offset=1,
+            )
             async for item in response:
                 yield item
 

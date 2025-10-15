@@ -76,6 +76,8 @@ class SecretGroupsClient:
         response = client.secret_groups.list(
             limit=10,
             offset=0,
+            fqn="fqn",
+            search="search",
         )
         for item in response:
             yield item
@@ -316,6 +318,8 @@ class AsyncSecretGroupsClient:
             response = await client.secret_groups.list(
                 limit=10,
                 offset=0,
+                fqn="fqn",
+                search="search",
             )
             async for item in response:
                 yield item

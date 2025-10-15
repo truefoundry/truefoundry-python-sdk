@@ -6,12 +6,12 @@ import typing
 T_Result = typing.TypeVar("T_Result")
 
 
-class JobRunsSortDirection(str, enum.Enum):
+class SortDirection(str, enum.Enum):
     ASC = "asc"
     DESC = "desc"
 
     def visit(self, asc: typing.Callable[[], T_Result], desc: typing.Callable[[], T_Result]) -> T_Result:
-        if self is JobRunsSortDirection.ASC:
+        if self is SortDirection.ASC:
             return asc()
-        if self is JobRunsSortDirection.DESC:
+        if self is SortDirection.DESC:
             return desc()

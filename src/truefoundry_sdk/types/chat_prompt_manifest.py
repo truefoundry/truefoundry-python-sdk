@@ -73,7 +73,11 @@ class ChatPromptManifest(UniversalBaseModel):
     Response format configuration for structured outputs
     """
 
-    routing_config: typing.Optional[ChatPromptManifestRoutingConfig] = None
+    routing_config: typing.Optional[ChatPromptManifestRoutingConfig] = pydantic.Field(default=None)
+    """
+    Configuration for routing requests to different model targets
+    """
+
     tool_call_to_mcp_mapping: typing.Optional[typing.Dict[str, McpServerToolDetails]] = pydantic.Field(default=None)
     """
     Mapping of tool calls to MCP server integration IDs and tool names

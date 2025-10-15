@@ -131,7 +131,14 @@ class ArtifactsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = client.artifacts.list()
+        response = client.artifacts.list(
+            fqn="fqn",
+            ml_repo_id="ml_repo_id",
+            name="name",
+            offset=1,
+            limit=1,
+            run_id="run_id",
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -325,7 +332,14 @@ class AsyncArtifactsClient:
 
 
         async def main() -> None:
-            response = await client.artifacts.list()
+            response = await client.artifacts.list(
+                fqn="fqn",
+                ml_repo_id="ml_repo_id",
+                name="name",
+                offset=1,
+                limit=1,
+                run_id="run_id",
+            )
             async for item in response:
                 yield item
 

@@ -4,11 +4,15 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .filter import Filter
+from .load_balance_target import LoadBalanceTarget
 
 
-class GuardrailMetricsFiltersResponseDto(UniversalBaseModel):
-    filters: typing.List[Filter]
+class WeightBasedLoadBalancing(UniversalBaseModel):
+    type: typing.Literal["weight-based-routing"] = "weight-based-routing"
+    load_balance_targets: typing.List[LoadBalanceTarget] = pydantic.Field()
+    """
+    List of targets for load balancing with weights
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

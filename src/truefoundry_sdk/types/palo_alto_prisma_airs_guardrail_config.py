@@ -4,6 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .palo_alto_prisma_airs_guardrail_config_mode import PaloAltoPrismaAirsGuardrailConfigMode
 from .palo_alto_prisma_airs_key_auth import PaloAltoPrismaAirsKeyAuth
 
 
@@ -35,6 +36,14 @@ class PaloAltoPrismaAirsGuardrailConfig(UniversalBaseModel):
     +label=Profile Name
     +usage=The profile name associated with this Guardrail Config.
     +sort=60
+    """
+
+    mode: typing.Optional[PaloAltoPrismaAirsGuardrailConfigMode] = pydantic.Field(default=None)
+    """
+    +label=Mode
+    +usage=Execution mode for the guardrail. Sync waits for the guardrail check to complete before proceeding. Async triggers the check without waiting. Defaults to sync.
+    +sort=70
+    +uiType=Select
     """
 
     auth_data: PaloAltoPrismaAirsKeyAuth

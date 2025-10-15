@@ -64,6 +64,7 @@ class TeamsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
+        from truefoundry_sdk.teams import TeamsListRequestType
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -72,6 +73,7 @@ class TeamsClient:
         response = client.teams.list(
             limit=10,
             offset=0,
+            type=TeamsListRequestType.TEAM,
         )
         for item in response:
             yield item
@@ -242,6 +244,7 @@ class AsyncTeamsClient:
         import asyncio
 
         from truefoundry_sdk import AsyncTrueFoundry
+        from truefoundry_sdk.teams import TeamsListRequestType
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -253,6 +256,7 @@ class AsyncTeamsClient:
             response = await client.teams.list(
                 limit=10,
                 offset=0,
+                type=TeamsListRequestType.TEAM,
             )
             async for item in response:
                 yield item

@@ -3,35 +3,25 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from .load_balancing_when import LoadBalancingWhen
-from .priority_based_load_balance_target import PriorityBasedLoadBalanceTarget
+from .priority_based_load_balancing import PriorityBasedLoadBalancing
 
 
-class PriorityBasedLoadBalancingRule(UniversalBaseModel):
+class PriorityBasedLoadBalancingRule(PriorityBasedLoadBalancing):
+    """
+    +label=Priority-based Load Balancing Rule
+    """
+
     id: str = pydantic.Field()
     """
     +usage=Unique identifier for the rule
     +uiProps={"descriptionInline":true}
-    +sort=1
+    +sort=2
     +label=Rule ID
     """
 
     when: LoadBalancingWhen
-    load_balance_targets: typing.List[PriorityBasedLoadBalanceTarget] = pydantic.Field()
-    """
-    +usage=List of targets for priority-based load balancing
-    +uiProps={"descriptionInline":true}
-    +sort=3
-    +label=Load Balance Targets
-    """
-
-    type: typing.Literal["priority-based-routing"] = pydantic.Field(default="priority-based-routing")
-    """
-    +value=priority-based-routing
-    +sort=4
-    +label=Routing Type
-    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

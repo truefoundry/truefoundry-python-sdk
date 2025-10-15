@@ -3,13 +3,30 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.serialization import FieldMetadata
 
 
 class TokenPagination(UniversalBaseModel):
-    limit: typing.Optional[int] = None
-    previous_page_token: typing.Optional[str] = None
-    next_page_token: typing.Optional[str] = None
+    limit: int = pydantic.Field()
+    """
+    Number of items per page
+    """
+
+    next_page_token: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="nextPageToken")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    Base64 encoded token for the next page
+    """
+
+    previous_page_token: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="previousPageToken")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    Base64 encoded token for the previous page
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

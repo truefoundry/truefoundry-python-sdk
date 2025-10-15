@@ -18,6 +18,11 @@ class PriorityBasedLoadBalanceTarget(UniversalBaseModel):
     Priority for the target, Lower the number, higher the priority (0 is the highest priority)
     """
 
+    max_inter_token_latency: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Maximum inter-token latency threshold in milliseconds. If ITL exceeds this value, the target will be marked as unhealthy
+    """
+
     retry_config: typing.Optional[RetryConfig] = None
     fallback_status_codes: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """

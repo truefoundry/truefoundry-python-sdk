@@ -2,24 +2,70 @@
 
 # isort: skip_file
 
-from . import (
-    ai_gateway,
-    applications,
-    artifact_versions,
-    clusters,
-    deployments,
-    docker_registries,
-    metrics,
-    ml,
-    users,
-    vcs,
-    workflows,
-)
-from .ai_gateway import AiGatewayGetGatewayConfigRequestType
-from .docker_registries import DockerRegistriesCreateRepositoryResponse, DockerRegistriesGetCredentialsResponse
-from .metrics import MetricsGetChartsRequestFilterEntity
-from .ml import ApplyMlEntityRequestManifest, DeleteMlEntityRequestManifest
-from .workflows import WorkflowsExecuteWorkflowResponse
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from . import (
+        ai_gateway,
+        applications,
+        artifact_versions,
+        clusters,
+        deployments,
+        docker_registries,
+        metrics,
+        ml,
+        users,
+        vcs,
+        workflows,
+    )
+    from .ai_gateway import AiGatewayGetGatewayConfigRequestType
+    from .docker_registries import DockerRegistriesCreateRepositoryResponse, DockerRegistriesGetCredentialsResponse
+    from .metrics import MetricsGetChartsRequestFilterEntity
+    from .ml import ApplyMlEntityRequestManifest, DeleteMlEntityRequestManifest
+    from .workflows import WorkflowsExecuteWorkflowResponse
+_dynamic_imports: typing.Dict[str, str] = {
+    "AiGatewayGetGatewayConfigRequestType": ".ai_gateway",
+    "ApplyMlEntityRequestManifest": ".ml",
+    "DeleteMlEntityRequestManifest": ".ml",
+    "DockerRegistriesCreateRepositoryResponse": ".docker_registries",
+    "DockerRegistriesGetCredentialsResponse": ".docker_registries",
+    "MetricsGetChartsRequestFilterEntity": ".metrics",
+    "WorkflowsExecuteWorkflowResponse": ".workflows",
+    "ai_gateway": ".ai_gateway",
+    "applications": ".applications",
+    "artifact_versions": ".artifact_versions",
+    "clusters": ".clusters",
+    "deployments": ".deployments",
+    "docker_registries": ".docker_registries",
+    "metrics": ".metrics",
+    "ml": ".ml",
+    "users": ".users",
+    "vcs": ".vcs",
+    "workflows": ".workflows",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        if module_name == f".{attr_name}":
+            return module
+        else:
+            return getattr(module, attr_name)
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "AiGatewayGetGatewayConfigRequestType",

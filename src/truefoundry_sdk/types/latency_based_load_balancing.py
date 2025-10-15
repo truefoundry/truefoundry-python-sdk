@@ -4,11 +4,15 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .event_chart_category import EventChartCategory
+from .latency_based_load_balance_target import LatencyBasedLoadBalanceTarget
 
 
-class EventChart(UniversalBaseModel):
-    category: EventChartCategory
+class LatencyBasedLoadBalancing(UniversalBaseModel):
+    type: typing.Literal["latency-based-routing"] = "latency-based-routing"
+    load_balance_targets: typing.List[LatencyBasedLoadBalanceTarget] = pydantic.Field()
+    """
+    List of targets for latency-based load balancing
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

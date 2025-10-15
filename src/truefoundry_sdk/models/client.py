@@ -131,7 +131,14 @@ class ModelsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = client.models.list()
+        response = client.models.list(
+            fqn="fqn",
+            ml_repo_id="ml_repo_id",
+            name="name",
+            offset=1,
+            limit=1,
+            run_id="run_id",
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -321,7 +328,14 @@ class AsyncModelsClient:
 
 
         async def main() -> None:
-            response = await client.models.list()
+            response = await client.models.list(
+                fqn="fqn",
+                ml_repo_id="ml_repo_id",
+                name="name",
+                offset=1,
+                limit=1,
+                run_id="run_id",
+            )
             async for item in response:
                 yield item
 

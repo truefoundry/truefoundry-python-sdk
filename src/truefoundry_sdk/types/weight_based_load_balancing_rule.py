@@ -3,12 +3,12 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .load_balance_target import LoadBalanceTarget
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from .load_balancing_when import LoadBalancingWhen
+from .weight_based_load_balancing import WeightBasedLoadBalancing
 
 
-class WeightBasedLoadBalancingRule(UniversalBaseModel):
+class WeightBasedLoadBalancingRule(WeightBasedLoadBalancing):
     """
     +label=Weight-based Load Balancing Rule
     """
@@ -17,25 +17,11 @@ class WeightBasedLoadBalancingRule(UniversalBaseModel):
     """
     +usage=Unique identifier for the rule
     +uiProps={"descriptionInline":true}
-    +sort=1
+    +sort=2
     +label=Rule ID
     """
 
     when: LoadBalancingWhen
-    load_balance_targets: typing.List[LoadBalanceTarget] = pydantic.Field()
-    """
-    +usage=List of targets for load balancing with weights
-    +uiProps={"descriptionInline":true}
-    +sort=3
-    +label=Load Balance Targets
-    """
-
-    type: typing.Literal["weight-based-routing"] = pydantic.Field(default="weight-based-routing")
-    """
-    +value=weight-based-routing
-    +sort=4
-    +label=Routing Type
-    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

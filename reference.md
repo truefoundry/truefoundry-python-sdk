@@ -285,6 +285,9 @@ client = TrueFoundry(
 response = client.users.list(
     limit=10,
     offset=0,
+    query="query",
+    show_invalid_users=True,
+    include_virtual_accounts="includeVirtualAccounts",
 )
 for item in response:
     yield item
@@ -1165,6 +1168,7 @@ Retrieve all teams associated with the authenticated user. If the user is a tena
 
 ```python
 from truefoundry_sdk import TrueFoundry
+from truefoundry_sdk.teams import TeamsListRequestType
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -1173,6 +1177,7 @@ client = TrueFoundry(
 response = client.teams.list(
     limit=10,
     offset=0,
+    type=TeamsListRequestType.TEAM,
 )
 for item in response:
     yield item
@@ -2148,150 +2153,7 @@ client.virtual_accounts.delete(
 </dl>
 </details>
 
-## LlmGateway
-<details><summary><code>client.llm_gateway.<a href="src/truefoundry_sdk/llm_gateway/client.py">svc_metrics_get_llm_playground_tables</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.llm_gateway.svc_metrics_get_llm_playground_tables()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**start_ts:** `typing.Optional[str]` — Start Timestamp in milliseconds
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**end_ts:** `typing.Optional[str]` — End Timestamp in milliseconds
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**model_names:** `typing.Optional[typing.Sequence[str]]` — Model Names
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**usernames:** `typing.Optional[typing.Sequence[str]]` — Usernames
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**metadata:** `typing.Optional[typing.Sequence[MetadataItem]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**utc_offset_seconds:** `typing.Optional[str]` — UTC Offset in seconds
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.llm_gateway.<a href="src/truefoundry_sdk/llm_gateway/client.py">svc_inference_request_get_filter_type_and_label_values</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.llm_gateway.svc_inference_request_get_filter_type_and_label_values()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.llm_gateway.<a href="src/truefoundry_sdk/llm_gateway/client.py">svc_mcp_metrics_get_mcp_metrics_charts</a>(...)</code></summary>
+<details><summary><code>client.virtual_accounts.<a href="src/truefoundry_sdk/virtual_accounts/client.py">get_token</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2303,367 +2165,7 @@ client.llm_gateway.svc_inference_request_get_filter_type_and_label_values()
 <dl>
 <dd>
 
-Retrieves available MCP metrics charts.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk.llm_gateway import (
-    SvcMcpMetricsGetMcpMetricsChartsRequestPage,
-)
-
-client = TrueFoundry(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.llm_gateway.svc_mcp_metrics_get_mcp_metrics_charts(
-    page=SvcMcpMetricsGetMcpMetricsChartsRequestPage.MCPSERVER,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**page:** `SvcMcpMetricsGetMcpMetricsChartsRequestPage` — Page type. Possible values: "mcpserver" or "tool"
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.llm_gateway.<a href="src/truefoundry_sdk/llm_gateway/client.py">svc_mcp_metrics_get_mcp_metrics_filters</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieves available MCP metrics filters.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk.llm_gateway import (
-    SvcMcpMetricsGetMcpMetricsFiltersRequestPage,
-)
-
-client = TrueFoundry(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.llm_gateway.svc_mcp_metrics_get_mcp_metrics_filters(
-    start_time=1710201609,
-    end_time=1710202200,
-    page=SvcMcpMetricsGetMcpMetricsFiltersRequestPage.MCPSERVER,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**start_time:** `int` — Start time in epoch seconds (e.g., 1710201609)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**end_time:** `int` — End time in epoch seconds (e.g., 1710202200)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page:** `SvcMcpMetricsGetMcpMetricsFiltersRequestPage` — Page type. Possible values: "mcpserver" or "tool"
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.llm_gateway.<a href="src/truefoundry_sdk/llm_gateway/client.py">svc_mcp_metrics_get_mcp_meters</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieves aggregated MCP metrics data.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk.llm_gateway import McpMetersRequestDtoPage
-
-client = TrueFoundry(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.llm_gateway.svc_mcp_metrics_get_mcp_meters(
-    page=McpMetersRequestDtoPage.MCPSERVER,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**page:** `McpMetersRequestDtoPage` — Page type. Possible values: "mcpserver" or "tool"
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**start_time:** `typing.Optional[int]` — Start time in epoch seconds (e.g., 1710201609)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**end_time:** `typing.Optional[int]` — End time in epoch seconds (e.g., 1710202200)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**filters:** `typing.Optional[typing.Dict[str, McpMetersRequestDtoFiltersValue]]` — Map of filterName → filter object
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.llm_gateway.<a href="src/truefoundry_sdk/llm_gateway/client.py">svc_mcp_metrics_get_mcp_metrics_charts_data</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieves available MCP metrics charts.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk.llm_gateway import McpMetricsChartsDataRequestDtoChartName
-
-client = TrueFoundry(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.llm_gateway.svc_mcp_metrics_get_mcp_metrics_charts_data(
-    start_time=1710201609,
-    end_time=1710202200,
-    chart_name=McpMetricsChartsDataRequestDtoChartName.RATE_OF_REQUESTS_PER_MCP_SERVER,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**start_time:** `int` — Start time in epoch seconds (e.g., 1710201609)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**end_time:** `int` — End time in epoch seconds (e.g., 1710202200)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**chart_name:** `McpMetricsChartsDataRequestDtoChartName` — Chart name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**filters:** `typing.Optional[typing.Dict[str, McpMetricsChartsDataRequestDtoFiltersValue]]` — Map of filterName → filter object
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.llm_gateway.<a href="src/truefoundry_sdk/llm_gateway/client.py">svc_guardrail_metrics_get_guardrail_metrics_charts</a>()</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieves available Guardrail metrics charts.
+Get token for a virtual account by id
 </dd>
 </dl>
 </dd>
@@ -2684,70 +2186,8 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.llm_gateway.svc_guardrail_metrics_get_guardrail_metrics_charts()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.llm_gateway.<a href="src/truefoundry_sdk/llm_gateway/client.py">svc_guardrail_metrics_get_guardrail_metrics_filters</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieves available Guardrail metrics filters.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.llm_gateway.svc_guardrail_metrics_get_guardrail_metrics_filters(
-    start_time=1710201609,
-    end_time=1710202200,
+client.virtual_accounts.get_token(
+    id="id",
 )
 
 ```
@@ -2764,202 +2204,7 @@ client.llm_gateway.svc_guardrail_metrics_get_guardrail_metrics_filters(
 <dl>
 <dd>
 
-**start_time:** `int` — Start time in epoch seconds (e.g., 1710201609)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**end_time:** `int` — End time in epoch seconds (e.g., 1710202200)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.llm_gateway.<a href="src/truefoundry_sdk/llm_gateway/client.py">svc_guardrail_metrics_get_guardrail_meters</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieves aggregated Guardrail metrics data.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.llm_gateway.svc_guardrail_metrics_get_guardrail_meters()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**start_time:** `typing.Optional[int]` — Start time in epoch seconds (e.g., 1710201609)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**end_time:** `typing.Optional[int]` — End time in epoch seconds (e.g., 1710202200)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**filters:** `typing.Optional[typing.Dict[str, GuardrailMetersRequestDtoFiltersValue]]` — Map of filterName → filter object
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.llm_gateway.<a href="src/truefoundry_sdk/llm_gateway/client.py">svc_guardrail_metrics_get_guardrail_metrics_charts_data</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieves Guardrail metrics charts data.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk.llm_gateway import (
-    GuardrailMetricsChartsDataRequestDtoChartName,
-)
-
-client = TrueFoundry(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.llm_gateway.svc_guardrail_metrics_get_guardrail_metrics_charts_data(
-    start_time=1710201609,
-    end_time=1710202200,
-    chart_name=GuardrailMetricsChartsDataRequestDtoChartName.RATE_OF_REQUESTS_PER_GUARDRAIL,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**start_time:** `int` — Start time in epoch seconds (e.g., 1710201609)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**end_time:** `int` — End time in epoch seconds (e.g., 1710202200)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**chart_name:** `GuardrailMetricsChartsDataRequestDtoChartName` — Chart name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**filters:** `typing.Optional[
-    typing.Dict[str, GuardrailMetricsChartsDataRequestDtoFiltersValue]
-]` — Map of filterName → filter object
+**id:** `str` — serviceaccount id
     
 </dd>
 </dl>
@@ -3265,6 +2510,8 @@ client = TrueFoundry(
 response = client.secret_groups.list(
     limit=10,
     offset=0,
+    fqn="fqn",
+    search="search",
 )
 for item in response:
     yield item
@@ -4478,6 +3725,10 @@ Retrieves a list of all latest applications. Supports filtering by application I
 
 ```python
 from truefoundry_sdk import TrueFoundry
+from truefoundry_sdk.applications import (
+    ApplicationsListRequestDeviceTypeFilter,
+    ApplicationsListRequestLifecycleStage,
+)
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -4486,6 +3737,21 @@ client = TrueFoundry(
 response = client.applications.list(
     limit=10,
     offset=0,
+    application_id="applicationId",
+    workspace_id="workspaceId",
+    application_name="applicationName",
+    fqn="fqn",
+    workspace_fqn="workspaceFqn",
+    application_type="applicationType",
+    name_search_query="nameSearchQuery",
+    environment_id="environmentId",
+    cluster_id="clusterId",
+    application_set_id="applicationSetId",
+    paused=True,
+    device_type_filter=ApplicationsListRequestDeviceTypeFilter.CPU,
+    last_deployed_by_subjects="lastDeployedBySubjects",
+    lifecycle_stage=ApplicationsListRequestLifecycleStage.ACTIVE,
+    is_recommendation_present_and_visible=True,
 )
 for item in response:
     yield item
@@ -5367,7 +4633,7 @@ List Job Runs for provided Job Id. Filter the data based on parameters passed in
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
+from truefoundry_sdk import JobRunsSortBy, SortDirection, TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -5377,6 +4643,9 @@ response = client.jobs.list_runs(
     job_id="jobId",
     limit=10,
     offset=0,
+    search_prefix="searchPrefix",
+    sort_by=JobRunsSortBy.START_TIME,
+    order=SortDirection.ASC,
 )
 for item in response:
     yield item
@@ -5438,7 +4707,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**order:** `typing.Optional[JobRunsSortDirection]` — Sorting order
+**order:** `typing.Optional[SortDirection]` — Sorting order
     
 </dd>
 </dl>
@@ -5852,6 +5121,9 @@ client = TrueFoundry(
 response = client.workspaces.list(
     limit=10,
     offset=0,
+    cluster_id="clusterId",
+    name="name",
+    fqn="fqn",
 )
 for item in response:
     yield item
@@ -6151,218 +5423,6 @@ client.workspaces.delete(
 </dl>
 </details>
 
-## Events
-<details><summary><code>client.events.<a href="src/truefoundry_sdk/events/client.py">get</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get Events for Pod, Job Run, Application. The events are sourced from Kubernetes as well as events captured by truefoundry. Optional query parameters include startTs, endTs for filtering.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.events.get()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**start_ts:** `typing.Optional[str]` — Start timestamp (ISO format) for querying events
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**end_ts:** `typing.Optional[str]` — End timestamp (ISO format) for querying events
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**application_id:** `typing.Optional[str]` — Application ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**application_fqn:** `typing.Optional[str]` — Application FQN
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**pod_names:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Name of the pods
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**job_run_name:** `typing.Optional[str]` — Job run name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Alerts
-<details><summary><code>client.alerts.<a href="src/truefoundry_sdk/alerts/client.py">list</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get alerts for a given application or cluster filtered by start and end timestamp
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.alerts.list()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**start_ts:** `typing.Optional[str]` — Start timestamp (ISO format) for querying events
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**end_ts:** `typing.Optional[str]` — End timestamp (ISO format) for querying events
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**cluster_id:** `typing.Optional[str]` — Cluster id
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**application_id:** `typing.Optional[str]` — Application id
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**alert_status:** `typing.Optional[AlertStatus]` — Alert status
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## Logs
 <details><summary><code>client.logs.<a href="src/truefoundry_sdk/logs/client.py">get</a>(...)</code></summary>
 <dl>
@@ -6391,13 +5451,35 @@ Fetch logs for various workload components, including Services, Jobs, Workflows,
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
+from truefoundry_sdk import (
+    LogsSearchFilterType,
+    LogsSearchOperatorType,
+    LogsSortingDirection,
+    TrueFoundry,
+)
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.logs.get()
+client.logs.get(
+    start_ts=1000000,
+    end_ts=1000000,
+    limit=1,
+    direction=LogsSortingDirection.ASC,
+    num_logs_to_ignore=1,
+    application_id="applicationId",
+    application_fqn="applicationFqn",
+    deployment_id="deploymentId",
+    job_run_name="jobRunName",
+    pod_name="podName",
+    container_name="containerName",
+    pod_names_regex="podNamesRegex",
+    search_filters="searchFilters",
+    search_string="searchString",
+    search_type=LogsSearchFilterType.REGEX,
+    search_operator=LogsSearchOperatorType.EQUAL,
+)
 
 ```
 </dd>
@@ -6835,7 +5917,11 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.ml_repos.list()
+response = client.ml_repos.list(
+    name="name",
+    limit=1,
+    offset=1,
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -6873,6 +5959,158 @@ for page in response.iter_pages():
 <dd>
 
 **offset:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Traces
+<details><summary><code>client.traces.<a href="src/truefoundry_sdk/traces/client.py">query_spans</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.traces.query_spans(
+    start_time="startTime",
+    tracing_project_fqn="tracingProjectFqn",
+)
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**start_time:** `str` — Start time in ISO 8601 format (e.g., 2025-03-12T00:00:09.872Z)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tracing_project_fqn:** `str` — Tracing project FQN (e.g., truefoundry:tracing-project:tfy-default)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end_time:** `typing.Optional[str]` — End time in ISO 8601 format (e.g., 2025-03-12T00:10:00.000Z). Defaults to current time if not provided.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**trace_ids:** `typing.Optional[typing.Sequence[str]]` — Array of trace IDs to filter by
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**span_ids:** `typing.Optional[typing.Sequence[str]]` — Array of span IDs to filter by
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**parent_span_ids:** `typing.Optional[typing.Sequence[str]]` — Array of parent span IDs to filter by
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_by_subject_types:** `typing.Optional[typing.Sequence[TracesSubjectType]]` — Array of subject types to filter by
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_by_subject_slugs:** `typing.Optional[typing.Sequence[str]]` — Array of subject slugs to filter by
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**application_names:** `typing.Optional[typing.Sequence[str]]` — Array of application names to filter by
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[int]` — The maximum number of spans to return per page. Defaults to 200 if not provided.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_direction:** `typing.Optional[SortDirection]` — Sort direction for results. Defaults to desc.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[str]` — Base64 encoded page token for pagination
     
 </dd>
 </dl>
@@ -7026,7 +6264,14 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.artifacts.list()
+response = client.artifacts.list(
+    fqn="fqn",
+    ml_repo_id="ml_repo_id",
+    name="name",
+    offset=1,
+    limit=1,
+    run_id="run_id",
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -7307,7 +6552,13 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.prompts.list()
+response = client.prompts.list(
+    fqn="fqn",
+    ml_repo_id="ml_repo_id",
+    name="name",
+    offset=1,
+    limit=1,
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -7580,7 +6831,14 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.models.list()
+response = client.models.list(
+    fqn="fqn",
+    ml_repo_id="ml_repo_id",
+    name="name",
+    offset=1,
+    limit=1,
+    run_id="run_id",
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -7973,7 +7231,17 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.artifact_versions.list()
+response = client.artifact_versions.list(
+    tag="tag",
+    fqn="fqn",
+    artifact_id="artifact_id",
+    ml_repo_id="ml_repo_id",
+    name="name",
+    version=1,
+    offset=1,
+    limit=1,
+    include_internal_metadata=True,
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -8699,7 +7967,17 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.model_versions.list()
+response = client.model_versions.list(
+    tag="tag",
+    fqn="fqn",
+    model_id="model_id",
+    ml_repo_id="ml_repo_id",
+    name="name",
+    version=1,
+    offset=1,
+    limit=1,
+    include_internal_metadata=True,
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -9070,7 +8348,16 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.prompt_versions.list()
+response = client.prompt_versions.list(
+    tag="tag",
+    fqn="fqn",
+    prompt_id="prompt_id",
+    ml_repo_id="ml_repo_id",
+    name="name",
+    version=1,
+    offset=1,
+    limit=1,
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -9289,6 +8576,7 @@ client = TrueFoundry(
 )
 client.data_directories.delete(
     id="id",
+    delete_contents=True,
 )
 
 ```
@@ -9377,7 +8665,13 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.data_directories.list()
+response = client.data_directories.list(
+    fqn="fqn",
+    ml_repo_id="ml_repo_id",
+    name="name",
+    limit=1,
+    offset=1,
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -10389,6 +9683,9 @@ client.internal.deployments.get_suggested_endpoint(
     application_type=ApplicationType.ASYNC_SERVICE,
     application_name="applicationName",
     workspace_id="workspaceId",
+    base_domain="baseDomain",
+    port="port",
+    prefer_wildcard=True,
 )
 
 ```
@@ -10466,6 +9763,86 @@ client.internal.deployments.get_suggested_endpoint(
 </details>
 
 ## Internal Applications
+<details><summary><code>client.internal.applications.<a href="src/truefoundry_sdk/internal/applications/client.py">promote_rollout</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Promote an application rollout for canary and blue-green.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.internal.applications.promote_rollout(
+    id="id",
+    full=True,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — Id of the application
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**full:** `typing.Optional[bool]` — Whether to promote a rollout to full
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.internal.applications.<a href="src/truefoundry_sdk/internal/applications/client.py">get_pod_template_hash_to_deployment_version</a>(...)</code></summary>
 <dl>
 <dd>
@@ -10501,6 +9878,7 @@ client = TrueFoundry(
 )
 client.internal.applications.get_pod_template_hash_to_deployment_version(
     id="id",
+    pod_template_hashes="podTemplateHashes",
 )
 
 ```
@@ -10583,7 +9961,10 @@ client = TrueFoundry(
 client.internal.metrics.get_charts(
     workspace_id="workspaceId",
     application_id="applicationId",
+    start_ts="startTs",
+    end_ts="endTs",
     filter_entity=MetricsGetChartsRequestFilterEntity.APPLICATION,
+    filter_query="filterQuery",
 )
 
 ```
@@ -10906,7 +10287,10 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.internal.docker_registries.get_credentials()
+client.internal.docker_registries.get_credentials(
+    fqn="fqn",
+    cluster_id="clusterId",
+)
 
 ```
 </dd>
@@ -11072,7 +10456,18 @@ client = TrueFoundry(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.internal.artifact_versions.list()
+response = client.internal.artifact_versions.list(
+    tag="tag",
+    fqn="fqn",
+    artifact_id="artifact_id",
+    ml_repo_id="ml_repo_id",
+    name="name",
+    version=1,
+    offset=1,
+    limit=1,
+    include_internal_metadata=True,
+    include_model_versions=True,
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page

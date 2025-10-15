@@ -184,7 +184,16 @@ class PromptVersionsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = client.prompt_versions.list()
+        response = client.prompt_versions.list(
+            tag="tag",
+            fqn="fqn",
+            prompt_id="prompt_id",
+            ml_repo_id="ml_repo_id",
+            name="name",
+            version=1,
+            offset=1,
+            limit=1,
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -405,7 +414,16 @@ class AsyncPromptVersionsClient:
 
 
         async def main() -> None:
-            response = await client.prompt_versions.list()
+            response = await client.prompt_versions.list(
+                tag="tag",
+                fqn="fqn",
+                prompt_id="prompt_id",
+                ml_repo_id="ml_repo_id",
+                name="name",
+                version=1,
+                offset=1,
+                limit=1,
+            )
             async for item in response:
                 yield item
 
