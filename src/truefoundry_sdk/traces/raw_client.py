@@ -83,7 +83,7 @@ class RawTracesClient:
         Returns
         -------
         SyncPager[TraceSpan]
-            Returns filtered spans with attributes
+            Returns all the spans matching the query.
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/svc/v1/spans/query",
@@ -213,7 +213,7 @@ class AsyncRawTracesClient:
         Returns
         -------
         AsyncPager[TraceSpan]
-            Returns filtered spans with attributes
+            Returns all the spans matching the query.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/svc/v1/spans/query",

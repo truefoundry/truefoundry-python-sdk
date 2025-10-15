@@ -15,6 +15,7 @@ from .types.true_foundry_apply_response import TrueFoundryApplyResponse
 from .types.true_foundry_delete_request_manifest import TrueFoundryDeleteRequestManifest
 
 if typing.TYPE_CHECKING:
+    from .alerts.client import AlertsClient, AsyncAlertsClient
     from .application_versions.client import ApplicationVersionsClient, AsyncApplicationVersionsClient
     from .applications.client import ApplicationsClient, AsyncApplicationsClient
     from .artifact_versions.client import ArtifactVersionsClient, AsyncArtifactVersionsClient
@@ -22,6 +23,7 @@ if typing.TYPE_CHECKING:
     from .clusters.client import AsyncClustersClient, ClustersClient
     from .data_directories.client import AsyncDataDirectoriesClient, DataDirectoriesClient
     from .environments.client import AsyncEnvironmentsClient, EnvironmentsClient
+    from .events.client import AsyncEventsClient, EventsClient
     from .internal.client import AsyncInternalClient, InternalClient
     from .jobs.client import AsyncJobsClient, JobsClient
     from .logs.client import AsyncLogsClient, LogsClient
@@ -114,6 +116,8 @@ class BaseTrueFoundry:
         self._application_versions: typing.Optional[ApplicationVersionsClient] = None
         self._jobs: typing.Optional[JobsClient] = None
         self._workspaces: typing.Optional[WorkspacesClient] = None
+        self._events: typing.Optional[EventsClient] = None
+        self._alerts: typing.Optional[AlertsClient] = None
         self._logs: typing.Optional[LogsClient] = None
         self._ml_repos: typing.Optional[MlReposClient] = None
         self._traces: typing.Optional[TracesClient] = None
@@ -333,6 +337,22 @@ class BaseTrueFoundry:
         return self._workspaces
 
     @property
+    def events(self):
+        if self._events is None:
+            from .events.client import EventsClient  # noqa: E402
+
+            self._events = EventsClient(client_wrapper=self._client_wrapper)
+        return self._events
+
+    @property
+    def alerts(self):
+        if self._alerts is None:
+            from .alerts.client import AlertsClient  # noqa: E402
+
+            self._alerts = AlertsClient(client_wrapper=self._client_wrapper)
+        return self._alerts
+
+    @property
     def logs(self):
         if self._logs is None:
             from .logs.client import LogsClient  # noqa: E402
@@ -485,6 +505,8 @@ class AsyncBaseTrueFoundry:
         self._application_versions: typing.Optional[AsyncApplicationVersionsClient] = None
         self._jobs: typing.Optional[AsyncJobsClient] = None
         self._workspaces: typing.Optional[AsyncWorkspacesClient] = None
+        self._events: typing.Optional[AsyncEventsClient] = None
+        self._alerts: typing.Optional[AsyncAlertsClient] = None
         self._logs: typing.Optional[AsyncLogsClient] = None
         self._ml_repos: typing.Optional[AsyncMlReposClient] = None
         self._traces: typing.Optional[AsyncTracesClient] = None
@@ -718,6 +740,22 @@ class AsyncBaseTrueFoundry:
 
             self._workspaces = AsyncWorkspacesClient(client_wrapper=self._client_wrapper)
         return self._workspaces
+
+    @property
+    def events(self):
+        if self._events is None:
+            from .events.client import AsyncEventsClient  # noqa: E402
+
+            self._events = AsyncEventsClient(client_wrapper=self._client_wrapper)
+        return self._events
+
+    @property
+    def alerts(self):
+        if self._alerts is None:
+            from .alerts.client import AsyncAlertsClient  # noqa: E402
+
+            self._alerts = AsyncAlertsClient(client_wrapper=self._client_wrapper)
+        return self._alerts
 
     @property
     def logs(self):

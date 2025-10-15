@@ -5423,6 +5423,230 @@ client.workspaces.delete(
 </dl>
 </details>
 
+## Events
+<details><summary><code>client.events.<a href="src/truefoundry_sdk/events/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get Events for Pod, Job Run, Application. The events are sourced from Kubernetes as well as events captured by truefoundry. Optional query parameters include startTs, endTs for filtering.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.events.get(
+    start_ts="startTs",
+    end_ts="endTs",
+    application_id="applicationId",
+    application_fqn="applicationFqn",
+    job_run_name="jobRunName",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**start_ts:** `typing.Optional[str]` — Start timestamp (ISO format) for querying events
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end_ts:** `typing.Optional[str]` — End timestamp (ISO format) for querying events
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**application_id:** `typing.Optional[str]` — Application ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**application_fqn:** `typing.Optional[str]` — Application FQN
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pod_names:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Name of the pods
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**job_run_name:** `typing.Optional[str]` — Job run name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Alerts
+<details><summary><code>client.alerts.<a href="src/truefoundry_sdk/alerts/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get alerts for a given application or cluster filtered by start and end timestamp
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import AlertStatus, TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.alerts.list(
+    start_ts="startTs",
+    end_ts="endTs",
+    cluster_id="clusterId",
+    application_id="applicationId",
+    alert_status=AlertStatus.FIRING,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**start_ts:** `typing.Optional[str]` — Start timestamp (ISO format) for querying events
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end_ts:** `typing.Optional[str]` — End timestamp (ISO format) for querying events
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cluster_id:** `typing.Optional[str]` — Cluster id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**application_id:** `typing.Optional[str]` — Application id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**alert_status:** `typing.Optional[AlertStatus]` — Alert status
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Logs
 <details><summary><code>client.logs.<a href="src/truefoundry_sdk/logs/client.py">get</a>(...)</code></summary>
 <dl>

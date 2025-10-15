@@ -91,7 +91,7 @@ class TracesClient:
         Returns
         -------
         SyncPager[TraceSpan]
-            Returns filtered spans with attributes
+            Returns all the spans matching the query.
 
         Examples
         --------
@@ -205,7 +205,7 @@ class AsyncTracesClient:
         Returns
         -------
         AsyncPager[TraceSpan]
-            Returns filtered spans with attributes
+            Returns all the spans matching the query.
 
         Examples
         --------

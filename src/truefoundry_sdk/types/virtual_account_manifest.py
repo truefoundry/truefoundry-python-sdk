@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .auto_rotate import AutoRotate
 from .permissions import Permissions
+from .secret_store_config import SecretStoreConfig
 
 
 class VirtualAccountManifest(UniversalBaseModel):
@@ -39,6 +40,7 @@ class VirtualAccountManifest(UniversalBaseModel):
     """
 
     auto_rotate: typing.Optional[AutoRotate] = None
+    secret_store_config: typing.Optional[SecretStoreConfig] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
