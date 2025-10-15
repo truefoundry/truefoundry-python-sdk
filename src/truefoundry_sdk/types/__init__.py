@@ -24,6 +24,7 @@ if typing.TYPE_CHECKING:
     from .alert_config_resource import AlertConfigResource
     from .alert_config_resource_type import AlertConfigResourceType
     from .alert_severity import AlertSeverity
+    from .alert_status import AlertStatus
     from .amqp_input_config import AmqpInputConfig
     from .amqp_metric_config import AmqpMetricConfig
     from .amqp_output_config import AmqpOutputConfig
@@ -238,6 +239,10 @@ if typing.TYPE_CHECKING:
     from .environment_color import EnvironmentColor
     from .environment_manifest import EnvironmentManifest
     from .environment_optimize_for import EnvironmentOptimizeFor
+    from .event import Event
+    from .event_chart import EventChart
+    from .event_chart_category import EventChartCategory
+    from .event_involved_object import EventInvolvedObject
     from .external_blob_storage_source import ExternalBlobStorageSource
     from .fallback_config import FallbackConfig
     from .fallback_model import FallbackModel
@@ -276,6 +281,7 @@ if typing.TYPE_CHECKING:
     from .gcp_region import GcpRegion
     from .gcp_tpu import GcpTpu
     from .gemini_model_v2 import GeminiModelV2
+    from .get_alerts_response import GetAlertsResponse
     from .get_application_deployment_response import GetApplicationDeploymentResponse
     from .get_application_response import GetApplicationResponse
     from .get_artifact_response import GetArtifactResponse
@@ -286,6 +292,7 @@ if typing.TYPE_CHECKING:
     from .get_cluster_response import GetClusterResponse
     from .get_data_directory_response import GetDataDirectoryResponse
     from .get_environment_response import GetEnvironmentResponse
+    from .get_events_response import GetEventsResponse
     from .get_job_run_response import GetJobRunResponse
     from .get_logs_response import GetLogsResponse
     from .get_ml_repo_response import GetMlRepoResponse
@@ -613,6 +620,7 @@ if typing.TYPE_CHECKING:
     from .secret_group import SecretGroup
     from .secret_input import SecretInput
     from .secret_mount import SecretMount
+    from .secret_store_config import SecretStoreConfig
     from .secret_version import SecretVersion
     from .self_hosted_model import SelfHostedModel
     from .self_hosted_model_auth_data import SelfHostedModelAuthData
@@ -772,6 +780,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AlertConfigResource": ".alert_config_resource",
     "AlertConfigResourceType": ".alert_config_resource_type",
     "AlertSeverity": ".alert_severity",
+    "AlertStatus": ".alert_status",
     "AmqpInputConfig": ".amqp_input_config",
     "AmqpMetricConfig": ".amqp_metric_config",
     "AmqpOutputConfig": ".amqp_output_config",
@@ -986,6 +995,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "EnvironmentColor": ".environment_color",
     "EnvironmentManifest": ".environment_manifest",
     "EnvironmentOptimizeFor": ".environment_optimize_for",
+    "Event": ".event",
+    "EventChart": ".event_chart",
+    "EventChartCategory": ".event_chart_category",
+    "EventInvolvedObject": ".event_involved_object",
     "ExternalBlobStorageSource": ".external_blob_storage_source",
     "FallbackConfig": ".fallback_config",
     "FallbackModel": ".fallback_model",
@@ -1024,6 +1037,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GcpRegion": ".gcp_region",
     "GcpTpu": ".gcp_tpu",
     "GeminiModelV2": ".gemini_model_v2",
+    "GetAlertsResponse": ".get_alerts_response",
     "GetApplicationDeploymentResponse": ".get_application_deployment_response",
     "GetApplicationResponse": ".get_application_response",
     "GetArtifactResponse": ".get_artifact_response",
@@ -1034,6 +1048,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetClusterResponse": ".get_cluster_response",
     "GetDataDirectoryResponse": ".get_data_directory_response",
     "GetEnvironmentResponse": ".get_environment_response",
+    "GetEventsResponse": ".get_events_response",
     "GetJobRunResponse": ".get_job_run_response",
     "GetLogsResponse": ".get_logs_response",
     "GetMlRepoResponse": ".get_ml_repo_response",
@@ -1360,6 +1375,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SecretGroup": ".secret_group",
     "SecretInput": ".secret_input",
     "SecretMount": ".secret_mount",
+    "SecretStoreConfig": ".secret_store_config",
     "SecretVersion": ".secret_version",
     "SelfHostedModel": ".self_hosted_model",
     "SelfHostedModelAuthData": ".self_hosted_model_auth_data",
@@ -1543,6 +1559,7 @@ __all__ = [
     "AlertConfigResource",
     "AlertConfigResourceType",
     "AlertSeverity",
+    "AlertStatus",
     "AmqpInputConfig",
     "AmqpMetricConfig",
     "AmqpOutputConfig",
@@ -1757,6 +1774,10 @@ __all__ = [
     "EnvironmentColor",
     "EnvironmentManifest",
     "EnvironmentOptimizeFor",
+    "Event",
+    "EventChart",
+    "EventChartCategory",
+    "EventInvolvedObject",
     "ExternalBlobStorageSource",
     "FallbackConfig",
     "FallbackModel",
@@ -1795,6 +1816,7 @@ __all__ = [
     "GcpRegion",
     "GcpTpu",
     "GeminiModelV2",
+    "GetAlertsResponse",
     "GetApplicationDeploymentResponse",
     "GetApplicationResponse",
     "GetArtifactResponse",
@@ -1805,6 +1827,7 @@ __all__ = [
     "GetClusterResponse",
     "GetDataDirectoryResponse",
     "GetEnvironmentResponse",
+    "GetEventsResponse",
     "GetJobRunResponse",
     "GetLogsResponse",
     "GetMlRepoResponse",
@@ -2131,6 +2154,7 @@ __all__ = [
     "SecretGroup",
     "SecretInput",
     "SecretMount",
+    "SecretStoreConfig",
     "SecretVersion",
     "SelfHostedModel",
     "SelfHostedModelAuthData",
