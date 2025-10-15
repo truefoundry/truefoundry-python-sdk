@@ -2,10 +2,10 @@
 
 import typing
 
-from .header_latency_based_load_balancing_rule import HeaderLatencyBasedLoadBalancingRule
-from .header_priority_based_load_balancing_rule import HeaderPriorityBasedLoadBalancingRule
-from .header_weight_based_load_balancing_rule import HeaderWeightBasedLoadBalancingRule
+from .latency_based_load_balancing import LatencyBasedLoadBalancing
+from .priority_based_load_balancing import PriorityBasedLoadBalancing
+from .weight_based_load_balancing import WeightBasedLoadBalancing
 
 ChatPromptManifestRoutingConfig = typing.Union[
-    HeaderWeightBasedLoadBalancingRule, HeaderLatencyBasedLoadBalancingRule, HeaderPriorityBasedLoadBalancingRule
+    WeightBasedLoadBalancing, LatencyBasedLoadBalancing, PriorityBasedLoadBalancing
 ]

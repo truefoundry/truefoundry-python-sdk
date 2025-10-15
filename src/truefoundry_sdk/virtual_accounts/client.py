@@ -6,6 +6,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.delete_virtual_account_response import DeleteVirtualAccountResponse
+from ..types.get_token_for_virtual_account_response import GetTokenForVirtualAccountResponse
 from ..types.get_virtual_account_response import GetVirtualAccountResponse
 from ..types.virtual_account import VirtualAccount
 from ..types.virtual_account_manifest import VirtualAccountManifest
@@ -192,6 +193,40 @@ class VirtualAccountsClient:
         )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
+        return _response.data
+
+    def get_token(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetTokenForVirtualAccountResponse:
+        """
+        Get token for a virtual account by id
+
+        Parameters
+        ----------
+        id : str
+            serviceaccount id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetTokenForVirtualAccountResponse
+            Token for the virtual account
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.virtual_accounts.get_token(
+            id="id",
+        )
+        """
+        _response = self._raw_client.get_token(id, request_options=request_options)
         return _response.data
 
 
@@ -411,4 +446,46 @@ class AsyncVirtualAccountsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
+        return _response.data
+
+    async def get_token(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetTokenForVirtualAccountResponse:
+        """
+        Get token for a virtual account by id
+
+        Parameters
+        ----------
+        id : str
+            serviceaccount id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetTokenForVirtualAccountResponse
+            Token for the virtual account
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.virtual_accounts.get_token(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_token(id, request_options=request_options)
         return _response.data

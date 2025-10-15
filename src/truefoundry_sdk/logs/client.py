@@ -114,13 +114,35 @@ class LogsClient:
 
         Examples
         --------
-        from truefoundry_sdk import TrueFoundry
+        from truefoundry_sdk import (
+            LogsSearchFilterType,
+            LogsSearchOperatorType,
+            LogsSortingDirection,
+            TrueFoundry,
+        )
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.logs.get()
+        client.logs.get(
+            start_ts=1000000,
+            end_ts=1000000,
+            limit=1,
+            direction=LogsSortingDirection.ASC,
+            num_logs_to_ignore=1,
+            application_id="applicationId",
+            application_fqn="applicationFqn",
+            deployment_id="deploymentId",
+            job_run_name="jobRunName",
+            pod_name="podName",
+            container_name="containerName",
+            pod_names_regex="podNamesRegex",
+            search_filters="searchFilters",
+            search_string="searchString",
+            search_type=LogsSearchFilterType.REGEX,
+            search_operator=LogsSearchOperatorType.EQUAL,
+        )
         """
         _response = self._raw_client.get(
             start_ts=start_ts,
@@ -250,7 +272,12 @@ class AsyncLogsClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import AsyncTrueFoundry
+        from truefoundry_sdk import (
+            AsyncTrueFoundry,
+            LogsSearchFilterType,
+            LogsSearchOperatorType,
+            LogsSortingDirection,
+        )
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -259,7 +286,24 @@ class AsyncLogsClient:
 
 
         async def main() -> None:
-            await client.logs.get()
+            await client.logs.get(
+                start_ts=1000000,
+                end_ts=1000000,
+                limit=1,
+                direction=LogsSortingDirection.ASC,
+                num_logs_to_ignore=1,
+                application_id="applicationId",
+                application_fqn="applicationFqn",
+                deployment_id="deploymentId",
+                job_run_name="jobRunName",
+                pod_name="podName",
+                container_name="containerName",
+                pod_names_regex="podNamesRegex",
+                search_filters="searchFilters",
+                search_string="searchString",
+                search_type=LogsSearchFilterType.REGEX,
+                search_operator=LogsSearchOperatorType.EQUAL,
+            )
 
 
         asyncio.run(main())

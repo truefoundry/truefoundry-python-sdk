@@ -123,6 +123,10 @@ class ApplicationsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
+        from truefoundry_sdk.applications import (
+            ApplicationsListRequestDeviceTypeFilter,
+            ApplicationsListRequestLifecycleStage,
+        )
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -131,6 +135,21 @@ class ApplicationsClient:
         response = client.applications.list(
             limit=10,
             offset=0,
+            application_id="applicationId",
+            workspace_id="workspaceId",
+            application_name="applicationName",
+            fqn="fqn",
+            workspace_fqn="workspaceFqn",
+            application_type="applicationType",
+            name_search_query="nameSearchQuery",
+            environment_id="environmentId",
+            cluster_id="clusterId",
+            application_set_id="applicationSetId",
+            paused=True,
+            device_type_filter=ApplicationsListRequestDeviceTypeFilter.CPU,
+            last_deployed_by_subjects="lastDeployedBySubjects",
+            lifecycle_stage=ApplicationsListRequestLifecycleStage.ACTIVE,
+            is_recommendation_present_and_visible=True,
         )
         for item in response:
             yield item
@@ -509,6 +528,10 @@ class AsyncApplicationsClient:
         import asyncio
 
         from truefoundry_sdk import AsyncTrueFoundry
+        from truefoundry_sdk.applications import (
+            ApplicationsListRequestDeviceTypeFilter,
+            ApplicationsListRequestLifecycleStage,
+        )
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -520,6 +543,21 @@ class AsyncApplicationsClient:
             response = await client.applications.list(
                 limit=10,
                 offset=0,
+                application_id="applicationId",
+                workspace_id="workspaceId",
+                application_name="applicationName",
+                fqn="fqn",
+                workspace_fqn="workspaceFqn",
+                application_type="applicationType",
+                name_search_query="nameSearchQuery",
+                environment_id="environmentId",
+                cluster_id="clusterId",
+                application_set_id="applicationSetId",
+                paused=True,
+                device_type_filter=ApplicationsListRequestDeviceTypeFilter.CPU,
+                last_deployed_by_subjects="lastDeployedBySubjects",
+                lifecycle_stage=ApplicationsListRequestLifecycleStage.ACTIVE,
+                is_recommendation_present_and_visible=True,
             )
             async for item in response:
                 yield item

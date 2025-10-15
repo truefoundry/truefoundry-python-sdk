@@ -15,12 +15,12 @@ class Service(BaseService):
     +docs=Describes the configuration for the service
     """
 
-    type: typing.Optional[typing.Literal["service"]] = pydantic.Field(default=None)
+    type: typing.Literal["service"] = pydantic.Field(default="service")
     """
     +value=service
     """
 
-    replicas: typing.Optional[ServiceReplicas] = pydantic.Field(default=None)
+    replicas: ServiceReplicas = pydantic.Field()
     """
     +label=Replicas
     +usage=Deploy multiple instances of your pods to distribute incoming traffic across them, ensuring effective load balancing.

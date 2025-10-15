@@ -75,7 +75,10 @@ class MetricsClient:
         client.internal.metrics.get_charts(
             workspace_id="workspaceId",
             application_id="applicationId",
+            start_ts="startTs",
+            end_ts="endTs",
             filter_entity=MetricsGetChartsRequestFilterEntity.APPLICATION,
+            filter_query="filterQuery",
         )
         """
         _response = self._raw_client.get_charts(
@@ -161,7 +164,10 @@ class AsyncMetricsClient:
             await client.internal.metrics.get_charts(
                 workspace_id="workspaceId",
                 application_id="applicationId",
+                start_ts="startTs",
+                end_ts="endTs",
                 filter_entity=MetricsGetChartsRequestFilterEntity.APPLICATION,
+                filter_query="filterQuery",
             )
 
 

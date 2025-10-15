@@ -16,12 +16,12 @@ class AsyncService(BaseService):
     +docs=Describes the configuration for the async-service
     """
 
-    type: typing.Optional[typing.Literal["async-service"]] = pydantic.Field(default=None)
+    type: typing.Literal["async-service"] = pydantic.Field(default="async-service")
     """
     +value=async-service
     """
 
-    replicas: typing.Optional[AsyncServiceReplicas] = pydantic.Field(default=None)
+    replicas: AsyncServiceReplicas = pydantic.Field()
     """
     +label=Replicas
     +usage=Deploy multiple instances of your pods to distribute incoming traffic across them, ensuring effective load balancing.
@@ -29,7 +29,7 @@ class AsyncService(BaseService):
     """
 
     rollout_strategy: typing.Optional[Rolling] = None
-    worker_config: typing.Optional[WorkerConfig] = None
+    worker_config: WorkerConfig
     sidecar: typing.Optional[AsyncProcessorSidecar] = None
 
     if IS_PYDANTIC_V2:

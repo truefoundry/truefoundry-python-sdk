@@ -15,6 +15,7 @@ from ..errors.bad_request_error import BadRequestError
 from ..errors.not_found_error import NotFoundError
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.delete_virtual_account_response import DeleteVirtualAccountResponse
+from ..types.get_token_for_virtual_account_response import GetTokenForVirtualAccountResponse
 from ..types.get_virtual_account_response import GetVirtualAccountResponse
 from ..types.list_virtual_account_response import ListVirtualAccountResponse
 from ..types.virtual_account import VirtualAccount
@@ -267,6 +268,45 @@ class RawVirtualAccountsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def get_token(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[GetTokenForVirtualAccountResponse]:
+        """
+        Get token for a virtual account by id
+
+        Parameters
+        ----------
+        id : str
+            serviceaccount id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetTokenForVirtualAccountResponse]
+            Token for the virtual account
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/virtual-accounts/{jsonable_encoder(id)}/token",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetTokenForVirtualAccountResponse,
+                    parse_obj_as(
+                        type_=GetTokenForVirtualAccountResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawVirtualAccountsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -509,6 +549,45 @@ class AsyncRawVirtualAccountsClient:
                         ),
                     ),
                 )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_token(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[GetTokenForVirtualAccountResponse]:
+        """
+        Get token for a virtual account by id
+
+        Parameters
+        ----------
+        id : str
+            serviceaccount id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetTokenForVirtualAccountResponse]
+            Token for the virtual account
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/virtual-accounts/{jsonable_encoder(id)}/token",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetTokenForVirtualAccountResponse,
+                    parse_obj_as(
+                        type_=GetTokenForVirtualAccountResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

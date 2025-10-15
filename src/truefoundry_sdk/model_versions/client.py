@@ -193,7 +193,17 @@ class ModelVersionsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = client.model_versions.list()
+        response = client.model_versions.list(
+            tag="tag",
+            fqn="fqn",
+            model_id="model_id",
+            ml_repo_id="ml_repo_id",
+            name="name",
+            version=1,
+            offset=1,
+            limit=1,
+            include_internal_metadata=True,
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -424,7 +434,17 @@ class AsyncModelVersionsClient:
 
 
         async def main() -> None:
-            response = await client.model_versions.list()
+            response = await client.model_versions.list(
+                tag="tag",
+                fqn="fqn",
+                model_id="model_id",
+                ml_repo_id="ml_repo_id",
+                name="name",
+                version=1,
+                offset=1,
+                limit=1,
+                include_internal_metadata=True,
+            )
             async for item in response:
                 yield item
 

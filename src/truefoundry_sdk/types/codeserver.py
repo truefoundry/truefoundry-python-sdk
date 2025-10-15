@@ -13,12 +13,12 @@ class Codeserver(BaseWorkbenchInput):
     +docs=Describes the configuration for the code server
     """
 
-    type: typing.Optional[typing.Literal["codeserver"]] = pydantic.Field(default=None)
+    type: typing.Literal["codeserver"] = pydantic.Field(default="codeserver")
     """
     +value=codeserver
     """
 
-    image: typing.Optional[WorkbenchImage] = None
+    image: WorkbenchImage
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

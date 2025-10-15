@@ -3,12 +3,12 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .latency_based_load_balance_target import LatencyBasedLoadBalanceTarget
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from .latency_based_load_balancing import LatencyBasedLoadBalancing
 from .load_balancing_when import LoadBalancingWhen
 
 
-class LatencyBasedLoadBalancingRule(UniversalBaseModel):
+class LatencyBasedLoadBalancingRule(LatencyBasedLoadBalancing):
     """
     +label=Latency-based Load Balancing Rule
     """
@@ -17,25 +17,11 @@ class LatencyBasedLoadBalancingRule(UniversalBaseModel):
     """
     +usage=Unique identifier for the rule
     +uiProps={"descriptionInline":true}
-    +sort=1
+    +sort=2
     +label=Rule ID
     """
 
     when: LoadBalancingWhen
-    load_balance_targets: typing.List[LatencyBasedLoadBalanceTarget] = pydantic.Field()
-    """
-    +usage=List of targets for latency-based load balancing
-    +uiProps={"descriptionInline":true}
-    +sort=3
-    +label=Load Balance Targets
-    """
-
-    type: typing.Literal["latency-based-routing"] = pydantic.Field(default="latency-based-routing")
-    """
-    +value=latency-based-routing
-    +sort=4
-    +label=Routing Type
-    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

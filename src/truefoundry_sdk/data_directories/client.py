@@ -114,6 +114,7 @@ class DataDirectoriesClient:
         )
         client.data_directories.delete(
             id="id",
+            delete_contents=True,
         )
         """
         _response = self._raw_client.delete(id, delete_contents=delete_contents, request_options=request_options)
@@ -171,7 +172,13 @@ class DataDirectoriesClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = client.data_directories.list()
+        response = client.data_directories.list(
+            fqn="fqn",
+            ml_repo_id="ml_repo_id",
+            name="name",
+            limit=1,
+            offset=1,
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -535,6 +542,7 @@ class AsyncDataDirectoriesClient:
         async def main() -> None:
             await client.data_directories.delete(
                 id="id",
+                delete_contents=True,
             )
 
 
@@ -600,7 +608,13 @@ class AsyncDataDirectoriesClient:
 
 
         async def main() -> None:
-            response = await client.data_directories.list()
+            response = await client.data_directories.list(
+                fqn="fqn",
+                ml_repo_id="ml_repo_id",
+                name="name",
+                limit=1,
+                offset=1,
+            )
             async for item in response:
                 yield item
 

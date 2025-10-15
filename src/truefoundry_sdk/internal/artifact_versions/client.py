@@ -86,7 +86,18 @@ class ArtifactVersionsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = client.internal.artifact_versions.list()
+        response = client.internal.artifact_versions.list(
+            tag="tag",
+            fqn="fqn",
+            artifact_id="artifact_id",
+            ml_repo_id="ml_repo_id",
+            name="name",
+            version=1,
+            offset=1,
+            limit=1,
+            include_internal_metadata=True,
+            include_model_versions=True,
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -192,7 +203,18 @@ class AsyncArtifactVersionsClient:
 
 
         async def main() -> None:
-            response = await client.internal.artifact_versions.list()
+            response = await client.internal.artifact_versions.list(
+                tag="tag",
+                fqn="fqn",
+                artifact_id="artifact_id",
+                ml_repo_id="ml_repo_id",
+                name="name",
+                version=1,
+                offset=1,
+                limit=1,
+                include_internal_metadata=True,
+                include_model_versions=True,
+            )
             async for item in response:
                 yield item
 

@@ -7,6 +7,7 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
+from .jwt import Jwt
 from .subject import Subject
 from .virtual_account_manifest import VirtualAccountManifest
 
@@ -21,6 +22,7 @@ class VirtualAccount(UniversalBaseModel):
     created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
     updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
     is_expired: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isExpired")] = None
+    jwts: typing.Optional[typing.List[Jwt]] = None
     created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = None
 
     if IS_PYDANTIC_V2:
