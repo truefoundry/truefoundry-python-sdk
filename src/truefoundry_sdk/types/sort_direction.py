@@ -6,16 +6,12 @@ import typing
 T_Result = typing.TypeVar("T_Result")
 
 
-class QuerySpansRequestSortDirection(str, enum.Enum):
-    """
-    Sort direction for results. Defaults to desc.
-    """
-
+class SortDirection(str, enum.Enum):
     ASC = "asc"
     DESC = "desc"
 
     def visit(self, asc: typing.Callable[[], T_Result], desc: typing.Callable[[], T_Result]) -> T_Result:
-        if self is QuerySpansRequestSortDirection.ASC:
+        if self is SortDirection.ASC:
             return asc()
-        if self is QuerySpansRequestSortDirection.DESC:
+        if self is SortDirection.DESC:
             return desc()

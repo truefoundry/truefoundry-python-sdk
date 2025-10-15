@@ -371,7 +371,6 @@ if typing.TYPE_CHECKING:
     from .job_run import JobRun
     from .job_run_status import JobRunStatus
     from .job_runs_sort_by import JobRunsSortBy
-    from .job_runs_sort_direction import JobRunsSortDirection
     from .job_trigger import JobTrigger
     from .job_trigger_input import JobTriggerInput
     from .job_trigger_input_command import JobTriggerInputCommand
@@ -639,6 +638,7 @@ if typing.TYPE_CHECKING:
     from .slack_webhook_auth import SlackWebhookAuth
     from .slack_webhook_integration import SlackWebhookIntegration
     from .smtp_credentials import SmtpCredentials
+    from .sort_direction import SortDirection
     from .spa_cy_framework import SpaCyFramework
     from .spark_build import SparkBuild
     from .spark_config import SparkConfig
@@ -1119,7 +1119,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "JobRun": ".job_run",
     "JobRunStatus": ".job_run_status",
     "JobRunsSortBy": ".job_runs_sort_by",
-    "JobRunsSortDirection": ".job_runs_sort_direction",
     "JobTrigger": ".job_trigger",
     "JobTriggerInput": ".job_trigger_input",
     "JobTriggerInputCommand": ".job_trigger_input_command",
@@ -1386,6 +1385,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SlackWebhookAuth": ".slack_webhook_auth",
     "SlackWebhookIntegration": ".slack_webhook_integration",
     "SmtpCredentials": ".smtp_credentials",
+    "SortDirection": ".sort_direction",
     "SpaCyFramework": ".spa_cy_framework",
     "SparkBuild": ".spark_build",
     "SparkConfig": ".spark_config",
@@ -1890,7 +1890,6 @@ __all__ = [
     "JobRun",
     "JobRunStatus",
     "JobRunsSortBy",
-    "JobRunsSortDirection",
     "JobTrigger",
     "JobTriggerInput",
     "JobTriggerInputCommand",
@@ -2157,6 +2156,7 @@ __all__ = [
     "SlackWebhookAuth",
     "SlackWebhookIntegration",
     "SmtpCredentials",
+    "SortDirection",
     "SpaCyFramework",
     "SparkBuild",
     "SparkConfig",

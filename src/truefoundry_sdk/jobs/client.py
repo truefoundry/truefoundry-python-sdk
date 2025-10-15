@@ -10,8 +10,8 @@ from ..types.get_job_run_response import GetJobRunResponse
 from ..types.job_run import JobRun
 from ..types.job_run_status import JobRunStatus
 from ..types.job_runs_sort_by import JobRunsSortBy
-from ..types.job_runs_sort_direction import JobRunsSortDirection
 from ..types.metadata import Metadata
+from ..types.sort_direction import SortDirection
 from ..types.terminate_job_response import TerminateJobResponse
 from ..types.trigger_job_run_response import TriggerJobRunResponse
 from .raw_client import AsyncRawJobsClient, RawJobsClient
@@ -44,7 +44,7 @@ class JobsClient:
         offset: typing.Optional[int] = 0,
         search_prefix: typing.Optional[str] = None,
         sort_by: typing.Optional[JobRunsSortBy] = None,
-        order: typing.Optional[JobRunsSortDirection] = None,
+        order: typing.Optional[SortDirection] = None,
         triggered_by: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         status: typing.Optional[typing.Union[JobRunStatus, typing.Sequence[JobRunStatus]]] = None,
         version_numbers: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
@@ -70,7 +70,7 @@ class JobsClient:
         sort_by : typing.Optional[JobRunsSortBy]
             Attribute to sort by
 
-        order : typing.Optional[JobRunsSortDirection]
+        order : typing.Optional[SortDirection]
             Sorting order
 
         triggered_by : typing.Optional[typing.Union[str, typing.Sequence[str]]]
@@ -92,7 +92,7 @@ class JobsClient:
 
         Examples
         --------
-        from truefoundry_sdk import JobRunsSortBy, JobRunsSortDirection, TrueFoundry
+        from truefoundry_sdk import JobRunsSortBy, SortDirection, TrueFoundry
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -104,7 +104,7 @@ class JobsClient:
             offset=0,
             search_prefix="searchPrefix",
             sort_by=JobRunsSortBy.START_TIME,
-            order=JobRunsSortDirection.ASC,
+            order=SortDirection.ASC,
         )
         for item in response:
             yield item
@@ -318,7 +318,7 @@ class AsyncJobsClient:
         offset: typing.Optional[int] = 0,
         search_prefix: typing.Optional[str] = None,
         sort_by: typing.Optional[JobRunsSortBy] = None,
-        order: typing.Optional[JobRunsSortDirection] = None,
+        order: typing.Optional[SortDirection] = None,
         triggered_by: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         status: typing.Optional[typing.Union[JobRunStatus, typing.Sequence[JobRunStatus]]] = None,
         version_numbers: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
@@ -344,7 +344,7 @@ class AsyncJobsClient:
         sort_by : typing.Optional[JobRunsSortBy]
             Attribute to sort by
 
-        order : typing.Optional[JobRunsSortDirection]
+        order : typing.Optional[SortDirection]
             Sorting order
 
         triggered_by : typing.Optional[typing.Union[str, typing.Sequence[str]]]
@@ -368,11 +368,7 @@ class AsyncJobsClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import (
-            AsyncTrueFoundry,
-            JobRunsSortBy,
-            JobRunsSortDirection,
-        )
+        from truefoundry_sdk import AsyncTrueFoundry, JobRunsSortBy, SortDirection
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -387,7 +383,7 @@ class AsyncJobsClient:
                 offset=0,
                 search_prefix="searchPrefix",
                 sort_by=JobRunsSortBy.START_TIME,
-                order=JobRunsSortDirection.ASC,
+                order=SortDirection.ASC,
             )
             async for item in response:
                 yield item

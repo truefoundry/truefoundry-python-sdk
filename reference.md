@@ -4633,7 +4633,7 @@ List Job Runs for provided Job Id. Filter the data based on parameters passed in
 <dd>
 
 ```python
-from truefoundry_sdk import JobRunsSortBy, JobRunsSortDirection, TrueFoundry
+from truefoundry_sdk import JobRunsSortBy, SortDirection, TrueFoundry
 
 client = TrueFoundry(
     api_key="YOUR_API_KEY",
@@ -4645,7 +4645,7 @@ response = client.jobs.list_runs(
     offset=0,
     search_prefix="searchPrefix",
     sort_by=JobRunsSortBy.START_TIME,
-    order=JobRunsSortDirection.ASC,
+    order=SortDirection.ASC,
 )
 for item in response:
     yield item
@@ -4707,7 +4707,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**order:** `typing.Optional[JobRunsSortDirection]` — Sorting order
+**order:** `typing.Optional[SortDirection]` — Sorting order
     
 </dd>
 </dl>
@@ -6102,7 +6102,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**sort_direction:** `typing.Optional[QuerySpansRequestSortDirection]` — Sort direction for results. Defaults to desc.
+**sort_direction:** `typing.Optional[SortDirection]` — Sort direction for results. Defaults to desc.
     
 </dd>
 </dl>

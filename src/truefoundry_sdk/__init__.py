@@ -369,7 +369,6 @@ if typing.TYPE_CHECKING:
         JobRun,
         JobRunStatus,
         JobRunsSortBy,
-        JobRunsSortDirection,
         JobTrigger,
         JobTriggerInput,
         JobTriggerInputCommand,
@@ -636,6 +635,7 @@ if typing.TYPE_CHECKING:
         SlackWebhookAuth,
         SlackWebhookIntegration,
         SmtpCredentials,
+        SortDirection,
         SpaCyFramework,
         SparkBuild,
         SparkConfig,
@@ -801,7 +801,6 @@ if typing.TYPE_CHECKING:
     from .clusters import ClustersDeleteResponse
     from .jobs import TriggerJobRequestInput
     from .teams import ApplyTeamRequestManifest, TeamsListRequestType
-    from .traces import QuerySpansRequestSortDirection
     from .version import __version__
     from .workspaces import WorkspacesDeleteResponse
 _dynamic_imports: typing.Dict[str, str] = {
@@ -1178,7 +1177,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "JobRun": ".types",
     "JobRunStatus": ".types",
     "JobRunsSortBy": ".types",
-    "JobRunsSortDirection": ".types",
     "JobTrigger": ".types",
     "JobTriggerInput": ".types",
     "JobTriggerInputCommand": ".types",
@@ -1395,7 +1393,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "QuayBasicAuth": ".types",
     "QuayIntegrations": ".types",
     "QuayProviderAccount": ".types",
-    "QuerySpansRequestSortDirection": ".traces",
     "QuerySpansResponse": ".types",
     "RStudio": ".types",
     "RateLimitConfig": ".types",
@@ -1449,6 +1446,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SlackWebhookAuth": ".types",
     "SlackWebhookIntegration": ".types",
     "SmtpCredentials": ".types",
+    "SortDirection": ".types",
     "SpaCyFramework": ".types",
     "SparkBuild": ".types",
     "SparkConfig": ".types",
@@ -1995,7 +1993,6 @@ __all__ = [
     "JobRun",
     "JobRunStatus",
     "JobRunsSortBy",
-    "JobRunsSortDirection",
     "JobTrigger",
     "JobTriggerInput",
     "JobTriggerInputCommand",
@@ -2212,7 +2209,6 @@ __all__ = [
     "QuayBasicAuth",
     "QuayIntegrations",
     "QuayProviderAccount",
-    "QuerySpansRequestSortDirection",
     "QuerySpansResponse",
     "RStudio",
     "RateLimitConfig",
@@ -2266,6 +2262,7 @@ __all__ = [
     "SlackWebhookAuth",
     "SlackWebhookIntegration",
     "SmtpCredentials",
+    "SortDirection",
     "SpaCyFramework",
     "SparkBuild",
     "SparkConfig",

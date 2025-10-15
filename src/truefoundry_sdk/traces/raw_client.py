@@ -9,9 +9,9 @@ from ..core.pagination import AsyncPager, BaseHttpResponse, SyncPager
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..types.query_spans_response import QuerySpansResponse
+from ..types.sort_direction import SortDirection
 from ..types.trace_span import TraceSpan
 from ..types.traces_subject_type import TracesSubjectType
-from .types.query_spans_request_sort_direction import QuerySpansRequestSortDirection
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -34,7 +34,7 @@ class RawTracesClient:
         created_by_subject_slugs: typing.Optional[typing.Sequence[str]] = OMIT,
         application_names: typing.Optional[typing.Sequence[str]] = OMIT,
         limit: typing.Optional[int] = OMIT,
-        sort_direction: typing.Optional[QuerySpansRequestSortDirection] = OMIT,
+        sort_direction: typing.Optional[SortDirection] = OMIT,
         page_token: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[TraceSpan]:
@@ -71,7 +71,7 @@ class RawTracesClient:
         limit : typing.Optional[int]
             The maximum number of spans to return per page. Defaults to 200 if not provided.
 
-        sort_direction : typing.Optional[QuerySpansRequestSortDirection]
+        sort_direction : typing.Optional[SortDirection]
             Sort direction for results. Defaults to desc.
 
         page_token : typing.Optional[str]
@@ -164,7 +164,7 @@ class AsyncRawTracesClient:
         created_by_subject_slugs: typing.Optional[typing.Sequence[str]] = OMIT,
         application_names: typing.Optional[typing.Sequence[str]] = OMIT,
         limit: typing.Optional[int] = OMIT,
-        sort_direction: typing.Optional[QuerySpansRequestSortDirection] = OMIT,
+        sort_direction: typing.Optional[SortDirection] = OMIT,
         page_token: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[TraceSpan]:
@@ -201,7 +201,7 @@ class AsyncRawTracesClient:
         limit : typing.Optional[int]
             The maximum number of spans to return per page. Defaults to 200 if not provided.
 
-        sort_direction : typing.Optional[QuerySpansRequestSortDirection]
+        sort_direction : typing.Optional[SortDirection]
             Sort direction for results. Defaults to desc.
 
         page_token : typing.Optional[str]
