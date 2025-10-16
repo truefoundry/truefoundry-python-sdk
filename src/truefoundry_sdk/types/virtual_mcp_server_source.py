@@ -16,7 +16,6 @@ class VirtualMcpServerSource(UniversalBaseModel):
     """
     +label=Server Name
     +usage=Name of the source MCP server within this group (use {provider_account_name}/{integration_name} format).
-    +uiType=VirtualMCPServerSelection
     +sort=100
     """
 
