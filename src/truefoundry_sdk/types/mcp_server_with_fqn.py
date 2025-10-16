@@ -9,27 +9,34 @@ from .mcp_tool import McpTool
 
 class McpServerWithFqn(UniversalBaseModel):
     """
-    MCP server with FQN
+    +label=MCP Server FQN
+    +icon=puzzle-piece
+    +usage=MCP server with FQN
     """
 
     type: typing.Literal["mcp-server-fqn"] = pydantic.Field(default="mcp-server-fqn")
     """
-    The FQN of the MCP server
+    +label=MCP Server FQN Type
+    +usage=The FQN of the MCP server
+    +value=mcp-server-fqn
     """
 
     integration_fqn: str = pydantic.Field()
     """
-    The FQN of the MCP server
+    +label=MCP Server Integration FQN
+    +usage=The FQN of the MCP server
     """
 
-    enable_all_tools: typing.Optional[bool] = pydantic.Field(default=False)
+    enable_all_tools: bool = pydantic.Field(default=False)
     """
-    Whether to enable all tools from the MCP server
+    +label=Enable All Tools
+    +usage=Whether to enable all tools from the MCP server
     """
 
     tools: typing.Optional[typing.List[McpTool]] = pydantic.Field(default=None)
     """
-    The tools to enable from the MCP server
+    +label=Tools
+    +usage=The tools to enable from the MCP server
     """
 
     if IS_PYDANTIC_V2:

@@ -4,25 +4,14 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .text_content_part_text import TextContentPartText
 
 
-class TextContentPart(UniversalBaseModel):
+class SlaCutoff(UniversalBaseModel):
+    time_per_output_token_ms: typing.Optional[int] = pydantic.Field(default=None)
     """
-    +label=Text Content
-    +usage=Text content for the message
-    """
-
-    type: typing.Literal["text"] = pydantic.Field(default="text")
-    """
-    +value=text
-    +usage=Type of the content part
-    """
-
-    text: TextContentPartText = pydantic.Field()
-    """
-    +label=Text
-    +usage=Text content for the message
+    +usage=Time per output token threshold in milliseconds. If time per output token exceeds this value, the target will be marked as unhealthy
+    +uiProps={"descriptionInline":true}
+    +label=Time Per Output Token (ms)
     """
 
     if IS_PYDANTIC_V2:

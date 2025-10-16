@@ -4,4 +4,4 @@ import typing
 
 from .blob_storage_reference import BlobStorageReference
 
-ImageUrlUrl = typing.Union[str, BlobStorageReference]
+ImageContentPartImageUrlUrl = typing.Union[str, BlobStorageReference]

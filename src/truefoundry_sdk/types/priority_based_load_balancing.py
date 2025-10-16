@@ -8,10 +8,23 @@ from .priority_based_load_balance_target import PriorityBasedLoadBalanceTarget
 
 
 class PriorityBasedLoadBalancing(UniversalBaseModel):
-    type: typing.Literal["priority-based-routing"] = "priority-based-routing"
+    """
+    +label=Priority-based Load Balancing
+    """
+
+    type: typing.Literal["priority-based-routing"] = pydantic.Field(default="priority-based-routing")
+    """
+    +value=priority-based-routing
+    +sort=1
+    +label=Routing Type
+    """
+
     load_balance_targets: typing.List[PriorityBasedLoadBalanceTarget] = pydantic.Field()
     """
-    List of targets for priority-based load balancing
+    +usage=List of targets for priority-based load balancing
+    +uiProps={"descriptionInline":true}
+    +sort=4
+    +label=Load Balance Targets
     """
 
     if IS_PYDANTIC_V2:

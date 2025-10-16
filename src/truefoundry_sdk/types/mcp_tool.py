@@ -8,12 +8,14 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class McpTool(UniversalBaseModel):
     """
-    Tool configuration for MCP server
+    +label=MCP Tool
+    +usage=Tool configuration for MCP server
     """
 
     name: str = pydantic.Field()
     """
-    The name of the tool as it appears in the MCP server
+    +label=Name
+    +usage=The name of the tool as it appears in the MCP server
     """
 
     if IS_PYDANTIC_V2:

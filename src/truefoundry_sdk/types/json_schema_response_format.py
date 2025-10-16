@@ -9,12 +9,14 @@ from .json_schema import JsonSchema
 
 class JsonSchemaResponseFormat(UniversalBaseModel):
     """
-    Structured JSON response format with schema validation
+    +label=JSON Schema Response Format
+    +usage=Structured JSON response format with schema validation
     """
 
     type: typing.Literal["json_schema"] = pydantic.Field(default="json_schema")
     """
-    Type of response format
+    +label=Type
+    +usage=Type of response format
     """
 
     json_schema: JsonSchema

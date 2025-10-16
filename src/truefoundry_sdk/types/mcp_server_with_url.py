@@ -9,32 +9,40 @@ from .mcp_tool import McpTool
 
 class McpServerWithUrl(UniversalBaseModel):
     """
-    MCP server with URL
+    +label=MCP Server URL
+    +icon=puzzle-piece
+    +usage=MCP server with URL
     """
 
     type: typing.Literal["mcp-server-url"] = pydantic.Field(default="mcp-server-url")
     """
-    The URL of the MCP server
+    +label=URL
+    +usage=The URL of the MCP server
+    +value=mcp-server-url
     """
 
     url: str = pydantic.Field()
     """
-    The URL of the MCP server
+    +label=URL
+    +usage=The URL of the MCP server
     """
 
     headers: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
     """
-    The headers to send to the MCP server
+    +label=Headers
+    +usage=The headers to send to the MCP server
     """
 
-    enable_all_tools: typing.Optional[bool] = pydantic.Field(default=False)
+    enable_all_tools: bool = pydantic.Field(default=False)
     """
-    Whether to enable all tools from the MCP server
+    +label=Enable All Tools
+    +usage=Whether to enable all tools from the MCP server
     """
 
     tools: typing.Optional[typing.List[McpTool]] = pydantic.Field(default=None)
     """
-    The tools to enable from the MCP server
+    +label=Tools
+    +usage=The tools to enable from the MCP server
     """
 
     if IS_PYDANTIC_V2:

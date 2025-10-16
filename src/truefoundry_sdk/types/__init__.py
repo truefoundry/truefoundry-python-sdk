@@ -352,8 +352,8 @@ if typing.TYPE_CHECKING:
     from .image import Image
     from .image_command import ImageCommand
     from .image_content_part import ImageContentPart
-    from .image_url import ImageUrl
-    from .image_url_url import ImageUrlUrl
+    from .image_content_part_image_url import ImageContentPartImageUrl
+    from .image_content_part_image_url_url import ImageContentPartImageUrlUrl
     from .infer_method_name import InferMethodName
     from .infra_provider_account import InfraProviderAccount
     from .ingress_controller_config import IngressControllerConfig
@@ -513,6 +513,7 @@ if typing.TYPE_CHECKING:
     from .openai_api_key_auth import OpenaiApiKeyAuth
     from .openai_provider_account import OpenaiProviderAccount
     from .operation import Operation
+    from .owned_by import OwnedBy
     from .paddle_framework import PaddleFramework
     from .pager_duty import PagerDuty
     from .pager_duty_integration import PagerDutyIntegration
@@ -637,6 +638,7 @@ if typing.TYPE_CHECKING:
     from .sklearn_framework import SklearnFramework
     from .sklearn_model_schema import SklearnModelSchema
     from .sklearn_serialization_format import SklearnSerializationFormat
+    from .sla_cutoff import SlaCutoff
     from .slack_bot import SlackBot
     from .slack_bot_auth import SlackBotAuth
     from .slack_bot_integration import SlackBotIntegration
@@ -1108,8 +1110,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Image": ".image",
     "ImageCommand": ".image_command",
     "ImageContentPart": ".image_content_part",
-    "ImageUrl": ".image_url",
-    "ImageUrlUrl": ".image_url_url",
+    "ImageContentPartImageUrl": ".image_content_part_image_url",
+    "ImageContentPartImageUrlUrl": ".image_content_part_image_url_url",
     "InferMethodName": ".infer_method_name",
     "InfraProviderAccount": ".infra_provider_account",
     "IngressControllerConfig": ".ingress_controller_config",
@@ -1265,6 +1267,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OpenaiApiKeyAuth": ".openai_api_key_auth",
     "OpenaiProviderAccount": ".openai_provider_account",
     "Operation": ".operation",
+    "OwnedBy": ".owned_by",
     "PaddleFramework": ".paddle_framework",
     "PagerDuty": ".pager_duty",
     "PagerDutyIntegration": ".pager_duty_integration",
@@ -1392,6 +1395,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SklearnFramework": ".sklearn_framework",
     "SklearnModelSchema": ".sklearn_model_schema",
     "SklearnSerializationFormat": ".sklearn_serialization_format",
+    "SlaCutoff": ".sla_cutoff",
     "SlackBot": ".slack_bot",
     "SlackBotAuth": ".slack_bot_auth",
     "SlackBotIntegration": ".slack_bot_integration",
@@ -1887,8 +1891,8 @@ __all__ = [
     "Image",
     "ImageCommand",
     "ImageContentPart",
-    "ImageUrl",
-    "ImageUrlUrl",
+    "ImageContentPartImageUrl",
+    "ImageContentPartImageUrlUrl",
     "InferMethodName",
     "InfraProviderAccount",
     "IngressControllerConfig",
@@ -2044,6 +2048,7 @@ __all__ = [
     "OpenaiApiKeyAuth",
     "OpenaiProviderAccount",
     "Operation",
+    "OwnedBy",
     "PaddleFramework",
     "PagerDuty",
     "PagerDutyIntegration",
@@ -2171,6 +2176,7 @@ __all__ = [
     "SklearnFramework",
     "SklearnModelSchema",
     "SklearnSerializationFormat",
+    "SlaCutoff",
     "SlackBot",
     "SlackBotAuth",
     "SlackBotIntegration",

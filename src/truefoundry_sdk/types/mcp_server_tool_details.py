@@ -8,17 +8,20 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class McpServerToolDetails(UniversalBaseModel):
     """
-    Mapping configuration for tool calls to MCP server integration and tool names
+    +label=Mcp Server Tool Details
+    +usage=Mapping configuration for tool calls to MCP server integration and tool names
     """
 
     mcp_server_integration_id: str = pydantic.Field()
     """
-    The integration ID of the MCP server
+    +label=MCP Server Integration ID
+    +usage=The integration ID of the MCP server
     """
 
     tool_name: str = pydantic.Field()
     """
-    The name of the tool in the MCP server
+    +label=Tool Name
+    +usage=The name of the tool in the MCP server
     """
 
     if IS_PYDANTIC_V2:

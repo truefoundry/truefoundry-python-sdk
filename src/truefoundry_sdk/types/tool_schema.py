@@ -9,12 +9,14 @@ from .function_schema import FunctionSchema
 
 class ToolSchema(UniversalBaseModel):
     """
-    Schema defining a tool for the chat prompt
+    +label=Tool Schema
+    +usage=Schema defining a tool for the chat prompt
     """
 
     type: typing.Literal["function"] = pydantic.Field(default="function")
     """
-    Type of the tool
+    +label=Type
+    +usage=Type of the tool
     """
 
     function: FunctionSchema

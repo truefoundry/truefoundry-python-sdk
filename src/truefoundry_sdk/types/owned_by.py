@@ -4,25 +4,20 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .text_content_part_text import TextContentPartText
 
 
-class TextContentPart(UniversalBaseModel):
+class OwnedBy(UniversalBaseModel):
     """
-    +label=Text Content
-    +usage=Text content for the message
-    """
-
-    type: typing.Literal["text"] = pydantic.Field(default="text")
-    """
-    +value=text
-    +usage=Type of the content part
+    +label=Owner of the virtual account
+    +sort=4
+    +usage=Name of the owner who owns the virtual account
     """
 
-    text: TextContentPartText = pydantic.Field()
+    team: str = pydantic.Field()
     """
-    +label=Text
-    +usage=Text content for the message
+    +label=Team Name
+    +sort=1
+    +usage=The name of the team who owns the virtual account
     """
 
     if IS_PYDANTIC_V2:

@@ -5,38 +5,50 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .retry_config import RetryConfig
+from .sla_cutoff import SlaCutoff
 
 
 class PriorityBasedLoadBalanceTarget(UniversalBaseModel):
     target: str = pydantic.Field()
     """
-    Target model or provider FQN
+    +usage=Target model or provider FQN
+    +uiProps={"integrationType":"model", "valuePattern": "${providerAccount.name}/${manifest.name}"}
+    +sort=1
+    +label=Target
     """
 
-    priority: typing.Optional[int] = pydantic.Field(default=0)
+    priority: int = pydantic.Field(default=0)
     """
-    Priority for the target, Lower the number, higher the priority (0 is the highest priority)
-    """
-
-    max_inter_token_latency: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Maximum inter-token latency threshold in milliseconds. If ITL exceeds this value, the target will be marked as unhealthy
+    +usage=Priority for the target, Lower the number, higher the priority (0 is the highest priority)
+    +uiProps={"descriptionInline":true}
+    +sort=2
+    +label=Priority
     """
 
+    sla_cutoff: typing.Optional[SlaCutoff] = None
     retry_config: typing.Optional[RetryConfig] = None
     fallback_status_codes: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    Status Codes for which the request will fallback to other targets. If the status code is not present in fallback_status_codes, it fails immediately.
+    +usage=Status Codes for which the request will fallback to other targets. If the status code is not present in fallback_status_codes, it fails immediately.
+    +uiProps={"descriptionInline":true}
+    +sort=5
+    +label=Fallback Status Codes
     """
 
     fallback_candidate: typing.Optional[bool] = pydantic.Field(default=True)
     """
-    Whether this target is a fallback candidate.  If set to false, this model will not be considered as a fallback option for targets of this load-balance-rule
+    +usage=Whether this target is a fallback candidate.  If set to false, this model will not be considered as a fallback option for targets of this load-balance-rule
+    +uiProps={"descriptionInline":true}
+    +sort=6
+    +label=Fallback Candidate
     """
 
     override_params: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
     """
-    Optional parameters to override in the request
+    +usage=Optional parameters to override in the request
+    +uiProps={"descriptionInline":true}
+    +sort=7
+    +label=Override Parameters
     """
 
     if IS_PYDANTIC_V2:

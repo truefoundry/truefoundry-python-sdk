@@ -9,7 +9,7 @@ from ..core.serialization import FieldMetadata
 
 
 class TokenPagination(UniversalBaseModel):
-    limit: int = pydantic.Field()
+    limit: typing.Optional[int] = pydantic.Field(default=None)
     """
     Number of items per page
     """

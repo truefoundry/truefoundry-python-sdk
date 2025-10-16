@@ -4,20 +4,25 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .image_url_url import ImageUrlUrl
+from .image_content_part_image_url_url import ImageContentPartImageUrlUrl
 
 
-class ImageUrl(UniversalBaseModel):
+class ImageContentPartImageUrl(UniversalBaseModel):
     """
-    Image URL linking to the image
-    """
-
-    url: ImageUrlUrl = pydantic.Field()
-    """
-    Image URL linking to the image
+    +label=Image URL
+    +usage=Image URL linking to the image
     """
 
-    detail: typing.Optional[str] = None
+    url: ImageContentPartImageUrlUrl = pydantic.Field()
+    """
+    +label=URL
+    +usage=Image URL linking to the image
+    """
+
+    detail: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    +label=Details
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
