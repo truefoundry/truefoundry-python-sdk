@@ -4,7 +4,6 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .notification_target import NotificationTarget
 
 
 class AutoRotate(UniversalBaseModel):
@@ -29,8 +28,6 @@ class AutoRotate(UniversalBaseModel):
     +sort=2
     +usage=Grace Period in days for which the token will be valid after rotation interval. Minimum value is 1.
     """
-
-    notification_target: typing.Optional[NotificationTarget] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

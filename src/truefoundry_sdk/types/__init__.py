@@ -513,6 +513,7 @@ if typing.TYPE_CHECKING:
     from .openai_api_key_auth import OpenaiApiKeyAuth
     from .openai_provider_account import OpenaiProviderAccount
     from .operation import Operation
+    from .owned_by import OwnedBy
     from .paddle_framework import PaddleFramework
     from .pager_duty import PagerDuty
     from .pager_duty_integration import PagerDutyIntegration
@@ -1265,6 +1266,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OpenaiApiKeyAuth": ".openai_api_key_auth",
     "OpenaiProviderAccount": ".openai_provider_account",
     "Operation": ".operation",
+    "OwnedBy": ".owned_by",
     "PaddleFramework": ".paddle_framework",
     "PagerDuty": ".pager_duty",
     "PagerDutyIntegration": ".pager_duty_integration",
@@ -2044,6 +2046,7 @@ __all__ = [
     "OpenaiApiKeyAuth",
     "OpenaiProviderAccount",
     "Operation",
+    "OwnedBy",
     "PaddleFramework",
     "PagerDuty",
     "PagerDutyIntegration",
