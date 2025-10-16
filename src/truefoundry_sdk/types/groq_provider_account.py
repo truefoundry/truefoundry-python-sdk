@@ -11,8 +11,7 @@ from .groq_key_auth import GroqKeyAuth
 
 class GroqProviderAccount(UniversalBaseModel):
     """
-    +label=Groq Provider Account
-    +icon=groq
+    Groq Provider Account
     """
 
     type: typing.Literal["provider-account/groq"] = pydantic.Field(default="provider-account/groq")

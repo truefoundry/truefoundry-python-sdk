@@ -9,8 +9,7 @@ from .jfrog_basic_auth import JfrogBasicAuth
 
 class JfrogArtifactsRegistry(UniversalBaseModel):
     """
-    +label=Jfrog Artifacts Registry
-    +icon=jfrog
+    Jfrog Artifacts Registry
     """
 
     type: typing.Literal["integration/docker-registry/jfrog"] = pydantic.Field(

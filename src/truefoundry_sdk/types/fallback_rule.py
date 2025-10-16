@@ -10,7 +10,7 @@ from .fallback_when import FallbackWhen
 
 class FallbackRule(UniversalBaseModel):
     """
-    +label=Fallback Rule
+    Fallback Rule
     """
 
     id: str = pydantic.Field()

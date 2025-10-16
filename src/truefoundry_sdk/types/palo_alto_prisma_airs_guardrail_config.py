@@ -10,8 +10,7 @@ from .palo_alto_prisma_airs_key_auth import PaloAltoPrismaAirsKeyAuth
 
 class PaloAltoPrismaAirsGuardrailConfig(UniversalBaseModel):
     """
-    +label=Palo Alto Prisma AIRS
-    +icon=https://assets.production.truefoundry.com/palo-alto-prisma-airs.svg
+    Palo Alto Prisma AIRS
     """
 
     name: str = pydantic.Field()

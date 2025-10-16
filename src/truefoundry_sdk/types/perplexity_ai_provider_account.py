@@ -11,8 +11,7 @@ from .perplexity_integrations import PerplexityIntegrations
 
 class PerplexityAiProviderAccount(UniversalBaseModel):
     """
-    +label=Perplexity AI Provider Account
-    +icon=perplexity-ai
+    Perplexity AI Provider Account
     """
 
     type: typing.Literal["provider-account/perplexity-ai"] = pydantic.Field(default="provider-account/perplexity-ai")

@@ -11,8 +11,7 @@ from .collaborator import Collaborator
 
 class AnthropicProviderAccount(UniversalBaseModel):
     """
-    +label=Anthropic
-    +icon=anthropic
+    Anthropic
     """
 
     type: typing.Literal["provider-account/anthropic"] = pydantic.Field(default="provider-account/anthropic")

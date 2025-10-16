@@ -10,8 +10,7 @@ from .model_type import ModelType
 
 class PerplexityAiModel(UniversalBaseModel):
     """
-    +label=Perplexity AI Model
-    +icon=perplexity-ai
+    Perplexity AI Model
     """
 
     type: typing.Literal["integration/model/perplexity-ai"] = pydantic.Field(default="integration/model/perplexity-ai")

@@ -10,7 +10,7 @@ from .load_balancing_when import LoadBalancingWhen
 
 class LatencyBasedLoadBalancingRule(LatencyBasedLoadBalancing):
     """
-    +label=Latency-based Load Balancing Rule
+    Latency-based Load Balancing Rule
     """
 
     id: str = pydantic.Field()

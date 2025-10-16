@@ -10,8 +10,7 @@ from .quay_integrations import QuayIntegrations
 
 class QuayProviderAccount(UniversalBaseModel):
     """
-    +label=Quay
-    +icon=puzzle-piece
+    Quay
     """
 
     type: typing.Literal["provider-account/quay"] = pydantic.Field(default="provider-account/quay")

@@ -9,7 +9,7 @@ from .guardrails_rule import GuardrailsRule
 
 class GuardrailsConfig(UniversalBaseModel):
     """
-    +label=Guardrails Configuration
+    Guardrails Configuration
     """
 
     name: str = pydantic.Field()

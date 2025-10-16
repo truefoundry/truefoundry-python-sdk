@@ -9,8 +9,7 @@ from .ttl_integrations import TtlIntegrations
 
 class TtlProviderAccount(UniversalBaseModel):
     """
-    +label=TTL
-    +icon=puzzle-piece
+    TTL
     """
 
     type: typing.Literal["provider-account/ttl"] = pydantic.Field(default="provider-account/ttl")

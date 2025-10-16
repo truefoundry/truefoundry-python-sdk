@@ -12,16 +12,12 @@ from .prometheus_alert_rule import PrometheusAlertRule
 class AlertConfig(UniversalBaseModel):
     type: typing.Literal["alert-config"] = pydantic.Field(default="alert-config")
     """
-    +label=Type
-    +value=alert-config
+    Type
     """
 
     name: str = pydantic.Field()
     """
-    +label=Name
-    +message=3 to 35 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
-    +uiProps={"descriptionInline":true}
-    +uiType=Hidden
+    Name - 3 to 35 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
     """
 
     resource: AlertConfigResource

@@ -10,8 +10,7 @@ from .model_type import ModelType
 
 class AnthropicModel(UniversalBaseModel):
     """
-    +label=Anthropic Model
-    +icon=anthropic
+    Anthropic Model
     """
 
     name: str = pydantic.Field()

@@ -11,8 +11,7 @@ from .model_type import ModelType
 
 class SagemakerModel(UniversalBaseModel):
     """
-    +label=Sagemaker Model
-    +icon=aws-sagemaker
+    Sagemaker Model
     """
 
     name: str = pydantic.Field()

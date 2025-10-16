@@ -10,8 +10,7 @@ from .model_type import ModelType
 
 class Ai21Model(UniversalBaseModel):
     """
-    +label=AI21 Model
-    +icon=ai21
+    AI21 Model
     """
 
     type: typing.Literal["integration/model/ai21"] = pydantic.Field(default="integration/model/ai21")

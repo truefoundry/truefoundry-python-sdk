@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class PerplexityAiKeyAuth(UniversalBaseModel):
     """
-    +label=Perplexity AI API Key Auth
-    +icon=perplexity-ai
+    Perplexity AI API Key Auth
     """
 
     type: typing.Literal["api-key"] = pydantic.Field(default="api-key")

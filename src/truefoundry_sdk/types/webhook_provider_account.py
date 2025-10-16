@@ -9,8 +9,7 @@ from .webhook_integrations import WebhookIntegrations
 
 class WebhookProviderAccount(UniversalBaseModel):
     """
-    +label=Webhook Provider Account
-    +icon=webhook
+    Webhook Provider Account
     """
 
     type: typing.Literal["provider-account/webhook"] = pydantic.Field(default="provider-account/webhook")

@@ -11,8 +11,7 @@ from .model_type import ModelType
 
 class BedrockModelV2(UniversalBaseModel):
     """
-    +label=Bedrock Model
-    +icon=aws-bedrock
+    Bedrock Model
     """
 
     name: str = pydantic.Field()

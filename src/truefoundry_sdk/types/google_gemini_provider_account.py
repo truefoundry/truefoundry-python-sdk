@@ -11,8 +11,7 @@ from .gemini_model_v2 import GeminiModelV2
 
 class GoogleGeminiProviderAccount(UniversalBaseModel):
     """
-    +label=Google Gemini Provider Account
-    +icon=googleCloud
+    Google Gemini Provider Account
     """
 
     type: typing.Literal["provider-account/google-gemini"] = pydantic.Field(default="provider-account/google-gemini")

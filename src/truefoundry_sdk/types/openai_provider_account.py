@@ -11,8 +11,7 @@ from .openai_api_key_auth import OpenaiApiKeyAuth
 
 class OpenaiProviderAccount(UniversalBaseModel):
     """
-    +label=OpenAI Provider Account
-    +icon=openai
+    OpenAI Provider Account
     """
 
     type: typing.Literal["provider-account/openai"] = pydantic.Field(default="provider-account/openai")

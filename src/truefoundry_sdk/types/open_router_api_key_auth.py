@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class OpenRouterApiKeyAuth(UniversalBaseModel):
     """
-    +label=OpenRouter API Key Auth
-    +icon=openrouter
+    OpenRouter API Key Auth
     """
 
     type: typing.Literal["api-key"] = pydantic.Field(default="api-key")

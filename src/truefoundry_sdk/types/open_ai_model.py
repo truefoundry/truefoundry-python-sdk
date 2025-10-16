@@ -10,8 +10,7 @@ from .model_type import ModelType
 
 class OpenAiModel(UniversalBaseModel):
     """
-    +label=OpenAI Model
-    +icon=openai
+    OpenAI Model
     """
 
     type: typing.Literal["integration/model/openai"] = pydantic.Field(default="integration/model/openai")

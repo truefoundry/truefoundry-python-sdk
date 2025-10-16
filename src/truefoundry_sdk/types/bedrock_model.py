@@ -12,15 +12,12 @@ from .model_type import ModelType
 
 class BedrockModel(UniversalBaseModel):
     """
-    +label=Bedrock Model
-    +icon=aws-bedrock
+    Bedrock Model
     """
 
     name: str = pydantic.Field()
     """
-    +label=Display Name
-    +sort=1
-    +message=2 to 62 characters long alphanumeric word, may contain - or . in between, cannot start with a number
+    Display Name - 2 to 62 characters long alphanumeric word, may contain - or . in between, cannot start with a number
     """
 
     model_id: str = pydantic.Field()
@@ -35,7 +32,7 @@ class BedrockModel(UniversalBaseModel):
 
     auth_data: typing.Optional[BedrockModelAuthData] = pydantic.Field(default=None)
     """
-    +label=Auth Data
+    Auth Data
     """
 
     region: AwsRegion

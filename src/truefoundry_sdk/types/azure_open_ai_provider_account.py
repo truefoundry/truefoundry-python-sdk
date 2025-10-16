@@ -11,8 +11,7 @@ from .collaborator import Collaborator
 
 class AzureOpenAiProviderAccount(UniversalBaseModel):
     """
-    +label=Azure OpenAI Provider Account
-    +icon=azure
+    Azure OpenAI Provider Account
     """
 
     type: typing.Literal["provider-account/azure-openai"] = pydantic.Field(default="provider-account/azure-openai")

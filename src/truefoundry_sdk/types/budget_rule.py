@@ -10,7 +10,7 @@ from .budget_when import BudgetWhen
 
 class BudgetRule(UniversalBaseModel):
     """
-    +label=Budget Rule
+    Budget Rule
     """
 
     id: str = pydantic.Field()

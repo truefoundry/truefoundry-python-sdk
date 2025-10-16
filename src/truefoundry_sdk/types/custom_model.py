@@ -12,20 +12,18 @@ from .model_type import ModelType
 
 class CustomModel(UniversalBaseModel):
     """
-    +label=Custom Model
-    +icon=puzzle-piece
+    Custom Model
     """
 
     name: str = pydantic.Field()
     """
-    +sort=1
-    +message=2 to 62 characters long alphanumeric word, may contain - in between, cannot start with a number
+    2 to 62 characters long alphanumeric word, may contain - in between, cannot start with a number
     """
 
     hosted_model_name: str
     url: str = pydantic.Field()
     """
-    +message=enter valid https/http URL that should not end with trailing slash
+    enter valid https/http URL that should not end with trailing slash
     """
 
     model_server: CustomModelModelServer

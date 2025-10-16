@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class AwsAssumedRoleBasedAuth(UniversalBaseModel):
     """
-    +label=AWS Assumed Role Based Auth
+    AWS Assumed Role Based Auth
     """
 
     type: typing.Literal["assumed-role-based"] = pydantic.Field(default="assumed-role-based")

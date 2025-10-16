@@ -11,8 +11,7 @@ from .collaborator import Collaborator
 
 class Ai21ProviderAccount(UniversalBaseModel):
     """
-    +label=AI21
-    +icon=ai21
+    AI21
     """
 
     type: typing.Literal["provider-account/ai21"] = pydantic.Field(default="provider-account/ai21")

@@ -10,8 +10,7 @@ from .custom_integrations import CustomIntegrations
 
 class CustomProviderAccount(UniversalBaseModel):
     """
-    +label=Custom
-    +icon=puzzle-piece
+    Custom
     """
 
     type: typing.Literal["provider-account/custom"] = pydantic.Field(default="provider-account/custom")

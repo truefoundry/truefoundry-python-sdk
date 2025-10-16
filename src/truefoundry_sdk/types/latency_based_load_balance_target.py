@@ -9,7 +9,7 @@ from .retry_config import RetryConfig
 
 class LatencyBasedLoadBalanceTarget(UniversalBaseModel):
     """
-    +label=Latency-based Target
+    Latency-based Target
     """
 
     target: str = pydantic.Field()

@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class OciRepo(UniversalBaseModel):
     """
-    +label=OCIRepo
+    OCIRepo
     """
 
     type: typing.Literal["oci-repo"] = pydantic.Field(default="oci-repo")
@@ -18,8 +18,7 @@ class OciRepo(UniversalBaseModel):
 
     oci_chart_url: str = pydantic.Field()
     """
-    +label=OCI chart URL
-    +message=Need to be a valid URL.
+    OCI chart URL - Need to be a valid URL.
     """
 
     integration_fqn: typing.Optional[str] = pydantic.Field(default=None)

@@ -11,8 +11,7 @@ from .nomic_key_auth import NomicKeyAuth
 
 class NomicProviderAccount(UniversalBaseModel):
     """
-    +label=Nomic Provider Account
-    +icon=nomic
+    Nomic Provider Account
     """
 
     type: typing.Literal["provider-account/nomic"] = pydantic.Field(default="provider-account/nomic")

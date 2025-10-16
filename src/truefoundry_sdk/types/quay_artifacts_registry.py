@@ -9,8 +9,7 @@ from .quay_basic_auth import QuayBasicAuth
 
 class QuayArtifactsRegistry(UniversalBaseModel):
     """
-    +label=Quay Artifacts Registry
-    +icon=quay
+    Quay Artifacts Registry
     """
 
     type: typing.Literal["integration/docker-registry/quay"] = pydantic.Field(

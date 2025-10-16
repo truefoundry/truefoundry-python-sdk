@@ -10,8 +10,7 @@ from .model_type import ModelType
 
 class AzureOpenAiModelV2(UniversalBaseModel):
     """
-    +label=Azure OpenAI Model
-    +icon=azure
+    Azure OpenAI Model
     """
 
     type: typing.Literal["integration/model/azure-openai"] = pydantic.Field(default="integration/model/azure-openai")

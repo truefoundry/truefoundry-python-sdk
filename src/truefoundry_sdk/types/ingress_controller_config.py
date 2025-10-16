@@ -9,7 +9,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 class IngressControllerConfig(UniversalBaseModel):
     ingress_class_name: str = pydantic.Field(default="nginx")
     """
-    +label=Ingress Class Name
+    Ingress Class Name
     """
 
     tls_enabled: typing.Optional[bool] = pydantic.Field(default=False)

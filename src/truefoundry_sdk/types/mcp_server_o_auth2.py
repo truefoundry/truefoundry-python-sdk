@@ -9,7 +9,7 @@ from .mcp_server_o_auth2jwt_source import McpServerOAuth2JwtSource
 
 class McpServerOAuth2(UniversalBaseModel):
     """
-    +label=OAuth2
+    OAuth2
     """
 
     type: typing.Literal["oauth2"] = pydantic.Field(default="oauth2")

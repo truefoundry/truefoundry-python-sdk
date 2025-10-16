@@ -11,8 +11,7 @@ from .palm_key_auth import PalmKeyAuth
 
 class PalmProviderAccount(UniversalBaseModel):
     """
-    +label=PaLM Provider Account
-    +icon=palm
+    PaLM Provider Account
     """
 
     type: typing.Literal["provider-account/palm"] = pydantic.Field(default="provider-account/palm")

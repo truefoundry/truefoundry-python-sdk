@@ -11,15 +11,12 @@ from .model_type import ModelType
 
 class AzureOpenAiModel(UniversalBaseModel):
     """
-    +label=Azure OpenAI Model
-    +icon=azure
+    Azure OpenAI Model
     """
 
     name: str = pydantic.Field()
     """
-    +label=Display Name
-    +sort=1
-    +message=2 to 62 characters long alphanumeric word, may contain - or . in between, cannot start with a number
+    Display Name - 2 to 62 characters long alphanumeric word, may contain - or . in between, cannot start with a number
     """
 
     model_id: str = pydantic.Field()

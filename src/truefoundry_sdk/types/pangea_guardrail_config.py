@@ -10,8 +10,7 @@ from .pangea_key_auth import PangeaKeyAuth
 
 class PangeaGuardrailConfig(UniversalBaseModel):
     """
-    +label=Pangea
-    +icon=https://assets.production.truefoundry.com/pangea-logo.svg
+    Pangea
     """
 
     name: str = pydantic.Field()

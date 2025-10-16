@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class BitbucketIntegration(UniversalBaseModel):
     """
-    +label=Bitbucket
-    +icon=bitbucket
+    Bitbucket
     """
 
     type: typing.Literal["integration/vcs/bitbucket"] = pydantic.Field(default="integration/vcs/bitbucket")
@@ -24,8 +23,7 @@ class BitbucketIntegration(UniversalBaseModel):
 
     account_name: str = pydantic.Field()
     """
-    +label=Account Name
-    +sort=200
+    Account Name
     """
 
     authorized_subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)

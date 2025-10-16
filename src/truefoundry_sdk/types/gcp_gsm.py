@@ -9,8 +9,7 @@ from .gcp_key_file_auth import GcpKeyFileAuth
 
 class GcpGsm(UniversalBaseModel):
     """
-    +icon=gcp-gsm
-    +label=GCP GSM
+    GCP GSM
     """
 
     type: typing.Literal["integration/secret-store/gcp/gsm"] = pydantic.Field(

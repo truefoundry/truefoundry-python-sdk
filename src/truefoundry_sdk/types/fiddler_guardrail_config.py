@@ -10,8 +10,7 @@ from .fiddler_key_auth import FiddlerKeyAuth
 
 class FiddlerGuardrailConfig(UniversalBaseModel):
     """
-    +label=Fiddler
-    +icon=https://assets.production.truefoundry.com/fiddler.svg
+    Fiddler
     """
 
     name: str = pydantic.Field()

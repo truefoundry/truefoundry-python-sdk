@@ -9,8 +9,7 @@ from .dockerhub_basic_auth import DockerhubBasicAuth
 
 class DockerhubRegistry(UniversalBaseModel):
     """
-    +label=Dockerhub Registry
-    +icon=docker
+    Dockerhub Registry
     """
 
     type: typing.Literal["integration/docker-registry/dockerhub"] = pydantic.Field(
@@ -27,8 +26,7 @@ class DockerhubRegistry(UniversalBaseModel):
 
     registry_url: str = pydantic.Field()
     """
-    +label=Registry URL
-    +sort=200
+    Registry URL
     """
 
     auth_data: typing.Optional[DockerhubBasicAuth] = None

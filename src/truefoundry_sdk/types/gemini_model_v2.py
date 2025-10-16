@@ -10,8 +10,7 @@ from .model_type import ModelType
 
 class GeminiModelV2(UniversalBaseModel):
     """
-    +label=Gemini Model
-    +icon=googleCloud
+    Gemini Model
     """
 
     type: typing.Literal["integration/model/gemini"] = pydantic.Field(default="integration/model/gemini")

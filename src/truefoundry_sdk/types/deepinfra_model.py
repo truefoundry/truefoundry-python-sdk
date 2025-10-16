@@ -10,8 +10,7 @@ from .model_type import ModelType
 
 class DeepinfraModel(UniversalBaseModel):
     """
-    +label=DeepInfra Model
-    +icon=deepinfra
+    DeepInfra Model
     """
 
     type: typing.Literal["integration/model/deepinfra"] = pydantic.Field(default="integration/model/deepinfra")

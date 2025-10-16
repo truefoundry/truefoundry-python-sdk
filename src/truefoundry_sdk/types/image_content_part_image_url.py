@@ -19,7 +19,7 @@ class ImageContentPartImageUrl(UniversalBaseModel):
 
     detail: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Details
+    Details
     """
 
     if IS_PYDANTIC_V2:

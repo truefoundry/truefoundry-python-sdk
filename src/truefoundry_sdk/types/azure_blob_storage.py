@@ -9,8 +9,7 @@ from .azure_connection_string_auth import AzureConnectionStringAuth
 
 class AzureBlobStorage(UniversalBaseModel):
     """
-    +icon=azure-blob
-    +label=Azure ABS
+    Azure ABS
     """
 
     type: typing.Literal["integration/blob-storage/azure/blob"] = pydantic.Field(

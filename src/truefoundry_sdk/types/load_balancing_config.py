@@ -9,7 +9,7 @@ from .load_balancing_rule import LoadBalancingRule
 
 class LoadBalancingConfig(UniversalBaseModel):
     """
-    +label=Load Balancing Configuration
+    Load Balancing Configuration
     """
 
     name: str = pydantic.Field()

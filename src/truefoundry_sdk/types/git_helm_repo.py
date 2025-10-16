@@ -14,10 +14,7 @@ class GitHelmRepo(UniversalBaseModel):
 
     repo_url: str = pydantic.Field()
     """
-    TODO: Check this regex and add guidelines
-    +label=Git repository URL
-    +sort=1
-    +message=Needs to be a valid URL.
+    Git repository URL - Needs to be a valid URL.
     """
 
     revision: str = pydantic.Field()

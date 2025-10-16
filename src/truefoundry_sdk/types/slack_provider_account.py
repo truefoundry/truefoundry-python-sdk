@@ -9,8 +9,7 @@ from .slack_integrations import SlackIntegrations
 
 class SlackProviderAccount(UniversalBaseModel):
     """
-    +label=Slack Provider Account
-    +icon=slack
+    Slack Provider Account
     """
 
     type: typing.Literal["provider-account/slack"] = pydantic.Field(default="provider-account/slack")

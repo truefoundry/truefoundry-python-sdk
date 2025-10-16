@@ -9,8 +9,7 @@ from .mcp_server_auth import McpServerAuth
 
 class McpServerIntegration(UniversalBaseModel):
     """
-    +label=MCP Server
-    +icon=puzzle-piece
+    MCP Server
     """
 
     type: typing.Literal["integration/mcp-server/remote"] = pydantic.Field(default="integration/mcp-server/remote")

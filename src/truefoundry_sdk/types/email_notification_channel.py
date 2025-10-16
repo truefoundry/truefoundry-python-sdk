@@ -9,8 +9,7 @@ from .smtp_credentials import SmtpCredentials
 
 class EmailNotificationChannel(UniversalBaseModel):
     """
-    +label=Email Notification Channel
-    +icon=envelope
+    Email Notification Channel
     """
 
     type: typing.Literal["integration/notification-channel/email"] = pydantic.Field(

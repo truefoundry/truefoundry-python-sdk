@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class SparkJobPythonEntrypoint(UniversalBaseModel):
     """
-    +label=python
+    python
     """
 
     type: typing.Literal["python"] = pydantic.Field(default="python")

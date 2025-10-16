@@ -10,8 +10,7 @@ from .aws_region import AwsRegion
 
 class AwsParameterStore(UniversalBaseModel):
     """
-    +label=AWS Parameter Store
-    +icon=aws-ssm
+    AWS Parameter Store
     """
 
     type: typing.Literal["integration/secret-store/aws/parameter-store"] = pydantic.Field(

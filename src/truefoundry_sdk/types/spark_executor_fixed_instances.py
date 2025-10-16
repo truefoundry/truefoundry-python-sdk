@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class SparkExecutorFixedInstances(UniversalBaseModel):
     """
-    +label=Fixed Instances
+    Fixed Instances
     """
 
     type: typing.Literal["fixed"] = pydantic.Field(default="fixed")

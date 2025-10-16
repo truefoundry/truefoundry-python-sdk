@@ -11,8 +11,7 @@ from .azure_pii_guardrail_config_domain import AzurePiiGuardrailConfigDomain
 
 class AzurePiiGuardrailConfig(UniversalBaseModel):
     """
-    +label=Azure PII
-    +icon=azure
+    Azure PII
     """
 
     name: str = pydantic.Field()

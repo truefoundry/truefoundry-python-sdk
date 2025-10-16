@@ -10,7 +10,7 @@ from ..core.serialization import FieldMetadata
 
 class AzureAiManagedDeployment(UniversalBaseModel):
     """
-    +label=Azure AI Managed Deployment
+    Azure AI Managed Deployment
     """
 
     type: typing.Literal["managed"] = pydantic.Field(default="managed")

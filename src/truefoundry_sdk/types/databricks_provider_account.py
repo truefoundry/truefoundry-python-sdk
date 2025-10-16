@@ -11,8 +11,7 @@ from .databricks_provider_account_auth_data import DatabricksProviderAccountAuth
 
 class DatabricksProviderAccount(UniversalBaseModel):
     """
-    +label=Databricks Provider Account
-    +icon=databricks
+    Databricks Provider Account
     """
 
     type: typing.Literal["provider-account/databricks"] = pydantic.Field(default="provider-account/databricks")

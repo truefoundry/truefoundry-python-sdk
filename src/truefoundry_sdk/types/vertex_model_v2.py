@@ -11,8 +11,7 @@ from .model_type import ModelType
 
 class VertexModelV2(UniversalBaseModel):
     """
-    +label=Vertex Model
-    +icon=googleCloud
+    Vertex Model
     """
 
     type: typing.Literal["integration/model/vertex"] = pydantic.Field(default="integration/model/vertex")

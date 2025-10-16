@@ -10,8 +10,7 @@ from .model_type import ModelType
 
 class GroqModel(UniversalBaseModel):
     """
-    +label=Groq Model
-    +icon=groq
+    Groq Model
     """
 
     type: typing.Literal["integration/model/groq"] = pydantic.Field(default="integration/model/groq")

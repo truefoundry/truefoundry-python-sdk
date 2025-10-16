@@ -11,8 +11,7 @@ from .aws_region import AwsRegion
 
 class AwsBedrockGuardrailConfig(UniversalBaseModel):
     """
-    +label=AWS Bedrock
-    +icon=aws-bedrock
+    AWS Bedrock
     """
 
     name: str = pydantic.Field()

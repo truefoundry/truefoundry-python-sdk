@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class SparkJobScalaNotebookEntrypoint(UniversalBaseModel):
     """
-    +label=scala notebook
+    scala notebook
     """
 
     type: typing.Literal["scala-notebook"] = pydantic.Field(default="scala-notebook")

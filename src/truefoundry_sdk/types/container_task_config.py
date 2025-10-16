@@ -33,8 +33,7 @@ class ContainerTaskConfig(UniversalBaseModel):
 
     service_account: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Service Account
-    +sort=500
+    Service Account
     """
 
     if IS_PYDANTIC_V2:

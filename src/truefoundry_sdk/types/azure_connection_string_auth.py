@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class AzureConnectionStringAuth(UniversalBaseModel):
     """
-    +label=Azure Connection String
+    Azure Connection String
     """
 
     type: typing.Literal["connection-string"] = pydantic.Field(default="connection-string")

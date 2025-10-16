@@ -10,7 +10,7 @@ from .rate_limit_when import RateLimitWhen
 
 class RateLimitRule(UniversalBaseModel):
     """
-    +label=Rate Limit Rule
+    Rate Limit Rule
     """
 
     id: str = pydantic.Field()

@@ -10,8 +10,7 @@ from .gcp_region import GcpRegion
 
 class GcpGkeIntegration(UniversalBaseModel):
     """
-    +icon=gcp-gke
-    +label=GCP GKE
+    GCP GKE
     """
 
     type: typing.Literal["integration/cluster/gcp/gke-standard"] = pydantic.Field(

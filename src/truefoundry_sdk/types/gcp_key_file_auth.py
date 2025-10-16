@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class GcpKeyFileAuth(UniversalBaseModel):
     """
-    +label=GCP Key File Auth
+    GCP Key File Auth
     """
 
     type: typing.Literal["key-file"] = pydantic.Field(default="key-file")
@@ -18,9 +18,7 @@ class GcpKeyFileAuth(UniversalBaseModel):
 
     key_file_content: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
     """
-    +uiType=JsonInput
-    +label=Key File Content
-    +sort=100
+    Key File Content
     """
 
     if IS_PYDANTIC_V2:

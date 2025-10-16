@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class GithubIntegration(UniversalBaseModel):
     """
-    +label=Github
-    +icon=github
+    Github
     """
 
     type: typing.Literal["integration/vcs/github"] = pydantic.Field(default="integration/vcs/github")
@@ -24,8 +23,7 @@ class GithubIntegration(UniversalBaseModel):
 
     account_name: str = pydantic.Field()
     """
-    +label=Account Name
-    +sort=200
+    Account Name
     """
 
     authorized_subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)

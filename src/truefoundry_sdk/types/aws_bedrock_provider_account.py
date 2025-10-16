@@ -12,8 +12,7 @@ from .collaborator import Collaborator
 
 class AwsBedrockProviderAccount(UniversalBaseModel):
     """
-    +label=AWS Bedrock
-    +icon=aws
+    AWS Bedrock
     """
 
     type: typing.Literal["provider-account/aws-bedrock"] = pydantic.Field(default="provider-account/aws-bedrock")

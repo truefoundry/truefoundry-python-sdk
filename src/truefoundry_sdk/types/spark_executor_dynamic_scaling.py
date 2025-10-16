@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class SparkExecutorDynamicScaling(UniversalBaseModel):
     """
-    +label=Dynamic Scaling
+    Dynamic Scaling
     """
 
     type: typing.Literal["dynamic"] = pydantic.Field(default="dynamic")

@@ -10,8 +10,7 @@ from .model_type import ModelType
 
 class OllamaModel(UniversalBaseModel):
     """
-    +label=Ollama Model
-    +icon=ollama
+    Ollama Model
     """
 
     type: typing.Literal["integration/model/ollama"] = pydantic.Field(default="integration/model/ollama")

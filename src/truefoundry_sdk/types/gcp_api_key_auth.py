@@ -10,7 +10,7 @@ from ..core.serialization import FieldMetadata
 
 class GcpApiKeyAuth(UniversalBaseModel):
     """
-    +label=GCP API Key Auth
+    GCP API Key Auth
     """
 
     type: typing.Literal["api-key"] = pydantic.Field(default="api-key")
@@ -20,8 +20,7 @@ class GcpApiKeyAuth(UniversalBaseModel):
 
     api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey")] = pydantic.Field()
     """
-    +label=API Key
-    +sort=100
+    API Key
     """
 
     if IS_PYDANTIC_V2:

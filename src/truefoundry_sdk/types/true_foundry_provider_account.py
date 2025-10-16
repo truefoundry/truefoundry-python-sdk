@@ -9,8 +9,7 @@ from .true_foundry_integrations import TrueFoundryIntegrations
 
 class TrueFoundryProviderAccount(UniversalBaseModel):
     """
-    +label=TrueFoundry
-    +icon=truefoundry
+    TrueFoundry
     """
 
     type: typing.Literal["provider-account/truefoundry"] = pydantic.Field(default="provider-account/truefoundry")

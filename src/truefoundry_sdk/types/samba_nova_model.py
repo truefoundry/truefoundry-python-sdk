@@ -10,8 +10,7 @@ from .model_type import ModelType
 
 class SambaNovaModel(UniversalBaseModel):
     """
-    +label=SambaNova Model
-    +icon=sambanova
+    SambaNova Model
     """
 
     type: typing.Literal["integration/model/sambanova"] = pydantic.Field(default="integration/model/sambanova")

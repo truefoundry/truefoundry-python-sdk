@@ -11,8 +11,7 @@ from .open_router_integrations import OpenRouterIntegrations
 
 class OpenRouterProviderAccount(UniversalBaseModel):
     """
-    +label=OpenRouter Provider Account
-    +icon=openrouter
+    OpenRouter Provider Account
     """
 
     type: typing.Literal["provider-account/openrouter"] = pydantic.Field(default="provider-account/openrouter")

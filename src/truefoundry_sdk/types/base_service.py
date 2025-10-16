@@ -45,7 +45,7 @@ class BaseService(UniversalBaseModel):
 
     labels: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
     """
-    +label=Labels
+    Labels
     """
 
     kustomize: typing.Optional[Kustomize] = None

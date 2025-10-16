@@ -12,8 +12,7 @@ from .sagemaker_model import SagemakerModel
 
 class AwsSagemakerProviderAccount(UniversalBaseModel):
     """
-    +label=Sagemaker
-    +icon=aws
+    Sagemaker
     """
 
     type: typing.Literal["provider-account/aws-sagemaker"] = pydantic.Field(default="provider-account/aws-sagemaker")

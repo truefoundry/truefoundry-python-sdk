@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class CustomBasicAuth(UniversalBaseModel):
     """
-    +label=Custom Basic Auth
+    Custom Basic Auth
     """
 
     type: typing.Literal["basic-auth"] = pydantic.Field(default="basic-auth")

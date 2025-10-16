@@ -12,9 +12,7 @@ from .vertex_model_v2 import VertexModelV2
 
 class GoogleVertexProviderAccount(UniversalBaseModel):
     """
-    +label=Google Vertex Provider Account
-    +icon=googleCloud
-    +heroDataKey=project_id
+    Google Vertex Provider Account
     """
 
     type: typing.Literal["provider-account/google-vertex"] = pydantic.Field(default="provider-account/google-vertex")

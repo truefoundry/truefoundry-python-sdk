@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class SmtpCredentials(UniversalBaseModel):
     """
-    +label=SMTP Credentials
+    SMTP Credentials
     """
 
     type: typing.Literal["smtp-credentials"] = pydantic.Field(default="smtp-credentials")

@@ -9,7 +9,7 @@ from .guardrails_when import GuardrailsWhen
 
 class GuardrailsRule(UniversalBaseModel):
     """
-    +label=Guardrails Rule
+    Guardrails Rule
     """
 
     id: str = pydantic.Field()

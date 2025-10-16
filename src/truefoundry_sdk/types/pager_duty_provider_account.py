@@ -9,8 +9,7 @@ from .pager_duty_integrations import PagerDutyIntegrations
 
 class PagerDutyProviderAccount(UniversalBaseModel):
     """
-    +label=PagerDuty Provider Account
-    +icon=https://assets.production.truefoundry.com/pagerduty.png
+    PagerDuty Provider Account
     """
 
     type: typing.Literal["provider-account/pagerduty"] = pydantic.Field(default="provider-account/pagerduty")

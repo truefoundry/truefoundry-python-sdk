@@ -31,9 +31,7 @@ class VirtualAccountManifest(UniversalBaseModel):
 
     permissions: typing.List[Permissions] = pydantic.Field()
     """
-    +label=Permissions
-    +sort=3
-    +uiType=ServiceAccountPermissions
+    Permissions
     """
 
     owned_by: typing_extensions.Annotated[typing.Optional[OwnedBy], FieldMetadata(alias="ownedBy")] = None

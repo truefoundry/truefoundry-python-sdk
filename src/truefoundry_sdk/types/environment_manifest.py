@@ -24,11 +24,7 @@ class EnvironmentManifest(UniversalBaseModel):
     color: EnvironmentColor
     is_production: typing_extensions.Annotated[bool, FieldMetadata(alias="isProduction")] = pydantic.Field()
     """
-    +sort=400
-    +label=Environment Type
-    +message=Indicates if the environment is for production use
-    +uiType=MultiSelectPills
-    +uiProps={"hideRadioIcon":true}
+    Environment Type - Indicates if the environment is for production use
     """
 
     optimize_for: typing_extensions.Annotated[EnvironmentOptimizeFor, FieldMetadata(alias="optimizeFor")]

@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class OpenaiApiKeyAuth(UniversalBaseModel):
     """
-    +label=OpenAI API Key Auth
-    +icon=openai
+    OpenAI API Key Auth
     """
 
     type: typing.Literal["api-key"] = pydantic.Field(default="api-key")

@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class GitlabIntegration(UniversalBaseModel):
     """
-    +label=Gitlab
-    +icon=gitlab
+    Gitlab
     """
 
     type: typing.Literal["integration/vcs/gitlab"] = pydantic.Field(default="integration/vcs/gitlab")
@@ -24,8 +23,7 @@ class GitlabIntegration(UniversalBaseModel):
 
     account_name: str = pydantic.Field()
     """
-    +label=Account Name
-    +sort=200
+    Account Name
     """
 
     authorized_subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)

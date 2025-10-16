@@ -9,8 +9,7 @@ from .custom_basic_auth import CustomBasicAuth
 
 class CustomUsernamePasswordArtifactsRegistry(UniversalBaseModel):
     """
-    +label=Custom Docker Registry
-    +icon=puzzle-piece
+    Custom Docker Registry
     """
 
     type: typing.Literal["integration/docker-registry/custom"] = pydantic.Field(

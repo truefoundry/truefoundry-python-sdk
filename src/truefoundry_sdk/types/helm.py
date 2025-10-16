@@ -28,8 +28,7 @@ class Helm(UniversalBaseModel):
 
     source: HelmSource = pydantic.Field()
     """
-    +label=Source helm repository
-    +sort=2
+    Source helm repository
     """
 
     values: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)

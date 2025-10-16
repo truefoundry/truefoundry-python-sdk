@@ -11,7 +11,7 @@ from .model_type import ModelType
 
 class AzureFoundryModel(UniversalBaseModel):
     """
-    +label=Azure AI Foundry Model
+    Azure AI Foundry Model
     """
 
     type: typing.Literal["integration/model/azure/ai-foundry"] = pydantic.Field(

@@ -14,9 +14,7 @@ class HelmRepo(UniversalBaseModel):
 
     repo_url: str = pydantic.Field()
     """
-    +label=Helm repository URL
-    +sort=1
-    +message=Needs to be a valid URL.
+    Helm repository URL - Needs to be a valid URL.
     """
 
     integration_fqn: typing.Optional[str] = pydantic.Field(default=None)

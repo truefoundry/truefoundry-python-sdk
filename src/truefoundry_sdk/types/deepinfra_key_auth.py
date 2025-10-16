@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class DeepinfraKeyAuth(UniversalBaseModel):
     """
-    +label=DeepInfra API Key Auth
-    +icon=deepinfra
+    DeepInfra API Key Auth
     """
 
     type: typing.Literal["api-key"] = pydantic.Field(default="api-key")

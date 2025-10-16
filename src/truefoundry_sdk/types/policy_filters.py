@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class PolicyFilters(UniversalBaseModel):
     """
-    +label=Filters
+    Filters
     """
 
     cluster_names: typing.Optional[typing.List[str]] = pydantic.Field(default=None)

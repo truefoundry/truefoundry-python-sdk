@@ -36,12 +36,12 @@ class Workflow(UniversalBaseModel):
 
     flyte_entities: typing.Optional[typing.List[WorkflowFlyteEntitiesItem]] = pydantic.Field(default=None)
     """
-    +label=Flyte Entities
+    Flyte Entities
     """
 
     alerts: typing.Optional[typing.List[WorkflowAlert]] = pydantic.Field(default=None)
     """
-    +label=Alerts
+    Alerts
     """
 
     if IS_PYDANTIC_V2:

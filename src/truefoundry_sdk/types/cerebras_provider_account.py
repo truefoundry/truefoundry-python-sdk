@@ -11,8 +11,7 @@ from .collaborator import Collaborator
 
 class CerebrasProviderAccount(UniversalBaseModel):
     """
-    +label=Cerebras Provider Account
-    +icon=cerebras
+    Cerebras Provider Account
     """
 
     type: typing.Literal["provider-account/cerebras"] = pydantic.Field(default="provider-account/cerebras")

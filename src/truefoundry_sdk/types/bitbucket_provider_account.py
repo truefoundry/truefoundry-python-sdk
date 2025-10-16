@@ -9,8 +9,7 @@ from .bitbucket_integration import BitbucketIntegration
 
 class BitbucketProviderAccount(UniversalBaseModel):
     """
-    +label=Bitbucket
-    +icon=bitbucket
+    Bitbucket
     """
 
     type: typing.Literal["provider-account/bitbucket"] = pydantic.Field(default="provider-account/bitbucket")

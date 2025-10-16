@@ -9,8 +9,7 @@ from .pager_duty_integration_key_auth import PagerDutyIntegrationKeyAuth
 
 class PagerDutyIntegration(UniversalBaseModel):
     """
-    +label=PagerDuty Integration
-    +icon=https://assets.production.truefoundry.com/pagerduty.png
+    PagerDuty Integration
     """
 
     type: typing.Literal["integration/notification-channel/pagerduty"] = pydantic.Field(

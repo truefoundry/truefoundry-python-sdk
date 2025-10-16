@@ -10,8 +10,7 @@ from .aws_s3auth_data import AwsS3AuthData
 
 class AwsS3(UniversalBaseModel):
     """
-    +label=AWS S3
-    +icon=aws-s3
+    AWS S3
     """
 
     type: typing.Literal["integration/blob-storage/aws/s3"] = pydantic.Field(default="integration/blob-storage/aws/s3")

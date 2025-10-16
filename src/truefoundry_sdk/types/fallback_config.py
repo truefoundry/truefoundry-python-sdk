@@ -9,7 +9,7 @@ from .fallback_rule import FallbackRule
 
 class FallbackConfig(UniversalBaseModel):
     """
-    +label=Fallback Configuration
+    Fallback Configuration
     """
 
     name: str = pydantic.Field()

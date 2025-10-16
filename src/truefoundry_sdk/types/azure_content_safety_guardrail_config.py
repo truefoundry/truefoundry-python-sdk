@@ -10,8 +10,7 @@ from .azure_key_auth import AzureKeyAuth
 
 class AzureContentSafetyGuardrailConfig(UniversalBaseModel):
     """
-    +label=Azure Content Safety
-    +icon=azure
+    Azure Content Safety
     """
 
     name: str = pydantic.Field()

@@ -16,18 +16,12 @@ class WorkspaceManifest(UniversalBaseModel):
 
     cluster_fqn: str = pydantic.Field()
     """
-    +label=Cluster FQN
-    +sort=150
-    +icon=fa-spider-web:#326ce5
-    +uiProps={"disableCloudProvider": true}
+    Cluster FQN
     """
 
     name: str = pydantic.Field()
     """
-    +label=Name
-    +sort=200
-    +icon=fa-desktop:#black
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
+    Name - 3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
     """
 
     environment_name: typing.Optional[str] = pydantic.Field(default=None)
@@ -47,16 +41,12 @@ class WorkspaceManifest(UniversalBaseModel):
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    +label=Collaborators
-    +sort=500
+    Collaborators
     """
 
     permissions: typing.Optional[typing.List[Permissions]] = pydantic.Field(default=None)
     """
-    +label=Permissions
-    +sort=500
-    +uiType=Permissions
-    +uiProps={"allowedResources": {"mlf-project": {"title": "ML Repo", "description": "ML Repos are used to store models and artifacts like git repos. MLRepos are backed by S3 / GCS / Azure bucket and you can have different ml repos with different set of permissions. [View Docs](https://docs.truefoundry.com/docs/introduction-to-ml-repo)"}}}
+    Permissions
     """
 
     if IS_PYDANTIC_V2:

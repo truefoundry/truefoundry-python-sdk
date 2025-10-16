@@ -10,12 +10,12 @@ from .spark_executor_config_instances import SparkExecutorConfigInstances
 
 class SparkExecutorConfig(UniversalBaseModel):
     """
-    +label=Executor Config
+    Executor Config
     """
 
     instances: SparkExecutorConfigInstances = pydantic.Field()
     """
-    +label=Executor Instances
+    Executor Instances
     """
 
     resources: typing.Optional[Resources] = None

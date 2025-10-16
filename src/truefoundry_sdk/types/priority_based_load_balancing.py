@@ -9,14 +9,12 @@ from .priority_based_load_balance_target import PriorityBasedLoadBalanceTarget
 
 class PriorityBasedLoadBalancing(UniversalBaseModel):
     """
-    +label=Priority-based Load Balancing
+    Priority-based Load Balancing
     """
 
     type: typing.Literal["priority-based-routing"] = pydantic.Field(default="priority-based-routing")
     """
-    +value=priority-based-routing
-    +sort=1
-    +label=Routing Type
+    Routing Type
     """
 
     load_balance_targets: typing.List[PriorityBasedLoadBalanceTarget] = pydantic.Field()

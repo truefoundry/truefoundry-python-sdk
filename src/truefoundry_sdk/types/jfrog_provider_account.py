@@ -10,8 +10,7 @@ from .jfrog_basic_auth import JfrogBasicAuth
 
 class JfrogProviderAccount(UniversalBaseModel):
     """
-    +label=Jfrog
-    +icon=jfrog
+    Jfrog
     """
 
     type: typing.Literal["provider-account/jfrog"] = pydantic.Field(default="provider-account/jfrog")

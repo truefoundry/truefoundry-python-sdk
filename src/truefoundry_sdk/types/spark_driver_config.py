@@ -9,7 +9,7 @@ from .resources import Resources
 
 class SparkDriverConfig(UniversalBaseModel):
     """
-    +label=Driver Config
+    Driver Config
     """
 
     resources: typing.Optional[Resources] = None

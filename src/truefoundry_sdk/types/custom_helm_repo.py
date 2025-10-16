@@ -9,8 +9,7 @@ from .custom_basic_auth import CustomBasicAuth
 
 class CustomHelmRepo(UniversalBaseModel):
     """
-    +label=Custom Helm Repo
-    +icon=puzzle-piece
+    Custom Helm Repo
     """
 
     type: typing.Literal["integration/helm-repo/custom"] = pydantic.Field(default="integration/helm-repo/custom")

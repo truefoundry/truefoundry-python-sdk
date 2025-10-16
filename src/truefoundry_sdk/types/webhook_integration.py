@@ -9,8 +9,7 @@ from .webhook_integration_auth_data import WebhookIntegrationAuthData
 
 class WebhookIntegration(UniversalBaseModel):
     """
-    +label=Webhook Integration
-    +icon=https://assets.production.truefoundry.com/webhook.svg
+    Webhook Integration
     """
 
     type: typing.Literal["integration/gateway-request-logger/webhook"] = pydantic.Field(

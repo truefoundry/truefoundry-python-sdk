@@ -9,7 +9,7 @@ from .endpoint import Endpoint
 
 class VolumeBrowser(UniversalBaseModel):
     """
-    +label=Volume Browser
+    Volume Browser
     """
 
     username: typing.Optional[str] = pydantic.Field(default=None)

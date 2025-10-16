@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class OllamaKeyAuth(UniversalBaseModel):
     """
-    +label=Ollama API Key Auth
-    +icon=ollama
+    Ollama API Key Auth
     """
 
     custom_host: str = pydantic.Field()

@@ -36,7 +36,7 @@ class DockerFileBuild(UniversalBaseModel):
 
     build_args: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
     """
-    +label=Build arguments to pass to docker build
+    Build arguments to pass to docker build
     """
 
     if IS_PYDANTIC_V2:

@@ -11,8 +11,7 @@ from .ollama_key_auth import OllamaKeyAuth
 
 class OllamaProviderAccount(UniversalBaseModel):
     """
-    +label=Ollama Provider Account
-    +icon=ollama
+    Ollama Provider Account
     """
 
     type: typing.Literal["provider-account/ollama"] = pydantic.Field(default="provider-account/ollama")

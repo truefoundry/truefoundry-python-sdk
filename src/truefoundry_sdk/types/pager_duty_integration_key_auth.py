@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class PagerDutyIntegrationKeyAuth(UniversalBaseModel):
     """
-    +label=PagerDuty Credentails
+    PagerDuty Credentails
     """
 
     type: typing.Literal["pagerduty-integration-auth"] = pydantic.Field(default="pagerduty-integration-auth")

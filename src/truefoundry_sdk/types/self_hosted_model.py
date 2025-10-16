@@ -13,8 +13,7 @@ from .self_hosted_model_model_server import SelfHostedModelModelServer
 
 class SelfHostedModel(UniversalBaseModel):
     """
-    +label=Self Hosted Model Integration
-    +icon=puzzle-piece
+    Self Hosted Model Integration
     """
 
     type: typing.Literal["integration/model/self-hosted-model"] = pydantic.Field(
@@ -26,8 +25,7 @@ class SelfHostedModel(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +sort=1
-    +message=2 to 62 characters long alphanumeric word, may contain - or . in between, cannot start with a number
+    2 to 62 characters long alphanumeric word, may contain - or . in between, cannot start with a number
     """
 
     hosted_model_name: str = pydantic.Field()
@@ -37,8 +35,7 @@ class SelfHostedModel(UniversalBaseModel):
 
     url: str = pydantic.Field()
     """
-    +sort=3
-    +message=enter valid https/http URL that should not end with trailing slash
+    enter valid https/http URL that should not end with trailing slash
     """
 
     model_server: SelfHostedModelModelServer = pydantic.Field()

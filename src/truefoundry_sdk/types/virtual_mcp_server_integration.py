@@ -9,8 +9,7 @@ from .virtual_mcp_server_source import VirtualMcpServerSource
 
 class VirtualMcpServerIntegration(UniversalBaseModel):
     """
-    +label=Virtual MCP Server
-    +icon=puzzle-piece
+    Virtual MCP Server
     """
 
     type: typing.Literal["integration/mcp-server/virtual"] = pydantic.Field(default="integration/mcp-server/virtual")

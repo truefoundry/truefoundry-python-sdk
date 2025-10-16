@@ -10,8 +10,7 @@ from .model_type import ModelType
 
 class NomicModel(UniversalBaseModel):
     """
-    +label=Nomic Model
-    +icon=nomic
+    Nomic Model
     """
 
     type: typing.Literal["integration/model/nomic"] = pydantic.Field(default="integration/model/nomic")

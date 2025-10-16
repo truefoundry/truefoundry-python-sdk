@@ -10,8 +10,7 @@ from .aws_region import AwsRegion
 
 class AwsEksIntegration(UniversalBaseModel):
     """
-    +label=AWS EKS
-    +icon=aws-eks
+    AWS EKS
     """
 
     type: typing.Literal["integration/cluster/aws/eks"] = pydantic.Field(default="integration/cluster/aws/eks")

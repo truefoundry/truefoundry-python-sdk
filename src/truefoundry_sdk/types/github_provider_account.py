@@ -9,8 +9,7 @@ from .github_integration import GithubIntegration
 
 class GithubProviderAccount(UniversalBaseModel):
     """
-    +label=Github
-    +icon=github
+    Github
     """
 
     type: typing.Literal["provider-account/github"] = pydantic.Field(default="provider-account/github")

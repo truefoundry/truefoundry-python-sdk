@@ -10,8 +10,7 @@ from .collaborator import Collaborator
 
 class AzureFoundryProviderAccount(UniversalBaseModel):
     """
-    +label=Azure Foundry Provider Account
-    +icon=azure
+    Azure Foundry Provider Account
     """
 
     type: typing.Literal["provider-account/azure-foundry"] = pydantic.Field(default="provider-account/azure-foundry")

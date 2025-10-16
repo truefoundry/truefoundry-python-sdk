@@ -9,7 +9,7 @@ from .mcp_server_header_override_auth import McpServerHeaderOverrideAuth
 
 class VirtualMcpServerSource(UniversalBaseModel):
     """
-    +label=Virtual MCP Server Source
+    Virtual MCP Server Source
     """
 
     name: str = pydantic.Field()

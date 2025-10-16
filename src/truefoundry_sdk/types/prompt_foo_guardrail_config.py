@@ -9,8 +9,7 @@ from .prompt_foo_guard_type import PromptFooGuardType
 
 class PromptFooGuardrailConfig(UniversalBaseModel):
     """
-    +label=PromptFoo
-    +icon=https://assets.production.truefoundry.com/promptfoo.svg
+    PromptFoo
     """
 
     name: str = pydantic.Field()

@@ -10,8 +10,7 @@ from .mcp_server_integrations import McpServerIntegrations
 
 class McpServerProviderAccount(UniversalBaseModel):
     """
-    +label=MCP Server Group
-    +icon=puzzle-piece
+    MCP Server Group
     """
 
     type: typing.Literal["provider-account/mcp-server-group"] = pydantic.Field(

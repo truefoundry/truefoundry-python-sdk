@@ -11,8 +11,7 @@ from .samba_nova_key_auth import SambaNovaKeyAuth
 
 class SambaNovaProviderAccount(UniversalBaseModel):
     """
-    +label=SambaNova Provider Account
-    +icon=sambanova
+    SambaNova Provider Account
     """
 
     type: typing.Literal["provider-account/sambanova"] = pydantic.Field(default="provider-account/sambanova")

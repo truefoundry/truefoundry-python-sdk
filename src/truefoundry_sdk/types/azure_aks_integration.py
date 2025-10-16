@@ -9,8 +9,7 @@ from .azure_o_auth import AzureOAuth
 
 class AzureAksIntegration(UniversalBaseModel):
     """
-    +icon=azure-aks
-    +label=Azure AKS
+    Azure AKS
     """
 
     type: typing.Literal["integration/cluster/azure/aks"] = pydantic.Field(default="integration/cluster/azure/aks")

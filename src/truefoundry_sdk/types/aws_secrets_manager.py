@@ -10,8 +10,7 @@ from .aws_secrets_manager_auth_data import AwsSecretsManagerAuthData
 
 class AwsSecretsManager(UniversalBaseModel):
     """
-    +label=AWS Secrets Manager
-    +icon=aws-secrets-manager
+    AWS Secrets Manager
     """
 
     type: typing.Literal["integration/secret-store/aws/secrets-manager"] = pydantic.Field(

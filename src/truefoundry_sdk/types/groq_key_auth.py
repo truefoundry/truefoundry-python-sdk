@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class GroqKeyAuth(UniversalBaseModel):
     """
-    +label=Groq API Key Auth
-    +icon=groq
+    Groq API Key Auth
     """
 
     type: typing.Literal["api-key"] = pydantic.Field(default="api-key")

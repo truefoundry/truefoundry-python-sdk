@@ -26,9 +26,7 @@ class SparkImageBuild(UniversalBaseModel):
 
     build_source: SparkImageBuildBuildSource = pydantic.Field()
     """
-    TODO (gw): The following is a hack till the uiType GitSelect is fixed fron frontend
-    +label=Fetch source code
-    +sort=1003
+    Fetch source code
     """
 
     build_spec: SparkBuild

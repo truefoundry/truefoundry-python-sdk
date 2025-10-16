@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class McpServerOAuth2Dcr(UniversalBaseModel):
     """
-    +label=DCR
+    DCR
     """
 
     type: typing.Literal["dcr"] = pydantic.Field(default="dcr")

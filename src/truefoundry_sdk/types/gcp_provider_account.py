@@ -10,9 +10,7 @@ from .gcp_provider_account_auth_data import GcpProviderAccountAuthData
 
 class GcpProviderAccount(UniversalBaseModel):
     """
-    +label=GCP
-    +icon=googleCloud
-    +heroDataKey=project_id
+    GCP
     """
 
     type: typing.Literal["provider-account/gcp"] = pydantic.Field(default="provider-account/gcp")

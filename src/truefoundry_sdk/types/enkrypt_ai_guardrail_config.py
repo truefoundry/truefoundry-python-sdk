@@ -10,8 +10,7 @@ from .enkrypt_ai_key_auth import EnkryptAiKeyAuth
 
 class EnkryptAiGuardrailConfig(UniversalBaseModel):
     """
-    +label=Enkrypt AI
-    +icon=https://app.enkryptai.com/favicon.ico
+    Enkrypt AI
     """
 
     name: str = pydantic.Field()

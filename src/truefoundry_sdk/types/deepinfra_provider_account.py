@@ -11,8 +11,7 @@ from .deepinfra_key_auth import DeepinfraKeyAuth
 
 class DeepinfraProviderAccount(UniversalBaseModel):
     """
-    +label=DeepInfra Provider Account
-    +icon=deepinfra
+    DeepInfra Provider Account
     """
 
     type: typing.Literal["provider-account/deepinfra"] = pydantic.Field(default="provider-account/deepinfra")

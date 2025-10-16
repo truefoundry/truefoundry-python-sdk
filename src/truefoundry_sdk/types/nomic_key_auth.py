@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class NomicKeyAuth(UniversalBaseModel):
     """
-    +label=Nomic API Key Auth
-    +icon=nomic
+    Nomic API Key Auth
     """
 
     type: typing.Literal["api-key"] = pydantic.Field(default="api-key")

@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class JfrogBasicAuth(UniversalBaseModel):
     """
-    +label=Jfrog Basic Auth
+    Jfrog Basic Auth
     """
 
     type: typing.Literal["basic-auth"] = pydantic.Field(default="basic-auth")

@@ -11,8 +11,7 @@ from .patronus_key_auth import PatronusKeyAuth
 
 class PatronusGuardrailConfig(UniversalBaseModel):
     """
-    +label=Patronus
-    +icon=https://assets.production.truefoundry.com/patronus.svg
+    Patronus
     """
 
     name: str = pydantic.Field()

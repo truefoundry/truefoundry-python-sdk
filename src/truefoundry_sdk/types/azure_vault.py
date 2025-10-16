@@ -9,8 +9,7 @@ from .azure_o_auth import AzureOAuth
 
 class AzureVault(UniversalBaseModel):
     """
-    +label=Azure Vault
-    +icon=azure-vault
+    Azure Vault
     """
 
     type: typing.Literal["integration/secret-store/azure/vault"] = pydantic.Field(

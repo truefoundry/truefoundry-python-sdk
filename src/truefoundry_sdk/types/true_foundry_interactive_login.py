@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class TrueFoundryInteractiveLogin(UniversalBaseModel):
     """
-    +label=Login with truefoundry
+    Login with truefoundry
     """
 
     type: typing.Literal["truefoundry_oauth"] = pydantic.Field(default="truefoundry_oauth")

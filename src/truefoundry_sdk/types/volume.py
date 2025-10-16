@@ -21,9 +21,7 @@ class Volume(UniversalBaseModel):
 
     config: VolumeConfig = pydantic.Field()
     """
-    +sort=2
-    +label=Volume Config
-    +message=Volume Configuration, can be either Dynamically provisioned or statically provisioned.
+    Volume Config - Volume Configuration, can be either Dynamically provisioned or statically provisioned.
     """
 
     volume_browser: typing.Optional[VolumeBrowser] = None

@@ -14,9 +14,7 @@ class HttpProbe(UniversalBaseModel):
 
     type: typing.Literal["http"] = pydantic.Field(default="http")
     """
-    +sort=1
-    +label=Request Type
-    +value=http
+    Request Type
     """
 
     path: str = pydantic.Field()

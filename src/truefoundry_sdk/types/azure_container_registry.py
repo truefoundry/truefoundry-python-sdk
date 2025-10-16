@@ -9,8 +9,7 @@ from .azure_basic_auth import AzureBasicAuth
 
 class AzureContainerRegistry(UniversalBaseModel):
     """
-    +icon=azure-acr
-    +label=Azure ACR
+    Azure ACR
     """
 
     type: typing.Literal["integration/docker-registry/azure/acr"] = pydantic.Field(

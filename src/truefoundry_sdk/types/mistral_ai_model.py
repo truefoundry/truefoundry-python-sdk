@@ -10,8 +10,7 @@ from .model_type import ModelType
 
 class MistralAiModel(UniversalBaseModel):
     """
-    +label=Mistral AI Model
-    +icon=mistral-ai
+    Mistral AI Model
     """
 
     type: typing.Literal["integration/model/mistral-ai"] = pydantic.Field(default="integration/model/mistral-ai")

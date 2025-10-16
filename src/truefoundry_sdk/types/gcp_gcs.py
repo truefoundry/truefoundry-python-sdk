@@ -9,8 +9,7 @@ from .gcp_key_file_auth import GcpKeyFileAuth
 
 class GcpGcs(UniversalBaseModel):
     """
-    +icon=gcp-gcs
-    +label=GCP GCS
+    GCP GCS
     """
 
     type: typing.Literal["integration/blob-storage/gcp/gcs"] = pydantic.Field(

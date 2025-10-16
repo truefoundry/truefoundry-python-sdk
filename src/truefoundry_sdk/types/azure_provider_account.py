@@ -9,9 +9,7 @@ from .azure_integrations import AzureIntegrations
 
 class AzureProviderAccount(UniversalBaseModel):
     """
-    +label=Azure
-    +icon=azure
-    +heroDataKey=subscription_id
+    Azure
     """
 
     type: typing.Literal["provider-account/azure"] = pydantic.Field(default="provider-account/azure")

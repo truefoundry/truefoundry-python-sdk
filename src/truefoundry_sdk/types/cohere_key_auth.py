@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class CohereKeyAuth(UniversalBaseModel):
     """
-    +label=Cohere API Key Auth
-    +icon=cohere
+    Cohere API Key Auth
     """
 
     type: typing.Literal["api-key"] = pydantic.Field(default="api-key")

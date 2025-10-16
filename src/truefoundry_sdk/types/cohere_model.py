@@ -10,8 +10,7 @@ from .model_type import ModelType
 
 class CohereModel(UniversalBaseModel):
     """
-    +label=Cohere Model
-    +icon=cohere
+    Cohere Model
     """
 
     type: typing.Literal["integration/model/cohere"] = pydantic.Field(default="integration/model/cohere")

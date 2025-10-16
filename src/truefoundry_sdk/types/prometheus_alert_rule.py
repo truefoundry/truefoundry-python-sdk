@@ -11,14 +11,12 @@ from .alert_severity import AlertSeverity
 
 class PrometheusAlertRule(UniversalBaseModel):
     """
-    +label=Prometheus Alert Rule
+    Prometheus Alert Rule
     """
 
     type: typing.Literal["prometheus-alert-rule"] = pydantic.Field(default="prometheus-alert-rule")
     """
-    +label=Type
-    +value=prometheus-alert-rule
-    +uiType=Hidden
+    Type
     """
 
     name: str = pydantic.Field()

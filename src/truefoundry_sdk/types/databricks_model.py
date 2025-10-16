@@ -10,8 +10,7 @@ from .model_type import ModelType
 
 class DatabricksModel(UniversalBaseModel):
     """
-    +label=Databricks Model
-    +icon=databricks
+    Databricks Model
     """
 
     type: typing.Literal["integration/model/databricks"] = pydantic.Field(default="integration/model/databricks")

@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class LoadBalancingWhen(UniversalBaseModel):
     """
-    +label=Rule Conditions
+    Rule Conditions
     """
 
     subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)

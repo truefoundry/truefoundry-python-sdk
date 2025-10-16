@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class DynamicVolumeConfig(UniversalBaseModel):
     """
-    +label=Create new volume
+    Create new volume
     """
 
     type: typing.Literal["dynamic"] = pydantic.Field(default="dynamic")

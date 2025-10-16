@@ -9,8 +9,7 @@ from .slack_bot_auth import SlackBotAuth
 
 class SlackBotIntegration(UniversalBaseModel):
     """
-    +label=Slack Bot Integration
-    +icon=https://assets.production.truefoundry.com/slack.svg
+    Slack Bot Integration
     """
 
     type: typing.Literal["integration/notification-channel/slack-bot"] = pydantic.Field(

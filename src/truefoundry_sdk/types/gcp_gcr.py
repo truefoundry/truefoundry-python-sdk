@@ -9,8 +9,7 @@ from .gcp_key_file_auth import GcpKeyFileAuth
 
 class GcpGcr(UniversalBaseModel):
     """
-    +icon=gcp-gcr
-    +label=GCP GCR
+    GCP GCR
     """
 
     type: typing.Literal["integration/docker-registry/gcp/gcr"] = pydantic.Field(

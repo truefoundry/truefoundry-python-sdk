@@ -10,8 +10,7 @@ from .self_hosted_model_integrations import SelfHostedModelIntegrations
 
 class SelfHostedModelProviderAccount(UniversalBaseModel):
     """
-    +label=Self Hosted
-    +icon=puzzle-piece
+    Self Hosted
     """
 
     type: typing.Literal["provider-account/self-hosted-model"] = pydantic.Field(
@@ -33,9 +32,7 @@ class SelfHostedModelProviderAccount(UniversalBaseModel):
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    +label=Collaborators
-    +sort=200
-    +uiType=Collaborators
+    Collaborators
     """
 
     if IS_PYDANTIC_V2:

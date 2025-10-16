@@ -10,8 +10,7 @@ from .model_type import ModelType
 
 class OpenRouterModel(UniversalBaseModel):
     """
-    +label=OpenRouter Model
-    +icon=openrouter
+    OpenRouter Model
     """
 
     type: typing.Literal["integration/model/openrouter"] = pydantic.Field(default="integration/model/openrouter")

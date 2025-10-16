@@ -9,8 +9,7 @@ from .gitlab_integration import GitlabIntegration
 
 class GitlabProviderAccount(UniversalBaseModel):
     """
-    +label=Gitlab
-    +icon=gitlab
+    Gitlab
     """
 
     type: typing.Literal["provider-account/gitlab"] = pydantic.Field(default="provider-account/gitlab")

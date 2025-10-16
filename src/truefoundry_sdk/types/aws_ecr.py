@@ -9,8 +9,7 @@ from .aws_ecr_auth_data import AwsEcrAuthData
 
 class AwsEcr(UniversalBaseModel):
     """
-    +label=AWS ECR
-    +icon=aws-ecr
+    AWS ECR
     """
 
     type: typing.Literal["integration/docker-registry/aws/ecr"] = pydantic.Field(

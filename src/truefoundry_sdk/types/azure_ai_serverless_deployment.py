@@ -10,7 +10,7 @@ from ..core.serialization import FieldMetadata
 
 class AzureAiServerlessDeployment(UniversalBaseModel):
     """
-    +label=Azure AI Serverless Deployment
+    Azure AI Serverless Deployment
     """
 
     type: typing.Literal["serverless"] = pydantic.Field(default="serverless")

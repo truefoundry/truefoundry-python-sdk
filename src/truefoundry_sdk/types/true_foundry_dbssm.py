@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class TrueFoundryDbssm(UniversalBaseModel):
     """
-    +label=TrueFoundry DBSSM
-    +icon=truefoundry
+    TrueFoundry DBSSM
     """
 
     type: typing.Literal["integration/secret-store/truefoundry/db"] = pydantic.Field(

@@ -8,8 +8,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class ModelType(str, enum.Enum):
     """
-    +label=Model Type
-    +uiType=Select
+    Model Type
     """
 
     CHAT = "chat"

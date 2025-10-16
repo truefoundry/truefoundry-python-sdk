@@ -14,7 +14,7 @@ from .model_type import ModelType
 
 class AzureAiInferenceModel(UniversalBaseModel):
     """
-    +label=Azure AI Inference Model
+    Azure AI Inference Model
     """
 
     name: str = pydantic.Field()

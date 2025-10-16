@@ -11,8 +11,7 @@ from .together_ai_key_auth import TogetherAiKeyAuth
 
 class TogetherAiProviderAccount(UniversalBaseModel):
     """
-    +label=Together AI Provider Account
-    +icon=together-ai
+    Together AI Provider Account
     """
 
     type: typing.Literal["provider-account/together-ai"] = pydantic.Field(default="provider-account/together-ai")

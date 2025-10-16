@@ -9,7 +9,7 @@ from .rate_limit_rule import RateLimitRule
 
 class RateLimitConfig(UniversalBaseModel):
     """
-    +label=Rate Limit Configuration
+    Rate Limit Configuration
     """
 
     name: str = pydantic.Field()

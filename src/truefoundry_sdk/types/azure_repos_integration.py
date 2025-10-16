@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class AzureReposIntegration(UniversalBaseModel):
     """
-    +label=Azure Repo
-    +icon=azure
+    Azure Repo
     """
 
     type: typing.Literal["integration/vcs/azure"] = pydantic.Field(default="integration/vcs/azure")
@@ -24,8 +23,7 @@ class AzureReposIntegration(UniversalBaseModel):
 
     account_name: str = pydantic.Field()
     """
-    +label=Account Name
-    +sort=200
+    Account Name
     """
 
     authorized_subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)

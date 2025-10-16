@@ -30,8 +30,7 @@ class SparkJob(UniversalBaseModel):
 
     entrypoint: SparkJobEntrypoint = pydantic.Field()
     """
-    +label=Entrypoint
-    +sort=1000
+    Entrypoint
     """
 
     driver_config: SparkDriverConfig
@@ -58,8 +57,7 @@ class SparkJob(UniversalBaseModel):
 
     service_account: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Service Account
-    +sort=24000
+    Service Account
     """
 
     workspace_fqn: typing.Optional[str] = pydantic.Field(default=None)

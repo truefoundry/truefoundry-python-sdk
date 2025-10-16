@@ -11,8 +11,7 @@ from .mistral_ai_key_auth import MistralAiKeyAuth
 
 class MistralAiProviderAccount(UniversalBaseModel):
     """
-    +label=Mistral AI Provider Account
-    +icon=mistral-ai
+    Mistral AI Provider Account
     """
 
     type: typing.Literal["provider-account/mistral-ai"] = pydantic.Field(default="provider-account/mistral-ai")

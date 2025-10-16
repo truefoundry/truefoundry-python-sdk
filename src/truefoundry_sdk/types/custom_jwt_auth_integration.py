@@ -9,8 +9,7 @@ from .o_auth2login_provider import OAuth2LoginProvider
 
 class CustomJwtAuthIntegration(UniversalBaseModel):
     """
-    +label=Custom JWT Auth Integration
-    +icon=puzzle-piece
+    Custom JWT Auth Integration
     """
 
     type: typing.Literal["integration/jwt-auth/custom"] = pydantic.Field(default="integration/jwt-auth/custom")

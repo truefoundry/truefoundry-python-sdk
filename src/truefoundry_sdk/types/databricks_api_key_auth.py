@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class DatabricksApiKeyAuth(UniversalBaseModel):
     """
-    +label=Databricks API Key Based Auth
+    Databricks API Key Based Auth
     """
 
     type: typing.Literal["api-key"] = pydantic.Field(default="api-key")

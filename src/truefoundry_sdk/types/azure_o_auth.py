@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class AzureOAuth(UniversalBaseModel):
     """
-    +label=Azure OAuth
+    Azure OAuth
     """
 
     type: typing.Literal["oauth"] = pydantic.Field(default="oauth")

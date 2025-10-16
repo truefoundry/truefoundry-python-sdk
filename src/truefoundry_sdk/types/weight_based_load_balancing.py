@@ -9,14 +9,12 @@ from .load_balance_target import LoadBalanceTarget
 
 class WeightBasedLoadBalancing(UniversalBaseModel):
     """
-    +label=Weight-based Load Balancing
+    Weight-based Load Balancing
     """
 
     type: typing.Literal["weight-based-routing"] = pydantic.Field(default="weight-based-routing")
     """
-    +value=weight-based-routing
-    +sort=1
-    +label=Routing Type
+    Routing Type
     """
 
     load_balance_targets: typing.List[LoadBalanceTarget] = pydantic.Field()

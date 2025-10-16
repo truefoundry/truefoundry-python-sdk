@@ -10,8 +10,7 @@ from .model_type import ModelType
 
 class PalmModel(UniversalBaseModel):
     """
-    +label=PaLM Model
-    +icon=palm
+    PaLM Model
     """
 
     type: typing.Literal["integration/model/palm"] = pydantic.Field(default="integration/model/palm")

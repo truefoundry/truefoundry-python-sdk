@@ -12,8 +12,7 @@ from .openai_api_key_auth import OpenaiApiKeyAuth
 
 class OpenAiModerationsGuardrailConfig(UniversalBaseModel):
     """
-    +label=OpenAI Moderation
-    +icon=openai
+    OpenAI Moderation
     """
 
     name: str = pydantic.Field()

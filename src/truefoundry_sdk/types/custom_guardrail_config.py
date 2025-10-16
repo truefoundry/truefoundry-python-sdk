@@ -11,8 +11,7 @@ from .custom_guardrail_config_target import CustomGuardrailConfigTarget
 
 class CustomGuardrailConfig(UniversalBaseModel):
     """
-    +label=Custom
-    +icon=puzzle-piece
+    Custom
     """
 
     name: str = pydantic.Field()

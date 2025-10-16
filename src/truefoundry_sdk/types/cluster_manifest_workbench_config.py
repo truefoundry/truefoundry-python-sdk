@@ -10,8 +10,7 @@ from .ssh_server_config import SshServerConfig
 
 class ClusterManifestWorkbenchConfig(UniversalBaseModel):
     """
-    +label=Workbench Config
-    +sort=70
+    Workbench Config
     """
 
     notebook_config: typing.Optional[NotebookConfig] = None

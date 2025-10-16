@@ -10,8 +10,7 @@ from .guardrail_config_integrations import GuardrailConfigIntegrations
 
 class GuardrailConfigGroup(UniversalBaseModel):
     """
-    +label=Guardrail Configs Group
-    +icon=puzzle-piece
+    Guardrail Configs Group
     """
 
     type: typing.Literal["provider-account/guardrail-config-group"] = pydantic.Field(

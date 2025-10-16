@@ -22,10 +22,7 @@ class ClusterManifest(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=Name
-    +icon=fa-desktop:#black
-    +sort=10
-    +message=3 to 35 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
+    Name - 3 to 35 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
     """
 
     cluster_type: ClusterManifestClusterType = pydantic.Field()
@@ -46,39 +43,29 @@ class ClusterManifest(UniversalBaseModel):
 
     monitoring: typing.Optional[ClusterManifestMonitoring] = pydantic.Field(default=None)
     """
-    +label=Monitoring
-    +icon=fa-gear:#68BBE3
-    +sort=50
+    Monitoring
     """
 
     default_registry_fqn: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Cluster Default Registry
-    +sort=60
+    Cluster Default Registry
     """
 
     workbench_config: typing.Optional[ClusterManifestWorkbenchConfig] = pydantic.Field(default=None)
     """
-    +label=Workbench Config
-    +sort=70
+    Workbench Config
     """
 
     spark_config: typing.Optional[SparkConfig] = None
     ingress_controller_config: typing.Optional[IngressControllerConfig] = None
     cluster_integration_fqn: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Cluster Integration FQN
-    +sort=75
-    +uiType=IntegrationSelect
-    +uiProps={"descriptionKey": "cluster_name","integrationType": "cluster"}
+    Cluster Integration FQN
     """
 
     workflow_storage_integration_fqn: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Workflow Storage Integration
-    +sort=80
-    +uiType=IntegrationSelect
-    +uiProps={"descriptionKey": "cluster_name","integrationType": "blob-storage"}
+    Workflow Storage Integration
     """
 
     supported_nodepools: typing.Optional[typing.List[Nodepool]] = pydantic.Field(default=None)

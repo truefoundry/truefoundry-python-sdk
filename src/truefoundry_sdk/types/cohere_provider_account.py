@@ -11,8 +11,7 @@ from .collaborator import Collaborator
 
 class CohereProviderAccount(UniversalBaseModel):
     """
-    +label=Cohere Provider Account
-    +icon=cohere
+    Cohere Provider Account
     """
 
     type: typing.Literal["provider-account/cohere"] = pydantic.Field(default="provider-account/cohere")

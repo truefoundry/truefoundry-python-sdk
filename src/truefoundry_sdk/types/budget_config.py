@@ -9,7 +9,7 @@ from .budget_rule import BudgetRule
 
 class BudgetConfig(UniversalBaseModel):
     """
-    +label=Budget Configuration
+    Budget Configuration
     """
 
     name: str = pydantic.Field()

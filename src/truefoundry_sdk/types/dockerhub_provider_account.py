@@ -10,8 +10,7 @@ from .dockerhub_integrations import DockerhubIntegrations
 
 class DockerhubProviderAccount(UniversalBaseModel):
     """
-    +label=Dockerhub
-    +icon=docker
+    Dockerhub
     """
 
     type: typing.Literal["provider-account/dockerhub"] = pydantic.Field(default="provider-account/dockerhub")
@@ -21,13 +20,12 @@ class DockerhubProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +uiProps={"disableEdit":true}
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
+    3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
     """
 
     account_name: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Account Name
+    Account Name
     """
 
     auth_data: typing.Optional[DockerhubBasicAuth] = None

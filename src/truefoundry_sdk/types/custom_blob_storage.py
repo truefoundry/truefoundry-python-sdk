@@ -9,8 +9,7 @@ from .custom_basic_auth import CustomBasicAuth
 
 class CustomBlobStorage(UniversalBaseModel):
     """
-    +label=Custom Blob Storage
-    +icon=puzzle-piece
+    Custom Blob Storage
     """
 
     type: typing.Literal["integration/blob-storage/custom"] = pydantic.Field(default="integration/blob-storage/custom")

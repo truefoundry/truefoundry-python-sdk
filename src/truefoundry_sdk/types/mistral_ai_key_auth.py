@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class MistralAiKeyAuth(UniversalBaseModel):
     """
-    +label=Mistral AI API Key Auth
-    +icon=mistral-ai
+    Mistral AI API Key Auth
     """
 
     type: typing.Literal["api-key"] = pydantic.Field(default="api-key")

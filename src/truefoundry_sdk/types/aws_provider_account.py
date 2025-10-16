@@ -10,9 +10,7 @@ from .aws_provider_account_auth_data import AwsProviderAccountAuthData
 
 class AwsProviderAccount(UniversalBaseModel):
     """
-    +label=AWS
-    +icon=aws
-    +heroDataKey=aws_account_id
+    AWS
     """
 
     type: typing.Literal["provider-account/aws"] = pydantic.Field(default="provider-account/aws")

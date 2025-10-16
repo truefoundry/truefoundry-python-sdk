@@ -9,7 +9,7 @@ from .retry_config import RetryConfig
 
 class LoadBalanceTarget(UniversalBaseModel):
     """
-    +label=Weight-based Target
+    Weight-based Target
     """
 
     target: str = pydantic.Field()

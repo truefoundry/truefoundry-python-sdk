@@ -10,7 +10,7 @@ from .weight_based_load_balancing import WeightBasedLoadBalancing
 
 class WeightBasedLoadBalancingRule(WeightBasedLoadBalancing):
     """
-    +label=Weight-based Load Balancing Rule
+    Weight-based Load Balancing Rule
     """
 
     id: str = pydantic.Field()

@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class SambaNovaKeyAuth(UniversalBaseModel):
     """
-    +label=SambaNova Key Auth
-    +icon=sambanova
+    SambaNova Key Auth
     """
 
     type: typing.Literal["api-key"] = pydantic.Field(default="api-key")

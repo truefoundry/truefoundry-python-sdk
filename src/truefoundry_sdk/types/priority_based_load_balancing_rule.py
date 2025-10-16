@@ -10,7 +10,7 @@ from .priority_based_load_balancing import PriorityBasedLoadBalancing
 
 class PriorityBasedLoadBalancingRule(PriorityBasedLoadBalancing):
     """
-    +label=Priority-based Load Balancing Rule
+    Priority-based Load Balancing Rule
     """
 
     id: str = pydantic.Field()

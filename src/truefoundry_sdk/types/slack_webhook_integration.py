@@ -9,8 +9,7 @@ from .slack_webhook_auth import SlackWebhookAuth
 
 class SlackWebhookIntegration(UniversalBaseModel):
     """
-    +label=Slack Webhook Integration
-    +icon=https://assets.production.truefoundry.com/slack.svg
+    Slack Webhook Integration
     """
 
     type: typing.Literal["integration/notification-channel/slack-webhook"] = pydantic.Field(

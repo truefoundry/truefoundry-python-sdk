@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class TtlRegistry(UniversalBaseModel):
     """
-    +label=TTL
-    +icon=docker
+    TTL
     """
 
     type: typing.Literal["integration/docker-registry/ttl"] = pydantic.Field(default="integration/docker-registry/ttl")

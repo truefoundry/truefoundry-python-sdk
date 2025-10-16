@@ -10,8 +10,7 @@ from .model_type import ModelType
 
 class TogetherAiModel(UniversalBaseModel):
     """
-    +label=Together AI Model
-    +icon=together-ai
+    Together AI Model
     """
 
     type: typing.Literal["integration/model/together-ai"] = pydantic.Field(default="integration/model/together-ai")
