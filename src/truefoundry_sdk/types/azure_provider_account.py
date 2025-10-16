@@ -21,26 +21,17 @@ class AzureProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +uiProps={"disableEdit":true}
-    +label=Name
-    +usage=The name of the Azure provider account.
-    +sort=100
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
+    The name of the Azure provider account.
     """
 
     subscription_id: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Azure Subscription Id
-    +usage=The ID of the target subscription. The value must be an UUID.
-    +sort=200
+    The ID of the target subscription. The value must be an UUID.
     """
 
     integrations: typing.List[AzureIntegrations] = pydantic.Field()
     """
-    +label=Integrations
-    +usage=List of integrations that are associated with the Azure provider account.
-    +sort=400
-    +uiType=IntegrationsGroup
+    List of integrations that are associated with the Azure provider account.
     """
 
     if IS_PYDANTIC_V2:

@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class NodepoolSelector(UniversalBaseModel):
     """
-    +label=Nodepool selector
-    +usage=Specify one or more nodepools to run your application on.
+    Specify one or more nodepools to run your application on.
     """
 
     type: typing.Literal["nodepool_selector"] = pydantic.Field(default="nodepool_selector")
@@ -19,8 +18,7 @@ class NodepoolSelector(UniversalBaseModel):
 
     nodepools: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +label=Nodepools
-    +usage=Nodepools where you want to run your workload. Multiple nodepools can be selected.
+    Nodepools where you want to run your workload. Multiple nodepools can be selected.
      The workload is guaranteed to be scheduled on one of the nodepool
     """
 

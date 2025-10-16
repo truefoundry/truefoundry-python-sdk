@@ -8,7 +8,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class RateLimitUnit(str, enum.Enum):
     """
-    +usage=Unit for rate limit calculation
+    Unit for rate limit calculation
     """
 
     REQUESTS_PER_DAY = "requests_per_day"

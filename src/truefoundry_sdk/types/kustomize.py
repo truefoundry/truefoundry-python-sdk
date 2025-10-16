@@ -9,16 +9,14 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 class Kustomize(UniversalBaseModel):
     patch: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
     """
-    +label=Patch
-    +usage=Content of kustomization.yaml to perform kustomize operation. Please do not include the `resources` section. It is filled in automatically
+    Content of kustomization.yaml to perform kustomize operation. Please do not include the `resources` section. It is filled in automatically
     """
 
     additions: typing.Optional[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]] = pydantic.Field(
         default=None
     )
     """
-    +label=Additional Manifests
-    +usage=Additional kubernetes manifests to be included in the application
+    Additional kubernetes manifests to be included in the application
     """
 
     if IS_PYDANTIC_V2:

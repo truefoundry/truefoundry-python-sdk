@@ -14,17 +14,12 @@ class WebhookBasicAuth(UniversalBaseModel):
 
     username: str = pydantic.Field()
     """
-    +label=Username
-    +usage=Basic auth username
-    +sort=100
+    Basic auth username
     """
 
     password: str = pydantic.Field()
     """
-    +label=Password
-    +usage=Basic auth password
-    +sort=200
-    +uiType=Password
+    Basic auth password
     """
 
     if IS_PYDANTIC_V2:

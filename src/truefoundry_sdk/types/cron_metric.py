@@ -14,15 +14,12 @@ class CronMetric(UniversalBaseModel):
 
     desired_replicas: typing.Optional[int] = pydantic.Field(default=None)
     """
-    +label=Desired Replicas
-    +usage=Desired number of replicas during the given interval. Default value is max_replicas.
+    Desired number of replicas during the given interval. Default value is max_replicas.
     """
 
     start: str = pydantic.Field()
     """
-    +label=Start Schedule
-    +docs=Cron expression indicating the start of the cron schedule.
-    +usage=Cron expression indicating the start of the cron schedule.
+    Cron expression indicating the start of the cron schedule.
     ```
     * * * * *
     | | | | |
@@ -36,9 +33,7 @@ class CronMetric(UniversalBaseModel):
 
     end: str = pydantic.Field()
     """
-    +label=End Schedule
-    +docs=Cron expression indicating the end of the cron schedule.
-    +usage=Cron expression indicating the end of the cron schedule.
+    Cron expression indicating the end of the cron schedule.
     ```
     * * * * *
     | | | | |
@@ -52,7 +47,7 @@ class CronMetric(UniversalBaseModel):
 
     timezone: str = pydantic.Field(default="UTC")
     """
-    +usage=Timezone against which the cron schedule will be calculated, e.g. "Asia/Tokyo". Default is machine's local time.
+    Timezone against which the cron schedule will be calculated, e.g. "Asia/Tokyo". Default is machine's local time.
     https://docs.truefoundry.com/docs/list-of-supported-timezones
     """
 

@@ -20,17 +20,12 @@ class SparkJob(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=Name
-    +usage=Name of the job
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
-    +sort=2
+    Name of the job
     """
 
     image: SparkJobImage = pydantic.Field()
     """
-    +label=Deploy a Docker image & Specify Spark Version
-    +usage=The image to use for driver and executors. Must have spark installed. Spark version must match the version in the image.
-    +sort=500
+    The image to use for driver and executors. Must have spark installed. Spark version must match the version in the image.
     """
 
     entrypoint: SparkJobEntrypoint = pydantic.Field()
@@ -43,34 +38,22 @@ class SparkJob(UniversalBaseModel):
     executor_config: SparkExecutorConfig
     env: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
     """
-    +label=Environment Variables
-    +usage=Configure environment variables to be injected in the service either as plain text. [Docs](https://docs.truefoundry.com/docs/env-variables)
-    +icon=fa-globe
-    +sort=21000
+    Configure environment variables to be injected in the service either as plain text. [Docs](https://docs.truefoundry.com/docs/env-variables)
     """
 
     spark_conf: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
     """
-    +label=Spark Config Properties
-    +usage=Extra configuration properties to be passed to the spark job. [Docs](https://spark.apache.org/docs/latest/configuration.html)
-    +icon=fa-gear:#68BBE3
-    +sort=21500
+    Extra configuration properties to be passed to the spark job. [Docs](https://spark.apache.org/docs/latest/configuration.html)
     """
 
     mounts: typing.Optional[typing.List[VolumeMount]] = pydantic.Field(default=None)
     """
-    +label=Mounts
-    +usage=Configure volumes to be mounted to driver and executors. [Docs](https://docs.truefoundry.com/docs/mounting-volumes-job)
-    +sort=22000
-    +uiType=Mounts
+    Configure volumes to be mounted to driver and executors. [Docs](https://docs.truefoundry.com/docs/mounting-volumes-job)
     """
 
     retries: typing.Optional[int] = pydantic.Field(default=0)
     """
-    +label=Retries
-    +usage=Specify the maximum number of attempts to retry a job before it is marked as failed.
-    +icon=fa-repeat
-    +sort=23000
+    Specify the maximum number of attempts to retry a job before it is marked as failed.
     """
 
     service_account: typing.Optional[str] = pydantic.Field(default=None)
@@ -81,9 +64,7 @@ class SparkJob(UniversalBaseModel):
 
     workspace_fqn: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Workspace FQN
-    +docs=Fully qualified name of the workspace
-    +uiType=Hidden
+    Fully qualified name of the workspace
     """
 
     if IS_PYDANTIC_V2:

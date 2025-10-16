@@ -14,10 +14,7 @@ class FallbackConfig(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +usage=Name of the fallback configuration
-    +uiProps={"descriptionInline":true}
-    +sort=1
-    +label=Configuration Name
+    Name of the fallback configuration
     """
 
     type: typing.Literal["gateway-fallback-config"] = pydantic.Field(default="gateway-fallback-config")
@@ -28,10 +25,7 @@ class FallbackConfig(UniversalBaseModel):
 
     rules: typing.List[FallbackRule] = pydantic.Field()
     """
-    +usage=List of fallback rules
-    +uiProps={"descriptionInline":true}
-    +sort=3
-    +label=Fallback Rules
+    List of fallback rules
     """
 
     if IS_PYDANTIC_V2:

@@ -18,31 +18,22 @@ class AzureOAuth(UniversalBaseModel):
 
     tenant_id: str = pydantic.Field()
     """
-    +label=Azure Tenant ID
-    +usage=The Azure Active Directory tenant (directory) ID.
-    +sort=100
+    The Azure Active Directory tenant (directory) ID.
     """
 
     client_id: str = pydantic.Field()
     """
-    +label=Azure Client ID
-    +usage=The client (application) ID of an App Registration in the tenant.
-    +sort=200
+    The client (application) ID of an App Registration in the tenant.
     """
 
     client_secret: str = pydantic.Field()
     """
-    +label=Azure Client secret
-    +sort=300
-    +usage=A client secret that was generated for the App Registration.
-    +uiType=Password
+    A client secret that was generated for the App Registration.
     """
 
     subscription_id: str = pydantic.Field()
     """
-    +label=Azure Subscription ID
-    +usage=The ID of the target subscription. The value must be an UUID.
-    +sort=400
+    The ID of the target subscription. The value must be an UUID.
     """
 
     if IS_PYDANTIC_V2:

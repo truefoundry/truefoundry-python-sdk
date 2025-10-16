@@ -13,15 +13,12 @@ class StaticVolumeConfig(UniversalBaseModel):
 
     type: typing.Literal["static"] = pydantic.Field(default="static")
     """
-    +label=Volume Type
-    +value=static
-    +usage=Volume Type for the volume.
+    Volume Type for the volume.
     """
 
     persistent_volume_name: str = pydantic.Field()
     """
-    +label=Persistent Volume
-    +usage=Persistent Volume Name of the volume to be used.
+    Persistent Volume Name of the volume to be used.
     """
 
     if IS_PYDANTIC_V2:

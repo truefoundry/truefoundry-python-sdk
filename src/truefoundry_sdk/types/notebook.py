@@ -10,7 +10,7 @@ from .workbench_image import WorkbenchImage
 
 class Notebook(BaseWorkbenchInput):
     """
-    +docs=Describes the configuration for the service
+    Describes the configuration for the service
     """
 
     type: typing.Literal["notebook"] = pydantic.Field(default="notebook")
@@ -21,11 +21,8 @@ class Notebook(BaseWorkbenchInput):
     image: WorkbenchImage
     cull_timeout: typing.Optional[int] = pydantic.Field(default=30)
     """
-    +label=Stop after (minutes of inactivity)
-    +usage=Stop the notebook instance after this much time in minutes of inactivity.
+    Stop the notebook instance after this much time in minutes of inactivity.
     The notebook instance will be stopped even if the notebook is open in your browser, but nothing is running on the notebook.
-    +sort=5
-    +uiProps={"descriptionInline":true}
     """
 
     if IS_PYDANTIC_V2:

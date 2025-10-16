@@ -14,17 +14,12 @@ class WebhookBearerAuth(UniversalBaseModel):
 
     token: str = pydantic.Field()
     """
-    +label=Token
-    +usage=Bearer token for authentication
-    +sort=100
-    +uiType=Password
+    Bearer token for authentication
     """
 
     prefix: str = pydantic.Field(default="Bearer")
     """
-    +label=Prefix
-    +usage=Prefix for the token
-    +sort=200
+    Prefix for the token
     """
 
     if IS_PYDANTIC_V2:

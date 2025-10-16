@@ -14,8 +14,7 @@ class AmqpMetricConfig(UniversalBaseModel):
 
     queue_length: int = pydantic.Field()
     """
-    +label=Queue Length
-    +usage=Upper limit of the number of backlog messages the auto-scaler will try to maintain per replica. If you set this number to 10 and have 30 messages in the stream and one replica, the auto-scaler will scale the number of replicas to 3.
+    Upper limit of the number of backlog messages the auto-scaler will try to maintain per replica. If you set this number to 10 and have 30 messages in the stream and one replica, the auto-scaler will scale the number of replicas to 3.
     """
 
     if IS_PYDANTIC_V2:

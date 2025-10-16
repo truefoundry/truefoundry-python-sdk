@@ -13,14 +13,12 @@ class Guardrails(UniversalBaseModel):
 
     input_guardrails: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +label=Input Guardrails
-    +usage=List of guardrail names to apply to user input messages before processing.
+    List of guardrail names to apply to user input messages before processing.
     """
 
     output_guardrails: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +label=Output Guardrails
-    +usage=List of guardrail names to apply to AI response messages before returning to user.
+    List of guardrail names to apply to AI response messages before returning to user.
     """
 
     if IS_PYDANTIC_V2:

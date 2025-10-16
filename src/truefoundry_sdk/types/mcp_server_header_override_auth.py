@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class McpServerHeaderOverrideAuth(UniversalBaseModel):
     """
-    +label=Override authentication header
-    +usage=Override authentication for this source server
+    Override authentication for this source server
     """
 
     type: typing.Literal["header"] = pydantic.Field(default="header")

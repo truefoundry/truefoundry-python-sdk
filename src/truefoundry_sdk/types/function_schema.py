@@ -8,34 +8,27 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class FunctionSchema(UniversalBaseModel):
     """
-    +label=Function Schema
-    +usage=Schema defining a function for tool calls
+    Schema defining a function for tool calls
     """
 
     name: str = pydantic.Field()
     """
-    +label=Function Name
-    +usage=Name of the function
+    Name of the function
     """
 
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Description
-    +usage=Description of the function
+    Description of the function
     """
 
     parameters: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
     """
-    +label=Parameters
-    +usage=Parameters schema for the function
-    +uiType=JsonInput
-    +uiProps={"descriptionInline":true}
+    Parameters schema for the function
     """
 
     strict: typing.Optional[bool] = pydantic.Field(default=False)
     """
-    +label=Strict
-    +usage=Indicates if the function should be called strictly
+    Indicates if the function should be called strictly
     """
 
     if IS_PYDANTIC_V2:

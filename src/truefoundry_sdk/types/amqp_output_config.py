@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class AmqpOutputConfig(UniversalBaseModel):
     """
-    +docs=Describes the configuration for the output AMQP worker
-    +label=AMQP
+    Describes the configuration for the output AMQP worker
     """
 
     type: typing.Literal["amqp"] = pydantic.Field(default="amqp")
@@ -19,23 +18,17 @@ class AmqpOutputConfig(UniversalBaseModel):
 
     url: str = pydantic.Field()
     """
-    +label=Queue URL
-    +usage=AMQP Queue URL of Publisher
-    +sort=1
+    AMQP Queue URL of Publisher
     """
 
     routing_key: str = pydantic.Field()
     """
-    +label=Routing Key
-    +usage=AMQP Routing Key to publish to.
-    +sort=2
+    AMQP Routing Key to publish to.
     """
 
     exchange_name: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Exchange Name
-    +usage=AMQP Exchange Name
-    +sort=3
+    AMQP Exchange Name
     """
 
     if IS_PYDANTIC_V2:

@@ -8,26 +8,17 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class SecretStoreConfig(UniversalBaseModel):
     """
-    +label=Enable Sync to SecretManager
-    +sort=6
-    +usage=Enable to store the virtual account token in a secret store
-    +message=Enable to store the virtual account token in a secret store
+    Enable to store the virtual account token in a secret store
     """
 
     integration_fqn: str = pydantic.Field()
     """
-    +label=Secret Store
-    +usage=The secret store to store the virtual account token in
-    +sort=1
-    +uiType=IntegrationSelect
+    The secret store to store the virtual account token in
     """
 
     secret_path: str = pydantic.Field()
     """
-    +label=Secret Path
-    +usage=The path where the virtual account token will be stored in the secret store (example: secret/path/to/virtual-account-token)
-    +message=The path should only contain alphanumeric characters, hyphens, and slashes and it should start with a slash if giving the path containing slashes in between
-    +sort=2
+    The path where the virtual account token will be stored in the secret store (example: secret/path/to/virtual-account-token)
     """
 
     if IS_PYDANTIC_V2:

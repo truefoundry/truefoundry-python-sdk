@@ -18,9 +18,7 @@ class AwsAssumedRoleBasedAuth(UniversalBaseModel):
 
     assumed_role_arn: str = pydantic.Field()
     """
-    +label=AWS Assumed Role ARN
-    +usage=ARN of the role you want to assume.
-    +sort=100
+    ARN of the role you want to assume.
     """
 
     if IS_PYDANTIC_V2:

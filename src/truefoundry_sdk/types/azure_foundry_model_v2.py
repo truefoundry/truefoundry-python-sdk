@@ -22,50 +22,34 @@ class AzureFoundryModelV2(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=Display Name
-    +sort=1
-    +usage=Name to identify this Azure Foundry model in the UI
-    +message=2 to 62 characters long alphanumeric word, may contain - or . in between, cannot start with a number
+    Name to identify this Azure Foundry model in the UI
     """
 
     auth_data: AzureKeyAuth
     model_types: typing.List[ModelType] = pydantic.Field()
     """
-    +label=Model Types
-    +sort=3
-    +usage=Types of models supported by this Azure AI Foundry deployment
-    +uiProps={"disableAllOption": true}
+    Types of models supported by this Azure AI Foundry deployment
     """
 
     model_id: str = pydantic.Field()
     """
-    +label=Azure Deployment Name
-    +sort=3
-    +usage=The name of the Azure Foundry deployment
+    The name of the Azure Foundry deployment
     """
 
     azure_endpoint: str = pydantic.Field()
     """
-    +label=Azure Endpoint
-    +sort=4
-    +usage=The Azure AI Foundry endpoint URL
-    +message=Endpoint URL must not be empty
+    The Azure AI Foundry endpoint URL
     """
 
     api_version: str = pydantic.Field()
     """
-    +label=API Version
-    +sort=5
-    +usage=The API version for the Azure Foundry model
+    The API version for the Azure Foundry model
     """
 
     cost: typing.Optional[ModelCostMetric] = None
     authorized_subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +label=Access Control
-    +sort=7
-    +usage=List of subjects that are authorized to access this integration. List of user fqn in format <user_type>:<username>.
-    +uiType=Hidden
+    List of subjects that are authorized to access this integration. List of user fqn in format <user_type>:<username>.
     """
 
     if IS_PYDANTIC_V2:

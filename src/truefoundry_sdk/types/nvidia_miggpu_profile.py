@@ -8,8 +8,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class NvidiaMiggpuProfile(str, enum.Enum):
     """
-    +label=MIG Profile
-    +usage=Name of the MIG profile to use. One of the following based on gpu type
+    Name of the MIG profile to use. One of the following based on gpu type
     Please refer to https://docs.nvidia.com/datacenter/tesla/mig-user-guide/#supported-mig-profiles for more details
     A30 - [1g.6gb, 2g.12gb, 4g.24gb]
     A100 40 GB - [1g.5gb, 1g.10gb, 2g.10gb, 3g.20gb, 4g.20gb, 7g.40gb]

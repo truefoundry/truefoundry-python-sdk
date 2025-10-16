@@ -24,19 +24,13 @@ class OciRepo(UniversalBaseModel):
 
     integration_fqn: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +docs=FQN of the container registry. You can use the FQN of your desired container registry (or add one)
-    in the  Integrations page[Integrations](https://app.truefoundry.tech/integrations) page
-    +label=Container Registry
-    +usage=FQN of the container registry. If you can't find your registry here,
+    FQN of the container registry. If you can't find your registry here,
     add it through the [Integrations](/integrations) page
-    +uiType=IntegrationSelect
-    +uiProps={"integrationType":"docker-registry"}
     """
 
     version: str = pydantic.Field()
     """
-    +label=Version
-    +usage=Helm chart version
+    Helm chart version
     """
 
     if IS_PYDANTIC_V2:

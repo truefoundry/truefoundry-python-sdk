@@ -9,14 +9,12 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 class Endpoint(UniversalBaseModel):
     host: str = pydantic.Field()
     """
-    +usage=Host e.g. ai.example.com, app.truefoundry.com
-    +message=Upto 253 characters, each part of host should be at most 63 characters long, can contain alphabets, digits and hypen, must begin and end with an alphanumeric characters. Parts must be separated by periods (.)
+    Host e.g. ai.example.com, app.truefoundry.com
     """
 
     path: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +usage=Path e.g. /v1/api/ml/, /v2/docs/
-    +message=Should begin and end with a forward slash (/). Each part can can contain alphabets, digits and hypen, must begin and end with an alphanumeric characters. Parts should be separated by forward slashes (/)
+    Path e.g. /v1/api/ml/, /v2/docs/
     """
 
     if IS_PYDANTIC_V2:

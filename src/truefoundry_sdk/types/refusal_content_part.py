@@ -9,14 +9,12 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 class RefusalContentPart(UniversalBaseModel):
     type: str = pydantic.Field()
     """
-    +value=refusal
-    +usage=Type of the content part
+    Type of the content part
     """
 
     refusal: str = pydantic.Field()
     """
-    +label=Refusal
-    +usage=Reason
+    Reason
     """
 
     if IS_PYDANTIC_V2:

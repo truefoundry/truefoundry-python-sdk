@@ -9,8 +9,7 @@ from .kafka_sasl_auth import KafkaSaslAuth
 
 class KafkaInputConfig(UniversalBaseModel):
     """
-    +docs=Describes the configuration for the input Kafka worker
-    +label=Kafka
+    Describes the configuration for the input Kafka worker
     """
 
     type: typing.Literal["kafka"] = pydantic.Field(default="kafka")
@@ -20,35 +19,27 @@ class KafkaInputConfig(UniversalBaseModel):
 
     bootstrap_servers: str = pydantic.Field()
     """
-    +label=Bootstrap servers
-    +usage='Kafka Bootstrap servers - Comma separated list of Kafka brokers "hostname:port" to connect to for bootstrap'
-    +sort=1
+    'Kafka Bootstrap servers - Comma separated list of Kafka brokers "hostname:port" to connect to for bootstrap'
     """
 
     topic_name: str = pydantic.Field()
     """
-    +label=Topic Name
-    +usage=Kafka topic to subscribe to
-    +sort=2
+    Kafka topic to subscribe to
     """
 
     consumer_group: str = pydantic.Field()
     """
-    +label=Consumer Group Name
-    +usage=The name of the consumer group to join for dynamic partition assignment
-    +sort=3
+    The name of the consumer group to join for dynamic partition assignment
     """
 
     tls: bool = pydantic.Field(default=True)
     """
-    +label=TLS
-    +usage=TLS configuration for SASL authentication
+    TLS configuration for SASL authentication
     """
 
     wait_time_seconds: typing.Optional[int] = pydantic.Field(default=10)
     """
-    +label=Wait Time Seconds
-    +usage=Wait timeout for long polling.
+    Wait timeout for long polling.
     """
 
     auth: typing.Optional[KafkaSaslAuth] = None

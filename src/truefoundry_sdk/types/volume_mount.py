@@ -14,21 +14,17 @@ class VolumeMount(UniversalBaseModel):
 
     mount_path: str = pydantic.Field()
     """
-    +label=Volume mount path
-    +usage=Absolute file path where the volume will be mounted.
-    +message=Please enter a valid mount path
+    Absolute file path where the volume will be mounted.
     """
 
     sub_path: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Sub Path
-    +usage=Sub path within the volume to mount. Defaults to root of the volume.
+    Sub path within the volume to mount. Defaults to root of the volume.
     """
 
     volume_fqn: str = pydantic.Field()
     """
-    +label=Volume
-    +usage=The TrueFoundry volume that needs to be mounted.
+    The TrueFoundry volume that needs to be mounted.
     """
 
     if IS_PYDANTIC_V2:

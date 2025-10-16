@@ -8,9 +8,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class BlueGreen(UniversalBaseModel):
     """
-    +docs=This strategy brings up the new release completely before switching the complete load to the new release.
+    This strategy brings up the new release completely before switching the complete load to the new release.
     This minimizes the time that two versions are serving traffic at the same time.
-    +label=Blue Green strategy
     """
 
     type: typing.Literal["blue_green"] = pydantic.Field(default="blue_green")
@@ -20,14 +19,12 @@ class BlueGreen(UniversalBaseModel):
 
     enable_auto_promotion: typing.Optional[bool] = pydantic.Field(default=False)
     """
-    +docs=Promote the new release to handle the complete traffic. A manual promotion would be needed if this is disabled
-    +label=Auto-promotion
+    Promote the new release to handle the complete traffic. A manual promotion would be needed if this is disabled
     """
 
     auto_promotion_seconds: typing.Optional[int] = pydantic.Field(default=30)
     """
-    +docs=Promote the new release to handle the complete traffic after waiting for these many seconds
-    +label=Auto-promotion seconds
+    Promote the new release to handle the complete traffic after waiting for these many seconds
     """
 
     if IS_PYDANTIC_V2:

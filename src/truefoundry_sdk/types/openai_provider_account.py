@@ -22,36 +22,23 @@ class OpenaiProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=Name
-    +sort=100
-    +usage=The name of the OpenAI provider account
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
-    +uiProps={"disableEdit":true}
+    The name of the OpenAI provider account
     """
 
     auth_data: OpenaiApiKeyAuth
     base_url: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Base URL
-    +sort=300
-    +usage=Optional custom base URL for OpenAI API
-    +message=Base URL must not be empty
+    Optional custom base URL for OpenAI API
     """
 
     integrations: typing.List[OpenAiIntegrations] = pydantic.Field()
     """
-    +label=Integrations
-    +sort=400
-    +usage=List of integrations that are associated with the OpenAI provider account
-    +uiType=IntegrationsGroup
+    List of integrations that are associated with the OpenAI provider account
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    +label=Collaborators
-    +sort=500
-    +usage=List of users who have access to this provider account
-    +uiType=Collaborators
+    List of users who have access to this provider account
     """
 
     if IS_PYDANTIC_V2:

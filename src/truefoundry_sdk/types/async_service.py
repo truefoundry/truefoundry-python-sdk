@@ -13,7 +13,7 @@ from .worker_config import WorkerConfig
 
 class AsyncService(BaseService):
     """
-    +docs=Describes the configuration for the async-service
+    Describes the configuration for the async-service
     """
 
     type: typing.Literal["async-service"] = pydantic.Field(default="async-service")
@@ -23,9 +23,7 @@ class AsyncService(BaseService):
 
     replicas: AsyncServiceReplicas = pydantic.Field()
     """
-    +label=Replicas
-    +usage=Deploy multiple instances of your pods to distribute incoming traffic across them, ensuring effective load balancing.
-    +icon=fa-clone
+    Deploy multiple instances of your pods to distribute incoming traffic across them, ensuring effective load balancing.
     """
 
     rollout_strategy: typing.Optional[Rolling] = None

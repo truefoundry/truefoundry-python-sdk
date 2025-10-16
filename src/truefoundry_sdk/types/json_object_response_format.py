@@ -8,14 +8,12 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class JsonObjectResponseFormat(UniversalBaseModel):
     """
-    +label=JSON Object Response Format
-    +usage=Simple JSON mode response format
+    Simple JSON mode response format
     """
 
     type: typing.Literal["json_object"] = pydantic.Field(default="json_object")
     """
-    +label=Type
-    +usage=Type of response format
+    Type of response format
     """
 
     if IS_PYDANTIC_V2:

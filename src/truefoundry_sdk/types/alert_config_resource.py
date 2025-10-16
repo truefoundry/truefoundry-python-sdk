@@ -10,16 +10,12 @@ from .alert_config_resource_type import AlertConfigResourceType
 class AlertConfigResource(UniversalBaseModel):
     type: AlertConfigResourceType = pydantic.Field()
     """
-    +label=Resource Type
-    +usage=The type of resource this alert config belongs to. Can be either an application or a cluster.
-    +uiType=Hidden
+    The type of resource this alert config belongs to. Can be either an application or a cluster.
     """
 
     fqn: str = pydantic.Field()
     """
-    +label=Resource FQN
-    +usage=FQN of the resource this alert config belongs to.
-    +uiType=Hidden
+    FQN of the resource this alert config belongs to.
     """
 
     if IS_PYDANTIC_V2:

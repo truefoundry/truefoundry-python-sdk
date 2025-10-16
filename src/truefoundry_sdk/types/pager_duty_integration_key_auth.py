@@ -18,19 +18,12 @@ class PagerDutyIntegrationKeyAuth(UniversalBaseModel):
 
     integration_key: str = pydantic.Field()
     """
-    +label=Integration Key
-    +sort=100
-    +usage=The integration key for the PagerDuty integration
-    +uiType=Password
+    The integration key for the PagerDuty integration
     """
 
     integration_url: str = pydantic.Field()
     """
-    +label=Integration URL
-    +sort=200
-    +usage=The integration URL for the PagerDuty integration
-    +docs=The integration URL for the PagerDuty integration. This is the URL that will be used to send events to PagerDuty. eg. https://events.pagerduty.com/generic/2010-04-15/create_event.json
-    +placeholder=https://events.pagerduty.com/generic/2010-04-15/create_event.json
+    The integration URL for the PagerDuty integration
     """
 
     if IS_PYDANTIC_V2:

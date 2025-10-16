@@ -8,9 +8,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class AlertConfigResourceType(str, enum.Enum):
     """
-    +label=Resource Type
-    +usage=The type of resource this alert config belongs to. Can be either an application or a cluster.
-    +uiType=Hidden
+    The type of resource this alert config belongs to. Can be either an application or a cluster.
     """
 
     APPLICATION = "application"

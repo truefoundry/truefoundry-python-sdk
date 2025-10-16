@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class Nodepool(UniversalBaseModel):
     """
-    +label=Configured Nodepools
-    +usage=The nodepools that are already created in your cluster. This will be used to schedule your workloads on particular nodepools.
+    The nodepools that are already created in your cluster. This will be used to schedule your workloads on particular nodepools.
     """
 
     name: str

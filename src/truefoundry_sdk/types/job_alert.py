@@ -9,41 +9,29 @@ from .notification_target import NotificationTarget
 
 class JobAlert(UniversalBaseModel):
     """
-    +docs=Describes the configuration for the job alerts
-    +label=Alert
+    Describes the configuration for the job alerts
     """
 
     notification_channel: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Notification Channel
-    +usage=Specify the notification channel to send alerts to
-    +uiType=Hidden
-    +sort=660
+    Specify the notification channel to send alerts to
     """
 
     to_emails: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +label=To Emails
-    +usage=List of recipients' email addresses if the notification channel is Email.
-    +docs=Specify the emails to send alerts to
-    +uiType=Hidden
-    +sort=665
+    List of recipients' email addresses if the notification channel is Email.
     """
 
     notification_target: typing.Optional[NotificationTarget] = None
     on_start: typing.Optional[bool] = pydantic.Field(default=False)
     """
-    +label=On Start
-    +usage=Send an alert when the job starts
-    +sort=670
+    Send an alert when the job starts
     """
 
     on_completion: typing.Optional[bool] = False
     on_failure: typing.Optional[bool] = pydantic.Field(default=True)
     """
-    +label=On Failure
-    +usage=Send an alert when the job fails
-    +sort=690
+    Send an alert when the job fails
     """
 
     if IS_PYDANTIC_V2:

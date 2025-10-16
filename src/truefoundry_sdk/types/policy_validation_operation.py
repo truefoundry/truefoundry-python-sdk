@@ -13,9 +13,7 @@ class PolicyValidationOperation(UniversalBaseModel):
 
     type: typing.Literal["validate"] = pydantic.Field(default="validate")
     """
-    +label=Action Type
-    +usage=Mutates or Validates Resources
-    +value=validate
+    Mutates or Validates Resources
     """
 
     if IS_PYDANTIC_V2:

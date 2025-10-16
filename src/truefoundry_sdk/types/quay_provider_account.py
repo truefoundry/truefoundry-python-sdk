@@ -21,27 +21,18 @@ class QuayProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +uiProps={"disableEdit":true}
-    +label=Name
-    +usage=The name of the provider account.
-    +sort=100
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
+    The name of the provider account.
     """
 
     account_name: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Account Name
-    +usage=The name of the account on Quay.
-    +sort=200
+    The name of the account on Quay.
     """
 
     auth_data: typing.Optional[QuayBasicAuth] = None
     integrations: typing.List[QuayIntegrations] = pydantic.Field()
     """
-    +label=Integrations
-    +usage=List of integrations that are associated with the provider account.
-    +sort=400
-    +uiType=IntegrationsGroup
+    List of integrations that are associated with the provider account.
     """
 
     if IS_PYDANTIC_V2:

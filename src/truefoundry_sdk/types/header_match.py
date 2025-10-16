@@ -14,14 +14,12 @@ class HeaderMatch(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +docs=Header name to match on
-    +label=Name
+    Header name to match on
     """
 
     exact_match: str = pydantic.Field(default="")
     """
-    +docs=Header value to match on
-    +label=Value
+    Header value to match on
     """
 
     if IS_PYDANTIC_V2:

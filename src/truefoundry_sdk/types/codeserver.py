@@ -10,7 +10,7 @@ from .workbench_image import WorkbenchImage
 
 class Codeserver(BaseWorkbenchInput):
     """
-    +docs=Describes the configuration for the code server
+    Describes the configuration for the code server
     """
 
     type: typing.Literal["codeserver"] = pydantic.Field(default="codeserver")

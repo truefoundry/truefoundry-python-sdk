@@ -9,8 +9,7 @@ from .nats_user_password_auth import NatsUserPasswordAuth
 
 class CoreNatsOutputConfig(UniversalBaseModel):
     """
-    +docs=Describes the configuration for the output Core NATS worker
-    +label=Core NATS
+    Describes the configuration for the output Core NATS worker
     """
 
     type: typing.Literal["core-nats"] = pydantic.Field(default="core-nats")
@@ -20,17 +19,12 @@ class CoreNatsOutputConfig(UniversalBaseModel):
 
     nats_url: str = pydantic.Field()
     """
-    +label=NATS URL
-    +usage=Output NATS URL
-    +sort=1
+    Output NATS URL
     """
 
     root_subject: str = pydantic.Field()
     """
-    +label=Root Subject
-    +usage=Root subject of output NATS
-    +message=Output NATS root subject should only contain alphanumeric letters, dashes(-), and periods(.)
-    +sort=2
+    Root subject of output NATS
     """
 
     auth: typing.Optional[NatsUserPasswordAuth] = None

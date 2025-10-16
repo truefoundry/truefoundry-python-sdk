@@ -8,17 +8,14 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class ClusterManifestNodeLabelKeys(UniversalBaseModel):
     """
-    +label=Node Label Keys
-    +usage=The node label keys that this cluster supports.
+    The node label keys that this cluster supports.
     Note: You will additionally need to add `truefoundry.com/gpu_type` label for GPU-supported node pools.
     For more information, check out [this documentation](https://docs.truefoundry.com/docs/generic-control-plane#configuring-node-pools-for-truefoundry).
-    +sort=100
     """
 
     nodepool_selector_label: str = pydantic.Field()
     """
-    +label=Nodepool Selector Label
-    +usage=The nodepool selector label that this cluster supports
+    The nodepool selector label that this cluster supports
     """
 
     if IS_PYDANTIC_V2:

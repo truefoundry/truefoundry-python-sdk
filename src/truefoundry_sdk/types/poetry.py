@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class Poetry(UniversalBaseModel):
     """
-    +usage=Use `poetry` to setup env.
+    Use `poetry` to setup env.
     Your build context root must contain `pyproject.toml` and `poetry.lock`
     """
 
@@ -19,14 +19,12 @@ class Poetry(UniversalBaseModel):
 
     poetry_version: typing.Optional[str] = pydantic.Field(default="latest")
     """
-    +label=Poetry version
-    +usage=Poetry version to use
+    Poetry version to use
     """
 
     install_options: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Install options
-    +usage=install options to pass to poetry command
+    install options to pass to poetry command
     """
 
     if IS_PYDANTIC_V2:

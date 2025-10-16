@@ -8,8 +8,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class PortAppProtocol(str, enum.Enum):
     """
-    +label=Application Protocol
-    +usage=Application Protocol for the port.
+    Application Protocol for the port.
     Select the application protocol used by your service. For most use cases, this should be `http`(HTTP/1.1).
     If you are running a gRPC server, select the `grpc` option.
     This is only applicable if `expose=true`.

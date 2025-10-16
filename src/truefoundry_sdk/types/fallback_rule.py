@@ -15,19 +15,13 @@ class FallbackRule(UniversalBaseModel):
 
     id: str = pydantic.Field()
     """
-    +usage=Unique identifier for the rule
-    +uiProps={"descriptionInline":true}
-    +sort=1
-    +label=Rule ID
+    Unique identifier for the rule
     """
 
     when: FallbackWhen
     fallback_models: typing.List[FallbackModel] = pydantic.Field()
     """
-    +usage=List of fallback models to try in sequence
-    +uiProps={"descriptionInline":true}
-    +sort=3
-    +label=Fallback Models
+    List of fallback models to try in sequence
     """
 
     if IS_PYDANTIC_V2:

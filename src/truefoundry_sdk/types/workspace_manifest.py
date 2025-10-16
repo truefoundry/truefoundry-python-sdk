@@ -32,10 +32,7 @@ class WorkspaceManifest(UniversalBaseModel):
 
     environment_name: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Environment
-    +sort=300
-    +icon=fa-tags:#black
-    +usage=Tag the environment like dev, staging or production. You will need to [create environments](https://docs.truefoundry.com/docs/key-concepts#creating-environments) if you don't have already.
+    Tag the environment like dev, staging or production. You will need to [create environments](https://docs.truefoundry.com/docs/key-concepts#creating-environments) if you don't have already.
     """
 
     labels: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)

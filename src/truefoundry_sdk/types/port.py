@@ -11,28 +11,27 @@ from .port_protocol import PortProtocol
 
 class Port(UniversalBaseModel):
     """
-    +docs=Describes the ports the service should be exposed to.
+    Describes the ports the service should be exposed to.
     """
 
     port: int = pydantic.Field(default=80)
     """
-    +usage=Port number to expose.
+    Port number to expose.
     """
 
     protocol: PortProtocol = pydantic.Field()
     """
-    +usage=Protocol for the port.
+    Protocol for the port.
     """
 
     expose: bool = pydantic.Field(default=True)
     """
-    +usage=Expose the port
+    Expose the port
     """
 
     app_protocol: typing.Optional[PortAppProtocol] = pydantic.Field(default=None)
     """
-    +label=Application Protocol
-    +usage=Application Protocol for the port.
+    Application Protocol for the port.
     Select the application protocol used by your service. For most use cases, this should be `http`(HTTP/1.1).
     If you are running a gRPC server, select the `grpc` option.
     This is only applicable if `expose=true`.
@@ -40,29 +39,25 @@ class Port(UniversalBaseModel):
 
     host: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +usage=Host e.g. ai.example.com, app.truefoundry.com
-    +message=Upto 253 characters, each part of host should be at most 63 characters long, can contain alphabets, digits and hypen, must begin and end with an alphanumeric characters. Parts must be separated by periods (.)
+    Host e.g. ai.example.com, app.truefoundry.com
     """
 
     path: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +usage=Path e.g. /v1/api/ml/, /v2/docs/
-    +message=Should begin and end with a forward slash (/). Each part can can contain alphabets, digits and hypen, must begin and end with an alphanumeric characters. Parts should be separated by forward slashes (/)
+    Path e.g. /v1/api/ml/, /v2/docs/
     """
 
     rewrite_path_to: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Rewrite Path to
-    +usage=Rewrite the path prefix to a different path.
+    Rewrite the path prefix to a different path.
     If `path` is `/v1/api` and `rewrite_path_to` is `/api`. The URI in the HTTP request `http://0.0.0.0:8080/v1/api/houses` will be rewritten to `http://0.0.0.0:8080/api/houses` before the request is forwarded your service.
     Defaults to `/`.
     This is only applicable if `path` is given.
-    +message=Should begin and end with a forward slash (/). Each part can can contain alphabets, digits and hypen, must begin and end with an alphanumeric characters. Parts should be separated by forward slashes (/)
     """
 
     auth: typing.Optional[PortAuth] = pydantic.Field(default=None)
     """
-    +usage=Authentication method for inbound traffic
+    Authentication method for inbound traffic
     """
 
     if IS_PYDANTIC_V2:

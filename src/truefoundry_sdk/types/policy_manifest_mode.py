@@ -8,10 +8,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class PolicyManifestMode(str, enum.Enum):
     """
-    +label=Mode
-    +usage=Mode of the policy: `Audit` logs all policy evaluations without blocking deployments. `Enforce` blocks deployments if the policy fails. `Disabled` deactivates the policy.
-    +uiType=MultiSelectPills
-    +sort=6
+    Mode of the policy: `Audit` logs all policy evaluations without blocking deployments. `Enforce` blocks deployments if the policy fails. `Disabled` deactivates the policy.
     """
 
     AUDIT = "audit"

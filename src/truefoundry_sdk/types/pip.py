@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class Pip(UniversalBaseModel):
     """
-    +usage=Use pip to install requirements files and packages
-    +label=Pip
+    Use pip to install requirements files and packages
     """
 
     type: typing.Literal["pip"] = pydantic.Field(default="pip")
@@ -19,16 +18,13 @@ class Pip(UniversalBaseModel):
 
     requirements_path: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Path to requirements
-    +usage=Path to `requirements.txt` relative to `Path to build context`
+    Path to `requirements.txt` relative to `Path to build context`
     """
 
     pip_packages: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +label=Pip packages to install
-    +usage=Define pip package requirements.
+    Define pip package requirements.
     In Python/YAML E.g. ["fastapi>=0.90,<1.0", "uvicorn"]
-    +placeholder=Enter a pip package name E.g. fastapi>=0.90,<1.0
     """
 
     if IS_PYDANTIC_V2:

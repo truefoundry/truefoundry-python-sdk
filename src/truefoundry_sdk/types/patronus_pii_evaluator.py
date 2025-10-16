@@ -10,9 +10,7 @@ from .patronus_pii_criteria import PatronusPiiCriteria
 class PatronusPiiEvaluator(UniversalBaseModel):
     type: typing.Literal["pii"] = pydantic.Field(default="pii")
     """
-    +label=Evaluator Type
-    +usage=The type of the evaluator to use for the Patronus Guardrail.
-    +sort=100
+    The type of the evaluator to use for the Patronus Guardrail.
     """
 
     criteria: PatronusPiiCriteria = "patronus:pii"

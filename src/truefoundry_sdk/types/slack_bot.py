@@ -14,19 +14,12 @@ class SlackBot(UniversalBaseModel):
 
     notification_channel: str = pydantic.Field()
     """
-    +label=Notification Channel
-    +usage=Specify the notification channel to send alerts to
-    +uiType=AlertNotificationChannel
-    +uiProps={"integrationType":"notification-channel"}
-    +sort=660
+    Specify the notification channel to send alerts to
     """
 
     channels: typing.List[str] = pydantic.Field()
     """
-    +label=Slack Channel Names
-    +usage=List of channels to send messages to.
-    +message=3 to 81 lower case characters long alphanumeric word, may contain - or _ in between, must start with #
-    +sort=665
+    List of channels to send messages to.
     """
 
     if IS_PYDANTIC_V2:

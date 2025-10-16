@@ -8,10 +8,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class PaloAltoPrismaAirsGuardrailConfigMode(str, enum.Enum):
     """
-    +label=Mode
-    +usage=Execution mode for the guardrail. Sync waits for the guardrail check to complete before proceeding. Async triggers the check without waiting. Defaults to sync.
-    +sort=70
-    +uiType=Select
+    Execution mode for the guardrail. Sync waits for the guardrail check to complete before proceeding. Async triggers the check without waiting. Defaults to sync.
     """
 
     SYNC = "sync"

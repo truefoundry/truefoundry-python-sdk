@@ -17,11 +17,7 @@ class AzurePiiGuardrailConfig(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=Name
-    +sort=50
-    +usage=The name of the Guardrail Config.
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
-    +uiProps={"disableEdit":true}
+    The name of the Guardrail Config.
     """
 
     type: typing.Literal["integration/guardrail-config/azure-pii"] = pydantic.Field(
@@ -34,53 +30,37 @@ class AzurePiiGuardrailConfig(UniversalBaseModel):
 
     resource_name: str = pydantic.Field()
     """
-    +label=Resource Name
-    +usage=The resource name where API is deployed.
-    +sort=50
+    The resource name where API is deployed.
     """
 
     api_version: str = pydantic.Field(default="2024-11-01")
     """
-    +label=API Version
-    +usage=API version for the Content Safety API
-    +sort=100
+    API version for the Content Safety API
     """
 
     custom_host: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Custom Host
-    +usage=Custom host for the PII detection API
-    +sort=200
-    +uiType=Hidden
+    Custom host for the PII detection API
     """
 
     domain: AzurePiiGuardrailConfigDomain = pydantic.Field()
     """
-    +label=Domain
-    +usage=Domain for PII detection
-    +sort=400
+    Domain for PII detection
     """
 
     pii_categories: typing.List[AzurePiiCategory] = pydantic.Field()
     """
-    +label=PII Categories
-    +usage=Categories of PII to detect.
-    +sort=500
-    +uiType=MultiSelectPills
+    Categories of PII to detect.
     """
 
     model_version: str = pydantic.Field(default="latest")
     """
-    +label=Model Version
-    +usage=Version of the PII detection model to use
-    +sort=600
+    Version of the PII detection model to use
     """
 
     language: str = pydantic.Field(default="en")
     """
-    +label=Language Code
-    +usage=Language code for PII detection
-    +sort=700
+    Language code for PII detection
     """
 
     auth_data: AzureKeyAuth

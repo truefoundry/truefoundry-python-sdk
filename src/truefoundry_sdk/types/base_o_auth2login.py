@@ -9,50 +9,37 @@ from .base_o_auth2login_jwt_source import BaseOAuth2LoginJwtSource
 
 class BaseOAuth2Login(UniversalBaseModel):
     """
-    +label=OAuth2 Client Configuration
-    +usage=OAuth2 client configuration to get the JWT.
+    OAuth2 client configuration to get the JWT.
     """
 
     client_id: str = pydantic.Field()
     """
-    +label=Client ID
-    +usage=client ID for OAuth2.
-    +sort=200
+    client ID for OAuth2.
     """
 
     client_secret: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Client Secret
-    +usage=Client secret or the TrueFoundry secret containing the client secret for OAuth2.
-    +sort=300
+    Client secret or the TrueFoundry secret containing the client secret for OAuth2.
     """
 
     authorization_url: str = pydantic.Field()
     """
-    +label=Authorization URL
-    +usage=URL for the authorization request
-    +sort=400
+    URL for the authorization request
     """
 
     token_url: str = pydantic.Field()
     """
-    +label=Token URL
-    +usage=The endpoint to exchange auth code for tokens.
-    +sort=500
+    The endpoint to exchange auth code for tokens.
     """
 
     scopes: typing.List[str] = pydantic.Field()
     """
-    +label=Scopes
-    +usage=List of scopes to request from the OAuth2 provider.
-    +sort=600
+    List of scopes to request from the OAuth2 provider.
     """
 
     jwt_source: BaseOAuth2LoginJwtSource = pydantic.Field()
     """
-    +label=JWT Source
-    +usage=Source of the JWT token to be used for verification.
-    +sort=700
+    Source of the JWT token to be used for verification.
     """
 
     if IS_PYDANTIC_V2:

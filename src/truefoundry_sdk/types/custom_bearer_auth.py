@@ -14,9 +14,7 @@ class CustomBearerAuth(UniversalBaseModel):
 
     bearer_token: str = pydantic.Field()
     """
-    +label=Bearer Token
-    +usage=The bearer token for the custom bearer authentication.
-    +sort=100
+    The bearer token for the custom bearer authentication.
     """
 
     if IS_PYDANTIC_V2:

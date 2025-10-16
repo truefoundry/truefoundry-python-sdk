@@ -9,8 +9,7 @@ from .kafka_sasl_auth import KafkaSaslAuth
 
 class KafkaOutputConfig(UniversalBaseModel):
     """
-    +docs=Describes the configuration for the output Kafka worker
-    +label=Kafka
+    Describes the configuration for the output Kafka worker
     """
 
     type: typing.Literal["kafka"] = pydantic.Field(default="kafka")
@@ -20,22 +19,17 @@ class KafkaOutputConfig(UniversalBaseModel):
 
     bootstrap_servers: str = pydantic.Field()
     """
-    +label=Bootstrap servers
-    +usage='Kafka Bootstrap servers - Comma separated list of Kafka brokers "hostname:port" to connect to for bootstrap'
-    +sort=1
+    'Kafka Bootstrap servers - Comma separated list of Kafka brokers "hostname:port" to connect to for bootstrap'
     """
 
     topic_name: str = pydantic.Field()
     """
-    +label=Topic Name
-    +usage=Kafka topic to publish to
-    +sort=2
+    Kafka topic to publish to
     """
 
     tls: bool = pydantic.Field(default=True)
     """
-    +label=TLS
-    +usage=TLS configuration for SASL authentication
+    TLS configuration for SASL authentication
     """
 
     auth: typing.Optional[KafkaSaslAuth] = None

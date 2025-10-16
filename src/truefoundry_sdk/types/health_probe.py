@@ -9,36 +9,34 @@ from .http_probe import HttpProbe
 
 class HealthProbe(UniversalBaseModel):
     """
-    +docs=Describes the configuration for the Health Probe's
+    Describes the configuration for the Health Probe's
     To learn more you can go [here](https://docs.truefoundry.com/docs/liveness-readiness-probe)
-    +icon=fa-heart
-    +uiType=HealthProbe
     """
 
     config: HttpProbe
     initial_delay_seconds: typing.Optional[int] = pydantic.Field(default=0)
     """
-    +usage=Time to wait after container has started before checking the endpoint
+    Time to wait after container has started before checking the endpoint
     """
 
     period_seconds: typing.Optional[int] = pydantic.Field(default=10)
     """
-    +usage=How often to check the endpoint
+    How often to check the endpoint
     """
 
     timeout_seconds: typing.Optional[int] = pydantic.Field(default=1)
     """
-    +usage=Time to wait for a response from the endpoint before considering it down
+    Time to wait for a response from the endpoint before considering it down
     """
 
     success_threshold: typing.Optional[int] = pydantic.Field(default=1)
     """
-    +usage=Number of successful responses from the endpoint before container is considered healthy
+    Number of successful responses from the endpoint before container is considered healthy
     """
 
     failure_threshold: typing.Optional[int] = pydantic.Field(default=3)
     """
-    +usage=Number of consecutive failures before the container is considered down
+    Number of consecutive failures before the container is considered down
     """
 
     if IS_PYDANTIC_V2:

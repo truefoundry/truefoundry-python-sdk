@@ -14,21 +14,18 @@ class MirrorAction(UniversalBaseModel):
 
     service_uri: str = pydantic.Field()
     """
-    +docs=Service uri to mirror to. This is the kubernetes fully qualified domain name that the target service can be reached on
+    Service uri to mirror to. This is the kubernetes fully qualified domain name that the target service can be reached on
     Eg - For a service called `sample-service` in workspace `ws` this would be `sample-service.ws.svc.cluster.local
-    +label=Service URI
     """
 
     port: int = pydantic.Field()
     """
-    +docs=Port to redirect the service traffic to
-    +label=Target port
+    Port to redirect the service traffic to
     """
 
     percentage: int = pydantic.Field()
     """
-    +docs=Percentage of requests to mirror
-    +label=Percentage
+    Percentage of requests to mirror
     """
 
     if IS_PYDANTIC_V2:

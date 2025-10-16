@@ -14,9 +14,7 @@ class FiddlerKeyAuth(UniversalBaseModel):
 
     api_key: str = pydantic.Field()
     """
-    +uiType=Password
-    +sort=100
-    +usage=API key for the Fiddler account
+    API key for the Fiddler account
     """
 
     if IS_PYDANTIC_V2:

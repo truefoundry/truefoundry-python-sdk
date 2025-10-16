@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class AiFeaturesSettings(UniversalBaseModel):
     """
-    +docs=Describes the configuration for TrueFoundry AI features
-    +label=AI Features Settings
+    Describes the configuration for TrueFoundry AI features
     """
 
     type: typing.Literal["settings/ai-features"] = pydantic.Field(default="settings/ai-features")
@@ -19,18 +18,14 @@ class AiFeaturesSettings(UniversalBaseModel):
 
     enabled: bool = pydantic.Field()
     """
-    +label=Enabled
-    +usage=Enable/Disable AI features.
+    Enable/Disable AI features.
     Other fields only apply when this is true
-    +sort=1
     """
 
     ai_provider: typing.Literal["truefoundry"] = pydantic.Field(default="truefoundry")
     """
-    +label=AI Provider
-    +usage=AI provider to use for AI features
+    AI provider to use for AI features
     When TrueFoundry is selected, TrueFoundry will manage and provide the AI models for the features.
-    +uiProps={"disableEdit":true}
     """
 
     if IS_PYDANTIC_V2:

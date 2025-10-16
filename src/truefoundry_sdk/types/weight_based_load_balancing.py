@@ -21,10 +21,7 @@ class WeightBasedLoadBalancing(UniversalBaseModel):
 
     load_balance_targets: typing.List[LoadBalanceTarget] = pydantic.Field()
     """
-    +usage=List of targets for load balancing with weights
-    +uiProps={"descriptionInline":true}
-    +sort=4
-    +label=Load Balance Targets
+    List of targets for load balancing with weights
     """
 
     if IS_PYDANTIC_V2:

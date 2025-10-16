@@ -10,7 +10,7 @@ from .workbench_image import WorkbenchImage
 
 class SshServer(BaseWorkbenchInput):
     """
-    +docs=Describes the configuration for the ssh server
+    Describes the configuration for the ssh server
     """
 
     type: typing.Literal["ssh-server"] = pydantic.Field(default="ssh-server")
@@ -21,20 +21,14 @@ class SshServer(BaseWorkbenchInput):
     image: WorkbenchImage
     ssh_public_key: str = pydantic.Field()
     """
-    +label: SSH Public Key
-    +usage=Add Your SSH Public Key, this will be used to authenticate you to the SSH Server.  \
+    Add Your SSH Public Key, this will be used to authenticate you to the SSH Server.  \
     You can find it using `cat ~/.ssh/id_rsa.pub` in Mac/Linux or `type $home\.ssh\id_rsa.pub` in Windows Powershell.  \
     You can also generate a new SSH key pair using `ssh-keygen -t rsa` in your local terminal. (same for both Mac/Linux and Windows Powershell)
-    +uiType=TextArea
-    +sort=4
     """
 
     cull_timeout: typing.Optional[int] = pydantic.Field(default=None)
     """
-    +label=Stop after (minutes of inactivity)
-    +usage=Stop the SSH Server instance after this much time in minutes of inactivity. The instance is considered active if there is at least one active SSH connection (a client connected to the SSH server), or if a background job is running using tmux or screen, or if the pod has restarted.
-    +sort=5
-    +uiProps={"descriptionInline":true, "warningMessage":"Please note that stop after inactivity is only available for images with tag(including custom images) >= v0.3.10"}
+    Stop the SSH Server instance after this much time in minutes of inactivity. The instance is considered active if there is at least one active SSH connection (a client connected to the SSH server), or if a background job is running using tmux or screen, or if the pod has restarted.
     """
 
     if IS_PYDANTIC_V2:

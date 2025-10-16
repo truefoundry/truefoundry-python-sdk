@@ -21,27 +21,17 @@ class AzureFoundryProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=Name
-    +sort=100
-    +usage=The name of the Azure Foundry provider account
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
-    +uiProps={"disableEdit":true}
+    The name of the Azure Foundry provider account
     """
 
     integrations: typing.List[AzureFoundryModelV2] = pydantic.Field()
     """
-    +label=Integrations
-    +sort=200
-    +usage=List of integrations that are associated with the Azure Foundry provider account
-    +uiType=IntegrationsGroup
+    List of integrations that are associated with the Azure Foundry provider account
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    +label=Collaborators
-    +sort=300
-    +usage=List of users who have access to this provider account
-    +uiType=Collaborators
+    List of users who have access to this provider account
     """
 
     if IS_PYDANTIC_V2:

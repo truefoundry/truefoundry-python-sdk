@@ -22,42 +22,27 @@ class DatabricksProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=Name
-    +sort=100
-    +usage=The name of the Databricks provider account
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
-    +uiProps={"disableEdit":true}
+    The name of the Databricks provider account
     """
 
     auth_data: DatabricksProviderAccountAuthData = pydantic.Field()
     """
-    +label=Auth Data
-    +sort=300
-    +usage=Databricks authentication credentials
+    Databricks authentication credentials
     """
 
     base_url: str = pydantic.Field()
     """
-    +label=Base URL
-    +sort=400
-    +usage=The base URL of your Databricks workspace
-    +message=Base URL must not be empty
+    The base URL of your Databricks workspace
     """
 
     integrations: typing.List[DatabricksIntegrations] = pydantic.Field()
     """
-    +label=Integrations
-    +sort=500
-    +usage=List of integrations that are associated with the Databricks provider account
-    +uiType=IntegrationsGroup
+    List of integrations that are associated with the Databricks provider account
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    +label=Collaborators
-    +sort=200
-    +usage=List of users who have access to this provider account
-    +uiType=Collaborators
+    List of users who have access to this provider account
     """
 
     if IS_PYDANTIC_V2:

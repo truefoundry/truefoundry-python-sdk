@@ -9,16 +9,12 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 class KafkaSaslAuth(UniversalBaseModel):
     username: str = pydantic.Field()
     """
-    +label=Username
-    +usage=Username for SASL authentication
-    +sort=1
+    Username for SASL authentication
     """
 
     password: str = pydantic.Field()
     """
-    +label=Password
-    +usage=Password for SASL authentication
-    +sort=2
+    Password for SASL authentication
     """
 
     if IS_PYDANTIC_V2:

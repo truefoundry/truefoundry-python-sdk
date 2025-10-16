@@ -8,7 +8,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class PortProtocol(str, enum.Enum):
     """
-    +usage=Protocol for the port.
+    Protocol for the port.
     """
 
     TCP = "TCP"

@@ -30,29 +30,18 @@ class ClusterManifest(UniversalBaseModel):
 
     cluster_type: ClusterManifestClusterType = pydantic.Field()
     """
-    +label=Cluster Type
-    +icon=fa-cloud:#7EC8E3
-    +sort=20
-    +usage=The cluster type of this cluster
+    The cluster type of this cluster
     """
 
     environment_names: typing.List[str] = pydantic.Field()
     """
-    +label=Environments
-    +icon=fa-tags:#black
-    +usage=Tag the environment like dev, staging or production. You will need to [create environments](https://docs.truefoundry.com/docs/key-concepts#creating-environments) if you don't have already.
-    +sort=30
+    Tag the environment like dev, staging or production. You will need to [create environments](https://docs.truefoundry.com/docs/key-concepts#creating-environments) if you don't have already.
     """
 
     base_domains: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +label=Base Domain URLs
-    +placeholder=Enter Base Domain URL eg. devtest.mydomain.com or *.mydomain.com
-    +usage=One or more base URLs, which can be either a wildcard domain (resulting in app URLs like `<app-name>-<workspace-name>.<base-domain-URL>`) or a non-wildcard domain (resulting in app URLs like `<base-domain-URL>/<app-name>-<workspace-name>`)
+    One or more base URLs, which can be either a wildcard domain (resulting in app URLs like `<app-name>-<workspace-name>.<base-domain-URL>`) or a non-wildcard domain (resulting in app URLs like `<base-domain-URL>/<app-name>-<workspace-name>`)
     > Read more about routing [here](https://docs.truefoundry.com/docs/routing) and about 'A' record and domain mapping [here](https://docs.truefoundry.com/docs/setting-up-domain)
-    +icon=fa-globe:#68BBE3
-    +sort=40
-    +message=Domain URL should be valid domain or IP address
     """
 
     monitoring: typing.Optional[ClusterManifestMonitoring] = pydantic.Field(default=None)
@@ -94,26 +83,20 @@ class ClusterManifest(UniversalBaseModel):
 
     supported_nodepools: typing.Optional[typing.List[Nodepool]] = pydantic.Field(default=None)
     """
-    +label=Nodepools
-    +usage=Add nodepools that are already created in your cluster.
+    Add nodepools that are already created in your cluster.
     When deploying, applications can choose to schedule from these nodepools.
-    +sort=90
     """
 
     node_label_keys: typing.Optional[ClusterManifestNodeLabelKeys] = pydantic.Field(default=None)
     """
-    +label=Node Label Keys
-    +usage=The node label keys that this cluster supports.
+    The node label keys that this cluster supports.
     Note: You will additionally need to add `truefoundry.com/gpu_type` label for GPU-supported node pools.
     For more information, check out [this documentation](https://docs.truefoundry.com/docs/generic-control-plane#configuring-node-pools-for-truefoundry).
-    +sort=100
     """
 
     collaborators: typing.List[Collaborator] = pydantic.Field()
     """
-    +label=Collaborators
-    +usage=Collaborators who can access this cluster
-    +sort=110
+    Collaborators who can access this cluster
     """
 
     if IS_PYDANTIC_V2:

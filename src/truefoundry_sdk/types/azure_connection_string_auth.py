@@ -18,9 +18,7 @@ class AzureConnectionStringAuth(UniversalBaseModel):
 
     connection_string: str = pydantic.Field()
     """
-    +label=Connection String
-    +usage=The connection string for the Azure managed identity.
-    +sort=100
+    The connection string for the Azure managed identity.
     """
 
     if IS_PYDANTIC_V2:

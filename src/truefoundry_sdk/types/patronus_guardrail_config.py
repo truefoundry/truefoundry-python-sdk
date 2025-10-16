@@ -17,11 +17,7 @@ class PatronusGuardrailConfig(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=Name
-    +sort=50
-    +usage=The name of the Guardrail Config.
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
-    +uiProps={"disableEdit":true}
+    The name of the Guardrail Config.
     """
 
     type: typing.Literal["integration/guardrail-config/patronus"] = pydantic.Field(
@@ -35,17 +31,12 @@ class PatronusGuardrailConfig(UniversalBaseModel):
     auth_data: PatronusKeyAuth
     target: PatronusGuardrailConfigTarget = pydantic.Field()
     """
-    +label=Target
-    +usage=The type of request to use for the Patronus Guardrail.
-    +sort=100
-    +uiType=Select
+    The type of request to use for the Patronus Guardrail.
     """
 
     evaluators: typing.List[PatronusEvaluator] = pydantic.Field()
     """
-    +label=Evaluators
-    +usage=The evaluators to use for the Patronus Guardrail.
-    +sort=200
+    The evaluators to use for the Patronus Guardrail.
     """
 
     if IS_PYDANTIC_V2:

@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class HuggingfaceArtifactSource(UniversalBaseModel):
     """
-    +docs=Input for Artifact from Huggingface Model Hub
-    +label=Huggingface Model Source
+    Input for Artifact from Huggingface Model Hub
     """
 
     type: typing.Literal["huggingface-hub"] = pydantic.Field(default="huggingface-hub")
@@ -19,26 +18,22 @@ class HuggingfaceArtifactSource(UniversalBaseModel):
 
     model_id: str = pydantic.Field()
     """
-    +label=Model ID
-    +usage=Model ID of the artifact to be downloaded
+    Model ID of the artifact to be downloaded
     """
 
     revision: str = pydantic.Field()
     """
-    +label=Revision
-    +usage=Revision of the artifact to be downloaded
+    Revision of the artifact to be downloaded
     """
 
     ignore_patterns: typing.List[str] = pydantic.Field()
     """
-    +label=Ignore Patterns
-    +usage=List of patterns to ignore while downloading the artifact
+    List of patterns to ignore while downloading the artifact
     """
 
     download_path_env_variable: str = pydantic.Field()
     """
-    +label=Download Path Environment Variable
-    +usage=Environment variable which will contain the download path of the artifact
+    Environment variable which will contain the download path of the artifact
     """
 
     if IS_PYDANTIC_V2:

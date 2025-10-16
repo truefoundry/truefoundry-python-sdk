@@ -8,29 +8,22 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class NatsUserPasswordAuth(UniversalBaseModel):
     """
-    +docs=NATS User Password Authentication
-    +label=NATS User Password Authentication
+    NATS User Password Authentication
     """
 
     account_name: str = pydantic.Field(default="$G")
     """
-    +label=Account Name
-    +usage=Name of the NATS account
-    +sort=1
+    Name of the NATS account
     """
 
     user: str = pydantic.Field()
     """
-    +label=User
-    +usage=User for NATS authentication
-    +sort=2
+    User for NATS authentication
     """
 
     password: str = pydantic.Field()
     """
-    +label=Password
-    +usage=Password for NATS authentication
-    +sort=3
+    Password for NATS authentication
     """
 
     if IS_PYDANTIC_V2:

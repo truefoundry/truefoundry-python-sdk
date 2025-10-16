@@ -11,7 +11,7 @@ from .workflow_source import WorkflowSource
 
 class Workflow(UniversalBaseModel):
     """
-    +docs=Describes the configuration for the worflow
+    Describes the configuration for the worflow
     """
 
     type: typing.Literal["workflow"] = pydantic.Field(default="workflow")
@@ -21,24 +21,17 @@ class Workflow(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +usage=Name of the workflow
-    +sort=1
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
+    Name of the workflow
     """
 
     source: WorkflowSource = pydantic.Field()
     """
-    +docs=Source Code for the workflow, either local or remote
-    +label=Source Code for your workflow
-    +icon=fa-solid fa-cloud-arrow-up:#21B6A8
-    +sort=200
+    Source Code for the workflow, either local or remote
     """
 
     workflow_file_path: str = pydantic.Field()
     """
-    +label=Workflow File Path
-    +docs=Path to the workflow file relative to the project root path
-    +sort=550
+    Path to the workflow file relative to the project root path
     """
 
     flyte_entities: typing.Optional[typing.List[WorkflowFlyteEntitiesItem]] = pydantic.Field(default=None)

@@ -10,9 +10,7 @@ from .patronus_phi_criteria import PatronusPhiCriteria
 class PatronusPhiEvaluator(UniversalBaseModel):
     type: typing.Literal["phi"] = pydantic.Field(default="phi")
     """
-    +label=Evaluator Type
-    +usage=The type of the evaluator to use for the Patronus Guardrail.
-    +sort=100
+    The type of the evaluator to use for the Patronus Guardrail.
     """
 
     criteria: PatronusPhiCriteria = "patronus:phi"

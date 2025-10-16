@@ -16,9 +16,7 @@ class Volume(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +sort=1
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
-    +usage=Name of the Volume. This will be set as the volume name.
+    Name of the Volume. This will be set as the volume name.
     """
 
     config: VolumeConfig = pydantic.Field()
@@ -31,9 +29,7 @@ class Volume(UniversalBaseModel):
     volume_browser: typing.Optional[VolumeBrowser] = None
     workspace_fqn: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Workspace FQN
-    +docs=Fully qualified name of the workspace
-    +uiType=Hidden
+    Fully qualified name of the workspace
     """
 
     if IS_PYDANTIC_V2:

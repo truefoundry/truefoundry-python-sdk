@@ -20,34 +20,22 @@ class VirtualMcpServerIntegration(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=Name
-    +usage=The name of the Virtual MCP Server.
-    +sort=100
+    The name of the Virtual MCP Server.
     """
 
     description: str = pydantic.Field()
     """
-    +label=Description
-    +usage=Provide a brief description of the purpose of this Virtual MCP Server.
-    +uiType=TextArea
-    +message=1 to 1000 characters long, may contain any character except newlines
-    +sort=200
-    +uiProps={"descriptionInline":true}
+    Provide a brief description of the purpose of this Virtual MCP Server.
     """
 
     servers: typing.List[VirtualMcpServerSource] = pydantic.Field()
     """
-    +label=Source MCP Servers
-    +usage=List of source MCP servers to include in this virtual server.
-    +sort=300
+    List of source MCP servers to include in this virtual server.
     """
 
     authorized_subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +label=Access Control
-    +usage=List of teams/users who can use this MCP server.
-    +sort=400
-    +uiType=AuthorizedSubjects
+    List of teams/users who can use this MCP server.
     """
 
     if IS_PYDANTIC_V2:

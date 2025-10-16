@@ -19,38 +19,27 @@ class SmtpCredentials(UniversalBaseModel):
 
     host: str = pydantic.Field()
     """
-    +label=Host
-    +usage=The SMTP host of the email server.
-    +sort=300
+    The SMTP host of the email server.
     """
 
     username: str = pydantic.Field()
     """
-    +label=Username
-    +usage=The username for the SMTP server.
-    +sort=400
+    The username for the SMTP server.
     """
 
     password: str = pydantic.Field()
     """
-    +label=Password
-    +usage=The password for the SMTP server.
-    +sort=500
-    +uiType=Password
+    The password for the SMTP server.
     """
 
     port: int = pydantic.Field(default=587)
     """
-    +label=Port
-    +usage=The port of the SMTP server.
-    +sort=600
+    The port of the SMTP server.
     """
 
     tls: bool = pydantic.Field(default=True)
     """
-    +label=TLS
-    +usage=Whether to use TLS for the SMTP server.
-    +sort=700
+    Whether to use TLS for the SMTP server.
     """
 
     if IS_PYDANTIC_V2:

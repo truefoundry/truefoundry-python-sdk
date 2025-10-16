@@ -22,36 +22,23 @@ class AzureOpenAiProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=Name
-    +sort=100
-    +usage=The name of the Azure OpenAI provider account
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
-    +uiProps={"disableEdit":true}
+    The name of the Azure OpenAI provider account
     """
 
     azure_endpoint: str = pydantic.Field()
     """
-    +label=Azure Endpoint
-    +sort=300
-    +usage=The Azure OpenAI Service endpoint URL
-    +message=Endpoint URL must not be empty
+    The Azure OpenAI Service endpoint URL
     """
 
     auth_data: AzureKeyAuth
     integrations: typing.List[AzureOpenAiModelV2] = pydantic.Field()
     """
-    +label=Integrations
-    +sort=500
-    +usage=List of integrations that are associated with the Azure OpenAI provider account
-    +uiType=IntegrationsGroup
+    List of integrations that are associated with the Azure OpenAI provider account
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    +label=Collaborators
-    +sort=200
-    +usage=List of users who have access to this provider account
-    +uiType=Collaborators
+    List of users who have access to this provider account
     """
 
     if IS_PYDANTIC_V2:

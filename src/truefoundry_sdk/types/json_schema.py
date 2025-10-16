@@ -10,24 +10,19 @@ from ..core.serialization import FieldMetadata
 
 class JsonSchema(UniversalBaseModel):
     """
-    +label=JSON Schema
-    +usage=JSON schema for structured output
+    JSON schema for structured output
     """
 
     name: str = pydantic.Field()
     """
-    +label=Name
-    +usage=Name of the schema
+    Name of the schema
     """
 
     schema_: typing_extensions.Annotated[
         typing.Dict[str, typing.Optional[typing.Any]], FieldMetadata(alias="schema")
     ] = pydantic.Field()
     """
-    +label=Schema
-    +usage=JSON schema object defining the expected structure
-    +uiType=JsonInput
-    +uiProps={"descriptionInline":true}
+    JSON schema object defining the expected structure
     """
 
     if IS_PYDANTIC_V2:

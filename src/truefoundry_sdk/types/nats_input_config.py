@@ -9,8 +9,7 @@ from .nats_user_password_auth import NatsUserPasswordAuth
 
 class NatsInputConfig(UniversalBaseModel):
     """
-    +docs=Describes the configuration for the input NATS worker
-    +label=NATS
+    Describes the configuration for the input NATS worker
     """
 
     type: typing.Literal["nats"] = pydantic.Field(default="nats")
@@ -20,46 +19,32 @@ class NatsInputConfig(UniversalBaseModel):
 
     nats_url: str = pydantic.Field()
     """
-    +label=NATS URL
-    +usage=Input NATS URL
-    +sort=1
+    Input NATS URL
     """
 
     stream_name: str = pydantic.Field()
     """
-    +label=Stream Name
-    +usage=Name of the NATS stream
-    +sort=2
+    Name of the NATS stream
     """
 
     root_subject: str = pydantic.Field()
     """
-    +label=Root Subject
-    +usage=Root subject of input NATS
-    +message=Input NATS root subject should only contain alphanumeric letters, dashes(-), and periods(.)
-    +sort=3
+    Root subject of input NATS
     """
 
     consumer_name: str = pydantic.Field()
     """
-    +label=Consumer Name
-    +usage=Consumer name of input NATS
-    +message=Consumer name should only contain alphanumeric letters, dashes(-), and underscores(_)
-    +sort=4
+    Consumer name of input NATS
     """
 
     wait_time_seconds: int = pydantic.Field(default=19)
     """
-    +label=Wait Time Seconds
-    +usage=Wait timeout for long polling.
-    +sort=5
+    Wait timeout for long polling.
     """
 
     nats_metrics_url: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=NATS metrics URL
-    +usage=URL for the NATS metrics endpoint. It is compulsory if you want to use NATS autoscaling.
-    +message=NATS Metrics URL should be a valid HTTP/HTTPS URL
+    URL for the NATS metrics endpoint. It is compulsory if you want to use NATS autoscaling.
     """
 
     auth: typing.Optional[NatsUserPasswordAuth] = None

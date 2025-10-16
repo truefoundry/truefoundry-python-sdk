@@ -8,10 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class RemoteSource(UniversalBaseModel):
     """
-    +docs=Describes that we are using code stored in a remote respository to build our image
-    +label=S3
-    +icon=fa-brands fa-aws:black
-    +sort=200
+    Describes that we are using code stored in a remote respository to build our image
     """
 
     type: typing.Literal["remote"] = pydantic.Field(default="remote")
@@ -21,8 +18,7 @@ class RemoteSource(UniversalBaseModel):
 
     remote_uri: str = pydantic.Field()
     """
-    +docs=Remote repository URI
-    +label=Remote URI
+    Remote repository URI
     """
 
     if IS_PYDANTIC_V2:

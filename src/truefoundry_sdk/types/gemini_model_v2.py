@@ -21,35 +21,23 @@ class GeminiModelV2(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=Display Name
-    +sort=1
-    +usage=Name to identify this Gemini model in the UI
-    +message=2 to 62 characters long alphanumeric word, may contain - or . in between, cannot start with a number
+    Name to identify this Gemini model in the UI
     """
 
     model_id: str = pydantic.Field()
     """
-    +label=Model ID
-    +sort=2
-    +usage=The unique identifier for the Gemini model
-    +message=Model ID must not be empty
+    The unique identifier for the Gemini model
     """
 
     model_types: typing.List[ModelType] = pydantic.Field()
     """
-    +label=Model Types
-    +sort=3
-    +usage=Specify the type of the Gemini model (e.g., chat, text, etc.)
-    +uiProps={"disableAllOption": true}
+    Specify the type of the Gemini model (e.g., chat, text, etc.)
     """
 
     cost: typing.Optional[ModelCostMetric] = None
     authorized_subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +label=Access Control
-    +sort=5
-    +usage=List of subjects that are authorized to access this integration. List of user fqn in format <user_type>:<username>.
-    +uiType=Hidden
+    List of subjects that are authorized to access this integration. List of user fqn in format <user_type>:<username>.
     """
 
     if IS_PYDANTIC_V2:

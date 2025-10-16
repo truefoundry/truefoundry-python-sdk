@@ -20,35 +20,23 @@ class McpServerIntegration(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=Name
-    +usage=The name of the MCP Server.
-    +sort=100
+    The name of the MCP Server.
     """
 
     description: str = pydantic.Field()
     """
-    +label=Description
-    +usage=Provide a brief description of the purpose of this MCP Server.
-    +uiType=TextArea
-    +message=1 to 1000 characters long, may contain any character except newlines
-    +sort=200
-    +uiProps={"descriptionInline":true}
+    Provide a brief description of the purpose of this MCP Server.
     """
 
     url: str = pydantic.Field()
     """
-    +label=URL
-    +usage=The endpoint URL for the MCP Server. The system will first try a connection using streamable-http transport on this URL. If that fails, it will attempt a connection using SSE transport on <url>/sse.
-    +sort=300
+    The endpoint URL for the MCP Server. The system will first try a connection using streamable-http transport on this URL. If that fails, it will attempt a connection using SSE transport on <url>/sse.
     """
 
     auth_data: typing.Optional[McpServerAuth] = None
     authorized_subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +label=Access Control
-    +usage=List of teams/users who can use this MCP server.
-    +sort=500
-    +uiType=AuthorizedSubjects
+    List of teams/users who can use this MCP server.
     """
 
     if IS_PYDANTIC_V2:

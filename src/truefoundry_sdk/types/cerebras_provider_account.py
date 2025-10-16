@@ -22,27 +22,18 @@ class CerebrasProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=Name
-    +sort=100
-    +usage=The name of the Cerebras provider account
-    +message=2 to 62 characters long alphanumeric word, may contain - or . in between, cannot start with a number
+    The name of the Cerebras provider account
     """
 
     auth_data: CerebrasKeyAuth
     integrations: typing.Optional[typing.List[CerebrasIntegrations]] = pydantic.Field(default=None)
     """
-    +label=Integrations
-    +sort=300
-    +usage=List of integrations that are associated with the Cerebras provider account
-    +uiType=IntegrationsGroup
+    List of integrations that are associated with the Cerebras provider account
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    +label=Collaborators
-    +sort=400
-    +usage=List of users who have access to this provider account
-    +uiType=Collaborators
+    List of users who have access to this provider account
     """
 
     if IS_PYDANTIC_V2:

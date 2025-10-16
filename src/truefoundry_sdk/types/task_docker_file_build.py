@@ -8,9 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class TaskDockerFileBuild(UniversalBaseModel):
     """
-    +docs=Describes the configuration for the docker build for a task
-    +label=Docker File
-    +icon=fa-brands fa-docker:#0db7ed
+    Describes the configuration for the docker build for a task
     """
 
     type: typing.Literal["task-dockerfile-build"] = pydantic.Field(default="task-dockerfile-build")
@@ -20,17 +18,13 @@ class TaskDockerFileBuild(UniversalBaseModel):
 
     docker_registry: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +docs=FQN of the container registry. You can the FQN of your desired container registry (or add one)
-    in the  Integrations page[Integrations](https://app.truefoundry.tech/integrations?tab=docker-registry) page
-    +label=Docker Registry
-    +usage=FQN of the container registry. If you can't find your registry here,
+    FQN of the container registry. If you can't find your registry here,
     add it through the [Integrations](/integrations?tab=docker-registry) page
     """
 
     dockerfile_path: str = pydantic.Field(default="./Dockerfile")
     """
-    +label=Path to Dockerfile
-    +usage=The file path of the Dockerfile relative to project root path.
+    The file path of the Dockerfile relative to project root path.
     """
 
     build_args: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)

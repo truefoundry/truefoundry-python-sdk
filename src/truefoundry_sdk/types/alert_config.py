@@ -27,18 +27,12 @@ class AlertConfig(UniversalBaseModel):
     resource: AlertConfigResource
     notification_targets: typing.List[NotificationTargetForAlertRule] = pydantic.Field()
     """
-    +label=Notification Targets
-    +usage=Configure one or more notification targets where alerts will be sent. Each target specifies a notification channel (email or slack).
-    +uiProps={"descriptionInline":true}
-    +sort=1
+    Configure one or more notification targets where alerts will be sent. Each target specifies a notification channel (email or slack).
     """
 
     rules: typing.List[PrometheusAlertRule] = pydantic.Field()
     """
-    +label=Rules
-    +usage=Define one or more alert rules that specify the conditions to monitor, when to trigger alerts, and how they should be handled.
-    +uiProps={"descriptionInline":true}
-    +uiType=Structs
+    Define one or more alert rules that specify the conditions to monitor, when to trigger alerts, and how they should be handled.
     """
 
     if IS_PYDANTIC_V2:

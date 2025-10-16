@@ -9,8 +9,7 @@ from .node_selector_capacity_type import NodeSelectorCapacityType
 
 class NodeSelector(UniversalBaseModel):
     """
-    +label=Node selector
-    +usage=Constraints to select a Node - Specific GPU / Instance Families, On-Demand/Spot.
+    Constraints to select a Node - Specific GPU / Instance Families, On-Demand/Spot.
     """
 
     type: typing.Literal["node_selector"] = pydantic.Field(default="node_selector")
@@ -20,15 +19,13 @@ class NodeSelector(UniversalBaseModel):
 
     instance_families: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +label=Instance family
-    +usage=Instance family of the underlying machine to use. Multiple instance families can be supplied.
+    Instance family of the underlying machine to use. Multiple instance families can be supplied.
     The workload is guaranteed to be scheduled on one of them.
     """
 
     capacity_type: typing.Optional[NodeSelectorCapacityType] = pydantic.Field(default=None)
     """
-    +label=Capacity Type
-    +usage=Configure what type of nodes to run the app. By default no placement logic is applied.
+    Configure what type of nodes to run the app. By default no placement logic is applied.
     "spot_fallback_on_demand" will try to place the application on spot nodes but will fallback to on-demand when spot nodes are not available.
     "spot" will strictly place the application on spot nodes.
     "on_demand" will strictly place the application on on-demand nodes.

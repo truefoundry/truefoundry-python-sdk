@@ -8,9 +8,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class McpServerOAuth2JwtSource(str, enum.Enum):
     """
-    +label=JWT Source
-    +usage=Source of the JWT token to be used for verification.
-    +sort=700
+    Source of the JWT token to be used for verification.
     """
 
     ACCESS_TOKEN = "access_token"

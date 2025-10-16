@@ -15,10 +15,7 @@ class PriorityBasedLoadBalancingRule(PriorityBasedLoadBalancing):
 
     id: str = pydantic.Field()
     """
-    +usage=Unique identifier for the rule
-    +uiProps={"descriptionInline":true}
-    +sort=2
-    +label=Rule ID
+    Unique identifier for the rule
     """
 
     when: LoadBalancingWhen

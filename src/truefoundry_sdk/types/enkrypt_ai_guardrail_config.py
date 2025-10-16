@@ -16,11 +16,7 @@ class EnkryptAiGuardrailConfig(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=Name
-    +sort=50
-    +usage=The name of the Guardrail Config.
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
-    +uiProps={"disableEdit":true}
+    The name of the Guardrail Config.
     """
 
     type: typing.Literal["integration/guardrail-config/enkrypt-ai"] = pydantic.Field(
@@ -33,18 +29,13 @@ class EnkryptAiGuardrailConfig(UniversalBaseModel):
 
     operation: EnkryptAiGuardrailConfigOperation = pydantic.Field()
     """
-    +label=Operation
-    +usage=The operation type to use for the Guardrail. Validate guardrails are used to validate requests and mutate can validate as well as mutate requests.
+    The operation type to use for the Guardrail. Validate guardrails are used to validate requests and mutate can validate as well as mutate requests.
     Validate guardrails are run in parallel while mutate guardrails are run sequentially.
-    +uiType=Select
-    +sort=100
     """
 
     guardrail_name: str = pydantic.Field()
     """
-    +label=Guardrail Name
-    +usage=The name of the guardrail to use for the Enkrypt AI Guardrail.
-    +sort=100
+    The name of the guardrail to use for the Enkrypt AI Guardrail.
     """
 
     auth_data: EnkryptAiKeyAuth

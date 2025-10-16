@@ -16,11 +16,7 @@ class AzureContentSafetyGuardrailConfig(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=Name
-    +sort=50
-    +usage=The name of the Guardrail Config.
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
-    +uiProps={"disableEdit":true}
+    The name of the Guardrail Config.
     """
 
     type: typing.Literal["integration/guardrail-config/azure-content-safety"] = pydantic.Field(
@@ -33,46 +29,32 @@ class AzureContentSafetyGuardrailConfig(UniversalBaseModel):
 
     resource_name: str = pydantic.Field()
     """
-    +label=Resource Name
-    +usage=The resource name where API is deployed.
-    +sort=100
+    The resource name where API is deployed.
     """
 
     api_version: str = pydantic.Field(default="2024-09-01")
     """
-    +label=API Version
-    +usage=API version for the Content Safety API
-    +sort=200
+    API version for the Content Safety API
     """
 
     custom_host: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Custom Host
-    +usage=Custom host for the PII detection API
-    +sort=300
-    +uiType=Hidden
+    Custom host for the PII detection API
     """
 
     blocklist_names: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +label=Blocklist Names
-    +usage=Array of blocklist names to check against
-    +sort=400
+    Array of blocklist names to check against
     """
 
     severity_threshold: float = pydantic.Field(default=2.0)
     """
-    +label=Severity
-    +usage=Severity threshold for the Content Safety API
-    +sort=500
+    Severity threshold for the Content Safety API
     """
 
     categories: typing.List[AzureContentSafetyCategory] = pydantic.Field()
     """
-    +label=Categories
-    +usage=Categories to check against
-    +uiType=Select
-    +sort=600
+    Categories to check against
     """
 
     auth_data: AzureKeyAuth

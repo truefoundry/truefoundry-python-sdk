@@ -9,23 +9,17 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 class AwsAccessKeyAuth(UniversalBaseModel):
     aws_access_key_id: str = pydantic.Field()
     """
-    +label=AWS Access Key ID
-    +usage=AWS Access Key ID
-    +sort=1
+    AWS Access Key ID
     """
 
     aws_secret_access_key: str = pydantic.Field()
     """
-    +label=AWS Secret Access Key
-    +usage=AWS Secret Access Key for the user to authenticate with
-    +sort=2
+    AWS Secret Access Key for the user to authenticate with
     """
 
     aws_session_token: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=AWS Session Token
-    +usage=AWS Session Token, only required when using temporary credentials
-    +sort=3
+    AWS Session Token, only required when using temporary credentials
     """
 
     if IS_PYDANTIC_V2:

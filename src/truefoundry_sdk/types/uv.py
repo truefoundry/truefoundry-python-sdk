@@ -8,9 +8,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class Uv(UniversalBaseModel):
     """
-    +usage=Use `uv` to setup env.
+    Use `uv` to setup env.
     Your build context root must contain `pyproject.toml` and `uv.lock`
-    +label=uv
     """
 
     type: typing.Literal["uv"] = pydantic.Field(default="uv")
@@ -20,14 +19,12 @@ class Uv(UniversalBaseModel):
 
     uv_version: typing.Optional[str] = pydantic.Field(default="latest")
     """
-    +label=UV version
-    +usage=UV version to use
+    UV version to use
     """
 
     sync_options: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Sync options
-    +usage=Sync options to pass to uv command
+    Sync options to pass to uv command
     """
 
     if IS_PYDANTIC_V2:

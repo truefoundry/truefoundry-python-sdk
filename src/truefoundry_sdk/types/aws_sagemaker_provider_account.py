@@ -23,35 +23,23 @@ class AwsSagemakerProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=Name
-    +sort=100
-    +usage=The name of the Sagemaker provider account
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
-    +uiProps={"disableEdit":true}
+    The name of the Sagemaker provider account
     """
 
     region: AwsRegion
     auth_data: typing.Optional[AwsSagemakerProviderAccountAuthData] = pydantic.Field(default=None)
     """
-    +label=AWS Account Auth Data
-    +sort=400
-    +usage=Authentication data for the AWS account
+    Authentication data for the AWS account
     """
 
     integrations: typing.List[SagemakerModel] = pydantic.Field()
     """
-    +label=Integrations
-    +sort=500
-    +usage=List of integrations that are associated with the Sagemaker provider account
-    +uiType=IntegrationsGroup
+    List of integrations that are associated with the Sagemaker provider account
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    +label=Collaborators
-    +sort=600
-    +usage=List of users who have access to this provider account
-    +uiType=Collaborators
+    List of users who have access to this provider account
     """
 
     if IS_PYDANTIC_V2:

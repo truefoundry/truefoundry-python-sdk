@@ -8,22 +8,17 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class CustomTlsSettings(UniversalBaseModel):
     """
-    +label=TLS Settings
-    +usage=Configure TLS settings for secure connections with custom CA certificates.
+    Configure TLS settings for secure connections with custom CA certificates.
     """
 
     reject_unauthorized: bool = pydantic.Field(default=True)
     """
-    +label=Reject Unauthorized
-    +usage=When set to true, it will reject any connection which is not authorized with the list of supplied CAs.
-    +uiType=Switch
+    When set to true, it will reject any connection which is not authorized with the list of supplied CAs.
     """
 
     ca_cert: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Custom CA Certificates
-    +usage=Add custom CA certificates to use for TLS verification.
-    +uiType=CodeEditor
+    Add custom CA certificates to use for TLS verification.
     """
 
     if IS_PYDANTIC_V2:

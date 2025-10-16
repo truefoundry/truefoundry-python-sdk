@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class McpServerHeaderAuth(UniversalBaseModel):
     """
-    +label=Header Auth
-    +usage=Static API key or token authentication via request headers. All users share the same credentials.
+    Static API key or token authentication via request headers. All users share the same credentials.
     """
 
     type: typing.Literal["header"] = pydantic.Field(default="header")

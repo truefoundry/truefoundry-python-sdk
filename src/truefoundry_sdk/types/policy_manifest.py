@@ -19,61 +19,38 @@ class PolicyManifest(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=Name
-    +usage=Unique identifier of the policy across the organisation
-    +sort=2
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
+    Unique identifier of the policy across the organisation
     """
 
     description: str = pydantic.Field()
     """
-    +label=Description
-    +usage=Description of the policy that explains what the policy does, its purpose, and how it affects resources. This helps other users understand the policy's behavior and impact.
-    +sort=3
-    ++uiProps={"descriptionInline":true}
-    +message=Description must be between 1 byte and 1024 bytes
+    Description of the policy that explains what the policy does, its purpose, and how it affects resources. This helps other users understand the policy's behavior and impact.
     """
 
     operation: PolicyManifestOperation = pydantic.Field()
     """
-    +label=Policy Action
-    +usage=Defines if the policy validates or mutates resources. Validation policies check TrueFoundry manifests to ensure they meet conditions and can block deployments. Mutation policies modify Kubernetes manifests before they're applied to the cluster. See this [documentation](https://docs.truefoundry.com/docs/applying-custom-policies#applying-custom-policies) for more details.
-    +sort=4
+    Defines if the policy validates or mutates resources. Validation policies check TrueFoundry manifests to ensure they meet conditions and can block deployments. Mutation policies modify Kubernetes manifests before they're applied to the cluster. See this [documentation](https://docs.truefoundry.com/docs/applying-custom-policies#applying-custom-policies) for more details.
     """
 
     mode: PolicyManifestMode = pydantic.Field()
     """
-    +label=Mode
-    +usage=Mode of the policy: `Audit` logs all policy evaluations without blocking deployments. `Enforce` blocks deployments if the policy fails. `Disabled` deactivates the policy.
-    +uiType=MultiSelectPills
-    +sort=6
+    Mode of the policy: `Audit` logs all policy evaluations without blocking deployments. `Enforce` blocks deployments if the policy fails. `Disabled` deactivates the policy.
     """
 
     entities: typing.List[PolicyEntityTypes] = pydantic.Field()
     """
-    +label=Entities
-    +usage=Types of applications this policy applies to
-    +uiType=MultiSelect
-    +sort=8
+    Types of applications this policy applies to
     """
 
     actions: typing.List[PolicyActions] = pydantic.Field()
     """
-    +label=Actions
-    +usage=Actions this policy applies to
-    +uiType=Hidden
-    +sort=9
+    Actions this policy applies to
     """
 
     filters: typing.Optional[PolicyFilters] = None
     code: str = pydantic.Field()
     """
-    +label=Policy Code
-    +usage=TypeScript code for Policy logic. To write and test your policy code, please refer to this [repository](https://github.com/truefoundry/tfy-typescript-policy)
-    +sort=13
-    +uiType=CodeEditor
-    +uiProps={"language":"typescript"}
-    +message=Code size must be between 1 byte and 10 KB
+    TypeScript code for Policy logic. To write and test your policy code, please refer to this [repository](https://github.com/truefoundry/tfy-typescript-policy)
     """
 
     if IS_PYDANTIC_V2:

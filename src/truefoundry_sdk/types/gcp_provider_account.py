@@ -22,33 +22,22 @@ class GcpProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +uiProps={"disableEdit":true}
-    +label=Name
-    +usage=The name of the GCP provider account.
-    +sort=100
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
+    The name of the GCP provider account.
     """
 
     project_id: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Project Id
-    +usage=The project id of the GCP account.
-    +sort=200
+    The project id of the GCP account.
     """
 
     auth_data: typing.Optional[GcpProviderAccountAuthData] = pydantic.Field(default=None)
     """
-    +label=GCP Account Auth Data
-    +usage=Authentication data for the GCP account.
-    +sort=400
+    Authentication data for the GCP account.
     """
 
     integrations: typing.List[GcpIntegrations] = pydantic.Field()
     """
-    +label=Integrations
-    +usage=List of integrations that are associated with the GCP provider account.
-    +sort=500
-    +uiType=IntegrationsGroup
+    List of integrations that are associated with the GCP provider account.
     """
 
     if IS_PYDANTIC_V2:

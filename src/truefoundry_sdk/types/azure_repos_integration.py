@@ -30,10 +30,7 @@ class AzureReposIntegration(UniversalBaseModel):
 
     authorized_subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +label=Access Control
-    +usage=List of subjects that are authorized to access this integration. List of user fqn in format <user_type>:<username>.
-    +sort=600
-    +uiType=AuthorizedSubjects
+    List of subjects that are authorized to access this integration. List of user fqn in format <user_type>:<username>.
     """
 
     if IS_PYDANTIC_V2:

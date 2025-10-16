@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class DatabricksServicePrincipalAuth(UniversalBaseModel):
     """
-    +label=Databricks Service Principal Auth
-    +usage=You can authenticate using Databricks service principal. To generate OAuth secret and Client ID, go to Databricks workspace -> Workspace Settings -> Identity and Access -> Service Principals -> Secrets.
+    You can authenticate using Databricks service principal. To generate OAuth secret and Client ID, go to Databricks workspace -> Workspace Settings -> Identity and Access -> Service Principals -> Secrets.
     """
 
     type: typing.Literal["service-principal"] = pydantic.Field(default="service-principal")
@@ -19,18 +18,12 @@ class DatabricksServicePrincipalAuth(UniversalBaseModel):
 
     oauth_secret: str = pydantic.Field()
     """
-    +label=OAuth Secret
-    +usage=OAuth secret of the Databricks service principal.
-    +sort=200
-    +uiType=Password
+    OAuth secret of the Databricks service principal.
     """
 
     client_id: str = pydantic.Field()
     """
-    +label=Client ID
-    +usage=Client ID or Application ID of the Databricks service principal.
-    +sort=100
-    +uiType=Password
+    Client ID or Application ID of the Databricks service principal.
     """
 
     if IS_PYDANTIC_V2:

@@ -17,25 +17,18 @@ class ContainerTaskConfig(UniversalBaseModel):
 
     image: ContainerTaskConfigImage = pydantic.Field()
     """
-    +docs=Specify whether you want to deploy a Docker image or build and deploy from source code
-    +label=Deploy a Docker image or build and deploy from source code
-    +icon=fa-solid fa-cloud-arrow-up:#21B6A8
-    +sort=200
+    Specify whether you want to deploy a Docker image or build and deploy from source code
     """
 
     env: typing.Optional[typing.Dict[str, typing.Optional[str]]] = pydantic.Field(default=None)
     """
-    +label=Environment Variables
-    +usage=Configure environment variables to be injected in the task either as plain text or secrets. [Docs](https://docs.truefoundry.com/docs/env-variables)
-    +icon=fa-globe
-    +sort=200
+    Configure environment variables to be injected in the task either as plain text or secrets. [Docs](https://docs.truefoundry.com/docs/env-variables)
     """
 
     resources: typing.Optional[Resources] = None
     mounts: typing.Optional[typing.List[ContainerTaskConfigMountsItem]] = pydantic.Field(default=None)
     """
-    +usage=Configure data to be mounted to Workflow pod(s) as a volume.
-    +sort=400
+    Configure data to be mounted to Workflow pod(s) as a volume.
     """
 
     service_account: typing.Optional[str] = pydantic.Field(default=None)

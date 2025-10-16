@@ -14,9 +14,7 @@ class PatronusKeyAuth(UniversalBaseModel):
 
     api_key: str = pydantic.Field()
     """
-    +uiType=Password
-    +sort=100
-    +usage=API key for the Patronus account
+    API key for the Patronus account
     """
 
     if IS_PYDANTIC_V2:

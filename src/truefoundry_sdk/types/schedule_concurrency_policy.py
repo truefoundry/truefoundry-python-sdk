@@ -8,7 +8,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class ScheduleConcurrencyPolicy(str, enum.Enum):
     """
-    +usage=Choose whether to allow this job to run while another instance of the job is running, or to replace the currently running instance. Allow
+    Choose whether to allow this job to run while another instance of the job is running, or to replace the currently running instance. Allow
     will enable multiple instances of this job to run. Forbid will keep the current instance of the job running and stop a new instance from being run.
     Replace will terminate any currently running instance of the job and start a new one.
     """

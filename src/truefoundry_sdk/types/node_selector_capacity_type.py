@@ -8,8 +8,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class NodeSelectorCapacityType(str, enum.Enum):
     """
-    +label=Capacity Type
-    +usage=Configure what type of nodes to run the app. By default no placement logic is applied.
+    Configure what type of nodes to run the app. By default no placement logic is applied.
     "spot_fallback_on_demand" will try to place the application on spot nodes but will fallback to on-demand when spot nodes are not available.
     "spot" will strictly place the application on spot nodes.
     "on_demand" will strictly place the application on on-demand nodes.

@@ -10,9 +10,7 @@ from .patronus_answer_relevance_criteria import PatronusAnswerRelevanceCriteria
 class PatronusAnswerRelevanceEvaluator(UniversalBaseModel):
     type: typing.Literal["answer-relevance"] = pydantic.Field(default="answer-relevance")
     """
-    +label=Evaluator Type
-    +usage=The type of the evaluator to use for the Patronus Guardrail.
-    +sort=100
+    The type of the evaluator to use for the Patronus Guardrail.
     """
 
     criteria: PatronusAnswerRelevanceCriteria = "patronus:answer-relevance"

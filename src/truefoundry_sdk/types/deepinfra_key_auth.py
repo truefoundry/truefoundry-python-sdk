@@ -19,11 +19,7 @@ class DeepinfraKeyAuth(UniversalBaseModel):
 
     api_key: str = pydantic.Field()
     """
-    +label=API Key
-    +sort=100
-    +usage=The API key for DeepInfra authentication
-    +message=API key must not be empty
-    +uiType=Password
+    The API key for DeepInfra authentication
     """
 
     if IS_PYDANTIC_V2:

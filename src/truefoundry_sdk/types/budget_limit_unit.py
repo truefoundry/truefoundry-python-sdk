@@ -8,7 +8,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class BudgetLimitUnit(str, enum.Enum):
     """
-    +usage=Unit for budget limit calculation
+    Unit for budget limit calculation
     """
 
     COST_PER_DAY = "cost_per_day"

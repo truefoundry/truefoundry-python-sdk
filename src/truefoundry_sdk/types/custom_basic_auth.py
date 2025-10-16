@@ -18,17 +18,12 @@ class CustomBasicAuth(UniversalBaseModel):
 
     username: str = pydantic.Field()
     """
-    +label=Username
-    +usage=The username for the basic authentication.
-    +sort=100
+    The username for the basic authentication.
     """
 
     password: str = pydantic.Field()
     """
-    +label=Password
-    +usage=The password for the basic authentication.
-    +uiType=Password
-    +sort=200
+    The password for the basic authentication.
     """
 
     if IS_PYDANTIC_V2:

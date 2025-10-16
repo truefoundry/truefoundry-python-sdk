@@ -9,9 +9,7 @@ from .image_command import ImageCommand
 
 class Image(UniversalBaseModel):
     """
-    +docs=Describes that we are using a pre-built image stored in a Docker Image registry
-    +label=Docker Image (Deploy an existing image)
-    +icon=fa-brands fa-docker:#0db7ed
+    Describes that we are using a pre-built image stored in a Docker Image registry
     """
 
     type: typing.Literal["image"] = pydantic.Field(default="image")
@@ -21,26 +19,20 @@ class Image(UniversalBaseModel):
 
     image_uri: str = pydantic.Field()
     """
-    +label=Image URI
-    +usage=The image URI. Specify the name of the image and the tag.
+    The image URI. Specify the name of the image and the tag.
     If the image is in Dockerhub, you can skip registry-url (for e.g. `tensorflow/tensorflow`).
     You can use an image from a private registry using Advanced fields
-    +placeholder=registry-url/account/image:version (e.g. docker.io/tensorflow/tensorflow)
     """
 
     docker_registry: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +docs=FQN of the container registry. You can the FQN of your desired container registry (or add one)
-    in the  Integrations page[Integrations](https://app.truefoundry.tech/integrations?tab=docker-registry) page
-    +label=Docker Registry
-    +usage=FQN of the container registry. If you can't find your registry here,
+    FQN of the container registry. If you can't find your registry here,
     add it through the [Integrations](/integrations?tab=docker-registry) page
     """
 
     command: typing.Optional[ImageCommand] = pydantic.Field(default=None)
     """
-    +label=Command Override
-    +usage=Override the command to run when container starts.
+    Override the command to run when container starts.
     When deploying a Job, the command can be templatized by defining `params` and referencing them in command
     E.g. `python main.py --learning_rate {{learning_rate}}`
     """

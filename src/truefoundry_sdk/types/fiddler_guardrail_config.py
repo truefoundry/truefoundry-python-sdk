@@ -16,11 +16,7 @@ class FiddlerGuardrailConfig(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=Name
-    +sort=50
-    +usage=The name of the Guardrail Config.
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
-    +uiProps={"disableEdit":true}
+    The name of the Guardrail Config.
     """
 
     type: typing.Literal["integration/guardrail-config/fiddler"] = pydantic.Field(
@@ -35,9 +31,7 @@ class FiddlerGuardrailConfig(UniversalBaseModel):
     guard_type: FiddlerGuardType
     threshold: typing.Optional[float] = pydantic.Field(default=None)
     """
-    +label=Threshold
-    +usage=Threshold for the guardrail.
-    +sort=200
+    Threshold for the guardrail.
     """
 
     if IS_PYDANTIC_V2:

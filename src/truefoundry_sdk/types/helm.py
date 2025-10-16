@@ -18,15 +18,12 @@ class Helm(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +sort=1
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
-    +usage=Name of the Helm deployment. This will be set as the release name of the chart you are deploying.
+    Name of the Helm deployment. This will be set as the release name of the chart you are deploying.
     """
 
     labels: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
     """
-    +label=Labels
-    +usage=Add labels to base argo app
+    Add labels to base argo app
     """
 
     source: HelmSource = pydantic.Field()
@@ -37,8 +34,7 @@ class Helm(UniversalBaseModel):
 
     values: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
     """
-    +label=Values
-    +usage=Values file as block file
+    Values file as block file
     """
 
     kustomize: typing.Optional[Kustomize] = None
@@ -48,9 +44,7 @@ class Helm(UniversalBaseModel):
     ] = None
     workspace_fqn: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Workspace FQN
-    +docs=Fully qualified name of the workspace
-    +uiType=Hidden
+    Fully qualified name of the workspace
     """
 
     if IS_PYDANTIC_V2:

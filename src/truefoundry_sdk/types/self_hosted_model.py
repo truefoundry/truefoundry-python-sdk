@@ -32,9 +32,7 @@ class SelfHostedModel(UniversalBaseModel):
 
     hosted_model_name: str = pydantic.Field()
     """
-    +label=Hosted Model Name
-    +sort=2
-    +usage=The name of the hosted model
+    The name of the hosted model
     """
 
     url: str = pydantic.Field()
@@ -45,9 +43,7 @@ class SelfHostedModel(UniversalBaseModel):
 
     model_server: SelfHostedModelModelServer = pydantic.Field()
     """
-    +sort=4
-    +label=Model Server Type
-    +usage=The type of model server being used
+    The type of model server being used
     """
 
     tfy_application_id: typing.Optional[str] = pydantic.Field(default=None)
@@ -57,33 +53,24 @@ class SelfHostedModel(UniversalBaseModel):
 
     model_types: typing.List[ModelType] = pydantic.Field()
     """
-    +usage=Specify the type of the model
-    +sort=4
-    +uiProps={"disableAllOption": true}
+    Specify the type of the model
     """
 
     tls_settings: typing.Optional[CustomTlsSettings] = None
     auth_data: typing.Optional[SelfHostedModelAuthData] = pydantic.Field(default=None)
     """
-    +label=Auth Data
-    +usage=SelfHostedModel authentication data for the integration.
-    +sort=300
+    SelfHostedModel authentication data for the integration.
     """
 
     headers: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
     """
-    +label=SelfHostedModel Headers
-    +usage=SelfHostedModel headers for the integration. Forwarded to the provider as is. For example: `{"Authorization": "APIKey <token>"}`
-    +sort=500
+    SelfHostedModel headers for the integration. Forwarded to the provider as is. For example: `{"Authorization": "APIKey <token>"}`
     """
 
     cost: typing.Optional[ModelCostMetric] = None
     authorized_subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +label=Access Control
-    +usage=List of subjects that are authorized to access this integration. List of user fqn in format <user_type>:<username>.
-    +sort=600
-    +uiType=Hidden
+    List of subjects that are authorized to access this integration. List of user fqn in format <user_type>:<username>.
     """
 
     if IS_PYDANTIC_V2:

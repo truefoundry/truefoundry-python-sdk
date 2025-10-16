@@ -13,18 +13,12 @@ class PolicyMutationOperation(UniversalBaseModel):
 
     type: typing.Literal["mutate"] = pydantic.Field(default="mutate")
     """
-    +label=Action Type
-    +usage=Mutates or Validates Resources
-    +value=mutate
+    Mutates or Validates Resources
     """
 
     order: int = pydantic.Field()
     """
-    +label=Execution Order
-    +usage=Determines the sequence in which mutation policies are executed. Policies with lower order value run first, followed by higher value. For example, a policy with order 10 runs before one with order 20. This is crucial when multiple mutation policies need to run in a specific sequence. The order must be between 1 and 100.
-    +sort=5
-    +message=Order must be a positive integer less than or equal to 100
-    +uiProps={"descriptionInline":true}
+    Determines the sequence in which mutation policies are executed. Policies with lower order value run first, followed by higher value. For example, a policy with order 10 runs before one with order 20. This is crucial when multiple mutation policies need to run in a specific sequence. The order must be between 1 and 100.
     """
 
     if IS_PYDANTIC_V2:

@@ -14,8 +14,7 @@ class RpsMetric(UniversalBaseModel):
 
     value: float = pydantic.Field()
     """
-    +label=Requests per second
-    +usage=Average request per second averaged over all replicas that autoscaler should try to maintain
+    Average request per second averaged over all replicas that autoscaler should try to maintain
     """
 
     if IS_PYDANTIC_V2:

@@ -8,25 +8,17 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class AutoRotate(UniversalBaseModel):
     """
-    +label=Enable Auto Rotation
-    +sort=4
-    +usage=Enable Auto Rotation to automatically rotate the token
-    +message=Enable Auto Rotation to automatically rotate the token
-    +uiProps={"disableEdit":true}
+    Enable Auto Rotation to automatically rotate the token
     """
 
     auto_rotate_interval: int = pydantic.Field(default=360)
     """
-    +label=Rotation Interval in days
-    +sort=1
-    +usage=Rotation Interval in days after which the token will be rotated. Minimum value is 30.
+    Rotation Interval in days after which the token will be rotated. Minimum value is 30.
     """
 
     grace_period: int = pydantic.Field(default=30)
     """
-    +label=Grace Period in days
-    +sort=2
-    +usage=Grace Period in days for which the token will be valid after rotation interval. Minimum value is 1.
+    Grace Period in days for which the token will be valid after rotation interval. Minimum value is 1.
     """
 
     if IS_PYDANTIC_V2:

@@ -11,23 +11,17 @@ from .worker_config_output_config import WorkerConfigOutputConfig
 class WorkerConfig(UniversalBaseModel):
     input_config: WorkerConfigInputConfig = pydantic.Field()
     """
-    +label=Input Config
-    +usage=Input Config
-    +sort=1
+    Input Config
     """
 
     output_config: typing.Optional[WorkerConfigOutputConfig] = pydantic.Field(default=None)
     """
-    +label=Output Config
-    +usage=Output Config
-    +sort=2
+    Output Config
     """
 
     num_concurrent_workers: int = pydantic.Field(default=1)
     """
-    +label=Number of Concurrent Workers
-    +usage=Number of concurrent workers to spawn for the processor
-    +sort=3
+    Number of concurrent workers to spawn for the processor
     """
 
     if IS_PYDANTIC_V2:

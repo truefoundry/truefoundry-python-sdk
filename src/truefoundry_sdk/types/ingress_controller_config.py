@@ -14,8 +14,7 @@ class IngressControllerConfig(UniversalBaseModel):
 
     tls_enabled: typing.Optional[bool] = pydantic.Field(default=False)
     """
-    +label=TLS Enabled
-    +usage=Whether TLS is managed by the ingress controller. If enabled, the ingress object will have TLS configuration.
+    Whether TLS is managed by the ingress controller. If enabled, the ingress object will have TLS configuration.
     """
 
     if IS_PYDANTIC_V2:

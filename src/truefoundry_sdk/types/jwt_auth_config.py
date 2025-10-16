@@ -9,8 +9,7 @@ from .jwt_auth_config_claims_item import JwtAuthConfigClaimsItem
 
 class JwtAuthConfig(UniversalBaseModel):
     """
-    +label=JWT Authentication
-    +usage=Configure JWT-based authentication using JWKS
+    Configure JWT-based authentication using JWKS
     """
 
     type: typing.Literal["jwt_auth"] = pydantic.Field(default="jwt_auth")
@@ -20,36 +19,24 @@ class JwtAuthConfig(UniversalBaseModel):
 
     integration_fqn: str = pydantic.Field()
     """
-    +docs=FQN of the JWT Auth integration. You can use the FQN of your desired jwt auth integration (or add one)
-    in the  Integrations page[Integrations](/integrations) page
-    +label=JWT Auth Integration
-    +sort=200
-    +usage=FQN of the JWT Auth integration. If you can't find your integration here,
+    FQN of the JWT Auth integration. If you can't find your integration here,
     add it through the [Integrations](/integrations) page
-    +uiType=IntegrationSelect
-    +uiProps={"integrationType":"jwt-auth"}
     """
 
     enable_login: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    +label=Enable Login
-    +usage=Enable login for the service
-    +sort=300
+    Enable login for the service
     """
 
     claims: typing.Optional[typing.List[JwtAuthConfigClaimsItem]] = pydantic.Field(default=None)
     """
-    +label=Claims
-    +usage=List of key-value pairs of claims to verify in the JWT token
-    +sort=400
+    List of key-value pairs of claims to verify in the JWT token
     """
 
     bypass_auth_paths: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +label=Paths that will bypass auth
-    +usage=List of paths that will bypass auth.
+    List of paths that will bypass auth.
     needs to start with a forward slash(/) and should not contain wildcards(*)
-    +sort=500
     """
 
     if IS_PYDANTIC_V2:

@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class TrueFoundryArtifactSource(UniversalBaseModel):
     """
-    +docs=Input for Artifact from TrueFoundry Artifact Registry
-    +label=TrueFoundry Artifact Source
+    Input for Artifact from TrueFoundry Artifact Registry
     """
 
     type: typing.Literal["truefoundry-artifact"] = pydantic.Field(default="truefoundry-artifact")
@@ -19,14 +18,12 @@ class TrueFoundryArtifactSource(UniversalBaseModel):
 
     artifact_version_fqn: str = pydantic.Field()
     """
-    +label=Artifact or Model Version FQN
-    +usage=Artifact or Model Version FQN of the artifact to be downloaded
+    Artifact or Model Version FQN of the artifact to be downloaded
     """
 
     download_path_env_variable: str = pydantic.Field()
     """
-    +label=Download Path Environment Variable
-    +usage=Environment variable which will contain the download path of the artifact
+    Environment variable which will contain the download path of the artifact
     """
 
     if IS_PYDANTIC_V2:

@@ -8,9 +8,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class SelfHostedModelModelServer(str, enum.Enum):
     """
-    +sort=4
-    +label=Model Server Type
-    +usage=The type of model server being used
+    The type of model server being used
     """
 
     OPENAI_COMPATIBLE = "openai-compatible"

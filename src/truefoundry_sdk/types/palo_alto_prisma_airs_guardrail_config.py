@@ -16,11 +16,7 @@ class PaloAltoPrismaAirsGuardrailConfig(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=Name
-    +sort=50
-    +usage=The name of the Guardrail Config.
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
-    +uiProps={"disableEdit":true}
+    The name of the Guardrail Config.
     """
 
     type: typing.Literal["integration/guardrail-config/palo-alto-prisma-airs"] = pydantic.Field(
@@ -33,17 +29,12 @@ class PaloAltoPrismaAirsGuardrailConfig(UniversalBaseModel):
 
     profile_name: str = pydantic.Field()
     """
-    +label=Profile Name
-    +usage=The profile name associated with this Guardrail Config.
-    +sort=60
+    The profile name associated with this Guardrail Config.
     """
 
     mode: typing.Optional[PaloAltoPrismaAirsGuardrailConfigMode] = pydantic.Field(default=None)
     """
-    +label=Mode
-    +usage=Execution mode for the guardrail. Sync waits for the guardrail check to complete before proceeding. Async triggers the check without waiting. Defaults to sync.
-    +sort=70
-    +uiType=Select
+    Execution mode for the guardrail. Sync waits for the guardrail check to complete before proceeding. Async triggers the check without waiting. Defaults to sync.
     """
 
     auth_data: PaloAltoPrismaAirsKeyAuth

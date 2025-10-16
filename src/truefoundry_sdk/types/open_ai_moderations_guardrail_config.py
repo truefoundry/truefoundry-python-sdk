@@ -18,11 +18,7 @@ class OpenAiModerationsGuardrailConfig(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=Name
-    +sort=50
-    +usage=The name of the Guardrail Config.
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
-    +uiProps={"disableEdit":true}
+    The name of the Guardrail Config.
     """
 
     type: typing.Literal["integration/guardrail-config/openai-moderations"] = pydantic.Field(
@@ -36,27 +32,20 @@ class OpenAiModerationsGuardrailConfig(UniversalBaseModel):
 
     base_url: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Base URL
-    +sort=100
-    +usage=Optional custom base URL for OpenAI API. If not provided, the default base URL will be used.
+    Optional custom base URL for OpenAI API. If not provided, the default base URL will be used.
     """
 
     auth_data: OpenaiApiKeyAuth
     model: str = pydantic.Field(default="omni-moderation-latest")
     """
-    +label=OpenAI Moderation Model
-    +sort=300
-    +usage=The model to use for the OpenAI Moderation API.
+    The model to use for the OpenAI Moderation API.
     """
 
     category_thresholds: typing.Optional[typing.Dict[str, OpenAiModerationsGuardrailConfigCategoryThresholdsValue]] = (
         pydantic.Field(default=None)
     )
     """
-    +label=Category Thresholds
-    +sort=400
-    +usage=The thresholds for the OpenAI Moderation API.
-    +uiType=KV
+    The thresholds for the OpenAI Moderation API.
     """
 
     if IS_PYDANTIC_V2:

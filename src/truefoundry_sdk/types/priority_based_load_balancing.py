@@ -21,10 +21,7 @@ class PriorityBasedLoadBalancing(UniversalBaseModel):
 
     load_balance_targets: typing.List[PriorityBasedLoadBalanceTarget] = pydantic.Field()
     """
-    +usage=List of targets for priority-based load balancing
-    +uiProps={"descriptionInline":true}
-    +sort=4
-    +label=Load Balance Targets
+    List of targets for priority-based load balancing
     """
 
     if IS_PYDANTIC_V2:

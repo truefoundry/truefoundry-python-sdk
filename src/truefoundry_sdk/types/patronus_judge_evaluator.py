@@ -10,9 +10,7 @@ from .patronus_judge_criteria import PatronusJudgeCriteria
 class PatronusJudgeEvaluator(UniversalBaseModel):
     type: typing.Literal["judge"] = pydantic.Field(default="judge")
     """
-    +label=Evaluator Type
-    +usage=The type of the evaluator to use for the Patronus Guardrail.
-    +sort=100
+    The type of the evaluator to use for the Patronus Guardrail.
     """
 
     criteria: PatronusJudgeCriteria

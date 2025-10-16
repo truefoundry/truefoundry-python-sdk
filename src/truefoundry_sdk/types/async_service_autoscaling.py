@@ -11,9 +11,7 @@ from .base_autoscaling import BaseAutoscaling
 class AsyncServiceAutoscaling(BaseAutoscaling):
     metrics: AsyncServiceAutoscalingMetrics = pydantic.Field()
     """
-    +label=Autoscaling metrics
-    +usage=Metrics to use for the autoscaler
-    +sort=4
+    Metrics to use for the autoscaler
     """
 
     if IS_PYDANTIC_V2:

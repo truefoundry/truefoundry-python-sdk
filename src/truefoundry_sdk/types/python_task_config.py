@@ -11,7 +11,7 @@ from .resources import Resources
 
 class PythonTaskConfig(UniversalBaseModel):
     """
-    +docs=Describes the configuration for the python function task
+    Describes the configuration for the python function task
     """
 
     type: typing.Literal["python-task-config"] = pydantic.Field(default="python-task-config")
@@ -21,25 +21,18 @@ class PythonTaskConfig(UniversalBaseModel):
 
     image: PythonTaskConfigImage = pydantic.Field()
     """
-    +label=Image Spec
-    +docs=Specification for the image to be used for the task
-    +sort=100
-    +usage=Specify the image spec for the task
+    Specify the image spec for the task
     """
 
     env: typing.Optional[typing.Dict[str, typing.Optional[str]]] = pydantic.Field(default=None)
     """
-    +label=Environment Variables
-    +usage=Configure environment variables to be injected in the task either as plain text or secrets. [Docs](https://docs.truefoundry.com/docs/env-variables)
-    +icon=fa-globe
-    +sort=200
+    Configure environment variables to be injected in the task either as plain text or secrets. [Docs](https://docs.truefoundry.com/docs/env-variables)
     """
 
     resources: typing.Optional[Resources] = None
     mounts: typing.Optional[typing.List[PythonTaskConfigMountsItem]] = pydantic.Field(default=None)
     """
-    +usage=Configure data to be mounted to Workflow pod(s) as a volume.
-    +sort=400
+    Configure data to be mounted to Workflow pod(s) as a volume.
     """
 
     service_account: typing.Optional[str] = pydantic.Field(default=None)

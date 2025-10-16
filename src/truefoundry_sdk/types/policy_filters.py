@@ -13,23 +13,17 @@ class PolicyFilters(UniversalBaseModel):
 
     cluster_names: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +label=Clusters
-    +usage=Cluster names where Policy applies
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
+    Cluster names where Policy applies
     """
 
     workspace_names: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +label=Workspaces
-    +usage=Workspace names where Policy applies
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
+    Workspace names where Policy applies
     """
 
     env_names: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +label=Environments
-    +usage=Environment names where Policy applies
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
+    Environment names where Policy applies
     """
 
     if IS_PYDANTIC_V2:

@@ -9,17 +9,12 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 class SshServerConfig(UniversalBaseModel):
     base_domain: str = pydantic.Field()
     """
-    +label=SSH Base Domain
-    +usage=The base domain for the cluster with which you can access your SSH containers
-    +sort=1000
-    +message=Must not contain any spaces.
+    The base domain for the cluster with which you can access your SSH containers
     """
 
     port: float = pydantic.Field()
     """
-    +label=SSH Port
-    +usage=The port for the cluster with which you can access your SSH containers
-    +sort=2000
+    The port for the cluster with which you can access your SSH containers
     """
 
     if IS_PYDANTIC_V2:

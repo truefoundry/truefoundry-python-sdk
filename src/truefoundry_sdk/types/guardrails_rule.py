@@ -14,27 +14,18 @@ class GuardrailsRule(UniversalBaseModel):
 
     id: str = pydantic.Field()
     """
-    +usage=Unique identifier for the rule
-    +uiProps={"descriptionInline":true}
-    +sort=1
-    +label=Rule ID
+    Unique identifier for the rule
     """
 
     when: GuardrailsWhen
     input_guardrails: typing.List[str] = pydantic.Field()
     """
-    +usage=Guardrail selectors of the guardrails to apply to the input (format: groupName/guardrailName)
-    +uiProps={"descriptionInline":true}
-    +sort=3
-    +label=Input Guardrails
+    Guardrail selectors of the guardrails to apply to the input (format: groupName/guardrailName)
     """
 
     output_guardrails: typing.List[str] = pydantic.Field()
     """
-    +usage=Guardrail selectors of the guardrails to apply to the output (format: groupName/guardrailName)
-    +uiProps={"descriptionInline":true}
-    +sort=4
-    +label=Output Guardrails
+    Guardrail selectors of the guardrails to apply to the output (format: groupName/guardrailName)
     """
 
     if IS_PYDANTIC_V2:

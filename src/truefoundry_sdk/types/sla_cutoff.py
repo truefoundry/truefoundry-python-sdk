@@ -9,9 +9,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 class SlaCutoff(UniversalBaseModel):
     time_per_output_token_ms: typing.Optional[int] = pydantic.Field(default=None)
     """
-    +usage=Time per output token threshold in milliseconds. If time per output token exceeds this value, the target will be marked as unhealthy
-    +uiProps={"descriptionInline":true}
-    +label=Time Per Output Token (ms)
+    Time per output token threshold in milliseconds. If time per output token exceeds this value, the target will be marked as unhealthy
     """
 
     if IS_PYDANTIC_V2:

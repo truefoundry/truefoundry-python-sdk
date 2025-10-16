@@ -14,8 +14,7 @@ class GcpTpu(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=TPU Type name
-    +usage=Name of the TPU Type. One of
+    Name of the TPU Type. One of
       - `tpu-v4-podslice` (TPU v4, ct4p)
       - `tpu-v5-lite-device` (TPU v5e, ct5l)
       - `tpu-v5-lite-podslice`  (TPU v5e, ct5lp)
@@ -24,8 +23,7 @@ class GcpTpu(UniversalBaseModel):
 
     topology: str = pydantic.Field()
     """
-    +label=Slice Topology
-    +usage=Topology of the TPU slices. Currently only single-host topology is supported.
+    Topology of the TPU slices. Currently only single-host topology is supported.
      Please refer to [TPUs on GKE docs](https://cloud.google.com/kubernetes-engine/docs/concepts/tpus#plan-tpu-configuration)
      Allowed Values:
        - `2x2x1` for `tpu-v4-podslice`

@@ -14,15 +14,13 @@ class AwsInferentia(UniversalBaseModel):
 
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Inferentia accelerator name
-    +usage=Name of the AWS Inferentia Accccelerator. One of [INF1, INF2].
+    Name of the AWS Inferentia Accccelerator. One of [INF1, INF2].
     This field is required for Node Selector and can be ignored in Nodepool Selector.
     """
 
     count: int = pydantic.Field()
     """
-    +label=Count
-    +usage=Count of Inferentia accelerator chips to provide to the application
+    Count of Inferentia accelerator chips to provide to the application
     """
 
     if IS_PYDANTIC_V2:

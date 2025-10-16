@@ -18,11 +18,7 @@ class SlackWebhook(UniversalBaseModel):
 
     notification_channel: str = pydantic.Field()
     """
-    +label=Notification Channel
-    +usage=Specify the notification channel to send alerts to
-    +uiType=AlertNotificationChannel
-    +uiProps={"integrationType":"notification-channel"}
-    +sort=660
+    Specify the notification channel to send alerts to
     """
 
     if IS_PYDANTIC_V2:

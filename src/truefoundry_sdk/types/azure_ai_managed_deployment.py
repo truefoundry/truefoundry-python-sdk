@@ -20,16 +20,12 @@ class AzureAiManagedDeployment(UniversalBaseModel):
 
     deployment_name: typing_extensions.Annotated[str, FieldMetadata(alias="deploymentName")] = pydantic.Field()
     """
-    +label=Azure Deployment Name
-    +usage=Name of the Azure AI deployment
-    +sort=1
+    Name of the Azure AI deployment
     """
 
     endpoint_name: typing_extensions.Annotated[str, FieldMetadata(alias="endpointName")] = pydantic.Field()
     """
-    +label=Azure Endpoint Name
-    +usage=Name of the Azure AI endpoint
-    +sort=2
+    Name of the Azure AI endpoint
     """
 
     if IS_PYDANTIC_V2:

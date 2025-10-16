@@ -19,11 +19,7 @@ class OpenaiApiKeyAuth(UniversalBaseModel):
 
     api_key: str = pydantic.Field()
     """
-    +label=API Key
-    +sort=100
-    +usage=Your OpenAI API key for authentication
-    +message=API key must not be empty
-    +uiType=Password
+    Your OpenAI API key for authentication
     """
 
     if IS_PYDANTIC_V2:

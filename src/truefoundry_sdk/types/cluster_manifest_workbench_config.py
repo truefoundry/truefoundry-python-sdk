@@ -18,9 +18,7 @@ class ClusterManifestWorkbenchConfig(UniversalBaseModel):
     ssh_server_config: typing.Optional[SshServerConfig] = None
     default_storage_class: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Default Storage Class
-    +usage=The default storage class for the home directory of workbench
-    +message=Must not contain any spaces.
+    The default storage class for the home directory of workbench
     """
 
     if IS_PYDANTIC_V2:

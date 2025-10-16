@@ -14,8 +14,7 @@ class CpuUtilizationMetric(UniversalBaseModel):
 
     value: int = pydantic.Field()
     """
-    +label=CPU utilization %
-    +usage=Percentage of cpu request averaged over all replicas which the autoscaler should try to maintain
+    Percentage of cpu request averaged over all replicas which the autoscaler should try to maintain
     """
 
     if IS_PYDANTIC_V2:

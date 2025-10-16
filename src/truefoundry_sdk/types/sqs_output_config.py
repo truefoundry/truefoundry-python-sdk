@@ -9,8 +9,7 @@ from .aws_access_key_auth import AwsAccessKeyAuth
 
 class SqsOutputConfig(UniversalBaseModel):
     """
-    +docs=Describes the configuration for the output SQS worker
-    +label=SQS
+    Describes the configuration for the output SQS worker
     """
 
     type: typing.Literal["sqs"] = pydantic.Field(default="sqs")
@@ -20,16 +19,12 @@ class SqsOutputConfig(UniversalBaseModel):
 
     queue_url: str = pydantic.Field()
     """
-    +label=Queue URL
-    +usage=AWS SQS Queue URL of Publisher
-    +sort=1
+    AWS SQS Queue URL of Publisher
     """
 
     region_name: str = pydantic.Field()
     """
-    +label=Region Name
-    +usage=AWS Region Name
-    +sort=2
+    AWS Region Name
     """
 
     auth: AwsAccessKeyAuth

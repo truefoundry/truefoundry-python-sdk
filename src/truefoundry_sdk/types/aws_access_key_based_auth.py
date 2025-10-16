@@ -18,18 +18,12 @@ class AwsAccessKeyBasedAuth(UniversalBaseModel):
 
     access_key_id: str = pydantic.Field()
     """
-    +label=AWS access key ID
-    +usage=AWS access key ID that you want to use for authentication.
-    +sort=100
-    +uiType=Password
+    AWS access key ID that you want to use for authentication.
     """
 
     secret_access_key: str = pydantic.Field()
     """
-    +label=AWS access key secret
-    +usage=AWS access key secret that you want to use for authentication.
-    +sort=200
-    +uiType=Password
+    AWS access key secret that you want to use for authentication.
     """
 
     if IS_PYDANTIC_V2:

@@ -21,24 +21,17 @@ class PySparkTaskConfig(UniversalBaseModel):
     executor_config: SparkExecutorConfig
     spark_conf: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
     """
-    +label=Spark Config Properties
-    +usage=Extra configuration properties to be passed to the spark job. [Docs](https://spark.apache.org/docs/latest/configuration.html)
-    +icon=fa-gear:#68BBE3
-    +sort=3000
+    Extra configuration properties to be passed to the spark job. [Docs](https://spark.apache.org/docs/latest/configuration.html)
     """
 
     env: typing.Optional[typing.Dict[str, typing.Optional[str]]] = pydantic.Field(default=None)
     """
-    +label=Environment Variables
-    +usage=Configure environment variables to be injected in the task either as plain text or secrets. [Docs](https://docs.truefoundry.com/docs/env-variables)
-    +icon=fa-globe
-    +sort=4000
+    Configure environment variables to be injected in the task either as plain text or secrets. [Docs](https://docs.truefoundry.com/docs/env-variables)
     """
 
     mounts: typing.Optional[typing.List[VolumeMount]] = pydantic.Field(default=None)
     """
-    +usage=Configure data to be mounted to Workflow pod(s) as a volume.
-    +sort=5000
+    Configure data to be mounted to Workflow pod(s) as a volume.
     """
 
     service_account: typing.Optional[str] = pydantic.Field(default=None)

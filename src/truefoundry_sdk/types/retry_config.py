@@ -9,23 +9,17 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 class RetryConfig(UniversalBaseModel):
     attempts: int = pydantic.Field()
     """
-    +usage=Number of attempts to retry the request
-    +uiProps={"descriptionInline":true}
-    +label=Attempts
+    Number of attempts to retry the request
     """
 
     delay: typing.Optional[int] = pydantic.Field(default=100)
     """
-    +usage=Delay between retries in milliseconds
-    +uiProps={"descriptionInline":true}
-    +label=Delay
+    Delay between retries in milliseconds
     """
 
     on_status_codes: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +usage=Status codes to retry on
-    +uiProps={"descriptionInline":true}
-    +label=Status Codes
+    Status codes to retry on
     """
 
     if IS_PYDANTIC_V2:

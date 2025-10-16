@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class Ai21KeyAuth(UniversalBaseModel):
     """
-    +label=AI21 API Key Auth
-    +usage=Authentication method using AI21 API key
+    Authentication method using AI21 API key
     """
 
     type: typing.Literal["api-key"] = pydantic.Field(default="api-key")
@@ -19,10 +18,7 @@ class Ai21KeyAuth(UniversalBaseModel):
 
     api_key: str = pydantic.Field()
     """
-    +sort=100
-    +uiType=Password
-    +usage=The API key for AI21 authentication
-    +message=API key must not be empty
+    The API key for AI21 authentication
     """
 
     if IS_PYDANTIC_V2:

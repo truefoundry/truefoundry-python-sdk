@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class CommonToolsSettings(UniversalBaseModel):
     """
-    +docs=Describes the configuration for Common Tools MCP Server in AI Gateway
-    +label=Common Tools Settings
+    Describes the configuration for Common Tools MCP Server in AI Gateway
     """
 
     type: typing.Literal["settings/common-tools"] = pydantic.Field(default="settings/common-tools")
@@ -19,47 +18,32 @@ class CommonToolsSettings(UniversalBaseModel):
 
     web_search: bool = pydantic.Field(default=True)
     """
-    +label=Web Search
-    +usage=Enable web search tool
+    Enable web search tool
     Allows model to search the web for information.
-    +icon=fa-searchengin
-    +sort=1
     """
 
     code_executor: bool = pydantic.Field(default=True)
     """
-    +label=Code Executor
-    +usage=Enable code executor tool
+    Enable code executor tool
     Allows model to execute code and return the results.
-    +icon=fa-code
-    +sort=2
     """
 
     sequential_thinking: bool = pydantic.Field(default=True)
     """
-    +label=Sequential Thinking
-    +usage=Enable sequential thinking tool
+    Enable sequential thinking tool
     Allows model to reason step-by-step to solve complex problems.
-    +icon=fa-brain
-    +sort=3
     """
 
     vision_ocr: bool = pydantic.Field(default=True)
     """
-    +label=Vision OCR
-    +usage=Enable vision OCR tool
+    Enable vision OCR tool
     Allows model to extract text from images or PDFs.
-    +icon=fa-eye
-    +sort=4
     """
 
     web_scrape: bool = pydantic.Field(default=True)
     """
-    +label=Web Scrape
-    +usage=Enable web scraping tool.
+    Enable web scraping tool.
     Allows model to scrape content from web pages with intelligent format selection for structured or unstructured data.
-    +icon=fa-brands fa-readme
-    +sort=5
     """
 
     if IS_PYDANTIC_V2:

@@ -20,33 +20,23 @@ class CustomJwtAuthIntegration(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=Name
-    +usage=The name of the integration that will be displayed in the TrueFoundry UI.
-    +sort=100
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
+    The name of the integration that will be displayed in the TrueFoundry UI.
     """
 
     issuer: str = pydantic.Field()
     """
-    +label=Issuer
-    +usage=The base URL of the authentication provider.
-    +sort=200
+    The base URL of the authentication provider.
     """
 
     jwks_uri: str = pydantic.Field()
     """
-    +label=JWKS URI
-    +usage=The JSON Web Key Set URI for JWT verification.
-    +sort=300
+    The JSON Web Key Set URI for JWT verification.
     """
 
     login_provider: typing.Optional[OAuth2LoginProvider] = None
     authorized_subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +label=Access Control
-    +usage=List of subjects that are authorized to access this integration. List of user fqn in format <user_type>:<username>.
-    +sort=500
-    +uiType=AuthorizedSubjects
+    List of subjects that are authorized to access this integration. List of user fqn in format <user_type>:<username>.
     """
 
     if IS_PYDANTIC_V2:

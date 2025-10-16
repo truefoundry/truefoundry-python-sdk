@@ -21,10 +21,7 @@ class LatencyBasedLoadBalancing(UniversalBaseModel):
 
     load_balance_targets: typing.List[LatencyBasedLoadBalanceTarget] = pydantic.Field()
     """
-    +usage=List of targets for latency-based load balancing
-    +uiProps={"descriptionInline":true}
-    +sort=4
-    +label=Load Balance Targets
+    List of targets for latency-based load balancing
     """
 
     if IS_PYDANTIC_V2:

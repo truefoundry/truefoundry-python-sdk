@@ -8,9 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class Manual(UniversalBaseModel):
     """
-    +docs=Describes that we are going to manually trigger our job.
-    +label=Manual
-    +usage=Trigger the job manually. [Docs](https://docs.truefoundry.com/docs/deploy-a-cron-job)
+    Trigger the job manually. [Docs](https://docs.truefoundry.com/docs/deploy-a-cron-job)
     """
 
     type: typing.Literal["manual"] = pydantic.Field(default="manual")

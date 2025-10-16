@@ -14,15 +14,12 @@ class SecretMount(UniversalBaseModel):
 
     mount_path: str = pydantic.Field()
     """
-    +label=File path
-    +usage=Absolute file path where the file will be created.
-    +message=Please enter a valid file path
+    Absolute file path where the file will be created.
     """
 
     secret_fqn: str = pydantic.Field()
     """
-    +label=Secret
-    +usage=The TrueFoundry secret whose value will be the file content.
+    The TrueFoundry secret whose value will be the file content.
     """
 
     if IS_PYDANTIC_V2:

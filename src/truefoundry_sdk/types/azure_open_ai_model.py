@@ -24,9 +24,7 @@ class AzureOpenAiModel(UniversalBaseModel):
 
     model_id: str = pydantic.Field()
     """
-    +sort=2
-    +label=Model ID
-    +usage=This is the name of the deployment
+    This is the name of the deployment
     """
 
     type: typing.Literal["integration/model/azure"] = pydantic.Field(default="integration/model/azure")
@@ -37,9 +35,7 @@ class AzureOpenAiModel(UniversalBaseModel):
     auth_data: AzureKeyAuth
     azure_endpoint: str = pydantic.Field()
     """
-    +sort=100
-    +label=Azure Endpoint
-    +usage=Azure OpenAI Service endpoint
+    Azure OpenAI Service endpoint
     """
 
     api_version: str = pydantic.Field()
@@ -49,16 +45,13 @@ class AzureOpenAiModel(UniversalBaseModel):
 
     model_types: typing.List[ModelType] = pydantic.Field()
     """
-    +usage=Specify the type of the model
-    +sort=4
+    Specify the type of the model
     """
 
     cost: typing.Optional[ModelCostMetric] = None
     authorized_subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +label=Access Control
-    +usage=List of subjects that are authorized to access this integration. List of user fqn in format <user_type>:<username>.
-    +uiType=Hidden
+    List of subjects that are authorized to access this integration. List of user fqn in format <user_type>:<username>.
     """
 
     if IS_PYDANTIC_V2:

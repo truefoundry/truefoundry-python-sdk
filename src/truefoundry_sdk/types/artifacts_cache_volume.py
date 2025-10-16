@@ -8,20 +8,17 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class ArtifactsCacheVolume(UniversalBaseModel):
     """
-    +docs=Describes the volume that will be used to cache the models
-    +label=Artifacts Cache Volume
+    Describes the volume that will be used to cache the models
     """
 
     storage_class: str = pydantic.Field()
     """
-    +label=Storage Class
-    +usage=Storage class of the Volume where artifacts will be cached
+    Storage class of the Volume where artifacts will be cached
     """
 
     cache_size: int = pydantic.Field(default=200)
     """
-    +label=Cache Size (GB)
-    +usage=Size of the Volume (in GB) where artifacts will be cached. Should be greater than twice the size of artifacts getting cached
+    Size of the Volume (in GB) where artifacts will be cached. Should be greater than twice the size of artifacts getting cached
     """
 
     if IS_PYDANTIC_V2:

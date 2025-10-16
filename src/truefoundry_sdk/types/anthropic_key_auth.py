@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class AnthropicKeyAuth(UniversalBaseModel):
     """
-    +label=Anthropic API Key Auth
-    +usage=Authentication method using Anthropic API key
+    Authentication method using Anthropic API key
     """
 
     type: typing.Literal["api-key"] = pydantic.Field(default="api-key")
@@ -19,10 +18,7 @@ class AnthropicKeyAuth(UniversalBaseModel):
 
     api_key: str = pydantic.Field()
     """
-    +sort=100
-    +uiType=Password
-    +usage=The API key for Anthropic authentication
-    +message=API key must not be empty
+    The API key for Anthropic authentication
     """
 
     if IS_PYDANTIC_V2:

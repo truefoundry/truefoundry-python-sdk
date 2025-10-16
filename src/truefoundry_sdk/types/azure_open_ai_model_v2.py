@@ -21,43 +21,28 @@ class AzureOpenAiModelV2(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=Display Name
-    +sort=1
-    +usage=Name to identify this Azure OpenAI model in the UI
-    +message=2 to 62 characters long alphanumeric word, may contain - or . in between, cannot start with a number
+    Name to identify this Azure OpenAI model in the UI
     """
 
     model_id: str = pydantic.Field()
     """
-    +label=Model ID
-    +sort=2
-    +usage=The name of the Azure OpenAI model deployment (e.g. gpt-35-turbo, gpt-4). Used for cost tracking and management
-    +message=Model ID must not be empty
+    The name of the Azure OpenAI model deployment (e.g. gpt-35-turbo, gpt-4). Used for cost tracking and management
     """
 
     api_version: str = pydantic.Field()
     """
-    +label=API Version
-    +sort=3
-    +usage=The Azure OpenAI API version to use
-    +message=API version must not be empty
+    The Azure OpenAI API version to use
     """
 
     model_types: typing.List[ModelType] = pydantic.Field()
     """
-    +label=Model Types
-    +sort=4
-    +usage=Specify the type of the Azure OpenAI model
-    +uiProps={"disableAllOption": true}
+    Specify the type of the Azure OpenAI model
     """
 
     cost: typing.Optional[ModelCostMetric] = None
     authorized_subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +label=Access Control
-    +sort=6
-    +usage=List of subjects that are authorized to access this integration. List of user fqn in format <user_type>:<username>.
-    +uiType=Hidden
+    List of subjects that are authorized to access this integration. List of user fqn in format <user_type>:<username>.
     """
 
     if IS_PYDANTIC_V2:

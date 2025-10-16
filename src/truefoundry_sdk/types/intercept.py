@@ -15,9 +15,7 @@ class Intercept(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +sort=1
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
-    +usage=Name of the service this intercept is for
+    Name of the service this intercept is for
     """
 
     rules: typing.List[InterceptRulesItem]

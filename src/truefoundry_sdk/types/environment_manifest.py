@@ -18,9 +18,7 @@ class EnvironmentManifest(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +sort=100
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
-    +usage=Environment Name
+    Environment Name
     """
 
     color: EnvironmentColor

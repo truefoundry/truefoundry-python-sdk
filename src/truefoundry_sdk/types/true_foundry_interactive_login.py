@@ -18,8 +18,7 @@ class TrueFoundryInteractiveLogin(UniversalBaseModel):
 
     bypass_auth_paths: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +label=Paths that will bypass auth
-    +usage=List of paths that will bypass auth.
+    List of paths that will bypass auth.
     needs to start with a forward slash(/) and should not contain wildcards(*)
     """
 

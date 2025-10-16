@@ -14,24 +14,17 @@ class SsoTeamManifest(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +sort=100
-    +message=Use of only alpha numeric character and "-" is allowed as team name and must be less than 25 characters
-    +usage=Name of the Team
+    Name of the Team
     """
 
     sso_name: str = pydantic.Field()
     """
-    +sort=200
-    +label=SSO
-    +usage=SSO configuration to use for this team
-    +uiType=Select
+    SSO configuration to use for this team
     """
 
     group_name: str = pydantic.Field()
     """
-    +sort=300
-    +label=Group Name
-    +usage=Group name from SSO that will be used to determine team membership
+    Group name from SSO that will be used to determine team membership
     """
 
     if IS_PYDANTIC_V2:

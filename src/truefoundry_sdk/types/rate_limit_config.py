@@ -14,10 +14,7 @@ class RateLimitConfig(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +usage=Name of the rate limiting configuration
-    +uiProps={"descriptionInline":true}
-    +sort=1
-    +label=Configuration Name
+    Name of the rate limiting configuration
     """
 
     type: typing.Literal["gateway-rate-limiting-config"] = pydantic.Field(default="gateway-rate-limiting-config")
@@ -28,10 +25,7 @@ class RateLimitConfig(UniversalBaseModel):
 
     rules: typing.List[RateLimitRule] = pydantic.Field()
     """
-    +usage=List of rate limit rules
-    +uiProps={"descriptionInline":true}
-    +sort=3
-    +label=Rate Limit Rules
+    List of rate limit rules
     """
 
     if IS_PYDANTIC_V2:

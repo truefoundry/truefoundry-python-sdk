@@ -21,33 +21,23 @@ class AwsEksIntegration(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=Display Name
-    +usage=The name of the integration that will be displayed in the TrueFoundry UI.
-    +sort=100
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
+    The name of the integration that will be displayed in the TrueFoundry UI.
     """
 
     region: AwsRegion
     cluster_name: str = pydantic.Field()
     """
-    +label=Cluster Name
-    +usage=Name of the cluster given in the cloud account.
-    +sort=300
+    Name of the cluster given in the cloud account.
     """
 
     auth_data: typing.Optional[AwsEksIntegrationAuthData] = pydantic.Field(default=None)
     """
-    +label=Auth Data
-    +usage=Custom authentication data for the integration.
-    +sort=400
+    Custom authentication data for the integration.
     """
 
     authorized_subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +label=Access Control
-    +usage=List of subjects that are authorized to access this integration. List of user fqn in format <user_type>:<username>.
-    +sort=600
-    +uiType=AuthorizedSubjects
+    List of subjects that are authorized to access this integration. List of user fqn in format <user_type>:<username>.
     """
 
     if IS_PYDANTIC_V2:

@@ -12,7 +12,7 @@ from .service_rollout_strategy import ServiceRolloutStrategy
 
 class Service(BaseService):
     """
-    +docs=Describes the configuration for the service
+    Describes the configuration for the service
     """
 
     type: typing.Literal["service"] = pydantic.Field(default="service")
@@ -22,24 +22,19 @@ class Service(BaseService):
 
     replicas: ServiceReplicas = pydantic.Field()
     """
-    +label=Replicas
-    +usage=Deploy multiple instances of your pods to distribute incoming traffic across them, ensuring effective load balancing.
-    +icon=fa-clone
-    +sort=4
+    Deploy multiple instances of your pods to distribute incoming traffic across them, ensuring effective load balancing.
     """
 
     auto_shutdown: typing.Optional[Autoshutdown] = None
     allow_interception: typing.Optional[bool] = pydantic.Field(default=False)
     """
-    +label=Allow intercepts
-    +usage=Whether to allow intercepts to be applied for this service.
+    Whether to allow intercepts to be applied for this service.
     This would inject an additional sidecar in each pod of the service. Not recommended on production
     """
 
     rollout_strategy: typing.Optional[ServiceRolloutStrategy] = pydantic.Field(default=None)
     """
-    +label=Rollout strategy
-    +usage=Strategy to dictate how a rollout should happen when a new release for this service is made [Docs](https://docs.truefoundry.com/docs/rollout-strategy)
+    Strategy to dictate how a rollout should happen when a new release for this service is made [Docs](https://docs.truefoundry.com/docs/rollout-strategy)
     """
 
     if IS_PYDANTIC_V2:

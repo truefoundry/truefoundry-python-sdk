@@ -18,10 +18,7 @@ class DatabricksApiKeyAuth(UniversalBaseModel):
 
     api_key: str = pydantic.Field()
     """
-    +label=API Key
-    +usage=API key for Databricks authentication.
-    +sort=100
-    +uiType=Password
+    API key for Databricks authentication.
     """
 
     if IS_PYDANTIC_V2:

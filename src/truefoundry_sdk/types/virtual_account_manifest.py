@@ -16,10 +16,7 @@ from .secret_store_config import SecretStoreConfig
 class VirtualAccountManifest(UniversalBaseModel):
     name: str = pydantic.Field()
     """
-    +label=Name
-    +sort=1
-    +message=3 to 25 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
-    +usage=Virtual Account Name
+    Virtual Account Name
     """
 
     type: typing.Literal["virtual-account"] = pydantic.Field(default="virtual-account")
@@ -29,11 +26,7 @@ class VirtualAccountManifest(UniversalBaseModel):
 
     expiration_date: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Expiration Date (UTC)
-    +sort=2
-    +message=Expiration date of the virtual account
-    +usage=Expiration Date of the Virtual Account (should be in the format yyyy-mm-dd)
-    +uiType=DatePicker
+    Expiration Date of the Virtual Account (should be in the format yyyy-mm-dd)
     """
 
     permissions: typing.List[Permissions] = pydantic.Field()

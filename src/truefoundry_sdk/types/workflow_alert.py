@@ -9,23 +9,18 @@ from .notification_target import NotificationTarget
 
 class WorkflowAlert(UniversalBaseModel):
     """
-    +docs=Describes the configuration for the workflow alerts
-    +label=Alert
+    Describes the configuration for the workflow alerts
     """
 
     notification_target: typing.Optional[NotificationTarget] = None
     on_completion: typing.Optional[bool] = pydantic.Field(default=False)
     """
-    +label=On Completion
-    +usage=Send an alert when the job completes
-    +sort=680
+    Send an alert when the job completes
     """
 
     on_failure: typing.Optional[bool] = pydantic.Field(default=True)
     """
-    +label=On Failure
-    +usage=Send an alert when the job fails
-    +sort=690
+    Send an alert when the job fails
     """
 
     if IS_PYDANTIC_V2:

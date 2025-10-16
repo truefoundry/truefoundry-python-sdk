@@ -9,9 +9,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 class SparkConfig(UniversalBaseModel):
     ui_base_domain: str = pydantic.Field()
     """
-    +label=Spark UI Base Domain
-    +usage=The base domain for the cluster with which you can access your Spark UI
-    +message=Must not contain any spaces.
+    The base domain for the cluster with which you can access your Spark UI
     """
 
     if IS_PYDANTIC_V2:

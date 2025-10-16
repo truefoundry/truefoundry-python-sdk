@@ -8,8 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class AmqpInputConfig(UniversalBaseModel):
     """
-    +docs=Describes the configuration for the input AMQP worker
-    +label=AMQP
+    Describes the configuration for the input AMQP worker
     """
 
     type: typing.Literal["amqp"] = pydantic.Field(default="amqp")
@@ -19,22 +18,17 @@ class AmqpInputConfig(UniversalBaseModel):
 
     url: str = pydantic.Field()
     """
-    +label=Queue URL
-    +usage=AMQP Queue URL of Subscriber
-    +sort=1
+    AMQP Queue URL of Subscriber
     """
 
     queue_name: str = pydantic.Field()
     """
-    +label=Queue Name
-    +usage=AMQP Queue Name
-    +sort=2
+    AMQP Queue Name
     """
 
     wait_time_seconds: int = pydantic.Field(default=5)
     """
-    +label=Wait Time Seconds
-    +usage=Wait timeout for long polling.
+    Wait timeout for long polling.
     """
 
     if IS_PYDANTIC_V2:

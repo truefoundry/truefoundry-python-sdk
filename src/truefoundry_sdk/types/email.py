@@ -18,19 +18,12 @@ class Email(UniversalBaseModel):
 
     notification_channel: str = pydantic.Field()
     """
-    +label=Notification Channel
-    +usage=Specify the notification channel to send alerts to
-    +uiType=AlertNotificationChannel
-    +uiProps={"integrationType":"notification-channel"}
-    +sort=660
+    Specify the notification channel to send alerts to
     """
 
     to_emails: typing.List[str] = pydantic.Field()
     """
-    +label=To Emails
-    +usage=List of recipients' email addresses if the notification channel is Email.
-    +docs=Specify the emails to send alerts to
-    +sort=665
+    List of recipients' email addresses if the notification channel is Email.
     """
 
     if IS_PYDANTIC_V2:

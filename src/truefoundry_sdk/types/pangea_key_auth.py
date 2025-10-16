@@ -14,9 +14,7 @@ class PangeaKeyAuth(UniversalBaseModel):
 
     api_key: str = pydantic.Field()
     """
-    +uiType=Password
-    +sort=100
-    +usage=API key for the Pangea account
+    API key for the Pangea account
     """
 
     if IS_PYDANTIC_V2:

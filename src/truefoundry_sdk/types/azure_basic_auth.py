@@ -18,17 +18,12 @@ class AzureBasicAuth(UniversalBaseModel):
 
     username: str = pydantic.Field()
     """
-    +label=Username
-    +usage=The username for the Azure managed identity.
-    +sort=100
+    The username for the Azure managed identity.
     """
 
     password: str = pydantic.Field()
     """
-    +sort=200
-    +label=Password
-    +usage=The password for the Azure managed identity.
-    +uiType=Password
+    The password for the Azure managed identity.
     """
 
     if IS_PYDANTIC_V2:

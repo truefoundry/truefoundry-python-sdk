@@ -22,33 +22,22 @@ class AwsProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +uiProps={"disableEdit":true}
-    +label=Name
-    +usage=The name of the AWS provider account.
-    +sort=200
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
+    The name of the AWS provider account.
     """
 
     aws_account_id: str = pydantic.Field()
     """
-    +label=AWS Account ID
-    +usage=The AWS account ID.
-    +sort=300
+    The AWS account ID.
     """
 
     auth_data: typing.Optional[AwsProviderAccountAuthData] = pydantic.Field(default=None)
     """
-    +label=AWS Account Auth Data
-    +usage=Authentication data for the AWS account.
-    +sort=400
+    Authentication data for the AWS account.
     """
 
     integrations: typing.List[AwsIntegrations] = pydantic.Field()
     """
-    +label=Integrations
-    +usage=List of integrations that are associated with the AWS provider account.
-    +sort=500
-    +uiType=IntegrationsGroup
+    List of integrations that are associated with the AWS provider account.
     """
 
     if IS_PYDANTIC_V2:

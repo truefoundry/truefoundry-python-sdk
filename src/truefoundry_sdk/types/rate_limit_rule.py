@@ -15,19 +15,13 @@ class RateLimitRule(UniversalBaseModel):
 
     id: str = pydantic.Field()
     """
-    +usage=Unique identifier for the rule
-    +uiProps={"descriptionInline":true}
-    +sort=1
-    +label=Rule ID
+    Unique identifier for the rule
     """
 
     when: RateLimitWhen
     limit_to: int = pydantic.Field()
     """
-    +usage=Maximum number of requests or tokens allowed
-    +uiProps={"descriptionInline":true}
-    +sort=3
-    +label=Limit Value
+    Maximum number of requests or tokens allowed
     """
 
     unit: RateLimitUnit

@@ -10,36 +10,27 @@ from .tool_call import ToolCall
 
 class AssistantMessage(UniversalBaseModel):
     """
-    +label=Assistant Message
-    +usage=Assistant message turn
+    Assistant message turn
     """
 
     role: typing.Literal["assistant"] = pydantic.Field(default="assistant")
     """
-    +value=assistant
-    +label=Role
-    +usage=Role of the message
-    +uiType=Ignore
+    Role of the message
     """
 
     content: typing.Optional[AssistantMessageContent] = pydantic.Field(default=None)
     """
-    +label=Content
-    +usage=Text content for the assistant message
-    +uiType=CodeEditor
-    +uiProps={"language": "text"}
+    Text content for the assistant message
     """
 
     tool_calls: typing.Optional[typing.List[ToolCall]] = pydantic.Field(default=None)
     """
-    +label=Tool Calls
-    +usage=List of tool calls made by the assistant
+    List of tool calls made by the assistant
     """
 
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Name
-    +usage=Name of the assistant this message is from
+    Name of the assistant this message is from
     """
 
     if IS_PYDANTIC_V2:

@@ -8,14 +8,13 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class Rolling(UniversalBaseModel):
     """
-    +docs=This strategy updates the pods in a rolling fashion such that a subset of the
+    This strategy updates the pods in a rolling fashion such that a subset of the
     total pods are replaced with new version at one time.
     A commonly used strategy can be to have maxUnavailablePercentage close to 0 so that there
     is no downtime and keep the maxSurgePercentage to around 25%. If you are anyways running
     a large number of pods, the service can often tolerate a few pods going down - so you
     max maxUnavailablePercentage = 10 and maxSurgePercentage=0. You can read about it more
     [here](https://spot.io/resources/kubernetes-autoscaling/5-kubernetes-deployment-strategies-roll-out-like-the-pros/)
-    +label=Rolling update strategy
     """
 
     type: typing.Literal["rolling_update"] = pydantic.Field(default="rolling_update")
@@ -25,16 +24,14 @@ class Rolling(UniversalBaseModel):
 
     max_unavailable_percentage: int = pydantic.Field(default=25)
     """
-    +label=Max unavailable(%)
-    +usage=Percentage of total replicas that can be brought down at one time.
+    Percentage of total replicas that can be brought down at one time.
     For a value of 25 when replicas are set to 12 this would mean minimum (25% of 12) = 3 pods might be unavailable during the deployment.
     Setting this to a higher value can help in speeding up the deployment process.
     """
 
     max_surge_percentage: int = pydantic.Field(default=25)
     """
-    +label=Max Surge(%)
-    +usage=Percentage of total replicas of updated image that can be brought up over the total replicas count.
+    Percentage of total replicas of updated image that can be brought up over the total replicas count.
     For a value of 25 when replicas are set to 12 this would mean (12+(25% of 12) = 15) pods might be running at one time.
     Setting this to a higher value can help in speeding up the deployment process.
     """

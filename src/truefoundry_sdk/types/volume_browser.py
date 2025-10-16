@@ -14,24 +14,18 @@ class VolumeBrowser(UniversalBaseModel):
 
     username: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +message=3 to 10 lower case characters long alphanumeric word, may contain - in between, cannot start with a number.
-    +usage=Username for logging in the volume browser.
-    +sort=1
+    Username for logging in the volume browser.
     """
 
     password_secret_fqn: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Password Secret FQN
-    +usage=TFY Secret containing the password for logging in the volume browser.
-    +sort=2
+    TFY Secret containing the password for logging in the volume browser.
     """
 
     endpoint: Endpoint
     service_account: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Service Account Name
-    +usage=Kubernetes Service account name for the volume browser.
-    +sort=4
+    Kubernetes Service account name for the volume browser.
     """
 
     if IS_PYDANTIC_V2:

@@ -11,44 +11,29 @@ from .sla_cutoff import SlaCutoff
 class PriorityBasedLoadBalanceTarget(UniversalBaseModel):
     target: str = pydantic.Field()
     """
-    +usage=Target model or provider FQN
-    +uiProps={"integrationType":"model", "valuePattern": "${providerAccount.name}/${manifest.name}"}
-    +sort=1
-    +label=Target
+    Target model or provider FQN
     """
 
     priority: int = pydantic.Field(default=0)
     """
-    +usage=Priority for the target, Lower the number, higher the priority (0 is the highest priority)
-    +uiProps={"descriptionInline":true}
-    +sort=2
-    +label=Priority
+    Priority for the target, Lower the number, higher the priority (0 is the highest priority)
     """
 
     sla_cutoff: typing.Optional[SlaCutoff] = None
     retry_config: typing.Optional[RetryConfig] = None
     fallback_status_codes: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +usage=Status Codes for which the request will fallback to other targets. If the status code is not present in fallback_status_codes, it fails immediately.
-    +uiProps={"descriptionInline":true}
-    +sort=5
-    +label=Fallback Status Codes
+    Status Codes for which the request will fallback to other targets. If the status code is not present in fallback_status_codes, it fails immediately.
     """
 
     fallback_candidate: typing.Optional[bool] = pydantic.Field(default=True)
     """
-    +usage=Whether this target is a fallback candidate.  If set to false, this model will not be considered as a fallback option for targets of this load-balance-rule
-    +uiProps={"descriptionInline":true}
-    +sort=6
-    +label=Fallback Candidate
+    Whether this target is a fallback candidate.  If set to false, this model will not be considered as a fallback option for targets of this load-balance-rule
     """
 
     override_params: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
     """
-    +usage=Optional parameters to override in the request
-    +uiProps={"descriptionInline":true}
-    +sort=7
-    +label=Override Parameters
+    Optional parameters to override in the request
     """
 
     if IS_PYDANTIC_V2:

@@ -10,7 +10,7 @@ from .workbench_image import WorkbenchImage
 
 class RStudio(BaseWorkbenchInput):
     """
-    +docs=Describes the configuration for the Rstudio server
+    Describes the configuration for the Rstudio server
     """
 
     type: typing.Literal["rstudio"] = pydantic.Field(default="rstudio")

@@ -10,9 +10,7 @@ from .patronus_glider_criteria import PatronusGliderCriteria
 class PatronusGliderEvaluator(UniversalBaseModel):
     type: typing.Literal["glider"] = pydantic.Field(default="glider")
     """
-    +label=Evaluator Type
-    +usage=The type of the evaluator to use for the Patronus Guardrail.
-    +sort=100
+    The type of the evaluator to use for the Patronus Guardrail.
     """
 
     criteria: PatronusGliderCriteria

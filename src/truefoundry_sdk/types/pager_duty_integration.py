@@ -22,19 +22,13 @@ class PagerDutyIntegration(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=Display Name
-    +sort=100
-    +usage=The name of the integration that will be displayed in the TrueFoundry UI.
-    +uiProps={"disableEdit":false}
+    The name of the integration that will be displayed in the TrueFoundry UI.
     """
 
     auth_data: PagerDutyIntegrationKeyAuth
     authorized_subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +label=Access Control
-    +usage=List of subjects that are authorized to access this integration. List of user fqn in format <user_type>:<username>.
-    +sort=10005
-    +uiType=AuthorizedSubjects
+    List of subjects that are authorized to access this integration. List of user fqn in format <user_type>:<username>.
     """
 
     if IS_PYDANTIC_V2:

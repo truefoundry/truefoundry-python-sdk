@@ -10,66 +10,49 @@ from .resources_node import ResourcesNode
 
 class Resources(UniversalBaseModel):
     """
-    +docs=Describes the resource constraints for the application so that it can be deployed accordingly on the cluster
-    To learn more you can go [here](https://docs.truefoundry.com/docs/resources)
-    +icon=fa-microchip
-    +label=Resources
-    +usage=Configure resource allocations, specify node constraints and capacity types to improve performance and reduce expenses. [Docs](https://docs.truefoundry.com/docs/resources)
+    Configure resource allocations, specify node constraints and capacity types to improve performance and reduce expenses. [Docs](https://docs.truefoundry.com/docs/resources)
     """
 
     cpu_request: float = pydantic.Field(default=0.2)
     """
-    +label=CPU Request
-    +sort=1
-    +usage=Requested CPU which determines the minimum cost incurred. The CPU usage can exceed the requested
+    Requested CPU which determines the minimum cost incurred. The CPU usage can exceed the requested
     amount, but not the value specified in the limit. 1 CPU means 1 CPU core. Fractional CPU can be requested
     like `0.5` or `0.05`
     """
 
     cpu_limit: float = pydantic.Field(default=0.5)
     """
-    +label=CPU Limit
-    +usage=CPU limit beyond which the usage cannot be exceeded. 1 CPU means 1 CPU core. Fractional CPU can be requested
+    CPU limit beyond which the usage cannot be exceeded. 1 CPU means 1 CPU core. Fractional CPU can be requested
     like `0.5`. CPU limit should be >= cpu request.
-    +sort=2
     """
 
     memory_request: int = pydantic.Field(default=200)
     """
-    +label=Memory Request
-    +usage=Requested memory which determines the minimum cost incurred. The unit of memory is in megabytes(MB).
+    Requested memory which determines the minimum cost incurred. The unit of memory is in megabytes(MB).
     So 1 means 1 MB and 2000 means 2GB.
-    +sort=3
     """
 
     memory_limit: int = pydantic.Field(default=500)
     """
-    +label=Memory Limit
-    +usage=Memory limit after which the application will be killed with an OOM error. The unit of memory is
+    Memory limit after which the application will be killed with an OOM error. The unit of memory is
     in megabytes(MB). So 1 means 1 MB and 2000 means 2GB. MemoryLimit should be greater than memory request.
-    +sort=4
     """
 
     ephemeral_storage_request: int = pydantic.Field(default=1000)
     """
-    +label=Storage Request
-    +usage=Requested disk storage. The unit of memory is in megabytes(MB).
+    Requested disk storage. The unit of memory is in megabytes(MB).
     This is ephemeral storage and will be wiped out on pod restarts or eviction
-    +sort=5
     """
 
     ephemeral_storage_limit: int = pydantic.Field(default=2000)
     """
-    +label=Storage Limit
-    +usage=Disk storage limit. The unit of memory is in megabytes(MB). Exceeding this limit will result in eviction.
+    Disk storage limit. The unit of memory is in megabytes(MB). Exceeding this limit will result in eviction.
     It should be greater than the request. This is ephemeral storage and will be wiped out on pod restarts or eviction
-    +sort=6
     """
 
     shared_memory_size: typing.Optional[int] = pydantic.Field(default=None)
     """
-    +label=Shared Memory Size (MB)
-    +usage=Define the shared memory requirements for your workload. Machine learning libraries like Pytorch can use Shared Memory
+    Define the shared memory requirements for your workload. Machine learning libraries like Pytorch can use Shared Memory
     for inter-process communication. If you use this, we will mount a `tmpfs` backed volume at the `/dev/shm` directory.
     Any usage will also count against the workload's memory limit (`resources.memory_limit`) along with your workload's memory usage.
     If the overall usage goes above `resources.memory_limit` the user process may get killed.
@@ -78,14 +61,12 @@ class Resources(UniversalBaseModel):
 
     node: typing.Optional[ResourcesNode] = pydantic.Field(default=None)
     """
-    +label=Node
-    +usage=This field determines how the underlying node resource is to be utilized
+    This field determines how the underlying node resource is to be utilized
     """
 
     devices: typing.Optional[typing.List[ResourcesDevicesItem]] = pydantic.Field(default=None)
     """
-    +label=Devices
-    +usage=Define custom device or accelerator requirements for your workload. We currently support NVIDIA GPUs, AWS Inferentia Accelerators, Single Host TPU Slices.
+    Define custom device or accelerator requirements for your workload. We currently support NVIDIA GPUs, AWS Inferentia Accelerators, Single Host TPU Slices.
     """
 
     if IS_PYDANTIC_V2:

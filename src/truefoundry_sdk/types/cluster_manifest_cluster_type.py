@@ -8,10 +8,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class ClusterManifestClusterType(str, enum.Enum):
     """
-    +label=Cluster Type
-    +icon=fa-cloud:#7EC8E3
-    +sort=20
-    +usage=The cluster type of this cluster
+    The cluster type of this cluster
     """
 
     AWS_EKS = "aws-eks"

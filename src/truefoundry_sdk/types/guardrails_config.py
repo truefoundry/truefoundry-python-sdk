@@ -14,10 +14,7 @@ class GuardrailsConfig(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +usage=Name of the guardrails configuration
-    +uiProps={"descriptionInline":true}
-    +sort=1
-    +label=Configuration Name
+    Name of the guardrails configuration
     """
 
     type: typing.Literal["gateway-guardrails-config"] = pydantic.Field(default="gateway-guardrails-config")
@@ -28,10 +25,7 @@ class GuardrailsConfig(UniversalBaseModel):
 
     rules: typing.List[GuardrailsRule] = pydantic.Field()
     """
-    +usage=List of guardrail rules
-    +uiProps={"descriptionInline":true}
-    +sort=3
-    +label=Guardrail Rules
+    List of guardrail rules
     """
 
     if IS_PYDANTIC_V2:

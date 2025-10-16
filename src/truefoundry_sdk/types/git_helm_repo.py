@@ -22,23 +22,17 @@ class GitHelmRepo(UniversalBaseModel):
 
     revision: str = pydantic.Field()
     """
-    +label=Revision
-    +sort=2
-    +usage=Branch/Commit SHA/Tag of the git repo.
+    Branch/Commit SHA/Tag of the git repo.
     """
 
     path: str = pydantic.Field()
     """
-    +label=Path
-    +sort=3
-    +usage=Path to the chart.
+    Path to the chart.
     """
 
     value_files: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +label=Value files
-    +sort=3
-    +usage=Helm values files for overriding values in the helm chart.
+    Helm values files for overriding values in the helm chart.
     The path is relative to the Path directory defined above
     """
 

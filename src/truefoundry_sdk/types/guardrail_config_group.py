@@ -24,27 +24,17 @@ class GuardrailConfigGroup(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=Name
-    +sort=100
-    +usage=The name of the Guardrail Config Group.
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
-    +uiProps={"disableEdit":true}
+    The name of the Guardrail Config Group.
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    +label=Access Control
-    +sort=200
-    +usage=List of users who have access to this Guardrail Config Group.
-    +uiType=Collaborators
+    List of users who have access to this Guardrail Config Group.
     """
 
     integrations: typing.List[GuardrailConfigIntegrations] = pydantic.Field()
     """
-    +label=Guardrail Configs
-    +usage=List of Guardrail Configs, which are part of this Guardrail Config Group.
-    +sort=400
-    +uiType=IntegrationsGroup
+    List of Guardrail Configs, which are part of this Guardrail Config Group.
     """
 
     if IS_PYDANTIC_V2:

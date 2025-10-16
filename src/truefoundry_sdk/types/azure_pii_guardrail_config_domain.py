@@ -8,9 +8,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class AzurePiiGuardrailConfigDomain(str, enum.Enum):
     """
-    +label=Domain
-    +usage=Domain for PII detection
-    +sort=400
+    Domain for PII detection
     """
 
     NONE = "none"

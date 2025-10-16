@@ -14,10 +14,7 @@ class BudgetConfig(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +usage=Name of the budget configuration
-    +uiProps={"descriptionInline":true}
-    +sort=1
-    +label=Configuration Name
+    Name of the budget configuration
     """
 
     type: typing.Literal["gateway-budget-config"] = pydantic.Field(default="gateway-budget-config")
@@ -28,10 +25,7 @@ class BudgetConfig(UniversalBaseModel):
 
     rules: typing.List[BudgetRule] = pydantic.Field()
     """
-    +usage=List of budget rules
-    +uiProps={"descriptionInline":true}
-    +sort=3
-    +label=Budget Rules
+    List of budget rules
     """
 
     if IS_PYDANTIC_V2:

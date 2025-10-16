@@ -14,9 +14,7 @@ class PaloAltoPrismaAirsKeyAuth(UniversalBaseModel):
 
     api_key: str = pydantic.Field()
     """
-    +uiType=Password
-    +sort=100
-    +usage=API key for the Palo Alto  Prisma AIRS account
+    API key for the Palo Alto  Prisma AIRS account
     """
 
     if IS_PYDANTIC_V2:

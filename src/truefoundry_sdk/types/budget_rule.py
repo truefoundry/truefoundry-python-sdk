@@ -15,19 +15,13 @@ class BudgetRule(UniversalBaseModel):
 
     id: str = pydantic.Field()
     """
-    +usage=Unique identifier for the rule
-    +uiProps={"descriptionInline":true}
-    +sort=1
-    +label=Rule ID
+    Unique identifier for the rule
     """
 
     when: BudgetWhen
     limit_to: float = pydantic.Field()
     """
-    +usage=Numeric limit value for the budget
-    +uiProps={"descriptionInline":true}
-    +sort=3
-    +label=Limit Value
+    Numeric limit value for the budget
     """
 
     unit: BudgetLimitUnit

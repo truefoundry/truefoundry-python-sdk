@@ -9,20 +9,17 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 class AsyncProcessorSidecar(UniversalBaseModel):
     destination_url: str = pydantic.Field()
     """
-    +label=Destination URL
-    +usage=URL for the processor to invoke
+    URL for the processor to invoke
     """
 
     request_timeout: typing.Optional[int] = pydantic.Field(default=10)
     """
-    +label=Request Timeout Seconds
-    +usage=Timeout for the invoke request in seconds
+    Timeout for the invoke request in seconds
     """
 
     sidecar_image: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Sidecar Image
-    +usage=Image for the processor sidecar (This field will be deprecated in the future)
+    Image for the processor sidecar (This field will be deprecated in the future)
     """
 
     if IS_PYDANTIC_V2:

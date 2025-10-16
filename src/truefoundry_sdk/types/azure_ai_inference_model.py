@@ -19,10 +19,7 @@ class AzureAiInferenceModel(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=Display Name
-    +usage=Name to identify this Azure AI model
-    +sort=100
-    +message=2 to 62 characters long alphanumeric word, may contain - or . in between, cannot start with a number
+    Name to identify this Azure AI model
     """
 
     type: typing.Literal["integration/model/azure/ai-inference"] = pydantic.Field(
@@ -34,9 +31,7 @@ class AzureAiInferenceModel(UniversalBaseModel):
 
     model_types: typing.List[ModelType] = pydantic.Field()
     """
-    +label=Model Types
-    +usage=Types of models supported by this Azure AI deployment
-    +sort=200
+    Types of models supported by this Azure AI deployment
     """
 
     auth_data: typing.Optional[AzureKeyAuth] = None
@@ -44,17 +39,13 @@ class AzureAiInferenceModel(UniversalBaseModel):
         AzureAiInferenceModelDeploymentDetails, FieldMetadata(alias="deploymentDetails")
     ] = pydantic.Field()
     """
-    +label=Deployment Configuration
-    +usage=Configuration details for the Azure AI deployment
-    +sort=400
+    Configuration details for the Azure AI deployment
     """
 
     cost: typing.Optional[ModelCostMetric] = None
     authorized_subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +label=Access Control
-    +usage=List of subjects that are authorized to access this integration. List of user fqn in format <user_type>:<username>.
-    +uiType=Hidden
+    List of subjects that are authorized to access this integration. List of user fqn in format <user_type>:<username>.
     """
 
     if IS_PYDANTIC_V2:

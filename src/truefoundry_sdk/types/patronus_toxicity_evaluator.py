@@ -10,9 +10,7 @@ from .patronus_toxicity_criteria import PatronusToxicityCriteria
 class PatronusToxicityEvaluator(UniversalBaseModel):
     type: typing.Literal["toxicity"] = pydantic.Field(default="toxicity")
     """
-    +label=Evaluator Type
-    +usage=The type of the evaluator to use for the Patronus Guardrail.
-    +sort=100
+    The type of the evaluator to use for the Patronus Guardrail.
     """
 
     criteria: PatronusToxicityCriteria = "patronus:toxicity"

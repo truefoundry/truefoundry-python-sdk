@@ -14,9 +14,7 @@ class SlackWebhookAuth(UniversalBaseModel):
 
     webhook_url: str = pydantic.Field()
     """
-    +label=Webhook URL
-    +usage=The URL of the slack webhook
-    +sort=100
+    The URL of the slack webhook
     """
 
     if IS_PYDANTIC_V2:

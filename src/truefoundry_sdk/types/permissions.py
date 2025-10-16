@@ -9,20 +9,17 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 class Permissions(UniversalBaseModel):
     resource_fqn: str = pydantic.Field()
     """
-    +label= Resource FQN
-    +usage=The fully qualified name of the resource
+    The fully qualified name of the resource
     """
 
     resource_type: str = pydantic.Field()
     """
-    +label=Resource Type
-    +usage=The type of the resource (cluster, workspace, etc.)
+    The type of the resource (cluster, workspace, etc.)
     """
 
     role_id: str = pydantic.Field()
     """
-    +label=Role ID
-    +usage=The role id of the role to be assigned to the service account for that resource
+    The role id of the role to be assigned to the service account for that resource
     """
 
     if IS_PYDANTIC_V2:

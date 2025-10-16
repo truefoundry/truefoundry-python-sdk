@@ -23,28 +23,17 @@ class McpServerProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=Group Name
-    +sort=100
-    +usage=The name of the MCP Server Group.
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
-    +uiProps={"disableEdit":true}
+    The name of the MCP Server Group.
     """
 
     collaborators: typing.List[Collaborator] = pydantic.Field()
     """
-    +label=Managers
-    +sort=200
-    +usage=List of teams/users who can manage this MCP Server Group. These subjects can add new MCP server integrations, can edit existing ones and can also use the MCP server.
-    +uiType=Collaborators
-    +uiProps={"optionTypes": ["Manager"]}
+    List of teams/users who can manage this MCP Server Group. These subjects can add new MCP server integrations, can edit existing ones and can also use the MCP server.
     """
 
     integrations: typing.List[McpServerIntegrations] = pydantic.Field()
     """
-    +label=MCP Servers
-    +usage=List of MCP Servers, which are part of this MCP Server Group.
-    +sort=400
-    +uiType=IntegrationsGroup
+    List of MCP Servers, which are part of this MCP Server Group.
     """
 
     if IS_PYDANTIC_V2:

@@ -20,16 +20,12 @@ class AzureAiServerlessDeployment(UniversalBaseModel):
 
     deployment_name: typing_extensions.Annotated[str, FieldMetadata(alias="deploymentName")] = pydantic.Field()
     """
-    +label=Azure Deployment Name
-    +usage=Name of the Azure AI deployment
-    +sort=100
+    Name of the Azure AI deployment
     """
 
     region: str = pydantic.Field()
     """
-    +label=Azure Region
-    +usage=Region where the Azure AI deployment is located
-    +sort=200
+    Region where the Azure AI deployment is located
     """
 
     if IS_PYDANTIC_V2:

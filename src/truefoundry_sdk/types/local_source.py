@@ -8,10 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class LocalSource(UniversalBaseModel):
     """
-    +docs=Describes that we are using code stored in a local developement environment to build our image
-    +label=Local
-    +icon=fa-folder:black
-    +sort=100
+    Describes that we are using code stored in a local developement environment to build our image
     """
 
     type: typing.Literal["local"] = pydantic.Field(default="local")
@@ -21,7 +18,7 @@ class LocalSource(UniversalBaseModel):
 
     project_root_path: str = pydantic.Field(default="./")
     """
-    +usage=Local project root path.
+    Local project root path.
     """
 
     local_build: bool = pydantic.Field(default=True)

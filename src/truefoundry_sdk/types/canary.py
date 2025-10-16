@@ -9,9 +9,8 @@ from .canary_step import CanaryStep
 
 class Canary(UniversalBaseModel):
     """
-    +docs=This strategy brings up the new release without bringing the older release down. Traffic is shifted from the older release to the newer release in a staged manner.
+    This strategy brings up the new release without bringing the older release down. Traffic is shifted from the older release to the newer release in a staged manner.
     This can help with verifying the health of the new release without shifting complete traffic.
-    +label=Canary strategy
     """
 
     type: typing.Literal["canary"] = pydantic.Field(default="canary")
@@ -21,8 +20,7 @@ class Canary(UniversalBaseModel):
 
     steps: typing.List[CanaryStep] = pydantic.Field()
     """
-    +docs=These steps would be executed in order to enable shifting of traffic slowly from stable to canary version
-    +label=Steps
+    These steps would be executed in order to enable shifting of traffic slowly from stable to canary version
     """
 
     if IS_PYDANTIC_V2:

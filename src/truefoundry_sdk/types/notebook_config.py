@@ -9,9 +9,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 class NotebookConfig(UniversalBaseModel):
     base_domain: str = pydantic.Field()
     """
-    +label=Notebook Base Domain
-    +usage=The base domain for the cluster with which you can access your Notebooks
-    +message=Must not contain any spaces.
+    The base domain for the cluster with which you can access your Notebooks
     """
 
     if IS_PYDANTIC_V2:

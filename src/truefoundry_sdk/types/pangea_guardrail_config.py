@@ -16,11 +16,7 @@ class PangeaGuardrailConfig(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +label=Name
-    +sort=50
-    +usage=The name of the Guardrail Config.
-    +message=3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
-    +uiProps={"disableEdit":true}
+    The name of the Guardrail Config.
     """
 
     type: typing.Literal["integration/guardrail-config/pangea"] = pydantic.Field(
@@ -35,25 +31,17 @@ class PangeaGuardrailConfig(UniversalBaseModel):
     guard_type: PangeaGuardType
     domain: str = pydantic.Field()
     """
-    +label=Domain
-    +usage=Domain of the cloud provider and region where your Pangea project is configured. Example: if endpoint is: https://<service_name>.aws.us-west-2.pangea.cloud/v1/text/guard, the input should be: aws.us-west-2.pangea.cloud
-    +message=Must be a valid domain name.
-    +sort=200
+    Domain of the cloud provider and region where your Pangea project is configured. Example: if endpoint is: https://<service_name>.aws.us-west-2.pangea.cloud/v1/text/guard, the input should be: aws.us-west-2.pangea.cloud
     """
 
     recipe: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +label=Recipe
-    +usage=Recipe key of a configuration of data types and settings defined in the Pangea User Console. It specifies the rules that are to be applied to the text, such as defang malicious URLs.
-    +sort=200
+    Recipe key of a configuration of data types and settings defined in the Pangea User Console. It specifies the rules that are to be applied to the text, such as defang malicious URLs.
     """
 
     overrides: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
     """
-    +label=Overrides
-    +usage=Overrides for the Pangea account
-    +sort=300
-    +uiType=KV
+    Overrides for the Pangea account
     """
 
     if IS_PYDANTIC_V2:

@@ -14,10 +14,7 @@ class LoadBalancingConfig(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    +usage=Name of the load balancing configuration
-    +uiProps={"descriptionInline":true}
-    +sort=1
-    +label=Configuration Name
+    Name of the load balancing configuration
     """
 
     type: typing.Literal["gateway-load-balancing-config"] = pydantic.Field(default="gateway-load-balancing-config")
@@ -28,10 +25,7 @@ class LoadBalancingConfig(UniversalBaseModel):
 
     rules: typing.List[LoadBalancingRule] = pydantic.Field()
     """
-    +usage=List of load balancing rules
-    +uiProps={"descriptionInline":true}
-    +sort=4
-    +label=Load Balancing Rules
+    List of load balancing rules
     """
 
     if IS_PYDANTIC_V2:

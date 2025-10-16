@@ -13,24 +13,17 @@ class RateLimitWhen(UniversalBaseModel):
 
     subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +usage=List of subjects that this rule applies to
-    +uiProps={"descriptionInline":true, "optionTypes": ["users","teams","virtualAccounts"]}
-    +label=Subjects
+    List of subjects that this rule applies to
     """
 
     models: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    +usage=List of models that this rule applies to
-    +uiType=IntegrationSelect
-    +uiProps={"integrationType":"model", "isMultiSelect": true, "valuePattern": "${providerAccount.name}/${manifest.name}"}
-    +label=Models
+    List of models that this rule applies to
     """
 
     metadata: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
     """
-    +usage=Metadata key-value pairs that this rule applies to
-    +uiProps={"descriptionInline":true}
-    +label=Metadata
+    Metadata key-value pairs that this rule applies to
     """
 
     if IS_PYDANTIC_V2:

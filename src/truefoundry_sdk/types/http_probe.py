@@ -8,9 +8,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class HttpProbe(UniversalBaseModel):
     """
-    +docs=Describes the Instructions for assessing container health by executing an HTTP GET request.
+    Describes the Instructions for assessing container health by executing an HTTP GET request.
     To learn more you can go [here](https://docs.truefoundry.com/docs/liveness-readiness-probe)
-    +label=Instructions for assessing container health by executing an HTTP GET request.
     """
 
     type: typing.Literal["http"] = pydantic.Field(default="http")
@@ -22,26 +21,22 @@ class HttpProbe(UniversalBaseModel):
 
     path: str = pydantic.Field()
     """
-    +usage=Path to the health check endpoint
-    +sort=2
+    Path to the health check endpoint
     """
 
     port: int = pydantic.Field()
     """
-    +usage=Listening port for the health check endpoint
-    +sort=3
+    Listening port for the health check endpoint
     """
 
     host: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +sort=4
-    +usage=Host name to connect to, defaults to the pod IP
+    Host name to connect to, defaults to the pod IP
     """
 
     scheme: typing.Optional[str] = pydantic.Field(default="HTTP")
     """
-    +sort=5
-    +usage=Scheme to use for connecting to the host
+    Scheme to use for connecting to the host
     """
 
     if IS_PYDANTIC_V2:

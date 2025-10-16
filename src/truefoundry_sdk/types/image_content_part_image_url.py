@@ -9,14 +9,12 @@ from .image_content_part_image_url_url import ImageContentPartImageUrlUrl
 
 class ImageContentPartImageUrl(UniversalBaseModel):
     """
-    +label=Image URL
-    +usage=Image URL linking to the image
+    Image URL linking to the image
     """
 
     url: ImageContentPartImageUrlUrl = pydantic.Field()
     """
-    +label=URL
-    +usage=Image URL linking to the image
+    Image URL linking to the image
     """
 
     detail: typing.Optional[str] = pydantic.Field(default=None)
