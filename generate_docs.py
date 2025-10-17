@@ -126,6 +126,15 @@ class TrueFoundrySDKDocGenerator:
 
         return client_modules
 
+    def _is_property_method(self, node: ast.FunctionDef) -> bool:
+        """Check if a function is decorated with @property"""
+        for decorator in node.decorator_list:
+            if isinstance(decorator, ast.Name) and decorator.id == "property":
+                return True
+            elif isinstance(decorator, ast.Attribute) and decorator.attr == "property":
+                return True
+        return False
+
     def _extract_main_client_info(self) -> ClientModuleInfo:
         # Read the main client file
         client_file = self.sdk_path / "client.py"
@@ -145,6 +154,9 @@ class TrueFoundrySDKDocGenerator:
             if isinstance(node, ast.ClassDef) and node.name == "TrueFoundry":
                 for child in node.body:
                     if isinstance(child, ast.FunctionDef) and not child.name.startswith("_"):
+                        # Skip @property methods
+                        if self._is_property_method(child):
+                            continue
                         method_info = self._extract_function_info(child, "client", is_method=True, all_types=self.types)
                         if method_info and method_info.name not in methods_map:
                             methods.append(method_info)
@@ -155,6 +167,9 @@ class TrueFoundrySDKDocGenerator:
             if isinstance(node, ast.ClassDef) and node.name == "BaseTrueFoundry":
                 for child in node.body:
                     if isinstance(child, ast.FunctionDef) and not child.name.startswith("_"):
+                        # Skip @property methods
+                        if self._is_property_method(child):
+                            continue
                         method_info = self._extract_function_info(child, "client", is_method=True, all_types=self.types)
                         if method_info and method_info.name not in methods_map:
                             methods.append(method_info)
@@ -1165,7 +1180,7 @@ pip install truefoundry
 
 ## Quick Example
 
-```python
+```python lines
 from truefoundry import TrueFoundry
 
 # Initialize the client
@@ -1294,7 +1309,7 @@ The main client for TrueFoundry SDK operations. This client provides access to a
   {%- if method.examples %}
   #### Usage
   {% for example in method.examples %}
-```python
+```python lines
 {{ example | safe }}
 ```
   {% endfor %}
@@ -1432,7 +1447,7 @@ description: "{{ module_info.description }}"
   {%- if method.examples %}
   #### Usage
   {% for example in method.examples %}
-```python
+```python lines
 {{ example | safe }}
 ```
   {% endfor %}
