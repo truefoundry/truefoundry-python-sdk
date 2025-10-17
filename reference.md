@@ -6326,7 +6326,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**sort_direction:** `typing.Optional[SortDirection]` — Sort direction for results. Defaults to desc.
+**sort_direction:** `typing.Optional[SortDirection]` — Sort direction for results based on time. Defaults to descending (latest first)
     
 </dd>
 </dl>
@@ -6334,7 +6334,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**page_token:** `typing.Optional[str]` — Base64 encoded page token for pagination
+**page_token:** `typing.Optional[str]` — Cursor token for pagination. This is an opaque string that should be passed as-is from the previous response
     
 </dd>
 </dl>

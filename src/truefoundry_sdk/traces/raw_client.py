@@ -72,10 +72,10 @@ class RawTracesClient:
             The maximum number of spans to return per page. Defaults to 200 if not provided.
 
         sort_direction : typing.Optional[SortDirection]
-            Sort direction for results. Defaults to desc.
+            Sort direction for results based on time. Defaults to descending (latest first)
 
         page_token : typing.Optional[str]
-            Base64 encoded page token for pagination
+            Cursor token for pagination. This is an opaque string that should be passed as-is from the previous response
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -202,10 +202,10 @@ class AsyncRawTracesClient:
             The maximum number of spans to return per page. Defaults to 200 if not provided.
 
         sort_direction : typing.Optional[SortDirection]
-            Sort direction for results. Defaults to desc.
+            Sort direction for results based on time. Defaults to descending (latest first)
 
         page_token : typing.Optional[str]
-            Base64 encoded page token for pagination
+            Cursor token for pagination. This is an opaque string that should be passed as-is from the previous response
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
