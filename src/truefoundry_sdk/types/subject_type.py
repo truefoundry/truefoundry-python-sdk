@@ -14,12 +14,14 @@ class SubjectType(str, enum.Enum):
     USER = "user"
     TEAM = "team"
     SERVICEACCOUNT = "serviceaccount"
+    VIRTUALACCOUNT = "virtualaccount"
 
     def visit(
         self,
         user: typing.Callable[[], T_Result],
         team: typing.Callable[[], T_Result],
         serviceaccount: typing.Callable[[], T_Result],
+        virtualaccount: typing.Callable[[], T_Result],
     ) -> T_Result:
         if self is SubjectType.USER:
             return user()
@@ -27,3 +29,5 @@ class SubjectType(str, enum.Enum):
             return team()
         if self is SubjectType.SERVICEACCOUNT:
             return serviceaccount()
+        if self is SubjectType.VIRTUALACCOUNT:
+            return virtualaccount()
