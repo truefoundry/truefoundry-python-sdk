@@ -3,10 +3,13 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.serialization import FieldMetadata
 from .collaborator import Collaborator
 from .open_ai_integrations import OpenAiIntegrations
 from .openai_api_key_auth import OpenaiApiKeyAuth
+from .owned_by import OwnedBy
 
 
 class OpenaiProviderAccount(UniversalBaseModel):
@@ -39,6 +42,8 @@ class OpenaiProviderAccount(UniversalBaseModel):
     """
     List of users who have access to this provider account
     """
+
+    owned_by: typing_extensions.Annotated[typing.Optional[OwnedBy], FieldMetadata(alias="ownedBy")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

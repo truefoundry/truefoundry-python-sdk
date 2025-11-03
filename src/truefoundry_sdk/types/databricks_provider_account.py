@@ -3,10 +3,13 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.serialization import FieldMetadata
 from .collaborator import Collaborator
 from .databricks_integrations import DatabricksIntegrations
 from .databricks_provider_account_auth_data import DatabricksProviderAccountAuthData
+from .owned_by import OwnedBy
 
 
 class DatabricksProviderAccount(UniversalBaseModel):
@@ -43,6 +46,8 @@ class DatabricksProviderAccount(UniversalBaseModel):
     """
     List of users who have access to this provider account
     """
+
+    owned_by: typing_extensions.Annotated[typing.Optional[OwnedBy], FieldMetadata(alias="ownedBy")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

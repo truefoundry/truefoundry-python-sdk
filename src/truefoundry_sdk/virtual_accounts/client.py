@@ -8,6 +8,7 @@ from ..core.request_options import RequestOptions
 from ..types.delete_virtual_account_response import DeleteVirtualAccountResponse
 from ..types.get_token_for_virtual_account_response import GetTokenForVirtualAccountResponse
 from ..types.get_virtual_account_response import GetVirtualAccountResponse
+from ..types.sync_virtual_account_token_response import SyncVirtualAccountTokenResponse
 from ..types.virtual_account import VirtualAccount
 from ..types.virtual_account_manifest import VirtualAccountManifest
 from .raw_client import AsyncRawVirtualAccountsClient, RawVirtualAccountsClient
@@ -227,6 +228,115 @@ class VirtualAccountsClient:
         )
         """
         _response = self._raw_client.get_token(id, request_options=request_options)
+        return _response.data
+
+    def sync_to_secret_store(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> SyncVirtualAccountTokenResponse:
+        """
+        Syncs the virtual account token to the configured secret store. Returns the updated JWT with sync metadata including timestamp and error (if any).
+
+        Parameters
+        ----------
+        id : str
+            serviceaccount id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncVirtualAccountTokenResponse
+            Token synced successfully to secret store
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.virtual_accounts.sync_to_secret_store(
+            id="id",
+        )
+        """
+        _response = self._raw_client.sync_to_secret_store(id, request_options=request_options)
+        return _response.data
+
+    def regenerate_token(
+        self, id: str, *, grace_period_in_days: float, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetTokenForVirtualAccountResponse:
+        """
+        Regenerate token for a virtual account by id. The old token will remain valid for the specified grace period.
+
+        Parameters
+        ----------
+        id : str
+            serviceaccount id
+
+        grace_period_in_days : float
+            Grace period in days for which the old token will remain valid after regeneration
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetTokenForVirtualAccountResponse
+            Token for the virtual account
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.virtual_accounts.regenerate_token(
+            id="id",
+            grace_period_in_days=30.0,
+        )
+        """
+        _response = self._raw_client.regenerate_token(
+            id, grace_period_in_days=grace_period_in_days, request_options=request_options
+        )
+        return _response.data
+
+    def delete_jwt(self, id: str, jwt_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete a JWT for a virtual account by id
+
+        Parameters
+        ----------
+        id : str
+            virtual account id
+
+        jwt_id : str
+            JWT id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.virtual_accounts.delete_jwt(
+            id="id",
+            jwt_id="jwtId",
+        )
+        """
+        _response = self._raw_client.delete_jwt(id, jwt_id, request_options=request_options)
         return _response.data
 
 
@@ -488,4 +598,139 @@ class AsyncVirtualAccountsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get_token(id, request_options=request_options)
+        return _response.data
+
+    async def sync_to_secret_store(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> SyncVirtualAccountTokenResponse:
+        """
+        Syncs the virtual account token to the configured secret store. Returns the updated JWT with sync metadata including timestamp and error (if any).
+
+        Parameters
+        ----------
+        id : str
+            serviceaccount id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncVirtualAccountTokenResponse
+            Token synced successfully to secret store
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.virtual_accounts.sync_to_secret_store(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.sync_to_secret_store(id, request_options=request_options)
+        return _response.data
+
+    async def regenerate_token(
+        self, id: str, *, grace_period_in_days: float, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetTokenForVirtualAccountResponse:
+        """
+        Regenerate token for a virtual account by id. The old token will remain valid for the specified grace period.
+
+        Parameters
+        ----------
+        id : str
+            serviceaccount id
+
+        grace_period_in_days : float
+            Grace period in days for which the old token will remain valid after regeneration
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetTokenForVirtualAccountResponse
+            Token for the virtual account
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.virtual_accounts.regenerate_token(
+                id="id",
+                grace_period_in_days=30.0,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.regenerate_token(
+            id, grace_period_in_days=grace_period_in_days, request_options=request_options
+        )
+        return _response.data
+
+    async def delete_jwt(
+        self, id: str, jwt_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Delete a JWT for a virtual account by id
+
+        Parameters
+        ----------
+        id : str
+            virtual account id
+
+        jwt_id : str
+            JWT id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.virtual_accounts.delete_jwt(
+                id="id",
+                jwt_id="jwtId",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete_jwt(id, jwt_id, request_options=request_options)
         return _response.data

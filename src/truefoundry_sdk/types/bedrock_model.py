@@ -5,7 +5,6 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .aws_region import AwsRegion
-from .bedrock_model_auth_data import BedrockModelAuthData
 from .model_cost_metric import ModelCostMetric
 from .model_type import ModelType
 
@@ -17,30 +16,25 @@ class BedrockModel(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    Display Name - 2 to 62 characters long alphanumeric word, may contain - or . in between, cannot start with a number
+    A descriptive name to identify this model integration in the UI
     """
 
     model_id: str = pydantic.Field()
     """
-    +sort=2
+    The AWS Bedrock model identifier or inference profile. Can be a foundation model ID (e.g., anthropic.claude-3-5-sonnet-20240620-v1:0, amazon.titan-text-express-v1), an inference profile ID (e.g., us.anthropic.claude-3-5-sonnet-20240620-v1:0), or an inference profile ARN (e.g., arn:aws:bedrock:us-east-1:123456789012:inference-profile/my-profile).
     """
 
-    type: typing.Literal["integration/model/aws"] = pydantic.Field(default="integration/model/aws")
+    type: typing.Literal["integration/model/bedrock"] = pydantic.Field(default="integration/model/bedrock")
     """
-    +value=integration/model/aws
-    """
-
-    auth_data: typing.Optional[BedrockModelAuthData] = pydantic.Field(default=None)
-    """
-    Auth Data
+    +value=integration/model/bedrock
     """
 
-    region: AwsRegion
     model_types: typing.List[ModelType] = pydantic.Field()
     """
-    Specify the type of the model
+    Specify the type of the Bedrock model
     """
 
+    region: typing.Optional[AwsRegion] = None
     cost: typing.Optional[ModelCostMetric] = None
     authorized_subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """

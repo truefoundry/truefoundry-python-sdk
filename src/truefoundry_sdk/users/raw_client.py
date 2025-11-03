@@ -124,6 +124,7 @@ class RawUsersClient:
         skip_if_user_exists: typing.Optional[bool] = False,
         dry_run: typing.Optional[bool] = False,
         accept_invite_client_url: typing.Optional[str] = OMIT,
+        account_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[RegisterUsersResponse]:
         """
@@ -146,6 +147,9 @@ class RawUsersClient:
         accept_invite_client_url : typing.Optional[str]
             Url to redirect when invite is accepted
 
+        account_id : typing.Optional[str]
+            Account ID to add the user to
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -163,6 +167,7 @@ class RawUsersClient:
                 "skipIfUserExists": skip_if_user_exists,
                 "dryRun": dry_run,
                 "acceptInviteClientURL": accept_invite_client_url,
+                "accountId": account_id,
             },
             headers={
                 "content-type": "application/json",
@@ -422,7 +427,12 @@ class RawUsersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def invite_user(
-        self, *, accept_invite_client_url: str, email: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        accept_invite_client_url: str,
+        email: str,
+        account_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[InviteUserResponse]:
         """
         Invite a user to the tenant
@@ -434,6 +444,9 @@ class RawUsersClient:
 
         email : str
             Email of user
+
+        account_id : typing.Optional[str]
+            Account ID to add the user to
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -449,6 +462,7 @@ class RawUsersClient:
             json={
                 "acceptInviteClientUrl": accept_invite_client_url,
                 "email": email,
+                "accountId": account_id,
             },
             headers={
                 "content-type": "application/json",
@@ -915,6 +929,7 @@ class AsyncRawUsersClient:
         skip_if_user_exists: typing.Optional[bool] = False,
         dry_run: typing.Optional[bool] = False,
         accept_invite_client_url: typing.Optional[str] = OMIT,
+        account_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[RegisterUsersResponse]:
         """
@@ -937,6 +952,9 @@ class AsyncRawUsersClient:
         accept_invite_client_url : typing.Optional[str]
             Url to redirect when invite is accepted
 
+        account_id : typing.Optional[str]
+            Account ID to add the user to
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -954,6 +972,7 @@ class AsyncRawUsersClient:
                 "skipIfUserExists": skip_if_user_exists,
                 "dryRun": dry_run,
                 "acceptInviteClientURL": accept_invite_client_url,
+                "accountId": account_id,
             },
             headers={
                 "content-type": "application/json",
@@ -1215,7 +1234,12 @@ class AsyncRawUsersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def invite_user(
-        self, *, accept_invite_client_url: str, email: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        accept_invite_client_url: str,
+        email: str,
+        account_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[InviteUserResponse]:
         """
         Invite a user to the tenant
@@ -1227,6 +1251,9 @@ class AsyncRawUsersClient:
 
         email : str
             Email of user
+
+        account_id : typing.Optional[str]
+            Account ID to add the user to
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1242,6 +1269,7 @@ class AsyncRawUsersClient:
             json={
                 "acceptInviteClientUrl": accept_invite_client_url,
                 "email": email,
+                "accountId": account_id,
             },
             headers={
                 "content-type": "application/json",

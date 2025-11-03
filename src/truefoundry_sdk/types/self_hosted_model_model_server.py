@@ -12,30 +12,30 @@ class SelfHostedModelModelServer(str, enum.Enum):
     """
 
     OPENAI_COMPATIBLE = "openai-compatible"
-    VLLM_OPENAI = "vllm-openai"
-    TEI = "tei"
-    INFINITY = "infinity"
-    NEMO_RETRIEVER = "nemo-retriever"
     COHERE_RERANK_V2 = "cohere-rerank-v2"
+    NEMO_RETRIEVER = "nemo-retriever"
+    INFINITY = "infinity"
+    TEI = "tei"
+    VLLM_OPENAI = "vllm-openai"
 
     def visit(
         self,
         openai_compatible: typing.Callable[[], T_Result],
-        vllm_openai: typing.Callable[[], T_Result],
-        tei: typing.Callable[[], T_Result],
-        infinity: typing.Callable[[], T_Result],
-        nemo_retriever: typing.Callable[[], T_Result],
         cohere_rerank_v2: typing.Callable[[], T_Result],
+        nemo_retriever: typing.Callable[[], T_Result],
+        infinity: typing.Callable[[], T_Result],
+        tei: typing.Callable[[], T_Result],
+        vllm_openai: typing.Callable[[], T_Result],
     ) -> T_Result:
         if self is SelfHostedModelModelServer.OPENAI_COMPATIBLE:
             return openai_compatible()
-        if self is SelfHostedModelModelServer.VLLM_OPENAI:
-            return vllm_openai()
-        if self is SelfHostedModelModelServer.TEI:
-            return tei()
-        if self is SelfHostedModelModelServer.INFINITY:
-            return infinity()
-        if self is SelfHostedModelModelServer.NEMO_RETRIEVER:
-            return nemo_retriever()
         if self is SelfHostedModelModelServer.COHERE_RERANK_V2:
             return cohere_rerank_v2()
+        if self is SelfHostedModelModelServer.NEMO_RETRIEVER:
+            return nemo_retriever()
+        if self is SelfHostedModelModelServer.INFINITY:
+            return infinity()
+        if self is SelfHostedModelModelServer.TEI:
+            return tei()
+        if self is SelfHostedModelModelServer.VLLM_OPENAI:
+            return vllm_openai()

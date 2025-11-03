@@ -4,45 +4,31 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .azure_key_auth import AzureKeyAuth
 from .model_cost_metric import ModelCostMetric
 from .model_type import ModelType
 
 
-class AzureFoundryModelV2(UniversalBaseModel):
+class SnowflakeCortexModel(UniversalBaseModel):
+    type: typing.Literal["integration/model/snowflake-cortex"] = pydantic.Field(
+        default="integration/model/snowflake-cortex"
+    )
     """
-    Azure Foundry Model
-    """
-
-    type: typing.Literal["integration/model/azure-foundry"] = pydantic.Field(default="integration/model/azure-foundry")
-    """
-    +value=integration/model/azure-foundry
+    +value=integration/model/snowflake-cortex
     """
 
     name: str = pydantic.Field()
     """
-    Name to identify this Azure Foundry model in the UI
-    """
-
-    auth_data: AzureKeyAuth
-    model_types: typing.List[ModelType] = pydantic.Field()
-    """
-    Types of models supported by this Azure AI Foundry deployment
+    Name to identify this Snowflake Cortex model in the UI
     """
 
     model_id: str = pydantic.Field()
     """
-    The name of the Azure Foundry deployment
+    ID of the Snowflake Cortex model to use
     """
 
-    azure_endpoint: str = pydantic.Field()
+    model_types: typing.List[ModelType] = pydantic.Field()
     """
-    The Azure AI Foundry endpoint URL
-    """
-
-    api_version: str = pydantic.Field()
-    """
-    The API version for the Azure Foundry model
+    Specify the type of the Snowflake Cortex model
     """
 
     cost: typing.Optional[ModelCostMetric] = None

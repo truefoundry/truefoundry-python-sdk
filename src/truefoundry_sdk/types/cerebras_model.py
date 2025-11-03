@@ -16,12 +16,12 @@ class CerebrasModel(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    Name to identify this Cerebras model in the UI
+    A descriptive name to identify this model integration in the UI
     """
 
     model_id: str = pydantic.Field()
     """
-    ID of the Cerebras model to use
+    The Cerebras model identifier (e.g., llama-4-scout-17b-16e-instruct, llama3.1-70b). This is the standard model name from Cerebras's API documentation.
     """
 
     model_types: typing.List[ModelType] = pydantic.Field()

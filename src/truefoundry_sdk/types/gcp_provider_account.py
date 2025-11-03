@@ -3,9 +3,12 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.serialization import FieldMetadata
 from .gcp_integrations import GcpIntegrations
 from .gcp_provider_account_auth_data import GcpProviderAccountAuthData
+from .owned_by import OwnedBy
 
 
 class GcpProviderAccount(UniversalBaseModel):
@@ -37,6 +40,8 @@ class GcpProviderAccount(UniversalBaseModel):
     """
     List of integrations that are associated with the GCP provider account.
     """
+
+    owned_by: typing_extensions.Annotated[typing.Optional[OwnedBy], FieldMetadata(alias="ownedBy")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

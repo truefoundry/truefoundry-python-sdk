@@ -25,7 +25,7 @@ class SelfHostedModel(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    2 to 62 characters long alphanumeric word, may contain - or . in between, cannot start with a number
+    A descriptive name to identify this self-hosted model in the UI
     """
 
     hosted_model_name: str = pydantic.Field()
@@ -35,7 +35,7 @@ class SelfHostedModel(UniversalBaseModel):
 
     url: str = pydantic.Field()
     """
-    enter valid https/http URL that should not end with trailing slash
+    The URL where the model is hosted
     """
 
     model_server: SelfHostedModelModelServer = pydantic.Field()
@@ -56,12 +56,12 @@ class SelfHostedModel(UniversalBaseModel):
     tls_settings: typing.Optional[CustomTlsSettings] = None
     auth_data: typing.Optional[SelfHostedModelAuthData] = pydantic.Field(default=None)
     """
-    SelfHostedModel authentication data for the integration.
+    Self Hosted Model authentication data for the integration.
     """
 
     headers: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
     """
-    SelfHostedModel headers for the integration. Forwarded to the provider as is. For example: `{"Authorization": "APIKey <token>"}`
+    Self Hosted Model headers for the integration. Forwarded to the provider as is. For example: `{"Authorization": "APIKey <token>"}`
     """
 
     cost: typing.Optional[ModelCostMetric] = None

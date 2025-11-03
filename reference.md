@@ -452,6 +452,14 @@ client.users.pre_register_users(
 <dl>
 <dd>
 
+**account_id:** `typing.Optional[str]` — Account ID to add the user to
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -747,6 +755,14 @@ client.users.invite_user(
 <dd>
 
 **email:** `str` — Email of user
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**account_id:** `typing.Optional[str]` — Account ID to add the user to
     
 </dd>
 </dl>
@@ -1612,6 +1628,14 @@ client.personal_access_tokens.create(
 <dl>
 <dd>
 
+**account_name:** `typing.Optional[str]` — Account name that owns this PAT
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -2205,6 +2229,237 @@ client.virtual_accounts.get_token(
 <dd>
 
 **id:** `str` — serviceaccount id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.virtual_accounts.<a href="src/truefoundry_sdk/virtual_accounts/client.py">sync_to_secret_store</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Syncs the virtual account token to the configured secret store. Returns the updated JWT with sync metadata including timestamp and error (if any).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.virtual_accounts.sync_to_secret_store(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — serviceaccount id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.virtual_accounts.<a href="src/truefoundry_sdk/virtual_accounts/client.py">regenerate_token</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Regenerate token for a virtual account by id. The old token will remain valid for the specified grace period.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.virtual_accounts.regenerate_token(
+    id="id",
+    grace_period_in_days=30.0,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — serviceaccount id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**grace_period_in_days:** `float` — Grace period in days for which the old token will remain valid after regeneration
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.virtual_accounts.<a href="src/truefoundry_sdk/virtual_accounts/client.py">delete_jwt</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a JWT for a virtual account by id
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.virtual_accounts.delete_jwt(
+    id="id",
+    jwt_id="jwtId",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — virtual account id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**jwt_id:** `str` — JWT id
     
 </dd>
 </dl>
@@ -6294,7 +6549,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**created_by_subject_types:** `typing.Optional[typing.Sequence[TracesSubjectType]]` — Array of subject types to filter by
+**created_by_subject_types:** `typing.Optional[typing.Sequence[SubjectType]]` — Array of subject types to filter by
     
 </dd>
 </dl>
@@ -6334,7 +6589,15 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**page_token:** `typing.Optional[str]` — Cursor token for pagination. This is an opaque string that should be passed as-is from the previous response
+**page_token:** `typing.Optional[str]` — An opaque string that should be passed as-is from previous response for fetching the next page. Pass `$response.pagination.nextPageToken` from previous response for fetching the next page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filters:** `typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]]` — Array of filters
     
 </dd>
 </dl>

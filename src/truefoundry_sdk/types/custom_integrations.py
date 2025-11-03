@@ -5,13 +5,11 @@ import typing
 from .custom_blob_storage import CustomBlobStorage
 from .custom_helm_repo import CustomHelmRepo
 from .custom_jwt_auth_integration import CustomJwtAuthIntegration
-from .custom_model import CustomModel
 from .custom_username_password_artifacts_registry import CustomUsernamePasswordArtifactsRegistry
 from .email_notification_channel import EmailNotificationChannel
 
 CustomIntegrations = typing.Union[
     CustomUsernamePasswordArtifactsRegistry,
-    CustomModel,
     EmailNotificationChannel,
     CustomHelmRepo,
     CustomBlobStorage,

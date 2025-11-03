@@ -8,7 +8,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class PatronusGuardrailConfigTarget(str, enum.Enum):
     """
-    The type of request to use for the Patronus Guardrail.
+    Where to apply evaluation: request (evaluate user input) or response (evaluate model response)
     """
 
     RESPONSE = "response"

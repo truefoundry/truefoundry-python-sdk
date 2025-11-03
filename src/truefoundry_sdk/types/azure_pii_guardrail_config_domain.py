@@ -8,7 +8,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class AzurePiiGuardrailConfigDomain(str, enum.Enum):
     """
-    Domain for PII detection
+    Specialized domain for PII detection. Use healthcare for PHI (Protected Health Information) or none for general text
     """
 
     NONE = "none"

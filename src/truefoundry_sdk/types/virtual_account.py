@@ -18,12 +18,17 @@ class VirtualAccount(UniversalBaseModel):
     type: str
     tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]
     manifest: typing.Optional[VirtualAccountManifest] = None
+    jwt_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="jwtId")] = None
     created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")]
     created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
     updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
     is_expired: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isExpired")] = None
     jwts: typing.Optional[typing.List[Jwt]] = None
+    account_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="accountId")] = None
     created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = None
+    next_scheduled_rotation: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="nextScheduledRotation")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

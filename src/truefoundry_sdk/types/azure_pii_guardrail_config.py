@@ -29,22 +29,22 @@ class AzurePiiGuardrailConfig(UniversalBaseModel):
 
     resource_name: str = pydantic.Field()
     """
-    The resource name where API is deployed.
+    Name of your Azure AI Language resource where the PII detection service is deployed (e.g., my-language-resource)
     """
 
     api_version: str = pydantic.Field(default="2024-11-01")
     """
-    API version for the Content Safety API
+    API version for the PII detection API
     """
 
     custom_host: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Custom host for the PII detection API
+    Custom endpoint URL for the PII detection API (optional, uses default Azure endpoint if not specified)
     """
 
     domain: AzurePiiGuardrailConfigDomain = pydantic.Field()
     """
-    Domain for PII detection
+    Specialized domain for PII detection. Use healthcare for PHI (Protected Health Information) or none for general text
     """
 
     pii_categories: typing.List[AzurePiiCategory] = pydantic.Field()
@@ -54,12 +54,12 @@ class AzurePiiGuardrailConfig(UniversalBaseModel):
 
     model_version: str = pydantic.Field(default="latest")
     """
-    Version of the PII detection model to use
+    Version of the PII detection model to use, use latest for the newest model or specify a specific version for consistency
     """
 
     language: str = pydantic.Field(default="en")
     """
-    Language code for PII detection
+    Language code for PII detection (e.g., en for English)
     """
 
     auth_data: AzureKeyAuth

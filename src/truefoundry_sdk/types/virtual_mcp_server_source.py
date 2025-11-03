@@ -19,7 +19,7 @@ class VirtualMcpServerSource(UniversalBaseModel):
 
     enabled_tools: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    List of tools to enable from this source server. Leave empty to enable all tools.
+    List of tools to enable from this source server.
     """
 
     auth_data: typing.Optional[McpServerHeaderOverrideAuth] = None

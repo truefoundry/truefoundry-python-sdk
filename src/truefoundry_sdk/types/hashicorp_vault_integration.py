@@ -4,38 +4,32 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .gcp_region import GcpRegion
-from .model_cost_metric import ModelCostMetric
-from .model_type import ModelType
+from .hashicorp_token_auth import HashicorpTokenAuth
 
 
-class VertexModelV2(UniversalBaseModel):
+class HashicorpVaultIntegration(UniversalBaseModel):
     """
-    Vertex Model
+    HashiCorp Vault Integration
     """
 
-    type: typing.Literal["integration/model/vertex"] = pydantic.Field(default="integration/model/vertex")
+    type: typing.Literal["integration/secret-store/hashicorp/vault"] = pydantic.Field(
+        default="integration/secret-store/hashicorp/vault"
+    )
     """
-    +value=integration/model/vertex
+    +value=integration/secret-store/hashicorp/vault
     """
 
     name: str = pydantic.Field()
     """
-    Name to identify this Vertex AI model in the UI
+    The name of the integration that will be displayed in the TrueFoundry UI.
     """
 
-    model_id: str = pydantic.Field()
+    vault_url: str = pydantic.Field()
     """
-    The unique identifier for the Vertex AI model
-    """
-
-    region: typing.Optional[GcpRegion] = None
-    model_types: typing.List[ModelType] = pydantic.Field()
-    """
-    Specify the type of the Vertex AI model (e.g., chat, text, etc.)
+    The URL of the HashiCorp Vault server (e.g., https://vault.example.com:8200).
     """
 
-    cost: typing.Optional[ModelCostMetric] = None
+    auth_data: HashicorpTokenAuth
     authorized_subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     List of subjects that are authorized to access this integration. List of user fqn in format <user_type>:<username>.

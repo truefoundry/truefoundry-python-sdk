@@ -7,6 +7,10 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class CustomBearerAuth(UniversalBaseModel):
+    """
+    Custom Bearer Auth
+    """
+
     type: typing.Literal["bearer-auth"] = pydantic.Field(default="bearer-auth")
     """
     +value=bearer-auth

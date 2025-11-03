@@ -4,28 +4,21 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .fallback_rule import FallbackRule
 
 
-class FallbackConfig(UniversalBaseModel):
+class VirtualAccountOwnedBy(UniversalBaseModel):
     """
-    Fallback Configuration
-    """
-
-    name: str = pydantic.Field()
-    """
-    Name of the fallback configuration
+    Names of the owners that own the virtual account
     """
 
-    type: typing.Literal["gateway-fallback-config"] = pydantic.Field(default="gateway-fallback-config")
+    account: typing.Optional[str] = pydantic.Field(default=None)
     """
-    +value=gateway-fallback-config
-    +sort=2
+    The name of the account that owns this resource
     """
 
-    rules: typing.List[FallbackRule] = pydantic.Field()
+    team: str = pydantic.Field()
     """
-    List of fallback rules
+    The name of the team that owns this resource
     """
 
     if IS_PYDANTIC_V2:

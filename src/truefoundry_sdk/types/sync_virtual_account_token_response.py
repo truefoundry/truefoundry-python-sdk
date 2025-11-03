@@ -3,22 +3,18 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.serialization import FieldMetadata
+from .sync_token_in_secret_store_info import SyncTokenInSecretStoreInfo
 
 
-class FallbackModel(UniversalBaseModel):
+class SyncVirtualAccountTokenResponse(UniversalBaseModel):
+    sync_token_in_secret_store_info: typing_extensions.Annotated[
+        SyncTokenInSecretStoreInfo, FieldMetadata(alias="syncTokenInSecretStoreInfo")
+    ] = pydantic.Field()
     """
-    Fallback Model
-    """
-
-    target: str = pydantic.Field()
-    """
-    Target model or provider FQN to use as fallback
-    """
-
-    override_params: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
-    """
-    Optional parameters to override in the fallback request
+    Sync status including timestamp and error (if any)
     """
 
     if IS_PYDANTIC_V2:

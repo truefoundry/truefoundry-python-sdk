@@ -8,34 +8,29 @@ from .model_cost_metric import ModelCostMetric
 from .model_type import ModelType
 
 
-class AzureOpenAiModelV2(UniversalBaseModel):
+class ClouderaModel(UniversalBaseModel):
     """
-    Azure OpenAI Model
+    Cloudera Model
     """
 
-    type: typing.Literal["integration/model/azure-openai"] = pydantic.Field(default="integration/model/azure-openai")
+    type: typing.Literal["integration/model/cloudera"] = pydantic.Field(default="integration/model/cloudera")
     """
-    +value=integration/model/azure-openai
+    +value=integration/model/cloudera
     """
 
     name: str = pydantic.Field()
     """
-    Name to identify this Azure OpenAI model in the UI
+    A descriptive name to identify this model integration in the UI
     """
 
     model_id: str = pydantic.Field()
     """
-    The name of the Azure OpenAI model deployment (e.g. gpt-35-turbo, gpt-4). Used for cost tracking and management
-    """
-
-    api_version: str = pydantic.Field()
-    """
-    The Azure OpenAI API version to use
+    The unique identifier of the Model in Cloudera Model Registry. This is the model ID assigned when you registered or deployed your model in the CDP Model Registry
     """
 
     model_types: typing.List[ModelType] = pydantic.Field()
     """
-    Specify the type of the Azure OpenAI model
+    Specify the type of the Cloudera model
     """
 
     cost: typing.Optional[ModelCostMetric] = None

@@ -82,6 +82,7 @@ class PersonalAccessTokensClient:
         *,
         name: str,
         expiration_date: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreatePersonalAccessTokenResponse:
         """
@@ -94,6 +95,9 @@ class PersonalAccessTokensClient:
 
         expiration_date : typing.Optional[str]
             Expiration date in ISO format (e.g. 2025-08-01T12:00)
+
+        account_name : typing.Optional[str]
+            Account name that owns this PAT
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -115,7 +119,9 @@ class PersonalAccessTokensClient:
             name="name",
         )
         """
-        _response = self._raw_client.create(name=name, expiration_date=expiration_date, request_options=request_options)
+        _response = self._raw_client.create(
+            name=name, expiration_date=expiration_date, account_name=account_name, request_options=request_options
+        )
         return _response.data
 
     def revoke_all(
@@ -295,6 +301,7 @@ class AsyncPersonalAccessTokensClient:
         *,
         name: str,
         expiration_date: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreatePersonalAccessTokenResponse:
         """
@@ -307,6 +314,9 @@ class AsyncPersonalAccessTokensClient:
 
         expiration_date : typing.Optional[str]
             Expiration date in ISO format (e.g. 2025-08-01T12:00)
+
+        account_name : typing.Optional[str]
+            Account name that owns this PAT
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -337,7 +347,7 @@ class AsyncPersonalAccessTokensClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
-            name=name, expiration_date=expiration_date, request_options=request_options
+            name=name, expiration_date=expiration_date, account_name=account_name, request_options=request_options
         )
         return _response.data
 

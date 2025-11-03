@@ -23,8 +23,6 @@ class GetApplicationResponse(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .application import Application  # noqa: E402, F401, I001
-from .application_debug_info import ApplicationDebugInfo  # noqa: E402, F401, I001
-from .deployment import Deployment  # noqa: E402, F401, I001
+from .application import Application  # noqa: E402, I001
 
 update_forward_refs(GetApplicationResponse)

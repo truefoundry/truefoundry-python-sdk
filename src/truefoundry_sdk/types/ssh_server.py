@@ -21,8 +21,8 @@ class SshServer(BaseWorkbenchInput):
     image: WorkbenchImage
     ssh_public_key: str = pydantic.Field()
     """
-    Add Your SSH Public Key, this will be used to authenticate you to the SSH Server.  \
-    You can find it using `cat ~/.ssh/id_rsa.pub` in Mac/Linux or `type $home\.ssh\id_rsa.pub` in Windows Powershell.  \
+    Add Your SSH Public Key, this will be used to authenticate you to the SSH Server.  \\
+    You can find it using `cat ~/.ssh/id_rsa.pub` in Mac/Linux or `type $home\\.ssh\\id_rsa.pub` in Windows Powershell.  \\
     You can also generate a new SSH key pair using `ssh-keygen -t rsa` in your local terminal. (same for both Mac/Linux and Windows Powershell)
     """
 

@@ -86,10 +86,6 @@ if typing.TYPE_CHECKING:
     from .aws_sagemaker_provider_account_auth_data import AwsSagemakerProviderAccountAuthData
     from .aws_secrets_manager import AwsSecretsManager
     from .aws_secrets_manager_auth_data import AwsSecretsManagerAuthData
-    from .azure_ai_inference_model import AzureAiInferenceModel
-    from .azure_ai_inference_model_deployment_details import AzureAiInferenceModelDeploymentDetails
-    from .azure_ai_managed_deployment import AzureAiManagedDeployment
-    from .azure_ai_serverless_deployment import AzureAiServerlessDeployment
     from .azure_aks_integration import AzureAksIntegration
     from .azure_basic_auth import AzureBasicAuth
     from .azure_blob_storage import AzureBlobStorage
@@ -98,13 +94,11 @@ if typing.TYPE_CHECKING:
     from .azure_content_safety_category import AzureContentSafetyCategory
     from .azure_content_safety_guardrail_config import AzureContentSafetyGuardrailConfig
     from .azure_foundry_model import AzureFoundryModel
-    from .azure_foundry_model_v2 import AzureFoundryModelV2
     from .azure_foundry_provider_account import AzureFoundryProviderAccount
     from .azure_integrations import AzureIntegrations
     from .azure_key_auth import AzureKeyAuth
     from .azure_o_auth import AzureOAuth
     from .azure_open_ai_model import AzureOpenAiModel
-    from .azure_open_ai_model_v2 import AzureOpenAiModelV2
     from .azure_open_ai_provider_account import AzureOpenAiProviderAccount
     from .azure_pii_category import AzurePiiCategory
     from .azure_pii_guardrail_config import AzurePiiGuardrailConfig
@@ -123,10 +117,7 @@ if typing.TYPE_CHECKING:
     from .base_workbench_input import BaseWorkbenchInput
     from .base_workbench_input_mounts_item import BaseWorkbenchInputMountsItem
     from .basic_auth_creds import BasicAuthCreds
-    from .bedrock_key_auth import BedrockKeyAuth
     from .bedrock_model import BedrockModel
-    from .bedrock_model_auth_data import BedrockModelAuthData
-    from .bedrock_model_v2 import BedrockModelV2
     from .bitbucket_integration import BitbucketIntegration
     from .bitbucket_provider_account import BitbucketProviderAccount
     from .blob_storage_reference import BlobStorageReference
@@ -152,6 +143,12 @@ if typing.TYPE_CHECKING:
     from .chat_prompt_manifest_messages_item import ChatPromptManifestMessagesItem
     from .chat_prompt_manifest_response_format import ChatPromptManifestResponseFormat
     from .chat_prompt_manifest_routing_config import ChatPromptManifestRoutingConfig
+    from .cloudera_integrations import ClouderaIntegrations
+    from .cloudera_model import ClouderaModel
+    from .cloudera_provider_account import ClouderaProviderAccount
+    from .cloudera_provider_account_auth_data import ClouderaProviderAccountAuthData
+    from .cloudera_token_auth import ClouderaTokenAuth
+    from .cloudera_workload_auth_token import ClouderaWorkloadAuthToken
     from .cluster import Cluster
     from .cluster_gateway import ClusterGateway
     from .cluster_manifest import ClusterManifest
@@ -186,9 +183,6 @@ if typing.TYPE_CHECKING:
     from .custom_helm_repo import CustomHelmRepo
     from .custom_integrations import CustomIntegrations
     from .custom_jwt_auth_integration import CustomJwtAuthIntegration
-    from .custom_model import CustomModel
-    from .custom_model_auth_data import CustomModelAuthData
-    from .custom_model_model_server import CustomModelModelServer
     from .custom_provider_account import CustomProviderAccount
     from .custom_tls_settings import CustomTlsSettings
     from .custom_username_password_artifacts_registry import CustomUsernamePasswordArtifactsRegistry
@@ -244,10 +238,6 @@ if typing.TYPE_CHECKING:
     from .event_chart_category import EventChartCategory
     from .event_involved_object import EventInvolvedObject
     from .external_blob_storage_source import ExternalBlobStorageSource
-    from .fallback_config import FallbackConfig
-    from .fallback_model import FallbackModel
-    from .fallback_rule import FallbackRule
-    from .fallback_when import FallbackWhen
     from .fast_ai_framework import FastAiFramework
     from .fiddler_guard_type import FiddlerGuardType
     from .fiddler_guardrail_config import FiddlerGuardrailConfig
@@ -269,6 +259,11 @@ if typing.TYPE_CHECKING:
     from .function_schema import FunctionSchema
     from .gateway_config import GatewayConfig
     from .gateway_configuration import GatewayConfiguration
+    from .gateway_otel_config import GatewayOtelConfig
+    from .gateway_otel_config_otel_traces_exporter_config import GatewayOtelConfigOtelTracesExporterConfig
+    from .gateway_request_metadata_filter import GatewayRequestMetadataFilter
+    from .gateway_request_metadata_filter_operator import GatewayRequestMetadataFilterOperator
+    from .gateway_request_metadata_filter_value import GatewayRequestMetadataFilterValue
     from .gcp_api_key_auth import GcpApiKeyAuth
     from .gcp_gcr import GcpGcr
     from .gcp_gcs import GcpGcs
@@ -280,7 +275,7 @@ if typing.TYPE_CHECKING:
     from .gcp_provider_account_auth_data import GcpProviderAccountAuthData
     from .gcp_region import GcpRegion
     from .gcp_tpu import GcpTpu
-    from .gemini_model_v2 import GeminiModelV2
+    from .gemini_model import GeminiModel
     from .get_alerts_response import GetAlertsResponse
     from .get_application_deployment_response import GetApplicationDeploymentResponse
     from .get_application_response import GetApplicationResponse
@@ -322,7 +317,6 @@ if typing.TYPE_CHECKING:
     from .gitlab_provider_account import GitlabProviderAccount
     from .gluon_framework import GluonFramework
     from .google_gemini_provider_account import GoogleGeminiProviderAccount
-    from .google_model import GoogleModel
     from .google_vertex_provider_account import GoogleVertexProviderAccount
     from .graph import Graph
     from .graph_chart_type import GraphChartType
@@ -337,6 +331,10 @@ if typing.TYPE_CHECKING:
     from .guardrails_rule import GuardrailsRule
     from .guardrails_when import GuardrailsWhen
     from .h2o_framework import H2OFramework
+    from .hashicorp_integrations import HashicorpIntegrations
+    from .hashicorp_provider_account import HashicorpProviderAccount
+    from .hashicorp_token_auth import HashicorpTokenAuth
+    from .hashicorp_vault_integration import HashicorpVaultIntegration
     from .header_match import HeaderMatch
     from .health_probe import HealthProbe
     from .helm import Helm
@@ -437,6 +435,7 @@ if typing.TYPE_CHECKING:
     from .mcp_server_header_auth import McpServerHeaderAuth
     from .mcp_server_header_override_auth import McpServerHeaderOverrideAuth
     from .mcp_server_integration import McpServerIntegration
+    from .mcp_server_integration_transport import McpServerIntegrationTransport
     from .mcp_server_integrations import McpServerIntegrations
     from .mcp_server_o_auth2 import McpServerOAuth2
     from .mcp_server_o_auth2dcr import McpServerOAuth2Dcr
@@ -513,6 +512,9 @@ if typing.TYPE_CHECKING:
     from .openai_api_key_auth import OpenaiApiKeyAuth
     from .openai_provider_account import OpenaiProviderAccount
     from .operation import Operation
+    from .otel_exporter_grpc_config import OtelExporterGrpcConfig
+    from .otel_exporter_http_config import OtelExporterHttpConfig
+    from .otel_exporter_http_config_encoding import OtelExporterHttpConfigEncoding
     from .owned_by import OwnedBy
     from .paddle_framework import PaddleFramework
     from .pager_duty import PagerDuty
@@ -648,8 +650,19 @@ if typing.TYPE_CHECKING:
     from .slack_webhook_auth import SlackWebhookAuth
     from .slack_webhook_integration import SlackWebhookIntegration
     from .smtp_credentials import SmtpCredentials
+    from .snowflake_cortex_integrations import SnowflakeCortexIntegrations
+    from .snowflake_cortex_model import SnowflakeCortexModel
+    from .snowflake_cortex_pat_token_auth import SnowflakeCortexPatTokenAuth
+    from .snowflake_cortex_provider_account import SnowflakeCortexProviderAccount
     from .sort_direction import SortDirection
     from .spa_cy_framework import SpaCyFramework
+    from .span_attribute_filter import SpanAttributeFilter
+    from .span_attribute_filter_operator import SpanAttributeFilterOperator
+    from .span_attribute_filter_value import SpanAttributeFilterValue
+    from .span_field_filter import SpanFieldFilter
+    from .span_field_filter_operator import SpanFieldFilterOperator
+    from .span_field_filter_span_field_name import SpanFieldFilterSpanFieldName
+    from .span_field_filter_value import SpanFieldFilterValue
     from .spark_build import SparkBuild
     from .spark_config import SparkConfig
     from .spark_driver_config import SparkDriverConfig
@@ -681,6 +694,8 @@ if typing.TYPE_CHECKING:
     from .string_data_mount import StringDataMount
     from .subject import Subject
     from .subject_type import SubjectType
+    from .sync_token_in_secret_store_info import SyncTokenInSecretStoreInfo
+    from .sync_virtual_account_token_response import SyncVirtualAccountTokenResponse
     from .system_message import SystemMessage
     from .system_message_content import SystemMessageContent
     from .task_docker_file_build import TaskDockerFileBuild
@@ -688,6 +703,7 @@ if typing.TYPE_CHECKING:
     from .task_python_build import TaskPythonBuild
     from .team import Team
     from .team_manifest import TeamManifest
+    from .team_owned_by import TeamOwnedBy
     from .tensor_flow_framework import TensorFlowFramework
     from .terminate_job_response import TerminateJobResponse
     from .text_content_part import TextContentPart
@@ -702,7 +718,6 @@ if typing.TYPE_CHECKING:
     from .tool_message_content import ToolMessageContent
     from .tool_schema import ToolSchema
     from .trace_span import TraceSpan
-    from .traces_subject_type import TracesSubjectType
     from .tracing_project import TracingProject
     from .tracing_project_manifest import TracingProjectManifest
     from .transformers_framework import TransformersFramework
@@ -736,9 +751,9 @@ if typing.TYPE_CHECKING:
     from .validation_error import ValidationError
     from .validation_error_loc_item import ValidationErrorLocItem
     from .vertex_model import VertexModel
-    from .vertex_model_v2 import VertexModelV2
     from .virtual_account import VirtualAccount
     from .virtual_account_manifest import VirtualAccountManifest
+    from .virtual_account_owned_by import VirtualAccountOwnedBy
     from .virtual_mcp_server_integration import VirtualMcpServerIntegration
     from .virtual_mcp_server_source import VirtualMcpServerSource
     from .volume import Volume
@@ -844,10 +859,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AwsSagemakerProviderAccountAuthData": ".aws_sagemaker_provider_account_auth_data",
     "AwsSecretsManager": ".aws_secrets_manager",
     "AwsSecretsManagerAuthData": ".aws_secrets_manager_auth_data",
-    "AzureAiInferenceModel": ".azure_ai_inference_model",
-    "AzureAiInferenceModelDeploymentDetails": ".azure_ai_inference_model_deployment_details",
-    "AzureAiManagedDeployment": ".azure_ai_managed_deployment",
-    "AzureAiServerlessDeployment": ".azure_ai_serverless_deployment",
     "AzureAksIntegration": ".azure_aks_integration",
     "AzureBasicAuth": ".azure_basic_auth",
     "AzureBlobStorage": ".azure_blob_storage",
@@ -856,13 +867,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AzureContentSafetyCategory": ".azure_content_safety_category",
     "AzureContentSafetyGuardrailConfig": ".azure_content_safety_guardrail_config",
     "AzureFoundryModel": ".azure_foundry_model",
-    "AzureFoundryModelV2": ".azure_foundry_model_v2",
     "AzureFoundryProviderAccount": ".azure_foundry_provider_account",
     "AzureIntegrations": ".azure_integrations",
     "AzureKeyAuth": ".azure_key_auth",
     "AzureOAuth": ".azure_o_auth",
     "AzureOpenAiModel": ".azure_open_ai_model",
-    "AzureOpenAiModelV2": ".azure_open_ai_model_v2",
     "AzureOpenAiProviderAccount": ".azure_open_ai_provider_account",
     "AzurePiiCategory": ".azure_pii_category",
     "AzurePiiGuardrailConfig": ".azure_pii_guardrail_config",
@@ -881,10 +890,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BaseWorkbenchInput": ".base_workbench_input",
     "BaseWorkbenchInputMountsItem": ".base_workbench_input_mounts_item",
     "BasicAuthCreds": ".basic_auth_creds",
-    "BedrockKeyAuth": ".bedrock_key_auth",
     "BedrockModel": ".bedrock_model",
-    "BedrockModelAuthData": ".bedrock_model_auth_data",
-    "BedrockModelV2": ".bedrock_model_v2",
     "BitbucketIntegration": ".bitbucket_integration",
     "BitbucketProviderAccount": ".bitbucket_provider_account",
     "BlobStorageReference": ".blob_storage_reference",
@@ -910,6 +916,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ChatPromptManifestMessagesItem": ".chat_prompt_manifest_messages_item",
     "ChatPromptManifestResponseFormat": ".chat_prompt_manifest_response_format",
     "ChatPromptManifestRoutingConfig": ".chat_prompt_manifest_routing_config",
+    "ClouderaIntegrations": ".cloudera_integrations",
+    "ClouderaModel": ".cloudera_model",
+    "ClouderaProviderAccount": ".cloudera_provider_account",
+    "ClouderaProviderAccountAuthData": ".cloudera_provider_account_auth_data",
+    "ClouderaTokenAuth": ".cloudera_token_auth",
+    "ClouderaWorkloadAuthToken": ".cloudera_workload_auth_token",
     "Cluster": ".cluster",
     "ClusterGateway": ".cluster_gateway",
     "ClusterManifest": ".cluster_manifest",
@@ -944,9 +956,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CustomHelmRepo": ".custom_helm_repo",
     "CustomIntegrations": ".custom_integrations",
     "CustomJwtAuthIntegration": ".custom_jwt_auth_integration",
-    "CustomModel": ".custom_model",
-    "CustomModelAuthData": ".custom_model_auth_data",
-    "CustomModelModelServer": ".custom_model_model_server",
     "CustomProviderAccount": ".custom_provider_account",
     "CustomTlsSettings": ".custom_tls_settings",
     "CustomUsernamePasswordArtifactsRegistry": ".custom_username_password_artifacts_registry",
@@ -1002,10 +1011,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "EventChartCategory": ".event_chart_category",
     "EventInvolvedObject": ".event_involved_object",
     "ExternalBlobStorageSource": ".external_blob_storage_source",
-    "FallbackConfig": ".fallback_config",
-    "FallbackModel": ".fallback_model",
-    "FallbackRule": ".fallback_rule",
-    "FallbackWhen": ".fallback_when",
     "FastAiFramework": ".fast_ai_framework",
     "FiddlerGuardType": ".fiddler_guard_type",
     "FiddlerGuardrailConfig": ".fiddler_guardrail_config",
@@ -1027,6 +1032,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FunctionSchema": ".function_schema",
     "GatewayConfig": ".gateway_config",
     "GatewayConfiguration": ".gateway_configuration",
+    "GatewayOtelConfig": ".gateway_otel_config",
+    "GatewayOtelConfigOtelTracesExporterConfig": ".gateway_otel_config_otel_traces_exporter_config",
+    "GatewayRequestMetadataFilter": ".gateway_request_metadata_filter",
+    "GatewayRequestMetadataFilterOperator": ".gateway_request_metadata_filter_operator",
+    "GatewayRequestMetadataFilterValue": ".gateway_request_metadata_filter_value",
     "GcpApiKeyAuth": ".gcp_api_key_auth",
     "GcpGcr": ".gcp_gcr",
     "GcpGcs": ".gcp_gcs",
@@ -1038,7 +1048,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GcpProviderAccountAuthData": ".gcp_provider_account_auth_data",
     "GcpRegion": ".gcp_region",
     "GcpTpu": ".gcp_tpu",
-    "GeminiModelV2": ".gemini_model_v2",
+    "GeminiModel": ".gemini_model",
     "GetAlertsResponse": ".get_alerts_response",
     "GetApplicationDeploymentResponse": ".get_application_deployment_response",
     "GetApplicationResponse": ".get_application_response",
@@ -1080,7 +1090,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GitlabProviderAccount": ".gitlab_provider_account",
     "GluonFramework": ".gluon_framework",
     "GoogleGeminiProviderAccount": ".google_gemini_provider_account",
-    "GoogleModel": ".google_model",
     "GoogleVertexProviderAccount": ".google_vertex_provider_account",
     "Graph": ".graph",
     "GraphChartType": ".graph_chart_type",
@@ -1095,6 +1104,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GuardrailsRule": ".guardrails_rule",
     "GuardrailsWhen": ".guardrails_when",
     "H2OFramework": ".h2o_framework",
+    "HashicorpIntegrations": ".hashicorp_integrations",
+    "HashicorpProviderAccount": ".hashicorp_provider_account",
+    "HashicorpTokenAuth": ".hashicorp_token_auth",
+    "HashicorpVaultIntegration": ".hashicorp_vault_integration",
     "HeaderMatch": ".header_match",
     "HealthProbe": ".health_probe",
     "Helm": ".helm",
@@ -1195,6 +1208,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "McpServerHeaderAuth": ".mcp_server_header_auth",
     "McpServerHeaderOverrideAuth": ".mcp_server_header_override_auth",
     "McpServerIntegration": ".mcp_server_integration",
+    "McpServerIntegrationTransport": ".mcp_server_integration_transport",
     "McpServerIntegrations": ".mcp_server_integrations",
     "McpServerOAuth2": ".mcp_server_o_auth2",
     "McpServerOAuth2Dcr": ".mcp_server_o_auth2dcr",
@@ -1267,6 +1281,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OpenaiApiKeyAuth": ".openai_api_key_auth",
     "OpenaiProviderAccount": ".openai_provider_account",
     "Operation": ".operation",
+    "OtelExporterGrpcConfig": ".otel_exporter_grpc_config",
+    "OtelExporterHttpConfig": ".otel_exporter_http_config",
+    "OtelExporterHttpConfigEncoding": ".otel_exporter_http_config_encoding",
     "OwnedBy": ".owned_by",
     "PaddleFramework": ".paddle_framework",
     "PagerDuty": ".pager_duty",
@@ -1405,8 +1422,19 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SlackWebhookAuth": ".slack_webhook_auth",
     "SlackWebhookIntegration": ".slack_webhook_integration",
     "SmtpCredentials": ".smtp_credentials",
+    "SnowflakeCortexIntegrations": ".snowflake_cortex_integrations",
+    "SnowflakeCortexModel": ".snowflake_cortex_model",
+    "SnowflakeCortexPatTokenAuth": ".snowflake_cortex_pat_token_auth",
+    "SnowflakeCortexProviderAccount": ".snowflake_cortex_provider_account",
     "SortDirection": ".sort_direction",
     "SpaCyFramework": ".spa_cy_framework",
+    "SpanAttributeFilter": ".span_attribute_filter",
+    "SpanAttributeFilterOperator": ".span_attribute_filter_operator",
+    "SpanAttributeFilterValue": ".span_attribute_filter_value",
+    "SpanFieldFilter": ".span_field_filter",
+    "SpanFieldFilterOperator": ".span_field_filter_operator",
+    "SpanFieldFilterSpanFieldName": ".span_field_filter_span_field_name",
+    "SpanFieldFilterValue": ".span_field_filter_value",
     "SparkBuild": ".spark_build",
     "SparkConfig": ".spark_config",
     "SparkDriverConfig": ".spark_driver_config",
@@ -1438,6 +1466,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StringDataMount": ".string_data_mount",
     "Subject": ".subject",
     "SubjectType": ".subject_type",
+    "SyncTokenInSecretStoreInfo": ".sync_token_in_secret_store_info",
+    "SyncVirtualAccountTokenResponse": ".sync_virtual_account_token_response",
     "SystemMessage": ".system_message",
     "SystemMessageContent": ".system_message_content",
     "TaskDockerFileBuild": ".task_docker_file_build",
@@ -1445,6 +1475,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TaskPythonBuild": ".task_python_build",
     "Team": ".team",
     "TeamManifest": ".team_manifest",
+    "TeamOwnedBy": ".team_owned_by",
     "TensorFlowFramework": ".tensor_flow_framework",
     "TerminateJobResponse": ".terminate_job_response",
     "TextContentPart": ".text_content_part",
@@ -1459,7 +1490,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ToolMessageContent": ".tool_message_content",
     "ToolSchema": ".tool_schema",
     "TraceSpan": ".trace_span",
-    "TracesSubjectType": ".traces_subject_type",
     "TracingProject": ".tracing_project",
     "TracingProjectManifest": ".tracing_project_manifest",
     "TransformersFramework": ".transformers_framework",
@@ -1493,9 +1523,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ValidationError": ".validation_error",
     "ValidationErrorLocItem": ".validation_error_loc_item",
     "VertexModel": ".vertex_model",
-    "VertexModelV2": ".vertex_model_v2",
     "VirtualAccount": ".virtual_account",
     "VirtualAccountManifest": ".virtual_account_manifest",
+    "VirtualAccountOwnedBy": ".virtual_account_owned_by",
     "VirtualMcpServerIntegration": ".virtual_mcp_server_integration",
     "VirtualMcpServerSource": ".virtual_mcp_server_source",
     "Volume": ".volume",
@@ -1625,10 +1655,6 @@ __all__ = [
     "AwsSagemakerProviderAccountAuthData",
     "AwsSecretsManager",
     "AwsSecretsManagerAuthData",
-    "AzureAiInferenceModel",
-    "AzureAiInferenceModelDeploymentDetails",
-    "AzureAiManagedDeployment",
-    "AzureAiServerlessDeployment",
     "AzureAksIntegration",
     "AzureBasicAuth",
     "AzureBlobStorage",
@@ -1637,13 +1663,11 @@ __all__ = [
     "AzureContentSafetyCategory",
     "AzureContentSafetyGuardrailConfig",
     "AzureFoundryModel",
-    "AzureFoundryModelV2",
     "AzureFoundryProviderAccount",
     "AzureIntegrations",
     "AzureKeyAuth",
     "AzureOAuth",
     "AzureOpenAiModel",
-    "AzureOpenAiModelV2",
     "AzureOpenAiProviderAccount",
     "AzurePiiCategory",
     "AzurePiiGuardrailConfig",
@@ -1662,10 +1686,7 @@ __all__ = [
     "BaseWorkbenchInput",
     "BaseWorkbenchInputMountsItem",
     "BasicAuthCreds",
-    "BedrockKeyAuth",
     "BedrockModel",
-    "BedrockModelAuthData",
-    "BedrockModelV2",
     "BitbucketIntegration",
     "BitbucketProviderAccount",
     "BlobStorageReference",
@@ -1691,6 +1712,12 @@ __all__ = [
     "ChatPromptManifestMessagesItem",
     "ChatPromptManifestResponseFormat",
     "ChatPromptManifestRoutingConfig",
+    "ClouderaIntegrations",
+    "ClouderaModel",
+    "ClouderaProviderAccount",
+    "ClouderaProviderAccountAuthData",
+    "ClouderaTokenAuth",
+    "ClouderaWorkloadAuthToken",
     "Cluster",
     "ClusterGateway",
     "ClusterManifest",
@@ -1725,9 +1752,6 @@ __all__ = [
     "CustomHelmRepo",
     "CustomIntegrations",
     "CustomJwtAuthIntegration",
-    "CustomModel",
-    "CustomModelAuthData",
-    "CustomModelModelServer",
     "CustomProviderAccount",
     "CustomTlsSettings",
     "CustomUsernamePasswordArtifactsRegistry",
@@ -1783,10 +1807,6 @@ __all__ = [
     "EventChartCategory",
     "EventInvolvedObject",
     "ExternalBlobStorageSource",
-    "FallbackConfig",
-    "FallbackModel",
-    "FallbackRule",
-    "FallbackWhen",
     "FastAiFramework",
     "FiddlerGuardType",
     "FiddlerGuardrailConfig",
@@ -1808,6 +1828,11 @@ __all__ = [
     "FunctionSchema",
     "GatewayConfig",
     "GatewayConfiguration",
+    "GatewayOtelConfig",
+    "GatewayOtelConfigOtelTracesExporterConfig",
+    "GatewayRequestMetadataFilter",
+    "GatewayRequestMetadataFilterOperator",
+    "GatewayRequestMetadataFilterValue",
     "GcpApiKeyAuth",
     "GcpGcr",
     "GcpGcs",
@@ -1819,7 +1844,7 @@ __all__ = [
     "GcpProviderAccountAuthData",
     "GcpRegion",
     "GcpTpu",
-    "GeminiModelV2",
+    "GeminiModel",
     "GetAlertsResponse",
     "GetApplicationDeploymentResponse",
     "GetApplicationResponse",
@@ -1861,7 +1886,6 @@ __all__ = [
     "GitlabProviderAccount",
     "GluonFramework",
     "GoogleGeminiProviderAccount",
-    "GoogleModel",
     "GoogleVertexProviderAccount",
     "Graph",
     "GraphChartType",
@@ -1876,6 +1900,10 @@ __all__ = [
     "GuardrailsRule",
     "GuardrailsWhen",
     "H2OFramework",
+    "HashicorpIntegrations",
+    "HashicorpProviderAccount",
+    "HashicorpTokenAuth",
+    "HashicorpVaultIntegration",
     "HeaderMatch",
     "HealthProbe",
     "Helm",
@@ -1976,6 +2004,7 @@ __all__ = [
     "McpServerHeaderAuth",
     "McpServerHeaderOverrideAuth",
     "McpServerIntegration",
+    "McpServerIntegrationTransport",
     "McpServerIntegrations",
     "McpServerOAuth2",
     "McpServerOAuth2Dcr",
@@ -2048,6 +2077,9 @@ __all__ = [
     "OpenaiApiKeyAuth",
     "OpenaiProviderAccount",
     "Operation",
+    "OtelExporterGrpcConfig",
+    "OtelExporterHttpConfig",
+    "OtelExporterHttpConfigEncoding",
     "OwnedBy",
     "PaddleFramework",
     "PagerDuty",
@@ -2186,8 +2218,19 @@ __all__ = [
     "SlackWebhookAuth",
     "SlackWebhookIntegration",
     "SmtpCredentials",
+    "SnowflakeCortexIntegrations",
+    "SnowflakeCortexModel",
+    "SnowflakeCortexPatTokenAuth",
+    "SnowflakeCortexProviderAccount",
     "SortDirection",
     "SpaCyFramework",
+    "SpanAttributeFilter",
+    "SpanAttributeFilterOperator",
+    "SpanAttributeFilterValue",
+    "SpanFieldFilter",
+    "SpanFieldFilterOperator",
+    "SpanFieldFilterSpanFieldName",
+    "SpanFieldFilterValue",
     "SparkBuild",
     "SparkConfig",
     "SparkDriverConfig",
@@ -2219,6 +2262,8 @@ __all__ = [
     "StringDataMount",
     "Subject",
     "SubjectType",
+    "SyncTokenInSecretStoreInfo",
+    "SyncVirtualAccountTokenResponse",
     "SystemMessage",
     "SystemMessageContent",
     "TaskDockerFileBuild",
@@ -2226,6 +2271,7 @@ __all__ = [
     "TaskPythonBuild",
     "Team",
     "TeamManifest",
+    "TeamOwnedBy",
     "TensorFlowFramework",
     "TerminateJobResponse",
     "TextContentPart",
@@ -2240,7 +2286,6 @@ __all__ = [
     "ToolMessageContent",
     "ToolSchema",
     "TraceSpan",
-    "TracesSubjectType",
     "TracingProject",
     "TracingProjectManifest",
     "TransformersFramework",
@@ -2274,9 +2319,9 @@ __all__ = [
     "ValidationError",
     "ValidationErrorLocItem",
     "VertexModel",
-    "VertexModelV2",
     "VirtualAccount",
     "VirtualAccountManifest",
+    "VirtualAccountOwnedBy",
     "VirtualMcpServerIntegration",
     "VirtualMcpServerSource",
     "Volume",

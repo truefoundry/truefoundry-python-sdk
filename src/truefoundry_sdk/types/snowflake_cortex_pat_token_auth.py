@@ -4,24 +4,17 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .fallback_model import FallbackModel
-from .fallback_when import FallbackWhen
 
 
-class FallbackRule(UniversalBaseModel):
+class SnowflakeCortexPatTokenAuth(UniversalBaseModel):
+    type: typing.Literal["pat-token"] = pydantic.Field(default="pat-token")
     """
-    Fallback Rule
-    """
-
-    id: str = pydantic.Field()
-    """
-    Unique identifier for the rule
+    +value=pat-token
     """
 
-    when: FallbackWhen
-    fallback_models: typing.List[FallbackModel] = pydantic.Field()
+    pat_token: str = pydantic.Field()
     """
-    List of fallback models to try in sequence
+    PAT token for Snowflake Cortex authentication
     """
 
     if IS_PYDANTIC_V2:

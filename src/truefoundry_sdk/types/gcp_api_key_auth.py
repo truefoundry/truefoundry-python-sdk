@@ -10,7 +10,7 @@ from ..core.serialization import FieldMetadata
 
 class GcpApiKeyAuth(UniversalBaseModel):
     """
-    GCP API Key Auth
+    Google Cloud API Key Auth
     """
 
     type: typing.Literal["api-key"] = pydantic.Field(default="api-key")
@@ -20,7 +20,7 @@ class GcpApiKeyAuth(UniversalBaseModel):
 
     api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey")] = pydantic.Field()
     """
-    API Key
+    The API key for Google Cloud authentication
     """
 
     if IS_PYDANTIC_V2:

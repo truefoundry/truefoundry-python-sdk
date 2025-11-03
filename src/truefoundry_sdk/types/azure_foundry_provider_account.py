@@ -3,9 +3,12 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .azure_foundry_model_v2 import AzureFoundryModelV2
+from ..core.serialization import FieldMetadata
+from .azure_foundry_model import AzureFoundryModel
 from .collaborator import Collaborator
+from .owned_by import OwnedBy
 
 
 class AzureFoundryProviderAccount(UniversalBaseModel):
@@ -23,7 +26,7 @@ class AzureFoundryProviderAccount(UniversalBaseModel):
     The name of the Azure Foundry provider account
     """
 
-    integrations: typing.List[AzureFoundryModelV2] = pydantic.Field()
+    integrations: typing.List[AzureFoundryModel] = pydantic.Field()
     """
     List of integrations that are associated with the Azure Foundry provider account
     """
@@ -32,6 +35,8 @@ class AzureFoundryProviderAccount(UniversalBaseModel):
     """
     List of users who have access to this provider account
     """
+
+    owned_by: typing_extensions.Annotated[typing.Optional[OwnedBy], FieldMetadata(alias="ownedBy")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

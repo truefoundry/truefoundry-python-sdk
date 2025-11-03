@@ -3,8 +3,11 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.serialization import FieldMetadata
 from .bitbucket_integration import BitbucketIntegration
+from .owned_by import OwnedBy
 
 
 class BitbucketProviderAccount(UniversalBaseModel):
@@ -26,6 +29,8 @@ class BitbucketProviderAccount(UniversalBaseModel):
     """
     +uiType=IntegrationsGroup
     """
+
+    owned_by: typing_extensions.Annotated[typing.Optional[OwnedBy], FieldMetadata(alias="ownedBy")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

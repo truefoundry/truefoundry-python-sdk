@@ -9,6 +9,7 @@ from .aws_sagemaker_provider_account import AwsSagemakerProviderAccount
 from .azure_foundry_provider_account import AzureFoundryProviderAccount
 from .azure_open_ai_provider_account import AzureOpenAiProviderAccount
 from .cerebras_provider_account import CerebrasProviderAccount
+from .cloudera_provider_account import ClouderaProviderAccount
 from .cohere_provider_account import CohereProviderAccount
 from .databricks_provider_account import DatabricksProviderAccount
 from .deepinfra_provider_account import DeepinfraProviderAccount
@@ -24,6 +25,7 @@ from .palm_provider_account import PalmProviderAccount
 from .perplexity_ai_provider_account import PerplexityAiProviderAccount
 from .samba_nova_provider_account import SambaNovaProviderAccount
 from .self_hosted_model_provider_account import SelfHostedModelProviderAccount
+from .snowflake_cortex_provider_account import SnowflakeCortexProviderAccount
 from .together_ai_provider_account import TogetherAiProviderAccount
 
 ModelProviderAccount = typing.Union[
@@ -45,9 +47,11 @@ ModelProviderAccount = typing.Union[
     OllamaProviderAccount,
     OpenaiProviderAccount,
     DatabricksProviderAccount,
+    ClouderaProviderAccount,
     SelfHostedModelProviderAccount,
     OpenRouterProviderAccount,
     SambaNovaProviderAccount,
     AwsSagemakerProviderAccount,
     CerebrasProviderAccount,
+    SnowflakeCortexProviderAccount,
 ]

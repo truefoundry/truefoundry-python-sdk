@@ -20,12 +20,12 @@ class GroqModel(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    Name to identify this Groq model in the UI
+    A descriptive name to identify this model integration in the UI
     """
 
     model_id: str = pydantic.Field()
     """
-    The name of the Groq model to use
+    The Groq model identifier (e.g., llama-3.1-8b-instant, openai/gpt-oss-20b). This is the standard model id from Groq's model catalog.
     """
 
     model_types: typing.List[ModelType] = pydantic.Field()

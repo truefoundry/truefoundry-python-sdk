@@ -6,9 +6,10 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.sort_direction import SortDirection
+from ..types.subject_type import SubjectType
 from ..types.trace_span import TraceSpan
-from ..types.traces_subject_type import TracesSubjectType
 from .raw_client import AsyncRawTracesClient, RawTracesClient
+from .types.query_spans_request_filters_item import QuerySpansRequestFiltersItem
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -38,12 +39,13 @@ class TracesClient:
         trace_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         span_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         parent_span_ids: typing.Optional[typing.Sequence[str]] = OMIT,
-        created_by_subject_types: typing.Optional[typing.Sequence[TracesSubjectType]] = OMIT,
+        created_by_subject_types: typing.Optional[typing.Sequence[SubjectType]] = OMIT,
         created_by_subject_slugs: typing.Optional[typing.Sequence[str]] = OMIT,
         application_names: typing.Optional[typing.Sequence[str]] = OMIT,
         limit: typing.Optional[int] = OMIT,
         sort_direction: typing.Optional[SortDirection] = OMIT,
         page_token: typing.Optional[str] = OMIT,
+        filters: typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[TraceSpan]:
         """
@@ -67,7 +69,7 @@ class TracesClient:
         parent_span_ids : typing.Optional[typing.Sequence[str]]
             Array of parent span IDs to filter by
 
-        created_by_subject_types : typing.Optional[typing.Sequence[TracesSubjectType]]
+        created_by_subject_types : typing.Optional[typing.Sequence[SubjectType]]
             Array of subject types to filter by
 
         created_by_subject_slugs : typing.Optional[typing.Sequence[str]]
@@ -83,7 +85,10 @@ class TracesClient:
             Sort direction for results based on time. Defaults to descending (latest first)
 
         page_token : typing.Optional[str]
-            Cursor token for pagination. This is an opaque string that should be passed as-is from the previous response
+            An opaque string that should be passed as-is from previous response for fetching the next page. Pass `$response.pagination.nextPageToken` from previous response for fetching the next page.
+
+        filters : typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]]
+            Array of filters
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -124,6 +129,7 @@ class TracesClient:
             limit=limit,
             sort_direction=sort_direction,
             page_token=page_token,
+            filters=filters,
             request_options=request_options,
         )
 
@@ -152,12 +158,13 @@ class AsyncTracesClient:
         trace_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         span_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         parent_span_ids: typing.Optional[typing.Sequence[str]] = OMIT,
-        created_by_subject_types: typing.Optional[typing.Sequence[TracesSubjectType]] = OMIT,
+        created_by_subject_types: typing.Optional[typing.Sequence[SubjectType]] = OMIT,
         created_by_subject_slugs: typing.Optional[typing.Sequence[str]] = OMIT,
         application_names: typing.Optional[typing.Sequence[str]] = OMIT,
         limit: typing.Optional[int] = OMIT,
         sort_direction: typing.Optional[SortDirection] = OMIT,
         page_token: typing.Optional[str] = OMIT,
+        filters: typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[TraceSpan]:
         """
@@ -181,7 +188,7 @@ class AsyncTracesClient:
         parent_span_ids : typing.Optional[typing.Sequence[str]]
             Array of parent span IDs to filter by
 
-        created_by_subject_types : typing.Optional[typing.Sequence[TracesSubjectType]]
+        created_by_subject_types : typing.Optional[typing.Sequence[SubjectType]]
             Array of subject types to filter by
 
         created_by_subject_slugs : typing.Optional[typing.Sequence[str]]
@@ -197,7 +204,10 @@ class AsyncTracesClient:
             Sort direction for results based on time. Defaults to descending (latest first)
 
         page_token : typing.Optional[str]
-            Cursor token for pagination. This is an opaque string that should be passed as-is from the previous response
+            An opaque string that should be passed as-is from previous response for fetching the next page. Pass `$response.pagination.nextPageToken` from previous response for fetching the next page.
+
+        filters : typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]]
+            Array of filters
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -247,5 +257,6 @@ class AsyncTracesClient:
             limit=limit,
             sort_direction=sort_direction,
             page_token=page_token,
+            filters=filters,
             request_options=request_options,
         )

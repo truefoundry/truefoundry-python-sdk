@@ -20,12 +20,12 @@ class SambaNovaModel(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    Name to identify this SambaNova model in the UI
+    A descriptive name to identify this model integration in the UI
     """
 
     model_id: str = pydantic.Field()
     """
-    The name of the SambaNova model to use
+    The SambaNova model identifier (e.g., DeepSeek-R1-0528, Meta-Llama-3.3-70B-Instruct). This is the standard Model ID from SambaNova's model catalog.
     """
 
     model_types: typing.List[ModelType] = pydantic.Field()

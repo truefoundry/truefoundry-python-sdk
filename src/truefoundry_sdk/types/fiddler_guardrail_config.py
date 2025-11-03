@@ -30,7 +30,7 @@ class FiddlerGuardrailConfig(UniversalBaseModel):
     guard_type: FiddlerGuardType
     threshold: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Threshold for the guardrail.
+    Confidence threshold (0.0-1.0) for flagging content. Content scoring above the threshold will be flagged
     """
 
     if IS_PYDANTIC_V2:

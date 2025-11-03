@@ -20,12 +20,12 @@ class OpenAiModel(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    Name to identify this OpenAI model in the UI
+    A descriptive name to identify this model integration in the UI
     """
 
     model_id: str = pydantic.Field()
     """
-    The name of the OpenAI model to use
+    The OpenAI model identifier (e.g., gpt-4o, gpt-4-turbo, gpt-3.5-turbo, o1-mini). This is the standard model name from OpenAI's API documentation.
     """
 
     model_types: typing.List[ModelType] = pydantic.Field()

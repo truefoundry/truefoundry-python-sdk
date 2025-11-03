@@ -112,6 +112,7 @@ class UsersClient:
         skip_if_user_exists: typing.Optional[bool] = False,
         dry_run: typing.Optional[bool] = False,
         accept_invite_client_url: typing.Optional[str] = OMIT,
+        account_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RegisterUsersResponse:
         """
@@ -133,6 +134,9 @@ class UsersClient:
 
         accept_invite_client_url : typing.Optional[str]
             Url to redirect when invite is accepted
+
+        account_id : typing.Optional[str]
+            Account ID to add the user to
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -160,6 +164,7 @@ class UsersClient:
             skip_if_user_exists=skip_if_user_exists,
             dry_run=dry_run,
             accept_invite_client_url=accept_invite_client_url,
+            account_id=account_id,
             request_options=request_options,
         )
         return _response.data
@@ -267,7 +272,12 @@ class UsersClient:
         return _response.data
 
     def invite_user(
-        self, *, accept_invite_client_url: str, email: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        accept_invite_client_url: str,
+        email: str,
+        account_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> InviteUserResponse:
         """
         Invite a user to the tenant
@@ -279,6 +289,9 @@ class UsersClient:
 
         email : str
             Email of user
+
+        account_id : typing.Optional[str]
+            Account ID to add the user to
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -302,7 +315,10 @@ class UsersClient:
         )
         """
         _response = self._raw_client.invite_user(
-            accept_invite_client_url=accept_invite_client_url, email=email, request_options=request_options
+            accept_invite_client_url=accept_invite_client_url,
+            email=email,
+            account_id=account_id,
+            request_options=request_options,
         )
         return _response.data
 
@@ -587,6 +603,7 @@ class AsyncUsersClient:
         skip_if_user_exists: typing.Optional[bool] = False,
         dry_run: typing.Optional[bool] = False,
         accept_invite_client_url: typing.Optional[str] = OMIT,
+        account_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RegisterUsersResponse:
         """
@@ -608,6 +625,9 @@ class AsyncUsersClient:
 
         accept_invite_client_url : typing.Optional[str]
             Url to redirect when invite is accepted
+
+        account_id : typing.Optional[str]
+            Account ID to add the user to
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -643,6 +663,7 @@ class AsyncUsersClient:
             skip_if_user_exists=skip_if_user_exists,
             dry_run=dry_run,
             accept_invite_client_url=accept_invite_client_url,
+            account_id=account_id,
             request_options=request_options,
         )
         return _response.data
@@ -774,7 +795,12 @@ class AsyncUsersClient:
         return _response.data
 
     async def invite_user(
-        self, *, accept_invite_client_url: str, email: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        accept_invite_client_url: str,
+        email: str,
+        account_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> InviteUserResponse:
         """
         Invite a user to the tenant
@@ -786,6 +812,9 @@ class AsyncUsersClient:
 
         email : str
             Email of user
+
+        account_id : typing.Optional[str]
+            Account ID to add the user to
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -817,7 +846,10 @@ class AsyncUsersClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.invite_user(
-            accept_invite_client_url=accept_invite_client_url, email=email, request_options=request_options
+            accept_invite_client_url=accept_invite_client_url,
+            email=email,
+            account_id=account_id,
+            request_options=request_options,
         )
         return _response.data
 

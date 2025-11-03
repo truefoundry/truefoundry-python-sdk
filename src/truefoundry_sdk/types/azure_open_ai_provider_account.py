@@ -3,10 +3,13 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.serialization import FieldMetadata
 from .azure_key_auth import AzureKeyAuth
-from .azure_open_ai_model_v2 import AzureOpenAiModelV2
+from .azure_open_ai_model import AzureOpenAiModel
 from .collaborator import Collaborator
+from .owned_by import OwnedBy
 
 
 class AzureOpenAiProviderAccount(UniversalBaseModel):
@@ -30,7 +33,7 @@ class AzureOpenAiProviderAccount(UniversalBaseModel):
     """
 
     auth_data: AzureKeyAuth
-    integrations: typing.List[AzureOpenAiModelV2] = pydantic.Field()
+    integrations: typing.List[AzureOpenAiModel] = pydantic.Field()
     """
     List of integrations that are associated with the Azure OpenAI provider account
     """
@@ -39,6 +42,8 @@ class AzureOpenAiProviderAccount(UniversalBaseModel):
     """
     List of users who have access to this provider account
     """
+
+    owned_by: typing_extensions.Annotated[typing.Optional[OwnedBy], FieldMetadata(alias="ownedBy")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

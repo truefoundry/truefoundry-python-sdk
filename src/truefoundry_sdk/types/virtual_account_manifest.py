@@ -8,9 +8,9 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
 from .auto_rotate import AutoRotate
 from .notification_target import NotificationTarget
-from .owned_by import OwnedBy
 from .permissions import Permissions
 from .secret_store_config import SecretStoreConfig
+from .virtual_account_owned_by import VirtualAccountOwnedBy
 
 
 class VirtualAccountManifest(UniversalBaseModel):
@@ -24,20 +24,20 @@ class VirtualAccountManifest(UniversalBaseModel):
     +value=virtual-account
     """
 
-    expiration_date: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Expiration Date of the Virtual Account (should be in the format yyyy-mm-dd)
-    """
-
     permissions: typing.List[Permissions] = pydantic.Field()
     """
     Permissions
     """
 
-    owned_by: typing_extensions.Annotated[typing.Optional[OwnedBy], FieldMetadata(alias="ownedBy")] = None
+    expiration_date: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Expiration Date of the Virtual Account (should be in the format yyyy-mm-dd)
+    """
+
     auto_rotate: typing.Optional[AutoRotate] = None
-    secret_store_config: typing.Optional[SecretStoreConfig] = None
     notification_target: typing.Optional[NotificationTarget] = None
+    secret_store_config: typing.Optional[SecretStoreConfig] = None
+    owned_by: typing_extensions.Annotated[typing.Optional[VirtualAccountOwnedBy], FieldMetadata(alias="ownedBy")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
