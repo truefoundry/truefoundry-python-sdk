@@ -30,7 +30,7 @@ packages = [
     { include = "truefoundry_sdk", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/truefoundry/truefoundry-python-sdk'
 
 [tool.poetry.dependencies]

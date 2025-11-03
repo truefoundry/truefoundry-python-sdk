@@ -6,8 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import QuerySpansRequestFiltersItem
-_dynamic_imports: typing.Dict[str, str] = {"QuerySpansRequestFiltersItem": ".types"}
+    from .query_spans_request_filters_item import QuerySpansRequestFiltersItem
+_dynamic_imports: typing.Dict[str, str] = {"QuerySpansRequestFiltersItem": ".query_spans_request_filters_item"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:

@@ -8,10 +8,12 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pagination import AsyncPager, BaseHttpResponse, SyncPager
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
+from ..core.serialization import convert_and_respect_annotation_metadata
 from ..types.query_spans_response import QuerySpansResponse
 from ..types.sort_direction import SortDirection
 from ..types.subject_type import SubjectType
 from ..types.trace_span import TraceSpan
+from .types.query_spans_request_filters_item import QuerySpansRequestFiltersItem
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -36,7 +38,7 @@ class RawTracesClient:
         limit: typing.Optional[int] = OMIT,
         sort_direction: typing.Optional[SortDirection] = OMIT,
         page_token: typing.Optional[str] = OMIT,
-        filters: typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]] = OMIT,
+        filters: typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[TraceSpan]:
         """
@@ -78,7 +80,7 @@ class RawTracesClient:
         page_token : typing.Optional[str]
             An opaque string that should be passed as-is from previous response for fetching the next page. Pass `$response.pagination.nextPageToken` from previous response for fetching the next page.
 
-        filters : typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]]
+        filters : typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]]
             Array of filters
 
         request_options : typing.Optional[RequestOptions]
@@ -105,7 +107,9 @@ class RawTracesClient:
                 "sortDirection": sort_direction,
                 "pageToken": page_token,
                 "tracingProjectFqn": tracing_project_fqn,
-                "filters": filters,
+                "filters": convert_and_respect_annotation_metadata(
+                    object_=filters, annotation=typing.Sequence[QuerySpansRequestFiltersItem], direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -172,7 +176,7 @@ class AsyncRawTracesClient:
         limit: typing.Optional[int] = OMIT,
         sort_direction: typing.Optional[SortDirection] = OMIT,
         page_token: typing.Optional[str] = OMIT,
-        filters: typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]] = OMIT,
+        filters: typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[TraceSpan]:
         """
@@ -214,7 +218,7 @@ class AsyncRawTracesClient:
         page_token : typing.Optional[str]
             An opaque string that should be passed as-is from previous response for fetching the next page. Pass `$response.pagination.nextPageToken` from previous response for fetching the next page.
 
-        filters : typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]]
+        filters : typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]]
             Array of filters
 
         request_options : typing.Optional[RequestOptions]
@@ -241,7 +245,9 @@ class AsyncRawTracesClient:
                 "sortDirection": sort_direction,
                 "pageToken": page_token,
                 "tracingProjectFqn": tracing_project_fqn,
-                "filters": filters,
+                "filters": convert_and_respect_annotation_metadata(
+                    object_=filters, annotation=typing.Sequence[QuerySpansRequestFiltersItem], direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",

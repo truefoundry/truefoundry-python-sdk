@@ -9,6 +9,7 @@ from ..types.sort_direction import SortDirection
 from ..types.subject_type import SubjectType
 from ..types.trace_span import TraceSpan
 from .raw_client import AsyncRawTracesClient, RawTracesClient
+from .types.query_spans_request_filters_item import QuerySpansRequestFiltersItem
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -44,7 +45,7 @@ class TracesClient:
         limit: typing.Optional[int] = OMIT,
         sort_direction: typing.Optional[SortDirection] = OMIT,
         page_token: typing.Optional[str] = OMIT,
-        filters: typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]] = OMIT,
+        filters: typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[TraceSpan]:
         """
@@ -86,7 +87,7 @@ class TracesClient:
         page_token : typing.Optional[str]
             An opaque string that should be passed as-is from previous response for fetching the next page. Pass `$response.pagination.nextPageToken` from previous response for fetching the next page.
 
-        filters : typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]]
+        filters : typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]]
             Array of filters
 
         request_options : typing.Optional[RequestOptions]
@@ -163,7 +164,7 @@ class AsyncTracesClient:
         limit: typing.Optional[int] = OMIT,
         sort_direction: typing.Optional[SortDirection] = OMIT,
         page_token: typing.Optional[str] = OMIT,
-        filters: typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]] = OMIT,
+        filters: typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[TraceSpan]:
         """
@@ -205,7 +206,7 @@ class AsyncTracesClient:
         page_token : typing.Optional[str]
             An opaque string that should be passed as-is from previous response for fetching the next page. Pass `$response.pagination.nextPageToken` from previous response for fetching the next page.
 
-        filters : typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]]
+        filters : typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]]
             Array of filters
 
         request_options : typing.Optional[RequestOptions]

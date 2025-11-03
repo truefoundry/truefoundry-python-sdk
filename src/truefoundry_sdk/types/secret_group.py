@@ -33,7 +33,6 @@ class SecretGroup(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .secret import Secret  # noqa: E402, F401, I001
-from .secret_version import SecretVersion  # noqa: E402, F401, I001
+from .secret import Secret  # noqa: E402, I001
 
 update_forward_refs(SecretGroup)

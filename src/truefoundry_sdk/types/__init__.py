@@ -261,6 +261,9 @@ if typing.TYPE_CHECKING:
     from .gateway_configuration import GatewayConfiguration
     from .gateway_otel_config import GatewayOtelConfig
     from .gateway_otel_config_otel_traces_exporter_config import GatewayOtelConfigOtelTracesExporterConfig
+    from .gateway_request_metadata_filter import GatewayRequestMetadataFilter
+    from .gateway_request_metadata_filter_operator import GatewayRequestMetadataFilterOperator
+    from .gateway_request_metadata_filter_value import GatewayRequestMetadataFilterValue
     from .gcp_api_key_auth import GcpApiKeyAuth
     from .gcp_gcr import GcpGcr
     from .gcp_gcs import GcpGcs
@@ -653,6 +656,13 @@ if typing.TYPE_CHECKING:
     from .snowflake_cortex_provider_account import SnowflakeCortexProviderAccount
     from .sort_direction import SortDirection
     from .spa_cy_framework import SpaCyFramework
+    from .span_attribute_filter import SpanAttributeFilter
+    from .span_attribute_filter_operator import SpanAttributeFilterOperator
+    from .span_attribute_filter_value import SpanAttributeFilterValue
+    from .span_field_filter import SpanFieldFilter
+    from .span_field_filter_operator import SpanFieldFilterOperator
+    from .span_field_filter_span_field_name import SpanFieldFilterSpanFieldName
+    from .span_field_filter_value import SpanFieldFilterValue
     from .spark_build import SparkBuild
     from .spark_config import SparkConfig
     from .spark_driver_config import SparkDriverConfig
@@ -1024,6 +1034,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GatewayConfiguration": ".gateway_configuration",
     "GatewayOtelConfig": ".gateway_otel_config",
     "GatewayOtelConfigOtelTracesExporterConfig": ".gateway_otel_config_otel_traces_exporter_config",
+    "GatewayRequestMetadataFilter": ".gateway_request_metadata_filter",
+    "GatewayRequestMetadataFilterOperator": ".gateway_request_metadata_filter_operator",
+    "GatewayRequestMetadataFilterValue": ".gateway_request_metadata_filter_value",
     "GcpApiKeyAuth": ".gcp_api_key_auth",
     "GcpGcr": ".gcp_gcr",
     "GcpGcs": ".gcp_gcs",
@@ -1415,6 +1428,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SnowflakeCortexProviderAccount": ".snowflake_cortex_provider_account",
     "SortDirection": ".sort_direction",
     "SpaCyFramework": ".spa_cy_framework",
+    "SpanAttributeFilter": ".span_attribute_filter",
+    "SpanAttributeFilterOperator": ".span_attribute_filter_operator",
+    "SpanAttributeFilterValue": ".span_attribute_filter_value",
+    "SpanFieldFilter": ".span_field_filter",
+    "SpanFieldFilterOperator": ".span_field_filter_operator",
+    "SpanFieldFilterSpanFieldName": ".span_field_filter_span_field_name",
+    "SpanFieldFilterValue": ".span_field_filter_value",
     "SparkBuild": ".spark_build",
     "SparkConfig": ".spark_config",
     "SparkDriverConfig": ".spark_driver_config",
@@ -1810,6 +1830,9 @@ __all__ = [
     "GatewayConfiguration",
     "GatewayOtelConfig",
     "GatewayOtelConfigOtelTracesExporterConfig",
+    "GatewayRequestMetadataFilter",
+    "GatewayRequestMetadataFilterOperator",
+    "GatewayRequestMetadataFilterValue",
     "GcpApiKeyAuth",
     "GcpGcr",
     "GcpGcs",
@@ -2201,6 +2224,13 @@ __all__ = [
     "SnowflakeCortexProviderAccount",
     "SortDirection",
     "SpaCyFramework",
+    "SpanAttributeFilter",
+    "SpanAttributeFilterOperator",
+    "SpanAttributeFilterValue",
+    "SpanFieldFilter",
+    "SpanFieldFilterOperator",
+    "SpanFieldFilterSpanFieldName",
+    "SpanFieldFilterValue",
     "SparkBuild",
     "SparkConfig",
     "SparkDriverConfig",

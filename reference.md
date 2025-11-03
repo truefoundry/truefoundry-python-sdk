@@ -6597,7 +6597,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**filters:** `typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]]` — Array of filters
+**filters:** `typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]]` — Array of filters
     
 </dd>
 </dl>
