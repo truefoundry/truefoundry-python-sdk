@@ -3,7 +3,7 @@ name = "truefoundry-sdk"
 
 [tool.poetry]
 name = "truefoundry-sdk"
-version = "0.0.0"
+version = "0.1.14-rc.1"
 description = ""
 readme = "README.md"
 authors = []
