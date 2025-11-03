@@ -4,7 +4,6 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .azure_key_auth import AzureKeyAuth
 from .model_cost_metric import ModelCostMetric
 from .model_type import ModelType
 
@@ -14,35 +13,29 @@ class AzureOpenAiModel(UniversalBaseModel):
     Azure OpenAI Model
     """
 
+    type: typing.Literal["integration/model/azure-openai"] = pydantic.Field(default="integration/model/azure-openai")
+    """
+    +value=integration/model/azure-openai
+    """
+
     name: str = pydantic.Field()
     """
-    Display Name - 2 to 62 characters long alphanumeric word, may contain - or . in between, cannot start with a number
+    A descriptive name to identify this model integration in the UI
     """
 
     model_id: str = pydantic.Field()
     """
-    This is the name of the deployment
-    """
-
-    type: typing.Literal["integration/model/azure"] = pydantic.Field(default="integration/model/azure")
-    """
-    +value=integration/model/azure
-    """
-
-    auth_data: AzureKeyAuth
-    azure_endpoint: str = pydantic.Field()
-    """
-    Azure OpenAI Service endpoint
+    The model deployment name created in your Azure OpenAI resource (e.g., gpt-4-deployment, gpt-35-turbo-deployment). This is NOT the base model name but the deployment name you configured in Azure.
     """
 
     api_version: str = pydantic.Field()
     """
-    +sort=100
+    The Azure OpenAI API version to use
     """
 
     model_types: typing.List[ModelType] = pydantic.Field()
     """
-    Specify the type of the model
+    Specify the type of the Azure OpenAI model
     """
 
     cost: typing.Optional[ModelCostMetric] = None

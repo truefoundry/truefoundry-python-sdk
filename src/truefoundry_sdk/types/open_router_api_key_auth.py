@@ -18,7 +18,7 @@ class OpenRouterApiKeyAuth(UniversalBaseModel):
 
     api_key: str = pydantic.Field()
     """
-    Your OpenRouter API key for authentication
+    The API key for OpenRouter authentication
     """
 
     if IS_PYDANTIC_V2:

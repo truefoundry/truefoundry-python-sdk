@@ -3,7 +3,9 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.serialization import FieldMetadata
 from .cluster_manifest_cluster_type import ClusterManifestClusterType
 from .cluster_manifest_monitoring import ClusterManifestMonitoring
 from .cluster_manifest_node_label_keys import ClusterManifestNodeLabelKeys
@@ -11,6 +13,7 @@ from .cluster_manifest_workbench_config import ClusterManifestWorkbenchConfig
 from .collaborator import Collaborator
 from .ingress_controller_config import IngressControllerConfig
 from .nodepool import Nodepool
+from .owned_by import OwnedBy
 from .spark_config import SparkConfig
 
 
@@ -85,6 +88,8 @@ class ClusterManifest(UniversalBaseModel):
     """
     Collaborators who can access this cluster
     """
+
+    owned_by: typing_extensions.Annotated[typing.Optional[OwnedBy], FieldMetadata(alias="ownedBy")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

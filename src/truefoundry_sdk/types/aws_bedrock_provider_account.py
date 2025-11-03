@@ -3,11 +3,14 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.serialization import FieldMetadata
 from .aws_bedrock_provider_account_auth_data import AwsBedrockProviderAccountAuthData
 from .aws_region import AwsRegion
-from .bedrock_model_v2 import BedrockModelV2
+from .bedrock_model import BedrockModel
 from .collaborator import Collaborator
+from .owned_by import OwnedBy
 
 
 class AwsBedrockProviderAccount(UniversalBaseModel):
@@ -31,7 +34,7 @@ class AwsBedrockProviderAccount(UniversalBaseModel):
     Authentication data for the AWS account
     """
 
-    integrations: typing.List[BedrockModelV2] = pydantic.Field()
+    integrations: typing.List[BedrockModel] = pydantic.Field()
     """
     List of integrations that are associated with the AWS Bedrock provider account
     """
@@ -40,6 +43,8 @@ class AwsBedrockProviderAccount(UniversalBaseModel):
     """
     List of users who have access to this provider account
     """
+
+    owned_by: typing_extensions.Annotated[typing.Optional[OwnedBy], FieldMetadata(alias="ownedBy")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

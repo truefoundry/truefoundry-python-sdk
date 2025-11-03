@@ -20,7 +20,7 @@ class NomicModel(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    Name to identify this Nomic model in the UI
+    A descriptive name to identify this model integration in the UI
     """
 
     model_id: str = pydantic.Field()

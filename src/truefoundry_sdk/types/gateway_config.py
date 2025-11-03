@@ -3,9 +3,9 @@
 import typing
 
 from .budget_config import BudgetConfig
-from .fallback_config import FallbackConfig
+from .gateway_otel_config import GatewayOtelConfig
 from .guardrails_config import GuardrailsConfig
 from .load_balancing_config import LoadBalancingConfig
 from .rate_limit_config import RateLimitConfig
 
-GatewayConfig = typing.Union[RateLimitConfig, FallbackConfig, LoadBalancingConfig, GuardrailsConfig, BudgetConfig]
+GatewayConfig = typing.Union[RateLimitConfig, LoadBalancingConfig, GuardrailsConfig, BudgetConfig, GatewayOtelConfig]

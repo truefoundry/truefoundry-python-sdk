@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .mcp_server_auth import McpServerAuth
+from .mcp_server_integration_transport import McpServerIntegrationTransport
 
 
 class McpServerIntegration(UniversalBaseModel):
@@ -29,7 +30,12 @@ class McpServerIntegration(UniversalBaseModel):
 
     url: str = pydantic.Field()
     """
-    The endpoint URL for the MCP Server. The system will first try a connection using streamable-http transport on this URL. If that fails, it will attempt a connection using SSE transport on <url>/sse.
+    The endpoint URL for the MCP Server.
+    """
+
+    transport: McpServerIntegrationTransport = pydantic.Field()
+    """
+    The transport protocol to use for communication with the MCP Server.
     """
 
     auth_data: typing.Optional[McpServerAuth] = None

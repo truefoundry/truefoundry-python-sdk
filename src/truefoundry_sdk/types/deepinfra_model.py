@@ -20,12 +20,12 @@ class DeepinfraModel(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    Name to identify this DeepInfra model in the UI
+    A descriptive name to identify this model integration in the UI
     """
 
     model_id: str = pydantic.Field()
     """
-    The name of the DeepInfra model to use
+    The DeepInfra model identifier (e.g., meta-llama/Llama-3.3-70B-Instruct-Turbo, mistralai/Mistral-Small-24B-Instruct-2501). This is the full model path from DeepInfra's model catalog.
     """
 
     model_types: typing.List[ModelType] = pydantic.Field()

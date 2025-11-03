@@ -8,12 +8,12 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class OwnedBy(UniversalBaseModel):
     """
-    Name of the owner who owns the virtual account
+    Names of the owners that own this resource
     """
 
-    team: str = pydantic.Field()
+    account: str = pydantic.Field()
     """
-    The name of the team who owns the virtual account
+    The name of the account that owns this resource
     """
 
     if IS_PYDANTIC_V2:

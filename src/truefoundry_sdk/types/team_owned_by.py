@@ -6,24 +6,14 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class BedrockKeyAuth(UniversalBaseModel):
+class TeamOwnedBy(UniversalBaseModel):
     """
-    Bedrock API Key Auth
-    """
-
-    type: typing.Literal["api-key"] = pydantic.Field(default="api-key")
-    """
-    +value=api-key
+    Names of the owners that own the team
     """
 
-    access_key: str = pydantic.Field()
+    account: str = pydantic.Field()
     """
-    +sort=100
-    """
-
-    access_key_secret: str = pydantic.Field()
-    """
-    +sort=100
+    The name of the account that owns the team
     """
 
     if IS_PYDANTIC_V2:

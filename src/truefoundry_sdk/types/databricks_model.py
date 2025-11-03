@@ -20,12 +20,12 @@ class DatabricksModel(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    Name to identify this Databricks model in the UI
+    A descriptive name to identify this model integration in the UI
     """
 
     model_id: str = pydantic.Field()
     """
-    The name of the Databricks model to use
+    The serving endpoint name configured in your Databricks workspace. This is the endpoint you created in Databricks Model Serving, not the underlying model name.
     """
 
     model_types: typing.List[ModelType] = pydantic.Field()

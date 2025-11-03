@@ -12,6 +12,7 @@ class AiGatewayGetGatewayConfigRequestType(str, enum.Enum):
     GATEWAY_LOAD_BALANCING_CONFIG = "gateway-load-balancing-config"
     GATEWAY_GUARDRAILS_CONFIG = "gateway-guardrails-config"
     GATEWAY_BUDGET_CONFIG = "gateway-budget-config"
+    GATEWAY_OTEL_CONFIG = "gateway-otel-config"
 
     def visit(
         self,
@@ -20,6 +21,7 @@ class AiGatewayGetGatewayConfigRequestType(str, enum.Enum):
         gateway_load_balancing_config: typing.Callable[[], T_Result],
         gateway_guardrails_config: typing.Callable[[], T_Result],
         gateway_budget_config: typing.Callable[[], T_Result],
+        gateway_otel_config: typing.Callable[[], T_Result],
     ) -> T_Result:
         if self is AiGatewayGetGatewayConfigRequestType.GATEWAY_RATE_LIMITING_CONFIG:
             return gateway_rate_limiting_config()
@@ -31,3 +33,5 @@ class AiGatewayGetGatewayConfigRequestType(str, enum.Enum):
             return gateway_guardrails_config()
         if self is AiGatewayGetGatewayConfigRequestType.GATEWAY_BUDGET_CONFIG:
             return gateway_budget_config()
+        if self is AiGatewayGetGatewayConfigRequestType.GATEWAY_OTEL_CONFIG:
+            return gateway_otel_config()

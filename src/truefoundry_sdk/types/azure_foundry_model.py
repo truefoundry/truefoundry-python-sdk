@@ -11,37 +11,40 @@ from .model_type import ModelType
 
 class AzureFoundryModel(UniversalBaseModel):
     """
-    Azure AI Foundry Model
+    Azure Foundry Model
     """
 
-    type: typing.Literal["integration/model/azure/ai-foundry"] = pydantic.Field(
-        default="integration/model/azure/ai-foundry"
-    )
+    type: typing.Literal["integration/model/azure-foundry"] = pydantic.Field(default="integration/model/azure-foundry")
     """
-    +value=integration/model/azure/ai-foundry
+    +value=integration/model/azure-foundry
     """
 
     name: str = pydantic.Field()
     """
-    Name to identify this Azure AI Foundry model
+    A descriptive name to identify this model integration in the UI
     """
 
-    model_id: str = pydantic.Field()
-    """
-    This is the Model Name on Azure
-    """
-
+    auth_data: AzureKeyAuth
     model_types: typing.List[ModelType] = pydantic.Field()
     """
     Types of models supported by this Azure AI Foundry deployment
     """
 
-    azure_endpoint: str = pydantic.Field()
+    model_id: str = pydantic.Field()
     """
-    Azure Foundry endpoint
+    The model deployment name created in your Azure AI Foundry project. This is the deployment name you configured in Azure AI Foundry, not the base model name.
     """
 
-    auth_data: typing.Optional[AzureKeyAuth] = None
+    azure_endpoint: str = pydantic.Field()
+    """
+    The Azure AI Foundry endpoint URL
+    """
+
+    api_version: str = pydantic.Field()
+    """
+    The API version for the Azure Foundry model
+    """
+
     cost: typing.Optional[ModelCostMetric] = None
     authorized_subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """

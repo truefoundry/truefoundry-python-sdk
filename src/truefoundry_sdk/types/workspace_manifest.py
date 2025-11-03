@@ -3,8 +3,11 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.serialization import FieldMetadata
 from .collaborator import Collaborator
+from .owned_by import OwnedBy
 from .permissions import Permissions
 
 
@@ -48,6 +51,8 @@ class WorkspaceManifest(UniversalBaseModel):
     """
     Permissions
     """
+
+    owned_by: typing_extensions.Annotated[typing.Optional[OwnedBy], FieldMetadata(alias="ownedBy")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -20,12 +20,12 @@ class CohereModel(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    Name to identify this Cohere model in the UI
+    A descriptive name to identify this model integration in the UI
     """
 
     model_id: str = pydantic.Field()
     """
-    The name of the Cohere model to use
+    The Cohere model identifier (e.g., command-a-03-2025, command-r-03-2024, command-r-03-2024). This is the standard model id from Cohere's model catalog.
     """
 
     model_types: typing.List[ModelType] = pydantic.Field()

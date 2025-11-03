@@ -28,7 +28,7 @@ class AzureContentSafetyGuardrailConfig(UniversalBaseModel):
 
     resource_name: str = pydantic.Field()
     """
-    The resource name where API is deployed.
+    Name of your Azure Content Safety resource where the service is deployed (e.g., my-content-safety)
     """
 
     api_version: str = pydantic.Field(default="2024-09-01")
@@ -38,22 +38,22 @@ class AzureContentSafetyGuardrailConfig(UniversalBaseModel):
 
     custom_host: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Custom host for the PII detection API
+    Custom endpoint URL for the Content Safety API (optional, uses default Azure endpoint if not specified)
     """
 
     blocklist_names: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    Array of blocklist names to check against
+    Names of custom blocklists created in Azure Content Safety to check text against. Leave empty if not using custom blocklists
     """
 
     severity_threshold: float = pydantic.Field(default=2.0)
     """
-    Severity threshold for the Content Safety API
+    Minimum severity level (0-6) to flag content. Higher values are more restrictive. 0=Safe, 2=Low risk, 4=Medium risk, 6=High risk
     """
 
     categories: typing.List[AzureContentSafetyCategory] = pydantic.Field()
     """
-    Categories to check against
+    Types of harmful content to detect: Hate (hate speech), SelfHarm (self-injury), Sexual (sexual content), Violence (violent content)
     """
 
     auth_data: AzureKeyAuth

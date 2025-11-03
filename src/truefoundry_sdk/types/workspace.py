@@ -22,6 +22,7 @@ class Workspace(UniversalBaseModel):
     updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
     environment_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="environmentId")] = None
     manifest: WorkspaceManifest
+    account_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="accountId")] = None
     is_system_ws: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isSystemWs")] = None
     created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = None
 

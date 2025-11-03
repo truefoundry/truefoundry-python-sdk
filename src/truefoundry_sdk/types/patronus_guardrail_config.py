@@ -30,7 +30,7 @@ class PatronusGuardrailConfig(UniversalBaseModel):
     auth_data: PatronusKeyAuth
     target: PatronusGuardrailConfigTarget = pydantic.Field()
     """
-    The type of request to use for the Patronus Guardrail.
+    Where to apply evaluation: request (evaluate user input) or response (evaluate model response)
     """
 
     evaluators: typing.List[PatronusEvaluator] = pydantic.Field()

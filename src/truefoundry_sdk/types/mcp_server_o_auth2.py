@@ -17,16 +17,6 @@ class McpServerOAuth2(UniversalBaseModel):
     OAuth2 authentication
     """
 
-    client_id: str = pydantic.Field()
-    """
-    client ID for OAuth2 or the TrueFoundry secret FQN containing the client ID.
-    """
-
-    client_secret: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Client secret or the TrueFoundry secret FQN containing the client secret for OAuth2.
-    """
-
     authorization_url: str = pydantic.Field()
     """
     URL for the authorization request
@@ -37,9 +27,31 @@ class McpServerOAuth2(UniversalBaseModel):
     The endpoint to exchange auth code for tokens.
     """
 
-    scopes: typing.List[str] = pydantic.Field()
+    scopes: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     List of scopes to request from the OAuth2 provider.
+    """
+
+    client_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    client ID for OAuth2 or the TrueFoundry secret FQN containing the client ID.
+    """
+
+    client_secret: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Client secret or the TrueFoundry secret FQN containing the client secret for OAuth2.
+    """
+
+    registration_url: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    URL for dynamic client registration (RFC 7591). If provided, client credentials will be obtained automatically.
+    """
+
+    code_challenge_methods_supported: typing.Optional[typing.List[typing.Literal["S256"]]] = pydantic.Field(
+        default=None
+    )
+    """
+    List of supported PKCE code challenge methods (S256 only)
     """
 
     jwt_source: McpServerOAuth2JwtSource = pydantic.Field()

@@ -35,7 +35,7 @@ class PangeaGuardrailConfig(UniversalBaseModel):
 
     recipe: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Recipe key of a configuration of data types and settings defined in the Pangea User Console. It specifies the rules that are to be applied to the text, such as defang malicious URLs.
+    Recipe key from Pangea console defining security rules and data types to apply
     """
 
     overrides: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)

@@ -40,12 +40,12 @@ class AwsBedrockGuardrailConfig(UniversalBaseModel):
 
     guardrail_id: str = pydantic.Field()
     """
-    The ID of the Guardrail to use.
+    The unique identifier of the Bedrock Guardrail created in AWS console
     """
 
     guardrail_version: str = pydantic.Field()
     """
-    The version of the Guardrail to use.
+    Version number of the guardrail to use (e.g., 2 for version 2)
     """
 
     region: AwsRegion

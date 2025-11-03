@@ -18,7 +18,7 @@ class PerplexityAiKeyAuth(UniversalBaseModel):
 
     api_key: str = pydantic.Field()
     """
-    Your Perplexity AI API key for authentication
+    The API key for Perplexity AI authentication
     """
 
     if IS_PYDANTIC_V2:

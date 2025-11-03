@@ -20,12 +20,12 @@ class TogetherAiModel(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    Name to identify this Together AI model in the UI
+    A descriptive name to identify this model integration in the UI
     """
 
     model_id: str = pydantic.Field()
     """
-    The name of the Together AI model to use
+    The Together AI model identifier (e.g., deepseek-ai/DeepSeek-R1, moonshotai/Kimi-K2-Instruct-0905). This is the model name from Together AI's model catalog.
     """
 
     model_types: typing.List[ModelType] = pydantic.Field()

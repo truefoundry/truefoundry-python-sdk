@@ -10,8 +10,8 @@ from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..types.query_spans_response import QuerySpansResponse
 from ..types.sort_direction import SortDirection
+from ..types.subject_type import SubjectType
 from ..types.trace_span import TraceSpan
-from ..types.traces_subject_type import TracesSubjectType
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -30,12 +30,13 @@ class RawTracesClient:
         trace_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         span_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         parent_span_ids: typing.Optional[typing.Sequence[str]] = OMIT,
-        created_by_subject_types: typing.Optional[typing.Sequence[TracesSubjectType]] = OMIT,
+        created_by_subject_types: typing.Optional[typing.Sequence[SubjectType]] = OMIT,
         created_by_subject_slugs: typing.Optional[typing.Sequence[str]] = OMIT,
         application_names: typing.Optional[typing.Sequence[str]] = OMIT,
         limit: typing.Optional[int] = OMIT,
         sort_direction: typing.Optional[SortDirection] = OMIT,
         page_token: typing.Optional[str] = OMIT,
+        filters: typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[TraceSpan]:
         """
@@ -59,7 +60,7 @@ class RawTracesClient:
         parent_span_ids : typing.Optional[typing.Sequence[str]]
             Array of parent span IDs to filter by
 
-        created_by_subject_types : typing.Optional[typing.Sequence[TracesSubjectType]]
+        created_by_subject_types : typing.Optional[typing.Sequence[SubjectType]]
             Array of subject types to filter by
 
         created_by_subject_slugs : typing.Optional[typing.Sequence[str]]
@@ -75,7 +76,10 @@ class RawTracesClient:
             Sort direction for results based on time. Defaults to descending (latest first)
 
         page_token : typing.Optional[str]
-            Cursor token for pagination. This is an opaque string that should be passed as-is from the previous response
+            An opaque string that should be passed as-is from previous response for fetching the next page. Pass `$response.pagination.nextPageToken` from previous response for fetching the next page.
+
+        filters : typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]]
+            Array of filters
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -101,6 +105,7 @@ class RawTracesClient:
                 "sortDirection": sort_direction,
                 "pageToken": page_token,
                 "tracingProjectFqn": tracing_project_fqn,
+                "filters": filters,
             },
             headers={
                 "content-type": "application/json",
@@ -136,6 +141,7 @@ class RawTracesClient:
                         limit=limit,
                         sort_direction=sort_direction,
                         page_token=_parsed_next,
+                        filters=filters,
                         request_options=request_options,
                     )
                 return SyncPager(
@@ -160,12 +166,13 @@ class AsyncRawTracesClient:
         trace_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         span_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         parent_span_ids: typing.Optional[typing.Sequence[str]] = OMIT,
-        created_by_subject_types: typing.Optional[typing.Sequence[TracesSubjectType]] = OMIT,
+        created_by_subject_types: typing.Optional[typing.Sequence[SubjectType]] = OMIT,
         created_by_subject_slugs: typing.Optional[typing.Sequence[str]] = OMIT,
         application_names: typing.Optional[typing.Sequence[str]] = OMIT,
         limit: typing.Optional[int] = OMIT,
         sort_direction: typing.Optional[SortDirection] = OMIT,
         page_token: typing.Optional[str] = OMIT,
+        filters: typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[TraceSpan]:
         """
@@ -189,7 +196,7 @@ class AsyncRawTracesClient:
         parent_span_ids : typing.Optional[typing.Sequence[str]]
             Array of parent span IDs to filter by
 
-        created_by_subject_types : typing.Optional[typing.Sequence[TracesSubjectType]]
+        created_by_subject_types : typing.Optional[typing.Sequence[SubjectType]]
             Array of subject types to filter by
 
         created_by_subject_slugs : typing.Optional[typing.Sequence[str]]
@@ -205,7 +212,10 @@ class AsyncRawTracesClient:
             Sort direction for results based on time. Defaults to descending (latest first)
 
         page_token : typing.Optional[str]
-            Cursor token for pagination. This is an opaque string that should be passed as-is from the previous response
+            An opaque string that should be passed as-is from previous response for fetching the next page. Pass `$response.pagination.nextPageToken` from previous response for fetching the next page.
+
+        filters : typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]]
+            Array of filters
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -231,6 +241,7 @@ class AsyncRawTracesClient:
                 "sortDirection": sort_direction,
                 "pageToken": page_token,
                 "tracingProjectFqn": tracing_project_fqn,
+                "filters": filters,
             },
             headers={
                 "content-type": "application/json",
@@ -268,6 +279,7 @@ class AsyncRawTracesClient:
                             limit=limit,
                             sort_direction=sort_direction,
                             page_token=_parsed_next,
+                            filters=filters,
                             request_options=request_options,
                         )
 

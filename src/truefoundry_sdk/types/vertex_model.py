@@ -14,27 +14,27 @@ class VertexModel(UniversalBaseModel):
     Vertex Model
     """
 
+    type: typing.Literal["integration/model/vertex"] = pydantic.Field(default="integration/model/vertex")
+    """
+    +value=integration/model/vertex
+    """
+
     name: str = pydantic.Field()
     """
-    Display Name - 2 to 62 characters long alphanumeric word, may contain - or . in between, cannot start with a number
+    A descriptive name to identify this model integration in the UI
     """
 
     model_id: str = pydantic.Field()
     """
-    +sort=2
-    """
-
-    type: typing.Literal["integration/model/gcp/vertex"] = pydantic.Field(default="integration/model/gcp/vertex")
-    """
-    +value=integration/model/gcp/vertex
-    """
-
-    model_types: typing.List[ModelType] = pydantic.Field()
-    """
-    Specify the type of the model
+    The Google Vertex AI model identifier (e.g., gemini-2.5-pro, anthropic/claude-sonnet-4-5@20250929). This is the model version name from Vertex AI's model catalog.
     """
 
     region: typing.Optional[GcpRegion] = None
+    model_types: typing.List[ModelType] = pydantic.Field()
+    """
+    Specify the type of the Vertex AI model (e.g., chat, text, etc.)
+    """
+
     cost: typing.Optional[ModelCostMetric] = None
     authorized_subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """

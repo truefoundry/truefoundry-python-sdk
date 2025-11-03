@@ -3,9 +3,12 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.serialization import FieldMetadata
 from .collaborator import Collaborator
 from .mcp_server_integrations import McpServerIntegrations
+from .owned_by import OwnedBy
 
 
 class McpServerProviderAccount(UniversalBaseModel):
@@ -34,6 +37,8 @@ class McpServerProviderAccount(UniversalBaseModel):
     """
     List of MCP Servers, which are part of this MCP Server Group.
     """
+
+    owned_by: typing_extensions.Annotated[typing.Optional[OwnedBy], FieldMetadata(alias="ownedBy")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -3,9 +3,12 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.serialization import FieldMetadata
 from .dockerhub_basic_auth import DockerhubBasicAuth
 from .dockerhub_integrations import DockerhubIntegrations
+from .owned_by import OwnedBy
 
 
 class DockerhubProviderAccount(UniversalBaseModel):
@@ -20,7 +23,7 @@ class DockerhubProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    3 to 32 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
+    3 to 36 lower case characters long alphanumeric word, may contain - in between, cannot start with a number
     """
 
     account_name: typing.Optional[str] = pydantic.Field(default=None)
@@ -33,6 +36,8 @@ class DockerhubProviderAccount(UniversalBaseModel):
     """
     +uiType=IntegrationsGroup
     """
+
+    owned_by: typing_extensions.Annotated[typing.Optional[OwnedBy], FieldMetadata(alias="ownedBy")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

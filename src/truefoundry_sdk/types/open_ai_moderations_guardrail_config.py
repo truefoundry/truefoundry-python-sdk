@@ -44,7 +44,7 @@ class OpenAiModerationsGuardrailConfig(UniversalBaseModel):
         pydantic.Field(default=None)
     )
     """
-    The thresholds for the OpenAI Moderation API.
+    Confidence thresholds (0.0-1.0) for each content category. Content scoring above the threshold will be flagged. Lower values are more strict
     """
 
     if IS_PYDANTIC_V2:

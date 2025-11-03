@@ -18,6 +18,7 @@ from ..types.delete_virtual_account_response import DeleteVirtualAccountResponse
 from ..types.get_token_for_virtual_account_response import GetTokenForVirtualAccountResponse
 from ..types.get_virtual_account_response import GetVirtualAccountResponse
 from ..types.list_virtual_account_response import ListVirtualAccountResponse
+from ..types.sync_virtual_account_token_response import SyncVirtualAccountTokenResponse
 from ..types.virtual_account import VirtualAccount
 from ..types.virtual_account_manifest import VirtualAccountManifest
 
@@ -307,6 +308,150 @@ class RawVirtualAccountsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def sync_to_secret_store(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[SyncVirtualAccountTokenResponse]:
+        """
+        Syncs the virtual account token to the configured secret store. Returns the updated JWT with sync metadata including timestamp and error (if any).
+
+        Parameters
+        ----------
+        id : str
+            serviceaccount id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[SyncVirtualAccountTokenResponse]
+            Token synced successfully to secret store
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/virtual-accounts/{jsonable_encoder(id)}/sync-to-secret-store",
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    SyncVirtualAccountTokenResponse,
+                    parse_obj_as(
+                        type_=SyncVirtualAccountTokenResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def regenerate_token(
+        self, id: str, *, grace_period_in_days: float, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[GetTokenForVirtualAccountResponse]:
+        """
+        Regenerate token for a virtual account by id. The old token will remain valid for the specified grace period.
+
+        Parameters
+        ----------
+        id : str
+            serviceaccount id
+
+        grace_period_in_days : float
+            Grace period in days for which the old token will remain valid after regeneration
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetTokenForVirtualAccountResponse]
+            Token for the virtual account
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/virtual-accounts/{jsonable_encoder(id)}/regenerate-token",
+            method="POST",
+            json={
+                "gracePeriodInDays": grace_period_in_days,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetTokenForVirtualAccountResponse,
+                    parse_obj_as(
+                        type_=GetTokenForVirtualAccountResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def delete_jwt(
+        self, id: str, jwt_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[None]:
+        """
+        Delete a JWT for a virtual account by id
+
+        Parameters
+        ----------
+        id : str
+            virtual account id
+
+        jwt_id : str
+            JWT id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[None]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/virtual-accounts/{jsonable_encoder(id)}/jwt/{jsonable_encoder(jwt_id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawVirtualAccountsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -588,6 +733,150 @@ class AsyncRawVirtualAccountsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def sync_to_secret_store(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[SyncVirtualAccountTokenResponse]:
+        """
+        Syncs the virtual account token to the configured secret store. Returns the updated JWT with sync metadata including timestamp and error (if any).
+
+        Parameters
+        ----------
+        id : str
+            serviceaccount id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[SyncVirtualAccountTokenResponse]
+            Token synced successfully to secret store
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/virtual-accounts/{jsonable_encoder(id)}/sync-to-secret-store",
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    SyncVirtualAccountTokenResponse,
+                    parse_obj_as(
+                        type_=SyncVirtualAccountTokenResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def regenerate_token(
+        self, id: str, *, grace_period_in_days: float, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[GetTokenForVirtualAccountResponse]:
+        """
+        Regenerate token for a virtual account by id. The old token will remain valid for the specified grace period.
+
+        Parameters
+        ----------
+        id : str
+            serviceaccount id
+
+        grace_period_in_days : float
+            Grace period in days for which the old token will remain valid after regeneration
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetTokenForVirtualAccountResponse]
+            Token for the virtual account
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/virtual-accounts/{jsonable_encoder(id)}/regenerate-token",
+            method="POST",
+            json={
+                "gracePeriodInDays": grace_period_in_days,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetTokenForVirtualAccountResponse,
+                    parse_obj_as(
+                        type_=GetTokenForVirtualAccountResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def delete_jwt(
+        self, id: str, jwt_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[None]:
+        """
+        Delete a JWT for a virtual account by id
+
+        Parameters
+        ----------
+        id : str
+            virtual account id
+
+        jwt_id : str
+            JWT id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[None]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/virtual-accounts/{jsonable_encoder(id)}/jwt/{jsonable_encoder(jwt_id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

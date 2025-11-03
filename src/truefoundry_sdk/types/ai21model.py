@@ -20,12 +20,12 @@ class Ai21Model(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    Name to identify this AI21 model in the UI
+    A descriptive name to identify this model integration in the UI
     """
 
     model_id: str = pydantic.Field()
     """
-    The unique identifier for the AI21 model
+    The AI21 model identifier (e.g., jamba-large, jamba-mini). This is the model name from AI21's model catalog.
     """
 
     model_types: typing.List[ModelType] = pydantic.Field()

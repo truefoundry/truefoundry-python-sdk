@@ -2,22 +2,12 @@
 
 import typing
 
-from .azure_ai_inference_model import AzureAiInferenceModel
 from .azure_aks_integration import AzureAksIntegration
 from .azure_blob_storage import AzureBlobStorage
 from .azure_container_registry import AzureContainerRegistry
-from .azure_foundry_model import AzureFoundryModel
-from .azure_open_ai_model import AzureOpenAiModel
 from .azure_repos_integration import AzureReposIntegration
 from .azure_vault import AzureVault
 
 AzureIntegrations = typing.Union[
-    AzureAksIntegration,
-    AzureContainerRegistry,
-    AzureBlobStorage,
-    AzureOpenAiModel,
-    AzureVault,
-    AzureReposIntegration,
-    AzureAiInferenceModel,
-    AzureFoundryModel,
+    AzureAksIntegration, AzureContainerRegistry, AzureBlobStorage, AzureVault, AzureReposIntegration
 ]

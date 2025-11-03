@@ -19,7 +19,6 @@ class AddonComponentName(str, enum.Enum):
     KARPENTER = "KARPENTER"
     KARPENTER_CONFIG = "KARPENTER_CONFIG"
     PROMETHEUS = "PROMETHEUS"
-    LOKI = "LOKI"
     METRICS_SERVER = "METRICS_SERVER"
     KUBECOST = "KUBECOST"
     KEDA = "KEDA"
@@ -49,7 +48,6 @@ class AddonComponentName(str, enum.Enum):
         karpenter: typing.Callable[[], T_Result],
         karpenter_config: typing.Callable[[], T_Result],
         prometheus: typing.Callable[[], T_Result],
-        loki: typing.Callable[[], T_Result],
         metrics_server: typing.Callable[[], T_Result],
         kubecost: typing.Callable[[], T_Result],
         keda: typing.Callable[[], T_Result],
@@ -89,8 +87,6 @@ class AddonComponentName(str, enum.Enum):
             return karpenter_config()
         if self is AddonComponentName.PROMETHEUS:
             return prometheus()
-        if self is AddonComponentName.LOKI:
-            return loki()
         if self is AddonComponentName.METRICS_SERVER:
             return metrics_server()
         if self is AddonComponentName.KUBECOST:

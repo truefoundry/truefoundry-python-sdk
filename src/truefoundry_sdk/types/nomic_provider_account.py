@@ -3,10 +3,13 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.serialization import FieldMetadata
 from .collaborator import Collaborator
 from .nomic_integrations import NomicIntegrations
 from .nomic_key_auth import NomicKeyAuth
+from .owned_by import OwnedBy
 
 
 class NomicProviderAccount(UniversalBaseModel):
@@ -25,7 +28,7 @@ class NomicProviderAccount(UniversalBaseModel):
     """
 
     auth_data: NomicKeyAuth
-    integrations: typing.Optional[typing.List[NomicIntegrations]] = pydantic.Field(default=None)
+    integrations: typing.List[NomicIntegrations] = pydantic.Field()
     """
     List of integrations that are associated with the Nomic provider account
     """
@@ -34,6 +37,8 @@ class NomicProviderAccount(UniversalBaseModel):
     """
     List of users who have access to this provider account
     """
+
+    owned_by: typing_extensions.Annotated[typing.Optional[OwnedBy], FieldMetadata(alias="ownedBy")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

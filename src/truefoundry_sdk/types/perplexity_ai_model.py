@@ -20,12 +20,12 @@ class PerplexityAiModel(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    Name to identify this Perplexity AI model in the UI
+    A descriptive name to identify this model integration in the UI
     """
 
     model_id: str = pydantic.Field()
     """
-    The name of the Perplexity AI model to use
+    The Perplexity AI model identifier (e.g., sonar-reasoning, sonar). This is the model name from Perplexity AI's API documentation.
     """
 
     model_types: typing.List[ModelType] = pydantic.Field()

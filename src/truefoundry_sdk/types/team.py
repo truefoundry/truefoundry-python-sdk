@@ -16,6 +16,7 @@ class Team(UniversalBaseModel):
     team_name: typing_extensions.Annotated[str, FieldMetadata(alias="teamName")]
     description: str
     tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]
+    account_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="accountId")] = None
     created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")]
     members: typing.Optional[typing.List[str]] = None
     created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]

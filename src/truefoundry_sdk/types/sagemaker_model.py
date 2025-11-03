@@ -16,12 +16,12 @@ class SagemakerModel(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    Name to identify this Sagemaker model in the UI
+    A descriptive name to identify this model integration in the UI
     """
 
     model_id: str = pydantic.Field()
     """
-    The unique identifier for the Sagemaker model
+    The SageMaker endpoint name you created for your model deployment. This is the name of the inference endpoint in AWS SageMaker, not the model name.
     """
 
     type: typing.Literal["integration/model/sagemaker"] = pydantic.Field(default="integration/model/sagemaker")

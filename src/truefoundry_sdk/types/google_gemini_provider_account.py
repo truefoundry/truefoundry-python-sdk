@@ -3,10 +3,13 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.serialization import FieldMetadata
 from .collaborator import Collaborator
 from .gcp_api_key_auth import GcpApiKeyAuth
-from .gemini_model_v2 import GeminiModelV2
+from .gemini_model import GeminiModel
+from .owned_by import OwnedBy
 
 
 class GoogleGeminiProviderAccount(UniversalBaseModel):
@@ -25,7 +28,7 @@ class GoogleGeminiProviderAccount(UniversalBaseModel):
     """
 
     auth_data: GcpApiKeyAuth
-    integrations: typing.List[GeminiModelV2] = pydantic.Field()
+    integrations: typing.List[GeminiModel] = pydantic.Field()
     """
     List of integrations that are associated with the Google Gemini provider account
     """
@@ -34,6 +37,8 @@ class GoogleGeminiProviderAccount(UniversalBaseModel):
     """
     List of users who have access to this provider account
     """
+
+    owned_by: typing_extensions.Annotated[typing.Optional[OwnedBy], FieldMetadata(alias="ownedBy")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

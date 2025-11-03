@@ -18,7 +18,7 @@ class TogetherAiKeyAuth(UniversalBaseModel):
 
     api_key: str = pydantic.Field()
     """
-    Your Together AI API key for authentication
+    The API key for Together AI authentication
     """
 
     if IS_PYDANTIC_V2:

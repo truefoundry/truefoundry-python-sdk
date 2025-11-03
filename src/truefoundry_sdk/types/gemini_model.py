@@ -4,37 +4,35 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .gcp_api_key_auth import GcpApiKeyAuth
 from .model_cost_metric import ModelCostMetric
 from .model_type import ModelType
 
 
-class GoogleModel(UniversalBaseModel):
+class GeminiModel(UniversalBaseModel):
     """
-    Google Model
+    Gemini Model
+    """
+
+    type: typing.Literal["integration/model/gemini"] = pydantic.Field(default="integration/model/gemini")
+    """
+    +value=integration/model/gemini
     """
 
     name: str = pydantic.Field()
     """
-    Display Name - 2 to 62 characters long alphanumeric word, may contain - or . in between, cannot start with a number
+    A descriptive name to identify this model integration in the UI
     """
 
     model_id: str = pydantic.Field()
     """
-    +sort=2
-    """
-
-    type: typing.Literal["integration/model/gcp/google"] = pydantic.Field(default="integration/model/gcp/google")
-    """
-    +value=integration/model/gcp/google
+    The Google Gemini model identifier (e.g., gemini-2.0-flash, gemini-2.0-flash-lite-preview-02-05, gemini-2.0-flash-lite-preview-02-05). This is the standard model name from Google's Gemini API documentation.
     """
 
     model_types: typing.List[ModelType] = pydantic.Field()
     """
-    Specify the type of the model
+    Specify the type of the Gemini model (e.g., chat, text, etc.)
     """
 
-    auth_data: typing.Optional[GcpApiKeyAuth] = None
     cost: typing.Optional[ModelCostMetric] = None
     authorized_subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """

@@ -15,12 +15,12 @@ class AnthropicModel(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    Name to identify this Anthropic model in the UI
+    A descriptive name to identify this model integration in the UI
     """
 
     model_id: str = pydantic.Field()
     """
-    The unique identifier for the Anthropic model
+    The Anthropic model identifier (e.g., claude-3-5-sonnet-20241022, claude-3-opus-20240229, claude-3-haiku-20240307). This is the standard model name from Anthropic's API documentation.
     """
 
     type: typing.Literal["integration/model/anthropic"] = pydantic.Field(default="integration/model/anthropic")

@@ -7,6 +7,5 @@ from .aws_eks_integration import AwsEksIntegration
 from .aws_parameter_store import AwsParameterStore
 from .aws_s3 import AwsS3
 from .aws_secrets_manager import AwsSecretsManager
-from .bedrock_model import BedrockModel
 
-AwsIntegrations = typing.Union[AwsEcr, AwsS3, AwsParameterStore, AwsSecretsManager, AwsEksIntegration, BedrockModel]
+AwsIntegrations = typing.Union[AwsEcr, AwsS3, AwsParameterStore, AwsSecretsManager, AwsEksIntegration]

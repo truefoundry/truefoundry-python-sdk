@@ -8,24 +8,15 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
 
 
-class AzureAiServerlessDeployment(UniversalBaseModel):
+class SyncTokenInSecretStoreInfo(UniversalBaseModel):
+    updated_at: typing_extensions.Annotated[str, FieldMetadata(alias="updatedAt")] = pydantic.Field()
     """
-    Azure AI Serverless Deployment
-    """
-
-    type: typing.Literal["serverless"] = pydantic.Field(default="serverless")
-    """
-    +value=serverless
+    ISO timestamp of when the token was synced
     """
 
-    deployment_name: typing_extensions.Annotated[str, FieldMetadata(alias="deploymentName")] = pydantic.Field()
+    error: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Name of the Azure AI deployment
-    """
-
-    region: str = pydantic.Field()
-    """
-    Region where the Azure AI deployment is located
+    Error message if sync failed
     """
 
     if IS_PYDANTIC_V2:

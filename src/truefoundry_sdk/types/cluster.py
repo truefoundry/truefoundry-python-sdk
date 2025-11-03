@@ -17,6 +17,7 @@ class Cluster(UniversalBaseModel):
     name: str
     manifest: ClusterManifest
     tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]
+    account_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="accountId")] = None
     created_by_subject: typing_extensions.Annotated[
         typing.Optional[Subject], FieldMetadata(alias="createdBySubject")
     ] = None

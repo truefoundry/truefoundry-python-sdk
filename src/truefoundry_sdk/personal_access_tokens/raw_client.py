@@ -95,6 +95,7 @@ class RawPersonalAccessTokensClient:
         *,
         name: str,
         expiration_date: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[CreatePersonalAccessTokenResponse]:
         """
@@ -107,6 +108,9 @@ class RawPersonalAccessTokensClient:
 
         expiration_date : typing.Optional[str]
             Expiration date in ISO format (e.g. 2025-08-01T12:00)
+
+        account_name : typing.Optional[str]
+            Account name that owns this PAT
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -122,6 +126,7 @@ class RawPersonalAccessTokensClient:
             json={
                 "name": name,
                 "expirationDate": expiration_date,
+                "accountName": account_name,
             },
             headers={
                 "content-type": "application/json",
@@ -396,6 +401,7 @@ class AsyncRawPersonalAccessTokensClient:
         *,
         name: str,
         expiration_date: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[CreatePersonalAccessTokenResponse]:
         """
@@ -408,6 +414,9 @@ class AsyncRawPersonalAccessTokensClient:
 
         expiration_date : typing.Optional[str]
             Expiration date in ISO format (e.g. 2025-08-01T12:00)
+
+        account_name : typing.Optional[str]
+            Account name that owns this PAT
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -423,6 +432,7 @@ class AsyncRawPersonalAccessTokensClient:
             json={
                 "name": name,
                 "expirationDate": expiration_date,
+                "accountName": account_name,
             },
             headers={
                 "content-type": "application/json",
