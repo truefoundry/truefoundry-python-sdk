@@ -1170,7 +1170,7 @@ class TrueFoundrySDKDocGenerator:
 
         template = Template("""---
 title: "TrueFoundry Python SDK"
-description: "Complete Python SDK for TrueFoundry - Build, deploy, and manage ML applications"
+description: "Complete Python SDK for TrueFoundry - Access and manage resources on TrueFoundry"
 ---
 ## Installation
 
@@ -1178,14 +1178,20 @@ description: "Complete Python SDK for TrueFoundry - Build, deploy, and manage ML
 pip install truefoundry
 ```
 
+<Tip>
+Looking for TypeScript SDK? Check out the [TrueFoundry TypeScript SDK](https://www.npmjs.com/package/truefoundry-sdk)
+</Tip>
+
 ## Quick Example
 
-```python lines
+<CodeGroup>
+
+```python Initialize With API Key lines
 from truefoundry import TrueFoundry
 
 # Initialize the client
 client = TrueFoundry(
-    base_url="https://api.truefoundry.com",
+    base_url="https://your-control-plane-url.truefoundry.com",
     api_key="your_api_key"
 )
 
@@ -1194,6 +1200,17 @@ applications = client.applications.list()
 for app in applications:
     print(f"Application: {app.name}")
 ```
+
+```python Using Existing Login Session lines
+from truefoundry import client
+
+# List your applications
+applications = client.applications.list()
+for app in applications:
+    print(f"Application: {app.name}")
+```
+
+</CodeGroup>
 
 ## Available Clients
 
@@ -1235,12 +1252,6 @@ for app in applications:
 - **Documentation**: Browse through the client documentation above
 - **GitHub**: [TrueFoundry Python SDK](https://github.com/truefoundry/truefoundry-python-sdk)
 - **Support**: Reach out to our support team for assistance
-
----
-
-<div className="text-center text-sm text-gray-500 mt-12">
-  Built with ❤️ by the TrueFoundry team
-</div>
 """)
 
         content = template.render(
