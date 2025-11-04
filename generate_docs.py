@@ -1170,13 +1170,17 @@ class TrueFoundrySDKDocGenerator:
 
         template = Template("""---
 title: "TrueFoundry Python SDK"
-description: "Complete Python SDK for TrueFoundry - Build, deploy, and manage ML applications"
+description: "Complete Python SDK for TrueFoundry - Access and manage resources on TrueFoundry"
 ---
 ## Installation
 
 ```bash
 pip install truefoundry
 ```
+
+<Tip>
+Looking for TypeScript SDK? Check out the [TrueFoundry TypeScript SDK](https://www.npmjs.com/package/truefoundry-sdk)
+</Tip>
 
 ## Quick Example
 
@@ -1248,12 +1252,6 @@ for app in applications:
 - **Documentation**: Browse through the client documentation above
 - **GitHub**: [TrueFoundry Python SDK](https://github.com/truefoundry/truefoundry-python-sdk)
 - **Support**: Reach out to our support team for assistance
-
----
-
-<div className="text-center text-sm text-gray-500 mt-12">
-  Built with ❤️ by the TrueFoundry team
-</div>
 """)
 
         content = template.render(
