@@ -432,6 +432,9 @@ if typing.TYPE_CHECKING:
     from .local_model_source import LocalModelSource
     from .local_source import LocalSource
     from .log import Log
+    from .logs_filter_query import LogsFilterQuery
+    from .logs_filter_query_type import LogsFilterQueryType
+    from .logs_response import LogsResponse
     from .logs_search_filter_type import LogsSearchFilterType
     from .logs_search_operator_type import LogsSearchOperatorType
     from .logs_sorting_direction import LogsSortingDirection
@@ -1220,6 +1223,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LocalModelSource": ".local_model_source",
     "LocalSource": ".local_source",
     "Log": ".log",
+    "LogsFilterQuery": ".logs_filter_query",
+    "LogsFilterQueryType": ".logs_filter_query_type",
+    "LogsResponse": ".logs_response",
     "LogsSearchFilterType": ".logs_search_filter_type",
     "LogsSearchOperatorType": ".logs_search_operator_type",
     "LogsSortingDirection": ".logs_sorting_direction",
@@ -2031,6 +2037,9 @@ __all__ = [
     "LocalModelSource",
     "LocalSource",
     "Log",
+    "LogsFilterQuery",
+    "LogsFilterQueryType",
+    "LogsResponse",
     "LogsSearchFilterType",
     "LogsSearchOperatorType",
     "LogsSortingDirection",
