@@ -28,17 +28,18 @@ from .workspaces.client import AsyncWorkspacesClient, WorkspacesClient
 from pydantic import BaseModel
 
 T = TypeVar("T", bound=BaseModel)
+R = TypeVar("R", bound=BaseModel)
 
 
-class HasListMethod(Protocol[T]):
-    def list(self, *, fqn: str, limit: Optional[int] = None, **kwargs: Any) -> SyncPager[T]: ...
+class HasListMethod(Protocol[T, R]):
+    def list(self, *, fqn: str, limit: Optional[int] = None, **kwargs: Any) -> SyncPager[T, R]: ...
 
 
-class HasAsyncListMethod(Protocol[T]):
-    async def list(self, *, fqn: str, limit: Optional[int] = None, **kwargs) -> AsyncPager[T]: ...
+class HasAsyncListMethod(Protocol[T, R]):
+    async def list(self, *, fqn: str, limit: Optional[int] = None, **kwargs) -> AsyncPager[T, R]: ...
 
 
-def _get_by_fqn(client: HasListMethod[T], *, fqn: str, request_options: Optional[RequestOptions] = None) -> T:
+def _get_by_fqn(client: HasListMethod[T, R], *, fqn: str, request_options: Optional[RequestOptions] = None) -> T:
     result = None
     for item in client.list(fqn=fqn, limit=1, request_options=request_options):
         result = item
@@ -54,7 +55,7 @@ def _get_by_fqn(client: HasListMethod[T], *, fqn: str, request_options: Optional
 
 
 async def _aget_by_fqn(
-    client: HasAsyncListMethod[T], *, fqn: str, request_options: Optional[RequestOptions] = None
+    client: HasAsyncListMethod[T, R], *, fqn: str, request_options: Optional[RequestOptions] = None
 ) -> T:
     result = None
     pager = await client.list(fqn=fqn, limit=1, request_options=request_options)
