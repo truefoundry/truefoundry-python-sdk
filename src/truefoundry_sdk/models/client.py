@@ -8,6 +8,7 @@ from ..core.request_options import RequestOptions
 from ..types.empty_response import EmptyResponse
 from ..types.get_model_response import GetModelResponse
 from ..types.get_model_version_response import GetModelVersionResponse
+from ..types.list_models_response import ListModelsResponse
 from ..types.model import Model
 from ..types.model_manifest import ModelManifest
 from .raw_client import AsyncRawModelsClient, RawModelsClient
@@ -98,8 +99,9 @@ class ModelsClient:
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         run_id: typing.Optional[str] = None,
+        include_empty_models: typing.Optional[bool] = True,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Model]:
+    ) -> SyncPager[Model, ListModelsResponse]:
         """
         Parameters
         ----------
@@ -115,12 +117,14 @@ class ModelsClient:
 
         run_id : typing.Optional[str]
 
+        include_empty_models : typing.Optional[bool]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        SyncPager[Model]
+        SyncPager[Model, ListModelsResponse]
             Successful Response
 
         Examples
@@ -138,6 +142,7 @@ class ModelsClient:
             offset=1,
             limit=1,
             run_id="run_id",
+            include_empty_models=True,
         )
         for item in response:
             yield item
@@ -152,6 +157,7 @@ class ModelsClient:
             offset=offset,
             limit=limit,
             run_id=run_id,
+            include_empty_models=include_empty_models,
             request_options=request_options,
         )
 
@@ -290,8 +296,9 @@ class AsyncModelsClient:
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         run_id: typing.Optional[str] = None,
+        include_empty_models: typing.Optional[bool] = True,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Model]:
+    ) -> AsyncPager[Model, ListModelsResponse]:
         """
         Parameters
         ----------
@@ -307,12 +314,14 @@ class AsyncModelsClient:
 
         run_id : typing.Optional[str]
 
+        include_empty_models : typing.Optional[bool]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncPager[Model]
+        AsyncPager[Model, ListModelsResponse]
             Successful Response
 
         Examples
@@ -335,6 +344,7 @@ class AsyncModelsClient:
                 offset=1,
                 limit=1,
                 run_id="run_id",
+                include_empty_models=True,
             )
             async for item in response:
                 yield item
@@ -353,6 +363,7 @@ class AsyncModelsClient:
             offset=offset,
             limit=limit,
             run_id=run_id,
+            include_empty_models=include_empty_models,
             request_options=request_options,
         )
 

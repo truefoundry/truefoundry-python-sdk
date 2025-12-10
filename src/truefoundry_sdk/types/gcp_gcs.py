@@ -26,7 +26,7 @@ class GcpGcs(UniversalBaseModel):
 
     storage_root: str = pydantic.Field()
     """
-    The root path of the storage.
+    The Google Cloud Storage path in the format 'gs://<bucket-name>/<optional-path-prefix>'. Example: 'gs://mybucket' or 'gs://mybucket/artifacts/production'.
     """
 
     auth_data: typing.Optional[GcpKeyFileAuth] = None

@@ -6,6 +6,7 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
+from .account import Account
 from .subject_type import SubjectType
 from .user_metadata import UserMetadata
 
@@ -23,7 +24,12 @@ class Session(UniversalBaseModel):
     tenant_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="tenantName")] = None
     roles: typing.List[str]
     teams: typing.List[str]
+    accounts: typing.List[str]
     metadata: typing.Optional[UserMetadata] = None
+    service_account_metadata: typing_extensions.Annotated[
+        typing.Optional[typing.Dict[str, typing.Any]], FieldMetadata(alias="serviceAccountMetadata")
+    ] = None
+    account: typing.Optional[Account] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

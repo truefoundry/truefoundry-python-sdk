@@ -2,7 +2,7 @@
 
 import typing
 
-from .assistant_message_content_item import AssistantMessageContentItem
+from .assistant_message_content_one_item import AssistantMessageContentOneItem
 from .blob_storage_reference import BlobStorageReference
 
-AssistantMessageContent = typing.Union[str, typing.List[AssistantMessageContentItem], BlobStorageReference]
+AssistantMessageContent = typing.Union[str, typing.List[AssistantMessageContentOneItem], BlobStorageReference]

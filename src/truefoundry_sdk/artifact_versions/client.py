@@ -10,6 +10,8 @@ from ..types.empty_response import EmptyResponse
 from ..types.file_info import FileInfo
 from ..types.get_artifact_version_response import GetArtifactVersionResponse
 from ..types.get_signed_ur_ls_response import GetSignedUrLsResponse
+from ..types.list_artifact_versions_response import ListArtifactVersionsResponse
+from ..types.list_files_response import ListFilesResponse
 from ..types.multi_part_upload_response import MultiPartUploadResponse
 from ..types.operation import Operation
 from ..types.stage_artifact_response import StageArtifactResponse
@@ -155,7 +157,7 @@ class ArtifactVersionsClient:
         limit: typing.Optional[int] = 100,
         include_internal_metadata: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[ArtifactVersion]:
+    ) -> SyncPager[ArtifactVersion, ListArtifactVersionsResponse]:
         """
         List artifact version API
 
@@ -188,7 +190,7 @@ class ArtifactVersionsClient:
 
         Returns
         -------
-        SyncPager[ArtifactVersion]
+        SyncPager[ArtifactVersion, ListArtifactVersionsResponse]
             Successful Response
 
         Examples
@@ -358,7 +360,7 @@ class ArtifactVersionsClient:
         limit: typing.Optional[int] = OMIT,
         page_token: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[FileInfo]:
+    ) -> SyncPager[FileInfo, ListFilesResponse]:
         """
         Parameters
         ----------
@@ -375,7 +377,7 @@ class ArtifactVersionsClient:
 
         Returns
         -------
-        SyncPager[FileInfo]
+        SyncPager[FileInfo, ListFilesResponse]
             Successful Response
 
         Examples
@@ -590,7 +592,7 @@ class AsyncArtifactVersionsClient:
         limit: typing.Optional[int] = 100,
         include_internal_metadata: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[ArtifactVersion]:
+    ) -> AsyncPager[ArtifactVersion, ListArtifactVersionsResponse]:
         """
         List artifact version API
 
@@ -623,7 +625,7 @@ class AsyncArtifactVersionsClient:
 
         Returns
         -------
-        AsyncPager[ArtifactVersion]
+        AsyncPager[ArtifactVersion, ListArtifactVersionsResponse]
             Successful Response
 
         Examples
@@ -830,7 +832,7 @@ class AsyncArtifactVersionsClient:
         limit: typing.Optional[int] = OMIT,
         page_token: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[FileInfo]:
+    ) -> AsyncPager[FileInfo, ListFilesResponse]:
         """
         Parameters
         ----------
@@ -847,7 +849,7 @@ class AsyncArtifactVersionsClient:
 
         Returns
         -------
-        AsyncPager[FileInfo]
+        AsyncPager[FileInfo, ListFilesResponse]
             Successful Response
 
         Examples

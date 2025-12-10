@@ -7,7 +7,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pagination import AsyncPager, BaseHttpResponse, SyncPager
+from ..core.pagination import AsyncPager, SyncPager
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
@@ -34,7 +34,7 @@ class RawEnvironmentsClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Environment]:
+    ) -> SyncPager[Environment, ListEnvironmentsResponse]:
         """
         List environments, if no environments are found, default environments are created and returned. Pagination is available based on query parameters
 
@@ -51,7 +51,7 @@ class RawEnvironmentsClient:
 
         Returns
         -------
-        SyncPager[Environment]
+        SyncPager[Environment, ListEnvironmentsResponse]
             Returns a list of environment. If pagination parameters are provided, the response includes paginated data
         """
         offset = offset if offset is not None else 0
@@ -81,9 +81,7 @@ class RawEnvironmentsClient:
                     offset=offset + len(_items),
                     request_options=request_options,
                 )
-                return SyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -144,9 +142,9 @@ class RawEnvironmentsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -231,9 +229,9 @@ class RawEnvironmentsClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -265,7 +263,7 @@ class AsyncRawEnvironmentsClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Environment]:
+    ) -> AsyncPager[Environment, ListEnvironmentsResponse]:
         """
         List environments, if no environments are found, default environments are created and returned. Pagination is available based on query parameters
 
@@ -282,7 +280,7 @@ class AsyncRawEnvironmentsClient:
 
         Returns
         -------
-        AsyncPager[Environment]
+        AsyncPager[Environment, ListEnvironmentsResponse]
             Returns a list of environment. If pagination parameters are provided, the response includes paginated data
         """
         offset = offset if offset is not None else 0
@@ -315,9 +313,7 @@ class AsyncRawEnvironmentsClient:
                         request_options=request_options,
                     )
 
-                return AsyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -378,9 +374,9 @@ class AsyncRawEnvironmentsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -467,9 +463,9 @@ class AsyncRawEnvironmentsClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

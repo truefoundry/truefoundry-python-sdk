@@ -7,14 +7,12 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class Kustomize(UniversalBaseModel):
-    patch: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    patch: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     Content of kustomization.yaml to perform kustomize operation. Please do not include the `resources` section. It is filled in automatically
     """
 
-    additions: typing.Optional[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]] = pydantic.Field(
-        default=None
-    )
+    additions: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = pydantic.Field(default=None)
     """
     Additional kubernetes manifests to be included in the application
     """

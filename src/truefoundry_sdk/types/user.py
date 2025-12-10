@@ -8,6 +8,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
 from .user_metadata import UserMetadata
+from .user_role_with_resource import UserRoleWithResource
 
 
 class User(UniversalBaseModel):
@@ -16,6 +17,9 @@ class User(UniversalBaseModel):
     tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]
     metadata: UserMetadata
     roles: typing.Optional[typing.List[str]] = None
+    roles_with_resource: typing_extensions.Annotated[
+        typing.Optional[typing.List[UserRoleWithResource]], FieldMetadata(alias="rolesWithResource")
+    ] = None
     active: bool
     created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
     updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]

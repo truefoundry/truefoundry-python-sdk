@@ -16,7 +16,7 @@ class GcpKeyFileAuth(UniversalBaseModel):
     +value=key-file
     """
 
-    key_file_content: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
+    key_file_content: typing.Dict[str, typing.Any] = pydantic.Field()
     """
     Key File Content
     """

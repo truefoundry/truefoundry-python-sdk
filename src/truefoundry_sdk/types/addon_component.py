@@ -27,7 +27,7 @@ class AddonComponent(UniversalBaseModel):
     installed: typing.Optional[bool] = None
     status: typing.Optional[AddonComponentStatus] = None
     version: typing.Optional[str] = None
-    manifest: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    manifest: typing.Optional[typing.Dict[str, typing.Any]] = None
     installation_source: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="installationSource")
     ] = None

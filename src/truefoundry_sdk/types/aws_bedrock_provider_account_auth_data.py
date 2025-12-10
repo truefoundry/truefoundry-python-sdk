@@ -3,6 +3,6 @@
 import typing
 
 from .aws_access_key_based_auth import AwsAccessKeyBasedAuth
-from .aws_assumed_role_based_auth import AwsAssumedRoleBasedAuth
+from .aws_bedrock_assumed_role_based_auth import AwsBedrockAssumedRoleBasedAuth
 
-AwsBedrockProviderAccountAuthData = typing.Union[AwsAccessKeyBasedAuth, AwsAssumedRoleBasedAuth]
+AwsBedrockProviderAccountAuthData = typing.Union[AwsAccessKeyBasedAuth, AwsBedrockAssumedRoleBasedAuth]

@@ -25,7 +25,7 @@ class HttpError(UniversalBaseModel):
     Error code
     """
 
-    details: typing.Optional[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]] = pydantic.Field(default=None)
+    details: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = pydantic.Field(default=None)
     """
     Error details
     """

@@ -19,7 +19,7 @@ class PySparkTaskConfig(UniversalBaseModel):
     image: TaskPySparkBuild
     driver_config: SparkDriverConfig
     executor_config: SparkExecutorConfig
-    spark_conf: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    spark_conf: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     Extra configuration properties to be passed to the spark job. [Docs](https://spark.apache.org/docs/latest/configuration.html)
     """

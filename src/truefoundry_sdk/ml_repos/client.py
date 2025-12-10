@@ -7,6 +7,7 @@ from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.empty_response import EmptyResponse
 from ..types.get_ml_repo_response import GetMlRepoResponse
+from ..types.list_ml_repos_response import ListMlReposResponse
 from ..types.ml_repo import MlRepo
 from ..types.ml_repo_manifest import MlRepoManifest
 from .raw_client import AsyncRawMlReposClient, RawMlReposClient
@@ -154,7 +155,7 @@ class MlReposClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[MlRepo]:
+    ) -> SyncPager[MlRepo, ListMlReposResponse]:
         """
         List ml repos
         Args:
@@ -177,7 +178,7 @@ class MlReposClient:
 
         Returns
         -------
-        SyncPager[MlRepo]
+        SyncPager[MlRepo, ListMlReposResponse]
             Successful Response
 
         Examples
@@ -365,7 +366,7 @@ class AsyncMlReposClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[MlRepo]:
+    ) -> AsyncPager[MlRepo, ListMlReposResponse]:
         """
         List ml repos
         Args:
@@ -388,7 +389,7 @@ class AsyncMlReposClient:
 
         Returns
         -------
-        AsyncPager[MlRepo]
+        AsyncPager[MlRepo, ListMlReposResponse]
             Successful Response
 
         Examples

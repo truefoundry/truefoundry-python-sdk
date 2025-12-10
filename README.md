@@ -11,6 +11,21 @@ This library provides convenient access to the TrueFoundry API.
 > - TypeScript: [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/truefoundry/truefoundry-typescript-sdk)
 
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Async Client](#async-client)
+- [Exception Handling](#exception-handling)
+- [Pagination](#pagination)
+- [Advanced](#advanced)
+  - [Access Raw Response Data](#access-raw-response-data)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Client](#custom-client)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```sh
@@ -152,6 +167,15 @@ for page in response.iter_pages():
     yield page
 ```
 
+```python
+# You can also iterate through pages and access the typed response per page
+pager = client.users.list(...)
+for page in pager.iter_pages():
+    print(page.response)  # access the typed response for each page
+    for item in page:
+        print(item)
+```
+
 ## Advanced
 
 ### Access Raw Response Data
@@ -169,11 +193,11 @@ response = client.applications.with_raw_response.list(...)
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
 pager = client.users.list(...)
-print(pager.response.headers)  # access the response headers for the first page
+print(pager.response)  # access the typed response for the first page
 for item in pager:
     print(item)  # access the underlying object(s)
 for page in pager.iter_pages():
-    print(page.response.headers)  # access the response headers for each page
+    print(page.response)  # access the typed response for each page
     for item in page:
         print(item)  # access the underlying object(s)
 ```

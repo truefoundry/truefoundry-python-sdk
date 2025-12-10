@@ -26,6 +26,16 @@ class OtelExporterGrpcConfig(UniversalBaseModel):
     gRPC metadata to include in OpenTelemetry export requests
     """
 
+    additional_resource_attributes: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
+    """
+    Set additional attributes to append them to existing resource attributes of every exported trace
+    """
+
+    exclude_request_data: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Enable to prevent forwarding the LLM or MCP request and response body in exported traces. The following span attributes are dropped: tfy.input, tfy.output, tfy.input_short_hand
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:

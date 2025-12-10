@@ -19,7 +19,7 @@ class RawInternalClient:
 
     def get_id_from_fqn(
         self, type: str, *, fqn: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[typing.Dict[str, typing.Optional[typing.Any]]]:
+    ) -> HttpResponse[typing.Dict[str, typing.Any]]:
         """
         Get IDs associated with the FQN for various entity types, such as deployment, application, workspace, or cluster.
 
@@ -36,7 +36,7 @@ class RawInternalClient:
 
         Returns
         -------
-        HttpResponse[typing.Dict[str, typing.Optional[typing.Any]]]
+        HttpResponse[typing.Dict[str, typing.Any]]
             Returns the IDs for the specified entity type based on the provided FQN. For example, deploymentId, applicationId, and workspaceId for type deployment, or applicationId and workspaceId for type app.
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -50,9 +50,9 @@ class RawInternalClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.Dict[str, typing.Optional[typing.Any]],
+                    typing.Dict[str, typing.Any],
                     parse_obj_as(
-                        type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
+                        type_=typing.Dict[str, typing.Any],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -61,9 +61,9 @@ class RawInternalClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -72,9 +72,9 @@ class RawInternalClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -91,7 +91,7 @@ class AsyncRawInternalClient:
 
     async def get_id_from_fqn(
         self, type: str, *, fqn: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[typing.Dict[str, typing.Optional[typing.Any]]]:
+    ) -> AsyncHttpResponse[typing.Dict[str, typing.Any]]:
         """
         Get IDs associated with the FQN for various entity types, such as deployment, application, workspace, or cluster.
 
@@ -108,7 +108,7 @@ class AsyncRawInternalClient:
 
         Returns
         -------
-        AsyncHttpResponse[typing.Dict[str, typing.Optional[typing.Any]]]
+        AsyncHttpResponse[typing.Dict[str, typing.Any]]
             Returns the IDs for the specified entity type based on the provided FQN. For example, deploymentId, applicationId, and workspaceId for type deployment, or applicationId and workspaceId for type app.
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -122,9 +122,9 @@ class AsyncRawInternalClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.Dict[str, typing.Optional[typing.Any]],
+                    typing.Dict[str, typing.Any],
                     parse_obj_as(
-                        type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
+                        type_=typing.Dict[str, typing.Any],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -133,9 +133,9 @@ class AsyncRawInternalClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -144,9 +144,9 @@ class AsyncRawInternalClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

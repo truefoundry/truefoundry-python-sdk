@@ -37,7 +37,7 @@ class SqsInputConfig(UniversalBaseModel):
     Wait timeout for long polling. For more information, see [here](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-short-and-long-polling.html)
     """
 
-    auth: AwsAccessKeyAuth
+    auth: typing.Optional[AwsAccessKeyAuth] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

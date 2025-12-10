@@ -53,7 +53,7 @@ class CustomGuardrailConfig(UniversalBaseModel):
     Headers for the Guardrail Server. Forwarded to the Guardrail Server as is. For example: `{"Authorization": "APIKey <token>"}`
     """
 
-    config: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
+    config: typing.Dict[str, typing.Any] = pydantic.Field()
     """
     The config for the Guardrail Server. This is a JSON object that will be sent as a config to Guardrail Server along with the request.
     """

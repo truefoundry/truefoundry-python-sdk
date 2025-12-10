@@ -31,7 +31,7 @@ class PriorityBasedLoadBalanceTarget(UniversalBaseModel):
     Whether this target is a fallback candidate.  If set to false, this model will not be considered as a fallback option for targets of this load-balance-rule
     """
 
-    override_params: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    override_params: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     Optional parameters to override in the request
     """

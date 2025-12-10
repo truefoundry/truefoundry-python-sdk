@@ -18,7 +18,7 @@ class GatewayOtelConfig(UniversalBaseModel):
         default=None
     )
     """
-    OpenTelemetry Traces exporter configuration
+    Set this configuration to export LLM gateway OTEL traces to an external platform. Note that we only export OTEL traces via this configuration, this does not include OTEL metrics.
     """
 
     if IS_PYDANTIC_V2:

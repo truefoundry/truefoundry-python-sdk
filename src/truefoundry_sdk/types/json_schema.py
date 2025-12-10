@@ -18,9 +18,7 @@ class JsonSchema(UniversalBaseModel):
     Name of the schema
     """
 
-    schema_: typing_extensions.Annotated[
-        typing.Dict[str, typing.Optional[typing.Any]], FieldMetadata(alias="schema")
-    ] = pydantic.Field()
+    schema_: typing_extensions.Annotated[typing.Dict[str, typing.Any], FieldMetadata(alias="schema")] = pydantic.Field()
     """
     JSON schema object defining the expected structure
     """

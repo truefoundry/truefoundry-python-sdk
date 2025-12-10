@@ -6,6 +6,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.get_secret_response import GetSecretResponse
+from ..types.list_secrets_response import ListSecretsResponse
 from ..types.secret import Secret
 from .raw_client import AsyncRawSecretsClient, RawSecretsClient
 
@@ -37,7 +38,7 @@ class SecretsClient:
         secret_group_id: typing.Optional[str] = OMIT,
         with_value: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Secret]:
+    ) -> SyncPager[Secret, ListSecretsResponse]:
         """
         List secrets associated with a user filtered with optional parameters passed in the body.
 
@@ -63,7 +64,7 @@ class SecretsClient:
 
         Returns
         -------
-        SyncPager[Secret]
+        SyncPager[Secret, ListSecretsResponse]
             Returns the secrets associated with a user filtered with optional parameters passed in the body.
 
         Examples
@@ -179,7 +180,7 @@ class AsyncSecretsClient:
         secret_group_id: typing.Optional[str] = OMIT,
         with_value: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Secret]:
+    ) -> AsyncPager[Secret, ListSecretsResponse]:
         """
         List secrets associated with a user filtered with optional parameters passed in the body.
 
@@ -205,7 +206,7 @@ class AsyncSecretsClient:
 
         Returns
         -------
-        AsyncPager[Secret]
+        AsyncPager[Secret, ListSecretsResponse]
             Returns the secrets associated with a user filtered with optional parameters passed in the body.
 
         Examples

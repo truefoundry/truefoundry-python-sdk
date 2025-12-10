@@ -20,6 +20,8 @@ from .notebook import Notebook
 from .policy_manifest import PolicyManifest
 from .provider_accounts import ProviderAccounts
 from .r_studio import RStudio
+from .role_manifest import RoleManifest
+from .secret_group_manifest import SecretGroupManifest
 from .service import Service
 from .spark_job import SparkJob
 from .ssh_server import SshServer
@@ -52,8 +54,10 @@ TrueFoundryApplyResponseExistingManifest = typing.Union[
     GatewayConfig,
     TeamManifest,
     PolicyManifest,
+    RoleManifest,
     AlertConfig,
     VirtualAccountManifest,
     CommonToolsSettings,
     AiFeaturesSettings,
+    SecretGroupManifest,
 ]

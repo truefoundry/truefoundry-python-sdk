@@ -13,6 +13,7 @@ from ..types.get_user_resources_response import GetUserResourcesResponse
 from ..types.get_user_response import GetUserResponse
 from ..types.get_user_teams_response import GetUserTeamsResponse
 from ..types.invite_user_response import InviteUserResponse
+from ..types.list_users_response import ListUsersResponse
 from ..types.register_users_response import RegisterUsersResponse
 from ..types.update_user_roles_response import UpdateUserRolesResponse
 from ..types.user import User
@@ -46,7 +47,7 @@ class UsersClient:
         show_invalid_users: typing.Optional[bool] = None,
         include_virtual_accounts: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersResponse]:
         """
         List all users of tenant filtered by query and showInvalidUsers. Pagination is available based on query parameters.
 
@@ -71,7 +72,7 @@ class UsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersResponse]
             Returns all users of tenant and also the response includes paginated data.
 
         Examples
@@ -112,7 +113,6 @@ class UsersClient:
         skip_if_user_exists: typing.Optional[bool] = False,
         dry_run: typing.Optional[bool] = False,
         accept_invite_client_url: typing.Optional[str] = OMIT,
-        account_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RegisterUsersResponse:
         """
@@ -134,9 +134,6 @@ class UsersClient:
 
         accept_invite_client_url : typing.Optional[str]
             Url to redirect when invite is accepted
-
-        account_id : typing.Optional[str]
-            Account ID to add the user to
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -164,13 +161,17 @@ class UsersClient:
             skip_if_user_exists=skip_if_user_exists,
             dry_run=dry_run,
             accept_invite_client_url=accept_invite_client_url,
-            account_id=account_id,
             request_options=request_options,
         )
         return _response.data
 
     def update_roles(
-        self, *, email: str, roles: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        email: str,
+        roles: typing.Sequence[str],
+        resource_type: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> UpdateUserRolesResponse:
         """
         This endpoint allows tenant administrators to update the roles of a user within their tenant.
@@ -181,7 +182,10 @@ class UsersClient:
             Email of the user
 
         roles : typing.Sequence[str]
-            Roles for the user
+            Role names for the user
+
+        resource_type : typing.Optional[str]
+            Resource Type
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -204,7 +208,9 @@ class UsersClient:
             roles=["roles"],
         )
         """
-        _response = self._raw_client.update_roles(email=email, roles=roles, request_options=request_options)
+        _response = self._raw_client.update_roles(
+            email=email, roles=roles, resource_type=resource_type, request_options=request_options
+        )
         return _response.data
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetUserResponse:
@@ -272,12 +278,7 @@ class UsersClient:
         return _response.data
 
     def invite_user(
-        self,
-        *,
-        accept_invite_client_url: str,
-        email: str,
-        account_id: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, accept_invite_client_url: str, email: str, request_options: typing.Optional[RequestOptions] = None
     ) -> InviteUserResponse:
         """
         Invite a user to the tenant
@@ -289,9 +290,6 @@ class UsersClient:
 
         email : str
             Email of user
-
-        account_id : typing.Optional[str]
-            Account ID to add the user to
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -315,10 +313,7 @@ class UsersClient:
         )
         """
         _response = self._raw_client.invite_user(
-            accept_invite_client_url=accept_invite_client_url,
-            email=email,
-            account_id=account_id,
-            request_options=request_options,
+            accept_invite_client_url=accept_invite_client_url, email=email, request_options=request_options
         )
         return _response.data
 
@@ -528,7 +523,7 @@ class AsyncUsersClient:
         show_invalid_users: typing.Optional[bool] = None,
         include_virtual_accounts: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersResponse]:
         """
         List all users of tenant filtered by query and showInvalidUsers. Pagination is available based on query parameters.
 
@@ -553,7 +548,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersResponse]
             Returns all users of tenant and also the response includes paginated data.
 
         Examples
@@ -603,7 +598,6 @@ class AsyncUsersClient:
         skip_if_user_exists: typing.Optional[bool] = False,
         dry_run: typing.Optional[bool] = False,
         accept_invite_client_url: typing.Optional[str] = OMIT,
-        account_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RegisterUsersResponse:
         """
@@ -625,9 +619,6 @@ class AsyncUsersClient:
 
         accept_invite_client_url : typing.Optional[str]
             Url to redirect when invite is accepted
-
-        account_id : typing.Optional[str]
-            Account ID to add the user to
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -663,13 +654,17 @@ class AsyncUsersClient:
             skip_if_user_exists=skip_if_user_exists,
             dry_run=dry_run,
             accept_invite_client_url=accept_invite_client_url,
-            account_id=account_id,
             request_options=request_options,
         )
         return _response.data
 
     async def update_roles(
-        self, *, email: str, roles: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        email: str,
+        roles: typing.Sequence[str],
+        resource_type: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> UpdateUserRolesResponse:
         """
         This endpoint allows tenant administrators to update the roles of a user within their tenant.
@@ -680,7 +675,10 @@ class AsyncUsersClient:
             Email of the user
 
         roles : typing.Sequence[str]
-            Roles for the user
+            Role names for the user
+
+        resource_type : typing.Optional[str]
+            Resource Type
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -711,7 +709,9 @@ class AsyncUsersClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.update_roles(email=email, roles=roles, request_options=request_options)
+        _response = await self._raw_client.update_roles(
+            email=email, roles=roles, resource_type=resource_type, request_options=request_options
+        )
         return _response.data
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetUserResponse:
@@ -795,12 +795,7 @@ class AsyncUsersClient:
         return _response.data
 
     async def invite_user(
-        self,
-        *,
-        accept_invite_client_url: str,
-        email: str,
-        account_id: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, accept_invite_client_url: str, email: str, request_options: typing.Optional[RequestOptions] = None
     ) -> InviteUserResponse:
         """
         Invite a user to the tenant
@@ -812,9 +807,6 @@ class AsyncUsersClient:
 
         email : str
             Email of user
-
-        account_id : typing.Optional[str]
-            Account ID to add the user to
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -846,10 +838,7 @@ class AsyncUsersClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.invite_user(
-            accept_invite_client_url=accept_invite_client_url,
-            email=email,
-            account_id=account_id,
-            request_options=request_options,
+            accept_invite_client_url=accept_invite_client_url, email=email, request_options=request_options
         )
         return _response.data
 

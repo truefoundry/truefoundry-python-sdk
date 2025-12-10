@@ -1,0 +1,25 @@
+{
+  "cliVersion": "3.5.0",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "4.45.1",
+  "generatorConfig": {
+    "package_name": "truefoundry_sdk",
+    "pydantic_config": {
+      "enum_type": "python_enums",
+      "use_provided_defaults": true,
+      "frozen": false
+    },
+    "client": {
+      "class_name": "BaseTrueFoundry",
+      "filename": "base_client.py",
+      "exported_class_name": "TrueFoundry",
+      "exported_filename": "client.py"
+    },
+    "pyproject_python_version": ">=3.8",
+    "extra_dev_dependencies": {
+      "ipython": ">=8.0.0,<10.0.0",
+      "Jinja2": ">=3.1.6,<4.0.0",
+      "numpydoc": ">=1.7.0,<2.0.0"
+    }
+  }
+}

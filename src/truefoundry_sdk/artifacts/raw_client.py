@@ -7,7 +7,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pagination import AsyncPager, BaseHttpResponse, SyncPager
+from ..core.pagination import AsyncPager, SyncPager
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
@@ -62,9 +62,9 @@ class RawArtifactsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -109,9 +109,9 @@ class RawArtifactsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -130,8 +130,9 @@ class RawArtifactsClient:
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         run_id: typing.Optional[str] = None,
+        include_empty_artifacts: typing.Optional[bool] = True,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Artifact]:
+    ) -> SyncPager[Artifact, ListArtifactsResponse]:
         """
         Parameters
         ----------
@@ -147,12 +148,14 @@ class RawArtifactsClient:
 
         run_id : typing.Optional[str]
 
+        include_empty_artifacts : typing.Optional[bool]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        SyncPager[Artifact]
+        SyncPager[Artifact, ListArtifactsResponse]
             Successful Response
         """
         offset = offset if offset is not None else 0
@@ -167,6 +170,7 @@ class RawArtifactsClient:
                 "offset": offset,
                 "limit": limit,
                 "run_id": run_id,
+                "include_empty_artifacts": include_empty_artifacts,
             },
             request_options=request_options,
         )
@@ -188,18 +192,17 @@ class RawArtifactsClient:
                     offset=offset + len(_items),
                     limit=limit,
                     run_id=run_id,
+                    include_empty_artifacts=include_empty_artifacts,
                     request_options=request_options,
                 )
-                return SyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -253,9 +256,9 @@ class RawArtifactsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -305,9 +308,9 @@ class AsyncRawArtifactsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -352,9 +355,9 @@ class AsyncRawArtifactsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -373,8 +376,9 @@ class AsyncRawArtifactsClient:
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         run_id: typing.Optional[str] = None,
+        include_empty_artifacts: typing.Optional[bool] = True,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Artifact]:
+    ) -> AsyncPager[Artifact, ListArtifactsResponse]:
         """
         Parameters
         ----------
@@ -390,12 +394,14 @@ class AsyncRawArtifactsClient:
 
         run_id : typing.Optional[str]
 
+        include_empty_artifacts : typing.Optional[bool]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncPager[Artifact]
+        AsyncPager[Artifact, ListArtifactsResponse]
             Successful Response
         """
         offset = offset if offset is not None else 0
@@ -410,6 +416,7 @@ class AsyncRawArtifactsClient:
                 "offset": offset,
                 "limit": limit,
                 "run_id": run_id,
+                "include_empty_artifacts": include_empty_artifacts,
             },
             request_options=request_options,
         )
@@ -433,19 +440,18 @@ class AsyncRawArtifactsClient:
                         offset=offset + len(_items),
                         limit=limit,
                         run_id=run_id,
+                        include_empty_artifacts=include_empty_artifacts,
                         request_options=request_options,
                     )
 
-                return AsyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -499,9 +505,9 @@ class AsyncRawArtifactsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

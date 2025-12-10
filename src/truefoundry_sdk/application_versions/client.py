@@ -7,6 +7,7 @@ from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.deployment import Deployment
 from ..types.get_application_deployment_response import GetApplicationDeploymentResponse
+from ..types.list_application_deployments_response import ListApplicationDeploymentsResponse
 from .raw_client import AsyncRawApplicationVersionsClient, RawApplicationVersionsClient
 
 
@@ -34,7 +35,7 @@ class ApplicationVersionsClient:
         version: typing.Optional[str] = None,
         deployment_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Deployment]:
+    ) -> SyncPager[Deployment, ListApplicationDeploymentsResponse]:
         """
         Fetch all deployments for a given application ID with optional filters such as deployment ID or version. Supports pagination.
 
@@ -60,7 +61,7 @@ class ApplicationVersionsClient:
 
         Returns
         -------
-        SyncPager[Deployment]
+        SyncPager[Deployment, ListApplicationDeploymentsResponse]
             List of deployments matching the provided filters.
 
         Examples
@@ -156,7 +157,7 @@ class AsyncApplicationVersionsClient:
         version: typing.Optional[str] = None,
         deployment_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Deployment]:
+    ) -> AsyncPager[Deployment, ListApplicationDeploymentsResponse]:
         """
         Fetch all deployments for a given application ID with optional filters such as deployment ID or version. Supports pagination.
 
@@ -182,7 +183,7 @@ class AsyncApplicationVersionsClient:
 
         Returns
         -------
-        AsyncPager[Deployment]
+        AsyncPager[Deployment, ListApplicationDeploymentsResponse]
             List of deployments matching the provided filters.
 
         Examples

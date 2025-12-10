@@ -11,7 +11,7 @@ from .flyte_launch_plan_spec import FlyteLaunchPlanSpec
 class FlyteLaunchPlan(UniversalBaseModel):
     id: FlyteLaunchPlanId
     spec: FlyteLaunchPlanSpec
-    closure: typing.Optional[typing.Any] = None
+    closure: typing.Any
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

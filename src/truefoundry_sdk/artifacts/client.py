@@ -10,6 +10,7 @@ from ..types.artifact_manifest import ArtifactManifest
 from ..types.empty_response import EmptyResponse
 from ..types.get_artifact_response import GetArtifactResponse
 from ..types.get_artifact_version_response import GetArtifactVersionResponse
+from ..types.list_artifacts_response import ListArtifactsResponse
 from .raw_client import AsyncRawArtifactsClient, RawArtifactsClient
 
 # this is used as the default value for optional parameters
@@ -98,8 +99,9 @@ class ArtifactsClient:
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         run_id: typing.Optional[str] = None,
+        include_empty_artifacts: typing.Optional[bool] = True,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Artifact]:
+    ) -> SyncPager[Artifact, ListArtifactsResponse]:
         """
         Parameters
         ----------
@@ -115,12 +117,14 @@ class ArtifactsClient:
 
         run_id : typing.Optional[str]
 
+        include_empty_artifacts : typing.Optional[bool]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        SyncPager[Artifact]
+        SyncPager[Artifact, ListArtifactsResponse]
             Successful Response
 
         Examples
@@ -138,6 +142,7 @@ class ArtifactsClient:
             offset=1,
             limit=1,
             run_id="run_id",
+            include_empty_artifacts=True,
         )
         for item in response:
             yield item
@@ -152,6 +157,7 @@ class ArtifactsClient:
             offset=offset,
             limit=limit,
             run_id=run_id,
+            include_empty_artifacts=include_empty_artifacts,
             request_options=request_options,
         )
 
@@ -294,8 +300,9 @@ class AsyncArtifactsClient:
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         run_id: typing.Optional[str] = None,
+        include_empty_artifacts: typing.Optional[bool] = True,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Artifact]:
+    ) -> AsyncPager[Artifact, ListArtifactsResponse]:
         """
         Parameters
         ----------
@@ -311,12 +318,14 @@ class AsyncArtifactsClient:
 
         run_id : typing.Optional[str]
 
+        include_empty_artifacts : typing.Optional[bool]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncPager[Artifact]
+        AsyncPager[Artifact, ListArtifactsResponse]
             Successful Response
 
         Examples
@@ -339,6 +348,7 @@ class AsyncArtifactsClient:
                 offset=1,
                 limit=1,
                 run_id="run_id",
+                include_empty_artifacts=True,
             )
             async for item in response:
                 yield item
@@ -357,6 +367,7 @@ class AsyncArtifactsClient:
             offset=offset,
             limit=limit,
             run_id=run_id,
+            include_empty_artifacts=include_empty_artifacts,
             request_options=request_options,
         )
 

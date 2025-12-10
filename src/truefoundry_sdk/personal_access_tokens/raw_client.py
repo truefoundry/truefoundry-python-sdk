@@ -7,7 +7,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pagination import AsyncPager, BaseHttpResponse, SyncPager
+from ..core.pagination import AsyncPager, SyncPager
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..errors.bad_request_error import BadRequestError
@@ -35,7 +35,7 @@ class RawPersonalAccessTokensClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[VirtualAccount]:
+    ) -> SyncPager[VirtualAccount, ListPersonalAccessTokenResponse]:
         """
         List Personal Access Tokens created by the user in the current tenant.
 
@@ -52,7 +52,7 @@ class RawPersonalAccessTokensClient:
 
         Returns
         -------
-        SyncPager[VirtualAccount]
+        SyncPager[VirtualAccount, ListPersonalAccessTokenResponse]
             Returns all Personal Access Tokens created by the user in the current tenant.
         """
         offset = offset if offset is not None else 0
@@ -82,9 +82,7 @@ class RawPersonalAccessTokensClient:
                     offset=offset + len(_items),
                     request_options=request_options,
                 )
-                return SyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -148,9 +146,9 @@ class RawPersonalAccessTokensClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -216,9 +214,9 @@ class RawPersonalAccessTokensClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -266,9 +264,9 @@ class RawPersonalAccessTokensClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -315,9 +313,9 @@ class RawPersonalAccessTokensClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -338,7 +336,7 @@ class AsyncRawPersonalAccessTokensClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[VirtualAccount]:
+    ) -> AsyncPager[VirtualAccount, ListPersonalAccessTokenResponse]:
         """
         List Personal Access Tokens created by the user in the current tenant.
 
@@ -355,7 +353,7 @@ class AsyncRawPersonalAccessTokensClient:
 
         Returns
         -------
-        AsyncPager[VirtualAccount]
+        AsyncPager[VirtualAccount, ListPersonalAccessTokenResponse]
             Returns all Personal Access Tokens created by the user in the current tenant.
         """
         offset = offset if offset is not None else 0
@@ -388,9 +386,7 @@ class AsyncRawPersonalAccessTokensClient:
                         request_options=request_options,
                     )
 
-                return AsyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -454,9 +450,9 @@ class AsyncRawPersonalAccessTokensClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -522,9 +518,9 @@ class AsyncRawPersonalAccessTokensClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -572,9 +568,9 @@ class AsyncRawPersonalAccessTokensClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -621,9 +617,9 @@ class AsyncRawPersonalAccessTokensClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

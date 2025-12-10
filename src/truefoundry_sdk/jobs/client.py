@@ -10,6 +10,7 @@ from ..types.get_job_run_response import GetJobRunResponse
 from ..types.job_run import JobRun
 from ..types.job_run_status import JobRunStatus
 from ..types.job_runs_sort_by import JobRunsSortBy
+from ..types.list_job_run_response import ListJobRunResponse
 from ..types.metadata import Metadata
 from ..types.sort_direction import SortDirection
 from ..types.terminate_job_response import TerminateJobResponse
@@ -49,7 +50,7 @@ class JobsClient:
         status: typing.Optional[typing.Union[JobRunStatus, typing.Sequence[JobRunStatus]]] = None,
         version_numbers: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[JobRun]:
+    ) -> SyncPager[JobRun, ListJobRunResponse]:
         """
         List Job Runs for provided Job Id. Filter the data based on parameters passed in the query
 
@@ -87,7 +88,7 @@ class JobsClient:
 
         Returns
         -------
-        SyncPager[JobRun]
+        SyncPager[JobRun, ListJobRunResponse]
             Returns all runs of a Job sorted by creation date in "data" key and total count in "totalCount" key
 
         Examples
@@ -323,7 +324,7 @@ class AsyncJobsClient:
         status: typing.Optional[typing.Union[JobRunStatus, typing.Sequence[JobRunStatus]]] = None,
         version_numbers: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[JobRun]:
+    ) -> AsyncPager[JobRun, ListJobRunResponse]:
         """
         List Job Runs for provided Job Id. Filter the data based on parameters passed in the query
 
@@ -361,7 +362,7 @@ class AsyncJobsClient:
 
         Returns
         -------
-        AsyncPager[JobRun]
+        AsyncPager[JobRun, ListJobRunResponse]
             Returns all runs of a Job sorted by creation date in "data" key and total count in "totalCount" key
 
         Examples

@@ -41,6 +41,11 @@ class AzureContentSafetyGuardrailConfig(UniversalBaseModel):
     Custom endpoint URL for the Content Safety API (optional, uses default Azure endpoint if not specified)
     """
 
+    operation: typing.Optional[typing.Literal["validate"]] = pydantic.Field(default=None)
+    """
+    The operation type for this guardrail. Azure Content Safety guardrails can only be used for validation.
+    """
+
     blocklist_names: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     Names of custom blocklists created in Azure Content Safety to check text against. Leave empty if not using custom blocklists

@@ -13,12 +13,12 @@ class SklearnModelSchema(UniversalBaseModel):
     Name of the method used for inference
     """
 
-    inputs: typing.List[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field()
+    inputs: typing.List[typing.Dict[str, typing.Any]] = pydantic.Field()
     """
     Schema of the input
     """
 
-    outputs: typing.List[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field()
+    outputs: typing.List[typing.Dict[str, typing.Any]] = pydantic.Field()
     """
     Schema of the output
     """

@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .prompt_foo_guard_type import PromptFooGuardType
+from .prompt_foo_guardrail_config_operation import PromptFooGuardrailConfigOperation
 
 
 class PromptFooGuardrailConfig(UniversalBaseModel):
@@ -26,6 +27,10 @@ class PromptFooGuardrailConfig(UniversalBaseModel):
     """
 
     guard_type: PromptFooGuardType
+    operation: typing.Optional[PromptFooGuardrailConfigOperation] = pydantic.Field(default=None)
+    """
+    The operation type to use for the Guardrail. Validate guardrails are used to validate requests and mutate can validate as well as mutate requests.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -4,7 +4,6 @@ import typing
 
 from .mcp_server_header_auth import McpServerHeaderAuth
 from .mcp_server_o_auth2 import McpServerOAuth2
-from .mcp_server_o_auth2dcr import McpServerOAuth2Dcr
 from .mcp_server_passthrough import McpServerPassthrough
 
-McpServerAuth = typing.Union[McpServerHeaderAuth, McpServerOAuth2Dcr, McpServerOAuth2, McpServerPassthrough]
+McpServerAuth = typing.Union[McpServerHeaderAuth, McpServerOAuth2, McpServerPassthrough]

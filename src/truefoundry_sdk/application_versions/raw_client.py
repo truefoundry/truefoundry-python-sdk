@@ -7,7 +7,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pagination import AsyncPager, BaseHttpResponse, SyncPager
+from ..core.pagination import AsyncPager, SyncPager
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..errors.forbidden_error import ForbiddenError
@@ -31,7 +31,7 @@ class RawApplicationVersionsClient:
         version: typing.Optional[str] = None,
         deployment_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Deployment]:
+    ) -> SyncPager[Deployment, ListApplicationDeploymentsResponse]:
         """
         Fetch all deployments for a given application ID with optional filters such as deployment ID or version. Supports pagination.
 
@@ -57,7 +57,7 @@ class RawApplicationVersionsClient:
 
         Returns
         -------
-        SyncPager[Deployment]
+        SyncPager[Deployment, ListApplicationDeploymentsResponse]
             List of deployments matching the provided filters.
         """
         offset = offset if offset is not None else 0
@@ -92,9 +92,7 @@ class RawApplicationVersionsClient:
                     deployment_id=deployment_id,
                     request_options=request_options,
                 )
-                return SyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             if _response.status_code == 403:
                 raise ForbiddenError(
                     headers=dict(_response.headers),
@@ -110,9 +108,9 @@ class RawApplicationVersionsClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -174,9 +172,9 @@ class RawApplicationVersionsClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -200,7 +198,7 @@ class AsyncRawApplicationVersionsClient:
         version: typing.Optional[str] = None,
         deployment_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Deployment]:
+    ) -> AsyncPager[Deployment, ListApplicationDeploymentsResponse]:
         """
         Fetch all deployments for a given application ID with optional filters such as deployment ID or version. Supports pagination.
 
@@ -226,7 +224,7 @@ class AsyncRawApplicationVersionsClient:
 
         Returns
         -------
-        AsyncPager[Deployment]
+        AsyncPager[Deployment, ListApplicationDeploymentsResponse]
             List of deployments matching the provided filters.
         """
         offset = offset if offset is not None else 0
@@ -264,9 +262,7 @@ class AsyncRawApplicationVersionsClient:
                         request_options=request_options,
                     )
 
-                return AsyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             if _response.status_code == 403:
                 raise ForbiddenError(
                     headers=dict(_response.headers),
@@ -282,9 +278,9 @@ class AsyncRawApplicationVersionsClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -346,9 +342,9 @@ class AsyncRawApplicationVersionsClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

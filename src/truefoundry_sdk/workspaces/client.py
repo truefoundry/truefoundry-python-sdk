@@ -6,6 +6,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.get_workspace_response import GetWorkspaceResponse
+from ..types.list_workspaces_response import ListWorkspacesResponse
 from ..types.workspace import Workspace
 from ..types.workspace_manifest import WorkspaceManifest
 from .raw_client import AsyncRawWorkspacesClient, RawWorkspacesClient
@@ -39,7 +40,7 @@ class WorkspacesClient:
         name: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Workspace]:
+    ) -> SyncPager[Workspace, ListWorkspacesResponse]:
         """
         List workspaces associated with the user. Optional filters include clusterId, fqn, and workspace name. Pagination is available based on query parameters.
 
@@ -65,7 +66,7 @@ class WorkspacesClient:
 
         Returns
         -------
-        SyncPager[Workspace]
+        SyncPager[Workspace, ListWorkspacesResponse]
             Returns all the workspaces associated with a user and also the response includes paginated data.
 
         Examples
@@ -232,7 +233,7 @@ class AsyncWorkspacesClient:
         name: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Workspace]:
+    ) -> AsyncPager[Workspace, ListWorkspacesResponse]:
         """
         List workspaces associated with the user. Optional filters include clusterId, fqn, and workspace name. Pagination is available based on query parameters.
 
@@ -258,7 +259,7 @@ class AsyncWorkspacesClient:
 
         Returns
         -------
-        AsyncPager[Workspace]
+        AsyncPager[Workspace, ListWorkspacesResponse]
             Returns all the workspaces associated with a user and also the response includes paginated data.
 
         Examples

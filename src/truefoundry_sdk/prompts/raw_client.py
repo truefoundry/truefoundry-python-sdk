@@ -7,7 +7,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pagination import AsyncPager, BaseHttpResponse, SyncPager
+from ..core.pagination import AsyncPager, SyncPager
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
@@ -62,9 +62,9 @@ class RawPromptsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -109,9 +109,9 @@ class RawPromptsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -129,8 +129,9 @@ class RawPromptsClient:
         name: typing.Optional[str] = None,
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
+        include_empty_prompts: typing.Optional[bool] = True,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Prompt]:
+    ) -> SyncPager[Prompt, ListPromptsResponse]:
         """
         Parameters
         ----------
@@ -144,12 +145,14 @@ class RawPromptsClient:
 
         limit : typing.Optional[int]
 
+        include_empty_prompts : typing.Optional[bool]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        SyncPager[Prompt]
+        SyncPager[Prompt, ListPromptsResponse]
             Successful Response
         """
         offset = offset if offset is not None else 0
@@ -163,6 +166,7 @@ class RawPromptsClient:
                 "name": name,
                 "offset": offset,
                 "limit": limit,
+                "include_empty_prompts": include_empty_prompts,
             },
             request_options=request_options,
         )
@@ -183,18 +187,17 @@ class RawPromptsClient:
                     name=name,
                     offset=offset + len(_items),
                     limit=limit,
+                    include_empty_prompts=include_empty_prompts,
                     request_options=request_options,
                 )
-                return SyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -248,9 +251,9 @@ class RawPromptsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -300,9 +303,9 @@ class AsyncRawPromptsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -347,9 +350,9 @@ class AsyncRawPromptsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -367,8 +370,9 @@ class AsyncRawPromptsClient:
         name: typing.Optional[str] = None,
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
+        include_empty_prompts: typing.Optional[bool] = True,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Prompt]:
+    ) -> AsyncPager[Prompt, ListPromptsResponse]:
         """
         Parameters
         ----------
@@ -382,12 +386,14 @@ class AsyncRawPromptsClient:
 
         limit : typing.Optional[int]
 
+        include_empty_prompts : typing.Optional[bool]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncPager[Prompt]
+        AsyncPager[Prompt, ListPromptsResponse]
             Successful Response
         """
         offset = offset if offset is not None else 0
@@ -401,6 +407,7 @@ class AsyncRawPromptsClient:
                 "name": name,
                 "offset": offset,
                 "limit": limit,
+                "include_empty_prompts": include_empty_prompts,
             },
             request_options=request_options,
         )
@@ -423,19 +430,18 @@ class AsyncRawPromptsClient:
                         name=name,
                         offset=offset + len(_items),
                         limit=limit,
+                        include_empty_prompts=include_empty_prompts,
                         request_options=request_options,
                     )
 
-                return AsyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -489,9 +495,9 @@ class AsyncRawPromptsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

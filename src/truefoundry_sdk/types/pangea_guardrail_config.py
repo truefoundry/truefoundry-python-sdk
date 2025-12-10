@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .pangea_guard_type import PangeaGuardType
+from .pangea_guardrail_config_operation import PangeaGuardrailConfigOperation
 from .pangea_key_auth import PangeaKeyAuth
 
 
@@ -28,6 +29,11 @@ class PangeaGuardrailConfig(UniversalBaseModel):
 
     auth_data: PangeaKeyAuth
     guard_type: PangeaGuardType
+    operation: typing.Optional[PangeaGuardrailConfigOperation] = pydantic.Field(default=None)
+    """
+    The operation type to use for the Guardrail. Validate guardrails are used to validate requests and mutate can validate as well as mutate requests.
+    """
+
     domain: str = pydantic.Field()
     """
     Domain of the cloud provider and region where your Pangea project is configured. Example: if endpoint is: https://<service_name>.aws.us-west-2.pangea.cloud/v1/text/guard, the input should be: aws.us-west-2.pangea.cloud

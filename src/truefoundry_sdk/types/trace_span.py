@@ -71,13 +71,13 @@ class TraceSpan(UniversalBaseModel):
     """
 
     span_attributes: typing_extensions.Annotated[
-        typing.Dict[str, typing.Optional[typing.Any]], FieldMetadata(alias="spanAttributes")
+        typing.Dict[str, typing.Any], FieldMetadata(alias="spanAttributes")
     ] = pydantic.Field()
     """
     Key-value pairs containing additional metadata about the span.
     """
 
-    events: typing.List[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field()
+    events: typing.List[typing.Dict[str, typing.Any]] = pydantic.Field()
     """
     Array of events that occurred during the span execution.
     """

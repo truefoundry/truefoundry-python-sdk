@@ -27,11 +27,6 @@ class McpServerOAuth2(UniversalBaseModel):
     The endpoint to exchange auth code for tokens.
     """
 
-    scopes: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
-    """
-    List of scopes to request from the OAuth2 provider.
-    """
-
     client_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     client ID for OAuth2 or the TrueFoundry secret FQN containing the client ID.
@@ -44,7 +39,7 @@ class McpServerOAuth2(UniversalBaseModel):
 
     registration_url: typing.Optional[str] = pydantic.Field(default=None)
     """
-    URL for dynamic client registration (RFC 7591). If provided, client credentials will be obtained automatically.
+    URL for dynamic client registration (RFC 7591). If provided, client credentials will be obtained automatically using the Dynamic Client Registration (DCR) process.
     """
 
     code_challenge_methods_supported: typing.Optional[typing.List[typing.Literal["S256"]]] = pydantic.Field(
@@ -57,6 +52,11 @@ class McpServerOAuth2(UniversalBaseModel):
     jwt_source: McpServerOAuth2JwtSource = pydantic.Field()
     """
     Source of the JWT token to be used for verification.
+    """
+
+    scopes: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    List of scopes to request from the OAuth2 provider.
     """
 
     if IS_PYDANTIC_V2:

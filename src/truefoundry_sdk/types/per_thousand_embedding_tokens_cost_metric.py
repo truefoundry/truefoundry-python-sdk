@@ -4,6 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .non_negative_float import NonNegativeFloat
 
 
 class PerThousandEmbeddingTokensCostMetric(UniversalBaseModel):
@@ -12,7 +13,7 @@ class PerThousandEmbeddingTokensCostMetric(UniversalBaseModel):
     +value=per_1000_embedding_tokens
     """
 
-    value: float
+    value: NonNegativeFloat
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

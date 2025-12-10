@@ -30,5 +30,6 @@ class ListSecretsResponse(UniversalBaseModel):
 
 
 from .secret import Secret  # noqa: E402, I001
+from .secret_version import SecretVersion  # noqa: E402, I001
 
-update_forward_refs(ListSecretsResponse)
+update_forward_refs(ListSecretsResponse, Secret=Secret, SecretVersion=SecretVersion)

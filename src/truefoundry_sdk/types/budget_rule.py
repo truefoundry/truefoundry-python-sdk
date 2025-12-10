@@ -4,6 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .budget_alert import BudgetAlert
 from .budget_limit_unit import BudgetLimitUnit
 from .budget_when import BudgetWhen
 
@@ -25,6 +26,12 @@ class BudgetRule(UniversalBaseModel):
     """
 
     unit: BudgetLimitUnit
+    budget_applies_per: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Create separate budget rules for each unique value of the selected entity. For example, if "user" is selected, a separate budget rule will be created for each unique user making requests. Options: user, virtualaccount, model, or a metadata key (e.g., metadata.appId).
+    """
+
+    alerts: typing.Optional[BudgetAlert] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

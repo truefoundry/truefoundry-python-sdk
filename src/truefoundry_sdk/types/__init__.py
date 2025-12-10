@@ -9,6 +9,7 @@ if typing.TYPE_CHECKING:
     from .resources import Resources
     from .resources_devices_item import ResourcesDevicesItem
     from .resources_node import ResourcesNode
+    from .account import Account
     from .activate_user_response import ActivateUserResponse
     from .add_on_component_source import AddOnComponentSource
     from .addon_component import AddonComponent
@@ -53,7 +54,7 @@ if typing.TYPE_CHECKING:
     from .artifacts_download_artifacts_item import ArtifactsDownloadArtifactsItem
     from .assistant_message import AssistantMessage
     from .assistant_message_content import AssistantMessageContent
-    from .assistant_message_content_item import AssistantMessageContentItem
+    from .assistant_message_content_one_item import AssistantMessageContentOneItem
     from .async_processor_sidecar import AsyncProcessorSidecar
     from .async_service import AsyncService
     from .async_service_autoscaling import AsyncServiceAutoscaling
@@ -64,6 +65,7 @@ if typing.TYPE_CHECKING:
     from .aws_access_key_auth import AwsAccessKeyAuth
     from .aws_access_key_based_auth import AwsAccessKeyBasedAuth
     from .aws_assumed_role_based_auth import AwsAssumedRoleBasedAuth
+    from .aws_bedrock_assumed_role_based_auth import AwsBedrockAssumedRoleBasedAuth
     from .aws_bedrock_guardrail_config import AwsBedrockGuardrailConfig
     from .aws_bedrock_guardrail_config_auth_data import AwsBedrockGuardrailConfigAuthData
     from .aws_bedrock_guardrail_config_operation import AwsBedrockGuardrailConfigOperation
@@ -86,6 +88,8 @@ if typing.TYPE_CHECKING:
     from .aws_sagemaker_provider_account_auth_data import AwsSagemakerProviderAccountAuthData
     from .aws_secrets_manager import AwsSecretsManager
     from .aws_secrets_manager_auth_data import AwsSecretsManagerAuthData
+    from .aws_sqs_access_key_based_auth import AwsSqsAccessKeyBasedAuth
+    from .aws_sqs_assumed_role_based_auth import AwsSqsAssumedRoleBasedAuth
     from .azure_aks_integration import AzureAksIntegration
     from .azure_basic_auth import AzureBasicAuth
     from .azure_blob_storage import AzureBlobStorage
@@ -122,6 +126,7 @@ if typing.TYPE_CHECKING:
     from .bitbucket_provider_account import BitbucketProviderAccount
     from .blob_storage_reference import BlobStorageReference
     from .blue_green import BlueGreen
+    from .budget_alert import BudgetAlert
     from .budget_config import BudgetConfig
     from .budget_limit_unit import BudgetLimitUnit
     from .budget_rule import BudgetRule
@@ -272,7 +277,6 @@ if typing.TYPE_CHECKING:
     from .gcp_integrations import GcpIntegrations
     from .gcp_key_file_auth import GcpKeyFileAuth
     from .gcp_provider_account import GcpProviderAccount
-    from .gcp_provider_account_auth_data import GcpProviderAccountAuthData
     from .gcp_region import GcpRegion
     from .gcp_tpu import GcpTpu
     from .gemini_model import GeminiModel
@@ -336,6 +340,7 @@ if typing.TYPE_CHECKING:
     from .hashicorp_token_auth import HashicorpTokenAuth
     from .hashicorp_vault_integration import HashicorpVaultIntegration
     from .header_match import HeaderMatch
+    from .header_routing_config import HeaderRoutingConfig
     from .health_probe import HealthProbe
     from .helm import Helm
     from .helm_repo import HelmRepo
@@ -438,7 +443,6 @@ if typing.TYPE_CHECKING:
     from .mcp_server_integration_transport import McpServerIntegrationTransport
     from .mcp_server_integrations import McpServerIntegrations
     from .mcp_server_o_auth2 import McpServerOAuth2
-    from .mcp_server_o_auth2dcr import McpServerOAuth2Dcr
     from .mcp_server_o_auth2jwt_source import McpServerOAuth2JwtSource
     from .mcp_server_passthrough import McpServerPassthrough
     from .mcp_server_provider_account import McpServerProviderAccount
@@ -481,6 +485,7 @@ if typing.TYPE_CHECKING:
     from .nomic_key_auth import NomicKeyAuth
     from .nomic_model import NomicModel
     from .nomic_provider_account import NomicProviderAccount
+    from .non_negative_float import NonNegativeFloat
     from .notebook import Notebook
     from .notebook_config import NotebookConfig
     from .notification_target import NotificationTarget
@@ -532,6 +537,7 @@ if typing.TYPE_CHECKING:
     from .palo_alto_prisma_airs_key_auth import PaloAltoPrismaAirsKeyAuth
     from .pangea_guard_type import PangeaGuardType
     from .pangea_guardrail_config import PangeaGuardrailConfig
+    from .pangea_guardrail_config_operation import PangeaGuardrailConfigOperation
     from .pangea_key_auth import PangeaKeyAuth
     from .param import Param
     from .param_param_type import ParamParamType
@@ -583,6 +589,7 @@ if typing.TYPE_CHECKING:
     from .prompt import Prompt
     from .prompt_foo_guard_type import PromptFooGuardType
     from .prompt_foo_guardrail_config import PromptFooGuardrailConfig
+    from .prompt_foo_guardrail_config_operation import PromptFooGuardrailConfigOperation
     from .prompt_version import PromptVersion
     from .provider_accounts import ProviderAccounts
     from .public_cost_metric import PublicCostMetric
@@ -610,6 +617,8 @@ if typing.TYPE_CHECKING:
     from .remote_source import RemoteSource
     from .retry_config import RetryConfig
     from .revoke_all_personal_access_token_response import RevokeAllPersonalAccessTokenResponse
+    from .role_manifest import RoleManifest
+    from .role_permissions import RolePermissions
     from .rolling import Rolling
     from .rps_metric import RpsMetric
     from .sagemaker_model import SagemakerModel
@@ -621,6 +630,7 @@ if typing.TYPE_CHECKING:
     from .schedule_concurrency_policy import ScheduleConcurrencyPolicy
     from .secret import Secret
     from .secret_group import SecretGroup
+    from .secret_group_manifest import SecretGroupManifest
     from .secret_input import SecretInput
     from .secret_mount import SecretMount
     from .secret_store_config import SecretStoreConfig
@@ -685,6 +695,7 @@ if typing.TYPE_CHECKING:
     from .sqs_input_config import SqsInputConfig
     from .sqs_output_config import SqsOutputConfig
     from .sqs_queue_metric_config import SqsQueueMetricConfig
+    from .sqs_queue_metric_config_auth import SqsQueueMetricConfigAuth
     from .ssh_server import SshServer
     from .ssh_server_config import SshServerConfig
     from .sso_team_manifest import SsoTeamManifest
@@ -743,10 +754,12 @@ if typing.TYPE_CHECKING:
     from .user import User
     from .user_message import UserMessage
     from .user_message_content import UserMessageContent
-    from .user_message_content_item import UserMessageContentItem
+    from .user_message_content_one_item import UserMessageContentOneItem
     from .user_metadata import UserMetadata
     from .user_metadata_tenant_role_managed_by import UserMetadataTenantRoleManagedBy
     from .user_resource import UserResource
+    from .user_role_with_resource import UserRoleWithResource
+    from .user_role_with_resource_resource_type import UserRoleWithResourceResourceType
     from .uv import Uv
     from .validation_error import ValidationError
     from .validation_error_loc_item import ValidationErrorLocItem
@@ -756,6 +769,8 @@ if typing.TYPE_CHECKING:
     from .virtual_account_owned_by import VirtualAccountOwnedBy
     from .virtual_mcp_server_integration import VirtualMcpServerIntegration
     from .virtual_mcp_server_source import VirtualMcpServerSource
+    from .virtual_model import VirtualModel
+    from .virtual_model_provider_account import VirtualModelProviderAccount
     from .volume import Volume
     from .volume_browser import VolumeBrowser
     from .volume_config import VolumeConfig
@@ -782,6 +797,7 @@ if typing.TYPE_CHECKING:
     from .xg_boost_model_schema import XgBoostModelSchema
     from .xg_boost_serialization_format import XgBoostSerializationFormat
 _dynamic_imports: typing.Dict[str, str] = {
+    "Account": ".account",
     "ActivateUserResponse": ".activate_user_response",
     "AddOnComponentSource": ".add_on_component_source",
     "AddonComponent": ".addon_component",
@@ -826,7 +842,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ArtifactsDownloadArtifactsItem": ".artifacts_download_artifacts_item",
     "AssistantMessage": ".assistant_message",
     "AssistantMessageContent": ".assistant_message_content",
-    "AssistantMessageContentItem": ".assistant_message_content_item",
+    "AssistantMessageContentOneItem": ".assistant_message_content_one_item",
     "AsyncProcessorSidecar": ".async_processor_sidecar",
     "AsyncService": ".async_service",
     "AsyncServiceAutoscaling": ".async_service_autoscaling",
@@ -837,6 +853,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AwsAccessKeyAuth": ".aws_access_key_auth",
     "AwsAccessKeyBasedAuth": ".aws_access_key_based_auth",
     "AwsAssumedRoleBasedAuth": ".aws_assumed_role_based_auth",
+    "AwsBedrockAssumedRoleBasedAuth": ".aws_bedrock_assumed_role_based_auth",
     "AwsBedrockGuardrailConfig": ".aws_bedrock_guardrail_config",
     "AwsBedrockGuardrailConfigAuthData": ".aws_bedrock_guardrail_config_auth_data",
     "AwsBedrockGuardrailConfigOperation": ".aws_bedrock_guardrail_config_operation",
@@ -859,6 +876,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AwsSagemakerProviderAccountAuthData": ".aws_sagemaker_provider_account_auth_data",
     "AwsSecretsManager": ".aws_secrets_manager",
     "AwsSecretsManagerAuthData": ".aws_secrets_manager_auth_data",
+    "AwsSqsAccessKeyBasedAuth": ".aws_sqs_access_key_based_auth",
+    "AwsSqsAssumedRoleBasedAuth": ".aws_sqs_assumed_role_based_auth",
     "AzureAksIntegration": ".azure_aks_integration",
     "AzureBasicAuth": ".azure_basic_auth",
     "AzureBlobStorage": ".azure_blob_storage",
@@ -895,6 +914,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BitbucketProviderAccount": ".bitbucket_provider_account",
     "BlobStorageReference": ".blob_storage_reference",
     "BlueGreen": ".blue_green",
+    "BudgetAlert": ".budget_alert",
     "BudgetConfig": ".budget_config",
     "BudgetLimitUnit": ".budget_limit_unit",
     "BudgetRule": ".budget_rule",
@@ -1045,7 +1065,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GcpIntegrations": ".gcp_integrations",
     "GcpKeyFileAuth": ".gcp_key_file_auth",
     "GcpProviderAccount": ".gcp_provider_account",
-    "GcpProviderAccountAuthData": ".gcp_provider_account_auth_data",
     "GcpRegion": ".gcp_region",
     "GcpTpu": ".gcp_tpu",
     "GeminiModel": ".gemini_model",
@@ -1109,6 +1128,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "HashicorpTokenAuth": ".hashicorp_token_auth",
     "HashicorpVaultIntegration": ".hashicorp_vault_integration",
     "HeaderMatch": ".header_match",
+    "HeaderRoutingConfig": ".header_routing_config",
     "HealthProbe": ".health_probe",
     "Helm": ".helm",
     "HelmRepo": ".helm_repo",
@@ -1211,7 +1231,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "McpServerIntegrationTransport": ".mcp_server_integration_transport",
     "McpServerIntegrations": ".mcp_server_integrations",
     "McpServerOAuth2": ".mcp_server_o_auth2",
-    "McpServerOAuth2Dcr": ".mcp_server_o_auth2dcr",
     "McpServerOAuth2JwtSource": ".mcp_server_o_auth2jwt_source",
     "McpServerPassthrough": ".mcp_server_passthrough",
     "McpServerProviderAccount": ".mcp_server_provider_account",
@@ -1254,6 +1273,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "NomicKeyAuth": ".nomic_key_auth",
     "NomicModel": ".nomic_model",
     "NomicProviderAccount": ".nomic_provider_account",
+    "NonNegativeFloat": ".non_negative_float",
     "Notebook": ".notebook",
     "NotebookConfig": ".notebook_config",
     "NotificationTarget": ".notification_target",
@@ -1301,6 +1321,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PaloAltoPrismaAirsKeyAuth": ".palo_alto_prisma_airs_key_auth",
     "PangeaGuardType": ".pangea_guard_type",
     "PangeaGuardrailConfig": ".pangea_guardrail_config",
+    "PangeaGuardrailConfigOperation": ".pangea_guardrail_config_operation",
     "PangeaKeyAuth": ".pangea_key_auth",
     "Param": ".param",
     "ParamParamType": ".param_param_type",
@@ -1352,6 +1373,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Prompt": ".prompt",
     "PromptFooGuardType": ".prompt_foo_guard_type",
     "PromptFooGuardrailConfig": ".prompt_foo_guardrail_config",
+    "PromptFooGuardrailConfigOperation": ".prompt_foo_guardrail_config_operation",
     "PromptVersion": ".prompt_version",
     "ProviderAccounts": ".provider_accounts",
     "PublicCostMetric": ".public_cost_metric",
@@ -1382,6 +1404,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ResourcesNode": ".resources_node",
     "RetryConfig": ".retry_config",
     "RevokeAllPersonalAccessTokenResponse": ".revoke_all_personal_access_token_response",
+    "RoleManifest": ".role_manifest",
+    "RolePermissions": ".role_permissions",
     "Rolling": ".rolling",
     "RpsMetric": ".rps_metric",
     "SagemakerModel": ".sagemaker_model",
@@ -1393,6 +1417,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ScheduleConcurrencyPolicy": ".schedule_concurrency_policy",
     "Secret": ".secret",
     "SecretGroup": ".secret_group",
+    "SecretGroupManifest": ".secret_group_manifest",
     "SecretInput": ".secret_input",
     "SecretMount": ".secret_mount",
     "SecretStoreConfig": ".secret_store_config",
@@ -1457,6 +1482,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SqsInputConfig": ".sqs_input_config",
     "SqsOutputConfig": ".sqs_output_config",
     "SqsQueueMetricConfig": ".sqs_queue_metric_config",
+    "SqsQueueMetricConfigAuth": ".sqs_queue_metric_config_auth",
     "SshServer": ".ssh_server",
     "SshServerConfig": ".ssh_server_config",
     "SsoTeamManifest": ".sso_team_manifest",
@@ -1515,10 +1541,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "User": ".user",
     "UserMessage": ".user_message",
     "UserMessageContent": ".user_message_content",
-    "UserMessageContentItem": ".user_message_content_item",
+    "UserMessageContentOneItem": ".user_message_content_one_item",
     "UserMetadata": ".user_metadata",
     "UserMetadataTenantRoleManagedBy": ".user_metadata_tenant_role_managed_by",
     "UserResource": ".user_resource",
+    "UserRoleWithResource": ".user_role_with_resource",
+    "UserRoleWithResourceResourceType": ".user_role_with_resource_resource_type",
     "Uv": ".uv",
     "ValidationError": ".validation_error",
     "ValidationErrorLocItem": ".validation_error_loc_item",
@@ -1528,6 +1556,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "VirtualAccountOwnedBy": ".virtual_account_owned_by",
     "VirtualMcpServerIntegration": ".virtual_mcp_server_integration",
     "VirtualMcpServerSource": ".virtual_mcp_server_source",
+    "VirtualModel": ".virtual_model",
+    "VirtualModelProviderAccount": ".virtual_model_provider_account",
     "Volume": ".volume",
     "VolumeBrowser": ".volume_browser",
     "VolumeConfig": ".volume_config",
@@ -1578,6 +1608,7 @@ def __dir__():
 
 
 __all__ = [
+    "Account",
     "ActivateUserResponse",
     "AddOnComponentSource",
     "AddonComponent",
@@ -1622,7 +1653,7 @@ __all__ = [
     "ArtifactsDownloadArtifactsItem",
     "AssistantMessage",
     "AssistantMessageContent",
-    "AssistantMessageContentItem",
+    "AssistantMessageContentOneItem",
     "AsyncProcessorSidecar",
     "AsyncService",
     "AsyncServiceAutoscaling",
@@ -1633,6 +1664,7 @@ __all__ = [
     "AwsAccessKeyAuth",
     "AwsAccessKeyBasedAuth",
     "AwsAssumedRoleBasedAuth",
+    "AwsBedrockAssumedRoleBasedAuth",
     "AwsBedrockGuardrailConfig",
     "AwsBedrockGuardrailConfigAuthData",
     "AwsBedrockGuardrailConfigOperation",
@@ -1655,6 +1687,8 @@ __all__ = [
     "AwsSagemakerProviderAccountAuthData",
     "AwsSecretsManager",
     "AwsSecretsManagerAuthData",
+    "AwsSqsAccessKeyBasedAuth",
+    "AwsSqsAssumedRoleBasedAuth",
     "AzureAksIntegration",
     "AzureBasicAuth",
     "AzureBlobStorage",
@@ -1691,6 +1725,7 @@ __all__ = [
     "BitbucketProviderAccount",
     "BlobStorageReference",
     "BlueGreen",
+    "BudgetAlert",
     "BudgetConfig",
     "BudgetLimitUnit",
     "BudgetRule",
@@ -1841,7 +1876,6 @@ __all__ = [
     "GcpIntegrations",
     "GcpKeyFileAuth",
     "GcpProviderAccount",
-    "GcpProviderAccountAuthData",
     "GcpRegion",
     "GcpTpu",
     "GeminiModel",
@@ -1905,6 +1939,7 @@ __all__ = [
     "HashicorpTokenAuth",
     "HashicorpVaultIntegration",
     "HeaderMatch",
+    "HeaderRoutingConfig",
     "HealthProbe",
     "Helm",
     "HelmRepo",
@@ -2007,7 +2042,6 @@ __all__ = [
     "McpServerIntegrationTransport",
     "McpServerIntegrations",
     "McpServerOAuth2",
-    "McpServerOAuth2Dcr",
     "McpServerOAuth2JwtSource",
     "McpServerPassthrough",
     "McpServerProviderAccount",
@@ -2050,6 +2084,7 @@ __all__ = [
     "NomicKeyAuth",
     "NomicModel",
     "NomicProviderAccount",
+    "NonNegativeFloat",
     "Notebook",
     "NotebookConfig",
     "NotificationTarget",
@@ -2097,6 +2132,7 @@ __all__ = [
     "PaloAltoPrismaAirsKeyAuth",
     "PangeaGuardType",
     "PangeaGuardrailConfig",
+    "PangeaGuardrailConfigOperation",
     "PangeaKeyAuth",
     "Param",
     "ParamParamType",
@@ -2148,6 +2184,7 @@ __all__ = [
     "Prompt",
     "PromptFooGuardType",
     "PromptFooGuardrailConfig",
+    "PromptFooGuardrailConfigOperation",
     "PromptVersion",
     "ProviderAccounts",
     "PublicCostMetric",
@@ -2178,6 +2215,8 @@ __all__ = [
     "ResourcesNode",
     "RetryConfig",
     "RevokeAllPersonalAccessTokenResponse",
+    "RoleManifest",
+    "RolePermissions",
     "Rolling",
     "RpsMetric",
     "SagemakerModel",
@@ -2189,6 +2228,7 @@ __all__ = [
     "ScheduleConcurrencyPolicy",
     "Secret",
     "SecretGroup",
+    "SecretGroupManifest",
     "SecretInput",
     "SecretMount",
     "SecretStoreConfig",
@@ -2253,6 +2293,7 @@ __all__ = [
     "SqsInputConfig",
     "SqsOutputConfig",
     "SqsQueueMetricConfig",
+    "SqsQueueMetricConfigAuth",
     "SshServer",
     "SshServerConfig",
     "SsoTeamManifest",
@@ -2311,10 +2352,12 @@ __all__ = [
     "User",
     "UserMessage",
     "UserMessageContent",
-    "UserMessageContentItem",
+    "UserMessageContentOneItem",
     "UserMetadata",
     "UserMetadataTenantRoleManagedBy",
     "UserResource",
+    "UserRoleWithResource",
+    "UserRoleWithResourceResourceType",
     "Uv",
     "ValidationError",
     "ValidationErrorLocItem",
@@ -2324,6 +2367,8 @@ __all__ = [
     "VirtualAccountOwnedBy",
     "VirtualMcpServerIntegration",
     "VirtualMcpServerSource",
+    "VirtualModel",
+    "VirtualModelProviderAccount",
     "Volume",
     "VolumeBrowser",
     "VolumeConfig",

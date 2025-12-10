@@ -5,7 +5,7 @@ from json.decoder import JSONDecodeError
 
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.pagination import AsyncPager, BaseHttpResponse, SyncPager
+from ..core.pagination import AsyncPager, SyncPager
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
@@ -40,7 +40,7 @@ class RawTracesClient:
         page_token: typing.Optional[str] = OMIT,
         filters: typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[TraceSpan]:
+    ) -> SyncPager[TraceSpan, QuerySpansResponse]:
         """
         Parameters
         ----------
@@ -88,7 +88,7 @@ class RawTracesClient:
 
         Returns
         -------
-        SyncPager[TraceSpan]
+        SyncPager[TraceSpan, QuerySpansResponse]
             Returns all the spans matching the query.
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -148,9 +148,7 @@ class RawTracesClient:
                         filters=filters,
                         request_options=request_options,
                     )
-                return SyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -178,7 +176,7 @@ class AsyncRawTracesClient:
         page_token: typing.Optional[str] = OMIT,
         filters: typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[TraceSpan]:
+    ) -> AsyncPager[TraceSpan, QuerySpansResponse]:
         """
         Parameters
         ----------
@@ -226,7 +224,7 @@ class AsyncRawTracesClient:
 
         Returns
         -------
-        AsyncPager[TraceSpan]
+        AsyncPager[TraceSpan, QuerySpansResponse]
             Returns all the spans matching the query.
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -289,9 +287,7 @@ class AsyncRawTracesClient:
                             request_options=request_options,
                         )
 
-                return AsyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

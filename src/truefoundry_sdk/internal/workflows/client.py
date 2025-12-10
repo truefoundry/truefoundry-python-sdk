@@ -30,8 +30,8 @@ class WorkflowsClient:
         self,
         application_id: str,
         *,
-        inputs: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        inputs_literal_map: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        inputs: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        inputs_literal_map: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> WorkflowsExecuteWorkflowResponse:
         """
@@ -42,10 +42,10 @@ class WorkflowsClient:
         application_id : str
             Id of the application
 
-        inputs : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        inputs : typing.Optional[typing.Dict[str, typing.Any]]
             Workflow inputs
 
-        inputs_literal_map : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        inputs_literal_map : typing.Optional[typing.Dict[str, typing.Any]]
             Workflow inputs literal map
 
         request_options : typing.Optional[RequestOptions]
@@ -93,8 +93,8 @@ class AsyncWorkflowsClient:
         self,
         application_id: str,
         *,
-        inputs: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        inputs_literal_map: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        inputs: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        inputs_literal_map: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> WorkflowsExecuteWorkflowResponse:
         """
@@ -105,10 +105,10 @@ class AsyncWorkflowsClient:
         application_id : str
             Id of the application
 
-        inputs : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        inputs : typing.Optional[typing.Dict[str, typing.Any]]
             Workflow inputs
 
-        inputs_literal_map : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        inputs_literal_map : typing.Optional[typing.Dict[str, typing.Any]]
             Workflow inputs literal map
 
         request_options : typing.Optional[RequestOptions]

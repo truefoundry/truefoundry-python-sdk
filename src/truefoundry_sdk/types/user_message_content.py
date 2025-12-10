@@ -3,6 +3,6 @@
 import typing
 
 from .blob_storage_reference import BlobStorageReference
-from .user_message_content_item import UserMessageContentItem
+from .user_message_content_one_item import UserMessageContentOneItem
 
-UserMessageContent = typing.Union[str, typing.List[UserMessageContentItem], BlobStorageReference]
+UserMessageContent = typing.Union[str, typing.List[UserMessageContentOneItem], BlobStorageReference]

@@ -29,7 +29,7 @@ class CustomBlobStorage(UniversalBaseModel):
 
     storage_root: str = pydantic.Field()
     """
-    The root path of the storage.
+    The S3-compatible storage path in the format 's3://<bucket-name>/<optional-path-prefix>'. Works with S3-compatible storage providers like MinIO, Ceph, and DigitalOcean Spaces. Example: 's3://mybucket' or 's3://mybucket/artifacts/production'.
     """
 
     region: typing.Optional[str] = pydantic.Field(default=None)

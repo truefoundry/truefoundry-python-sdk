@@ -18,7 +18,7 @@ class Recommendation(UniversalBaseModel):
         typing.Optional[int], FieldMetadata(alias="applicationVersion")
     ] = None
     recommendation_data: typing_extensions.Annotated[
-        typing.Dict[str, typing.Optional[typing.Any]], FieldMetadata(alias="recommendationData")
+        typing.Dict[str, typing.Any], FieldMetadata(alias="recommendationData")
     ]
     recommendation_type: typing_extensions.Annotated[str, FieldMetadata(alias="recommendationType")]
     applied_deployment_id: typing_extensions.Annotated[

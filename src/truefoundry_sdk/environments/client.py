@@ -8,6 +8,7 @@ from ..core.request_options import RequestOptions
 from ..types.environment import Environment
 from ..types.environment_manifest import EnvironmentManifest
 from ..types.get_environment_response import GetEnvironmentResponse
+from ..types.list_environments_response import ListEnvironmentsResponse
 from .raw_client import AsyncRawEnvironmentsClient, RawEnvironmentsClient
 
 # this is used as the default value for optional parameters
@@ -35,7 +36,7 @@ class EnvironmentsClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Environment]:
+    ) -> SyncPager[Environment, ListEnvironmentsResponse]:
         """
         List environments, if no environments are found, default environments are created and returned. Pagination is available based on query parameters
 
@@ -52,7 +53,7 @@ class EnvironmentsClient:
 
         Returns
         -------
-        SyncPager[Environment]
+        SyncPager[Environment, ListEnvironmentsResponse]
             Returns a list of environment. If pagination parameters are provided, the response includes paginated data
 
         Examples
@@ -214,7 +215,7 @@ class AsyncEnvironmentsClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Environment]:
+    ) -> AsyncPager[Environment, ListEnvironmentsResponse]:
         """
         List environments, if no environments are found, default environments are created and returned. Pagination is available based on query parameters
 
@@ -231,7 +232,7 @@ class AsyncEnvironmentsClient:
 
         Returns
         -------
-        AsyncPager[Environment]
+        AsyncPager[Environment, ListEnvironmentsResponse]
             Returns a list of environment. If pagination parameters are provided, the response includes paginated data
 
         Examples

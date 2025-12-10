@@ -5,6 +5,7 @@ import typing
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.pagination import AsyncPager, SyncPager
 from ...core.request_options import RequestOptions
+from ...types.internal_list_artifact_versions_response import InternalListArtifactVersionsResponse
 from ...types.internal_list_artifact_versions_response_data_item import InternalListArtifactVersionsResponseDataItem
 from .raw_client import AsyncRawArtifactVersionsClient, RawArtifactVersionsClient
 
@@ -40,7 +41,7 @@ class ArtifactVersionsClient:
         include_internal_metadata: typing.Optional[bool] = False,
         include_model_versions: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[InternalListArtifactVersionsResponseDataItem]:
+    ) -> SyncPager[InternalListArtifactVersionsResponseDataItem, InternalListArtifactVersionsResponse]:
         """
         List artifact version API
 
@@ -75,7 +76,7 @@ class ArtifactVersionsClient:
 
         Returns
         -------
-        SyncPager[InternalListArtifactVersionsResponseDataItem]
+        SyncPager[InternalListArtifactVersionsResponseDataItem, InternalListArtifactVersionsResponse]
             Successful Response
 
         Examples
@@ -152,7 +153,7 @@ class AsyncArtifactVersionsClient:
         include_internal_metadata: typing.Optional[bool] = False,
         include_model_versions: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[InternalListArtifactVersionsResponseDataItem]:
+    ) -> AsyncPager[InternalListArtifactVersionsResponseDataItem, InternalListArtifactVersionsResponse]:
         """
         List artifact version API
 
@@ -187,7 +188,7 @@ class AsyncArtifactVersionsClient:
 
         Returns
         -------
-        AsyncPager[InternalListArtifactVersionsResponseDataItem]
+        AsyncPager[InternalListArtifactVersionsResponseDataItem, InternalListArtifactVersionsResponse]
             Successful Response
 
         Examples

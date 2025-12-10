@@ -20,6 +20,7 @@ class SecretGroup(UniversalBaseModel):
     created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")]
     associated_secrets: typing_extensions.Annotated[typing.List["Secret"], FieldMetadata(alias="associatedSecrets")]
     integration_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="integrationId")] = None
+    manifest: typing.Optional[typing.Dict[str, typing.Any]] = None
     created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
     updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
     created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = None
@@ -34,5 +35,6 @@ class SecretGroup(UniversalBaseModel):
 
 
 from .secret import Secret  # noqa: E402, I001
+from .secret_version import SecretVersion  # noqa: E402, I001
 
-update_forward_refs(SecretGroup)
+update_forward_refs(SecretGroup, Secret=Secret, SecretVersion=SecretVersion)

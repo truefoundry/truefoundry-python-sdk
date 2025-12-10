@@ -27,6 +27,11 @@ class PatronusGuardrailConfig(UniversalBaseModel):
     +value=integration/guardrail-config/patronus
     """
 
+    operation: typing.Optional[typing.Literal["validate"]] = pydantic.Field(default=None)
+    """
+    The operation type for this guardrail. Patronus guardrails can only be used for validation.
+    """
+
     auth_data: PatronusKeyAuth
     target: PatronusGuardrailConfigTarget = pydantic.Field()
     """

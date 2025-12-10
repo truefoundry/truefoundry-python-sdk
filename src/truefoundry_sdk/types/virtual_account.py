@@ -25,6 +25,8 @@ class VirtualAccount(UniversalBaseModel):
     is_expired: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isExpired")] = None
     jwts: typing.Optional[typing.List[Jwt]] = None
     account_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="accountId")] = None
+    metadata: typing.Optional[typing.Dict[str, typing.Any]] = None
+    role_ids: typing_extensions.Annotated[typing.Optional[typing.List[str]], FieldMetadata(alias="roleIds")] = None
     created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = None
     next_scheduled_rotation: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="nextScheduledRotation")

@@ -51,7 +51,7 @@ class InternalClient:
 
     def get_id_from_fqn(
         self, type: str, *, fqn: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Dict[str, typing.Optional[typing.Any]]:
+    ) -> typing.Dict[str, typing.Any]:
         """
         Get IDs associated with the FQN for various entity types, such as deployment, application, workspace, or cluster.
 
@@ -68,7 +68,7 @@ class InternalClient:
 
         Returns
         -------
-        typing.Dict[str, typing.Optional[typing.Any]]
+        typing.Dict[str, typing.Any]
             Returns the IDs for the specified entity type based on the provided FQN. For example, deploymentId, applicationId, and workspaceId for type deployment, or applicationId and workspaceId for type app.
 
         Examples
@@ -205,7 +205,7 @@ class AsyncInternalClient:
 
     async def get_id_from_fqn(
         self, type: str, *, fqn: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Dict[str, typing.Optional[typing.Any]]:
+    ) -> typing.Dict[str, typing.Any]:
         """
         Get IDs associated with the FQN for various entity types, such as deployment, application, workspace, or cluster.
 
@@ -222,7 +222,7 @@ class AsyncInternalClient:
 
         Returns
         -------
-        typing.Dict[str, typing.Optional[typing.Any]]
+        typing.Dict[str, typing.Any]
             Returns the IDs for the specified entity type based on the provided FQN. For example, deploymentId, applicationId, and workspaceId for type deployment, or applicationId and workspaceId for type app.
 
         Examples

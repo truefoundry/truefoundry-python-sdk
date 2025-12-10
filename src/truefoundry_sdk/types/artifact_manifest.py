@@ -18,7 +18,7 @@ class ArtifactManifest(UniversalBaseModel):
     """
 
     description: typing.Optional[str] = None
-    metadata: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
+    metadata: typing.Dict[str, typing.Any] = pydantic.Field()
     """
     Key value metadata. Should be valid JSON. For e.g. `{"business-unit": "sales", "quality": "good", "rating": 4.5}`
     """
