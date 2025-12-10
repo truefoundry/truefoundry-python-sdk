@@ -12,6 +12,16 @@ class AzureContentSafetyCategory(enum.StrEnum):
     SELF_HARM = "SelfHarm"
     SEXUAL = "Sexual"
     VIOLENCE = "Violence"
+    _UNKNOWN = "__AZURECONTENTSAFETYCATEGORY_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "AzureContentSafetyCategory":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
@@ -19,6 +29,7 @@ class AzureContentSafetyCategory(enum.StrEnum):
         self_harm: typing.Callable[[], T_Result],
         sexual: typing.Callable[[], T_Result],
         violence: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is AzureContentSafetyCategory.HATE:
             return hate()
@@ -28,3 +39,4 @@ class AzureContentSafetyCategory(enum.StrEnum):
             return sexual()
         if self is AzureContentSafetyCategory.VIOLENCE:
             return violence()
+        return _unknown_member(self._value_)

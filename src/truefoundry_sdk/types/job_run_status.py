@@ -21,6 +21,16 @@ class JobRunStatus(enum.StrEnum):
     TERMINATING = "TERMINATING"
     TERMINATED = "TERMINATED"
     UNKNOWN = "UNKNOWN"
+    _UNKNOWN = "__JOBRUNSTATUS_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "JobRunStatus":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
@@ -33,6 +43,7 @@ class JobRunStatus(enum.StrEnum):
         terminating: typing.Callable[[], T_Result],
         terminated: typing.Callable[[], T_Result],
         unknown: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is JobRunStatus.CREATED:
             return created()
@@ -52,3 +63,4 @@ class JobRunStatus(enum.StrEnum):
             return terminated()
         if self is JobRunStatus.UNKNOWN:
             return unknown()
+        return _unknown_member(self._value_)

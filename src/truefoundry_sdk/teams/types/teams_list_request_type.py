@@ -10,9 +10,25 @@ T_Result = typing.TypeVar("T_Result")
 class TeamsListRequestType(enum.StrEnum):
     TEAM = "team"
     SSO_TEAM = "sso-team"
+    _UNKNOWN = "__TEAMSLISTREQUESTTYPE_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
 
-    def visit(self, team: typing.Callable[[], T_Result], sso_team: typing.Callable[[], T_Result]) -> T_Result:
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "TeamsListRequestType":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
+
+    def visit(
+        self,
+        team: typing.Callable[[], T_Result],
+        sso_team: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
+    ) -> T_Result:
         if self is TeamsListRequestType.TEAM:
             return team()
         if self is TeamsListRequestType.SSO_TEAM:
             return sso_team()
+        return _unknown_member(self._value_)

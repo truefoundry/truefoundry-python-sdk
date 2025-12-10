@@ -22,6 +22,16 @@ class ModelType(enum.StrEnum):
     TEXT_TO_SPEECH = "text_to_speech"
     MODERATION = "moderation"
     IMAGE = "image"
+    _UNKNOWN = "__MODELTYPE_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "ModelType":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
@@ -35,6 +45,7 @@ class ModelType(enum.StrEnum):
         text_to_speech: typing.Callable[[], T_Result],
         moderation: typing.Callable[[], T_Result],
         image: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is ModelType.CHAT:
             return chat()
@@ -56,3 +67,4 @@ class ModelType(enum.StrEnum):
             return moderation()
         if self is ModelType.IMAGE:
             return image()
+        return _unknown_member(self._value_)

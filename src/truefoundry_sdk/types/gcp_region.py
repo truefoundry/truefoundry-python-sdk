@@ -45,6 +45,16 @@ class GcpRegion(enum.StrEnum):
     ME_CENTRAL1 = "me-central1"
     ME_CENTRAL2 = "me-central2"
     ME_WEST1 = "me-west1"
+    _UNKNOWN = "__GCPREGION_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "GcpRegion":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
@@ -85,6 +95,7 @@ class GcpRegion(enum.StrEnum):
         me_central1: typing.Callable[[], T_Result],
         me_central2: typing.Callable[[], T_Result],
         me_west1: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is GcpRegion.GLOBAL:
             return global_()
@@ -160,3 +171,4 @@ class GcpRegion(enum.StrEnum):
             return me_central2()
         if self is GcpRegion.ME_WEST1:
             return me_west1()
+        return _unknown_member(self._value_)

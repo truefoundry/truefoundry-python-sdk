@@ -54,6 +54,16 @@ class NvidiaMiggpuProfile(enum.StrEnum):
     SEVEN_G94GB = "7g.94gb"
     SEVEN_G96GB = "7g.96gb"
     SEVEN_G180GB = "7g.180gb"
+    _UNKNOWN = "__NVIDIAMIGGPUPROFILE_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "NvidiaMiggpuProfile":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
@@ -91,6 +101,7 @@ class NvidiaMiggpuProfile(enum.StrEnum):
         seven_g94gb: typing.Callable[[], T_Result],
         seven_g96gb: typing.Callable[[], T_Result],
         seven_g180gb: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is NvidiaMiggpuProfile.ONE_G6GB:
             return one_g6gb()
@@ -160,3 +171,4 @@ class NvidiaMiggpuProfile(enum.StrEnum):
             return seven_g96gb()
         if self is NvidiaMiggpuProfile.SEVEN_G180GB:
             return seven_g180gb()
+        return _unknown_member(self._value_)

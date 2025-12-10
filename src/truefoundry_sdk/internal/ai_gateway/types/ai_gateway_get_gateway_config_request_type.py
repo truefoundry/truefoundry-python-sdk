@@ -14,6 +14,16 @@ class AiGatewayGetGatewayConfigRequestType(enum.StrEnum):
     GATEWAY_GUARDRAILS_CONFIG = "gateway-guardrails-config"
     GATEWAY_BUDGET_CONFIG = "gateway-budget-config"
     GATEWAY_OTEL_CONFIG = "gateway-otel-config"
+    _UNKNOWN = "__AIGATEWAYGETGATEWAYCONFIGREQUESTTYPE_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "AiGatewayGetGatewayConfigRequestType":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
@@ -23,6 +33,7 @@ class AiGatewayGetGatewayConfigRequestType(enum.StrEnum):
         gateway_guardrails_config: typing.Callable[[], T_Result],
         gateway_budget_config: typing.Callable[[], T_Result],
         gateway_otel_config: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is AiGatewayGetGatewayConfigRequestType.GATEWAY_RATE_LIMITING_CONFIG:
             return gateway_rate_limiting_config()
@@ -36,3 +47,4 @@ class AiGatewayGetGatewayConfigRequestType(enum.StrEnum):
             return gateway_budget_config()
         if self is AiGatewayGetGatewayConfigRequestType.GATEWAY_OTEL_CONFIG:
             return gateway_otel_config()
+        return _unknown_member(self._value_)

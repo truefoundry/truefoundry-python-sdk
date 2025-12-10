@@ -15,12 +15,23 @@ class LibraryName(enum.StrEnum):
     TRANSFORMERS = "transformers"
     SENTENCE_TRANSFORMERS = "sentence-transformers"
     DIFFUSERS = "diffusers"
+    _UNKNOWN = "__LIBRARYNAME_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "LibraryName":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
         transformers: typing.Callable[[], T_Result],
         sentence_transformers: typing.Callable[[], T_Result],
         diffusers: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is LibraryName.TRANSFORMERS:
             return transformers()
@@ -28,3 +39,4 @@ class LibraryName(enum.StrEnum):
             return sentence_transformers()
         if self is LibraryName.DIFFUSERS:
             return diffusers()
+        return _unknown_member(self._value_)

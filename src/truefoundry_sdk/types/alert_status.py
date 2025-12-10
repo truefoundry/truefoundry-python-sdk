@@ -10,9 +10,25 @@ T_Result = typing.TypeVar("T_Result")
 class AlertStatus(enum.StrEnum):
     FIRING = "firing"
     RESOLVED = "resolved"
+    _UNKNOWN = "__ALERTSTATUS_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
 
-    def visit(self, firing: typing.Callable[[], T_Result], resolved: typing.Callable[[], T_Result]) -> T_Result:
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "AlertStatus":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
+
+    def visit(
+        self,
+        firing: typing.Callable[[], T_Result],
+        resolved: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
+    ) -> T_Result:
         if self is AlertStatus.FIRING:
             return firing()
         if self is AlertStatus.RESOLVED:
             return resolved()
+        return _unknown_member(self._value_)

@@ -15,12 +15,23 @@ class SklearnSerializationFormat(enum.StrEnum):
     CLOUDPICKLE = "cloudpickle"
     JOBLIB = "joblib"
     PICKLE = "pickle"
+    _UNKNOWN = "__SKLEARNSERIALIZATIONFORMAT_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "SklearnSerializationFormat":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
         cloudpickle: typing.Callable[[], T_Result],
         joblib: typing.Callable[[], T_Result],
         pickle: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is SklearnSerializationFormat.CLOUDPICKLE:
             return cloudpickle()
@@ -28,3 +39,4 @@ class SklearnSerializationFormat(enum.StrEnum):
             return joblib()
         if self is SklearnSerializationFormat.PICKLE:
             return pickle()
+        return _unknown_member(self._value_)

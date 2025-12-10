@@ -15,12 +15,23 @@ class LogsFilterQueryType(enum.StrEnum):
     REGEX = "regex"
     SUBSTRING = "substring"
     IGNORE_CASE_SUBSTRING = "ignore_case_substring"
+    _UNKNOWN = "__LOGSFILTERQUERYTYPE_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "LogsFilterQueryType":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
         regex: typing.Callable[[], T_Result],
         substring: typing.Callable[[], T_Result],
         ignore_case_substring: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is LogsFilterQueryType.REGEX:
             return regex()
@@ -28,3 +39,4 @@ class LogsFilterQueryType(enum.StrEnum):
             return substring()
         if self is LogsFilterQueryType.IGNORE_CASE_SUBSTRING:
             return ignore_case_substring()
+        return _unknown_member(self._value_)

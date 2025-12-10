@@ -17,6 +17,16 @@ class MimeType(enum.StrEnum):
     IMAGE_PNG = "image/png"
     IMAGE_JPEG = "image/jpeg"
     APPLICATION_X_DIRECTORY = "application/x-directory"
+    _UNKNOWN = "__MIMETYPE_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "MimeType":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
@@ -25,6 +35,7 @@ class MimeType(enum.StrEnum):
         image_png: typing.Callable[[], T_Result],
         image_jpeg: typing.Callable[[], T_Result],
         application_x_directory: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is MimeType.TEXT_PLAIN:
             return text_plain()
@@ -36,3 +47,4 @@ class MimeType(enum.StrEnum):
             return image_jpeg()
         if self is MimeType.APPLICATION_X_DIRECTORY:
             return application_x_directory()
+        return _unknown_member(self._value_)

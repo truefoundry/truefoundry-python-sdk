@@ -14,9 +14,25 @@ class InferMethodName(enum.StrEnum):
 
     PREDICT = "predict"
     PREDICT_PROBA = "predict_proba"
+    _UNKNOWN = "__INFERMETHODNAME_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
 
-    def visit(self, predict: typing.Callable[[], T_Result], predict_proba: typing.Callable[[], T_Result]) -> T_Result:
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "InferMethodName":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
+
+    def visit(
+        self,
+        predict: typing.Callable[[], T_Result],
+        predict_proba: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
+    ) -> T_Result:
         if self is InferMethodName.PREDICT:
             return predict()
         if self is InferMethodName.PREDICT_PROBA:
             return predict_proba()
+        return _unknown_member(self._value_)

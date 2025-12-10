@@ -14,9 +14,25 @@ class MultiPartUploadStorageProvider(enum.StrEnum):
 
     S3COMPATIBLE = "S3_COMPATIBLE"
     AZURE_BLOB = "AZURE_BLOB"
+    _UNKNOWN = "__MULTIPARTUPLOADSTORAGEPROVIDER_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
 
-    def visit(self, s3compatible: typing.Callable[[], T_Result], azure_blob: typing.Callable[[], T_Result]) -> T_Result:
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "MultiPartUploadStorageProvider":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
+
+    def visit(
+        self,
+        s3compatible: typing.Callable[[], T_Result],
+        azure_blob: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
+    ) -> T_Result:
         if self is MultiPartUploadStorageProvider.S3COMPATIBLE:
             return s3compatible()
         if self is MultiPartUploadStorageProvider.AZURE_BLOB:
             return azure_blob()
+        return _unknown_member(self._value_)

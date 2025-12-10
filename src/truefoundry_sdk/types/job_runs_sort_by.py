@@ -13,6 +13,16 @@ class JobRunsSortBy(enum.StrEnum):
     DEPLOYMENT_VERSION = "deploymentVersion"
     TRIGGERED_BY = "triggeredBy"
     STATUS = "status"
+    _UNKNOWN = "__JOBRUNSSORTBY_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "JobRunsSortBy":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
@@ -21,6 +31,7 @@ class JobRunsSortBy(enum.StrEnum):
         deployment_version: typing.Callable[[], T_Result],
         triggered_by: typing.Callable[[], T_Result],
         status: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is JobRunsSortBy.START_TIME:
             return start_time()
@@ -32,3 +43,4 @@ class JobRunsSortBy(enum.StrEnum):
             return triggered_by()
         if self is JobRunsSortBy.STATUS:
             return status()
+        return _unknown_member(self._value_)

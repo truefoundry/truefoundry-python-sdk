@@ -13,6 +13,16 @@ class PatronusGliderCriteria(enum.StrEnum):
     PATRONUS_IS_GOOD_SUMMARY = "patronus:is-good-summary"
     PATRONUS_IS_HARMFUL_ADVICE = "patronus:is-harmful-advice"
     PATRONUS_IS_INFORMAL_TONE = "patronus:is-informal-tone"
+    _UNKNOWN = "__PATRONUSGLIDERCRITERIA_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "PatronusGliderCriteria":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
@@ -21,6 +31,7 @@ class PatronusGliderCriteria(enum.StrEnum):
         patronus_is_good_summary: typing.Callable[[], T_Result],
         patronus_is_harmful_advice: typing.Callable[[], T_Result],
         patronus_is_informal_tone: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is PatronusGliderCriteria.PATRONUS_IS_COMPLIANT:
             return patronus_is_compliant()
@@ -32,3 +43,4 @@ class PatronusGliderCriteria(enum.StrEnum):
             return patronus_is_harmful_advice()
         if self is PatronusGliderCriteria.PATRONUS_IS_INFORMAL_TONE:
             return patronus_is_informal_tone()
+        return _unknown_member(self._value_)

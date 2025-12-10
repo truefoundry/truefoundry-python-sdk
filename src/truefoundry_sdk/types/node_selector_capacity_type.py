@@ -18,12 +18,23 @@ class NodeSelectorCapacityType(enum.StrEnum):
     SPOT_FALLBACK_ON_DEMAND = "spot_fallback_on_demand"
     SPOT = "spot"
     ON_DEMAND = "on_demand"
+    _UNKNOWN = "__NODESELECTORCAPACITYTYPE_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "NodeSelectorCapacityType":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
         spot_fallback_on_demand: typing.Callable[[], T_Result],
         spot: typing.Callable[[], T_Result],
         on_demand: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is NodeSelectorCapacityType.SPOT_FALLBACK_ON_DEMAND:
             return spot_fallback_on_demand()
@@ -31,3 +42,4 @@ class NodeSelectorCapacityType(enum.StrEnum):
             return spot()
         if self is NodeSelectorCapacityType.ON_DEMAND:
             return on_demand()
+        return _unknown_member(self._value_)

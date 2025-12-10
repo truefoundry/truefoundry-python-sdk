@@ -44,6 +44,16 @@ class AwsRegion(enum.StrEnum):
     US_GOV_WEST1 = "us-gov-west-1"
     US_WEST1 = "us-west-1"
     US_WEST2 = "us-west-2"
+    _UNKNOWN = "__AWSREGION_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "AwsRegion":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
@@ -83,6 +93,7 @@ class AwsRegion(enum.StrEnum):
         us_gov_west1: typing.Callable[[], T_Result],
         us_west1: typing.Callable[[], T_Result],
         us_west2: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is AwsRegion.AF_SOUTH1:
             return af_south1()
@@ -156,3 +167,4 @@ class AwsRegion(enum.StrEnum):
             return us_west1()
         if self is AwsRegion.US_WEST2:
             return us_west2()
+        return _unknown_member(self._value_)

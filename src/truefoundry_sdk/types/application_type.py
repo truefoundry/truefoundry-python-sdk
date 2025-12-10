@@ -22,6 +22,16 @@ class ApplicationType(enum.StrEnum):
     APPLICATION_SET = "application-set"
     INTERCEPT = "intercept"
     WORKFLOW = "workflow"
+    _UNKNOWN = "__APPLICATIONTYPE_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "ApplicationType":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
@@ -39,6 +49,7 @@ class ApplicationType(enum.StrEnum):
         application_set: typing.Callable[[], T_Result],
         intercept: typing.Callable[[], T_Result],
         workflow: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is ApplicationType.ASYNC_SERVICE:
             return async_service()
@@ -68,3 +79,4 @@ class ApplicationType(enum.StrEnum):
             return intercept()
         if self is ApplicationType.WORKFLOW:
             return workflow()
+        return _unknown_member(self._value_)

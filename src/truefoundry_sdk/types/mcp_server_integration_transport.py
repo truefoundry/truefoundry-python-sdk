@@ -14,9 +14,25 @@ class McpServerIntegrationTransport(enum.StrEnum):
 
     STREAMABLE_HTTP = "streamable-http"
     SSE = "sse"
+    _UNKNOWN = "__MCPSERVERINTEGRATIONTRANSPORT_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
 
-    def visit(self, streamable_http: typing.Callable[[], T_Result], sse: typing.Callable[[], T_Result]) -> T_Result:
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "McpServerIntegrationTransport":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
+
+    def visit(
+        self,
+        streamable_http: typing.Callable[[], T_Result],
+        sse: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
+    ) -> T_Result:
         if self is McpServerIntegrationTransport.STREAMABLE_HTTP:
             return streamable_http()
         if self is McpServerIntegrationTransport.SSE:
             return sse()
+        return _unknown_member(self._value_)

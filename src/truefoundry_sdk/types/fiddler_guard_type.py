@@ -10,13 +10,25 @@ T_Result = typing.TypeVar("T_Result")
 class FiddlerGuardType(enum.StrEnum):
     FIDDLER_SAFETY = "fiddler-safety"
     FIDDLER_RESPONSE_FAITHFULNESS = "fiddler-response-faithfulness"
+    _UNKNOWN = "__FIDDLERGUARDTYPE_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "FiddlerGuardType":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
         fiddler_safety: typing.Callable[[], T_Result],
         fiddler_response_faithfulness: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is FiddlerGuardType.FIDDLER_SAFETY:
             return fiddler_safety()
         if self is FiddlerGuardType.FIDDLER_RESPONSE_FAITHFULNESS:
             return fiddler_response_faithfulness()
+        return _unknown_member(self._value_)

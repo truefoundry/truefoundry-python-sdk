@@ -17,6 +17,16 @@ class ClusterManifestClusterType(enum.StrEnum):
     AZURE_AKS = "azure-aks"
     GENERIC = "generic"
     CIVO_TALOS = "civo-talos"
+    _UNKNOWN = "__CLUSTERMANIFESTCLUSTERTYPE_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "ClusterManifestClusterType":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
@@ -25,6 +35,7 @@ class ClusterManifestClusterType(enum.StrEnum):
         azure_aks: typing.Callable[[], T_Result],
         generic: typing.Callable[[], T_Result],
         civo_talos: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is ClusterManifestClusterType.AWS_EKS:
             return aws_eks()
@@ -36,3 +47,4 @@ class ClusterManifestClusterType(enum.StrEnum):
             return generic()
         if self is ClusterManifestClusterType.CIVO_TALOS:
             return civo_talos()
+        return _unknown_member(self._value_)

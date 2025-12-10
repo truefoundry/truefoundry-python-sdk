@@ -17,6 +17,16 @@ class BudgetLimitUnit(enum.StrEnum):
     COST_PER_WEEK = "cost_per_week"
     TOKENS_PER_DAY = "tokens_per_day"
     TOKENS_PER_MONTH = "tokens_per_month"
+    _UNKNOWN = "__BUDGETLIMITUNIT_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "BudgetLimitUnit":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
@@ -25,6 +35,7 @@ class BudgetLimitUnit(enum.StrEnum):
         cost_per_week: typing.Callable[[], T_Result],
         tokens_per_day: typing.Callable[[], T_Result],
         tokens_per_month: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is BudgetLimitUnit.COST_PER_DAY:
             return cost_per_day()
@@ -36,3 +47,4 @@ class BudgetLimitUnit(enum.StrEnum):
             return tokens_per_day()
         if self is BudgetLimitUnit.TOKENS_PER_MONTH:
             return tokens_per_month()
+        return _unknown_member(self._value_)
