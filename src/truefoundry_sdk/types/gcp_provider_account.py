@@ -7,7 +7,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
 from .gcp_integrations import GcpIntegrations
-from .gcp_provider_account_auth_data import GcpProviderAccountAuthData
+from .gcp_key_file_auth import GcpKeyFileAuth
 from .owned_by import OwnedBy
 
 
@@ -31,11 +31,7 @@ class GcpProviderAccount(UniversalBaseModel):
     The project id of the GCP account.
     """
 
-    auth_data: typing.Optional[GcpProviderAccountAuthData] = pydantic.Field(default=None)
-    """
-    Authentication data for the GCP account.
-    """
-
+    auth_data: typing.Optional[GcpKeyFileAuth] = None
     integrations: typing.List[GcpIntegrations] = pydantic.Field()
     """
     List of integrations that are associated with the GCP provider account.

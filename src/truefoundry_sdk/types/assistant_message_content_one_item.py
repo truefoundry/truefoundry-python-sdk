@@ -5,4 +5,4 @@ import typing
 from .refusal_content_part import RefusalContentPart
 from .text_content_part import TextContentPart
 
-AssistantMessageContentItem = typing.Union[TextContentPart, RefusalContentPart]
+AssistantMessageContentOneItem = typing.Union[TextContentPart, RefusalContentPart]

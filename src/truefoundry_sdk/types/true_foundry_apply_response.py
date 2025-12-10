@@ -23,7 +23,7 @@ class TrueFoundryApplyResponse(UniversalBaseModel):
     The action performed: CREATE or UPDATE
     """
 
-    data: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    data: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     The created or updated resource
     """

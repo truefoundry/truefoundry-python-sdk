@@ -25,8 +25,8 @@ class RawWorkflowsClient:
         self,
         application_id: str,
         *,
-        inputs: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        inputs_literal_map: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        inputs: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        inputs_literal_map: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[WorkflowsExecuteWorkflowResponse]:
         """
@@ -37,10 +37,10 @@ class RawWorkflowsClient:
         application_id : str
             Id of the application
 
-        inputs : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        inputs : typing.Optional[typing.Dict[str, typing.Any]]
             Workflow inputs
 
-        inputs_literal_map : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        inputs_literal_map : typing.Optional[typing.Dict[str, typing.Any]]
             Workflow inputs literal map
 
         request_options : typing.Optional[RequestOptions]
@@ -78,9 +78,9 @@ class RawWorkflowsClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -89,9 +89,9 @@ class RawWorkflowsClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -110,8 +110,8 @@ class AsyncRawWorkflowsClient:
         self,
         application_id: str,
         *,
-        inputs: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        inputs_literal_map: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        inputs: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        inputs_literal_map: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[WorkflowsExecuteWorkflowResponse]:
         """
@@ -122,10 +122,10 @@ class AsyncRawWorkflowsClient:
         application_id : str
             Id of the application
 
-        inputs : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        inputs : typing.Optional[typing.Dict[str, typing.Any]]
             Workflow inputs
 
-        inputs_literal_map : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        inputs_literal_map : typing.Optional[typing.Dict[str, typing.Any]]
             Workflow inputs literal map
 
         request_options : typing.Optional[RequestOptions]
@@ -163,9 +163,9 @@ class AsyncRawWorkflowsClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -174,9 +174,9 @@ class AsyncRawWorkflowsClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

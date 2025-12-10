@@ -34,6 +34,11 @@ class OpenAiModerationsGuardrailConfig(UniversalBaseModel):
     Optional custom base URL for OpenAI API. If not provided, the default base URL will be used.
     """
 
+    operation: typing.Optional[typing.Literal["validate"]] = pydantic.Field(default=None)
+    """
+    The operation type for this guardrail. OpenAI Moderation guardrails can only be used for validation.
+    """
+
     auth_data: OpenaiApiKeyAuth
     model: str = pydantic.Field(default="omni-moderation-latest")
     """

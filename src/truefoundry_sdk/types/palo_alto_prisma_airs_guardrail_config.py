@@ -31,6 +31,11 @@ class PaloAltoPrismaAirsGuardrailConfig(UniversalBaseModel):
     The profile name associated with this Guardrail Config.
     """
 
+    operation: typing.Optional[typing.Literal["validate"]] = pydantic.Field(default=None)
+    """
+    The operation type for this guardrail. Palo Alto Prisma AIRS guardrails can only be used for validation.
+    """
+
     mode: typing.Optional[PaloAltoPrismaAirsGuardrailConfigMode] = pydantic.Field(default=None)
     """
     Execution mode for the guardrail. Sync waits for the guardrail check to complete before proceeding. Async triggers the check without waiting. Defaults to sync.

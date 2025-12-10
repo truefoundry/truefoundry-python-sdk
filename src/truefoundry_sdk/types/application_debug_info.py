@@ -15,9 +15,7 @@ class ApplicationDebugInfo(UniversalBaseModel):
     id: typing.Optional[str] = None
     application_id: typing_extensions.Annotated[str, FieldMetadata(alias="applicationId")]
     application: typing.Optional["Application"] = None
-    debug_info: typing_extensions.Annotated[
-        typing.Dict[str, typing.Optional[typing.Any]], FieldMetadata(alias="debugInfo")
-    ]
+    debug_info: typing_extensions.Annotated[typing.Dict[str, typing.Any], FieldMetadata(alias="debugInfo")]
     created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None
     updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = None
 
@@ -31,5 +29,6 @@ class ApplicationDebugInfo(UniversalBaseModel):
 
 
 from .application import Application  # noqa: E402, I001
+from .deployment import Deployment  # noqa: E402, I001
 
-update_forward_refs(ApplicationDebugInfo)
+update_forward_refs(ApplicationDebugInfo, Application=Application, Deployment=Deployment)

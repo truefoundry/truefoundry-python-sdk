@@ -31,15 +31,14 @@ class Helm(UniversalBaseModel):
     Source helm repository
     """
 
-    values: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    values: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     Values file as block file
     """
 
     kustomize: typing.Optional[Kustomize] = None
     ignore_differences: typing_extensions.Annotated[
-        typing.Optional[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]],
-        FieldMetadata(alias="ignoreDifferences"),
+        typing.Optional[typing.List[typing.Dict[str, typing.Any]]], FieldMetadata(alias="ignoreDifferences")
     ] = None
     workspace_fqn: typing.Optional[str] = pydantic.Field(default=None)
     """

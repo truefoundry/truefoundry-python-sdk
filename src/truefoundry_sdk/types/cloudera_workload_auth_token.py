@@ -16,6 +16,11 @@ class ClouderaWorkloadAuthToken(UniversalBaseModel):
     +value=workload-auth-token
     """
 
+    cdp_base_url: str = pydantic.Field()
+    """
+    The base URL for CDP API services
+    """
+
     access_key_id: str = pydantic.Field()
     """
     The access key ID for your Cloudera CDP workload authentication.

@@ -28,7 +28,7 @@ class DataDirectoryManifest(UniversalBaseModel):
     Description for the data directory
     """
 
-    metadata: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
+    metadata: typing.Dict[str, typing.Any] = pydantic.Field()
     """
     Key Value metadata. Should be valid JSON. For e.g. `{"business-unit": "sales", "quality": "good", "rating": 4.5}`
     """

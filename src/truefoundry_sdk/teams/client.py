@@ -7,6 +7,7 @@ from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.delete_team_response import DeleteTeamResponse
 from ..types.get_team_response import GetTeamResponse
+from ..types.list_teams_response import ListTeamsResponse
 from ..types.team import Team
 from .raw_client import AsyncRawTeamsClient, RawTeamsClient
 from .types.apply_team_request_manifest import ApplyTeamRequestManifest
@@ -38,7 +39,7 @@ class TeamsClient:
         offset: typing.Optional[int] = 0,
         type: typing.Optional[TeamsListRequestType] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Team]:
+    ) -> SyncPager[Team, ListTeamsResponse]:
         """
         Retrieve all teams associated with the authenticated user. If the user is a tenant admin, returns all teams for the tenant. Pagination is available based on query parameters
 
@@ -58,7 +59,7 @@ class TeamsClient:
 
         Returns
         -------
-        SyncPager[Team]
+        SyncPager[Team, ListTeamsResponse]
             Returns an array of teams associated with the user or tenant And also the response includes paginated data
 
         Examples
@@ -216,7 +217,7 @@ class AsyncTeamsClient:
         offset: typing.Optional[int] = 0,
         type: typing.Optional[TeamsListRequestType] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Team]:
+    ) -> AsyncPager[Team, ListTeamsResponse]:
         """
         Retrieve all teams associated with the authenticated user. If the user is a tenant admin, returns all teams for the tenant. Pagination is available based on query parameters
 
@@ -236,7 +237,7 @@ class AsyncTeamsClient:
 
         Returns
         -------
-        AsyncPager[Team]
+        AsyncPager[Team, ListTeamsResponse]
             Returns an array of teams associated with the user or tenant And also the response includes paginated data
 
         Examples

@@ -21,7 +21,7 @@ class FunctionSchema(UniversalBaseModel):
     Description of the function
     """
 
-    parameters: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    parameters: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     Parameters schema for the function
     """

@@ -42,6 +42,11 @@ class AzurePiiGuardrailConfig(UniversalBaseModel):
     Custom endpoint URL for the PII detection API (optional, uses default Azure endpoint if not specified)
     """
 
+    operation: typing.Optional[typing.Literal["mutate"]] = pydantic.Field(default=None)
+    """
+    The operation type for this guardrail. Azure PII guardrails can only be used for mutate.
+    """
+
     domain: AzurePiiGuardrailConfigDomain = pydantic.Field()
     """
     Specialized domain for PII detection. Use healthcare for PHI (Protected Health Information) or none for general text

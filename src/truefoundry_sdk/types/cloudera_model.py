@@ -28,6 +28,11 @@ class ClouderaModel(UniversalBaseModel):
     The unique identifier of the Model in Cloudera Model Registry. This is the model ID assigned when you registered or deployed your model in the CDP Model Registry
     """
 
+    base_url: str = pydantic.Field()
+    """
+    The model endpoint URL up to the API version v1. To get the base_url, copy the model endpoint URL and delete the last two path components
+    """
+
     model_types: typing.List[ModelType] = pydantic.Field()
     """
     Specify the type of the Cloudera model

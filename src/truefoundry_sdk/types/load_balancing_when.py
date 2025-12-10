@@ -16,7 +16,7 @@ class LoadBalancingWhen(UniversalBaseModel):
     List of subjects that this rule applies to
     """
 
-    models: typing.List[str] = pydantic.Field()
+    models: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     List of models that this rule applies to
     """

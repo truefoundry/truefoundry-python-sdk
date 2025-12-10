@@ -9,6 +9,7 @@ from ..types.chat_prompt_manifest import ChatPromptManifest
 from ..types.empty_response import EmptyResponse
 from ..types.get_prompt_response import GetPromptResponse
 from ..types.get_prompt_version_response import GetPromptVersionResponse
+from ..types.list_prompts_response import ListPromptsResponse
 from ..types.prompt import Prompt
 from .raw_client import AsyncRawPromptsClient, RawPromptsClient
 
@@ -97,8 +98,9 @@ class PromptsClient:
         name: typing.Optional[str] = None,
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
+        include_empty_prompts: typing.Optional[bool] = True,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Prompt]:
+    ) -> SyncPager[Prompt, ListPromptsResponse]:
         """
         Parameters
         ----------
@@ -112,12 +114,14 @@ class PromptsClient:
 
         limit : typing.Optional[int]
 
+        include_empty_prompts : typing.Optional[bool]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        SyncPager[Prompt]
+        SyncPager[Prompt, ListPromptsResponse]
             Successful Response
 
         Examples
@@ -134,6 +138,7 @@ class PromptsClient:
             name="name",
             offset=1,
             limit=1,
+            include_empty_prompts=True,
         )
         for item in response:
             yield item
@@ -142,7 +147,13 @@ class PromptsClient:
             yield page
         """
         return self._raw_client.list(
-            fqn=fqn, ml_repo_id=ml_repo_id, name=name, offset=offset, limit=limit, request_options=request_options
+            fqn=fqn,
+            ml_repo_id=ml_repo_id,
+            name=name,
+            offset=offset,
+            limit=limit,
+            include_empty_prompts=include_empty_prompts,
+            request_options=request_options,
         )
 
     def create_or_update(
@@ -283,8 +294,9 @@ class AsyncPromptsClient:
         name: typing.Optional[str] = None,
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
+        include_empty_prompts: typing.Optional[bool] = True,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Prompt]:
+    ) -> AsyncPager[Prompt, ListPromptsResponse]:
         """
         Parameters
         ----------
@@ -298,12 +310,14 @@ class AsyncPromptsClient:
 
         limit : typing.Optional[int]
 
+        include_empty_prompts : typing.Optional[bool]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncPager[Prompt]
+        AsyncPager[Prompt, ListPromptsResponse]
             Successful Response
 
         Examples
@@ -325,6 +339,7 @@ class AsyncPromptsClient:
                 name="name",
                 offset=1,
                 limit=1,
+                include_empty_prompts=True,
             )
             async for item in response:
                 yield item
@@ -337,7 +352,13 @@ class AsyncPromptsClient:
         asyncio.run(main())
         """
         return await self._raw_client.list(
-            fqn=fqn, ml_repo_id=ml_repo_id, name=name, offset=offset, limit=limit, request_options=request_options
+            fqn=fqn,
+            ml_repo_id=ml_repo_id,
+            name=name,
+            offset=offset,
+            limit=limit,
+            include_empty_prompts=include_empty_prompts,
+            request_options=request_options,
         )
 
     async def create_or_update(

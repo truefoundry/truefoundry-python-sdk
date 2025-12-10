@@ -14,16 +14,17 @@ class UserMetadata(UniversalBaseModel):
     image_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="imageURL")] = None
     display_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="displayName")] = None
     user_object: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="userObject")
+        typing.Optional[typing.Dict[str, typing.Any]], FieldMetadata(alias="userObject")
     ] = None
     invite_accepted: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="inviteAccepted")] = None
     registered_in_idp: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="registeredInIdp")] = None
-    preference: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    preference: typing.Optional[typing.Dict[str, typing.Any]] = None
     groups: typing.Optional[typing.List[str]] = None
     tenant_role_managed_by: typing_extensions.Annotated[
         typing.Optional[UserMetadataTenantRoleManagedBy], FieldMetadata(alias="tenantRoleManagedBy")
     ] = None
     sso_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="ssoName")] = None
+    is_primary_sso: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isPrimarySSO")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

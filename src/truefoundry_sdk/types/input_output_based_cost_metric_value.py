@@ -4,22 +4,14 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .non_negative_float import NonNegativeFloat
 
 
 class InputOutputBasedCostMetricValue(UniversalBaseModel):
-    input: float
-    output: float
-    cache_read: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    Cost for reading cached tokens (e.g., OpenAI cached prompts, Anthropic cache reads)
-    +uiProps={"allowDecimal":true}
-    """
-
-    cache_write: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    Cost for writing/creating cached tokens (e.g., Anthropic cache creation)
-    +uiProps={"allowDecimal":true}
-    """
+    input: NonNegativeFloat
+    output: NonNegativeFloat
+    cache_read: typing.Optional[NonNegativeFloat] = None
+    cache_write: typing.Optional[NonNegativeFloat] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

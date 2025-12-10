@@ -8,6 +8,7 @@ from ..core.request_options import RequestOptions
 from ..types.delete_virtual_account_response import DeleteVirtualAccountResponse
 from ..types.get_token_for_virtual_account_response import GetTokenForVirtualAccountResponse
 from ..types.get_virtual_account_response import GetVirtualAccountResponse
+from ..types.list_virtual_account_response import ListVirtualAccountResponse
 from ..types.sync_virtual_account_token_response import SyncVirtualAccountTokenResponse
 from ..types.virtual_account import VirtualAccount
 from ..types.virtual_account_manifest import VirtualAccountManifest
@@ -38,7 +39,7 @@ class VirtualAccountsClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[VirtualAccount]:
+    ) -> SyncPager[VirtualAccount, ListVirtualAccountResponse]:
         """
         List virtual accounts for the tenant.
 
@@ -55,7 +56,7 @@ class VirtualAccountsClient:
 
         Returns
         -------
-        SyncPager[VirtualAccount]
+        SyncPager[VirtualAccount, ListVirtualAccountResponse]
             Return all virtual accounts for the tenant
 
         Examples
@@ -361,7 +362,7 @@ class AsyncVirtualAccountsClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[VirtualAccount]:
+    ) -> AsyncPager[VirtualAccount, ListVirtualAccountResponse]:
         """
         List virtual accounts for the tenant.
 
@@ -378,7 +379,7 @@ class AsyncVirtualAccountsClient:
 
         Returns
         -------
-        AsyncPager[VirtualAccount]
+        AsyncPager[VirtualAccount, ListVirtualAccountResponse]
             Return all virtual accounts for the tenant
 
         Examples

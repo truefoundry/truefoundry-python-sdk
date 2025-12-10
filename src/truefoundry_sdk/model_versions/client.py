@@ -7,6 +7,7 @@ from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.empty_response import EmptyResponse
 from ..types.get_model_version_response import GetModelVersionResponse
+from ..types.list_model_versions_response import ListModelVersionsResponse
 from ..types.model_version import ModelVersion
 from .raw_client import AsyncRawModelVersionsClient, RawModelVersionsClient
 
@@ -149,7 +150,7 @@ class ModelVersionsClient:
         limit: typing.Optional[int] = 100,
         include_internal_metadata: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[ModelVersion]:
+    ) -> SyncPager[ModelVersion, ListModelVersionsResponse]:
         """
         List model version API
 
@@ -182,7 +183,7 @@ class ModelVersionsClient:
 
         Returns
         -------
-        SyncPager[ModelVersion]
+        SyncPager[ModelVersion, ListModelVersionsResponse]
             Successful Response
 
         Examples
@@ -385,7 +386,7 @@ class AsyncModelVersionsClient:
         limit: typing.Optional[int] = 100,
         include_internal_metadata: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[ModelVersion]:
+    ) -> AsyncPager[ModelVersion, ListModelVersionsResponse]:
         """
         List model version API
 
@@ -418,7 +419,7 @@ class AsyncModelVersionsClient:
 
         Returns
         -------
-        AsyncPager[ModelVersion]
+        AsyncPager[ModelVersion, ListModelVersionsResponse]
             Successful Response
 
         Examples

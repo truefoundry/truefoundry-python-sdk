@@ -28,6 +28,11 @@ class FiddlerGuardrailConfig(UniversalBaseModel):
 
     auth_data: FiddlerKeyAuth
     guard_type: FiddlerGuardType
+    operation: typing.Optional[typing.Literal["validate"]] = pydantic.Field(default=None)
+    """
+    The operation type for this guardrail. Fiddler guardrails can only be used for validation.
+    """
+
     threshold: typing.Optional[float] = pydantic.Field(default=None)
     """
     Confidence threshold (0.0-1.0) for flagging content. Content scoring above the threshold will be flagged

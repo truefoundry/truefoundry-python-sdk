@@ -7,7 +7,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pagination import AsyncPager, BaseHttpResponse, SyncPager
+from ..core.pagination import AsyncPager, SyncPager
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..errors.bad_request_error import BadRequestError
@@ -56,7 +56,7 @@ class RawApplicationsClient:
         lifecycle_stage: typing.Optional[ApplicationsListRequestLifecycleStage] = None,
         is_recommendation_present_and_visible: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Application]:
+    ) -> SyncPager[Application, ListApplicationsResponse]:
         """
         Retrieves a list of all latest applications. Supports filtering by application ID, name, type, and other parameters. Pagination is available based on query parameters.
 
@@ -118,7 +118,7 @@ class RawApplicationsClient:
 
         Returns
         -------
-        SyncPager[Application]
+        SyncPager[Application, ListApplicationsResponse]
             Retrieve latest applications based on the specified query parameters. If pagination parameters are provided, the response includes paginated data.
         """
         offset = offset if offset is not None else 0
@@ -178,16 +178,14 @@ class RawApplicationsClient:
                     is_recommendation_present_and_visible=is_recommendation_present_and_visible,
                     request_options=request_options,
                 )
-                return SyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             if _response.status_code == 400:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -200,7 +198,7 @@ class RawApplicationsClient:
     def create_or_update(
         self,
         *,
-        manifest: typing.Dict[str, typing.Optional[typing.Any]],
+        manifest: typing.Dict[str, typing.Any],
         dry_run: typing.Optional[bool] = OMIT,
         force_deploy: typing.Optional[bool] = OMIT,
         trigger_on_deploy: typing.Optional[bool] = OMIT,
@@ -215,7 +213,7 @@ class RawApplicationsClient:
 
         Parameters
         ----------
-        manifest : typing.Dict[str, typing.Optional[typing.Any]]
+        manifest : typing.Dict[str, typing.Any]
             Manifest of application
 
         dry_run : typing.Optional[bool]
@@ -283,9 +281,9 @@ class RawApplicationsClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -305,9 +303,9 @@ class RawApplicationsClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -377,9 +375,9 @@ class RawApplicationsClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -438,9 +436,9 @@ class RawApplicationsClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -489,9 +487,9 @@ class RawApplicationsClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -500,9 +498,9 @@ class RawApplicationsClient:
                 raise MethodNotAllowedError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -572,9 +570,9 @@ class RawApplicationsClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -647,9 +645,9 @@ class RawApplicationsClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -696,7 +694,7 @@ class AsyncRawApplicationsClient:
         lifecycle_stage: typing.Optional[ApplicationsListRequestLifecycleStage] = None,
         is_recommendation_present_and_visible: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Application]:
+    ) -> AsyncPager[Application, ListApplicationsResponse]:
         """
         Retrieves a list of all latest applications. Supports filtering by application ID, name, type, and other parameters. Pagination is available based on query parameters.
 
@@ -758,7 +756,7 @@ class AsyncRawApplicationsClient:
 
         Returns
         -------
-        AsyncPager[Application]
+        AsyncPager[Application, ListApplicationsResponse]
             Retrieve latest applications based on the specified query parameters. If pagination parameters are provided, the response includes paginated data.
         """
         offset = offset if offset is not None else 0
@@ -821,16 +819,14 @@ class AsyncRawApplicationsClient:
                         request_options=request_options,
                     )
 
-                return AsyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             if _response.status_code == 400:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -843,7 +839,7 @@ class AsyncRawApplicationsClient:
     async def create_or_update(
         self,
         *,
-        manifest: typing.Dict[str, typing.Optional[typing.Any]],
+        manifest: typing.Dict[str, typing.Any],
         dry_run: typing.Optional[bool] = OMIT,
         force_deploy: typing.Optional[bool] = OMIT,
         trigger_on_deploy: typing.Optional[bool] = OMIT,
@@ -858,7 +854,7 @@ class AsyncRawApplicationsClient:
 
         Parameters
         ----------
-        manifest : typing.Dict[str, typing.Optional[typing.Any]]
+        manifest : typing.Dict[str, typing.Any]
             Manifest of application
 
         dry_run : typing.Optional[bool]
@@ -926,9 +922,9 @@ class AsyncRawApplicationsClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -948,9 +944,9 @@ class AsyncRawApplicationsClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -1020,9 +1016,9 @@ class AsyncRawApplicationsClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -1081,9 +1077,9 @@ class AsyncRawApplicationsClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -1134,9 +1130,9 @@ class AsyncRawApplicationsClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -1145,9 +1141,9 @@ class AsyncRawApplicationsClient:
                 raise MethodNotAllowedError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -1217,9 +1213,9 @@ class AsyncRawApplicationsClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -1292,9 +1288,9 @@ class AsyncRawApplicationsClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

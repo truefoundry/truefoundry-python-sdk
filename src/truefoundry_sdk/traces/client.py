@@ -5,6 +5,7 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
+from ..types.query_spans_response import QuerySpansResponse
 from ..types.sort_direction import SortDirection
 from ..types.subject_type import SubjectType
 from ..types.trace_span import TraceSpan
@@ -47,7 +48,7 @@ class TracesClient:
         page_token: typing.Optional[str] = OMIT,
         filters: typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[TraceSpan]:
+    ) -> SyncPager[TraceSpan, QuerySpansResponse]:
         """
         Parameters
         ----------
@@ -95,7 +96,7 @@ class TracesClient:
 
         Returns
         -------
-        SyncPager[TraceSpan]
+        SyncPager[TraceSpan, QuerySpansResponse]
             Returns all the spans matching the query.
 
         Examples
@@ -166,7 +167,7 @@ class AsyncTracesClient:
         page_token: typing.Optional[str] = OMIT,
         filters: typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[TraceSpan]:
+    ) -> AsyncPager[TraceSpan, QuerySpansResponse]:
         """
         Parameters
         ----------
@@ -214,7 +215,7 @@ class AsyncTracesClient:
 
         Returns
         -------
-        AsyncPager[TraceSpan]
+        AsyncPager[TraceSpan, QuerySpansResponse]
             Returns all the spans matching the query.
 
         Examples

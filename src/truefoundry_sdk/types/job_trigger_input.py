@@ -13,7 +13,7 @@ class JobTriggerInput(UniversalBaseModel):
     Command
     """
 
-    params: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    params: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     Parameters used to populate template command
     """

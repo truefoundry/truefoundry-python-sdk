@@ -43,7 +43,7 @@ class Application(UniversalBaseModel):
     """
 
     alerts_summary: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="alertsSummary")
+        typing.Optional[typing.Dict[str, typing.Any]], FieldMetadata(alias="alertsSummary")
     ] = pydantic.Field(default=None)
     """
     Summary of alerts for this application
@@ -63,7 +63,7 @@ class Application(UniversalBaseModel):
     Potential problems with the application
     """
 
-    autopilot: typing.Dict[str, typing.Optional[typing.Any]]
+    autopilot: typing.Dict[str, typing.Any]
     workspace_fqn: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="workspaceFqn")] = None
     created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = None
     deployment: typing.Optional["Deployment"] = None
@@ -86,4 +86,4 @@ class Application(UniversalBaseModel):
 from .application_debug_info import ApplicationDebugInfo  # noqa: E402, I001
 from .deployment import Deployment  # noqa: E402, I001
 
-update_forward_refs(Application)
+update_forward_refs(Application, ApplicationDebugInfo=ApplicationDebugInfo, Deployment=Deployment)

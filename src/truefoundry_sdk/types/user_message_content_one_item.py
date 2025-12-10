@@ -5,4 +5,4 @@ import typing
 from .image_content_part import ImageContentPart
 from .text_content_part import TextContentPart
 
-UserMessageContentItem = typing.Union[TextContentPart, ImageContentPart]
+UserMessageContentOneItem = typing.Union[TextContentPart, ImageContentPart]

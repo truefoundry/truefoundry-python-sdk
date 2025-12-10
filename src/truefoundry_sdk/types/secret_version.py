@@ -32,4 +32,4 @@ class SecretVersion(UniversalBaseModel):
 
 from .secret import Secret  # noqa: E402, I001
 
-update_forward_refs(SecretVersion)
+update_forward_refs(SecretVersion, Secret=Secret)

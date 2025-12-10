@@ -4,16 +4,22 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .notification_target import NotificationTarget
 
 
-class McpServerOAuth2Dcr(UniversalBaseModel):
+class BudgetAlert(UniversalBaseModel):
     """
-    DCR
+    Budget Alert
     """
 
-    type: typing.Literal["dcr"] = pydantic.Field(default="dcr")
+    thresholds: typing.List[float] = pydantic.Field()
     """
-    Uses Dynamic Client Registration (RFC 7591) to automatically obtain OAuth2 credentials from the MCP server. The system will register as a client, receive client ID and secret, and handle the complete OAuth2 flow without manual configuration.
+    List of usage percentages (0-100) at which alerts should be triggered. Default thresholds are [75, 90, 95, 100].
+    """
+
+    notification_target: typing.List[NotificationTarget] = pydantic.Field()
+    """
+    Select where to send budget alert notifications
     """
 
     if IS_PYDANTIC_V2:

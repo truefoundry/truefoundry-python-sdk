@@ -13,7 +13,7 @@ class Jwt(UniversalBaseModel):
     id: str
     subject_type: typing_extensions.Annotated[str, FieldMetadata(alias="subjectType")]
     subject_id: typing_extensions.Annotated[str, FieldMetadata(alias="subjectId")]
-    metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    metadata: typing.Optional[typing.Dict[str, typing.Any]] = None
     expiry: dt.datetime
     created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
     updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]

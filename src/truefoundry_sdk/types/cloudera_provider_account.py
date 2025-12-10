@@ -32,11 +32,6 @@ class ClouderaProviderAccount(UniversalBaseModel):
     Cloudera authentication credentials
     """
 
-    base_url: str = pydantic.Field()
-    """
-    The base URL of your Cloudera CDP environment. This should be the CDP API endpoint URL for your region and environment.
-    """
-
     integrations: typing.List[ClouderaIntegrations] = pydantic.Field()
     """
     List of integrations that are associated with the Cloudera provider account

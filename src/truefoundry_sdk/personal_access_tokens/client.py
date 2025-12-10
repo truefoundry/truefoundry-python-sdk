@@ -8,6 +8,7 @@ from ..core.request_options import RequestOptions
 from ..types.create_personal_access_token_response import CreatePersonalAccessTokenResponse
 from ..types.delete_personal_access_token_response import DeletePersonalAccessTokenResponse
 from ..types.get_or_create_personal_access_token_response import GetOrCreatePersonalAccessTokenResponse
+from ..types.list_personal_access_token_response import ListPersonalAccessTokenResponse
 from ..types.revoke_all_personal_access_token_response import RevokeAllPersonalAccessTokenResponse
 from ..types.virtual_account import VirtualAccount
 from .raw_client import AsyncRawPersonalAccessTokensClient, RawPersonalAccessTokensClient
@@ -37,7 +38,7 @@ class PersonalAccessTokensClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[VirtualAccount]:
+    ) -> SyncPager[VirtualAccount, ListPersonalAccessTokenResponse]:
         """
         List Personal Access Tokens created by the user in the current tenant.
 
@@ -54,7 +55,7 @@ class PersonalAccessTokensClient:
 
         Returns
         -------
-        SyncPager[VirtualAccount]
+        SyncPager[VirtualAccount, ListPersonalAccessTokenResponse]
             Returns all Personal Access Tokens created by the user in the current tenant.
 
         Examples
@@ -247,7 +248,7 @@ class AsyncPersonalAccessTokensClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[VirtualAccount]:
+    ) -> AsyncPager[VirtualAccount, ListPersonalAccessTokenResponse]:
         """
         List Personal Access Tokens created by the user in the current tenant.
 
@@ -264,7 +265,7 @@ class AsyncPersonalAccessTokensClient:
 
         Returns
         -------
-        AsyncPager[VirtualAccount]
+        AsyncPager[VirtualAccount, ListPersonalAccessTokenResponse]
             Returns all Personal Access Tokens created by the user in the current tenant.
 
         Examples

@@ -7,7 +7,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pagination import AsyncPager, BaseHttpResponse, SyncPager
+from ..core.pagination import AsyncPager, SyncPager
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..errors.bad_request_error import BadRequestError
@@ -47,7 +47,7 @@ class RawUsersClient:
         show_invalid_users: typing.Optional[bool] = None,
         include_virtual_accounts: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersResponse]:
         """
         List all users of tenant filtered by query and showInvalidUsers. Pagination is available based on query parameters.
 
@@ -72,7 +72,7 @@ class RawUsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersResponse]
             Returns all users of tenant and also the response includes paginated data.
         """
         offset = offset if offset is not None else 0
@@ -108,9 +108,7 @@ class RawUsersClient:
                     include_virtual_accounts=include_virtual_accounts,
                     request_options=request_options,
                 )
-                return SyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -124,7 +122,6 @@ class RawUsersClient:
         skip_if_user_exists: typing.Optional[bool] = False,
         dry_run: typing.Optional[bool] = False,
         accept_invite_client_url: typing.Optional[str] = OMIT,
-        account_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[RegisterUsersResponse]:
         """
@@ -147,9 +144,6 @@ class RawUsersClient:
         accept_invite_client_url : typing.Optional[str]
             Url to redirect when invite is accepted
 
-        account_id : typing.Optional[str]
-            Account ID to add the user to
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -167,7 +161,6 @@ class RawUsersClient:
                 "skipIfUserExists": skip_if_user_exists,
                 "dryRun": dry_run,
                 "acceptInviteClientURL": accept_invite_client_url,
-                "accountId": account_id,
             },
             headers={
                 "content-type": "application/json",
@@ -211,9 +204,9 @@ class RawUsersClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -224,7 +217,12 @@ class RawUsersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update_roles(
-        self, *, email: str, roles: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        email: str,
+        roles: typing.Sequence[str],
+        resource_type: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[UpdateUserRolesResponse]:
         """
         This endpoint allows tenant administrators to update the roles of a user within their tenant.
@@ -235,7 +233,10 @@ class RawUsersClient:
             Email of the user
 
         roles : typing.Sequence[str]
-            Roles for the user
+            Role names for the user
+
+        resource_type : typing.Optional[str]
+            Resource Type
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -251,6 +252,7 @@ class RawUsersClient:
             json={
                 "email": email,
                 "roles": roles,
+                "resourceType": resource_type,
             },
             headers={
                 "content-type": "application/json",
@@ -283,9 +285,9 @@ class RawUsersClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -294,9 +296,9 @@ class RawUsersClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -342,9 +344,9 @@ class RawUsersClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -392,9 +394,9 @@ class RawUsersClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -414,9 +416,9 @@ class RawUsersClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -427,12 +429,7 @@ class RawUsersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def invite_user(
-        self,
-        *,
-        accept_invite_client_url: str,
-        email: str,
-        account_id: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, accept_invite_client_url: str, email: str, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[InviteUserResponse]:
         """
         Invite a user to the tenant
@@ -444,9 +441,6 @@ class RawUsersClient:
 
         email : str
             Email of user
-
-        account_id : typing.Optional[str]
-            Account ID to add the user to
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -462,7 +456,6 @@ class RawUsersClient:
             json={
                 "acceptInviteClientUrl": accept_invite_client_url,
                 "email": email,
-                "accountId": account_id,
             },
             headers={
                 "content-type": "application/json",
@@ -574,9 +567,9 @@ class RawUsersClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -642,9 +635,9 @@ class RawUsersClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -762,9 +755,9 @@ class RawUsersClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -823,9 +816,9 @@ class RawUsersClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -849,7 +842,7 @@ class AsyncRawUsersClient:
         show_invalid_users: typing.Optional[bool] = None,
         include_virtual_accounts: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersResponse]:
         """
         List all users of tenant filtered by query and showInvalidUsers. Pagination is available based on query parameters.
 
@@ -874,7 +867,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersResponse]
             Returns all users of tenant and also the response includes paginated data.
         """
         offset = offset if offset is not None else 0
@@ -913,9 +906,7 @@ class AsyncRawUsersClient:
                         request_options=request_options,
                     )
 
-                return AsyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -929,7 +920,6 @@ class AsyncRawUsersClient:
         skip_if_user_exists: typing.Optional[bool] = False,
         dry_run: typing.Optional[bool] = False,
         accept_invite_client_url: typing.Optional[str] = OMIT,
-        account_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[RegisterUsersResponse]:
         """
@@ -952,9 +942,6 @@ class AsyncRawUsersClient:
         accept_invite_client_url : typing.Optional[str]
             Url to redirect when invite is accepted
 
-        account_id : typing.Optional[str]
-            Account ID to add the user to
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -972,7 +959,6 @@ class AsyncRawUsersClient:
                 "skipIfUserExists": skip_if_user_exists,
                 "dryRun": dry_run,
                 "acceptInviteClientURL": accept_invite_client_url,
-                "accountId": account_id,
             },
             headers={
                 "content-type": "application/json",
@@ -1016,9 +1002,9 @@ class AsyncRawUsersClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -1029,7 +1015,12 @@ class AsyncRawUsersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update_roles(
-        self, *, email: str, roles: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        email: str,
+        roles: typing.Sequence[str],
+        resource_type: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[UpdateUserRolesResponse]:
         """
         This endpoint allows tenant administrators to update the roles of a user within their tenant.
@@ -1040,7 +1031,10 @@ class AsyncRawUsersClient:
             Email of the user
 
         roles : typing.Sequence[str]
-            Roles for the user
+            Role names for the user
+
+        resource_type : typing.Optional[str]
+            Resource Type
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1056,6 +1050,7 @@ class AsyncRawUsersClient:
             json={
                 "email": email,
                 "roles": roles,
+                "resourceType": resource_type,
             },
             headers={
                 "content-type": "application/json",
@@ -1088,9 +1083,9 @@ class AsyncRawUsersClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -1099,9 +1094,9 @@ class AsyncRawUsersClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -1149,9 +1144,9 @@ class AsyncRawUsersClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -1199,9 +1194,9 @@ class AsyncRawUsersClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -1221,9 +1216,9 @@ class AsyncRawUsersClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -1234,12 +1229,7 @@ class AsyncRawUsersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def invite_user(
-        self,
-        *,
-        accept_invite_client_url: str,
-        email: str,
-        account_id: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, accept_invite_client_url: str, email: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[InviteUserResponse]:
         """
         Invite a user to the tenant
@@ -1251,9 +1241,6 @@ class AsyncRawUsersClient:
 
         email : str
             Email of user
-
-        account_id : typing.Optional[str]
-            Account ID to add the user to
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1269,7 +1256,6 @@ class AsyncRawUsersClient:
             json={
                 "acceptInviteClientUrl": accept_invite_client_url,
                 "email": email,
-                "accountId": account_id,
             },
             headers={
                 "content-type": "application/json",
@@ -1381,9 +1367,9 @@ class AsyncRawUsersClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -1449,9 +1435,9 @@ class AsyncRawUsersClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -1569,9 +1555,9 @@ class AsyncRawUsersClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -1630,9 +1616,9 @@ class AsyncRawUsersClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

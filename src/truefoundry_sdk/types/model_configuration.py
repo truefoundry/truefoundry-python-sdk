@@ -27,7 +27,7 @@ class ModelConfiguration(UniversalBaseModel):
     Parameters to pass to the model when generating
     """
 
-    extra_parameters: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    extra_parameters: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     Arbitrary extra parameters to pass to the model when generating
     """

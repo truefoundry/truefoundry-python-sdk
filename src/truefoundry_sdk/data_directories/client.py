@@ -11,6 +11,8 @@ from ..types.empty_response import EmptyResponse
 from ..types.file_info import FileInfo
 from ..types.get_data_directory_response import GetDataDirectoryResponse
 from ..types.get_signed_ur_ls_response import GetSignedUrLsResponse
+from ..types.list_data_directories_response import ListDataDirectoriesResponse
+from ..types.list_files_response import ListFilesResponse
 from ..types.multi_part_upload_response import MultiPartUploadResponse
 from ..types.operation import Operation
 from .raw_client import AsyncRawDataDirectoriesClient, RawDataDirectoriesClient
@@ -129,7 +131,7 @@ class DataDirectoriesClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[DataDirectory]:
+    ) -> SyncPager[DataDirectory, ListDataDirectoriesResponse]:
         """
         List all data directories with optional filtering and pagination.
 
@@ -161,7 +163,7 @@ class DataDirectoriesClient:
 
         Returns
         -------
-        SyncPager[DataDirectory]
+        SyncPager[DataDirectory, ListDataDirectoriesResponse]
             Successful Response
 
         Examples
@@ -237,7 +239,7 @@ class DataDirectoriesClient:
         limit: typing.Optional[int] = OMIT,
         page_token: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[FileInfo]:
+    ) -> SyncPager[FileInfo, ListFilesResponse]:
         """
         List files in a dataset.
 
@@ -263,7 +265,7 @@ class DataDirectoriesClient:
 
         Returns
         -------
-        SyncPager[FileInfo]
+        SyncPager[FileInfo, ListFilesResponse]
             Successful Response
 
         Examples
@@ -560,7 +562,7 @@ class AsyncDataDirectoriesClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[DataDirectory]:
+    ) -> AsyncPager[DataDirectory, ListDataDirectoriesResponse]:
         """
         List all data directories with optional filtering and pagination.
 
@@ -592,7 +594,7 @@ class AsyncDataDirectoriesClient:
 
         Returns
         -------
-        AsyncPager[DataDirectory]
+        AsyncPager[DataDirectory, ListDataDirectoriesResponse]
             Successful Response
 
         Examples
@@ -685,7 +687,7 @@ class AsyncDataDirectoriesClient:
         limit: typing.Optional[int] = OMIT,
         page_token: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[FileInfo]:
+    ) -> AsyncPager[FileInfo, ListFilesResponse]:
         """
         List files in a dataset.
 
@@ -711,7 +713,7 @@ class AsyncDataDirectoriesClient:
 
         Returns
         -------
-        AsyncPager[FileInfo]
+        AsyncPager[FileInfo, ListFilesResponse]
             Successful Response
 
         Examples

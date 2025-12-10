@@ -7,7 +7,9 @@ from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.delete_secret_group_response import DeleteSecretGroupResponse
 from ..types.get_secret_group_response import GetSecretGroupResponse
+from ..types.list_secret_group_response import ListSecretGroupResponse
 from ..types.secret_group import SecretGroup
+from ..types.secret_group_manifest import SecretGroupManifest
 from ..types.secret_input import SecretInput
 from ..types.update_secret_input import UpdateSecretInput
 from .raw_client import AsyncRawSecretGroupsClient, RawSecretGroupsClient
@@ -39,7 +41,7 @@ class SecretGroupsClient:
         fqn: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[SecretGroup]:
+    ) -> SyncPager[SecretGroup, ListSecretGroupResponse]:
         """
         List the secret groups associated with a user along with the associated secrets for each group. Filtered with the options passed in the query fields. Note: This method does not return the secret values of the <em>associatedSecrets</em> in the response. A separate API call to `/v1/secrets/{id}` should be made to fetch the associated secret value.
 
@@ -62,7 +64,7 @@ class SecretGroupsClient:
 
         Returns
         -------
-        SyncPager[SecretGroup]
+        SyncPager[SecretGroup, ListSecretGroupResponse]
             Returns all the secret groups associated with a user along with the associated secrets for each group.
 
         Examples
@@ -141,6 +143,49 @@ class SecretGroupsClient:
         _response = self._raw_client.create(
             name=name, integration_id=integration_id, secrets=secrets, request_options=request_options
         )
+        return _response.data
+
+    def create_or_update(
+        self, *, manifest: SecretGroupManifest, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetSecretGroupResponse:
+        """
+        Creates a new secret group or updates an existing one based on the provided manifest.
+
+        Parameters
+        ----------
+        manifest : SecretGroupManifest
+            Secret Group Manifest
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetSecretGroupResponse
+            Secret group created or updated successfully.
+
+        Examples
+        --------
+        from truefoundry_sdk import Collaborator, SecretGroupManifest, TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.secret_groups.create_or_update(
+            manifest=SecretGroupManifest(
+                name="name",
+                integration_fqn="integration_fqn",
+                collaborators=[
+                    Collaborator(
+                        subject="subject",
+                        role_id="role_id",
+                    )
+                ],
+            ),
+        )
+        """
+        _response = self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
         return _response.data
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetSecretGroupResponse:
@@ -276,7 +321,7 @@ class AsyncSecretGroupsClient:
         fqn: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[SecretGroup]:
+    ) -> AsyncPager[SecretGroup, ListSecretGroupResponse]:
         """
         List the secret groups associated with a user along with the associated secrets for each group. Filtered with the options passed in the query fields. Note: This method does not return the secret values of the <em>associatedSecrets</em> in the response. A separate API call to `/v1/secrets/{id}` should be made to fetch the associated secret value.
 
@@ -299,7 +344,7 @@ class AsyncSecretGroupsClient:
 
         Returns
         -------
-        AsyncPager[SecretGroup]
+        AsyncPager[SecretGroup, ListSecretGroupResponse]
             Returns all the secret groups associated with a user along with the associated secrets for each group.
 
         Examples
@@ -395,6 +440,57 @@ class AsyncSecretGroupsClient:
         _response = await self._raw_client.create(
             name=name, integration_id=integration_id, secrets=secrets, request_options=request_options
         )
+        return _response.data
+
+    async def create_or_update(
+        self, *, manifest: SecretGroupManifest, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetSecretGroupResponse:
+        """
+        Creates a new secret group or updates an existing one based on the provided manifest.
+
+        Parameters
+        ----------
+        manifest : SecretGroupManifest
+            Secret Group Manifest
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetSecretGroupResponse
+            Secret group created or updated successfully.
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry, Collaborator, SecretGroupManifest
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.secret_groups.create_or_update(
+                manifest=SecretGroupManifest(
+                    name="name",
+                    integration_fqn="integration_fqn",
+                    collaborators=[
+                        Collaborator(
+                            subject="subject",
+                            role_id="role_id",
+                        )
+                    ],
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
         return _response.data
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetSecretGroupResponse:

@@ -10,6 +10,7 @@ from ..types.cluster_manifest import ClusterManifest
 from ..types.get_cluster_response import GetClusterResponse
 from ..types.is_cluster_connected_response import IsClusterConnectedResponse
 from ..types.list_cluster_addons_response import ListClusterAddonsResponse
+from ..types.list_clusters_response import ListClustersResponse
 from .raw_client import AsyncRawClustersClient, RawClustersClient
 from .types.clusters_delete_response import ClustersDeleteResponse
 
@@ -38,7 +39,7 @@ class ClustersClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Cluster]:
+    ) -> SyncPager[Cluster, ListClustersResponse]:
         """
         Retrieves a list of all latest Clusters. Pagination is available based on query parameters.
 
@@ -55,7 +56,7 @@ class ClustersClient:
 
         Returns
         -------
-        SyncPager[Cluster]
+        SyncPager[Cluster, ListClustersResponse]
             Retrieve latest Clusters. If pagination parameters are provided, the response includes paginated data.
 
         Examples
@@ -303,7 +304,7 @@ class AsyncClustersClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Cluster]:
+    ) -> AsyncPager[Cluster, ListClustersResponse]:
         """
         Retrieves a list of all latest Clusters. Pagination is available based on query parameters.
 
@@ -320,7 +321,7 @@ class AsyncClustersClient:
 
         Returns
         -------
-        AsyncPager[Cluster]
+        AsyncPager[Cluster, ListClustersResponse]
             Retrieve latest Clusters. If pagination parameters are provided, the response includes paginated data.
 
         Examples

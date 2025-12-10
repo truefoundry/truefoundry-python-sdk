@@ -10,6 +10,7 @@ from ..types.delete_application_response import DeleteApplicationResponse
 from ..types.deployment import Deployment
 from ..types.get_application_deployment_response import GetApplicationDeploymentResponse
 from ..types.get_application_response import GetApplicationResponse
+from ..types.list_applications_response import ListApplicationsResponse
 from .raw_client import AsyncRawApplicationsClient, RawApplicationsClient
 from .types.applications_cancel_deployment_response import ApplicationsCancelDeploymentResponse
 from .types.applications_list_request_device_type_filter import ApplicationsListRequestDeviceTypeFilter
@@ -55,7 +56,7 @@ class ApplicationsClient:
         lifecycle_stage: typing.Optional[ApplicationsListRequestLifecycleStage] = None,
         is_recommendation_present_and_visible: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Application]:
+    ) -> SyncPager[Application, ListApplicationsResponse]:
         """
         Retrieves a list of all latest applications. Supports filtering by application ID, name, type, and other parameters. Pagination is available based on query parameters.
 
@@ -117,7 +118,7 @@ class ApplicationsClient:
 
         Returns
         -------
-        SyncPager[Application]
+        SyncPager[Application, ListApplicationsResponse]
             Retrieve latest applications based on the specified query parameters. If pagination parameters are provided, the response includes paginated data.
 
         Examples
@@ -181,7 +182,7 @@ class ApplicationsClient:
     def create_or_update(
         self,
         *,
-        manifest: typing.Dict[str, typing.Optional[typing.Any]],
+        manifest: typing.Dict[str, typing.Any],
         dry_run: typing.Optional[bool] = OMIT,
         force_deploy: typing.Optional[bool] = OMIT,
         trigger_on_deploy: typing.Optional[bool] = OMIT,
@@ -196,7 +197,7 @@ class ApplicationsClient:
 
         Parameters
         ----------
-        manifest : typing.Dict[str, typing.Optional[typing.Any]]
+        manifest : typing.Dict[str, typing.Any]
             Manifest of application
 
         dry_run : typing.Optional[bool]
@@ -458,7 +459,7 @@ class AsyncApplicationsClient:
         lifecycle_stage: typing.Optional[ApplicationsListRequestLifecycleStage] = None,
         is_recommendation_present_and_visible: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Application]:
+    ) -> AsyncPager[Application, ListApplicationsResponse]:
         """
         Retrieves a list of all latest applications. Supports filtering by application ID, name, type, and other parameters. Pagination is available based on query parameters.
 
@@ -520,7 +521,7 @@ class AsyncApplicationsClient:
 
         Returns
         -------
-        AsyncPager[Application]
+        AsyncPager[Application, ListApplicationsResponse]
             Retrieve latest applications based on the specified query parameters. If pagination parameters are provided, the response includes paginated data.
 
         Examples
@@ -593,7 +594,7 @@ class AsyncApplicationsClient:
     async def create_or_update(
         self,
         *,
-        manifest: typing.Dict[str, typing.Optional[typing.Any]],
+        manifest: typing.Dict[str, typing.Any],
         dry_run: typing.Optional[bool] = OMIT,
         force_deploy: typing.Optional[bool] = OMIT,
         trigger_on_deploy: typing.Optional[bool] = OMIT,
@@ -608,7 +609,7 @@ class AsyncApplicationsClient:
 
         Parameters
         ----------
-        manifest : typing.Dict[str, typing.Optional[typing.Any]]
+        manifest : typing.Dict[str, typing.Any]
             Manifest of application
 
         dry_run : typing.Optional[bool]

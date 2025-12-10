@@ -14,9 +14,9 @@ from .i_change_operation import IChangeOperation
 class IChange(UniversalBaseModel):
     type: IChangeOperation
     key: str
-    value: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    value: typing.Optional[typing.Dict[str, typing.Any]] = None
     old_value: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="oldValue")
+        typing.Optional[typing.Dict[str, typing.Any]], FieldMetadata(alias="oldValue")
     ] = None
     changes: typing.Optional[typing.List["IChange"]] = None
 

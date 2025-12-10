@@ -15,7 +15,7 @@ class DeploymentStatus(UniversalBaseModel):
     id: typing.Optional[str] = None
     deployment_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="deploymentId")] = None
     status: typing.Optional[DeploymentStatusValue] = None
-    state: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    state: typing.Optional[typing.Dict[str, typing.Any]] = None
     transition: typing.Optional[DeploymentTransition] = None
     message: typing.Optional[str] = None
     retry_count: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="retryCount")] = None

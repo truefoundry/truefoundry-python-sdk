@@ -35,12 +35,12 @@ class SparkJob(UniversalBaseModel):
 
     driver_config: SparkDriverConfig
     executor_config: SparkExecutorConfig
-    env: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    env: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     Configure environment variables to be injected in the service either as plain text. [Docs](https://docs.truefoundry.com/docs/env-variables)
     """
 
-    spark_conf: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    spark_conf: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     Extra configuration properties to be passed to the spark job. [Docs](https://spark.apache.org/docs/latest/configuration.html)
     """

@@ -26,7 +26,7 @@ class AzureBlobStorage(UniversalBaseModel):
 
     storage_root: str = pydantic.Field()
     """
-    The root path of the storage.
+    The full Azure Blob Storage URL in the format 'https://<storage-account-name>.blob.core.windows.net/<container-name>/<optional-path-prefix>'. Example: 'https://mystorageaccount.blob.core.windows.net/mycontainer' or 'https://mystorageaccount.blob.core.windows.net/mycontainer/artifacts/production'.
     """
 
     auth_data: typing.Optional[AzureConnectionStringAuth] = None

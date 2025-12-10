@@ -7,6 +7,7 @@ from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.empty_response import EmptyResponse
 from ..types.get_prompt_version_response import GetPromptVersionResponse
+from ..types.list_prompt_versions_response import ListPromptVersionsResponse
 from ..types.prompt_version import PromptVersion
 from .raw_client import AsyncRawPromptVersionsClient, RawPromptVersionsClient
 
@@ -146,7 +147,7 @@ class PromptVersionsClient:
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[PromptVersion]:
+    ) -> SyncPager[PromptVersion, ListPromptVersionsResponse]:
         """
         List prompt version API
 
@@ -173,7 +174,7 @@ class PromptVersionsClient:
 
         Returns
         -------
-        SyncPager[PromptVersion]
+        SyncPager[PromptVersion, ListPromptVersionsResponse]
             Successful Response
 
         Examples
@@ -371,7 +372,7 @@ class AsyncPromptVersionsClient:
         offset: typing.Optional[int] = 0,
         limit: typing.Optional[int] = 100,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[PromptVersion]:
+    ) -> AsyncPager[PromptVersion, ListPromptVersionsResponse]:
         """
         List prompt version API
 
@@ -398,7 +399,7 @@ class AsyncPromptVersionsClient:
 
         Returns
         -------
-        AsyncPager[PromptVersion]
+        AsyncPager[PromptVersion, ListPromptVersionsResponse]
             Successful Response
 
         Examples

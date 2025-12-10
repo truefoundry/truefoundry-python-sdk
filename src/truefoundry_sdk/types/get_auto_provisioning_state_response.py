@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class GetAutoProvisioningStateResponse(UniversalBaseModel):
-    state: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    state: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     State of auto-provisioning for the cluster.
     """

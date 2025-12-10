@@ -32,4 +32,4 @@ class UpgradeData(UniversalBaseModel):
 
 from .i_change import IChange  # noqa: E402, I001
 
-update_forward_refs(UpgradeData)
+update_forward_refs(UpgradeData, IChange=IChange)

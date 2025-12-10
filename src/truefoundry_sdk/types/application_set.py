@@ -32,7 +32,7 @@ class ApplicationSet(UniversalBaseModel):
     Template to be used for the application set.
     """
 
-    values: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    values: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     Values to be used to render components for the application set.
     """
