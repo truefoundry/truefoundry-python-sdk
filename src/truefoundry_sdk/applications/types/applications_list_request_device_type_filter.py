@@ -14,6 +14,16 @@ class ApplicationsListRequestDeviceTypeFilter(enum.StrEnum):
     NVIDIA_MIG_GPU = "nvidia_mig_gpu"
     NVIDIA_TIMESLICING_GPU = "nvidia_timeslicing_gpu"
     GCP_TPU = "gcp_tpu"
+    _UNKNOWN = "__APPLICATIONSLISTREQUESTDEVICETYPEFILTER_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "ApplicationsListRequestDeviceTypeFilter":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
@@ -23,6 +33,7 @@ class ApplicationsListRequestDeviceTypeFilter(enum.StrEnum):
         nvidia_mig_gpu: typing.Callable[[], T_Result],
         nvidia_timeslicing_gpu: typing.Callable[[], T_Result],
         gcp_tpu: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is ApplicationsListRequestDeviceTypeFilter.CPU:
             return cpu()
@@ -36,3 +47,4 @@ class ApplicationsListRequestDeviceTypeFilter(enum.StrEnum):
             return nvidia_timeslicing_gpu()
         if self is ApplicationsListRequestDeviceTypeFilter.GCP_TPU:
             return gcp_tpu()
+        return _unknown_member(self._value_)

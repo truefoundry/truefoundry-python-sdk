@@ -13,6 +13,16 @@ class EventChartCategory(enum.StrEnum):
     POD_TERMINATED = "PodTerminated"
     POD_EVICTED = "PodEvicted"
     GENERAL = "General"
+    _UNKNOWN = "__EVENTCHARTCATEGORY_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "EventChartCategory":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
@@ -21,6 +31,7 @@ class EventChartCategory(enum.StrEnum):
         pod_terminated: typing.Callable[[], T_Result],
         pod_evicted: typing.Callable[[], T_Result],
         general: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is EventChartCategory.CONTAINER_TERMINATED:
             return container_terminated()
@@ -32,3 +43,4 @@ class EventChartCategory(enum.StrEnum):
             return pod_evicted()
         if self is EventChartCategory.GENERAL:
             return general()
+        return _unknown_member(self._value_)

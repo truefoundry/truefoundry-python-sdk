@@ -15,6 +15,16 @@ class PolicyEntityTypes(enum.StrEnum):
     SSH_SERVER = "ssh-server"
     WORKFLOW = "workflow"
     HELM = "helm"
+    _UNKNOWN = "__POLICYENTITYTYPES_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "PolicyEntityTypes":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
@@ -25,6 +35,7 @@ class PolicyEntityTypes(enum.StrEnum):
         ssh_server: typing.Callable[[], T_Result],
         workflow: typing.Callable[[], T_Result],
         helm: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is PolicyEntityTypes.SERVICE:
             return service()
@@ -40,3 +51,4 @@ class PolicyEntityTypes(enum.StrEnum):
             return workflow()
         if self is PolicyEntityTypes.HELM:
             return helm()
+        return _unknown_member(self._value_)

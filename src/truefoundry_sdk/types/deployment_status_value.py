@@ -21,6 +21,16 @@ class DeploymentStatusValue(enum.StrEnum):
     CANCELLED = "CANCELLED"
     REDEPLOY_STARTED = "REDEPLOY_STARTED"
     BUILDING = "BUILDING"
+    _UNKNOWN = "__DEPLOYMENTSTATUSVALUE_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "DeploymentStatusValue":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
@@ -37,6 +47,7 @@ class DeploymentStatusValue(enum.StrEnum):
         cancelled: typing.Callable[[], T_Result],
         redeploy_started: typing.Callable[[], T_Result],
         building: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is DeploymentStatusValue.INITIALIZED:
             return initialized()
@@ -64,3 +75,4 @@ class DeploymentStatusValue(enum.StrEnum):
             return redeploy_started()
         if self is DeploymentStatusValue.BUILDING:
             return building()
+        return _unknown_member(self._value_)

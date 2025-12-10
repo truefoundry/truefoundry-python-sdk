@@ -10,9 +10,25 @@ T_Result = typing.TypeVar("T_Result")
 class EnvironmentOptimizeFor(enum.StrEnum):
     COST = "COST"
     AVAILABILITY = "AVAILABILITY"
+    _UNKNOWN = "__ENVIRONMENTOPTIMIZEFOR_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
 
-    def visit(self, cost: typing.Callable[[], T_Result], availability: typing.Callable[[], T_Result]) -> T_Result:
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "EnvironmentOptimizeFor":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
+
+    def visit(
+        self,
+        cost: typing.Callable[[], T_Result],
+        availability: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
+    ) -> T_Result:
         if self is EnvironmentOptimizeFor.COST:
             return cost()
         if self is EnvironmentOptimizeFor.AVAILABILITY:
             return availability()
+        return _unknown_member(self._value_)

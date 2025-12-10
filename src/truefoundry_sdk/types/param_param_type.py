@@ -10,9 +10,25 @@ T_Result = typing.TypeVar("T_Result")
 class ParamParamType(enum.StrEnum):
     STRING = "string"
     ML_REPO = "ml_repo"
+    _UNKNOWN = "__PARAMPARAMTYPE_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
 
-    def visit(self, string: typing.Callable[[], T_Result], ml_repo: typing.Callable[[], T_Result]) -> T_Result:
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "ParamParamType":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
+
+    def visit(
+        self,
+        string: typing.Callable[[], T_Result],
+        ml_repo: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
+    ) -> T_Result:
         if self is ParamParamType.STRING:
             return string()
         if self is ParamParamType.ML_REPO:
             return ml_repo()
+        return _unknown_member(self._value_)

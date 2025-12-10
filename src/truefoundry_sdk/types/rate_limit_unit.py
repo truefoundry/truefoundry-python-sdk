@@ -18,6 +18,16 @@ class RateLimitUnit(enum.StrEnum):
     TOKENS_PER_DAY = "tokens_per_day"
     REQUESTS_PER_HOUR = "requests_per_hour"
     TOKENS_PER_HOUR = "tokens_per_hour"
+    _UNKNOWN = "__RATELIMITUNIT_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "RateLimitUnit":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
@@ -27,6 +37,7 @@ class RateLimitUnit(enum.StrEnum):
         tokens_per_day: typing.Callable[[], T_Result],
         requests_per_hour: typing.Callable[[], T_Result],
         tokens_per_hour: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is RateLimitUnit.REQUESTS_PER_DAY:
             return requests_per_day()
@@ -40,3 +51,4 @@ class RateLimitUnit(enum.StrEnum):
             return requests_per_hour()
         if self is RateLimitUnit.TOKENS_PER_HOUR:
             return tokens_per_hour()
+        return _unknown_member(self._value_)

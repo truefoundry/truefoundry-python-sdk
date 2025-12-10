@@ -21,6 +21,16 @@ class AzurePiiCategory(enum.StrEnum):
     BANK_ACCOUNT_NUMBER = "BankAccountNumber"
     DRIVERS_LICENSE_NUMBER = "DriversLicenseNumber"
     PASSPORT_NUMBER = "PassportNumber"
+    _UNKNOWN = "__AZUREPIICATEGORY_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "AzurePiiCategory":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
@@ -37,6 +47,7 @@ class AzurePiiCategory(enum.StrEnum):
         bank_account_number: typing.Callable[[], T_Result],
         drivers_license_number: typing.Callable[[], T_Result],
         passport_number: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is AzurePiiCategory.ALL:
             return all_()
@@ -64,3 +75,4 @@ class AzurePiiCategory(enum.StrEnum):
             return drivers_license_number()
         if self is AzurePiiCategory.PASSPORT_NUMBER:
             return passport_number()
+        return _unknown_member(self._value_)

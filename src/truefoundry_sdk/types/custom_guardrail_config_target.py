@@ -14,9 +14,25 @@ class CustomGuardrailConfigTarget(enum.StrEnum):
 
     REQUEST = "request"
     RESPONSE = "response"
+    _UNKNOWN = "__CUSTOMGUARDRAILCONFIGTARGET_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
 
-    def visit(self, request: typing.Callable[[], T_Result], response: typing.Callable[[], T_Result]) -> T_Result:
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "CustomGuardrailConfigTarget":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
+
+    def visit(
+        self,
+        request: typing.Callable[[], T_Result],
+        response: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
+    ) -> T_Result:
         if self is CustomGuardrailConfigTarget.REQUEST:
             return request()
         if self is CustomGuardrailConfigTarget.RESPONSE:
             return response()
+        return _unknown_member(self._value_)

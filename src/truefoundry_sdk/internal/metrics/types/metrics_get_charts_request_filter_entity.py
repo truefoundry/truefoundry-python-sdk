@@ -13,6 +13,16 @@ class MetricsGetChartsRequestFilterEntity(enum.StrEnum):
     JOB_RUN = "job-run"
     EVENT = "event"
     CLUSTER = "cluster"
+    _UNKNOWN = "__METRICSGETCHARTSREQUESTFILTERENTITY_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "MetricsGetChartsRequestFilterEntity":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
@@ -21,6 +31,7 @@ class MetricsGetChartsRequestFilterEntity(enum.StrEnum):
         job_run: typing.Callable[[], T_Result],
         event: typing.Callable[[], T_Result],
         cluster: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is MetricsGetChartsRequestFilterEntity.APPLICATION:
             return application()
@@ -32,3 +43,4 @@ class MetricsGetChartsRequestFilterEntity(enum.StrEnum):
             return event()
         if self is MetricsGetChartsRequestFilterEntity.CLUSTER:
             return cluster()
+        return _unknown_member(self._value_)

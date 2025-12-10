@@ -11,12 +11,23 @@ class BuildStatus(enum.StrEnum):
     STARTED = "STARTED"
     SUCCEEDED = "SUCCEEDED"
     FAILED = "FAILED"
+    _UNKNOWN = "__BUILDSTATUS_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "BuildStatus":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
         started: typing.Callable[[], T_Result],
         succeeded: typing.Callable[[], T_Result],
         failed: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is BuildStatus.STARTED:
             return started()
@@ -24,3 +35,4 @@ class BuildStatus(enum.StrEnum):
             return succeeded()
         if self is BuildStatus.FAILED:
             return failed()
+        return _unknown_member(self._value_)

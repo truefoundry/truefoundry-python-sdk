@@ -14,9 +14,25 @@ class Operation(enum.StrEnum):
 
     READ = "READ"
     WRITE = "WRITE"
+    _UNKNOWN = "__OPERATION_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
 
-    def visit(self, read: typing.Callable[[], T_Result], write: typing.Callable[[], T_Result]) -> T_Result:
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "Operation":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
+
+    def visit(
+        self,
+        read: typing.Callable[[], T_Result],
+        write: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
+    ) -> T_Result:
         if self is Operation.READ:
             return read()
         if self is Operation.WRITE:
             return write()
+        return _unknown_member(self._value_)

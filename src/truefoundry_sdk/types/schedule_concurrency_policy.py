@@ -17,12 +17,23 @@ class ScheduleConcurrencyPolicy(enum.StrEnum):
     FORBID = "Forbid"
     ALLOW = "Allow"
     REPLACE = "Replace"
+    _UNKNOWN = "__SCHEDULECONCURRENCYPOLICY_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "ScheduleConcurrencyPolicy":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
         forbid: typing.Callable[[], T_Result],
         allow: typing.Callable[[], T_Result],
         replace: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is ScheduleConcurrencyPolicy.FORBID:
             return forbid()
@@ -30,3 +41,4 @@ class ScheduleConcurrencyPolicy(enum.StrEnum):
             return allow()
         if self is ScheduleConcurrencyPolicy.REPLACE:
             return replace()
+        return _unknown_member(self._value_)

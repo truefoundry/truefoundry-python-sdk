@@ -21,6 +21,16 @@ class SpanFieldFilterSpanFieldName(enum.StrEnum):
     TAG = "tag"
     SCOPE_NAME = "scopeName"
     ENVIRONMENT = "environment"
+    _UNKNOWN = "__SPANFIELDFILTERSPANFIELDNAME_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "SpanFieldFilterSpanFieldName":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
@@ -37,6 +47,7 @@ class SpanFieldFilterSpanFieldName(enum.StrEnum):
         tag: typing.Callable[[], T_Result],
         scope_name: typing.Callable[[], T_Result],
         environment: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is SpanFieldFilterSpanFieldName.SPAN_NAME:
             return span_name()
@@ -64,3 +75,4 @@ class SpanFieldFilterSpanFieldName(enum.StrEnum):
             return scope_name()
         if self is SpanFieldFilterSpanFieldName.ENVIRONMENT:
             return environment()
+        return _unknown_member(self._value_)

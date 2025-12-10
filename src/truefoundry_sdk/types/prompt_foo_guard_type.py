@@ -11,12 +11,23 @@ class PromptFooGuardType(enum.StrEnum):
     GUARD_CHECK = "guard_check"
     PII_REDACTION = "pii_redaction"
     HARMFUL_DETECTION = "harmful_detection"
+    _UNKNOWN = "__PROMPTFOOGUARDTYPE_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "PromptFooGuardType":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
         guard_check: typing.Callable[[], T_Result],
         pii_redaction: typing.Callable[[], T_Result],
         harmful_detection: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is PromptFooGuardType.GUARD_CHECK:
             return guard_check()
@@ -24,3 +35,4 @@ class PromptFooGuardType(enum.StrEnum):
             return pii_redaction()
         if self is PromptFooGuardType.HARMFUL_DETECTION:
             return harmful_detection()
+        return _unknown_member(self._value_)

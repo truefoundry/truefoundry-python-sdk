@@ -18,6 +18,16 @@ class SelfHostedModelModelServer(enum.StrEnum):
     INFINITY = "infinity"
     TEI = "tei"
     VLLM_OPENAI = "vllm-openai"
+    _UNKNOWN = "__SELFHOSTEDMODELMODELSERVER_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
+
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "SelfHostedModelModelServer":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
 
     def visit(
         self,
@@ -27,6 +37,7 @@ class SelfHostedModelModelServer(enum.StrEnum):
         infinity: typing.Callable[[], T_Result],
         tei: typing.Callable[[], T_Result],
         vllm_openai: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is SelfHostedModelModelServer.OPENAI_COMPATIBLE:
             return openai_compatible()
@@ -40,3 +51,4 @@ class SelfHostedModelModelServer(enum.StrEnum):
             return tei()
         if self is SelfHostedModelModelServer.VLLM_OPENAI:
             return vllm_openai()
+        return _unknown_member(self._value_)

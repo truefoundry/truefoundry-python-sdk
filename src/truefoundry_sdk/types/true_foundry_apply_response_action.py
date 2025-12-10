@@ -14,9 +14,25 @@ class TrueFoundryApplyResponseAction(enum.StrEnum):
 
     CREATE = "CREATE"
     UPDATE = "UPDATE"
+    _UNKNOWN = "__TRUEFOUNDRYAPPLYRESPONSEACTION_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
 
-    def visit(self, create: typing.Callable[[], T_Result], update: typing.Callable[[], T_Result]) -> T_Result:
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "TrueFoundryApplyResponseAction":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
+
+    def visit(
+        self,
+        create: typing.Callable[[], T_Result],
+        update: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
+    ) -> T_Result:
         if self is TrueFoundryApplyResponseAction.CREATE:
             return create()
         if self is TrueFoundryApplyResponseAction.UPDATE:
             return update()
+        return _unknown_member(self._value_)

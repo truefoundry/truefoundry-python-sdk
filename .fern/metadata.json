@@ -5,7 +5,7 @@
   "generatorConfig": {
     "package_name": "truefoundry_sdk",
     "pydantic_config": {
-      "enum_type": "python_enums",
+      "enum_type": "forward_compatible_python_enums",
       "use_provided_defaults": true,
       "frozen": false
     },

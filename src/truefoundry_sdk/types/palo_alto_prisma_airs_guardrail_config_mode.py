@@ -14,9 +14,25 @@ class PaloAltoPrismaAirsGuardrailConfigMode(enum.StrEnum):
 
     SYNC = "sync"
     ASYNC = "async"
+    _UNKNOWN = "__PALOALTOPRISMAAIRSGUARDRAILCONFIGMODE_UNKNOWN__"
+    """
+    This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
+    """
 
-    def visit(self, sync: typing.Callable[[], T_Result], async_: typing.Callable[[], T_Result]) -> T_Result:
+    @classmethod
+    def _missing_(cls, value: typing.Any) -> "PaloAltoPrismaAirsGuardrailConfigMode":
+        unknown = cls._UNKNOWN
+        unknown._value_ = value
+        return unknown
+
+    def visit(
+        self,
+        sync: typing.Callable[[], T_Result],
+        async_: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
+    ) -> T_Result:
         if self is PaloAltoPrismaAirsGuardrailConfigMode.SYNC:
             return sync()
         if self is PaloAltoPrismaAirsGuardrailConfigMode.ASYNC:
             return async_()
+        return _unknown_member(self._value_)
