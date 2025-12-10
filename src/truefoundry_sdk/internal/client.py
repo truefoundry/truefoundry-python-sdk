@@ -12,6 +12,7 @@ if typing.TYPE_CHECKING:
     from .ai_gateway.client import AiGatewayClient, AsyncAiGatewayClient
     from .applications.client import ApplicationsClient, AsyncApplicationsClient
     from .artifact_versions.client import ArtifactVersionsClient, AsyncArtifactVersionsClient
+    from .build_logs.client import AsyncBuildLogsClient, BuildLogsClient
     from .clusters.client import AsyncClustersClient, ClustersClient
     from .deployments.client import AsyncDeploymentsClient, DeploymentsClient
     from .docker_registries.client import AsyncDockerRegistriesClient, DockerRegistriesClient
@@ -35,6 +36,7 @@ class InternalClient:
         self._vcs: typing.Optional[VcsClient] = None
         self._docker_registries: typing.Optional[DockerRegistriesClient] = None
         self._workflows: typing.Optional[WorkflowsClient] = None
+        self._build_logs: typing.Optional[BuildLogsClient] = None
         self._artifact_versions: typing.Optional[ArtifactVersionsClient] = None
         self._ml: typing.Optional[MlClient] = None
 
@@ -160,6 +162,14 @@ class InternalClient:
         return self._workflows
 
     @property
+    def build_logs(self):
+        if self._build_logs is None:
+            from .build_logs.client import BuildLogsClient  # noqa: E402
+
+            self._build_logs = BuildLogsClient(client_wrapper=self._client_wrapper)
+        return self._build_logs
+
+    @property
     def artifact_versions(self):
         if self._artifact_versions is None:
             from .artifact_versions.client import ArtifactVersionsClient  # noqa: E402
@@ -189,6 +199,7 @@ class AsyncInternalClient:
         self._vcs: typing.Optional[AsyncVcsClient] = None
         self._docker_registries: typing.Optional[AsyncDockerRegistriesClient] = None
         self._workflows: typing.Optional[AsyncWorkflowsClient] = None
+        self._build_logs: typing.Optional[AsyncBuildLogsClient] = None
         self._artifact_versions: typing.Optional[AsyncArtifactVersionsClient] = None
         self._ml: typing.Optional[AsyncMlClient] = None
 
@@ -320,6 +331,14 @@ class AsyncInternalClient:
 
             self._workflows = AsyncWorkflowsClient(client_wrapper=self._client_wrapper)
         return self._workflows
+
+    @property
+    def build_logs(self):
+        if self._build_logs is None:
+            from .build_logs.client import AsyncBuildLogsClient  # noqa: E402
+
+            self._build_logs = AsyncBuildLogsClient(client_wrapper=self._client_wrapper)
+        return self._build_logs
 
     @property
     def artifact_versions(self):

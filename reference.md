@@ -11008,6 +11008,131 @@ client.internal.workflows.execute_workflow(
 </dl>
 </details>
 
+## Internal BuildLogs
+<details><summary><code>client.internal.build_logs.<a href="src/truefoundry_sdk/internal/build_logs/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get logs for a given pipeline run by its name, with optional filters and time range.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.internal.build_logs.get(
+    pipeline_run_name="pipelineRunName",
+    start_ts="1635467890123456789",
+    end_ts="1635467891123456789",
+    limit="limit",
+    direction="direction",
+    num_logs_to_ignore=1.1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pipeline_run_name:** `str` — PipelineRun Name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start_ts:** `typing.Optional[str]` — Start timestamp for querying logs, in nanoseconds from the Unix epoch.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end_ts:** `typing.Optional[str]` — End timestamp for querying logs, in nanoseconds from the Unix epoch.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[str]` — Max number of log lines to fetch
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**direction:** `typing.Optional[str]` — Direction of sorting logs. Can be `asc` or `desc`
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filter_query:** `typing.Optional[LogsFilterQuery]` — Query to filter logs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_logs_to_ignore:** `typing.Optional[float]` — Number of logs corresponding to the starting timestamp to be ignored.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Internal ArtifactVersions
 <details><summary><code>client.internal.artifact_versions.<a href="src/truefoundry_sdk/internal/artifact_versions/client.py">list</a>(...)</code></summary>
 <dl>
