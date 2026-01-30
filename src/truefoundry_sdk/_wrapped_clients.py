@@ -48,7 +48,7 @@ def _get_by_fqn(client: HasListMethod[T, R], *, fqn: str, request_options: Optio
         raise NotFoundError(
             body=HttpError(
                 message=f"No entity found with fqn {fqn}",
-                status_code=404,
+                statusCode=404,
             )
         )
     return result
@@ -67,7 +67,7 @@ async def _aget_by_fqn(
         raise NotFoundError(
             body=HttpError(
                 message=f"No entity found with fqn {fqn}",
-                status_code=404,
+                statusCode=404,
             )
         )
     return result

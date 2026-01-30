@@ -80,7 +80,7 @@ class RawVirtualAccountsClient:
                 _has_next = True
                 _get_next = lambda: self.list(
                     limit=limit,
-                    offset=offset + len(_items),
+                    offset=offset + len(_items or []),
                     request_options=request_options,
                 )
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
@@ -507,7 +507,7 @@ class AsyncRawVirtualAccountsClient:
                 async def _get_next():
                     return await self.list(
                         limit=limit,
-                        offset=offset + len(_items),
+                        offset=offset + len(_items or []),
                         request_options=request_options,
                     )
 

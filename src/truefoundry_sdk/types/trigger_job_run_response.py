@@ -15,7 +15,9 @@ class TriggerJobRunResponse(UniversalBaseModel):
     Job triggered
     """
 
-    job_run_name: typing_extensions.Annotated[str, FieldMetadata(alias="jobRunName")] = pydantic.Field()
+    job_run_name: typing_extensions.Annotated[str, FieldMetadata(alias="jobRunName")] = pydantic.Field(
+        alias="jobRunName"
+    )
     """
     Name of the job run
     """

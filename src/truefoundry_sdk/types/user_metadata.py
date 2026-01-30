@@ -11,20 +11,32 @@ from .user_metadata_tenant_role_managed_by import UserMetadataTenantRoleManagedB
 
 class UserMetadata(UniversalBaseModel):
     sub: typing.Optional[str] = None
-    image_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="imageURL")] = None
-    display_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="displayName")] = None
+    image_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="imageURL")] = pydantic.Field(
+        alias="imageURL", default=None
+    )
+    display_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="displayName")] = (
+        pydantic.Field(alias="displayName", default=None)
+    )
     user_object: typing_extensions.Annotated[
         typing.Optional[typing.Dict[str, typing.Any]], FieldMetadata(alias="userObject")
-    ] = None
-    invite_accepted: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="inviteAccepted")] = None
-    registered_in_idp: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="registeredInIdp")] = None
+    ] = pydantic.Field(alias="userObject", default=None)
+    invite_accepted: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="inviteAccepted")] = (
+        pydantic.Field(alias="inviteAccepted", default=None)
+    )
+    registered_in_idp: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="registeredInIdp")] = (
+        pydantic.Field(alias="registeredInIdp", default=None)
+    )
     preference: typing.Optional[typing.Dict[str, typing.Any]] = None
     groups: typing.Optional[typing.List[str]] = None
     tenant_role_managed_by: typing_extensions.Annotated[
         typing.Optional[UserMetadataTenantRoleManagedBy], FieldMetadata(alias="tenantRoleManagedBy")
-    ] = None
-    sso_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="ssoName")] = None
-    is_primary_sso: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isPrimarySSO")] = None
+    ] = pydantic.Field(alias="tenantRoleManagedBy", default=None)
+    sso_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="ssoName")] = pydantic.Field(
+        alias="ssoName", default=None
+    )
+    is_primary_sso: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isPrimarySSO")] = (
+        pydantic.Field(alias="isPrimarySSO", default=None)
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

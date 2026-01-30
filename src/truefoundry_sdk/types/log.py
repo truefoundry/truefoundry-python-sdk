@@ -30,7 +30,7 @@ class Log(UniversalBaseModel):
     """
 
     container_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="containerName")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="containerName", default=None)
     )
     """
     Container Name

@@ -22,12 +22,16 @@ class EnvironmentManifest(UniversalBaseModel):
     """
 
     color: EnvironmentColor
-    is_production: typing_extensions.Annotated[bool, FieldMetadata(alias="isProduction")] = pydantic.Field()
+    is_production: typing_extensions.Annotated[bool, FieldMetadata(alias="isProduction")] = pydantic.Field(
+        alias="isProduction"
+    )
     """
     Environment Type - Indicates if the environment is for production use
     """
 
-    optimize_for: typing_extensions.Annotated[EnvironmentOptimizeFor, FieldMetadata(alias="optimizeFor")]
+    optimize_for: typing_extensions.Annotated[EnvironmentOptimizeFor, FieldMetadata(alias="optimizeFor")] = (
+        pydantic.Field(alias="optimizeFor")
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

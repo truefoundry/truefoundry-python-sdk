@@ -25,7 +25,9 @@ class Graph(UniversalBaseModel):
     Chart name
     """
 
-    chart_type: typing_extensions.Annotated[GraphChartType, FieldMetadata(alias="chartType")] = pydantic.Field()
+    chart_type: typing_extensions.Annotated[GraphChartType, FieldMetadata(alias="chartType")] = pydantic.Field(
+        alias="chartType"
+    )
     """
     Chart type
     """

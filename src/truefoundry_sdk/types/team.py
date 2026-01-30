@@ -13,14 +13,24 @@ from .team_manifest import TeamManifest
 
 class Team(UniversalBaseModel):
     id: str
-    team_name: typing_extensions.Annotated[str, FieldMetadata(alias="teamName")]
+    team_name: typing_extensions.Annotated[str, FieldMetadata(alias="teamName")] = pydantic.Field(alias="teamName")
     description: str
-    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]
-    account_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="accountId")] = None
-    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")]
+    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")] = pydantic.Field(
+        alias="tenantName"
+    )
+    account_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="accountId")] = pydantic.Field(
+        alias="accountId", default=None
+    )
+    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")] = pydantic.Field(
+        alias="createdBySubject"
+    )
     members: typing.Optional[typing.List[str]] = None
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
+    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field(
+        alias="createdAt"
+    )
+    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")] = pydantic.Field(
+        alias="updatedAt"
+    )
     manifest: TeamManifest
 
     if IS_PYDANTIC_V2:

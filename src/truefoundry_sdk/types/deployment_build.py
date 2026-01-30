@@ -13,19 +13,37 @@ from .build_status import BuildStatus
 
 class DeploymentBuild(UniversalBaseModel):
     id: typing.Optional[str] = None
-    deployment_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="deploymentId")] = None
-    component_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="componentName")] = None
+    deployment_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="deploymentId")] = (
+        pydantic.Field(alias="deploymentId", default=None)
+    )
+    component_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="componentName")] = (
+        pydantic.Field(alias="componentName", default=None)
+    )
     build: typing.Optional[BuildInfo] = None
-    build_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="buildId")] = None
-    image_uri: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="imageUri")] = None
+    build_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="buildId")] = pydantic.Field(
+        alias="buildId", default=None
+    )
+    image_uri: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="imageUri")] = pydantic.Field(
+        alias="imageUri", default=None
+    )
     name: typing.Optional[str] = None
     status: typing.Optional[BuildStatus] = None
-    get_logs_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="getLogsUrl")] = None
-    tail_logs_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="tailLogsUrl")] = None
-    logs_start_ts: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="logsStartTs")] = None
+    get_logs_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="getLogsUrl")] = pydantic.Field(
+        alias="getLogsUrl", default=None
+    )
+    tail_logs_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="tailLogsUrl")] = (
+        pydantic.Field(alias="tailLogsUrl", default=None)
+    )
+    logs_start_ts: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="logsStartTs")] = (
+        pydantic.Field(alias="logsStartTs", default=None)
+    )
     metadata: typing.Optional[typing.Dict[str, typing.Any]] = None
-    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None
-    updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = None
+    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = (
+        pydantic.Field(alias="createdAt", default=None)
+    )
+    updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = (
+        pydantic.Field(alias="updatedAt", default=None)
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

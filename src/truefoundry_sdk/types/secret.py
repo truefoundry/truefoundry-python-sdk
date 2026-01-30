@@ -16,20 +16,28 @@ class Secret(UniversalBaseModel):
     id: str
     fqn: str
     name: str
-    secret_group_id: typing_extensions.Annotated[str, FieldMetadata(alias="secretGroupId")]
+    secret_group_id: typing_extensions.Annotated[str, FieldMetadata(alias="secretGroupId")] = pydantic.Field(
+        alias="secretGroupId"
+    )
     value: typing.Optional[str] = None
     created_by_subject: typing_extensions.Annotated[
         typing.Optional[Subject], FieldMetadata(alias="createdBySubject")
-    ] = None
-    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None
-    updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = None
+    ] = pydantic.Field(alias="createdBySubject", default=None)
+    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = (
+        pydantic.Field(alias="createdAt", default=None)
+    )
+    updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = (
+        pydantic.Field(alias="updatedAt", default=None)
+    )
     secret_versions: typing_extensions.Annotated[
         typing.Optional[typing.List["SecretVersion"]], FieldMetadata(alias="secretVersions")
-    ] = None
+    ] = pydantic.Field(alias="secretVersions", default=None)
     active_deployments_count: typing_extensions.Annotated[
         typing.Optional[int], FieldMetadata(alias="activeDeploymentsCount")
-    ] = None
-    created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = None
+    ] = pydantic.Field(alias="activeDeploymentsCount", default=None)
+    created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = pydantic.Field(
+        alias="createdBy", default=None
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

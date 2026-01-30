@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/truefoundry_sdk/base_client.py">apply</a>(...) -> AsyncHttpResponse[TrueFoundryApplyResponse]</code></summary>
+<details><summary><code>client.<a href="src/truefoundry_sdk/base_client.py">apply</a>(...) -&gt; AsyncHttpResponse[TrueFoundryApplyResponse]</code></summary>
 <dl>
 <dd>
 
@@ -87,7 +87,7 @@ client.apply(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/truefoundry_sdk/base_client.py">delete</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.<a href="src/truefoundry_sdk/base_client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -168,7 +168,7 @@ client.delete(
 </details>
 
 ## Internal
-<details><summary><code>client.internal.<a href="src/truefoundry_sdk/internal/client.py">get_id_from_fqn</a>(...) -> AsyncHttpResponse[typing.Dict[str, typing.Any]]</code></summary>
+<details><summary><code>client.internal.<a href="src/truefoundry_sdk/internal/client.py">get_id_from_fqn</a>(...) -&gt; AsyncHttpResponse[typing.Dict[str, typing.Any]]</code></summary>
 <dl>
 <dd>
 
@@ -249,7 +249,7 @@ client.internal.get_id_from_fqn(
 </details>
 
 ## Users
-<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">list</a>(...) -> AsyncPager[User, ListUsersResponse]</code></summary>
+<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">list</a>(...) -&gt; AsyncPager[User, ListUsersResponse]</code></summary>
 <dl>
 <dd>
 
@@ -361,7 +361,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">pre_register_users</a>(...) -> AsyncHttpResponse[RegisterUsersResponse]</code></summary>
+<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">pre_register_users</a>(...) -&gt; AsyncHttpResponse[RegisterUsersResponse]</code></summary>
 <dl>
 <dd>
 
@@ -464,7 +464,7 @@ client.users.pre_register_users(
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">update_roles</a>(...) -> AsyncHttpResponse[UpdateUserRolesResponse]</code></summary>
+<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">update_roles</a>(...) -&gt; AsyncHttpResponse[UpdateUserRolesResponse]</code></summary>
 <dl>
 <dd>
 
@@ -552,7 +552,7 @@ client.users.update_roles(
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">get</a>(...) -> AsyncHttpResponse[GetUserResponse]</code></summary>
+<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetUserResponse]</code></summary>
 <dl>
 <dd>
 
@@ -623,7 +623,7 @@ client.users.get(
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">delete</a>(...) -> AsyncHttpResponse[DeleteUserResponse]</code></summary>
+<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">delete</a>(...) -&gt; AsyncHttpResponse[DeleteUserResponse]</code></summary>
 <dl>
 <dd>
 
@@ -694,7 +694,7 @@ client.users.delete(
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">invite_user</a>(...) -> AsyncHttpResponse[InviteUserResponse]</code></summary>
+<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">invite_user</a>(...) -&gt; AsyncHttpResponse[InviteUserResponse]</code></summary>
 <dl>
 <dd>
 
@@ -774,7 +774,7 @@ client.users.invite_user(
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">deactivate</a>(...) -> AsyncHttpResponse[DeactivateUserResponse]</code></summary>
+<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">deactivate</a>(...) -&gt; AsyncHttpResponse[DeactivateUserResponse]</code></summary>
 <dl>
 <dd>
 
@@ -845,7 +845,7 @@ client.users.deactivate(
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">activate</a>(...) -> AsyncHttpResponse[ActivateUserResponse]</code></summary>
+<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">activate</a>(...) -&gt; AsyncHttpResponse[ActivateUserResponse]</code></summary>
 <dl>
 <dd>
 
@@ -916,7 +916,7 @@ client.users.activate(
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">change_password</a>(...) -> AsyncHttpResponse[ChangePasswordResponse]</code></summary>
+<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">change_password</a>(...) -&gt; AsyncHttpResponse[ChangePasswordResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1005,7 +1005,7 @@ client.users.change_password(
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">get_resources</a>(...) -> AsyncHttpResponse[GetUserResourcesResponse]</code></summary>
+<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">get_resources</a>(...) -&gt; AsyncHttpResponse[GetUserResourcesResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1076,7 +1076,7 @@ client.users.get_resources(
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">get_teams</a>(...) -> AsyncHttpResponse[GetUserTeamsResponse]</code></summary>
+<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">get_teams</a>(...) -&gt; AsyncHttpResponse[GetUserTeamsResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1148,7 +1148,7 @@ client.users.get_teams(
 </details>
 
 ## Teams
-<details><summary><code>client.teams.<a href="src/truefoundry_sdk/teams/client.py">list</a>(...) -> AsyncPager[Team, ListTeamsResponse]</code></summary>
+<details><summary><code>client.teams.<a href="src/truefoundry_sdk/teams/client.py">list</a>(...) -&gt; AsyncPager[Team, ListTeamsResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1243,7 +1243,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.teams.<a href="src/truefoundry_sdk/teams/client.py">create_or_update</a>(...) -> AsyncHttpResponse[GetTeamResponse]</code></summary>
+<details><summary><code>client.teams.<a href="src/truefoundry_sdk/teams/client.py">create_or_update</a>(...) -&gt; AsyncHttpResponse[GetTeamResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1325,7 +1325,7 @@ client.teams.create_or_update(
 </dl>
 </details>
 
-<details><summary><code>client.teams.<a href="src/truefoundry_sdk/teams/client.py">get</a>(...) -> AsyncHttpResponse[GetTeamResponse]</code></summary>
+<details><summary><code>client.teams.<a href="src/truefoundry_sdk/teams/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetTeamResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1396,7 +1396,7 @@ client.teams.get(
 </dl>
 </details>
 
-<details><summary><code>client.teams.<a href="src/truefoundry_sdk/teams/client.py">delete</a>(...) -> AsyncHttpResponse[DeleteTeamResponse]</code></summary>
+<details><summary><code>client.teams.<a href="src/truefoundry_sdk/teams/client.py">delete</a>(...) -&gt; AsyncHttpResponse[DeleteTeamResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1468,7 +1468,7 @@ client.teams.delete(
 </details>
 
 ## PersonalAccessTokens
-<details><summary><code>client.personal_access_tokens.<a href="src/truefoundry_sdk/personal_access_tokens/client.py">list</a>(...) -> AsyncPager[VirtualAccount, ListPersonalAccessTokenResponse]</code></summary>
+<details><summary><code>client.personal_access_tokens.<a href="src/truefoundry_sdk/personal_access_tokens/client.py">list</a>(...) -&gt; AsyncPager[VirtualAccount, ListPersonalAccessTokenResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1553,7 +1553,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.personal_access_tokens.<a href="src/truefoundry_sdk/personal_access_tokens/client.py">create</a>(...) -> AsyncHttpResponse[CreatePersonalAccessTokenResponse]</code></summary>
+<details><summary><code>client.personal_access_tokens.<a href="src/truefoundry_sdk/personal_access_tokens/client.py">create</a>(...) -&gt; AsyncHttpResponse[CreatePersonalAccessTokenResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1640,7 +1640,7 @@ client.personal_access_tokens.create(
 </dl>
 </details>
 
-<details><summary><code>client.personal_access_tokens.<a href="src/truefoundry_sdk/personal_access_tokens/client.py">revoke_all</a>(...) -> AsyncHttpResponse[RevokeAllPersonalAccessTokenResponse]</code></summary>
+<details><summary><code>client.personal_access_tokens.<a href="src/truefoundry_sdk/personal_access_tokens/client.py">revoke_all</a>(...) -&gt; AsyncHttpResponse[RevokeAllPersonalAccessTokenResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1711,7 +1711,7 @@ client.personal_access_tokens.revoke_all(
 </dl>
 </details>
 
-<details><summary><code>client.personal_access_tokens.<a href="src/truefoundry_sdk/personal_access_tokens/client.py">delete</a>(...) -> AsyncHttpResponse[DeletePersonalAccessTokenResponse]</code></summary>
+<details><summary><code>client.personal_access_tokens.<a href="src/truefoundry_sdk/personal_access_tokens/client.py">delete</a>(...) -&gt; AsyncHttpResponse[DeletePersonalAccessTokenResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1782,7 +1782,7 @@ client.personal_access_tokens.delete(
 </dl>
 </details>
 
-<details><summary><code>client.personal_access_tokens.<a href="src/truefoundry_sdk/personal_access_tokens/client.py">get</a>(...) -> AsyncHttpResponse[GetOrCreatePersonalAccessTokenResponse]</code></summary>
+<details><summary><code>client.personal_access_tokens.<a href="src/truefoundry_sdk/personal_access_tokens/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetOrCreatePersonalAccessTokenResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1854,7 +1854,7 @@ client.personal_access_tokens.get(
 </details>
 
 ## VirtualAccounts
-<details><summary><code>client.virtual_accounts.<a href="src/truefoundry_sdk/virtual_accounts/client.py">list</a>(...) -> AsyncPager[VirtualAccount, ListVirtualAccountResponse]</code></summary>
+<details><summary><code>client.virtual_accounts.<a href="src/truefoundry_sdk/virtual_accounts/client.py">list</a>(...) -&gt; AsyncPager[VirtualAccount, ListVirtualAccountResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1939,7 +1939,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.virtual_accounts.<a href="src/truefoundry_sdk/virtual_accounts/client.py">create_or_update</a>(...) -> AsyncHttpResponse[GetVirtualAccountResponse]</code></summary>
+<details><summary><code>client.virtual_accounts.<a href="src/truefoundry_sdk/virtual_accounts/client.py">create_or_update</a>(...) -&gt; AsyncHttpResponse[GetVirtualAccountResponse]</code></summary>
 <dl>
 <dd>
 
@@ -2027,7 +2027,7 @@ client.virtual_accounts.create_or_update(
 </dl>
 </details>
 
-<details><summary><code>client.virtual_accounts.<a href="src/truefoundry_sdk/virtual_accounts/client.py">get</a>(...) -> AsyncHttpResponse[GetVirtualAccountResponse]</code></summary>
+<details><summary><code>client.virtual_accounts.<a href="src/truefoundry_sdk/virtual_accounts/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetVirtualAccountResponse]</code></summary>
 <dl>
 <dd>
 
@@ -2098,7 +2098,7 @@ client.virtual_accounts.get(
 </dl>
 </details>
 
-<details><summary><code>client.virtual_accounts.<a href="src/truefoundry_sdk/virtual_accounts/client.py">delete</a>(...) -> AsyncHttpResponse[DeleteVirtualAccountResponse]</code></summary>
+<details><summary><code>client.virtual_accounts.<a href="src/truefoundry_sdk/virtual_accounts/client.py">delete</a>(...) -&gt; AsyncHttpResponse[DeleteVirtualAccountResponse]</code></summary>
 <dl>
 <dd>
 
@@ -2169,7 +2169,7 @@ client.virtual_accounts.delete(
 </dl>
 </details>
 
-<details><summary><code>client.virtual_accounts.<a href="src/truefoundry_sdk/virtual_accounts/client.py">get_token</a>(...) -> AsyncHttpResponse[GetTokenForVirtualAccountResponse]</code></summary>
+<details><summary><code>client.virtual_accounts.<a href="src/truefoundry_sdk/virtual_accounts/client.py">get_token</a>(...) -&gt; AsyncHttpResponse[GetTokenForVirtualAccountResponse]</code></summary>
 <dl>
 <dd>
 
@@ -2240,7 +2240,7 @@ client.virtual_accounts.get_token(
 </dl>
 </details>
 
-<details><summary><code>client.virtual_accounts.<a href="src/truefoundry_sdk/virtual_accounts/client.py">sync_to_secret_store</a>(...) -> AsyncHttpResponse[SyncVirtualAccountTokenResponse]</code></summary>
+<details><summary><code>client.virtual_accounts.<a href="src/truefoundry_sdk/virtual_accounts/client.py">sync_to_secret_store</a>(...) -&gt; AsyncHttpResponse[SyncVirtualAccountTokenResponse]</code></summary>
 <dl>
 <dd>
 
@@ -2311,7 +2311,7 @@ client.virtual_accounts.sync_to_secret_store(
 </dl>
 </details>
 
-<details><summary><code>client.virtual_accounts.<a href="src/truefoundry_sdk/virtual_accounts/client.py">regenerate_token</a>(...) -> AsyncHttpResponse[GetTokenForVirtualAccountResponse]</code></summary>
+<details><summary><code>client.virtual_accounts.<a href="src/truefoundry_sdk/virtual_accounts/client.py">regenerate_token</a>(...) -&gt; AsyncHttpResponse[GetTokenForVirtualAccountResponse]</code></summary>
 <dl>
 <dd>
 
@@ -2391,7 +2391,7 @@ client.virtual_accounts.regenerate_token(
 </dl>
 </details>
 
-<details><summary><code>client.virtual_accounts.<a href="src/truefoundry_sdk/virtual_accounts/client.py">delete_jwt</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.virtual_accounts.<a href="src/truefoundry_sdk/virtual_accounts/client.py">delete_jwt</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -2472,7 +2472,7 @@ client.virtual_accounts.delete_jwt(
 </details>
 
 ## Clusters
-<details><summary><code>client.clusters.<a href="src/truefoundry_sdk/clusters/client.py">list</a>(...) -> AsyncPager[Cluster, ListClustersResponse]</code></summary>
+<details><summary><code>client.clusters.<a href="src/truefoundry_sdk/clusters/client.py">list</a>(...) -&gt; AsyncPager[Cluster, ListClustersResponse]</code></summary>
 <dl>
 <dd>
 
@@ -2557,7 +2557,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.clusters.<a href="src/truefoundry_sdk/clusters/client.py">create_or_update</a>(...) -> AsyncHttpResponse[GetClusterResponse]</code></summary>
+<details><summary><code>client.clusters.<a href="src/truefoundry_sdk/clusters/client.py">create_or_update</a>(...) -&gt; AsyncHttpResponse[GetClusterResponse]</code></summary>
 <dl>
 <dd>
 
@@ -2651,7 +2651,7 @@ client.clusters.create_or_update(
 </dl>
 </details>
 
-<details><summary><code>client.clusters.<a href="src/truefoundry_sdk/clusters/client.py">get</a>(...) -> AsyncHttpResponse[GetClusterResponse]</code></summary>
+<details><summary><code>client.clusters.<a href="src/truefoundry_sdk/clusters/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetClusterResponse]</code></summary>
 <dl>
 <dd>
 
@@ -2722,7 +2722,7 @@ client.clusters.get(
 </dl>
 </details>
 
-<details><summary><code>client.clusters.<a href="src/truefoundry_sdk/clusters/client.py">delete</a>(...) -> AsyncHttpResponse[ClustersDeleteResponse]</code></summary>
+<details><summary><code>client.clusters.<a href="src/truefoundry_sdk/clusters/client.py">delete</a>(...) -&gt; AsyncHttpResponse[ClustersDeleteResponse]</code></summary>
 <dl>
 <dd>
 
@@ -2793,7 +2793,7 @@ client.clusters.delete(
 </dl>
 </details>
 
-<details><summary><code>client.clusters.<a href="src/truefoundry_sdk/clusters/client.py">get_addons</a>(...) -> AsyncHttpResponse[ListClusterAddonsResponse]</code></summary>
+<details><summary><code>client.clusters.<a href="src/truefoundry_sdk/clusters/client.py">get_addons</a>(...) -&gt; AsyncHttpResponse[ListClusterAddonsResponse]</code></summary>
 <dl>
 <dd>
 
@@ -2882,7 +2882,7 @@ client.clusters.get_addons(
 </dl>
 </details>
 
-<details><summary><code>client.clusters.<a href="src/truefoundry_sdk/clusters/client.py">is_connected</a>(...) -> AsyncHttpResponse[IsClusterConnectedResponse]</code></summary>
+<details><summary><code>client.clusters.<a href="src/truefoundry_sdk/clusters/client.py">is_connected</a>(...) -&gt; AsyncHttpResponse[IsClusterConnectedResponse]</code></summary>
 <dl>
 <dd>
 
@@ -2954,7 +2954,7 @@ client.clusters.is_connected(
 </details>
 
 ## Applications
-<details><summary><code>client.applications.<a href="src/truefoundry_sdk/applications/client.py">list</a>(...) -> AsyncPager[Application, ListApplicationsResponse]</code></summary>
+<details><summary><code>client.applications.<a href="src/truefoundry_sdk/applications/client.py">list</a>(...) -&gt; AsyncPager[Application, ListApplicationsResponse]</code></summary>
 <dl>
 <dd>
 
@@ -3178,7 +3178,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.applications.<a href="src/truefoundry_sdk/applications/client.py">create_or_update</a>(...) -> AsyncHttpResponse[GetApplicationDeploymentResponse]</code></summary>
+<details><summary><code>client.applications.<a href="src/truefoundry_sdk/applications/client.py">create_or_update</a>(...) -&gt; AsyncHttpResponse[GetApplicationDeploymentResponse]</code></summary>
 <dl>
 <dd>
 
@@ -3305,7 +3305,7 @@ client.applications.create_or_update(
 </dl>
 </details>
 
-<details><summary><code>client.applications.<a href="src/truefoundry_sdk/applications/client.py">get</a>(...) -> AsyncHttpResponse[GetApplicationResponse]</code></summary>
+<details><summary><code>client.applications.<a href="src/truefoundry_sdk/applications/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetApplicationResponse]</code></summary>
 <dl>
 <dd>
 
@@ -3376,7 +3376,7 @@ client.applications.get(
 </dl>
 </details>
 
-<details><summary><code>client.applications.<a href="src/truefoundry_sdk/applications/client.py">delete</a>(...) -> AsyncHttpResponse[DeleteApplicationResponse]</code></summary>
+<details><summary><code>client.applications.<a href="src/truefoundry_sdk/applications/client.py">delete</a>(...) -&gt; AsyncHttpResponse[DeleteApplicationResponse]</code></summary>
 <dl>
 <dd>
 
@@ -3447,7 +3447,7 @@ client.applications.delete(
 </dl>
 </details>
 
-<details><summary><code>client.applications.<a href="src/truefoundry_sdk/applications/client.py">scale_to_zero</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.applications.<a href="src/truefoundry_sdk/applications/client.py">scale_to_zero</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -3518,7 +3518,7 @@ client.applications.scale_to_zero(
 </dl>
 </details>
 
-<details><summary><code>client.applications.<a href="src/truefoundry_sdk/applications/client.py">scale_to_original</a>(...) -> AsyncHttpResponse[Deployment]</code></summary>
+<details><summary><code>client.applications.<a href="src/truefoundry_sdk/applications/client.py">scale_to_original</a>(...) -&gt; AsyncHttpResponse[Deployment]</code></summary>
 <dl>
 <dd>
 
@@ -3589,7 +3589,7 @@ client.applications.scale_to_original(
 </dl>
 </details>
 
-<details><summary><code>client.applications.<a href="src/truefoundry_sdk/applications/client.py">cancel_deployment</a>(...) -> AsyncHttpResponse[ApplicationsCancelDeploymentResponse]</code></summary>
+<details><summary><code>client.applications.<a href="src/truefoundry_sdk/applications/client.py">cancel_deployment</a>(...) -&gt; AsyncHttpResponse[ApplicationsCancelDeploymentResponse]</code></summary>
 <dl>
 <dd>
 
@@ -3670,7 +3670,7 @@ client.applications.cancel_deployment(
 </details>
 
 ## ApplicationVersions
-<details><summary><code>client.application_versions.<a href="src/truefoundry_sdk/application_versions/client.py">list</a>(...) -> AsyncPager[Deployment, ListApplicationDeploymentsResponse]</code></summary>
+<details><summary><code>client.application_versions.<a href="src/truefoundry_sdk/application_versions/client.py">list</a>(...) -&gt; AsyncPager[Deployment, ListApplicationDeploymentsResponse]</code></summary>
 <dl>
 <dd>
 
@@ -3782,7 +3782,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.application_versions.<a href="src/truefoundry_sdk/application_versions/client.py">get</a>(...) -> AsyncHttpResponse[GetApplicationDeploymentResponse]</code></summary>
+<details><summary><code>client.application_versions.<a href="src/truefoundry_sdk/application_versions/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetApplicationDeploymentResponse]</code></summary>
 <dl>
 <dd>
 
@@ -3863,7 +3863,7 @@ client.application_versions.get(
 </details>
 
 ## Jobs
-<details><summary><code>client.jobs.<a href="src/truefoundry_sdk/jobs/client.py">list_runs</a>(...) -> AsyncPager[JobRun, ListJobRunResponse]</code></summary>
+<details><summary><code>client.jobs.<a href="src/truefoundry_sdk/jobs/client.py">list_runs</a>(...) -&gt; AsyncPager[JobRun, ListJobRunResponse]</code></summary>
 <dl>
 <dd>
 
@@ -4008,7 +4008,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.jobs.<a href="src/truefoundry_sdk/jobs/client.py">get_run</a>(...) -> AsyncHttpResponse[GetJobRunResponse]</code></summary>
+<details><summary><code>client.jobs.<a href="src/truefoundry_sdk/jobs/client.py">get_run</a>(...) -&gt; AsyncHttpResponse[GetJobRunResponse]</code></summary>
 <dl>
 <dd>
 
@@ -4088,7 +4088,7 @@ client.jobs.get_run(
 </dl>
 </details>
 
-<details><summary><code>client.jobs.<a href="src/truefoundry_sdk/jobs/client.py">delete_run</a>(...) -> AsyncHttpResponse[DeleteJobRunResponse]</code></summary>
+<details><summary><code>client.jobs.<a href="src/truefoundry_sdk/jobs/client.py">delete_run</a>(...) -&gt; AsyncHttpResponse[DeleteJobRunResponse]</code></summary>
 <dl>
 <dd>
 
@@ -4168,7 +4168,7 @@ client.jobs.delete_run(
 </dl>
 </details>
 
-<details><summary><code>client.jobs.<a href="src/truefoundry_sdk/jobs/client.py">trigger</a>(...) -> AsyncHttpResponse[TriggerJobRunResponse]</code></summary>
+<details><summary><code>client.jobs.<a href="src/truefoundry_sdk/jobs/client.py">trigger</a>(...) -&gt; AsyncHttpResponse[TriggerJobRunResponse]</code></summary>
 <dl>
 <dd>
 
@@ -4261,7 +4261,7 @@ client.jobs.trigger()
 </dl>
 </details>
 
-<details><summary><code>client.jobs.<a href="src/truefoundry_sdk/jobs/client.py">terminate</a>(...) -> AsyncHttpResponse[TerminateJobResponse]</code></summary>
+<details><summary><code>client.jobs.<a href="src/truefoundry_sdk/jobs/client.py">terminate</a>(...) -&gt; AsyncHttpResponse[TerminateJobResponse]</code></summary>
 <dl>
 <dd>
 
@@ -4342,7 +4342,7 @@ client.jobs.terminate(
 </details>
 
 ## Workspaces
-<details><summary><code>client.workspaces.<a href="src/truefoundry_sdk/workspaces/client.py">list</a>(...) -> AsyncPager[Workspace, ListWorkspacesResponse]</code></summary>
+<details><summary><code>client.workspaces.<a href="src/truefoundry_sdk/workspaces/client.py">list</a>(...) -&gt; AsyncPager[Workspace, ListWorkspacesResponse]</code></summary>
 <dl>
 <dd>
 
@@ -4454,7 +4454,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.workspaces.<a href="src/truefoundry_sdk/workspaces/client.py">create_or_update</a>(...) -> AsyncHttpResponse[GetWorkspaceResponse]</code></summary>
+<details><summary><code>client.workspaces.<a href="src/truefoundry_sdk/workspaces/client.py">create_or_update</a>(...) -&gt; AsyncHttpResponse[GetWorkspaceResponse]</code></summary>
 <dl>
 <dd>
 
@@ -4536,7 +4536,7 @@ client.workspaces.create_or_update(
 </dl>
 </details>
 
-<details><summary><code>client.workspaces.<a href="src/truefoundry_sdk/workspaces/client.py">get</a>(...) -> AsyncHttpResponse[GetWorkspaceResponse]</code></summary>
+<details><summary><code>client.workspaces.<a href="src/truefoundry_sdk/workspaces/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetWorkspaceResponse]</code></summary>
 <dl>
 <dd>
 
@@ -4607,7 +4607,7 @@ client.workspaces.get(
 </dl>
 </details>
 
-<details><summary><code>client.workspaces.<a href="src/truefoundry_sdk/workspaces/client.py">delete</a>(...) -> AsyncHttpResponse[WorkspacesDeleteResponse]</code></summary>
+<details><summary><code>client.workspaces.<a href="src/truefoundry_sdk/workspaces/client.py">delete</a>(...) -&gt; AsyncHttpResponse[WorkspacesDeleteResponse]</code></summary>
 <dl>
 <dd>
 
@@ -4681,7 +4681,7 @@ client.workspaces.delete(
 </details>
 
 ## Environments
-<details><summary><code>client.environments.<a href="src/truefoundry_sdk/environments/client.py">list</a>(...) -> AsyncPager[Environment, ListEnvironmentsResponse]</code></summary>
+<details><summary><code>client.environments.<a href="src/truefoundry_sdk/environments/client.py">list</a>(...) -&gt; AsyncPager[Environment, ListEnvironmentsResponse]</code></summary>
 <dl>
 <dd>
 
@@ -4766,7 +4766,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.environments.<a href="src/truefoundry_sdk/environments/client.py">create_or_update</a>(...) -> AsyncHttpResponse[GetEnvironmentResponse]</code></summary>
+<details><summary><code>client.environments.<a href="src/truefoundry_sdk/environments/client.py">create_or_update</a>(...) -&gt; AsyncHttpResponse[GetEnvironmentResponse]</code></summary>
 <dl>
 <dd>
 
@@ -4855,7 +4855,7 @@ client.environments.create_or_update(
 </dl>
 </details>
 
-<details><summary><code>client.environments.<a href="src/truefoundry_sdk/environments/client.py">get</a>(...) -> AsyncHttpResponse[GetEnvironmentResponse]</code></summary>
+<details><summary><code>client.environments.<a href="src/truefoundry_sdk/environments/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetEnvironmentResponse]</code></summary>
 <dl>
 <dd>
 
@@ -4926,7 +4926,7 @@ client.environments.get(
 </dl>
 </details>
 
-<details><summary><code>client.environments.<a href="src/truefoundry_sdk/environments/client.py">delete</a>(...) -> AsyncHttpResponse[bool]</code></summary>
+<details><summary><code>client.environments.<a href="src/truefoundry_sdk/environments/client.py">delete</a>(...) -&gt; AsyncHttpResponse[bool]</code></summary>
 <dl>
 <dd>
 
@@ -4998,7 +4998,7 @@ client.environments.delete(
 </details>
 
 ## Secrets
-<details><summary><code>client.secrets.<a href="src/truefoundry_sdk/secrets/client.py">list</a>(...) -> AsyncPager[Secret, ListSecretsResponse]</code></summary>
+<details><summary><code>client.secrets.<a href="src/truefoundry_sdk/secrets/client.py">list</a>(...) -&gt; AsyncPager[Secret, ListSecretsResponse]</code></summary>
 <dl>
 <dd>
 
@@ -5104,7 +5104,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.secrets.<a href="src/truefoundry_sdk/secrets/client.py">get</a>(...) -> AsyncHttpResponse[GetSecretResponse]</code></summary>
+<details><summary><code>client.secrets.<a href="src/truefoundry_sdk/secrets/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetSecretResponse]</code></summary>
 <dl>
 <dd>
 
@@ -5175,7 +5175,7 @@ client.secrets.get(
 </dl>
 </details>
 
-<details><summary><code>client.secrets.<a href="src/truefoundry_sdk/secrets/client.py">delete</a>(...) -> AsyncHttpResponse[float]</code></summary>
+<details><summary><code>client.secrets.<a href="src/truefoundry_sdk/secrets/client.py">delete</a>(...) -&gt; AsyncHttpResponse[float]</code></summary>
 <dl>
 <dd>
 
@@ -5247,7 +5247,7 @@ client.secrets.delete(
 </details>
 
 ## SecretGroups
-<details><summary><code>client.secret_groups.<a href="src/truefoundry_sdk/secret_groups/client.py">list</a>(...) -> AsyncPager[SecretGroup, ListSecretGroupResponse]</code></summary>
+<details><summary><code>client.secret_groups.<a href="src/truefoundry_sdk/secret_groups/client.py">list</a>(...) -&gt; AsyncPager[SecretGroup, ListSecretGroupResponse]</code></summary>
 <dl>
 <dd>
 
@@ -5350,7 +5350,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.secret_groups.<a href="src/truefoundry_sdk/secret_groups/client.py">create</a>(...) -> AsyncHttpResponse[GetSecretGroupResponse]</code></summary>
+<details><summary><code>client.secret_groups.<a href="src/truefoundry_sdk/secret_groups/client.py">create</a>(...) -&gt; AsyncHttpResponse[GetSecretGroupResponse]</code></summary>
 <dl>
 <dd>
 
@@ -5444,7 +5444,7 @@ client.secret_groups.create(
 </dl>
 </details>
 
-<details><summary><code>client.secret_groups.<a href="src/truefoundry_sdk/secret_groups/client.py">create_or_update</a>(...) -> AsyncHttpResponse[GetSecretGroupResponse]</code></summary>
+<details><summary><code>client.secret_groups.<a href="src/truefoundry_sdk/secret_groups/client.py">create_or_update</a>(...) -&gt; AsyncHttpResponse[GetSecretGroupResponse]</code></summary>
 <dl>
 <dd>
 
@@ -5524,7 +5524,7 @@ client.secret_groups.create_or_update(
 </dl>
 </details>
 
-<details><summary><code>client.secret_groups.<a href="src/truefoundry_sdk/secret_groups/client.py">get</a>(...) -> AsyncHttpResponse[GetSecretGroupResponse]</code></summary>
+<details><summary><code>client.secret_groups.<a href="src/truefoundry_sdk/secret_groups/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetSecretGroupResponse]</code></summary>
 <dl>
 <dd>
 
@@ -5595,7 +5595,7 @@ client.secret_groups.get(
 </dl>
 </details>
 
-<details><summary><code>client.secret_groups.<a href="src/truefoundry_sdk/secret_groups/client.py">update</a>(...) -> AsyncHttpResponse[GetSecretGroupResponse]</code></summary>
+<details><summary><code>client.secret_groups.<a href="src/truefoundry_sdk/secret_groups/client.py">update</a>(...) -&gt; AsyncHttpResponse[GetSecretGroupResponse]</code></summary>
 <dl>
 <dd>
 
@@ -5679,7 +5679,7 @@ client.secret_groups.update(
 </dl>
 </details>
 
-<details><summary><code>client.secret_groups.<a href="src/truefoundry_sdk/secret_groups/client.py">delete</a>(...) -> AsyncHttpResponse[DeleteSecretGroupResponse]</code></summary>
+<details><summary><code>client.secret_groups.<a href="src/truefoundry_sdk/secret_groups/client.py">delete</a>(...) -&gt; AsyncHttpResponse[DeleteSecretGroupResponse]</code></summary>
 <dl>
 <dd>
 
@@ -5751,7 +5751,7 @@ client.secret_groups.delete(
 </details>
 
 ## Events
-<details><summary><code>client.events.<a href="src/truefoundry_sdk/events/client.py">get</a>(...) -> AsyncHttpResponse[GetEventsResponse]</code></summary>
+<details><summary><code>client.events.<a href="src/truefoundry_sdk/events/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetEventsResponse]</code></summary>
 <dl>
 <dd>
 
@@ -5867,7 +5867,7 @@ client.events.get(
 </details>
 
 ## Alerts
-<details><summary><code>client.alerts.<a href="src/truefoundry_sdk/alerts/client.py">list</a>(...) -> AsyncHttpResponse[GetAlertsResponse]</code></summary>
+<details><summary><code>client.alerts.<a href="src/truefoundry_sdk/alerts/client.py">list</a>(...) -&gt; AsyncHttpResponse[GetAlertsResponse]</code></summary>
 <dl>
 <dd>
 
@@ -5975,7 +5975,7 @@ client.alerts.list(
 </details>
 
 ## Logs
-<details><summary><code>client.logs.<a href="src/truefoundry_sdk/logs/client.py">get</a>(...) -> AsyncHttpResponse[GetLogsResponse]</code></summary>
+<details><summary><code>client.logs.<a href="src/truefoundry_sdk/logs/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetLogsResponse]</code></summary>
 <dl>
 <dd>
 
@@ -6195,7 +6195,7 @@ client.logs.get(
 </details>
 
 ## MlRepos
-<details><summary><code>client.ml_repos.<a href="src/truefoundry_sdk/ml_repos/client.py">create_or_update</a>(...) -> AsyncHttpResponse[GetMlRepoResponse]</code></summary>
+<details><summary><code>client.ml_repos.<a href="src/truefoundry_sdk/ml_repos/client.py">create_or_update</a>(...) -&gt; AsyncHttpResponse[GetMlRepoResponse]</code></summary>
 <dl>
 <dd>
 
@@ -6275,7 +6275,7 @@ client.ml_repos.create_or_update(
 </dl>
 </details>
 
-<details><summary><code>client.ml_repos.<a href="src/truefoundry_sdk/ml_repos/client.py">get</a>(...) -> AsyncHttpResponse[GetMlRepoResponse]</code></summary>
+<details><summary><code>client.ml_repos.<a href="src/truefoundry_sdk/ml_repos/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetMlRepoResponse]</code></summary>
 <dl>
 <dd>
 
@@ -6352,7 +6352,7 @@ client.ml_repos.get(
 </dl>
 </details>
 
-<details><summary><code>client.ml_repos.<a href="src/truefoundry_sdk/ml_repos/client.py">delete</a>(...) -> AsyncHttpResponse[EmptyResponse]</code></summary>
+<details><summary><code>client.ml_repos.<a href="src/truefoundry_sdk/ml_repos/client.py">delete</a>(...) -&gt; AsyncHttpResponse[EmptyResponse]</code></summary>
 <dl>
 <dd>
 
@@ -6429,7 +6429,7 @@ client.ml_repos.delete(
 </dl>
 </details>
 
-<details><summary><code>client.ml_repos.<a href="src/truefoundry_sdk/ml_repos/client.py">list</a>(...) -> AsyncPager[MlRepo, ListMlReposResponse]</code></summary>
+<details><summary><code>client.ml_repos.<a href="src/truefoundry_sdk/ml_repos/client.py">list</a>(...) -&gt; AsyncPager[MlRepo, ListMlReposResponse]</code></summary>
 <dl>
 <dd>
 
@@ -6530,7 +6530,7 @@ for page in response.iter_pages():
 </details>
 
 ## Traces
-<details><summary><code>client.traces.<a href="src/truefoundry_sdk/traces/client.py">query_spans</a>(...) -> AsyncPager[TraceSpan, QuerySpansResponse]</code></summary>
+<details><summary><code>client.traces.<a href="src/truefoundry_sdk/traces/client.py">query_spans</a>(...) -&gt; AsyncPager[TraceSpan, QuerySpansResponse]</code></summary>
 <dl>
 <dd>
 
@@ -6690,7 +6690,7 @@ for page in response.iter_pages():
 </details>
 
 ## Artifacts
-<details><summary><code>client.artifacts.<a href="src/truefoundry_sdk/artifacts/client.py">get</a>(...) -> AsyncHttpResponse[GetArtifactResponse]</code></summary>
+<details><summary><code>client.artifacts.<a href="src/truefoundry_sdk/artifacts/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetArtifactResponse]</code></summary>
 <dl>
 <dd>
 
@@ -6747,7 +6747,7 @@ client.artifacts.get(
 </dl>
 </details>
 
-<details><summary><code>client.artifacts.<a href="src/truefoundry_sdk/artifacts/client.py">delete</a>(...) -> AsyncHttpResponse[EmptyResponse]</code></summary>
+<details><summary><code>client.artifacts.<a href="src/truefoundry_sdk/artifacts/client.py">delete</a>(...) -&gt; AsyncHttpResponse[EmptyResponse]</code></summary>
 <dl>
 <dd>
 
@@ -6804,7 +6804,7 @@ client.artifacts.delete(
 </dl>
 </details>
 
-<details><summary><code>client.artifacts.<a href="src/truefoundry_sdk/artifacts/client.py">list</a>(...) -> AsyncPager[Artifact, ListArtifactsResponse]</code></summary>
+<details><summary><code>client.artifacts.<a href="src/truefoundry_sdk/artifacts/client.py">list</a>(...) -&gt; AsyncPager[Artifact, ListArtifactsResponse]</code></summary>
 <dl>
 <dd>
 
@@ -6920,7 +6920,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.artifacts.<a href="src/truefoundry_sdk/artifacts/client.py">create_or_update</a>(...) -> AsyncHttpResponse[GetArtifactVersionResponse]</code></summary>
+<details><summary><code>client.artifacts.<a href="src/truefoundry_sdk/artifacts/client.py">create_or_update</a>(...) -&gt; AsyncHttpResponse[GetArtifactVersionResponse]</code></summary>
 <dl>
 <dd>
 
@@ -6987,7 +6987,7 @@ client.artifacts.create_or_update(
 </details>
 
 ## Prompts
-<details><summary><code>client.prompts.<a href="src/truefoundry_sdk/prompts/client.py">get</a>(...) -> AsyncHttpResponse[GetPromptResponse]</code></summary>
+<details><summary><code>client.prompts.<a href="src/truefoundry_sdk/prompts/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetPromptResponse]</code></summary>
 <dl>
 <dd>
 
@@ -7044,7 +7044,7 @@ client.prompts.get(
 </dl>
 </details>
 
-<details><summary><code>client.prompts.<a href="src/truefoundry_sdk/prompts/client.py">delete</a>(...) -> AsyncHttpResponse[EmptyResponse]</code></summary>
+<details><summary><code>client.prompts.<a href="src/truefoundry_sdk/prompts/client.py">delete</a>(...) -&gt; AsyncHttpResponse[EmptyResponse]</code></summary>
 <dl>
 <dd>
 
@@ -7101,7 +7101,7 @@ client.prompts.delete(
 </dl>
 </details>
 
-<details><summary><code>client.prompts.<a href="src/truefoundry_sdk/prompts/client.py">list</a>(...) -> AsyncPager[Prompt, ListPromptsResponse]</code></summary>
+<details><summary><code>client.prompts.<a href="src/truefoundry_sdk/prompts/client.py">list</a>(...) -&gt; AsyncPager[Prompt, ListPromptsResponse]</code></summary>
 <dl>
 <dd>
 
@@ -7208,7 +7208,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.prompts.<a href="src/truefoundry_sdk/prompts/client.py">create_or_update</a>(...) -> AsyncHttpResponse[GetPromptVersionResponse]</code></summary>
+<details><summary><code>client.prompts.<a href="src/truefoundry_sdk/prompts/client.py">create_or_update</a>(...) -&gt; AsyncHttpResponse[GetPromptVersionResponse]</code></summary>
 <dl>
 <dd>
 
@@ -7275,7 +7275,7 @@ client.prompts.create_or_update(
 </details>
 
 ## Models
-<details><summary><code>client.models.<a href="src/truefoundry_sdk/models/client.py">get</a>(...) -> AsyncHttpResponse[GetModelResponse]</code></summary>
+<details><summary><code>client.models.<a href="src/truefoundry_sdk/models/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetModelResponse]</code></summary>
 <dl>
 <dd>
 
@@ -7332,7 +7332,7 @@ client.models.get(
 </dl>
 </details>
 
-<details><summary><code>client.models.<a href="src/truefoundry_sdk/models/client.py">delete</a>(...) -> AsyncHttpResponse[EmptyResponse]</code></summary>
+<details><summary><code>client.models.<a href="src/truefoundry_sdk/models/client.py">delete</a>(...) -&gt; AsyncHttpResponse[EmptyResponse]</code></summary>
 <dl>
 <dd>
 
@@ -7389,7 +7389,7 @@ client.models.delete(
 </dl>
 </details>
 
-<details><summary><code>client.models.<a href="src/truefoundry_sdk/models/client.py">list</a>(...) -> AsyncPager[Model, ListModelsResponse]</code></summary>
+<details><summary><code>client.models.<a href="src/truefoundry_sdk/models/client.py">list</a>(...) -&gt; AsyncPager[Model, ListModelsResponse]</code></summary>
 <dl>
 <dd>
 
@@ -7505,7 +7505,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.models.<a href="src/truefoundry_sdk/models/client.py">create_or_update</a>(...) -> AsyncHttpResponse[GetModelVersionResponse]</code></summary>
+<details><summary><code>client.models.<a href="src/truefoundry_sdk/models/client.py">create_or_update</a>(...) -&gt; AsyncHttpResponse[GetModelVersionResponse]</code></summary>
 <dl>
 <dd>
 
@@ -7568,7 +7568,7 @@ client.models.create_or_update(
 </details>
 
 ## ArtifactVersions
-<details><summary><code>client.artifact_versions.<a href="src/truefoundry_sdk/artifact_versions/client.py">apply_tags</a>(...) -> AsyncHttpResponse[EmptyResponse]</code></summary>
+<details><summary><code>client.artifact_versions.<a href="src/truefoundry_sdk/artifact_versions/client.py">apply_tags</a>(...) -&gt; AsyncHttpResponse[EmptyResponse]</code></summary>
 <dl>
 <dd>
 
@@ -7642,7 +7642,7 @@ client.artifact_versions.apply_tags(
 </dl>
 </details>
 
-<details><summary><code>client.artifact_versions.<a href="src/truefoundry_sdk/artifact_versions/client.py">get</a>(...) -> AsyncHttpResponse[GetArtifactVersionResponse]</code></summary>
+<details><summary><code>client.artifact_versions.<a href="src/truefoundry_sdk/artifact_versions/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetArtifactVersionResponse]</code></summary>
 <dl>
 <dd>
 
@@ -7713,7 +7713,7 @@ client.artifact_versions.get(
 </dl>
 </details>
 
-<details><summary><code>client.artifact_versions.<a href="src/truefoundry_sdk/artifact_versions/client.py">delete</a>(...) -> AsyncHttpResponse[EmptyResponse]</code></summary>
+<details><summary><code>client.artifact_versions.<a href="src/truefoundry_sdk/artifact_versions/client.py">delete</a>(...) -&gt; AsyncHttpResponse[EmptyResponse]</code></summary>
 <dl>
 <dd>
 
@@ -7784,7 +7784,7 @@ client.artifact_versions.delete(
 </dl>
 </details>
 
-<details><summary><code>client.artifact_versions.<a href="src/truefoundry_sdk/artifact_versions/client.py">list</a>(...) -> AsyncPager[ArtifactVersion, ListArtifactVersionsResponse]</code></summary>
+<details><summary><code>client.artifact_versions.<a href="src/truefoundry_sdk/artifact_versions/client.py">list</a>(...) -&gt; AsyncPager[ArtifactVersion, ListArtifactVersionsResponse]</code></summary>
 <dl>
 <dd>
 
@@ -7948,7 +7948,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.artifact_versions.<a href="src/truefoundry_sdk/artifact_versions/client.py">get_signed_urls</a>(...) -> AsyncHttpResponse[GetSignedUrLsResponse]</code></summary>
+<details><summary><code>client.artifact_versions.<a href="src/truefoundry_sdk/artifact_versions/client.py">get_signed_urls</a>(...) -&gt; AsyncHttpResponse[GetSignedUrLsResponse]</code></summary>
 <dl>
 <dd>
 
@@ -8023,7 +8023,7 @@ client.artifact_versions.get_signed_urls(
 </dl>
 </details>
 
-<details><summary><code>client.artifact_versions.<a href="src/truefoundry_sdk/artifact_versions/client.py">create_multi_part_upload</a>(...) -> AsyncHttpResponse[MultiPartUploadResponse]</code></summary>
+<details><summary><code>client.artifact_versions.<a href="src/truefoundry_sdk/artifact_versions/client.py">create_multi_part_upload</a>(...) -&gt; AsyncHttpResponse[MultiPartUploadResponse]</code></summary>
 <dl>
 <dd>
 
@@ -8098,7 +8098,7 @@ client.artifact_versions.create_multi_part_upload(
 </dl>
 </details>
 
-<details><summary><code>client.artifact_versions.<a href="src/truefoundry_sdk/artifact_versions/client.py">stage</a>(...) -> AsyncHttpResponse[StageArtifactResponse]</code></summary>
+<details><summary><code>client.artifact_versions.<a href="src/truefoundry_sdk/artifact_versions/client.py">stage</a>(...) -&gt; AsyncHttpResponse[StageArtifactResponse]</code></summary>
 <dl>
 <dd>
 
@@ -8160,7 +8160,7 @@ client.artifact_versions.stage(
 </dl>
 </details>
 
-<details><summary><code>client.artifact_versions.<a href="src/truefoundry_sdk/artifact_versions/client.py">list_files</a>(...) -> AsyncPager[FileInfo, ListFilesResponse]</code></summary>
+<details><summary><code>client.artifact_versions.<a href="src/truefoundry_sdk/artifact_versions/client.py">list_files</a>(...) -&gt; AsyncPager[FileInfo, ListFilesResponse]</code></summary>
 <dl>
 <dd>
 
@@ -8246,7 +8246,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.artifact_versions.<a href="src/truefoundry_sdk/artifact_versions/client.py">mark_stage_failure</a>(...) -> AsyncHttpResponse[EmptyResponse]</code></summary>
+<details><summary><code>client.artifact_versions.<a href="src/truefoundry_sdk/artifact_versions/client.py">mark_stage_failure</a>(...) -&gt; AsyncHttpResponse[EmptyResponse]</code></summary>
 <dl>
 <dd>
 
@@ -8304,7 +8304,7 @@ client.artifact_versions.mark_stage_failure(
 </details>
 
 ## ModelVersions
-<details><summary><code>client.model_versions.<a href="src/truefoundry_sdk/model_versions/client.py">apply_tags</a>(...) -> AsyncHttpResponse[EmptyResponse]</code></summary>
+<details><summary><code>client.model_versions.<a href="src/truefoundry_sdk/model_versions/client.py">apply_tags</a>(...) -&gt; AsyncHttpResponse[EmptyResponse]</code></summary>
 <dl>
 <dd>
 
@@ -8378,7 +8378,7 @@ client.model_versions.apply_tags(
 </dl>
 </details>
 
-<details><summary><code>client.model_versions.<a href="src/truefoundry_sdk/model_versions/client.py">get</a>(...) -> AsyncHttpResponse[GetModelVersionResponse]</code></summary>
+<details><summary><code>client.model_versions.<a href="src/truefoundry_sdk/model_versions/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetModelVersionResponse]</code></summary>
 <dl>
 <dd>
 
@@ -8449,7 +8449,7 @@ client.model_versions.get(
 </dl>
 </details>
 
-<details><summary><code>client.model_versions.<a href="src/truefoundry_sdk/model_versions/client.py">delete</a>(...) -> AsyncHttpResponse[EmptyResponse]</code></summary>
+<details><summary><code>client.model_versions.<a href="src/truefoundry_sdk/model_versions/client.py">delete</a>(...) -&gt; AsyncHttpResponse[EmptyResponse]</code></summary>
 <dl>
 <dd>
 
@@ -8520,7 +8520,7 @@ client.model_versions.delete(
 </dl>
 </details>
 
-<details><summary><code>client.model_versions.<a href="src/truefoundry_sdk/model_versions/client.py">list</a>(...) -> AsyncPager[ModelVersion, ListModelVersionsResponse]</code></summary>
+<details><summary><code>client.model_versions.<a href="src/truefoundry_sdk/model_versions/client.py">list</a>(...) -&gt; AsyncPager[ModelVersion, ListModelVersionsResponse]</code></summary>
 <dl>
 <dd>
 
@@ -8685,7 +8685,7 @@ for page in response.iter_pages():
 </details>
 
 ## PromptVersions
-<details><summary><code>client.prompt_versions.<a href="src/truefoundry_sdk/prompt_versions/client.py">apply_tags</a>(...) -> AsyncHttpResponse[EmptyResponse]</code></summary>
+<details><summary><code>client.prompt_versions.<a href="src/truefoundry_sdk/prompt_versions/client.py">apply_tags</a>(...) -&gt; AsyncHttpResponse[EmptyResponse]</code></summary>
 <dl>
 <dd>
 
@@ -8759,7 +8759,7 @@ client.prompt_versions.apply_tags(
 </dl>
 </details>
 
-<details><summary><code>client.prompt_versions.<a href="src/truefoundry_sdk/prompt_versions/client.py">get</a>(...) -> AsyncHttpResponse[GetPromptVersionResponse]</code></summary>
+<details><summary><code>client.prompt_versions.<a href="src/truefoundry_sdk/prompt_versions/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetPromptVersionResponse]</code></summary>
 <dl>
 <dd>
 
@@ -8830,7 +8830,7 @@ client.prompt_versions.get(
 </dl>
 </details>
 
-<details><summary><code>client.prompt_versions.<a href="src/truefoundry_sdk/prompt_versions/client.py">delete</a>(...) -> AsyncHttpResponse[EmptyResponse]</code></summary>
+<details><summary><code>client.prompt_versions.<a href="src/truefoundry_sdk/prompt_versions/client.py">delete</a>(...) -&gt; AsyncHttpResponse[EmptyResponse]</code></summary>
 <dl>
 <dd>
 
@@ -8901,7 +8901,7 @@ client.prompt_versions.delete(
 </dl>
 </details>
 
-<details><summary><code>client.prompt_versions.<a href="src/truefoundry_sdk/prompt_versions/client.py">list</a>(...) -> AsyncPager[PromptVersion, ListPromptVersionsResponse]</code></summary>
+<details><summary><code>client.prompt_versions.<a href="src/truefoundry_sdk/prompt_versions/client.py">list</a>(...) -&gt; AsyncPager[PromptVersion, ListPromptVersionsResponse]</code></summary>
 <dl>
 <dd>
 
@@ -9041,7 +9041,7 @@ for page in response.iter_pages():
 </details>
 
 ## DataDirectories
-<details><summary><code>client.data_directories.<a href="src/truefoundry_sdk/data_directories/client.py">get</a>(...) -> AsyncHttpResponse[GetDataDirectoryResponse]</code></summary>
+<details><summary><code>client.data_directories.<a href="src/truefoundry_sdk/data_directories/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetDataDirectoryResponse]</code></summary>
 <dl>
 <dd>
 
@@ -9119,7 +9119,7 @@ client.data_directories.get(
 </dl>
 </details>
 
-<details><summary><code>client.data_directories.<a href="src/truefoundry_sdk/data_directories/client.py">delete</a>(...) -> AsyncHttpResponse[EmptyResponse]</code></summary>
+<details><summary><code>client.data_directories.<a href="src/truefoundry_sdk/data_directories/client.py">delete</a>(...) -&gt; AsyncHttpResponse[EmptyResponse]</code></summary>
 <dl>
 <dd>
 
@@ -9207,7 +9207,7 @@ client.data_directories.delete(
 </dl>
 </details>
 
-<details><summary><code>client.data_directories.<a href="src/truefoundry_sdk/data_directories/client.py">list</a>(...) -> AsyncPager[DataDirectory, ListDataDirectoriesResponse]</code></summary>
+<details><summary><code>client.data_directories.<a href="src/truefoundry_sdk/data_directories/client.py">list</a>(...) -&gt; AsyncPager[DataDirectory, ListDataDirectoriesResponse]</code></summary>
 <dl>
 <dd>
 
@@ -9330,7 +9330,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.data_directories.<a href="src/truefoundry_sdk/data_directories/client.py">create_or_update</a>(...) -> AsyncHttpResponse[GetDataDirectoryResponse]</code></summary>
+<details><summary><code>client.data_directories.<a href="src/truefoundry_sdk/data_directories/client.py">create_or_update</a>(...) -&gt; AsyncHttpResponse[GetDataDirectoryResponse]</code></summary>
 <dl>
 <dd>
 
@@ -9396,7 +9396,7 @@ client.data_directories.create_or_update(
 </dl>
 </details>
 
-<details><summary><code>client.data_directories.<a href="src/truefoundry_sdk/data_directories/client.py">list_files</a>(...) -> AsyncPager[FileInfo, ListFilesResponse]</code></summary>
+<details><summary><code>client.data_directories.<a href="src/truefoundry_sdk/data_directories/client.py">list_files</a>(...) -&gt; AsyncPager[FileInfo, ListFilesResponse]</code></summary>
 <dl>
 <dd>
 
@@ -9503,7 +9503,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.data_directories.<a href="src/truefoundry_sdk/data_directories/client.py">delete_files</a>(...) -> AsyncHttpResponse[EmptyResponse]</code></summary>
+<details><summary><code>client.data_directories.<a href="src/truefoundry_sdk/data_directories/client.py">delete_files</a>(...) -&gt; AsyncHttpResponse[EmptyResponse]</code></summary>
 <dl>
 <dd>
 
@@ -9590,7 +9590,7 @@ client.data_directories.delete_files(
 </dl>
 </details>
 
-<details><summary><code>client.data_directories.<a href="src/truefoundry_sdk/data_directories/client.py">get_signed_urls</a>(...) -> AsyncHttpResponse[GetSignedUrLsResponse]</code></summary>
+<details><summary><code>client.data_directories.<a href="src/truefoundry_sdk/data_directories/client.py">get_signed_urls</a>(...) -&gt; AsyncHttpResponse[GetSignedUrLsResponse]</code></summary>
 <dl>
 <dd>
 
@@ -9686,7 +9686,7 @@ client.data_directories.get_signed_urls(
 </dl>
 </details>
 
-<details><summary><code>client.data_directories.<a href="src/truefoundry_sdk/data_directories/client.py">create_multipart_upload</a>(...) -> AsyncHttpResponse[MultiPartUploadResponse]</code></summary>
+<details><summary><code>client.data_directories.<a href="src/truefoundry_sdk/data_directories/client.py">create_multipart_upload</a>(...) -&gt; AsyncHttpResponse[MultiPartUploadResponse]</code></summary>
 <dl>
 <dd>
 
@@ -9783,7 +9783,7 @@ client.data_directories.create_multipart_upload(
 </details>
 
 ## Internal Users
-<details><summary><code>client.internal.users.<a href="src/truefoundry_sdk/internal/users/client.py">get_info</a>() -> AsyncHttpResponse[Session]</code></summary>
+<details><summary><code>client.internal.users.<a href="src/truefoundry_sdk/internal/users/client.py">get_info</a>() -&gt; AsyncHttpResponse[Session]</code></summary>
 <dl>
 <dd>
 
@@ -9845,7 +9845,7 @@ client.internal.users.get_info()
 </details>
 
 ## Internal AiGateway
-<details><summary><code>client.internal.ai_gateway.<a href="src/truefoundry_sdk/internal/ai_gateway/client.py">get_gateway_config</a>(...) -> AsyncHttpResponse[GatewayConfiguration]</code></summary>
+<details><summary><code>client.internal.ai_gateway.<a href="src/truefoundry_sdk/internal/ai_gateway/client.py">get_gateway_config</a>(...) -&gt; AsyncHttpResponse[GatewayConfiguration]</code></summary>
 <dl>
 <dd>
 
@@ -9920,7 +9920,7 @@ client.internal.ai_gateway.get_gateway_config(
 </details>
 
 ## Internal Clusters
-<details><summary><code>client.internal.clusters.<a href="src/truefoundry_sdk/internal/clusters/client.py">get_autoprovisioning_state</a>(...) -> AsyncHttpResponse[GetAutoProvisioningStateResponse]</code></summary>
+<details><summary><code>client.internal.clusters.<a href="src/truefoundry_sdk/internal/clusters/client.py">get_autoprovisioning_state</a>(...) -&gt; AsyncHttpResponse[GetAutoProvisioningStateResponse]</code></summary>
 <dl>
 <dd>
 
@@ -9992,7 +9992,7 @@ client.internal.clusters.get_autoprovisioning_state(
 </details>
 
 ## Internal Deployments
-<details><summary><code>client.internal.deployments.<a href="src/truefoundry_sdk/internal/deployments/client.py">get_deployment_statuses</a>(...) -> AsyncHttpResponse[typing.List[DeploymentStatus]]</code></summary>
+<details><summary><code>client.internal.deployments.<a href="src/truefoundry_sdk/internal/deployments/client.py">get_deployment_statuses</a>(...) -&gt; AsyncHttpResponse[typing.List[DeploymentStatus]]</code></summary>
 <dl>
 <dd>
 
@@ -10072,7 +10072,7 @@ client.internal.deployments.get_deployment_statuses(
 </dl>
 </details>
 
-<details><summary><code>client.internal.deployments.<a href="src/truefoundry_sdk/internal/deployments/client.py">get_builds</a>(...) -> AsyncHttpResponse[typing.List[DeploymentBuild]]</code></summary>
+<details><summary><code>client.internal.deployments.<a href="src/truefoundry_sdk/internal/deployments/client.py">get_builds</a>(...) -&gt; AsyncHttpResponse[typing.List[DeploymentBuild]]</code></summary>
 <dl>
 <dd>
 
@@ -10152,7 +10152,7 @@ client.internal.deployments.get_builds(
 </dl>
 </details>
 
-<details><summary><code>client.internal.deployments.<a href="src/truefoundry_sdk/internal/deployments/client.py">get_code_upload_url</a>(...) -> AsyncHttpResponse[PresignedUrlObject]</code></summary>
+<details><summary><code>client.internal.deployments.<a href="src/truefoundry_sdk/internal/deployments/client.py">get_code_upload_url</a>(...) -&gt; AsyncHttpResponse[PresignedUrlObject]</code></summary>
 <dl>
 <dd>
 
@@ -10232,7 +10232,7 @@ client.internal.deployments.get_code_upload_url(
 </dl>
 </details>
 
-<details><summary><code>client.internal.deployments.<a href="src/truefoundry_sdk/internal/deployments/client.py">get_suggested_endpoint</a>(...) -> AsyncHttpResponse[GetSuggestedDeploymentEndpointResponse]</code></summary>
+<details><summary><code>client.internal.deployments.<a href="src/truefoundry_sdk/internal/deployments/client.py">get_suggested_endpoint</a>(...) -&gt; AsyncHttpResponse[GetSuggestedDeploymentEndpointResponse]</code></summary>
 <dl>
 <dd>
 
@@ -10349,7 +10349,7 @@ client.internal.deployments.get_suggested_endpoint(
 </details>
 
 ## Internal Applications
-<details><summary><code>client.internal.applications.<a href="src/truefoundry_sdk/internal/applications/client.py">promote_rollout</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.internal.applications.<a href="src/truefoundry_sdk/internal/applications/client.py">promote_rollout</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -10429,7 +10429,7 @@ client.internal.applications.promote_rollout(
 </dl>
 </details>
 
-<details><summary><code>client.internal.applications.<a href="src/truefoundry_sdk/internal/applications/client.py">get_pod_template_hash_to_deployment_version</a>(...) -> AsyncHttpResponse[typing.Dict[str, float]]</code></summary>
+<details><summary><code>client.internal.applications.<a href="src/truefoundry_sdk/internal/applications/client.py">get_pod_template_hash_to_deployment_version</a>(...) -&gt; AsyncHttpResponse[typing.Dict[str, float]]</code></summary>
 <dl>
 <dd>
 
@@ -10510,7 +10510,7 @@ client.internal.applications.get_pod_template_hash_to_deployment_version(
 </details>
 
 ## Internal Metrics
-<details><summary><code>client.internal.metrics.<a href="src/truefoundry_sdk/internal/metrics/client.py">get_charts</a>(...) -> AsyncHttpResponse[GetChartsResponse]</code></summary>
+<details><summary><code>client.internal.metrics.<a href="src/truefoundry_sdk/internal/metrics/client.py">get_charts</a>(...) -&gt; AsyncHttpResponse[GetChartsResponse]</code></summary>
 <dl>
 <dd>
 
@@ -10628,7 +10628,7 @@ client.internal.metrics.get_charts(
 </details>
 
 ## Internal Vcs
-<details><summary><code>client.internal.vcs.<a href="src/truefoundry_sdk/internal/vcs/client.py">get_repository_details</a>(...) -> AsyncHttpResponse[GitRepositoryExistsResponse]</code></summary>
+<details><summary><code>client.internal.vcs.<a href="src/truefoundry_sdk/internal/vcs/client.py">get_repository_details</a>(...) -&gt; AsyncHttpResponse[GitRepositoryExistsResponse]</code></summary>
 <dl>
 <dd>
 
@@ -10693,7 +10693,7 @@ client.internal.vcs.get_repository_details(
 </dl>
 </details>
 
-<details><summary><code>client.internal.vcs.<a href="src/truefoundry_sdk/internal/vcs/client.py">get_authenticated_url</a>(...) -> AsyncHttpResponse[GetAuthenticatedVcsurlResponse]</code></summary>
+<details><summary><code>client.internal.vcs.<a href="src/truefoundry_sdk/internal/vcs/client.py">get_authenticated_url</a>(...) -&gt; AsyncHttpResponse[GetAuthenticatedVcsurlResponse]</code></summary>
 <dl>
 <dd>
 
@@ -10751,7 +10751,7 @@ client.internal.vcs.get_authenticated_url(
 </details>
 
 ## Internal DockerRegistries
-<details><summary><code>client.internal.docker_registries.<a href="src/truefoundry_sdk/internal/docker_registries/client.py">create_repository</a>(...) -> AsyncHttpResponse[DockerRegistriesCreateRepositoryResponse]</code></summary>
+<details><summary><code>client.internal.docker_registries.<a href="src/truefoundry_sdk/internal/docker_registries/client.py">create_repository</a>(...) -&gt; AsyncHttpResponse[DockerRegistriesCreateRepositoryResponse]</code></summary>
 <dl>
 <dd>
 
@@ -10840,7 +10840,7 @@ client.internal.docker_registries.create_repository(
 </dl>
 </details>
 
-<details><summary><code>client.internal.docker_registries.<a href="src/truefoundry_sdk/internal/docker_registries/client.py">get_credentials</a>(...) -> AsyncHttpResponse[DockerRegistriesGetCredentialsResponse]</code></summary>
+<details><summary><code>client.internal.docker_registries.<a href="src/truefoundry_sdk/internal/docker_registries/client.py">get_credentials</a>(...) -&gt; AsyncHttpResponse[DockerRegistriesGetCredentialsResponse]</code></summary>
 <dl>
 <dd>
 
@@ -10921,7 +10921,7 @@ client.internal.docker_registries.get_credentials(
 </details>
 
 ## Internal Workflows
-<details><summary><code>client.internal.workflows.<a href="src/truefoundry_sdk/internal/workflows/client.py">execute_workflow</a>(...) -> AsyncHttpResponse[WorkflowsExecuteWorkflowResponse]</code></summary>
+<details><summary><code>client.internal.workflows.<a href="src/truefoundry_sdk/internal/workflows/client.py">execute_workflow</a>(...) -&gt; AsyncHttpResponse[WorkflowsExecuteWorkflowResponse]</code></summary>
 <dl>
 <dd>
 
@@ -11009,7 +11009,7 @@ client.internal.workflows.execute_workflow(
 </details>
 
 ## Internal BuildLogs
-<details><summary><code>client.internal.build_logs.<a href="src/truefoundry_sdk/internal/build_logs/client.py">get</a>(...) -> AsyncHttpResponse[LogsResponse]</code></summary>
+<details><summary><code>client.internal.build_logs.<a href="src/truefoundry_sdk/internal/build_logs/client.py">get</a>(...) -&gt; AsyncHttpResponse[LogsResponse]</code></summary>
 <dl>
 <dd>
 
@@ -11134,7 +11134,7 @@ client.internal.build_logs.get(
 </details>
 
 ## Internal ArtifactVersions
-<details><summary><code>client.internal.artifact_versions.<a href="src/truefoundry_sdk/internal/artifact_versions/client.py">list</a>(...) -> AsyncPager[
+<details><summary><code>client.internal.artifact_versions.<a href="src/truefoundry_sdk/internal/artifact_versions/client.py">list</a>(...) -&gt; AsyncPager[
     InternalListArtifactVersionsResponseDataItem,
     InternalListArtifactVersionsResponse,
 ]</code></summary>
@@ -11311,7 +11311,7 @@ for page in response.iter_pages():
 </details>
 
 ## Internal Ml
-<details><summary><code>client.internal.ml.<a href="src/truefoundry_sdk/internal/ml/client.py">apply</a>(...) -> AsyncHttpResponse[ApplyMlEntityResponse]</code></summary>
+<details><summary><code>client.internal.ml.<a href="src/truefoundry_sdk/internal/ml/client.py">apply</a>(...) -&gt; AsyncHttpResponse[ApplyMlEntityResponse]</code></summary>
 <dl>
 <dd>
 
@@ -11373,7 +11373,7 @@ client.internal.ml.apply(
 </dl>
 </details>
 
-<details><summary><code>client.internal.ml.<a href="src/truefoundry_sdk/internal/ml/client.py">delete</a>(...) -> AsyncHttpResponse[EmptyResponse]</code></summary>
+<details><summary><code>client.internal.ml.<a href="src/truefoundry_sdk/internal/ml/client.py">delete</a>(...) -&gt; AsyncHttpResponse[EmptyResponse]</code></summary>
 <dl>
 <dd>
 

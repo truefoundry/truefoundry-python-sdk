@@ -123,7 +123,7 @@ class RawJobsClient:
                 _get_next = lambda: self.list_runs(
                     job_id,
                     limit=limit,
-                    offset=offset + len(_items),
+                    offset=offset + len(_items or []),
                     search_prefix=search_prefix,
                     sort_by=sort_by,
                     order=order,
@@ -604,7 +604,7 @@ class AsyncRawJobsClient:
                     return await self.list_runs(
                         job_id,
                         limit=limit,
-                        offset=offset + len(_items),
+                        offset=offset + len(_items or []),
                         search_prefix=search_prefix,
                         sort_by=sort_by,
                         order=order,

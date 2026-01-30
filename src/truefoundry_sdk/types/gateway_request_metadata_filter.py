@@ -11,7 +11,9 @@ from .gateway_request_metadata_filter_value import GatewayRequestMetadataFilterV
 
 
 class GatewayRequestMetadataFilter(UniversalBaseModel):
-    gateway_request_metadata_key: typing_extensions.Annotated[str, FieldMetadata(alias="gatewayRequestMetadataKey")]
+    gateway_request_metadata_key: typing_extensions.Annotated[str, FieldMetadata(alias="gatewayRequestMetadataKey")] = (
+        pydantic.Field(alias="gatewayRequestMetadataKey")
+    )
     operator: GatewayRequestMetadataFilterOperator
     value: GatewayRequestMetadataFilterValue
 

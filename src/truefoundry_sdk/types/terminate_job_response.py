@@ -15,7 +15,9 @@ class TerminateJobResponse(UniversalBaseModel):
     Terminate Job Message
     """
 
-    job_run_status: typing_extensions.Annotated[JobRunStatus, FieldMetadata(alias="jobRunStatus")] = pydantic.Field()
+    job_run_status: typing_extensions.Annotated[JobRunStatus, FieldMetadata(alias="jobRunStatus")] = pydantic.Field(
+        alias="jobRunStatus"
+    )
     """
     Job run status
     """

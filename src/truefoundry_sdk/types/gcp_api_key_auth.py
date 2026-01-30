@@ -18,7 +18,7 @@ class GcpApiKeyAuth(UniversalBaseModel):
     +value=api-key
     """
 
-    api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey")] = pydantic.Field()
+    api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey")] = pydantic.Field(alias="apiKey")
     """
     The API key for Google Cloud authentication
     """

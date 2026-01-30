@@ -16,23 +16,27 @@ class JobRun(UniversalBaseModel):
     JobRun Name
     """
 
-    application_name: typing_extensions.Annotated[str, FieldMetadata(alias="applicationName")] = pydantic.Field()
+    application_name: typing_extensions.Annotated[str, FieldMetadata(alias="applicationName")] = pydantic.Field(
+        alias="applicationName"
+    )
     """
     Application Name
     """
 
-    deployment_version: typing_extensions.Annotated[str, FieldMetadata(alias="deploymentVersion")] = pydantic.Field()
+    deployment_version: typing_extensions.Annotated[str, FieldMetadata(alias="deploymentVersion")] = pydantic.Field(
+        alias="deploymentVersion"
+    )
     """
     Deployment Version
     """
 
-    created_at: typing_extensions.Annotated[float, FieldMetadata(alias="createdAt")] = pydantic.Field()
+    created_at: typing_extensions.Annotated[float, FieldMetadata(alias="createdAt")] = pydantic.Field(alias="createdAt")
     """
     Created At
     """
 
     end_time: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="endTime")] = pydantic.Field(
-        default=None
+        alias="endTime", default=None
     )
     """
     End Time of JobRun
@@ -48,7 +52,9 @@ class JobRun(UniversalBaseModel):
     Command
     """
 
-    total_retries: typing_extensions.Annotated[int, FieldMetadata(alias="totalRetries")] = pydantic.Field()
+    total_retries: typing_extensions.Annotated[int, FieldMetadata(alias="totalRetries")] = pydantic.Field(
+        alias="totalRetries"
+    )
     """
     Total Retries
     """
@@ -64,7 +70,7 @@ class JobRun(UniversalBaseModel):
     """
 
     triggered_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="triggeredBy")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="triggeredBy", default=None)
     )
     """
     Triggered By
@@ -72,20 +78,20 @@ class JobRun(UniversalBaseModel):
 
     triggered_by_subject: typing_extensions.Annotated[
         typing.Optional[Subject], FieldMetadata(alias="triggeredBySubject")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="triggeredBySubject", default=None)
     """
     Triggered By Subject
     """
 
     exit_code: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="exitCode")] = pydantic.Field(
-        default=None
+        alias="exitCode", default=None
     )
     """
     Exit Code
     """
 
     spark_ui: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="sparkUi")] = pydantic.Field(
-        default=None
+        alias="sparkUi", default=None
     )
     """
     Spark UI Url

@@ -96,7 +96,7 @@ class RawWorkspacesClient:
                 _has_next = True
                 _get_next = lambda: self.list(
                     limit=limit,
-                    offset=offset + len(_items),
+                    offset=offset + len(_items or []),
                     cluster_id=cluster_id,
                     name=name,
                     fqn=fqn,
@@ -395,7 +395,7 @@ class AsyncRawWorkspacesClient:
                 async def _get_next():
                     return await self.list(
                         limit=limit,
-                        offset=offset + len(_items),
+                        offset=offset + len(_items or []),
                         cluster_id=cluster_id,
                         name=name,
                         fqn=fqn,

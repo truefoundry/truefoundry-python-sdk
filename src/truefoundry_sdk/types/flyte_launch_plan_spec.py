@@ -10,7 +10,9 @@ from .flyte_workflow_id import FlyteWorkflowId
 
 
 class FlyteLaunchPlanSpec(UniversalBaseModel):
-    workflow_id: typing_extensions.Annotated[FlyteWorkflowId, FieldMetadata(alias="workflowId")]
+    workflow_id: typing_extensions.Annotated[FlyteWorkflowId, FieldMetadata(alias="workflowId")] = pydantic.Field(
+        alias="workflowId"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

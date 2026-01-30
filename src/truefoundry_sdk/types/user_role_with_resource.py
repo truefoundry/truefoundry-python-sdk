@@ -10,9 +10,13 @@ from .user_role_with_resource_resource_type import UserRoleWithResourceResourceT
 
 
 class UserRoleWithResource(UniversalBaseModel):
-    role_id: typing_extensions.Annotated[str, FieldMetadata(alias="roleId")]
-    resource_type: typing_extensions.Annotated[UserRoleWithResourceResourceType, FieldMetadata(alias="resourceType")]
-    resource_id: typing_extensions.Annotated[str, FieldMetadata(alias="resourceId")]
+    role_id: typing_extensions.Annotated[str, FieldMetadata(alias="roleId")] = pydantic.Field(alias="roleId")
+    resource_type: typing_extensions.Annotated[
+        UserRoleWithResourceResourceType, FieldMetadata(alias="resourceType")
+    ] = pydantic.Field(alias="resourceType")
+    resource_id: typing_extensions.Annotated[str, FieldMetadata(alias="resourceId")] = pydantic.Field(
+        alias="resourceId"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

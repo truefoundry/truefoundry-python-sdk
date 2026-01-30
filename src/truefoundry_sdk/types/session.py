@@ -13,22 +13,32 @@ from .user_metadata import UserMetadata
 
 class Session(UniversalBaseModel):
     id: str
-    user_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="userName")] = None
-    subject_slug: typing_extensions.Annotated[str, FieldMetadata(alias="subjectSlug")]
+    user_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="userName")] = pydantic.Field(
+        alias="userName", default=None
+    )
+    subject_slug: typing_extensions.Annotated[str, FieldMetadata(alias="subjectSlug")] = pydantic.Field(
+        alias="subjectSlug"
+    )
     subject_controller_name: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="subjectControllerName")
-    ] = None
-    subject_pat_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="subjectPatName")] = None
+    ] = pydantic.Field(alias="subjectControllerName", default=None)
+    subject_pat_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="subjectPatName")] = (
+        pydantic.Field(alias="subjectPatName", default=None)
+    )
     email: typing.Optional[str] = None
-    subject_type: typing_extensions.Annotated[SubjectType, FieldMetadata(alias="subjectType")]
-    tenant_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="tenantName")] = None
+    subject_type: typing_extensions.Annotated[SubjectType, FieldMetadata(alias="subjectType")] = pydantic.Field(
+        alias="subjectType"
+    )
+    tenant_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="tenantName")] = pydantic.Field(
+        alias="tenantName", default=None
+    )
     roles: typing.List[str]
     teams: typing.List[str]
     accounts: typing.List[str]
     metadata: typing.Optional[UserMetadata] = None
     service_account_metadata: typing_extensions.Annotated[
         typing.Optional[typing.Dict[str, typing.Any]], FieldMetadata(alias="serviceAccountMetadata")
-    ] = None
+    ] = pydantic.Field(alias="serviceAccountMetadata", default=None)
     account: typing.Optional[Account] = None
 
     if IS_PYDANTIC_V2:

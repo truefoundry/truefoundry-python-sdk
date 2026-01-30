@@ -10,7 +10,7 @@ from ..core.serialization import FieldMetadata
 
 class FlyteWorkflowId(UniversalBaseModel):
     resource_type: typing_extensions.Annotated[typing.Literal["WORKFLOW"], FieldMetadata(alias="resourceType")] = (
-        "WORKFLOW"
+        pydantic.Field(alias="resourceType", default="WORKFLOW")
     )
     name: str
 

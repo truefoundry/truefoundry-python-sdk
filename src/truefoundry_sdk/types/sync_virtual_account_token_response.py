@@ -12,7 +12,7 @@ from .sync_token_in_secret_store_info import SyncTokenInSecretStoreInfo
 class SyncVirtualAccountTokenResponse(UniversalBaseModel):
     sync_token_in_secret_store_info: typing_extensions.Annotated[
         SyncTokenInSecretStoreInfo, FieldMetadata(alias="syncTokenInSecretStoreInfo")
-    ] = pydantic.Field()
+    ] = pydantic.Field(alias="syncTokenInSecretStoreInfo")
     """
     Sync status including timestamp and error (if any)
     """

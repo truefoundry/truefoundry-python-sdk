@@ -17,9 +17,15 @@ class SecretVersion(UniversalBaseModel):
     value: typing.Optional[str] = None
     version: typing.Optional[float] = None
     secret: typing.Optional["Secret"] = None
-    secret_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="secretId")] = None
-    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None
-    updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = None
+    secret_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="secretId")] = pydantic.Field(
+        alias="secretId", default=None
+    )
+    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = (
+        pydantic.Field(alias="createdAt", default=None)
+    )
+    updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = (
+        pydantic.Field(alias="updatedAt", default=None)
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

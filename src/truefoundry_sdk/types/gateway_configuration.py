@@ -13,12 +13,20 @@ from .subject import Subject
 
 class GatewayConfiguration(UniversalBaseModel):
     id: typing.Optional[str] = None
-    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]
+    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")] = pydantic.Field(
+        alias="tenantName"
+    )
     type: str
     manifest: types_config_Config
-    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")]
-    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None
-    updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = None
+    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")] = pydantic.Field(
+        alias="createdBySubject"
+    )
+    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = (
+        pydantic.Field(alias="createdAt", default=None)
+    )
+    updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = (
+        pydantic.Field(alias="updatedAt", default=None)
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

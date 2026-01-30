@@ -17,14 +17,22 @@ class Environment(UniversalBaseModel):
     name: str
     priority: float
     color: EnvironmentColor
-    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]
-    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")]
-    is_production: typing_extensions.Annotated[bool, FieldMetadata(alias="isProduction")]
+    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")] = pydantic.Field(
+        alias="tenantName"
+    )
+    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")] = pydantic.Field(
+        alias="createdBySubject"
+    )
+    is_production: typing_extensions.Annotated[bool, FieldMetadata(alias="isProduction")] = pydantic.Field(
+        alias="isProduction"
+    )
     optimize_for: typing_extensions.Annotated[
         typing.Optional[EnvironmentOptimizeFor], FieldMetadata(alias="optimizeFor")
-    ] = None
+    ] = pydantic.Field(alias="optimizeFor", default=None)
     manifest: EnvironmentManifest
-    created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = None
+    created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = pydantic.Field(
+        alias="createdBy", default=None
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -9,7 +9,9 @@ from ..core.serialization import FieldMetadata
 
 
 class RolePermissions(UniversalBaseModel):
-    resource_type: typing_extensions.Annotated[str, FieldMetadata(alias="resourceType")] = pydantic.Field()
+    resource_type: typing_extensions.Annotated[str, FieldMetadata(alias="resourceType")] = pydantic.Field(
+        alias="resourceType"
+    )
     """
     Type of resource this role can perform actions on
     """

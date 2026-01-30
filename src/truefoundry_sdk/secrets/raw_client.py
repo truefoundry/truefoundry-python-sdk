@@ -95,7 +95,7 @@ class RawSecretsClient:
                 _has_next = True
                 _get_next = lambda: self.list(
                     limit=limit,
-                    offset=offset + len(_items),
+                    offset=offset + len(_items or []),
                     secret_fqns=secret_fqns,
                     secret_group_id=secret_group_id,
                     with_value=with_value,
@@ -336,7 +336,7 @@ class AsyncRawSecretsClient:
                 async def _get_next():
                     return await self.list(
                         limit=limit,
-                        offset=offset + len(_items),
+                        offset=offset + len(_items or []),
                         secret_fqns=secret_fqns,
                         secret_group_id=secret_group_id,
                         with_value=with_value,
