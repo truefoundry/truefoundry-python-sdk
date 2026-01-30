@@ -9,7 +9,9 @@ from ....core.serialization import FieldMetadata
 
 
 class DockerRegistriesCreateRepositoryResponse(UniversalBaseModel):
-    repo_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="repoName")] = None
+    repo_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="repoName")] = pydantic.Field(
+        alias="repoName", default=None
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

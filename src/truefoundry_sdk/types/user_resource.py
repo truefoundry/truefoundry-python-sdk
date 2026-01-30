@@ -9,23 +9,27 @@ from ..core.serialization import FieldMetadata
 
 
 class UserResource(UniversalBaseModel):
-    resource_type: typing_extensions.Annotated[str, FieldMetadata(alias="resourceType")] = pydantic.Field()
+    resource_type: typing_extensions.Annotated[str, FieldMetadata(alias="resourceType")] = pydantic.Field(
+        alias="resourceType"
+    )
     """
     Resource Type
     """
 
-    resource_id: typing_extensions.Annotated[str, FieldMetadata(alias="resourceId")] = pydantic.Field()
+    resource_id: typing_extensions.Annotated[str, FieldMetadata(alias="resourceId")] = pydantic.Field(
+        alias="resourceId"
+    )
     """
     Resource ID
     """
 
-    role_id: typing_extensions.Annotated[str, FieldMetadata(alias="roleId")] = pydantic.Field()
+    role_id: typing_extensions.Annotated[str, FieldMetadata(alias="roleId")] = pydantic.Field(alias="roleId")
     """
     Role ID
     """
 
     resource_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="resourceName")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="resourceName", default=None)
     )
     """
     Resource Name (if available)

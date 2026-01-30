@@ -14,15 +14,21 @@ from .user_role_with_resource import UserRoleWithResource
 class User(UniversalBaseModel):
     id: str
     email: str
-    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]
+    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")] = pydantic.Field(
+        alias="tenantName"
+    )
     metadata: UserMetadata
     roles: typing.Optional[typing.List[str]] = None
     roles_with_resource: typing_extensions.Annotated[
         typing.Optional[typing.List[UserRoleWithResource]], FieldMetadata(alias="rolesWithResource")
-    ] = None
+    ] = pydantic.Field(alias="rolesWithResource", default=None)
     active: bool
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
+    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field(
+        alias="createdAt"
+    )
+    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")] = pydantic.Field(
+        alias="updatedAt"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -13,17 +13,29 @@ class Alert(UniversalBaseModel):
     id: typing.Optional[str] = None
     name: str
     timestamps: typing.List[dt.datetime]
-    start_time: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="startTime")]
-    resolved_time: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="resolvedTime")] = None
-    application_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="applicationId")] = None
-    cluster_id: typing_extensions.Annotated[str, FieldMetadata(alias="clusterId")]
-    tenant_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="tenantName")] = None
+    start_time: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="startTime")] = pydantic.Field(
+        alias="startTime"
+    )
+    resolved_time: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="resolvedTime")] = (
+        pydantic.Field(alias="resolvedTime", default=None)
+    )
+    application_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="applicationId")] = (
+        pydantic.Field(alias="applicationId", default=None)
+    )
+    cluster_id: typing_extensions.Annotated[str, FieldMetadata(alias="clusterId")] = pydantic.Field(alias="clusterId")
+    tenant_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="tenantName")] = pydantic.Field(
+        alias="tenantName", default=None
+    )
     fingerprint: str
-    updated_at: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="updatedAt")] = None
-    created_at: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdAt")] = None
+    updated_at: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="updatedAt")] = pydantic.Field(
+        alias="updatedAt", default=None
+    )
+    created_at: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdAt")] = pydantic.Field(
+        alias="createdAt", default=None
+    )
     application_debug_info_id: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="applicationDebugInfoId")
-    ] = None
+    ] = pydantic.Field(alias="applicationDebugInfoId", default=None)
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

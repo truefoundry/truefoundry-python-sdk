@@ -17,7 +17,7 @@ class IChange(UniversalBaseModel):
     value: typing.Optional[typing.Dict[str, typing.Any]] = None
     old_value: typing_extensions.Annotated[
         typing.Optional[typing.Dict[str, typing.Any]], FieldMetadata(alias="oldValue")
-    ] = None
+    ] = pydantic.Field(alias="oldValue", default=None)
     changes: typing.Optional[typing.List["IChange"]] = None
 
     if IS_PYDANTIC_V2:

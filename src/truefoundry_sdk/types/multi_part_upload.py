@@ -15,7 +15,7 @@ class MultiPartUpload(UniversalBaseModel):
     part_signed_urls: typing.List[SignedUrl]
     s3compatible_upload_id: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="s3_compatible_upload_id")
-    ] = None
+    ] = pydantic.Field(alias="s3_compatible_upload_id", default=None)
     azure_blob_block_ids: typing.Optional[typing.List[str]] = None
     finalize_signed_url: SignedUrl
 

@@ -13,16 +13,26 @@ from .subject import Subject
 class Account(UniversalBaseModel):
     id: typing.Optional[str] = None
     name: typing.Optional[str] = None
-    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")]
+    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")] = pydantic.Field(
+        alias="tenantName"
+    )
     manifest: typing.Dict[str, typing.Any] = pydantic.Field()
     """
     Account manifest
     """
 
-    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")]
-    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None
-    updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = None
-    is_editable: typing_extensions.Annotated[bool, FieldMetadata(alias="isEditable")]
+    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")] = pydantic.Field(
+        alias="createdBySubject"
+    )
+    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = (
+        pydantic.Field(alias="createdAt", default=None)
+    )
+    updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = (
+        pydantic.Field(alias="updatedAt", default=None)
+    )
+    is_editable: typing_extensions.Annotated[bool, FieldMetadata(alias="isEditable")] = pydantic.Field(
+        alias="isEditable"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

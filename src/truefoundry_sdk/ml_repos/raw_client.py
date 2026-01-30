@@ -291,7 +291,7 @@ class RawMlReposClient:
                 _get_next = lambda: self.list(
                     name=name,
                     limit=limit,
-                    offset=offset + len(_items),
+                    offset=offset + len(_items or []),
                     request_options=request_options,
                 )
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
@@ -579,7 +579,7 @@ class AsyncRawMlReposClient:
                     return await self.list(
                         name=name,
                         limit=limit,
-                        offset=offset + len(_items),
+                        offset=offset + len(_items or []),
                         request_options=request_options,
                     )
 

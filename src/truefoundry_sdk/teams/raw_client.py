@@ -85,7 +85,7 @@ class RawTeamsClient:
                 _has_next = True
                 _get_next = lambda: self.list(
                     limit=limit,
-                    offset=offset + len(_items),
+                    offset=offset + len(_items or []),
                     type=type,
                     request_options=request_options,
                 )
@@ -344,7 +344,7 @@ class AsyncRawTeamsClient:
                 async def _get_next():
                     return await self.list(
                         limit=limit,
-                        offset=offset + len(_items),
+                        offset=offset + len(_items or []),
                         type=type,
                         request_options=request_options,
                     )

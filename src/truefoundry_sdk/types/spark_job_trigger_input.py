@@ -10,7 +10,7 @@ from ..core.serialization import FieldMetadata
 
 class SparkJobTriggerInput(UniversalBaseModel):
     main_class: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="mainClass")] = pydantic.Field(
-        default=None
+        alias="mainClass", default=None
     )
     """
     Main Class for Spark Job
@@ -18,7 +18,7 @@ class SparkJobTriggerInput(UniversalBaseModel):
 
     main_application_file: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="mainApplicationFile")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="mainApplicationFile", default=None)
     """
     Main Application File for Spark Job
     """

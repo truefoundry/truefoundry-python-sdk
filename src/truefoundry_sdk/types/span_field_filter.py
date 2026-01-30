@@ -12,7 +12,9 @@ from .span_field_filter_value import SpanFieldFilterValue
 
 
 class SpanFieldFilter(UniversalBaseModel):
-    span_field_name: typing_extensions.Annotated[SpanFieldFilterSpanFieldName, FieldMetadata(alias="spanFieldName")]
+    span_field_name: typing_extensions.Annotated[SpanFieldFilterSpanFieldName, FieldMetadata(alias="spanFieldName")] = (
+        pydantic.Field(alias="spanFieldName")
+    )
     operator: SpanFieldFilterOperator
     value: SpanFieldFilterValue
 

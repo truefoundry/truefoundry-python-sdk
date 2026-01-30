@@ -10,7 +10,7 @@ from ....core.serialization import FieldMetadata
 
 class WorkflowsExecuteWorkflowResponse(UniversalBaseModel):
     execution_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="executionName")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="executionName", default=None)
     )
     """
     The name of the execution

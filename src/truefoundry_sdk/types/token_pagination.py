@@ -15,14 +15,14 @@ class TokenPagination(UniversalBaseModel):
     """
 
     next_page_token: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="nextPageToken")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="nextPageToken", default=None)
     )
     """
     Base64 encoded token for the next page
     """
 
     previous_page_token: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="previousPageToken")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="previousPageToken", default=None)
     )
     """
     Base64 encoded token for the previous page

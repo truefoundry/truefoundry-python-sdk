@@ -10,14 +10,14 @@ from ..core.serialization import FieldMetadata
 
 class AddonComponentStatus(UniversalBaseModel):
     health_status: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="healthStatus")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="healthStatus", default=None)
     )
     """
     Health status of the addon
     """
 
     sync_status: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="syncStatus")] = pydantic.Field(
-        default=None
+        alias="syncStatus", default=None
     )
     """
     Sync status of the addon

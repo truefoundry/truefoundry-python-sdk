@@ -87,7 +87,7 @@ class RawApplicationVersionsClient:
                 _get_next = lambda: self.list(
                     id,
                     limit=limit,
-                    offset=offset + len(_items),
+                    offset=offset + len(_items or []),
                     version=version,
                     deployment_id=deployment_id,
                     request_options=request_options,
@@ -256,7 +256,7 @@ class AsyncRawApplicationVersionsClient:
                     return await self.list(
                         id,
                         limit=limit,
-                        offset=offset + len(_items),
+                        offset=offset + len(_items or []),
                         version=version,
                         deployment_id=deployment_id,
                         request_options=request_options,

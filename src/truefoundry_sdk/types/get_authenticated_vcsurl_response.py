@@ -9,7 +9,9 @@ from ..core.serialization import FieldMetadata
 
 
 class GetAuthenticatedVcsurlResponse(UniversalBaseModel):
-    authenticated_url: typing_extensions.Annotated[str, FieldMetadata(alias="authenticatedURL")] = pydantic.Field()
+    authenticated_url: typing_extensions.Annotated[str, FieldMetadata(alias="authenticatedURL")] = pydantic.Field(
+        alias="authenticatedURL"
+    )
     """
     Authenticated URL to access the repository
     """

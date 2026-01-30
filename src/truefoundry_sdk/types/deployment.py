@@ -20,30 +20,42 @@ class Deployment(UniversalBaseModel):
     id: typing.Optional[str] = None
     version: typing.Optional[float] = None
     fqn: typing.Optional[str] = None
-    application_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="applicationId")] = None
+    application_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="applicationId")] = (
+        pydantic.Field(alias="applicationId", default=None)
+    )
     manifest: DeploymentManifest
     application: typing.Optional["Application"] = None
-    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")]
-    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None
-    updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = None
+    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")] = pydantic.Field(
+        alias="createdBySubject"
+    )
+    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = (
+        pydantic.Field(alias="createdAt", default=None)
+    )
+    updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = (
+        pydantic.Field(alias="updatedAt", default=None)
+    )
     deployment_builds: typing_extensions.Annotated[
         typing.Optional[typing.List[BuildInfo]], FieldMetadata(alias="deploymentBuilds")
-    ] = None
+    ] = pydantic.Field(alias="deploymentBuilds", default=None)
     deployment_statuses: typing_extensions.Annotated[
         typing.Optional[typing.List[DeploymentStatus]], FieldMetadata(alias="deploymentStatuses")
-    ] = None
-    current_status_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="currentStatusId")] = None
+    ] = pydantic.Field(alias="deploymentStatuses", default=None)
+    current_status_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="currentStatusId")] = (
+        pydantic.Field(alias="currentStatusId", default=None)
+    )
     current_status: typing_extensions.Annotated[
         typing.Optional[DeploymentStatus], FieldMetadata(alias="currentStatus")
-    ] = None
+    ] = pydantic.Field(alias="currentStatus", default=None)
     applied_recommendations: typing_extensions.Annotated[
         typing.Optional[typing.List[Recommendation]], FieldMetadata(alias="appliedRecommendations")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="appliedRecommendations", default=None)
     """
     Applied recommendations for this deployment
     """
 
-    created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = None
+    created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = pydantic.Field(
+        alias="createdBy", default=None
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

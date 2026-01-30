@@ -102,7 +102,7 @@ class RawUsersClient:
                 _has_next = True
                 _get_next = lambda: self.list(
                     limit=limit,
-                    offset=offset + len(_items),
+                    offset=offset + len(_items or []),
                     query=query,
                     show_invalid_users=show_invalid_users,
                     include_virtual_accounts=include_virtual_accounts,
@@ -899,7 +899,7 @@ class AsyncRawUsersClient:
                 async def _get_next():
                     return await self.list(
                         limit=limit,
-                        offset=offset + len(_items),
+                        offset=offset + len(_items or []),
                         query=query,
                         show_invalid_users=show_invalid_users,
                         include_virtual_accounts=include_virtual_accounts,

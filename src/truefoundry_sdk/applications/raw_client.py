@@ -160,7 +160,7 @@ class RawApplicationsClient:
                 _has_next = True
                 _get_next = lambda: self.list(
                     limit=limit,
-                    offset=offset + len(_items),
+                    offset=offset + len(_items or []),
                     application_id=application_id,
                     workspace_id=workspace_id,
                     application_name=application_name,
@@ -800,7 +800,7 @@ class AsyncRawApplicationsClient:
                 async def _get_next():
                     return await self.list(
                         limit=limit,
-                        offset=offset + len(_items),
+                        offset=offset + len(_items or []),
                         application_id=application_id,
                         workspace_id=workspace_id,
                         application_name=application_name,

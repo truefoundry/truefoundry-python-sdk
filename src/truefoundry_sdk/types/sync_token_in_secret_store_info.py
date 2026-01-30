@@ -9,7 +9,7 @@ from ..core.serialization import FieldMetadata
 
 
 class SyncTokenInSecretStoreInfo(UniversalBaseModel):
-    updated_at: typing_extensions.Annotated[str, FieldMetadata(alias="updatedAt")] = pydantic.Field()
+    updated_at: typing_extensions.Annotated[str, FieldMetadata(alias="updatedAt")] = pydantic.Field(alias="updatedAt")
     """
     ISO timestamp of when the token was synced
     """

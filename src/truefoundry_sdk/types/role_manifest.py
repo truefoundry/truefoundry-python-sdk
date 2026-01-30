@@ -20,7 +20,9 @@ class RoleManifest(UniversalBaseModel):
     Unique identifier of the role across the organization
     """
 
-    display_name: typing_extensions.Annotated[str, FieldMetadata(alias="displayName")] = pydantic.Field()
+    display_name: typing_extensions.Annotated[str, FieldMetadata(alias="displayName")] = pydantic.Field(
+        alias="displayName"
+    )
     """
     Human-readable name for the role
     """
@@ -30,7 +32,9 @@ class RoleManifest(UniversalBaseModel):
     Description of the role that explains its purpose and permissions
     """
 
-    resource_type: typing_extensions.Annotated[str, FieldMetadata(alias="resourceType")] = pydantic.Field()
+    resource_type: typing_extensions.Annotated[str, FieldMetadata(alias="resourceType")] = pydantic.Field(
+        alias="resourceType"
+    )
     """
     Type of resource this role applies to
     """

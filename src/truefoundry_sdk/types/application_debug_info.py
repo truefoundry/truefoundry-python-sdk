@@ -13,11 +13,19 @@ from ..core.serialization import FieldMetadata
 
 class ApplicationDebugInfo(UniversalBaseModel):
     id: typing.Optional[str] = None
-    application_id: typing_extensions.Annotated[str, FieldMetadata(alias="applicationId")]
+    application_id: typing_extensions.Annotated[str, FieldMetadata(alias="applicationId")] = pydantic.Field(
+        alias="applicationId"
+    )
     application: typing.Optional["Application"] = None
-    debug_info: typing_extensions.Annotated[typing.Dict[str, typing.Any], FieldMetadata(alias="debugInfo")]
-    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None
-    updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = None
+    debug_info: typing_extensions.Annotated[typing.Dict[str, typing.Any], FieldMetadata(alias="debugInfo")] = (
+        pydantic.Field(alias="debugInfo")
+    )
+    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = (
+        pydantic.Field(alias="createdAt", default=None)
+    )
+    updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = (
+        pydantic.Field(alias="updatedAt", default=None)
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

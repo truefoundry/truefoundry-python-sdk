@@ -11,9 +11,13 @@ from ..core.serialization import FieldMetadata
 class EventInvolvedObject(UniversalBaseModel):
     kind: str
     name: str
-    api_version: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="apiVersion")] = None
+    api_version: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="apiVersion")] = pydantic.Field(
+        alias="apiVersion", default=None
+    )
     namespace: typing.Optional[str] = None
-    container_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="containerName")] = None
+    container_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="containerName")] = (
+        pydantic.Field(alias="containerName", default=None)
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

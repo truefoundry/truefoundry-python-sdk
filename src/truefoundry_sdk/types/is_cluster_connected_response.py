@@ -9,7 +9,9 @@ from ..core.serialization import FieldMetadata
 
 
 class IsClusterConnectedResponse(UniversalBaseModel):
-    is_connected: typing_extensions.Annotated[bool, FieldMetadata(alias="isConnected")] = pydantic.Field()
+    is_connected: typing_extensions.Annotated[bool, FieldMetadata(alias="isConnected")] = pydantic.Field(
+        alias="isConnected"
+    )
     """
     Whether the cluster is connected
     """

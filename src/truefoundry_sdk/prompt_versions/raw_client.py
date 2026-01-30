@@ -264,7 +264,7 @@ class RawPromptVersionsClient:
                     ml_repo_id=ml_repo_id,
                     name=name,
                     version=version,
-                    offset=offset + len(_items),
+                    offset=offset + len(_items or []),
                     limit=limit,
                     request_options=request_options,
                 )
@@ -532,7 +532,7 @@ class AsyncRawPromptVersionsClient:
                         ml_repo_id=ml_repo_id,
                         name=name,
                         version=version,
-                        offset=offset + len(_items),
+                        offset=offset + len(_items or []),
                         limit=limit,
                         request_options=request_options,
                     )

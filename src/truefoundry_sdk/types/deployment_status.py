@@ -13,14 +13,22 @@ from .deployment_transition import DeploymentTransition
 
 class DeploymentStatus(UniversalBaseModel):
     id: typing.Optional[str] = None
-    deployment_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="deploymentId")] = None
+    deployment_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="deploymentId")] = (
+        pydantic.Field(alias="deploymentId", default=None)
+    )
     status: typing.Optional[DeploymentStatusValue] = None
     state: typing.Optional[typing.Dict[str, typing.Any]] = None
     transition: typing.Optional[DeploymentTransition] = None
     message: typing.Optional[str] = None
-    retry_count: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="retryCount")] = None
-    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = None
-    updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = None
+    retry_count: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="retryCount")] = (
+        pydantic.Field(alias="retryCount", default=None)
+    )
+    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = (
+        pydantic.Field(alias="createdAt", default=None)
+    )
+    updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = (
+        pydantic.Field(alias="updatedAt", default=None)
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

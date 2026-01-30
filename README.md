@@ -191,6 +191,7 @@ client = TrueFoundry(
 )
 response = client.applications.with_raw_response.list(...)
 print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
 pager = client.users.list(...)
 print(pager.response)  # access the typed response for the first page

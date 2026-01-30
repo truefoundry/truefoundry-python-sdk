@@ -11,7 +11,9 @@ from .span_attribute_filter_value import SpanAttributeFilterValue
 
 
 class SpanAttributeFilter(UniversalBaseModel):
-    span_attribute_key: typing_extensions.Annotated[str, FieldMetadata(alias="spanAttributeKey")]
+    span_attribute_key: typing_extensions.Annotated[str, FieldMetadata(alias="spanAttributeKey")] = pydantic.Field(
+        alias="spanAttributeKey"
+    )
     operator: SpanAttributeFilterOperator
     value: SpanAttributeFilterValue
 

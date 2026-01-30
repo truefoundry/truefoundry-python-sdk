@@ -11,12 +11,18 @@ from ..core.serialization import FieldMetadata
 
 class Jwt(UniversalBaseModel):
     id: str
-    subject_type: typing_extensions.Annotated[str, FieldMetadata(alias="subjectType")]
-    subject_id: typing_extensions.Annotated[str, FieldMetadata(alias="subjectId")]
+    subject_type: typing_extensions.Annotated[str, FieldMetadata(alias="subjectType")] = pydantic.Field(
+        alias="subjectType"
+    )
+    subject_id: typing_extensions.Annotated[str, FieldMetadata(alias="subjectId")] = pydantic.Field(alias="subjectId")
     metadata: typing.Optional[typing.Dict[str, typing.Any]] = None
     expiry: dt.datetime
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
+    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field(
+        alias="createdAt"
+    )
+    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")] = pydantic.Field(
+        alias="updatedAt"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

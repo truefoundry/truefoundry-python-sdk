@@ -12,7 +12,9 @@ class ListFilesRequest(UniversalBaseModel):
     id: str
     path: typing.Optional[str] = None
     limit: typing.Optional[int] = None
-    page_token: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="pageToken")] = None
+    page_token: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="pageToken")] = pydantic.Field(
+        alias="pageToken", default=None
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

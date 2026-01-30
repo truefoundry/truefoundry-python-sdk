@@ -39,7 +39,7 @@ class Helm(UniversalBaseModel):
     kustomize: typing.Optional[Kustomize] = None
     ignore_differences: typing_extensions.Annotated[
         typing.Optional[typing.List[typing.Dict[str, typing.Any]]], FieldMetadata(alias="ignoreDifferences")
-    ] = None
+    ] = pydantic.Field(alias="ignoreDifferences", default=None)
     workspace_fqn: typing.Optional[str] = pydantic.Field(default=None)
     """
     Fully qualified name of the workspace
