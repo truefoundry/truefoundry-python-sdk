@@ -7,10 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class H2OFramework(UniversalBaseModel):
-    type: typing.Literal["h2o"] = pydantic.Field(default="h2o")
-    """
-    Type of the framework
-    """
+    type: typing.Literal["h2o"] = "h2o"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

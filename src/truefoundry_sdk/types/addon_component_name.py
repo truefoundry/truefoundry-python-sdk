@@ -34,6 +34,7 @@ class AddonComponentName(enum.StrEnum):
     TFY_PROMETHEUS_CONFIG = "TFY_PROMETHEUS_CONFIG"
     SPARK_OPERATOR = "SPARK_OPERATOR"
     TFY_LOGS = "TFY_LOGS"
+    TFY_CERT_MANAGER_CONFIG = "TFY_CERT_MANAGER_CONFIG"
     _UNKNOWN = "__ADDONCOMPONENTNAME_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
@@ -73,6 +74,7 @@ class AddonComponentName(enum.StrEnum):
         tfy_prometheus_config: typing.Callable[[], T_Result],
         spark_operator: typing.Callable[[], T_Result],
         tfy_logs: typing.Callable[[], T_Result],
+        tfy_cert_manager_config: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is AddonComponentName.ARGOCD:
@@ -127,4 +129,6 @@ class AddonComponentName(enum.StrEnum):
             return spark_operator()
         if self is AddonComponentName.TFY_LOGS:
             return tfy_logs()
+        if self is AddonComponentName.TFY_CERT_MANAGER_CONFIG:
+            return tfy_cert_manager_config()
         return _unknown_member(self._value_)

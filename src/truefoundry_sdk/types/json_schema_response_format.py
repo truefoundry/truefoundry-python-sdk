@@ -12,11 +12,7 @@ class JsonSchemaResponseFormat(UniversalBaseModel):
     Structured JSON response format with schema validation
     """
 
-    type: typing.Literal["json_schema"] = pydantic.Field(default="json_schema")
-    """
-    Type of response format
-    """
-
+    type: typing.Literal["json_schema"] = "json_schema"
     json_schema: JsonSchema
 
     if IS_PYDANTIC_V2:

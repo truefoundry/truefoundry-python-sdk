@@ -28,16 +28,16 @@ class CommonToolsSettings(UniversalBaseModel):
     Allows model to execute code and return the results.
     """
 
+    sandbox_exec: bool = pydantic.Field(default=True)
+    """
+    Enable sandbox executor tool
+    Allows model to execute shell command in an isolated stateful sandbox environment.
+    """
+
     sequential_thinking: bool = pydantic.Field(default=True)
     """
     Enable sequential thinking tool
     Allows model to reason step-by-step to solve complex problems.
-    """
-
-    vision_ocr: bool = pydantic.Field(default=True)
-    """
-    Enable vision OCR tool
-    Allows model to extract text from images or PDFs.
     """
 
     web_scrape: bool = pydantic.Field(default=True)

@@ -2,4 +2,4 @@
 
 import typing
 
-SpanFieldFilterValue = typing.Union[str, float, typing.List[str], typing.List[float]]
+SpanFieldFilterValue = typing.Union[str, float, bool, typing.List[str], typing.List[float]]

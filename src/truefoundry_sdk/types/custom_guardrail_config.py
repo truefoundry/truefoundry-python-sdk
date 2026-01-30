@@ -5,8 +5,10 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .custom_guardrail_config_auth_data import CustomGuardrailConfigAuthData
+from .custom_guardrail_config_config import CustomGuardrailConfigConfig
 from .custom_guardrail_config_operation import CustomGuardrailConfigOperation
 from .custom_guardrail_config_target import CustomGuardrailConfigTarget
+from .enforcing_strategy import EnforcingStrategy
 
 
 class CustomGuardrailConfig(UniversalBaseModel):
@@ -17,6 +19,13 @@ class CustomGuardrailConfig(UniversalBaseModel):
     name: str = pydantic.Field()
     """
     The name of the Guardrail Config.
+    """
+
+    description: typing.Optional[str] = pydantic.Field(
+        default="Custom guardrail server for validate or mutate via HTTP endpoint"
+    )
+    """
+    Optional description for this Guardrail Config.
     """
 
     type: typing.Literal["integration/guardrail-config/custom"] = pydantic.Field(
@@ -33,14 +42,15 @@ class CustomGuardrailConfig(UniversalBaseModel):
     Validate guardrails are run in parallel while mutate guardrails are run sequentially.
     """
 
+    priority: typing.Optional[int] = pydantic.Field(default=1)
+    """
+    Execution order for mutate guardrails. Lower values run first. Only applicable when operation is mutate.
+    """
+
+    enforcing_strategy: EnforcingStrategy
     target: CustomGuardrailConfigTarget = pydantic.Field()
     """
     Specify whether the guardrail should be applied to the request or response. Guardrails with target "Request" can be only used in input guardrails and guardrails with target "Response" can only be used in output guardrails.
-    """
-
-    url: str = pydantic.Field()
-    """
-    The URL of the Guardrail to send a post request to.
     """
 
     auth_data: typing.Optional[CustomGuardrailConfigAuthData] = pydantic.Field(default=None)
@@ -48,15 +58,7 @@ class CustomGuardrailConfig(UniversalBaseModel):
     Authentication data for the Guardrail Server.
     """
 
-    headers: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
-    """
-    Headers for the Guardrail Server. Forwarded to the Guardrail Server as is. For example: `{"Authorization": "APIKey <token>"}`
-    """
-
-    config: typing.Dict[str, typing.Any] = pydantic.Field()
-    """
-    The config for the Guardrail Server. This is a JSON object that will be sent as a config to Guardrail Server along with the request.
-    """
+    config: CustomGuardrailConfigConfig
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

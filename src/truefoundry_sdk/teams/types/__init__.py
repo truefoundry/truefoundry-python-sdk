@@ -6,12 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .apply_team_request_manifest import ApplyTeamRequestManifest
     from .teams_list_request_type import TeamsListRequestType
-_dynamic_imports: typing.Dict[str, str] = {
-    "ApplyTeamRequestManifest": ".apply_team_request_manifest",
-    "TeamsListRequestType": ".teams_list_request_type",
-}
+_dynamic_imports: typing.Dict[str, str] = {"TeamsListRequestType": ".teams_list_request_type"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -35,4 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ApplyTeamRequestManifest", "TeamsListRequestType"]
+__all__ = ["TeamsListRequestType"]

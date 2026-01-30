@@ -7,10 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class SpaCyFramework(UniversalBaseModel):
-    type: typing.Literal["spacy"] = pydantic.Field(default="spacy")
-    """
-    Type of the framework
-    """
+    type: typing.Literal["spacy"] = "spacy"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

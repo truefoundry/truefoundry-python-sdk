@@ -6,8 +6,8 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
-from .azure_key_auth import AzureKeyAuth
 from .azure_open_ai_model import AzureOpenAiModel
+from .azure_open_ai_provider_account_auth_data import AzureOpenAiProviderAccountAuthData
 from .collaborator import Collaborator
 from .owned_by import OwnedBy
 
@@ -29,10 +29,14 @@ class AzureOpenAiProviderAccount(UniversalBaseModel):
 
     azure_endpoint: str = pydantic.Field()
     """
-    The Azure OpenAI Service endpoint URL
+    The Azure OpenAI Service endpoint URL. Should look like https://{resource-name}.openai.azure.com
     """
 
-    auth_data: AzureKeyAuth
+    auth_data: AzureOpenAiProviderAccountAuthData = pydantic.Field()
+    """
+    Azure OpenAI authentication credentials
+    """
+
     integrations: typing.List[AzureOpenAiModel] = pydantic.Field()
     """
     List of integrations that are associated with the Azure OpenAI provider account

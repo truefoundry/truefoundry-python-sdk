@@ -35,6 +35,7 @@ class RawVirtualAccountsClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
+        name_search_query: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[VirtualAccount, ListVirtualAccountResponse]:
         """
@@ -47,6 +48,9 @@ class RawVirtualAccountsClient:
 
         offset : typing.Optional[int]
             Number of items to skip
+
+        name_search_query : typing.Optional[str]
+            Return virtual accounts with names that contain this string
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -64,6 +68,7 @@ class RawVirtualAccountsClient:
             params={
                 "limit": limit,
                 "offset": offset,
+                "nameSearchQuery": name_search_query,
             },
             request_options=request_options,
         )
@@ -81,6 +86,7 @@ class RawVirtualAccountsClient:
                 _get_next = lambda: self.list(
                     limit=limit,
                     offset=offset + len(_items or []),
+                    name_search_query=name_search_query,
                     request_options=request_options,
                 )
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
@@ -460,6 +466,7 @@ class AsyncRawVirtualAccountsClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
+        name_search_query: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[VirtualAccount, ListVirtualAccountResponse]:
         """
@@ -472,6 +479,9 @@ class AsyncRawVirtualAccountsClient:
 
         offset : typing.Optional[int]
             Number of items to skip
+
+        name_search_query : typing.Optional[str]
+            Return virtual accounts with names that contain this string
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -489,6 +499,7 @@ class AsyncRawVirtualAccountsClient:
             params={
                 "limit": limit,
                 "offset": offset,
+                "nameSearchQuery": name_search_query,
             },
             request_options=request_options,
         )
@@ -508,6 +519,7 @@ class AsyncRawVirtualAccountsClient:
                     return await self.list(
                         limit=limit,
                         offset=offset + len(_items or []),
+                        name_search_query=name_search_query,
                         request_options=request_options,
                     )
 

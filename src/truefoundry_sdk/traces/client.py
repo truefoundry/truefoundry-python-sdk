@@ -35,7 +35,6 @@ class TracesClient:
         self,
         *,
         start_time: str,
-        tracing_project_fqn: str,
         end_time: typing.Optional[str] = OMIT,
         trace_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         span_ids: typing.Optional[typing.Sequence[str]] = OMIT,
@@ -46,7 +45,10 @@ class TracesClient:
         limit: typing.Optional[int] = OMIT,
         sort_direction: typing.Optional[SortDirection] = OMIT,
         page_token: typing.Optional[str] = OMIT,
+        tracing_project_fqn: typing.Optional[str] = OMIT,
+        data_routing_destination: typing.Optional[str] = OMIT,
         filters: typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]] = OMIT,
+        include_feedbacks: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[TraceSpan, QuerySpansResponse]:
         """
@@ -54,9 +56,6 @@ class TracesClient:
         ----------
         start_time : str
             Start time in ISO 8601 format (e.g., 2025-03-12T00:00:09.872Z)
-
-        tracing_project_fqn : str
-            Tracing project FQN (e.g., truefoundry:tracing-project:tfy-default)
 
         end_time : typing.Optional[str]
             End time in ISO 8601 format (e.g., 2025-03-12T00:10:00.000Z). Defaults to current time if not provided.
@@ -88,8 +87,17 @@ class TracesClient:
         page_token : typing.Optional[str]
             An opaque string that should be passed as-is from previous response for fetching the next page. Pass `$response.pagination.nextPageToken` from previous response for fetching the next page.
 
+        tracing_project_fqn : typing.Optional[str]
+            Tracing project FQN (e.g., truefoundry:tracing-project:tfy-default)
+
+        data_routing_destination : typing.Optional[str]
+            Data Routing Destination. One of tracingProjectFqn or dataRoutingDestination is required.
+
         filters : typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]]
             Array of filters
+
+        include_feedbacks : typing.Optional[bool]
+            When true, feedback data is included in the response. When false, feedback data is excluded (returns empty array).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -109,7 +117,6 @@ class TracesClient:
         )
         response = client.traces.query_spans(
             start_time="startTime",
-            tracing_project_fqn="tracingProjectFqn",
         )
         for item in response:
             yield item
@@ -119,7 +126,6 @@ class TracesClient:
         """
         return self._raw_client.query_spans(
             start_time=start_time,
-            tracing_project_fqn=tracing_project_fqn,
             end_time=end_time,
             trace_ids=trace_ids,
             span_ids=span_ids,
@@ -130,7 +136,10 @@ class TracesClient:
             limit=limit,
             sort_direction=sort_direction,
             page_token=page_token,
+            tracing_project_fqn=tracing_project_fqn,
+            data_routing_destination=data_routing_destination,
             filters=filters,
+            include_feedbacks=include_feedbacks,
             request_options=request_options,
         )
 
@@ -154,7 +163,6 @@ class AsyncTracesClient:
         self,
         *,
         start_time: str,
-        tracing_project_fqn: str,
         end_time: typing.Optional[str] = OMIT,
         trace_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         span_ids: typing.Optional[typing.Sequence[str]] = OMIT,
@@ -165,7 +173,10 @@ class AsyncTracesClient:
         limit: typing.Optional[int] = OMIT,
         sort_direction: typing.Optional[SortDirection] = OMIT,
         page_token: typing.Optional[str] = OMIT,
+        tracing_project_fqn: typing.Optional[str] = OMIT,
+        data_routing_destination: typing.Optional[str] = OMIT,
         filters: typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]] = OMIT,
+        include_feedbacks: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[TraceSpan, QuerySpansResponse]:
         """
@@ -173,9 +184,6 @@ class AsyncTracesClient:
         ----------
         start_time : str
             Start time in ISO 8601 format (e.g., 2025-03-12T00:00:09.872Z)
-
-        tracing_project_fqn : str
-            Tracing project FQN (e.g., truefoundry:tracing-project:tfy-default)
 
         end_time : typing.Optional[str]
             End time in ISO 8601 format (e.g., 2025-03-12T00:10:00.000Z). Defaults to current time if not provided.
@@ -207,8 +215,17 @@ class AsyncTracesClient:
         page_token : typing.Optional[str]
             An opaque string that should be passed as-is from previous response for fetching the next page. Pass `$response.pagination.nextPageToken` from previous response for fetching the next page.
 
+        tracing_project_fqn : typing.Optional[str]
+            Tracing project FQN (e.g., truefoundry:tracing-project:tfy-default)
+
+        data_routing_destination : typing.Optional[str]
+            Data Routing Destination. One of tracingProjectFqn or dataRoutingDestination is required.
+
         filters : typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]]
             Array of filters
+
+        include_feedbacks : typing.Optional[bool]
+            When true, feedback data is included in the response. When false, feedback data is excluded (returns empty array).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -233,7 +250,6 @@ class AsyncTracesClient:
         async def main() -> None:
             response = await client.traces.query_spans(
                 start_time="startTime",
-                tracing_project_fqn="tracingProjectFqn",
             )
             async for item in response:
                 yield item
@@ -247,7 +263,6 @@ class AsyncTracesClient:
         """
         return await self._raw_client.query_spans(
             start_time=start_time,
-            tracing_project_fqn=tracing_project_fqn,
             end_time=end_time,
             trace_ids=trace_ids,
             span_ids=span_ids,
@@ -258,6 +273,9 @@ class AsyncTracesClient:
             limit=limit,
             sort_direction=sort_direction,
             page_token=page_token,
+            tracing_project_fqn=tracing_project_fqn,
+            data_routing_destination=data_routing_destination,
             filters=filters,
+            include_feedbacks=include_feedbacks,
             request_options=request_options,
         )

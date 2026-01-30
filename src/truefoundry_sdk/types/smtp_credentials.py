@@ -22,12 +22,12 @@ class SmtpCredentials(UniversalBaseModel):
     The SMTP host of the email server.
     """
 
-    username: str = pydantic.Field()
+    username: typing.Optional[str] = pydantic.Field(default=None)
     """
     The username for the SMTP server.
     """
 
-    password: str = pydantic.Field()
+    password: typing.Optional[str] = pydantic.Field(default=None)
     """
     The password for the SMTP server.
     """

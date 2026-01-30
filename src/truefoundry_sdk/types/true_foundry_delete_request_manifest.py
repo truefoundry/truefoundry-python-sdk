@@ -2,6 +2,7 @@
 
 import typing
 
+from .agent_manifest import AgentManifest
 from .ai_features_settings import AiFeaturesSettings
 from .alert_config import AlertConfig
 from .application_set import ApplicationSet
@@ -11,6 +12,7 @@ from .chat_prompt_manifest import ChatPromptManifest
 from .cluster_manifest import ClusterManifest
 from .common_tools_settings import CommonToolsSettings
 from .data_directory import DataDirectory
+from .environment_manifest import EnvironmentManifest
 from .gateway_config import GatewayConfig
 from .helm import Helm
 from .job import Job
@@ -26,6 +28,7 @@ from .service import Service
 from .spark_job import SparkJob
 from .ssh_server import SshServer
 from .team_manifest import TeamManifest
+from .tracing_project_manifest import TracingProjectManifest
 from .virtual_account_manifest import VirtualAccountManifest
 from .volume import Volume
 from .workflow import Workflow
@@ -60,4 +63,7 @@ TrueFoundryDeleteRequestManifest = typing.Union[
     CommonToolsSettings,
     AiFeaturesSettings,
     SecretGroupManifest,
+    AgentManifest,
+    EnvironmentManifest,
+    TracingProjectManifest,
 ]

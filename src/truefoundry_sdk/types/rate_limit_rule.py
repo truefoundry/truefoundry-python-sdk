@@ -25,6 +25,10 @@ class RateLimitRule(UniversalBaseModel):
     """
 
     unit: RateLimitUnit
+    rate_limit_applies_per: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Create separate rate limiting rules for each unique value of the selected entity. For example, if "user" is selected, a separate rate limit rule will be created for each unique user making requests. Options: user, virtualaccount, model, or a metadata key (e.g., metadata.appId).
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

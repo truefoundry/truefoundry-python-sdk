@@ -4,6 +4,8 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .enforcing_strategy import EnforcingStrategy
+from .enkrypt_ai_guardrail_config_config import EnkryptAiGuardrailConfigConfig
 from .enkrypt_ai_guardrail_config_operation import EnkryptAiGuardrailConfigOperation
 from .enkrypt_ai_key_auth import EnkryptAiKeyAuth
 
@@ -16,6 +18,13 @@ class EnkryptAiGuardrailConfig(UniversalBaseModel):
     name: str = pydantic.Field()
     """
     The name of the Guardrail Config.
+    """
+
+    description: typing.Optional[str] = pydantic.Field(
+        default="Enkrypt AI guardrails for content safety and policy enforcement"
+    )
+    """
+    Optional description for this Guardrail Config.
     """
 
     type: typing.Literal["integration/guardrail-config/enkrypt-ai"] = pydantic.Field(
@@ -32,12 +41,14 @@ class EnkryptAiGuardrailConfig(UniversalBaseModel):
     Validate guardrails are run in parallel while mutate guardrails are run sequentially.
     """
 
-    guardrail_name: str = pydantic.Field()
+    priority: typing.Optional[int] = pydantic.Field(default=1)
     """
-    The name of the guardrail to use for the Enkrypt AI Guardrail.
+    Execution order for mutate guardrails. Lower values run first. Only applicable when operation is mutate.
     """
 
+    enforcing_strategy: EnforcingStrategy
     auth_data: EnkryptAiKeyAuth
+    config: EnkryptAiGuardrailConfigConfig
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

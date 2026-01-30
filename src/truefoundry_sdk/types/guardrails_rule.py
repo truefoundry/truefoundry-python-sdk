@@ -18,14 +18,24 @@ class GuardrailsRule(UniversalBaseModel):
     """
 
     when: GuardrailsWhen
-    input_guardrails: typing.List[str] = pydantic.Field()
+    llm_input_guardrails: typing.List[str] = pydantic.Field()
     """
     Guardrail selectors of the guardrails to apply to the input (format: groupName/guardrailName)
     """
 
-    output_guardrails: typing.List[str] = pydantic.Field()
+    llm_output_guardrails: typing.List[str] = pydantic.Field()
     """
     Guardrail selectors of the guardrails to apply to the output (format: groupName/guardrailName)
+    """
+
+    mcp_tool_pre_invoke_guardrails: typing.List[str] = pydantic.Field()
+    """
+    Guardrail selectors of the guardrails to apply to the MCP tool pre invoke (format: groupName/guardrailName)
+    """
+
+    mcp_tool_post_invoke_guardrails: typing.List[str] = pydantic.Field()
+    """
+    Guardrail selectors of the guardrails to apply to the MCP tool post invoke (format: groupName/guardrailName)
     """
 
     if IS_PYDANTIC_V2:

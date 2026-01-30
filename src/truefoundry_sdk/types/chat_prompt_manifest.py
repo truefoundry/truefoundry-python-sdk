@@ -4,13 +4,16 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .chat_prompt_manifest_cache_config import ChatPromptManifestCacheConfig
 from .chat_prompt_manifest_mcp_servers_item import ChatPromptManifestMcpServersItem
 from .chat_prompt_manifest_messages_item import ChatPromptManifestMessagesItem
 from .chat_prompt_manifest_response_format import ChatPromptManifestResponseFormat
 from .chat_prompt_manifest_routing_config import ChatPromptManifestRoutingConfig
 from .guardrails import Guardrails
+from .logging_config import LoggingConfig
 from .mcp_server_tool_details import McpServerToolDetails
 from .model_configuration import ModelConfiguration
+from .sub_agent import SubAgent
 from .tool_schema import ToolSchema
 
 
@@ -78,9 +81,20 @@ class ChatPromptManifest(UniversalBaseModel):
     Configuration for routing requests to different model targets
     """
 
+    cache_config: typing.Optional[ChatPromptManifestCacheConfig] = pydantic.Field(default=None)
+    """
+    Cache configuration for the chat prompt
+    """
+
     tool_call_to_mcp_mapping: typing.Optional[typing.Dict[str, McpServerToolDetails]] = pydantic.Field(default=None)
     """
     Mapping of tool calls to MCP server integration IDs and tool names
+    """
+
+    logging_config: typing.Optional[LoggingConfig] = None
+    sub_agents: typing.Optional[typing.List[SubAgent]] = pydantic.Field(default=None)
+    """
+    Sub agents to be used in the chat prompt
     """
 
     if IS_PYDANTIC_V2:

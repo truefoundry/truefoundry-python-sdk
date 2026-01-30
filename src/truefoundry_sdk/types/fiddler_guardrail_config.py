@@ -4,7 +4,8 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .fiddler_guard_type import FiddlerGuardType
+from .enforcing_strategy import EnforcingStrategy
+from .fiddler_guardrail_config_config import FiddlerGuardrailConfigConfig
 from .fiddler_key_auth import FiddlerKeyAuth
 
 
@@ -18,6 +19,13 @@ class FiddlerGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
+    description: typing.Optional[str] = pydantic.Field(
+        default="Fiddler for harmful content detection or response faithfulness checks"
+    )
+    """
+    Optional description for this Guardrail Config.
+    """
+
     type: typing.Literal["integration/guardrail-config/fiddler"] = pydantic.Field(
         default="integration/guardrail-config/fiddler"
     )
@@ -26,17 +34,14 @@ class FiddlerGuardrailConfig(UniversalBaseModel):
     +value=integration/guardrail-config/fiddler
     """
 
-    auth_data: FiddlerKeyAuth
-    guard_type: FiddlerGuardType
-    operation: typing.Optional[typing.Literal["validate"]] = pydantic.Field(default=None)
+    operation: typing.Literal["validate"] = pydantic.Field(default="validate")
     """
     The operation type for this guardrail. Fiddler guardrails can only be used for validation.
     """
 
-    threshold: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    Confidence threshold (0.0-1.0) for flagging content. Content scoring above the threshold will be flagged
-    """
+    enforcing_strategy: EnforcingStrategy
+    auth_data: FiddlerKeyAuth
+    config: FiddlerGuardrailConfigConfig
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

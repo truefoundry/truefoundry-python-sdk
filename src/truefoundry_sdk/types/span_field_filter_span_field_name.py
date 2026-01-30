@@ -21,6 +21,7 @@ class SpanFieldFilterSpanFieldName(enum.StrEnum):
     TAG = "tag"
     SCOPE_NAME = "scopeName"
     ENVIRONMENT = "environment"
+    FEEDBACKS = "feedbacks"
     _UNKNOWN = "__SPANFIELDFILTERSPANFIELDNAME_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
@@ -47,6 +48,7 @@ class SpanFieldFilterSpanFieldName(enum.StrEnum):
         tag: typing.Callable[[], T_Result],
         scope_name: typing.Callable[[], T_Result],
         environment: typing.Callable[[], T_Result],
+        feedbacks: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is SpanFieldFilterSpanFieldName.SPAN_NAME:
@@ -75,4 +77,6 @@ class SpanFieldFilterSpanFieldName(enum.StrEnum):
             return scope_name()
         if self is SpanFieldFilterSpanFieldName.ENVIRONMENT:
             return environment()
+        if self is SpanFieldFilterSpanFieldName.FEEDBACKS:
+            return feedbacks()
         return _unknown_member(self._value_)

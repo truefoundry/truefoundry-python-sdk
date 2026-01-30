@@ -7,6 +7,8 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
 from .account import Account
+from .session_account import SessionAccount
+from .session_team import SessionTeam
 from .subject_type import SubjectType
 from .user_metadata import UserMetadata
 
@@ -33,13 +35,19 @@ class Session(UniversalBaseModel):
         alias="tenantName", default=None
     )
     roles: typing.List[str]
-    teams: typing.List[str]
-    accounts: typing.List[str]
+    teams: typing.List[SessionTeam]
+    accounts: typing.List[SessionAccount]
     metadata: typing.Optional[UserMetadata] = None
+    is_billing_enabled: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isBillingEnabled")] = (
+        pydantic.Field(alias="isBillingEnabled", default=None)
+    )
     service_account_metadata: typing_extensions.Annotated[
         typing.Optional[typing.Dict[str, typing.Any]], FieldMetadata(alias="serviceAccountMetadata")
     ] = pydantic.Field(alias="serviceAccountMetadata", default=None)
     account: typing.Optional[Account] = None
+    root_account: typing_extensions.Annotated[typing.Optional[Account], FieldMetadata(alias="rootAccount")] = (
+        pydantic.Field(alias="rootAccount", default=None)
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

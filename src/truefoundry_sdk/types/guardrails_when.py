@@ -4,27 +4,14 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .subject_condition_group import SubjectConditionGroup
+from .target_condition_group import TargetConditionGroup
 
 
 class GuardrailsWhen(UniversalBaseModel):
-    """
-    Rule Conditions
-    """
-
-    subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
-    """
-    List of subjects that this rule applies to
-    """
-
-    models: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
-    """
-    List of models that this rule applies to
-    """
-
-    metadata: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
-    """
-    Metadata key-value pairs that this rule applies to
-    """
+    target: typing.Optional[TargetConditionGroup] = None
+    subjects: typing.Optional[SubjectConditionGroup] = None
+    metadata: typing.Optional[typing.Dict[str, str]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

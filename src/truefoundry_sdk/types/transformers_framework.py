@@ -8,11 +8,7 @@ from .library_name import LibraryName
 
 
 class TransformersFramework(UniversalBaseModel):
-    type: typing.Literal["transformers"] = pydantic.Field(default="transformers")
-    """
-    Type of the framework
-    """
-
+    type: typing.Literal["transformers"] = "transformers"
     library_name: typing.Optional[LibraryName] = pydantic.Field(default=None)
     """
     Name of the library for the framework

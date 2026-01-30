@@ -1297,7 +1297,7 @@ client.teams.create_or_update(
 <dl>
 <dd>
 
-**manifest:** `ApplyTeamRequestManifest` — Team manifest
+**manifest:** `TeamManifest` — Team manifest
     
 </dd>
 </dl>
@@ -1890,6 +1890,7 @@ client = TrueFoundry(
 response = client.virtual_accounts.list(
     limit=10,
     offset=0,
+    name_search_query="nameSearchQuery",
 )
 for item in response:
     yield item
@@ -1920,6 +1921,14 @@ for page in response.iter_pages():
 <dd>
 
 **offset:** `typing.Optional[int]` — Number of items to skip
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name_search_query:** `typing.Optional[str]` — Return virtual accounts with names that contain this string
     
 </dd>
 </dl>
@@ -4680,323 +4689,6 @@ client.workspaces.delete(
 </dl>
 </details>
 
-## Environments
-<details><summary><code>client.environments.<a href="src/truefoundry_sdk/environments/client.py">list</a>(...) -&gt; AsyncPager[Environment, ListEnvironmentsResponse]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List environments, if no environments are found, default environments are created and returned. Pagination is available based on query parameters
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-response = client.environments.list(
-    limit=10,
-    offset=0,
-)
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**limit:** `typing.Optional[int]` — Number of items per page
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**offset:** `typing.Optional[int]` — Number of items to skip
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.environments.<a href="src/truefoundry_sdk/environments/client.py">create_or_update</a>(...) -&gt; AsyncHttpResponse[GetEnvironmentResponse]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Creates a new Environment or updates an existing Environment.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import (
-    EnvironmentColor,
-    EnvironmentManifest,
-    EnvironmentOptimizeFor,
-    TrueFoundry,
-)
-
-client = TrueFoundry(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.environments.create_or_update(
-    manifest=EnvironmentManifest(
-        name="name",
-        color=EnvironmentColor(),
-        is_production=True,
-        optimize_for=EnvironmentOptimizeFor.COST,
-    ),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**manifest:** `EnvironmentManifest` — Environment Manifest
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**dry_run:** `typing.Optional[bool]` — Dry run
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.environments.<a href="src/truefoundry_sdk/environments/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetEnvironmentResponse]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get Environment associated with the provided id.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.environments.get(
-    id="id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `str` — Environment id
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.environments.<a href="src/truefoundry_sdk/environments/client.py">delete</a>(...) -&gt; AsyncHttpResponse[bool]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete Environment associated with the provided id.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.environments.delete(
-    id="id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `str` — Environment id
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## Secrets
 <details><summary><code>client.secrets.<a href="src/truefoundry_sdk/secrets/client.py">list</a>(...) -&gt; AsyncPager[Secret, ListSecretsResponse]</code></summary>
 <dl>
@@ -5731,6 +5423,323 @@ client.secret_groups.delete(
 <dd>
 
 **id:** `str` — Secret Id of the secret group.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Environments
+<details><summary><code>client.environments.<a href="src/truefoundry_sdk/environments/client.py">list</a>(...) -&gt; AsyncPager[Environment, ListEnvironmentsResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List environments, if no environments are found, default environments are created and returned. Pagination is available based on query parameters
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.environments.list(
+    limit=10,
+    offset=0,
+)
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[int]` — Number of items per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**offset:** `typing.Optional[int]` — Number of items to skip
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.environments.<a href="src/truefoundry_sdk/environments/client.py">create_or_update</a>(...) -&gt; AsyncHttpResponse[GetEnvironmentResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a new Environment or updates an existing Environment.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import (
+    EnvironmentColor,
+    EnvironmentManifest,
+    EnvironmentOptimizeFor,
+    TrueFoundry,
+)
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.environments.create_or_update(
+    manifest=EnvironmentManifest(
+        name="name",
+        color=EnvironmentColor(),
+        is_production=True,
+        optimize_for=EnvironmentOptimizeFor.COST,
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**manifest:** `EnvironmentManifest` — Environment Manifest
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dry_run:** `typing.Optional[bool]` — Dry run
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.environments.<a href="src/truefoundry_sdk/environments/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetEnvironmentResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get Environment associated with the provided id.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.environments.get(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — Environment id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.environments.<a href="src/truefoundry_sdk/environments/client.py">delete</a>(...) -&gt; AsyncHttpResponse[bool]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete Environment associated with the provided id.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.environments.delete(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — Environment id
     
 </dd>
 </dl>
@@ -6551,7 +6560,6 @@ client = TrueFoundry(
 )
 response = client.traces.query_spans(
     start_time="startTime",
-    tracing_project_fqn="tracingProjectFqn",
 )
 for item in response:
     yield item
@@ -6574,14 +6582,6 @@ for page in response.iter_pages():
 <dd>
 
 **start_time:** `str` — Start time in ISO 8601 format (e.g., 2025-03-12T00:00:09.872Z)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tracing_project_fqn:** `str` — Tracing project FQN (e.g., truefoundry:tracing-project:tfy-default)
     
 </dd>
 </dl>
@@ -6669,7 +6669,31 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
+**tracing_project_fqn:** `typing.Optional[str]` — Tracing project FQN (e.g., truefoundry:tracing-project:tfy-default)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**data_routing_destination:** `typing.Optional[str]` — Data Routing Destination. One of tracingProjectFqn or dataRoutingDestination is required.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **filters:** `typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]]` — Array of filters
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_feedbacks:** `typing.Optional[bool]` — When true, feedback data is included in the response. When false, feedback data is excluded (returns empty array).
     
 </dd>
 </dl>

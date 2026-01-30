@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .otel_exporter_http_config_encoding import OtelExporterHttpConfigEncoding
+from .otel_exporter_span_attribute_filter import OtelExporterSpanAttributeFilter
 
 
 class OtelExporterHttpConfig(UniversalBaseModel):
@@ -40,6 +41,11 @@ class OtelExporterHttpConfig(UniversalBaseModel):
     exclude_request_data: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Enable to prevent forwarding the LLM or MCP request and response body in exported traces. The following span attributes are dropped: tfy.input, tfy.output, tfy.input_short_hand
+    """
+
+    when: typing.Optional[typing.List[OtelExporterSpanAttributeFilter]] = pydantic.Field(default=None)
+    """
+    Export spans only when they match all of the following filters. Only matching on spanAttributes with string values in supported.
     """
 
     if IS_PYDANTIC_V2:

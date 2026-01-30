@@ -4,9 +4,8 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .open_ai_moderations_guardrail_config_category_thresholds_value import (
-    OpenAiModerationsGuardrailConfigCategoryThresholdsValue,
-)
+from .enforcing_strategy import EnforcingStrategy
+from .open_ai_moderations_guardrail_config_config import OpenAiModerationsGuardrailConfigConfig
 from .openai_api_key_auth import OpenaiApiKeyAuth
 
 
@@ -20,6 +19,13 @@ class OpenAiModerationsGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
+    description: typing.Optional[str] = pydantic.Field(
+        default="OpenAI content moderation for hate, harassment, self-harm, sexual, violence, and illicit content"
+    )
+    """
+    Optional description for this Guardrail Config.
+    """
+
     type: typing.Literal["integration/guardrail-config/openai-moderations"] = pydantic.Field(
         default="integration/guardrail-config/openai-moderations"
     )
@@ -29,28 +35,14 @@ class OpenAiModerationsGuardrailConfig(UniversalBaseModel):
     +uiType=Hidden
     """
 
-    base_url: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Optional custom base URL for OpenAI API. If not provided, the default base URL will be used.
-    """
-
-    operation: typing.Optional[typing.Literal["validate"]] = pydantic.Field(default=None)
+    operation: typing.Literal["validate"] = pydantic.Field(default="validate")
     """
     The operation type for this guardrail. OpenAI Moderation guardrails can only be used for validation.
     """
 
+    enforcing_strategy: EnforcingStrategy
     auth_data: OpenaiApiKeyAuth
-    model: str = pydantic.Field(default="omni-moderation-latest")
-    """
-    The model to use for the OpenAI Moderation API.
-    """
-
-    category_thresholds: typing.Optional[typing.Dict[str, OpenAiModerationsGuardrailConfigCategoryThresholdsValue]] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Confidence thresholds (0.0-1.0) for each content category. Content scoring above the threshold will be flagged. Lower values are more strict
-    """
+    config: OpenAiModerationsGuardrailConfigConfig
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

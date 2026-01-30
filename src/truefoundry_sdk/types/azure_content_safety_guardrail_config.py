@@ -4,8 +4,9 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .azure_content_safety_category import AzureContentSafetyCategory
+from .azure_content_safety_guardrail_config_config import AzureContentSafetyGuardrailConfigConfig
 from .azure_key_auth import AzureKeyAuth
+from .enforcing_strategy import EnforcingStrategy
 
 
 class AzureContentSafetyGuardrailConfig(UniversalBaseModel):
@@ -18,6 +19,13 @@ class AzureContentSafetyGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
+    description: typing.Optional[str] = pydantic.Field(
+        default="Azure Content Safety for hate, self-harm, sexual, and violence detection"
+    )
+    """
+    Optional description for this Guardrail Config.
+    """
+
     type: typing.Literal["integration/guardrail-config/azure-content-safety"] = pydantic.Field(
         default="integration/guardrail-config/azure-content-safety"
     )
@@ -26,42 +34,14 @@ class AzureContentSafetyGuardrailConfig(UniversalBaseModel):
     +value=integration/guardrail-config/azure-content-safety
     """
 
-    resource_name: str = pydantic.Field()
-    """
-    Name of your Azure Content Safety resource where the service is deployed (e.g., my-content-safety)
-    """
-
-    api_version: str = pydantic.Field(default="2024-09-01")
-    """
-    API version for the Content Safety API
-    """
-
-    custom_host: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Custom endpoint URL for the Content Safety API (optional, uses default Azure endpoint if not specified)
-    """
-
-    operation: typing.Optional[typing.Literal["validate"]] = pydantic.Field(default=None)
+    operation: typing.Literal["validate"] = pydantic.Field(default="validate")
     """
     The operation type for this guardrail. Azure Content Safety guardrails can only be used for validation.
     """
 
-    blocklist_names: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
-    """
-    Names of custom blocklists created in Azure Content Safety to check text against. Leave empty if not using custom blocklists
-    """
-
-    severity_threshold: float = pydantic.Field(default=2.0)
-    """
-    Minimum severity level (0-6) to flag content. Higher values are more restrictive. 0=Safe, 2=Low risk, 4=Medium risk, 6=High risk
-    """
-
-    categories: typing.List[AzureContentSafetyCategory] = pydantic.Field()
-    """
-    Types of harmful content to detect: Hate (hate speech), SelfHarm (self-injury), Sexual (sexual content), Violence (violent content)
-    """
-
+    enforcing_strategy: EnforcingStrategy
     auth_data: AzureKeyAuth
+    config: AzureContentSafetyGuardrailConfigConfig
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

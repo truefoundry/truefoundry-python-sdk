@@ -4,7 +4,8 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .palo_alto_prisma_airs_guardrail_config_mode import PaloAltoPrismaAirsGuardrailConfigMode
+from .enforcing_strategy import EnforcingStrategy
+from .palo_alto_prisma_airs_guardrail_config_config import PaloAltoPrismaAirsGuardrailConfigConfig
 from .palo_alto_prisma_airs_key_auth import PaloAltoPrismaAirsKeyAuth
 
 
@@ -18,6 +19,13 @@ class PaloAltoPrismaAirsGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
+    description: typing.Optional[str] = pydantic.Field(
+        default="Palo Alto Prisma AIRS for AI security and content validation"
+    )
+    """
+    Optional description for this Guardrail Config.
+    """
+
     type: typing.Literal["integration/guardrail-config/palo-alto-prisma-airs"] = pydantic.Field(
         default="integration/guardrail-config/palo-alto-prisma-airs"
     )
@@ -26,22 +34,14 @@ class PaloAltoPrismaAirsGuardrailConfig(UniversalBaseModel):
     +value=integration/guardrail-config/palo-alto-prisma-airs
     """
 
-    profile_name: str = pydantic.Field()
-    """
-    The profile name associated with this Guardrail Config.
-    """
-
-    operation: typing.Optional[typing.Literal["validate"]] = pydantic.Field(default=None)
+    operation: typing.Literal["validate"] = pydantic.Field(default="validate")
     """
     The operation type for this guardrail. Palo Alto Prisma AIRS guardrails can only be used for validation.
     """
 
-    mode: typing.Optional[PaloAltoPrismaAirsGuardrailConfigMode] = pydantic.Field(default=None)
-    """
-    Execution mode for the guardrail. Sync waits for the guardrail check to complete before proceeding. Async triggers the check without waiting. Defaults to sync.
-    """
-
+    enforcing_strategy: EnforcingStrategy
     auth_data: PaloAltoPrismaAirsKeyAuth
+    config: PaloAltoPrismaAirsGuardrailConfigConfig
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

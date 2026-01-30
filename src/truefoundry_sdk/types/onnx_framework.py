@@ -7,10 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class OnnxFramework(UniversalBaseModel):
-    type: typing.Literal["onnx"] = pydantic.Field(default="onnx")
-    """
-    Type of the framework
-    """
+    type: typing.Literal["onnx"] = "onnx"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

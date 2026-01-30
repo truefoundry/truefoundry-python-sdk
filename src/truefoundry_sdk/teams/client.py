@@ -9,8 +9,8 @@ from ..types.delete_team_response import DeleteTeamResponse
 from ..types.get_team_response import GetTeamResponse
 from ..types.list_teams_response import ListTeamsResponse
 from ..types.team import Team
+from ..types.team_manifest import TeamManifest
 from .raw_client import AsyncRawTeamsClient, RawTeamsClient
-from .types.apply_team_request_manifest import ApplyTeamRequestManifest
 from .types.teams_list_request_type import TeamsListRequestType
 
 # this is used as the default value for optional parameters
@@ -87,7 +87,7 @@ class TeamsClient:
     def create_or_update(
         self,
         *,
-        manifest: ApplyTeamRequestManifest,
+        manifest: TeamManifest,
         dry_run: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetTeamResponse:
@@ -96,7 +96,7 @@ class TeamsClient:
 
         Parameters
         ----------
-        manifest : ApplyTeamRequestManifest
+        manifest : TeamManifest
             Team manifest
 
         dry_run : typing.Optional[bool]
@@ -274,7 +274,7 @@ class AsyncTeamsClient:
     async def create_or_update(
         self,
         *,
-        manifest: ApplyTeamRequestManifest,
+        manifest: TeamManifest,
         dry_run: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetTeamResponse:
@@ -283,7 +283,7 @@ class AsyncTeamsClient:
 
         Parameters
         ----------
-        manifest : ApplyTeamRequestManifest
+        manifest : TeamManifest
             Team manifest
 
         dry_run : typing.Optional[bool]

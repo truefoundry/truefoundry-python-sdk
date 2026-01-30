@@ -4,8 +4,8 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .patronus_evaluator import PatronusEvaluator
-from .patronus_guardrail_config_target import PatronusGuardrailConfigTarget
+from .enforcing_strategy import EnforcingStrategy
+from .patronus_guardrail_config_config import PatronusGuardrailConfigConfig
 from .patronus_key_auth import PatronusKeyAuth
 
 
@@ -19,6 +19,13 @@ class PatronusGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
+    description: typing.Optional[str] = pydantic.Field(
+        default="Patronus evaluators for relevance, safety, PII, PHI, toxicity, and more"
+    )
+    """
+    Optional description for this Guardrail Config.
+    """
+
     type: typing.Literal["integration/guardrail-config/patronus"] = pydantic.Field(
         default="integration/guardrail-config/patronus"
     )
@@ -27,21 +34,14 @@ class PatronusGuardrailConfig(UniversalBaseModel):
     +value=integration/guardrail-config/patronus
     """
 
-    operation: typing.Optional[typing.Literal["validate"]] = pydantic.Field(default=None)
+    operation: typing.Literal["validate"] = pydantic.Field(default="validate")
     """
     The operation type for this guardrail. Patronus guardrails can only be used for validation.
     """
 
+    enforcing_strategy: EnforcingStrategy
     auth_data: PatronusKeyAuth
-    target: PatronusGuardrailConfigTarget = pydantic.Field()
-    """
-    Where to apply evaluation: request (evaluate user input) or response (evaluate model response)
-    """
-
-    evaluators: typing.List[PatronusEvaluator] = pydantic.Field()
-    """
-    The evaluators to use for the Patronus Guardrail.
-    """
+    config: PatronusGuardrailConfigConfig
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

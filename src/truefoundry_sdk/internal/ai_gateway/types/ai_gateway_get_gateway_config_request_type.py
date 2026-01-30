@@ -14,6 +14,9 @@ class AiGatewayGetGatewayConfigRequestType(enum.StrEnum):
     GATEWAY_GUARDRAILS_CONFIG = "gateway-guardrails-config"
     GATEWAY_BUDGET_CONFIG = "gateway-budget-config"
     GATEWAY_OTEL_CONFIG = "gateway-otel-config"
+    GATEWAY_GLOBAL_SETTINGS = "gateway-global-settings"
+    GATEWAY_DATA_ACCESS_CONFIG = "gateway-data-access-config"
+    GATEWAY_DATA_ROUTING_CONFIG = "gateway-data-routing-config"
     _UNKNOWN = "__AIGATEWAYGETGATEWAYCONFIGREQUESTTYPE_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
@@ -33,6 +36,9 @@ class AiGatewayGetGatewayConfigRequestType(enum.StrEnum):
         gateway_guardrails_config: typing.Callable[[], T_Result],
         gateway_budget_config: typing.Callable[[], T_Result],
         gateway_otel_config: typing.Callable[[], T_Result],
+        gateway_global_settings: typing.Callable[[], T_Result],
+        gateway_data_access_config: typing.Callable[[], T_Result],
+        gateway_data_routing_config: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is AiGatewayGetGatewayConfigRequestType.GATEWAY_RATE_LIMITING_CONFIG:
@@ -47,4 +53,10 @@ class AiGatewayGetGatewayConfigRequestType(enum.StrEnum):
             return gateway_budget_config()
         if self is AiGatewayGetGatewayConfigRequestType.GATEWAY_OTEL_CONFIG:
             return gateway_otel_config()
+        if self is AiGatewayGetGatewayConfigRequestType.GATEWAY_GLOBAL_SETTINGS:
+            return gateway_global_settings()
+        if self is AiGatewayGetGatewayConfigRequestType.GATEWAY_DATA_ACCESS_CONFIG:
+            return gateway_data_access_config()
+        if self is AiGatewayGetGatewayConfigRequestType.GATEWAY_DATA_ROUTING_CONFIG:
+            return gateway_data_routing_config()
         return _unknown_member(self._value_)
