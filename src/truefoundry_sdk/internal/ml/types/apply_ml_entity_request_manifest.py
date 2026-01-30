@@ -6,8 +6,5 @@ from ....types.artifact_manifest import ArtifactManifest
 from ....types.chat_prompt_manifest import ChatPromptManifest
 from ....types.data_directory_manifest import DataDirectoryManifest
 from ....types.model_manifest import ModelManifest
-from ....types.tracing_project_manifest import TracingProjectManifest
 
-ApplyMlEntityRequestManifest = typing.Union[
-    ModelManifest, ChatPromptManifest, ArtifactManifest, DataDirectoryManifest, TracingProjectManifest
-]
+ApplyMlEntityRequestManifest = typing.Union[ModelManifest, ChatPromptManifest, ArtifactManifest, DataDirectoryManifest]

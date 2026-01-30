@@ -12,11 +12,7 @@ class PriorityBasedLoadBalancing(UniversalBaseModel):
     Priority-based Load Balancing
     """
 
-    type: typing.Literal["priority-based-routing"] = pydantic.Field(default="priority-based-routing")
-    """
-    Routing Type
-    """
-
+    type: typing.Literal["priority-based-routing"] = "priority-based-routing"
     load_balance_targets: typing.List[PriorityBasedLoadBalanceTarget] = pydantic.Field()
     """
     List of targets for priority-based load balancing

@@ -3,24 +3,51 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.serialization import FieldMetadata
+from .collaborator import Collaborator
+from .owned_by import OwnedBy
+from .tracing_project_storage_config import TracingProjectStorageConfig
 
 
 class TracingProjectManifest(UniversalBaseModel):
     """
-    Tracing Project manifest.
+    Tracing Project is an entity that allows you to manage and monitor telemetry data.
     """
 
-    type: typing.Literal["tracing-project"] = "tracing-project"
+    type: typing.Literal["tracing-project"] = pydantic.Field(default="tracing-project")
+    """
+    +value=tracing-project
+    """
+
     name: str = pydantic.Field()
     """
-    Name of the tracing project
+    Name of the Tracing Project
     """
 
-    ml_repo: typing.Optional[str] = pydantic.Field(default=None)
+    storage: TracingProjectStorageConfig
+    description: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Name of the ML Repo
+    Description for the Tracing Project.
     """
+
+    collaborators: typing.List[Collaborator] = pydantic.Field()
+    """
+    Users and Teams that have access to Tracing Project
+    """
+
+    traces_retention_duration_days: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Number of days to retain traces for (minimum 7 days).
+    Traces older than these number of days will be deleted automatically.
+    When not set, traces are retained indefinitely.
+    Note: Metrics will be retained regardless of this setting.
+    """
+
+    owned_by: typing_extensions.Annotated[typing.Optional[OwnedBy], FieldMetadata(alias="ownedBy")] = pydantic.Field(
+        alias="ownedBy", default=None
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

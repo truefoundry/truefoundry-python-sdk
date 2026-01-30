@@ -3,9 +3,25 @@
 import typing
 
 from .budget_config import BudgetConfig
+from .gateway_data_access_config import GatewayDataAccessConfig
+from .gateway_data_routing_config import GatewayDataRoutingConfig
+from .gateway_logging_config import GatewayLoggingConfig
+from .gateway_metadata_config import GatewayMetadataConfig
 from .gateway_otel_config import GatewayOtelConfig
+from .global_settings import GlobalSettings
 from .guardrails_config import GuardrailsConfig
 from .load_balancing_config import LoadBalancingConfig
 from .rate_limit_config import RateLimitConfig
 
-GatewayConfig = typing.Union[RateLimitConfig, LoadBalancingConfig, GuardrailsConfig, BudgetConfig, GatewayOtelConfig]
+GatewayConfig = typing.Union[
+    RateLimitConfig,
+    LoadBalancingConfig,
+    GuardrailsConfig,
+    BudgetConfig,
+    GatewayOtelConfig,
+    GatewayMetadataConfig,
+    GatewayLoggingConfig,
+    GlobalSettings,
+    GatewayDataAccessConfig,
+    GatewayDataRoutingConfig,
+]

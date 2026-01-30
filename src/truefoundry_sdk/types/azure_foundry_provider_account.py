@@ -13,7 +13,7 @@ from .owned_by import OwnedBy
 
 class AzureFoundryProviderAccount(UniversalBaseModel):
     """
-    Azure Foundry Provider Account
+    Azure AI Foundry Provider Account
     """
 
     type: typing.Literal["provider-account/azure-foundry"] = pydantic.Field(default="provider-account/azure-foundry")
@@ -23,7 +23,7 @@ class AzureFoundryProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    The name of the Azure Foundry provider account
+    The name of the Azure AI Foundry provider account
     """
 
     integrations: typing.List[AzureFoundryModel] = pydantic.Field()

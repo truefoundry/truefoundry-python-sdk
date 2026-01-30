@@ -6,7 +6,6 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
-from .role_permissions import RolePermissions
 
 
 class RoleManifest(UniversalBaseModel):
@@ -39,7 +38,7 @@ class RoleManifest(UniversalBaseModel):
     Type of resource this role applies to
     """
 
-    permissions: typing.List[RolePermissions] = pydantic.Field()
+    permissions: typing.List[str] = pydantic.Field()
     """
     Define the resource type and the corresponding actions this role can perform on the resource
     """

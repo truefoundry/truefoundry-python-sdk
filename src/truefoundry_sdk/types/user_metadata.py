@@ -14,6 +14,9 @@ class UserMetadata(UniversalBaseModel):
     image_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="imageURL")] = pydantic.Field(
         alias="imageURL", default=None
     )
+    picture_download_path: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="pictureDownloadPath")
+    ] = pydantic.Field(alias="pictureDownloadPath", default=None)
     display_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="displayName")] = (
         pydantic.Field(alias="displayName", default=None)
     )
@@ -36,6 +39,12 @@ class UserMetadata(UniversalBaseModel):
     )
     is_primary_sso: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isPrimarySSO")] = (
         pydantic.Field(alias="isPrimarySSO", default=None)
+    )
+    scim_user_object: typing_extensions.Annotated[
+        typing.Optional[typing.Dict[str, typing.Any]], FieldMetadata(alias="scimUserObject")
+    ] = pydantic.Field(alias="scimUserObject", default=None)
+    created_by_scim: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="createdByScim")] = (
+        pydantic.Field(alias="createdByScim", default=None)
     )
 
     if IS_PYDANTIC_V2:

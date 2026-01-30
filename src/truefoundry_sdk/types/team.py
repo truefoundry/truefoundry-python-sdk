@@ -9,6 +9,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
 from .subject import Subject
 from .team_manifest import TeamManifest
+from .team_metadata import TeamMetadata
 
 
 class Team(UniversalBaseModel):
@@ -18,9 +19,7 @@ class Team(UniversalBaseModel):
     tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")] = pydantic.Field(
         alias="tenantName"
     )
-    account_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="accountId")] = pydantic.Field(
-        alias="accountId", default=None
-    )
+    account_id: typing_extensions.Annotated[str, FieldMetadata(alias="accountId")] = pydantic.Field(alias="accountId")
     created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")] = pydantic.Field(
         alias="createdBySubject"
     )
@@ -32,6 +31,10 @@ class Team(UniversalBaseModel):
         alias="updatedAt"
     )
     manifest: TeamManifest
+    metadata: typing.Optional[TeamMetadata] = None
+    is_editable: typing_extensions.Annotated[bool, FieldMetadata(alias="isEditable")] = pydantic.Field(
+        alias="isEditable"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

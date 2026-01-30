@@ -7,10 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class PyTorchFramework(UniversalBaseModel):
-    type: typing.Literal["pytorch"] = pydantic.Field(default="pytorch")
-    """
-    Type of the framework
-    """
+    type: typing.Literal["pytorch"] = "pytorch"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

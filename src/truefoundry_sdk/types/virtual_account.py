@@ -8,6 +8,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
 from .jwt import Jwt
+from .role_with_resource import RoleWithResource
 from .subject import Subject
 from .virtual_account_manifest import VirtualAccountManifest
 
@@ -36,13 +37,14 @@ class VirtualAccount(UniversalBaseModel):
         alias="isExpired", default=None
     )
     jwts: typing.Optional[typing.List[Jwt]] = None
-    account_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="accountId")] = pydantic.Field(
-        alias="accountId", default=None
-    )
+    account_id: typing_extensions.Annotated[str, FieldMetadata(alias="accountId")] = pydantic.Field(alias="accountId")
     metadata: typing.Optional[typing.Dict[str, typing.Any]] = None
     role_ids: typing_extensions.Annotated[typing.Optional[typing.List[str]], FieldMetadata(alias="roleIds")] = (
         pydantic.Field(alias="roleIds", default=None)
     )
+    roles_with_resource: typing_extensions.Annotated[
+        typing.Optional[typing.List[RoleWithResource]], FieldMetadata(alias="rolesWithResource")
+    ] = pydantic.Field(alias="rolesWithResource", default=None)
     created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = pydantic.Field(
         alias="createdBy", default=None
     )

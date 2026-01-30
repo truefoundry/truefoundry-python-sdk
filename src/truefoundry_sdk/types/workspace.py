@@ -32,9 +32,7 @@ class Workspace(UniversalBaseModel):
         pydantic.Field(alias="environmentId", default=None)
     )
     manifest: WorkspaceManifest
-    account_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="accountId")] = pydantic.Field(
-        alias="accountId", default=None
-    )
+    account_id: typing_extensions.Annotated[str, FieldMetadata(alias="accountId")] = pydantic.Field(alias="accountId")
     is_system_ws: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isSystemWs")] = (
         pydantic.Field(alias="isSystemWs", default=None)
     )

@@ -16,6 +16,7 @@ class Account(UniversalBaseModel):
     tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")] = pydantic.Field(
         alias="tenantName"
     )
+    fqn: str
     manifest: typing.Dict[str, typing.Any] = pydantic.Field()
     """
     Account manifest

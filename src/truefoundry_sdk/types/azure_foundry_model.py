@@ -4,14 +4,14 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .azure_key_auth import AzureKeyAuth
+from .azure_foundry_model_auth_data import AzureFoundryModelAuthData
 from .model_cost_metric import ModelCostMetric
 from .model_type import ModelType
 
 
 class AzureFoundryModel(UniversalBaseModel):
     """
-    Azure Foundry Model
+    Azure AI Foundry Model
     """
 
     type: typing.Literal["integration/model/azure-foundry"] = pydantic.Field(default="integration/model/azure-foundry")
@@ -24,7 +24,11 @@ class AzureFoundryModel(UniversalBaseModel):
     A descriptive name to identify this model integration in the UI
     """
 
-    auth_data: AzureKeyAuth
+    auth_data: AzureFoundryModelAuthData = pydantic.Field()
+    """
+    Azure AI Foundry authentication credentials
+    """
+
     model_types: typing.List[ModelType] = pydantic.Field()
     """
     Types of models supported by this Azure AI Foundry deployment
@@ -37,10 +41,10 @@ class AzureFoundryModel(UniversalBaseModel):
 
     azure_endpoint: str = pydantic.Field()
     """
-    The Azure AI Foundry endpoint URL
+    The Azure AI Foundry endpoint URL. Should look like https://{deployment}.{region}.models.ai.azure.com
     """
 
-    api_version: str = pydantic.Field()
+    api_version: typing.Optional[str] = pydantic.Field(default=None)
     """
     The API version for the Azure Foundry model
     """

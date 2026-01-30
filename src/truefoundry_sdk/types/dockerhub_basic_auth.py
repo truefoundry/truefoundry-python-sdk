@@ -24,7 +24,7 @@ class DockerhubBasicAuth(UniversalBaseModel):
     password: str = pydantic.Field()
     """
     +sort=200
-    +uiType=Password
+    +uiType=SecretSelect
     """
 
     if IS_PYDANTIC_V2:

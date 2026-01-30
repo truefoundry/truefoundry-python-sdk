@@ -5,8 +5,8 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .azure_key_auth import AzureKeyAuth
-from .azure_pii_category import AzurePiiCategory
-from .azure_pii_guardrail_config_domain import AzurePiiGuardrailConfigDomain
+from .azure_pii_guardrail_config_config import AzurePiiGuardrailConfigConfig
+from .enforcing_strategy import EnforcingStrategy
 
 
 class AzurePiiGuardrailConfig(UniversalBaseModel):
@@ -19,6 +19,13 @@ class AzurePiiGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
+    description: typing.Optional[str] = pydantic.Field(
+        default="Azure AI Language PII detection and redaction for sensitive data"
+    )
+    """
+    Optional description for this Guardrail Config.
+    """
+
     type: typing.Literal["integration/guardrail-config/azure-pii"] = pydantic.Field(
         default="integration/guardrail-config/azure-pii"
     )
@@ -27,47 +34,19 @@ class AzurePiiGuardrailConfig(UniversalBaseModel):
     +value=integration/guardrail-config/azure-pii
     """
 
-    resource_name: str = pydantic.Field()
-    """
-    Name of your Azure AI Language resource where the PII detection service is deployed (e.g., my-language-resource)
-    """
-
-    api_version: str = pydantic.Field(default="2024-11-01")
-    """
-    API version for the PII detection API
-    """
-
-    custom_host: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Custom endpoint URL for the PII detection API (optional, uses default Azure endpoint if not specified)
-    """
-
-    operation: typing.Optional[typing.Literal["mutate"]] = pydantic.Field(default=None)
+    operation: typing.Literal["mutate"] = pydantic.Field(default="mutate")
     """
     The operation type for this guardrail. Azure PII guardrails can only be used for mutate.
     """
 
-    domain: AzurePiiGuardrailConfigDomain = pydantic.Field()
+    priority: typing.Optional[int] = pydantic.Field(default=1)
     """
-    Specialized domain for PII detection. Use healthcare for PHI (Protected Health Information) or none for general text
-    """
-
-    pii_categories: typing.List[AzurePiiCategory] = pydantic.Field()
-    """
-    Categories of PII to detect.
-    """
-
-    model_version: str = pydantic.Field(default="latest")
-    """
-    Version of the PII detection model to use, use latest for the newest model or specify a specific version for consistency
-    """
-
-    language: str = pydantic.Field(default="en")
-    """
-    Language code for PII detection (e.g., en for English)
+    Execution order for mutate guardrails. Lower values run first. Only applicable when operation is mutate.
     """
 
     auth_data: AzureKeyAuth
+    enforcing_strategy: EnforcingStrategy
+    config: AzurePiiGuardrailConfigConfig
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -18,8 +18,10 @@ class GatewayRequestMetadataFilterOperator(enum.StrEnum):
     NOT_IN = "NOT_IN"
     STRING_CONTAINS = "STRING_CONTAINS"
     STRING_STARTS_WITH = "STRING_STARTS_WITH"
+    STRING_ENDS_WITH = "STRING_ENDS_WITH"
     ARRAY_HAS_ANY = "ARRAY_HAS_ANY"
     ARRAY_HAS_NONE = "ARRAY_HAS_NONE"
+    PRESENT = "PRESENT"
     _UNKNOWN = "__GATEWAYREQUESTMETADATAFILTEROPERATOR_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
@@ -43,8 +45,10 @@ class GatewayRequestMetadataFilterOperator(enum.StrEnum):
         not_in: typing.Callable[[], T_Result],
         string_contains: typing.Callable[[], T_Result],
         string_starts_with: typing.Callable[[], T_Result],
+        string_ends_with: typing.Callable[[], T_Result],
         array_has_any: typing.Callable[[], T_Result],
         array_has_none: typing.Callable[[], T_Result],
+        present: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is GatewayRequestMetadataFilterOperator.EQUAL:
@@ -67,8 +71,12 @@ class GatewayRequestMetadataFilterOperator(enum.StrEnum):
             return string_contains()
         if self is GatewayRequestMetadataFilterOperator.STRING_STARTS_WITH:
             return string_starts_with()
+        if self is GatewayRequestMetadataFilterOperator.STRING_ENDS_WITH:
+            return string_ends_with()
         if self is GatewayRequestMetadataFilterOperator.ARRAY_HAS_ANY:
             return array_has_any()
         if self is GatewayRequestMetadataFilterOperator.ARRAY_HAS_NONE:
             return array_has_none()
+        if self is GatewayRequestMetadataFilterOperator.PRESENT:
+            return present()
         return _unknown_member(self._value_)

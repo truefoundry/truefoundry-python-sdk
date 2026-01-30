@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .non_negative_float import NonNegativeFloat
+from .private_pricing_tier import PrivatePricingTier
 
 
 class InputOutputBasedCostMetricValue(UniversalBaseModel):
@@ -12,6 +13,25 @@ class InputOutputBasedCostMetricValue(UniversalBaseModel):
     output: NonNegativeFloat
     cache_read: typing.Optional[NonNegativeFloat] = None
     cache_write: typing.Optional[NonNegativeFloat] = None
+    input_tiers: typing.Optional[typing.List[PrivatePricingTier]] = pydantic.Field(default=None)
+    """
+    Optional volume-based pricing tiers for input tokens. Tokens up to the first tier use base rate above.
+    """
+
+    output_tiers: typing.Optional[typing.List[PrivatePricingTier]] = pydantic.Field(default=None)
+    """
+    Optional volume-based pricing tiers for output tokens. Tokens up to the first tier use base rate above.
+    """
+
+    cache_read_tiers: typing.Optional[typing.List[PrivatePricingTier]] = pydantic.Field(default=None)
+    """
+    Optional volume-based pricing tiers for cache read tokens. Tokens up to the first tier use base rate above.
+    """
+
+    cache_write_tiers: typing.Optional[typing.List[PrivatePricingTier]] = pydantic.Field(default=None)
+    """
+    Optional volume-based pricing tiers for cache write tokens. Tokens up to the first tier use base rate above.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

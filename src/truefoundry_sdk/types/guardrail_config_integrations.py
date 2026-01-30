@@ -5,6 +5,7 @@ import typing
 from .aws_bedrock_guardrail_config import AwsBedrockGuardrailConfig
 from .azure_content_safety_guardrail_config import AzureContentSafetyGuardrailConfig
 from .azure_pii_guardrail_config import AzurePiiGuardrailConfig
+from .code_safety_linter_guardrail_config import CodeSafetyLinterGuardrailConfig
 from .custom_guardrail_config import CustomGuardrailConfig
 from .enkrypt_ai_guardrail_config import EnkryptAiGuardrailConfig
 from .fiddler_guardrail_config import FiddlerGuardrailConfig
@@ -13,6 +14,8 @@ from .palo_alto_prisma_airs_guardrail_config import PaloAltoPrismaAirsGuardrailC
 from .pangea_guardrail_config import PangeaGuardrailConfig
 from .patronus_guardrail_config import PatronusGuardrailConfig
 from .prompt_foo_guardrail_config import PromptFooGuardrailConfig
+from .secret_detection_guardrail_config import SecretDetectionGuardrailConfig
+from .sql_sanitizer_guardrail_config import SqlSanitizerGuardrailConfig
 
 GuardrailConfigIntegrations = typing.Union[
     OpenAiModerationsGuardrailConfig,
@@ -26,4 +29,7 @@ GuardrailConfigIntegrations = typing.Union[
     FiddlerGuardrailConfig,
     PangeaGuardrailConfig,
     PatronusGuardrailConfig,
+    SecretDetectionGuardrailConfig,
+    CodeSafetyLinterGuardrailConfig,
+    SqlSanitizerGuardrailConfig,
 ]

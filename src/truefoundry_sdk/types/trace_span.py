@@ -101,6 +101,11 @@ class TraceSpan(UniversalBaseModel):
     Subject (user or virtualaccount) that created this span.
     """
 
+    feedbacks: typing.Optional[typing.List[typing.List[typing.Any]]] = pydantic.Field(default=None)
+    """
+    Gateway feedbacks associated with this span (if any).
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:

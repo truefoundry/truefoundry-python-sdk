@@ -38,6 +38,7 @@ class VirtualAccountsClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
+        name_search_query: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[VirtualAccount, ListVirtualAccountResponse]:
         """
@@ -50,6 +51,9 @@ class VirtualAccountsClient:
 
         offset : typing.Optional[int]
             Number of items to skip
+
+        name_search_query : typing.Optional[str]
+            Return virtual accounts with names that contain this string
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -70,6 +74,7 @@ class VirtualAccountsClient:
         response = client.virtual_accounts.list(
             limit=10,
             offset=0,
+            name_search_query="nameSearchQuery",
         )
         for item in response:
             yield item
@@ -77,7 +82,9 @@ class VirtualAccountsClient:
         for page in response.iter_pages():
             yield page
         """
-        return self._raw_client.list(limit=limit, offset=offset, request_options=request_options)
+        return self._raw_client.list(
+            limit=limit, offset=offset, name_search_query=name_search_query, request_options=request_options
+        )
 
     def create_or_update(
         self,
@@ -361,6 +368,7 @@ class AsyncVirtualAccountsClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
+        name_search_query: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[VirtualAccount, ListVirtualAccountResponse]:
         """
@@ -373,6 +381,9 @@ class AsyncVirtualAccountsClient:
 
         offset : typing.Optional[int]
             Number of items to skip
+
+        name_search_query : typing.Optional[str]
+            Return virtual accounts with names that contain this string
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -398,6 +409,7 @@ class AsyncVirtualAccountsClient:
             response = await client.virtual_accounts.list(
                 limit=10,
                 offset=0,
+                name_search_query="nameSearchQuery",
             )
             async for item in response:
                 yield item
@@ -409,7 +421,9 @@ class AsyncVirtualAccountsClient:
 
         asyncio.run(main())
         """
-        return await self._raw_client.list(limit=limit, offset=offset, request_options=request_options)
+        return await self._raw_client.list(
+            limit=limit, offset=offset, name_search_query=name_search_query, request_options=request_options
+        )
 
     async def create_or_update(
         self,

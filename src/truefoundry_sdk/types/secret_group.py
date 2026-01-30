@@ -29,6 +29,7 @@ class SecretGroup(UniversalBaseModel):
         pydantic.Field(alias="integrationId", default=None)
     )
     manifest: typing.Optional[typing.Dict[str, typing.Any]] = None
+    account_id: typing_extensions.Annotated[str, FieldMetadata(alias="accountId")] = pydantic.Field(alias="accountId")
     created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field(
         alias="createdAt"
     )

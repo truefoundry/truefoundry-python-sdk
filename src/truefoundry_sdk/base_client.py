@@ -113,9 +113,9 @@ class BaseTrueFoundry:
         self._application_versions: typing.Optional[ApplicationVersionsClient] = None
         self._jobs: typing.Optional[JobsClient] = None
         self._workspaces: typing.Optional[WorkspacesClient] = None
-        self._environments: typing.Optional[EnvironmentsClient] = None
         self._secrets: typing.Optional[SecretsClient] = None
         self._secret_groups: typing.Optional[SecretGroupsClient] = None
+        self._environments: typing.Optional[EnvironmentsClient] = None
         self._events: typing.Optional[EventsClient] = None
         self._alerts: typing.Optional[AlertsClient] = None
         self._logs: typing.Optional[LogsClient] = None
@@ -313,14 +313,6 @@ class BaseTrueFoundry:
         return self._workspaces
 
     @property
-    def environments(self):
-        if self._environments is None:
-            from .environments.client import EnvironmentsClient  # noqa: E402
-
-            self._environments = EnvironmentsClient(client_wrapper=self._client_wrapper)
-        return self._environments
-
-    @property
     def secrets(self):
         if self._secrets is None:
             from .secrets.client import SecretsClient  # noqa: E402
@@ -335,6 +327,14 @@ class BaseTrueFoundry:
 
             self._secret_groups = SecretGroupsClient(client_wrapper=self._client_wrapper)
         return self._secret_groups
+
+    @property
+    def environments(self):
+        if self._environments is None:
+            from .environments.client import EnvironmentsClient  # noqa: E402
+
+            self._environments = EnvironmentsClient(client_wrapper=self._client_wrapper)
+        return self._environments
 
     @property
     def events(self):
@@ -502,9 +502,9 @@ class AsyncBaseTrueFoundry:
         self._application_versions: typing.Optional[AsyncApplicationVersionsClient] = None
         self._jobs: typing.Optional[AsyncJobsClient] = None
         self._workspaces: typing.Optional[AsyncWorkspacesClient] = None
-        self._environments: typing.Optional[AsyncEnvironmentsClient] = None
         self._secrets: typing.Optional[AsyncSecretsClient] = None
         self._secret_groups: typing.Optional[AsyncSecretGroupsClient] = None
+        self._environments: typing.Optional[AsyncEnvironmentsClient] = None
         self._events: typing.Optional[AsyncEventsClient] = None
         self._alerts: typing.Optional[AsyncAlertsClient] = None
         self._logs: typing.Optional[AsyncLogsClient] = None
@@ -718,14 +718,6 @@ class AsyncBaseTrueFoundry:
         return self._workspaces
 
     @property
-    def environments(self):
-        if self._environments is None:
-            from .environments.client import AsyncEnvironmentsClient  # noqa: E402
-
-            self._environments = AsyncEnvironmentsClient(client_wrapper=self._client_wrapper)
-        return self._environments
-
-    @property
     def secrets(self):
         if self._secrets is None:
             from .secrets.client import AsyncSecretsClient  # noqa: E402
@@ -740,6 +732,14 @@ class AsyncBaseTrueFoundry:
 
             self._secret_groups = AsyncSecretGroupsClient(client_wrapper=self._client_wrapper)
         return self._secret_groups
+
+    @property
+    def environments(self):
+        if self._environments is None:
+            from .environments.client import AsyncEnvironmentsClient  # noqa: E402
+
+            self._environments = AsyncEnvironmentsClient(client_wrapper=self._client_wrapper)
+        return self._environments
 
     @property
     def events(self):

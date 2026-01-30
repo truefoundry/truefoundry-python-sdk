@@ -19,9 +19,7 @@ class Cluster(UniversalBaseModel):
     tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")] = pydantic.Field(
         alias="tenantName"
     )
-    account_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="accountId")] = pydantic.Field(
-        alias="accountId", default=None
-    )
+    account_id: typing_extensions.Annotated[str, FieldMetadata(alias="accountId")] = pydantic.Field(alias="accountId")
     created_by_subject: typing_extensions.Annotated[
         typing.Optional[Subject], FieldMetadata(alias="createdBySubject")
     ] = pydantic.Field(alias="createdBySubject", default=None)

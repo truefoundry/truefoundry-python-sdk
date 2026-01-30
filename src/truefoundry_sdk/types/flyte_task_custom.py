@@ -8,7 +8,10 @@ from .flyte_task_custom_truefoundry import FlyteTaskCustomTruefoundry
 
 
 class FlyteTaskCustom(UniversalBaseModel):
-    truefoundry: FlyteTaskCustomTruefoundry
+    truefoundry: FlyteTaskCustomTruefoundry = pydantic.Field()
+    """
+    +discriminator=type
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

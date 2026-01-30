@@ -7,11 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class TrueFoundryManagedSource(UniversalBaseModel):
-    type: typing.Literal["truefoundry"] = pydantic.Field(default="truefoundry")
-    """
-    Type of the source
-    """
-
+    type: typing.Literal["truefoundry"] = "truefoundry"
     uri: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

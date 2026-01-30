@@ -28,6 +28,7 @@ from .self_hosted_model_provider_account import SelfHostedModelProviderAccount
 from .snowflake_cortex_provider_account import SnowflakeCortexProviderAccount
 from .together_ai_provider_account import TogetherAiProviderAccount
 from .virtual_model_provider_account import VirtualModelProviderAccount
+from .xai_provider_account import XaiProviderAccount
 
 ModelProviderAccount = typing.Union[
     AwsBedrockProviderAccount,
@@ -52,6 +53,7 @@ ModelProviderAccount = typing.Union[
     SelfHostedModelProviderAccount,
     OpenRouterProviderAccount,
     SambaNovaProviderAccount,
+    XaiProviderAccount,
     AwsSagemakerProviderAccount,
     CerebrasProviderAccount,
     SnowflakeCortexProviderAccount,

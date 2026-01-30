@@ -7,8 +7,9 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
+from .account_info import AccountInfo
+from .role_with_resource import RoleWithResource
 from .user_metadata import UserMetadata
-from .user_role_with_resource import UserRoleWithResource
 
 
 class User(UniversalBaseModel):
@@ -20,9 +21,13 @@ class User(UniversalBaseModel):
     metadata: UserMetadata
     roles: typing.Optional[typing.List[str]] = None
     roles_with_resource: typing_extensions.Annotated[
-        typing.Optional[typing.List[UserRoleWithResource]], FieldMetadata(alias="rolesWithResource")
+        typing.Optional[typing.List[RoleWithResource]], FieldMetadata(alias="rolesWithResource")
     ] = pydantic.Field(alias="rolesWithResource", default=None)
+    accounts: typing.Optional[typing.List[AccountInfo]] = None
     active: bool
+    is_editable: typing_extensions.Annotated[bool, FieldMetadata(alias="isEditable")] = pydantic.Field(
+        alias="isEditable"
+    )
     created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field(
         alias="createdAt"
     )

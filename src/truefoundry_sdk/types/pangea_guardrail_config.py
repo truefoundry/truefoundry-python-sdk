@@ -4,7 +4,8 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .pangea_guard_type import PangeaGuardType
+from .enforcing_strategy import EnforcingStrategy
+from .pangea_guardrail_config_config import PangeaGuardrailConfigConfig
 from .pangea_guardrail_config_operation import PangeaGuardrailConfigOperation
 from .pangea_key_auth import PangeaKeyAuth
 
@@ -19,6 +20,13 @@ class PangeaGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
+    description: typing.Optional[str] = pydantic.Field(
+        default="Pangea textGuard for text security or PII detection and redaction"
+    )
+    """
+    Optional description for this Guardrail Config.
+    """
+
     type: typing.Literal["integration/guardrail-config/pangea"] = pydantic.Field(
         default="integration/guardrail-config/pangea"
     )
@@ -27,27 +35,19 @@ class PangeaGuardrailConfig(UniversalBaseModel):
     +value=integration/guardrail-config/pangea
     """
 
-    auth_data: PangeaKeyAuth
-    guard_type: PangeaGuardType
-    operation: typing.Optional[PangeaGuardrailConfigOperation] = pydantic.Field(default=None)
+    operation: PangeaGuardrailConfigOperation = pydantic.Field()
     """
     The operation type to use for the Guardrail. Validate guardrails are used to validate requests and mutate can validate as well as mutate requests.
     """
 
-    domain: str = pydantic.Field()
+    priority: typing.Optional[int] = pydantic.Field(default=1)
     """
-    Domain of the cloud provider and region where your Pangea project is configured. Example: if endpoint is: https://<service_name>.aws.us-west-2.pangea.cloud/v1/text/guard, the input should be: aws.us-west-2.pangea.cloud
-    """
-
-    recipe: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Recipe key from Pangea console defining security rules and data types to apply
+    Execution order for mutate guardrails. Lower values run first. Only applicable when operation is mutate.
     """
 
-    overrides: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
-    """
-    Overrides for the Pangea account
-    """
+    enforcing_strategy: EnforcingStrategy
+    auth_data: PangeaKeyAuth
+    config: PangeaGuardrailConfigConfig
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

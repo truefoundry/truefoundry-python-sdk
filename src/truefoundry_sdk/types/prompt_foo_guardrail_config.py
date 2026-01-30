@@ -4,7 +4,8 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .prompt_foo_guard_type import PromptFooGuardType
+from .enforcing_strategy import EnforcingStrategy
+from .prompt_foo_guardrail_config_config import PromptFooGuardrailConfigConfig
 from .prompt_foo_guardrail_config_operation import PromptFooGuardrailConfigOperation
 
 
@@ -18,6 +19,13 @@ class PromptFooGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
+    description: typing.Optional[str] = pydantic.Field(
+        default="PromptFoo guardrails: guard check, PII redaction, or harmful content detection"
+    )
+    """
+    Optional description for this Guardrail Config.
+    """
+
     type: typing.Literal["integration/guardrail-config/promptfoo"] = pydantic.Field(
         default="integration/guardrail-config/promptfoo"
     )
@@ -26,11 +34,18 @@ class PromptFooGuardrailConfig(UniversalBaseModel):
     +value=integration/guardrail-config/promptfoo
     """
 
-    guard_type: PromptFooGuardType
-    operation: typing.Optional[PromptFooGuardrailConfigOperation] = pydantic.Field(default=None)
+    operation: PromptFooGuardrailConfigOperation = pydantic.Field()
     """
     The operation type to use for the Guardrail. Validate guardrails are used to validate requests and mutate can validate as well as mutate requests.
     """
+
+    priority: typing.Optional[int] = pydantic.Field(default=1)
+    """
+    Execution order for mutate guardrails. Lower values run first. Only applicable when operation is mutate.
+    """
+
+    enforcing_strategy: EnforcingStrategy
+    config: PromptFooGuardrailConfigConfig
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

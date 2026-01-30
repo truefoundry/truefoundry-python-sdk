@@ -7,10 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class LightGbmFramework(UniversalBaseModel):
-    type: typing.Literal["lightgbm"] = pydantic.Field(default="lightgbm")
-    """
-    Type of the framework
-    """
+    type: typing.Literal["lightgbm"] = "lightgbm"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

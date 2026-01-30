@@ -9,11 +9,7 @@ from .xg_boost_serialization_format import XgBoostSerializationFormat
 
 
 class XgBoostFramework(UniversalBaseModel):
-    type: typing.Literal["xgboost"] = pydantic.Field(default="xgboost")
-    """
-    Type of the framework
-    """
-
+    type: typing.Literal["xgboost"] = "xgboost"
     serialization_format: typing.Optional[XgBoostSerializationFormat] = None
     model_filepath: typing.Optional[str] = pydantic.Field(default=None)
     """

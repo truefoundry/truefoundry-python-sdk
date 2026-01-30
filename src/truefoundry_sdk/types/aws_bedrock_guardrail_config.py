@@ -5,8 +5,9 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .aws_bedrock_guardrail_config_auth_data import AwsBedrockGuardrailConfigAuthData
+from .aws_bedrock_guardrail_config_config import AwsBedrockGuardrailConfigConfig
 from .aws_bedrock_guardrail_config_operation import AwsBedrockGuardrailConfigOperation
-from .aws_region import AwsRegion
+from .enforcing_strategy import EnforcingStrategy
 
 
 class AwsBedrockGuardrailConfig(UniversalBaseModel):
@@ -17,6 +18,13 @@ class AwsBedrockGuardrailConfig(UniversalBaseModel):
     name: str = pydantic.Field()
     """
     The name of the Guardrail Config.
+    """
+
+    description: typing.Optional[str] = pydantic.Field(
+        default="AWS Bedrock Guardrails for content filtering and safety policies"
+    )
+    """
+    Optional description for this Guardrail Config.
     """
 
     type: typing.Literal["integration/guardrail-config/aws-bedrock"] = pydantic.Field(
@@ -33,22 +41,18 @@ class AwsBedrockGuardrailConfig(UniversalBaseModel):
     Validate guardrails are run in parallel while mutate guardrails are run sequentially.
     """
 
+    priority: typing.Optional[int] = pydantic.Field(default=1)
+    """
+    Execution order for mutate guardrails. Lower values run first. Only applicable when operation is mutate.
+    """
+
+    enforcing_strategy: EnforcingStrategy
     auth_data: typing.Optional[AwsBedrockGuardrailConfigAuthData] = pydantic.Field(default=None)
     """
     Authentication data for the AWS account
     """
 
-    guardrail_id: str = pydantic.Field()
-    """
-    The unique identifier of the Bedrock Guardrail created in AWS console
-    """
-
-    guardrail_version: str = pydantic.Field()
-    """
-    Version number of the guardrail to use (e.g., 2 for version 2)
-    """
-
-    region: AwsRegion
+    config: AwsBedrockGuardrailConfigConfig
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
