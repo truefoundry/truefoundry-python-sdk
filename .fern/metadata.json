@@ -22,5 +22,5 @@
       "numpydoc": ">=1.7.0,<2.0.0"
     }
   },
-  "sdkVersion": "0.0.0"
+  "sdkVersion": "0.1.20"
 }
