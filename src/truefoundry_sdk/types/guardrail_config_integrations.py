@@ -5,17 +5,26 @@ import typing
 from .aws_bedrock_guardrail_config import AwsBedrockGuardrailConfig
 from .azure_content_safety_guardrail_config import AzureContentSafetyGuardrailConfig
 from .azure_pii_guardrail_config import AzurePiiGuardrailConfig
+from .azure_prompt_shield_guardrail_config import AzurePromptShieldGuardrailConfig
+from .cedar_guardrail_config import CedarGuardrailConfig
 from .code_safety_linter_guardrail_config import CodeSafetyLinterGuardrailConfig
 from .custom_guardrail_config import CustomGuardrailConfig
 from .enkrypt_ai_guardrail_config import EnkryptAiGuardrailConfig
 from .fiddler_guardrail_config import FiddlerGuardrailConfig
+from .google_model_armor_guardrail_config import GoogleModelArmorGuardrailConfig
+from .gray_swan_cygnal_guardrail_config import GraySwanCygnalGuardrailConfig
+from .opa_guardrail_config import OpaGuardrailConfig
 from .open_ai_moderations_guardrail_config import OpenAiModerationsGuardrailConfig
 from .palo_alto_prisma_airs_guardrail_config import PaloAltoPrismaAirsGuardrailConfig
 from .pangea_guardrail_config import PangeaGuardrailConfig
 from .patronus_guardrail_config import PatronusGuardrailConfig
 from .prompt_foo_guardrail_config import PromptFooGuardrailConfig
+from .regex_guardrail_config import RegexGuardrailConfig
 from .secret_detection_guardrail_config import SecretDetectionGuardrailConfig
 from .sql_sanitizer_guardrail_config import SqlSanitizerGuardrailConfig
+from .tfy_content_moderation_guardrail_config import TfyContentModerationGuardrailConfig
+from .tfy_pii_guardrail_config import TfyPiiGuardrailConfig
+from .tfy_prompt_injection_guardrail_config import TfyPromptInjectionGuardrailConfig
 
 GuardrailConfigIntegrations = typing.Union[
     OpenAiModerationsGuardrailConfig,
@@ -23,6 +32,7 @@ GuardrailConfigIntegrations = typing.Union[
     CustomGuardrailConfig,
     AzurePiiGuardrailConfig,
     AzureContentSafetyGuardrailConfig,
+    AzurePromptShieldGuardrailConfig,
     EnkryptAiGuardrailConfig,
     PaloAltoPrismaAirsGuardrailConfig,
     PromptFooGuardrailConfig,
@@ -32,4 +42,12 @@ GuardrailConfigIntegrations = typing.Union[
     SecretDetectionGuardrailConfig,
     CodeSafetyLinterGuardrailConfig,
     SqlSanitizerGuardrailConfig,
+    RegexGuardrailConfig,
+    TfyContentModerationGuardrailConfig,
+    TfyPiiGuardrailConfig,
+    TfyPromptInjectionGuardrailConfig,
+    CedarGuardrailConfig,
+    OpaGuardrailConfig,
+    GoogleModelArmorGuardrailConfig,
+    GraySwanCygnalGuardrailConfig,
 ]

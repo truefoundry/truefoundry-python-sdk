@@ -14,7 +14,6 @@ from .team_metadata import TeamMetadata
 
 class Team(UniversalBaseModel):
     id: str
-    team_name: typing_extensions.Annotated[str, FieldMetadata(alias="teamName")] = pydantic.Field(alias="teamName")
     description: str
     tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")] = pydantic.Field(
         alias="tenantName"

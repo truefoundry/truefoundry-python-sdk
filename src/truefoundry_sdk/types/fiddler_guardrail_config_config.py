@@ -8,6 +8,11 @@ from .fiddler_guard_type import FiddlerGuardType
 
 
 class FiddlerGuardrailConfigConfig(UniversalBaseModel):
+    """
+    +uiType=Ignore
+    +uiProps={"forwardJsonKey": true}
+    """
+
     guard_type: FiddlerGuardType
     threshold: typing.Optional[float] = pydantic.Field(default=None)
     """

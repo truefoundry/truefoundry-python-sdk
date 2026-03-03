@@ -158,7 +158,6 @@ response = client.users.list(
     offset=0,
     query="query",
     show_invalid_users=True,
-    include_virtual_accounts="includeVirtualAccounts",
 )
 for item in response:
     yield item

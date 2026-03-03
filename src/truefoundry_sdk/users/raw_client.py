@@ -45,7 +45,6 @@ class RawUsersClient:
         offset: typing.Optional[int] = 0,
         query: typing.Optional[str] = None,
         show_invalid_users: typing.Optional[bool] = None,
-        include_virtual_accounts: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[User, ListUsersResponse]:
         """
@@ -63,9 +62,6 @@ class RawUsersClient:
 
         show_invalid_users : typing.Optional[bool]
             Show Deactivated users
-
-        include_virtual_accounts : typing.Optional[str]
-            Include virtual accounts
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -85,7 +81,6 @@ class RawUsersClient:
                 "offset": offset,
                 "query": query,
                 "showInvalidUsers": show_invalid_users,
-                "includeVirtualAccounts": include_virtual_accounts,
             },
             request_options=request_options,
         )
@@ -105,7 +100,6 @@ class RawUsersClient:
                     offset=offset + len(_items or []),
                     query=query,
                     show_invalid_users=show_invalid_users,
-                    include_virtual_accounts=include_virtual_accounts,
                     request_options=request_options,
                 )
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
@@ -840,7 +834,6 @@ class AsyncRawUsersClient:
         offset: typing.Optional[int] = 0,
         query: typing.Optional[str] = None,
         show_invalid_users: typing.Optional[bool] = None,
-        include_virtual_accounts: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[User, ListUsersResponse]:
         """
@@ -858,9 +851,6 @@ class AsyncRawUsersClient:
 
         show_invalid_users : typing.Optional[bool]
             Show Deactivated users
-
-        include_virtual_accounts : typing.Optional[str]
-            Include virtual accounts
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -880,7 +870,6 @@ class AsyncRawUsersClient:
                 "offset": offset,
                 "query": query,
                 "showInvalidUsers": show_invalid_users,
-                "includeVirtualAccounts": include_virtual_accounts,
             },
             request_options=request_options,
         )
@@ -902,7 +891,6 @@ class AsyncRawUsersClient:
                         offset=offset + len(_items or []),
                         query=query,
                         show_invalid_users=show_invalid_users,
-                        include_virtual_accounts=include_virtual_accounts,
                         request_options=request_options,
                     )
 

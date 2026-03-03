@@ -190,7 +190,13 @@ class RawSecretsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[float]:
+    def delete(
+        self,
+        id: str,
+        *,
+        force_delete: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[float]:
         """
         Deletes a secret and its versions along with its values.
 
@@ -198,6 +204,9 @@ class RawSecretsClient:
         ----------
         id : str
             Secret Id of the secret.
+
+        force_delete : typing.Optional[bool]
+            Whether to force delete the secret.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -210,6 +219,9 @@ class RawSecretsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/secrets/{jsonable_encoder(id)}",
             method="DELETE",
+            params={
+                "forceDelete": force_delete,
+            },
             request_options=request_options,
         )
         try:
@@ -433,7 +445,11 @@ class AsyncRawSecretsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: str,
+        *,
+        force_delete: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[float]:
         """
         Deletes a secret and its versions along with its values.
@@ -442,6 +458,9 @@ class AsyncRawSecretsClient:
         ----------
         id : str
             Secret Id of the secret.
+
+        force_delete : typing.Optional[bool]
+            Whether to force delete the secret.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -454,6 +473,9 @@ class AsyncRawSecretsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/secrets/{jsonable_encoder(id)}",
             method="DELETE",
+            params={
+                "forceDelete": force_delete,
+            },
             request_options=request_options,
         )
         try:

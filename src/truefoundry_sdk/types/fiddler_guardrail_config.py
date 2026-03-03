@@ -34,14 +34,18 @@ class FiddlerGuardrailConfig(UniversalBaseModel):
     +value=integration/guardrail-config/fiddler
     """
 
+    auth_data: FiddlerKeyAuth
     operation: typing.Literal["validate"] = pydantic.Field(default="validate")
     """
     The operation type for this guardrail. Fiddler guardrails can only be used for validation.
     """
 
     enforcing_strategy: EnforcingStrategy
-    auth_data: FiddlerKeyAuth
-    config: FiddlerGuardrailConfigConfig
+    config: FiddlerGuardrailConfigConfig = pydantic.Field()
+    """
+    +uiType=Ignore
+    +uiProps={"forwardJsonKey": true}
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

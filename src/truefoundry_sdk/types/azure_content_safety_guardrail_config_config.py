@@ -8,6 +8,11 @@ from .azure_content_safety_category import AzureContentSafetyCategory
 
 
 class AzureContentSafetyGuardrailConfigConfig(UniversalBaseModel):
+    """
+    +uiType=Ignore
+    +uiProps={"forwardJsonKey": true}
+    """
+
     resource_name: str = pydantic.Field()
     """
     Name of your Azure Content Safety resource where the service is deployed (e.g., my-content-safety)

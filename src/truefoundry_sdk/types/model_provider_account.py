@@ -8,11 +8,14 @@ from .aws_bedrock_provider_account import AwsBedrockProviderAccount
 from .aws_sagemaker_provider_account import AwsSagemakerProviderAccount
 from .azure_foundry_provider_account import AzureFoundryProviderAccount
 from .azure_open_ai_provider_account import AzureOpenAiProviderAccount
+from .cartesia_provider_account import CartesiaProviderAccount
 from .cerebras_provider_account import CerebrasProviderAccount
 from .cloudera_provider_account import ClouderaProviderAccount
 from .cohere_provider_account import CohereProviderAccount
 from .databricks_provider_account import DatabricksProviderAccount
+from .deepgram_provider_account import DeepgramProviderAccount
 from .deepinfra_provider_account import DeepinfraProviderAccount
+from .eleven_labs_provider_account import ElevenLabsProviderAccount
 from .google_gemini_provider_account import GoogleGeminiProviderAccount
 from .google_vertex_provider_account import GoogleVertexProviderAccount
 from .groq_provider_account import GroqProviderAccount
@@ -57,5 +60,8 @@ ModelProviderAccount = typing.Union[
     AwsSagemakerProviderAccount,
     CerebrasProviderAccount,
     SnowflakeCortexProviderAccount,
+    ElevenLabsProviderAccount,
+    DeepgramProviderAccount,
+    CartesiaProviderAccount,
     VirtualModelProviderAccount,
 ]

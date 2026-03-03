@@ -12,11 +12,6 @@ class GuardrailsConfig(UniversalBaseModel):
     Guardrails Configuration
     """
 
-    name: str = pydantic.Field()
-    """
-    Name of the guardrails configuration
-    """
-
     type: typing.Literal["gateway-guardrails-config"] = pydantic.Field(default="gateway-guardrails-config")
     """
     +value=gateway-guardrails-config

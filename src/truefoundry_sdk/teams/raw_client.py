@@ -99,7 +99,7 @@ class RawTeamsClient:
         self,
         *,
         manifest: TeamManifest,
-        dry_run: typing.Optional[bool] = OMIT,
+        dry_run: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetTeamResponse]:
         """
@@ -359,7 +359,7 @@ class AsyncRawTeamsClient:
         self,
         *,
         manifest: TeamManifest,
-        dry_run: typing.Optional[bool] = OMIT,
+        dry_run: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetTeamResponse]:
         """

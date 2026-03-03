@@ -15,7 +15,6 @@ from .subject import Subject
 class SecretGroup(UniversalBaseModel):
     id: typing.Optional[str] = None
     fqn: typing.Optional[str] = None
-    name: str
     tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")] = pydantic.Field(
         alias="tenantName"
     )

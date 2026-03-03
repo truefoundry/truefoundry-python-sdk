@@ -4,8 +4,9 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .azure_key_auth import AzureKeyAuth
+from .azure_pii_guardrail_config_auth_data import AzurePiiGuardrailConfigAuthData
 from .azure_pii_guardrail_config_config import AzurePiiGuardrailConfigConfig
+from .azure_pii_guardrail_config_operation import AzurePiiGuardrailConfigOperation
 from .enforcing_strategy import EnforcingStrategy
 
 
@@ -34,9 +35,14 @@ class AzurePiiGuardrailConfig(UniversalBaseModel):
     +value=integration/guardrail-config/azure-pii
     """
 
-    operation: typing.Literal["mutate"] = pydantic.Field(default="mutate")
+    auth_data: AzurePiiGuardrailConfigAuthData = pydantic.Field()
     """
-    The operation type for this guardrail. Azure PII guardrails can only be used for mutate.
+    Authentication data for the Azure account
+    """
+
+    operation: AzurePiiGuardrailConfigOperation = pydantic.Field()
+    """
+    The operation type to use for the Guardrail. Validate guardrails are used to validate requests and mutate can validate as well as mutate requests. Validate guardrails are run in parallel while mutate guardrails are run sequentially.
     """
 
     priority: typing.Optional[int] = pydantic.Field(default=1)
@@ -44,9 +50,12 @@ class AzurePiiGuardrailConfig(UniversalBaseModel):
     Execution order for mutate guardrails. Lower values run first. Only applicable when operation is mutate.
     """
 
-    auth_data: AzureKeyAuth
     enforcing_strategy: EnforcingStrategy
-    config: AzurePiiGuardrailConfigConfig
+    config: AzurePiiGuardrailConfigConfig = pydantic.Field()
+    """
+    +uiType=Ignore
+    +uiProps={"forwardJsonKey": true}
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

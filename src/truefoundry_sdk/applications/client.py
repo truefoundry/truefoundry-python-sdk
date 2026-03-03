@@ -183,7 +183,7 @@ class ApplicationsClient:
         self,
         *,
         manifest: typing.Dict[str, typing.Any],
-        dry_run: typing.Optional[bool] = OMIT,
+        dry_run: typing.Optional[bool] = False,
         force_deploy: typing.Optional[bool] = OMIT,
         trigger_on_deploy: typing.Optional[bool] = OMIT,
         workspace_id: typing.Optional[str] = OMIT,
@@ -319,6 +319,44 @@ class ApplicationsClient:
         )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
+        return _response.data
+
+    def redeploy(
+        self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetApplicationDeploymentResponse:
+        """
+        Creates a new deployment with the same manifest as the given deployment.
+
+        Parameters
+        ----------
+        id : str
+            Application id of the application
+
+        deployment_id : str
+            Deployment id of the deployment
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetApplicationDeploymentResponse
+            Returns the new deployment.
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.applications.redeploy(
+            id="id",
+            deployment_id="deploymentId",
+        )
+        """
+        _response = self._raw_client.redeploy(id, deployment_id, request_options=request_options)
         return _response.data
 
     def scale_to_zero(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
@@ -595,7 +633,7 @@ class AsyncApplicationsClient:
         self,
         *,
         manifest: typing.Dict[str, typing.Any],
-        dry_run: typing.Optional[bool] = OMIT,
+        dry_run: typing.Optional[bool] = False,
         force_deploy: typing.Optional[bool] = OMIT,
         trigger_on_deploy: typing.Optional[bool] = OMIT,
         workspace_id: typing.Optional[str] = OMIT,
@@ -757,6 +795,52 @@ class AsyncApplicationsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
+        return _response.data
+
+    async def redeploy(
+        self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetApplicationDeploymentResponse:
+        """
+        Creates a new deployment with the same manifest as the given deployment.
+
+        Parameters
+        ----------
+        id : str
+            Application id of the application
+
+        deployment_id : str
+            Deployment id of the deployment
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetApplicationDeploymentResponse
+            Returns the new deployment.
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.applications.redeploy(
+                id="id",
+                deployment_id="deploymentId",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.redeploy(id, deployment_id, request_options=request_options)
         return _response.data
 
     async def scale_to_zero(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:

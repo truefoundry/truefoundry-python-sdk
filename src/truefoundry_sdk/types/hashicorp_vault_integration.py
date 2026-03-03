@@ -29,10 +29,20 @@ class HashicorpVaultIntegration(UniversalBaseModel):
     The URL of the HashiCorp Vault server (e.g., https://vault.example.com:8200).
     """
 
+    kv_mount_path: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Mount path of the KV v2 engine vault to use for secrets. The default value is tfy-secrets
+    """
+
     auth_data: HashicorpTokenAuth
     authorized_subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     List of subjects that are authorized to access this integration. List of user fqn in format <user_type>:<username>.
+    """
+
+    namespace: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Namespace for vault operations, used for multi-tenancy in HashiCorp Vault Enterprise. Optional for open source Vault.
     """
 
     if IS_PYDANTIC_V2:

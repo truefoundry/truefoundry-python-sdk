@@ -4,6 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .gcp_key_file_auth_key_file_content import GcpKeyFileAuthKeyFileContent
 
 
 class GcpKeyFileAuth(UniversalBaseModel):
@@ -16,9 +17,9 @@ class GcpKeyFileAuth(UniversalBaseModel):
     +value=key-file
     """
 
-    key_file_content: typing.Dict[str, typing.Any] = pydantic.Field()
+    key_file_content: GcpKeyFileAuthKeyFileContent = pydantic.Field()
     """
-    Key File Content
+    Key File Content - Key file content must be valid JSON
     """
 
     if IS_PYDANTIC_V2:

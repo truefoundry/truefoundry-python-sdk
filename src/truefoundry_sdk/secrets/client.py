@@ -123,7 +123,13 @@ class SecretsClient:
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
 
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> float:
+    def delete(
+        self,
+        id: str,
+        *,
+        force_delete: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> float:
         """
         Deletes a secret and its versions along with its values.
 
@@ -131,6 +137,9 @@ class SecretsClient:
         ----------
         id : str
             Secret Id of the secret.
+
+        force_delete : typing.Optional[bool]
+            Whether to force delete the secret.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -150,9 +159,10 @@ class SecretsClient:
         )
         client.secrets.delete(
             id="id",
+            force_delete=True,
         )
         """
-        _response = self._raw_client.delete(id, request_options=request_options)
+        _response = self._raw_client.delete(id, force_delete=force_delete, request_options=request_options)
         return _response.data
 
 
@@ -282,7 +292,13 @@ class AsyncSecretsClient:
         _response = await self._raw_client.get(id, request_options=request_options)
         return _response.data
 
-    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> float:
+    async def delete(
+        self,
+        id: str,
+        *,
+        force_delete: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> float:
         """
         Deletes a secret and its versions along with its values.
 
@@ -290,6 +306,9 @@ class AsyncSecretsClient:
         ----------
         id : str
             Secret Id of the secret.
+
+        force_delete : typing.Optional[bool]
+            Whether to force delete the secret.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -314,10 +333,11 @@ class AsyncSecretsClient:
         async def main() -> None:
             await client.secrets.delete(
                 id="id",
+                force_delete=True,
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.delete(id, request_options=request_options)
+        _response = await self._raw_client.delete(id, force_delete=force_delete, request_options=request_options)
         return _response.data

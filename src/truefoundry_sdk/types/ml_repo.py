@@ -22,7 +22,7 @@ class MlRepo(UniversalBaseModel):
     Created At
     """
 
-    account_id: typing.Optional[str] = None
+    account_id: str
     id: str = pydantic.Field()
     """
     Experiment Id

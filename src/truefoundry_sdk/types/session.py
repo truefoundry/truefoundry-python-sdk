@@ -48,6 +48,9 @@ class Session(UniversalBaseModel):
     root_account: typing_extensions.Annotated[typing.Optional[Account], FieldMetadata(alias="rootAccount")] = (
         pydantic.Field(alias="rootAccount", default=None)
     )
+    effective_user_id: typing_extensions.Annotated[str, FieldMetadata(alias="effectiveUserId")] = pydantic.Field(
+        alias="effectiveUserId"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

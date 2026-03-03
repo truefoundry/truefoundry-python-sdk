@@ -9,6 +9,11 @@ from .azure_pii_guardrail_config_config_domain import AzurePiiGuardrailConfigCon
 
 
 class AzurePiiGuardrailConfigConfig(UniversalBaseModel):
+    """
+    +uiType=Ignore
+    +uiProps={"forwardJsonKey": true}
+    """
+
     resource_name: str = pydantic.Field()
     """
     Name of your Azure AI Language resource where the PII detection service is deployed (e.g., my-language-resource)
@@ -26,7 +31,7 @@ class AzurePiiGuardrailConfigConfig(UniversalBaseModel):
 
     domain: AzurePiiGuardrailConfigConfigDomain = pydantic.Field()
     """
-    Specialized domain for PII detection. Use healthcare for PHI (Protected Health Information) or none for general text
+    Specialized domain for PII detection. Use phi for PHI (Protected Health Information) or none for general text
     """
 
     pii_categories: typing.List[AzurePiiCategory] = pydantic.Field()

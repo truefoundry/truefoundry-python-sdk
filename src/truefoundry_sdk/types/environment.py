@@ -14,7 +14,6 @@ from .subject import Subject
 
 class Environment(UniversalBaseModel):
     id: typing.Optional[str] = None
-    name: str
     priority: float
     color: EnvironmentColor
     tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")] = pydantic.Field(

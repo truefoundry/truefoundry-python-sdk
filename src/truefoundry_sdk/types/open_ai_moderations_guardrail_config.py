@@ -35,14 +35,18 @@ class OpenAiModerationsGuardrailConfig(UniversalBaseModel):
     +uiType=Hidden
     """
 
+    auth_data: OpenaiApiKeyAuth
     operation: typing.Literal["validate"] = pydantic.Field(default="validate")
     """
     The operation type for this guardrail. OpenAI Moderation guardrails can only be used for validation.
     """
 
     enforcing_strategy: EnforcingStrategy
-    auth_data: OpenaiApiKeyAuth
-    config: OpenAiModerationsGuardrailConfigConfig
+    config: OpenAiModerationsGuardrailConfigConfig = pydantic.Field()
+    """
+    +uiType=Ignore
+    +uiProps={"forwardJsonKey": true}
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

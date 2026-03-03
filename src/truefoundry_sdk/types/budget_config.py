@@ -12,11 +12,6 @@ class BudgetConfig(UniversalBaseModel):
     Budget Configuration
     """
 
-    name: str = pydantic.Field()
-    """
-    Name of the budget configuration
-    """
-
     type: typing.Literal["gateway-budget-config"] = pydantic.Field(default="gateway-budget-config")
     """
     +value=gateway-budget-config

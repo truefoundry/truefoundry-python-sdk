@@ -4,6 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .gateway_data_type import GatewayDataType
 
 
 class DataAccessRuleBase(UniversalBaseModel):
@@ -21,14 +22,19 @@ class DataAccessRuleBase(UniversalBaseModel):
     Description of the rule
     """
 
+    enabled: typing.Optional[bool] = pydantic.Field(default=True)
+    """
+    Whether this rule is enabled
+    """
+
     subjects: typing.List[str] = pydantic.Field()
     """
     List of subjects that this rule applies to (users, teams, roles)
     """
 
-    enabled: typing.Optional[bool] = pydantic.Field(default=True)
+    data_types: typing.List[GatewayDataType] = pydantic.Field()
     """
-    Whether this rule is enabled
+    List of data types that this rule applies to
     """
 
     if IS_PYDANTIC_V2:

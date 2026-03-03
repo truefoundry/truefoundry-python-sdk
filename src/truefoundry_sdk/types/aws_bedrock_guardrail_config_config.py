@@ -8,6 +8,11 @@ from .aws_region import AwsRegion
 
 
 class AwsBedrockGuardrailConfigConfig(UniversalBaseModel):
+    """
+    +uiType=Ignore
+    +uiProps={"forwardJsonKey": true}
+    """
+
     guardrail_id: str = pydantic.Field()
     """
     The unique identifier of the Bedrock Guardrail created in AWS console

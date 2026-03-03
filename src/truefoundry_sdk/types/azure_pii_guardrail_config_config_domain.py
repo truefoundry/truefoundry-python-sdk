@@ -9,11 +9,11 @@ T_Result = typing.TypeVar("T_Result")
 
 class AzurePiiGuardrailConfigConfigDomain(enum.StrEnum):
     """
-    Specialized domain for PII detection. Use healthcare for PHI (Protected Health Information) or none for general text
+    Specialized domain for PII detection. Use phi for PHI (Protected Health Information) or none for general text
     """
 
     NONE = "none"
-    HEALTHCARE = "healthcare"
+    PHI = "phi"
     _UNKNOWN = "__AZUREPIIGUARDRAILCONFIGCONFIGDOMAIN_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
@@ -28,11 +28,11 @@ class AzurePiiGuardrailConfigConfigDomain(enum.StrEnum):
     def visit(
         self,
         none: typing.Callable[[], T_Result],
-        healthcare: typing.Callable[[], T_Result],
+        phi: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is AzurePiiGuardrailConfigConfigDomain.NONE:
             return none()
-        if self is AzurePiiGuardrailConfigConfigDomain.HEALTHCARE:
-            return healthcare()
+        if self is AzurePiiGuardrailConfigConfigDomain.PHI:
+            return phi()
         return _unknown_member(self._value_)

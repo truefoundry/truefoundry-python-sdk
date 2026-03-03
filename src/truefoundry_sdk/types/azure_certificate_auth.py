@@ -28,7 +28,7 @@ class AzureCertificateAuth(UniversalBaseModel):
 
     certificate: str = pydantic.Field()
     """
-    The certificate in PEM format
+    Certificate in PEM format (e.g., -----BEGIN CERTIFICATE----- ... -----END CERTIFICATE-----)
     """
 
     certificate_thumbprint: str = pydantic.Field()

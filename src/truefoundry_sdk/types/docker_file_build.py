@@ -4,6 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .build_secret import BuildSecret
 from .docker_file_build_command import DockerFileBuildCommand
 
 
@@ -37,6 +38,11 @@ class DockerFileBuild(UniversalBaseModel):
     build_args: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
     """
     Build arguments to pass to docker build
+    """
+
+    build_secrets: typing.Optional[typing.List[BuildSecret]] = pydantic.Field(default=None)
+    """
+    Build secrets you can use in run statements inside dockerfile like RUN --mount=type=secret,id=pip_index_url ... you can learn more about build secrets here https://www.truefoundry.com/docs/docker-build-secrets
     """
 
     if IS_PYDANTIC_V2:

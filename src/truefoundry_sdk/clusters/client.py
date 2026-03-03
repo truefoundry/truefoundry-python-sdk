@@ -83,7 +83,7 @@ class ClustersClient:
         self,
         *,
         manifest: ClusterManifest,
-        dry_run: typing.Optional[bool] = OMIT,
+        dry_run: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetClusterResponse:
         """
@@ -357,7 +357,7 @@ class AsyncClustersClient:
         self,
         *,
         manifest: ClusterManifest,
-        dry_run: typing.Optional[bool] = OMIT,
+        dry_run: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetClusterResponse:
         """

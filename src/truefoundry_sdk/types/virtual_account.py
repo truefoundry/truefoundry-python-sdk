@@ -15,7 +15,6 @@ from .virtual_account_manifest import VirtualAccountManifest
 
 class VirtualAccount(UniversalBaseModel):
     id: str
-    name: str
     type: str
     tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")] = pydantic.Field(
         alias="tenantName"

@@ -36,6 +36,11 @@ class CustomGuardrailConfig(UniversalBaseModel):
     +value=integration/guardrail-config/custom
     """
 
+    auth_data: typing.Optional[CustomGuardrailConfigAuthData] = pydantic.Field(default=None)
+    """
+    Authentication data for the Guardrail Server.
+    """
+
     operation: CustomGuardrailConfigOperation = pydantic.Field()
     """
     The operation type to use for the Guardrail. Validate guardrails are used to validate requests and mutate can validate as well as mutate requests.
@@ -53,12 +58,11 @@ class CustomGuardrailConfig(UniversalBaseModel):
     Specify whether the guardrail should be applied to the request or response. Guardrails with target "Request" can be only used in input guardrails and guardrails with target "Response" can only be used in output guardrails.
     """
 
-    auth_data: typing.Optional[CustomGuardrailConfigAuthData] = pydantic.Field(default=None)
+    config: CustomGuardrailConfigConfig = pydantic.Field()
     """
-    Authentication data for the Guardrail Server.
+    +uiType=Ignore
+    +uiProps={"forwardJsonKey": true}
     """
-
-    config: CustomGuardrailConfigConfig
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

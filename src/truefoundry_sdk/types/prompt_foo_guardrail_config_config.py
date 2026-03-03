@@ -8,6 +8,11 @@ from .prompt_foo_guard_type import PromptFooGuardType
 
 
 class PromptFooGuardrailConfigConfig(UniversalBaseModel):
+    """
+    +uiType=Ignore
+    +uiProps={"forwardJsonKey": true}
+    """
+
     guard_type: PromptFooGuardType
 
     if IS_PYDANTIC_V2:

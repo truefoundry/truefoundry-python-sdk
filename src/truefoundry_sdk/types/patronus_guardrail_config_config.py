@@ -9,6 +9,11 @@ from .patronus_guardrail_config_config_target import PatronusGuardrailConfigConf
 
 
 class PatronusGuardrailConfigConfig(UniversalBaseModel):
+    """
+    +uiType=Ignore
+    +uiProps={"forwardJsonKey": true}
+    """
+
     target: PatronusGuardrailConfigConfigTarget = pydantic.Field()
     """
     Where to apply evaluation: request (evaluate user input) or response (evaluate model response)
@@ -16,7 +21,7 @@ class PatronusGuardrailConfigConfig(UniversalBaseModel):
 
     evaluators: typing.List[PatronusEvaluator] = pydantic.Field()
     """
-    The evaluators to use for the Patronus Guardrail.
+    Patronus evaluators guard against GenAI failures by checking for evaluation criteria, refer to [docs](https://docs.patronus.ai/docs/evaluators/reference_guide)
     """
 
     if IS_PYDANTIC_V2:
