@@ -32,6 +32,10 @@ class BudgetRule(UniversalBaseModel):
     """
 
     alerts: typing.Optional[BudgetAlert] = None
+    audit_mode: typing.Optional[bool] = pydantic.Field(default=False)
+    """
+    When enabled, requests exceeding the budget are tracked but not blocked
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

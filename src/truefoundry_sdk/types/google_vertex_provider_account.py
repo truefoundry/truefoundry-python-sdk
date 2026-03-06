@@ -7,9 +7,9 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
 from .collaborator import Collaborator
-from .gcp_key_file_auth import GcpKeyFileAuth
 from .gcp_region import GcpRegion
 from .owned_by import OwnedBy
+from .vertex_key_file_auth import VertexKeyFileAuth
 from .vertex_model import VertexModel
 
 
@@ -34,7 +34,7 @@ class GoogleVertexProviderAccount(UniversalBaseModel):
     """
 
     region: GcpRegion
-    auth_data: typing.Optional[GcpKeyFileAuth] = None
+    auth_data: typing.Optional[VertexKeyFileAuth] = None
     integrations: typing.List[VertexModel] = pydantic.Field()
     """
     List of integrations that are associated with the Google Vertex provider account

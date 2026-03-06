@@ -35,6 +35,11 @@ class AwsBedrockGuardrailConfig(UniversalBaseModel):
     +value=integration/guardrail-config/aws-bedrock
     """
 
+    auth_data: typing.Optional[AwsBedrockGuardrailConfigAuthData] = pydantic.Field(default=None)
+    """
+    Authentication data for the AWS account
+    """
+
     operation: AwsBedrockGuardrailConfigOperation = pydantic.Field()
     """
     The operation type to use for the Guardrail. Validate guardrails are used to validate requests and mutate can validate as well as mutate requests.
@@ -47,12 +52,11 @@ class AwsBedrockGuardrailConfig(UniversalBaseModel):
     """
 
     enforcing_strategy: EnforcingStrategy
-    auth_data: typing.Optional[AwsBedrockGuardrailConfigAuthData] = pydantic.Field(default=None)
+    config: AwsBedrockGuardrailConfigConfig = pydantic.Field()
     """
-    Authentication data for the AWS account
+    +uiType=Ignore
+    +uiProps={"forwardJsonKey": true}
     """
-
-    config: AwsBedrockGuardrailConfigConfig
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

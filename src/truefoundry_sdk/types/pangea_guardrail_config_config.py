@@ -8,6 +8,11 @@ from .pangea_guard_type import PangeaGuardType
 
 
 class PangeaGuardrailConfigConfig(UniversalBaseModel):
+    """
+    +uiType=Ignore
+    +uiProps={"forwardJsonKey": true}
+    """
+
     guard_type: PangeaGuardType
     domain: str = pydantic.Field()
     """

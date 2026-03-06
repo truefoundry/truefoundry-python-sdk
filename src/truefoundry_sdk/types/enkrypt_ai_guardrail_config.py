@@ -35,6 +35,7 @@ class EnkryptAiGuardrailConfig(UniversalBaseModel):
     +value=integration/guardrail-config/enkrypt-ai
     """
 
+    auth_data: EnkryptAiKeyAuth
     operation: EnkryptAiGuardrailConfigOperation = pydantic.Field()
     """
     The operation type to use for the Guardrail. Validate guardrails are used to validate requests and mutate can validate as well as mutate requests.
@@ -47,8 +48,11 @@ class EnkryptAiGuardrailConfig(UniversalBaseModel):
     """
 
     enforcing_strategy: EnforcingStrategy
-    auth_data: EnkryptAiKeyAuth
-    config: EnkryptAiGuardrailConfigConfig
+    config: EnkryptAiGuardrailConfigConfig = pydantic.Field()
+    """
+    +uiType=Ignore
+    +uiProps={"forwardJsonKey": true}
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

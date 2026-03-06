@@ -35,6 +35,7 @@ class PangeaGuardrailConfig(UniversalBaseModel):
     +value=integration/guardrail-config/pangea
     """
 
+    auth_data: PangeaKeyAuth
     operation: PangeaGuardrailConfigOperation = pydantic.Field()
     """
     The operation type to use for the Guardrail. Validate guardrails are used to validate requests and mutate can validate as well as mutate requests.
@@ -46,8 +47,11 @@ class PangeaGuardrailConfig(UniversalBaseModel):
     """
 
     enforcing_strategy: EnforcingStrategy
-    auth_data: PangeaKeyAuth
-    config: PangeaGuardrailConfigConfig
+    config: PangeaGuardrailConfigConfig = pydantic.Field()
+    """
+    +uiType=Ignore
+    +uiProps={"forwardJsonKey": true}
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

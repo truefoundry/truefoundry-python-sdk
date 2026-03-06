@@ -12,11 +12,6 @@ class LoadBalancingConfig(UniversalBaseModel):
     Load Balancing Configuration
     """
 
-    name: str = pydantic.Field()
-    """
-    Name of the load balancing configuration
-    """
-
     type: typing.Literal["gateway-load-balancing-config"] = pydantic.Field(default="gateway-load-balancing-config")
     """
     +value=gateway-load-balancing-config

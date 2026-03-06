@@ -14,7 +14,6 @@ from .subject import Subject
 class Cluster(UniversalBaseModel):
     id: str
     fqn: str
-    name: str
     manifest: ClusterManifest
     tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")] = pydantic.Field(
         alias="tenantName"

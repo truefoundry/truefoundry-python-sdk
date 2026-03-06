@@ -10,7 +10,7 @@ from .resources_node import ResourcesNode
 
 class Resources(UniversalBaseModel):
     """
-    Configure resource allocations, specify node constraints and capacity types to improve performance and reduce expenses. [Docs](https://docs.truefoundry.com/docs/resources)
+    Configure resource allocations, specify node constraints and capacity types to improve performance and reduce expenses. [Docs](https://www.truefoundry.com/docs/resources-cpu-memory-storage)
     """
 
     cpu_request: float = pydantic.Field(default=0.2)

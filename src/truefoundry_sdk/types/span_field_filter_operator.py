@@ -22,6 +22,7 @@ class SpanFieldFilterOperator(enum.StrEnum):
     ARRAY_HAS_ANY = "ARRAY_HAS_ANY"
     ARRAY_HAS_NONE = "ARRAY_HAS_NONE"
     PRESENT = "PRESENT"
+    IS_NULL = "IS_NULL"
     _UNKNOWN = "__SPANFIELDFILTEROPERATOR_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
@@ -49,6 +50,7 @@ class SpanFieldFilterOperator(enum.StrEnum):
         array_has_any: typing.Callable[[], T_Result],
         array_has_none: typing.Callable[[], T_Result],
         present: typing.Callable[[], T_Result],
+        is_null: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is SpanFieldFilterOperator.EQUAL:
@@ -79,4 +81,6 @@ class SpanFieldFilterOperator(enum.StrEnum):
             return array_has_none()
         if self is SpanFieldFilterOperator.PRESENT:
             return present()
+        if self is SpanFieldFilterOperator.IS_NULL:
+            return is_null()
         return _unknown_member(self._value_)

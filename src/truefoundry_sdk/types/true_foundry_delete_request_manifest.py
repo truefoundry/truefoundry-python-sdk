@@ -16,6 +16,7 @@ from .environment_manifest import EnvironmentManifest
 from .gateway_config import GatewayConfig
 from .helm import Helm
 from .job import Job
+from .mcp_server_manifest import McpServerManifest
 from .ml_repo_manifest import MlRepoManifest
 from .model_manifest import ModelManifest
 from .notebook import Notebook
@@ -66,4 +67,5 @@ TrueFoundryDeleteRequestManifest = typing.Union[
     AgentManifest,
     EnvironmentManifest,
     TracingProjectManifest,
+    McpServerManifest,
 ]

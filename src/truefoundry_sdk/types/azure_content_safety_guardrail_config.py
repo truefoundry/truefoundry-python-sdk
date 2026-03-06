@@ -4,8 +4,8 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .azure_content_safety_guardrail_config_auth_data import AzureContentSafetyGuardrailConfigAuthData
 from .azure_content_safety_guardrail_config_config import AzureContentSafetyGuardrailConfigConfig
-from .azure_key_auth import AzureKeyAuth
 from .enforcing_strategy import EnforcingStrategy
 
 
@@ -34,14 +34,22 @@ class AzureContentSafetyGuardrailConfig(UniversalBaseModel):
     +value=integration/guardrail-config/azure-content-safety
     """
 
+    auth_data: AzureContentSafetyGuardrailConfigAuthData = pydantic.Field()
+    """
+    Authentication data for the Azure account
+    """
+
     operation: typing.Literal["validate"] = pydantic.Field(default="validate")
     """
     The operation type for this guardrail. Azure Content Safety guardrails can only be used for validation.
     """
 
     enforcing_strategy: EnforcingStrategy
-    auth_data: AzureKeyAuth
-    config: AzureContentSafetyGuardrailConfigConfig
+    config: AzureContentSafetyGuardrailConfigConfig = pydantic.Field()
+    """
+    +uiType=Ignore
+    +uiProps={"forwardJsonKey": true}
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

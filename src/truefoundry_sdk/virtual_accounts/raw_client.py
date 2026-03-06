@@ -99,7 +99,7 @@ class RawVirtualAccountsClient:
         self,
         *,
         manifest: VirtualAccountManifest,
-        dry_run: typing.Optional[bool] = OMIT,
+        dry_run: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetVirtualAccountResponse]:
         """
@@ -533,7 +533,7 @@ class AsyncRawVirtualAccountsClient:
         self,
         *,
         manifest: VirtualAccountManifest,
-        dry_run: typing.Optional[bool] = OMIT,
+        dry_run: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetVirtualAccountResponse]:
         """

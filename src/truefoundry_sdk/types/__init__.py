@@ -106,6 +106,7 @@ if typing.TYPE_CHECKING:
     from .azure_container_registry import AzureContainerRegistry
     from .azure_content_safety_category import AzureContentSafetyCategory
     from .azure_content_safety_guardrail_config import AzureContentSafetyGuardrailConfig
+    from .azure_content_safety_guardrail_config_auth_data import AzureContentSafetyGuardrailConfigAuthData
     from .azure_content_safety_guardrail_config_config import AzureContentSafetyGuardrailConfigConfig
     from .azure_foundry_model import AzureFoundryModel
     from .azure_foundry_model_auth_data import AzureFoundryModelAuthData
@@ -114,12 +115,19 @@ if typing.TYPE_CHECKING:
     from .azure_key_auth import AzureKeyAuth
     from .azure_o_auth import AzureOAuth
     from .azure_open_ai_model import AzureOpenAiModel
+    from .azure_open_ai_model_deployment_type import AzureOpenAiModelDeploymentType
+    from .azure_open_ai_model_region import AzureOpenAiModelRegion
     from .azure_open_ai_provider_account import AzureOpenAiProviderAccount
     from .azure_open_ai_provider_account_auth_data import AzureOpenAiProviderAccountAuthData
     from .azure_pii_category import AzurePiiCategory
     from .azure_pii_guardrail_config import AzurePiiGuardrailConfig
+    from .azure_pii_guardrail_config_auth_data import AzurePiiGuardrailConfigAuthData
     from .azure_pii_guardrail_config_config import AzurePiiGuardrailConfigConfig
     from .azure_pii_guardrail_config_config_domain import AzurePiiGuardrailConfigConfigDomain
+    from .azure_pii_guardrail_config_operation import AzurePiiGuardrailConfigOperation
+    from .azure_prompt_shield_guardrail_config import AzurePromptShieldGuardrailConfig
+    from .azure_prompt_shield_guardrail_config_auth_data import AzurePromptShieldGuardrailConfigAuthData
+    from .azure_prompt_shield_guardrail_config_config import AzurePromptShieldGuardrailConfigConfig
     from .azure_provider_account import AzureProviderAccount
     from .azure_repos_integration import AzureReposIntegration
     from .azure_vault import AzureVault
@@ -148,9 +156,16 @@ if typing.TYPE_CHECKING:
     from .build_build_source import BuildBuildSource
     from .build_build_spec import BuildBuildSpec
     from .build_info import BuildInfo
+    from .build_secret import BuildSecret
     from .build_status import BuildStatus
     from .canary import Canary
     from .canary_step import CanaryStep
+    from .cartesia_api_key_auth import CartesiaApiKeyAuth
+    from .cartesia_model import CartesiaModel
+    from .cartesia_provider_account import CartesiaProviderAccount
+    from .cartesia_provider_account_cartesia_version import CartesiaProviderAccountCartesiaVersion
+    from .cedar_guardrail_config import CedarGuardrailConfig
+    from .cedar_guardrail_config_config import CedarGuardrailConfigConfig
     from .cerebras_integrations import CerebrasIntegrations
     from .cerebras_key_auth import CerebrasKeyAuth
     from .cerebras_model import CerebrasModel
@@ -205,6 +220,7 @@ if typing.TYPE_CHECKING:
     from .custom_integrations import CustomIntegrations
     from .custom_jwt_auth_integration import CustomJwtAuthIntegration
     from .custom_provider_account import CustomProviderAccount
+    from .custom_regex_pattern import CustomRegexPattern
     from .custom_tls_settings import CustomTlsSettings
     from .custom_username_password_artifacts_registry import CustomUsernamePasswordArtifactsRegistry
     from .data_access_rule import DataAccessRule
@@ -219,6 +235,9 @@ if typing.TYPE_CHECKING:
     from .databricks_provider_account_auth_data import DatabricksProviderAccountAuthData
     from .databricks_service_principal_auth import DatabricksServicePrincipalAuth
     from .deactivate_user_response import DeactivateUserResponse
+    from .deepgram_api_key_auth import DeepgramApiKeyAuth
+    from .deepgram_model import DeepgramModel
+    from .deepgram_provider_account import DeepgramProviderAccount
     from .deepinfra_integrations import DeepinfraIntegrations
     from .deepinfra_key_auth import DeepinfraKeyAuth
     from .deepinfra_model import DeepinfraModel
@@ -245,6 +264,9 @@ if typing.TYPE_CHECKING:
     from .dockerhub_provider_account import DockerhubProviderAccount
     from .dockerhub_registry import DockerhubRegistry
     from .dynamic_volume_config import DynamicVolumeConfig
+    from .eleven_labs_api_key_auth import ElevenLabsApiKeyAuth
+    from .eleven_labs_model import ElevenLabsModel
+    from .eleven_labs_provider_account import ElevenLabsProviderAccount
     from .email import Email
     from .email_notification_channel import EmailNotificationChannel
     from .empty_response import EmptyResponse
@@ -311,6 +333,7 @@ if typing.TYPE_CHECKING:
     from .gateway_data_routing_config_destination_storage_storage import (
         GatewayDataRoutingConfigDestinationStorageStorage,
     )
+    from .gateway_data_type import GatewayDataType
     from .gateway_logging_config import GatewayLoggingConfig
     from .gateway_logging_rule import GatewayLoggingRule
     from .gateway_logging_when import GatewayLoggingWhen
@@ -329,6 +352,7 @@ if typing.TYPE_CHECKING:
     from .gcp_gsm import GcpGsm
     from .gcp_integrations import GcpIntegrations
     from .gcp_key_file_auth import GcpKeyFileAuth
+    from .gcp_key_file_auth_key_file_content import GcpKeyFileAuthKeyFileContent
     from .gcp_provider_account import GcpProviderAccount
     from .gcp_region import GcpRegion
     from .gcp_tpu import GcpTpu
@@ -375,9 +399,21 @@ if typing.TYPE_CHECKING:
     from .global_settings import GlobalSettings
     from .gluon_framework import GluonFramework
     from .google_gemini_provider_account import GoogleGeminiProviderAccount
+    from .google_model_armor_api_key_auth import GoogleModelArmorApiKeyAuth
+    from .google_model_armor_guardrail_config import GoogleModelArmorGuardrailConfig
+    from .google_model_armor_guardrail_config_auth_data import GoogleModelArmorGuardrailConfigAuthData
+    from .google_model_armor_guardrail_config_config import GoogleModelArmorGuardrailConfigConfig
+    from .google_model_armor_key_file_auth import GoogleModelArmorKeyFileAuth
+    from .google_model_armor_key_file_auth_key_file_content import GoogleModelArmorKeyFileAuthKeyFileContent
     from .google_vertex_provider_account import GoogleVertexProviderAccount
     from .graph import Graph
     from .graph_chart_type import GraphChartType
+    from .gray_swan_cygnal_api_key_auth import GraySwanCygnalApiKeyAuth
+    from .gray_swan_cygnal_guardrail_config import GraySwanCygnalGuardrailConfig
+    from .gray_swan_cygnal_guardrail_config_config import GraySwanCygnalGuardrailConfigConfig
+    from .gray_swan_cygnal_guardrail_config_config_reasoning_mode import (
+        GraySwanCygnalGuardrailConfigConfigReasoningMode,
+    )
     from .groq_integrations import GroqIntegrations
     from .groq_key_auth import GroqKeyAuth
     from .groq_model import GroqModel
@@ -417,6 +453,8 @@ if typing.TYPE_CHECKING:
     from .infer_method_name import InferMethodName
     from .infra_provider_account import InfraProviderAccount
     from .ingress_controller_config import IngressControllerConfig
+    from .inline_spec_source import InlineSpecSource
+    from .inline_spec_source_openapi_spec import InlineSpecSourceOpenapiSpec
     from .input_output_based_cost_metric_value import InputOutputBasedCostMetricValue
     from .intercept import Intercept
     from .intercept_rules_item import InterceptRulesItem
@@ -507,14 +545,17 @@ if typing.TYPE_CHECKING:
     from .mcp_server_integration import McpServerIntegration
     from .mcp_server_integration_transport import McpServerIntegrationTransport
     from .mcp_server_integrations import McpServerIntegrations
+    from .mcp_server_manifest import McpServerManifest
     from .mcp_server_o_auth2 import McpServerOAuth2
     from .mcp_server_o_auth2jwt_source import McpServerOAuth2JwtSource
     from .mcp_server_passthrough import McpServerPassthrough
     from .mcp_server_provider_account import McpServerProviderAccount
+    from .mcp_server_source import McpServerSource
     from .mcp_server_tool_details import McpServerToolDetails
     from .mcp_server_with_fqn import McpServerWithFqn
     from .mcp_server_with_url import McpServerWithUrl
     from .mcp_tool import McpTool
+    from .mcp_tool_setting import McpToolSetting
     from .metadata import Metadata
     from .metric import Metric
     from .mime_type import MimeType
@@ -566,6 +607,11 @@ if typing.TYPE_CHECKING:
     from .ollama_model import OllamaModel
     from .ollama_provider_account import OllamaProviderAccount
     from .onnx_framework import OnnxFramework
+    from .opa_auth import OpaAuth
+    from .opa_bearer_auth import OpaBearerAuth
+    from .opa_guardrail_config import OpaGuardrailConfig
+    from .opa_guardrail_config_config import OpaGuardrailConfigConfig
+    from .opa_header_auth import OpaHeaderAuth
     from .open_ai_integrations import OpenAiIntegrations
     from .open_ai_model import OpenAiModel
     from .open_ai_moderations_guardrail_config import OpenAiModerationsGuardrailConfig
@@ -576,6 +622,10 @@ if typing.TYPE_CHECKING:
     from .open_ai_moderations_guardrail_config_config_category_thresholds_value_harassment import (
         OpenAiModerationsGuardrailConfigConfigCategoryThresholdsValueHarassment,
     )
+    from .open_api_spec_source import OpenApiSpecSource
+    from .open_apimcp_server_manifest import OpenApimcpServerManifest
+    from .open_apimcp_tool_setting import OpenApimcpToolSetting
+    from .open_apimcp_tool_setting_method import OpenApimcpToolSettingMethod
     from .open_router_api_key_auth import OpenRouterApiKeyAuth
     from .open_router_integrations import OpenRouterIntegrations
     from .open_router_model import OpenRouterModel
@@ -652,6 +702,8 @@ if typing.TYPE_CHECKING:
     from .port_app_protocol import PortAppProtocol
     from .port_auth import PortAuth
     from .port_protocol import PortProtocol
+    from .preset_regex_pattern import PresetRegexPattern
+    from .preset_regex_pattern_enum import PresetRegexPatternEnum
     from .presigned_url_object import PresignedUrlObject
     from .priority_based_load_balance_target import PriorityBasedLoadBalanceTarget
     from .priority_based_load_balancing import PriorityBasedLoadBalancing
@@ -687,8 +739,13 @@ if typing.TYPE_CHECKING:
     from .rate_limit_when import RateLimitWhen
     from .recommendation import Recommendation
     from .refusal_content_part import RefusalContentPart
+    from .regex_guardrail_config import RegexGuardrailConfig
+    from .regex_guardrail_config_config import RegexGuardrailConfigConfig
+    from .regex_guardrail_config_operation import RegexGuardrailConfigOperation
     from .register_users_response import RegisterUsersResponse
+    from .remote_mcp_server_manifest import RemoteMcpServerManifest
     from .remote_source import RemoteSource
+    from .remote_spec_source import RemoteSpecSource
     from .retry_config import RetryConfig
     from .revoke_all_personal_access_token_response import RevokeAllPersonalAccessTokenResponse
     from .role_manifest import RoleManifest
@@ -812,6 +869,12 @@ if typing.TYPE_CHECKING:
     from .terminate_job_response import TerminateJobResponse
     from .text_content_part import TextContentPart
     from .text_content_part_text import TextContentPartText
+    from .tfy_content_moderation_guardrail_config import TfyContentModerationGuardrailConfig
+    from .tfy_content_moderation_guardrail_config_config import TfyContentModerationGuardrailConfigConfig
+    from .tfy_pii_guardrail_config import TfyPiiGuardrailConfig
+    from .tfy_pii_guardrail_config_config import TfyPiiGuardrailConfigConfig
+    from .tfy_pii_guardrail_config_operation import TfyPiiGuardrailConfigOperation
+    from .tfy_prompt_injection_guardrail_config import TfyPromptInjectionGuardrailConfig
     from .together_ai_integrations import TogetherAiIntegrations
     from .together_ai_key_auth import TogetherAiKeyAuth
     from .together_ai_model import TogetherAiModel
@@ -845,6 +908,7 @@ if typing.TYPE_CHECKING:
     from .update_secret_input import UpdateSecretInput
     from .update_user_roles_response import UpdateUserRolesResponse
     from .upgrade_data import UpgradeData
+    from .upload_spec_source import UploadSpecSource
     from .usage_code_snippet import UsageCodeSnippet
     from .user import User
     from .user_message import UserMessage
@@ -856,11 +920,14 @@ if typing.TYPE_CHECKING:
     from .uv import Uv
     from .validation_error import ValidationError
     from .validation_error_loc_item import ValidationErrorLocItem
+    from .vertex_key_file_auth import VertexKeyFileAuth
+    from .vertex_key_file_auth_key_file_content import VertexKeyFileAuthKeyFileContent
     from .vertex_model import VertexModel
     from .virtual_account import VirtualAccount
     from .virtual_account_manifest import VirtualAccountManifest
     from .virtual_account_owned_by import VirtualAccountOwnedBy
     from .virtual_mcp_server_integration import VirtualMcpServerIntegration
+    from .virtual_mcp_server_manifest import VirtualMcpServerManifest
     from .virtual_mcp_server_source import VirtualMcpServerSource
     from .virtual_model import VirtualModel
     from .virtual_model_provider_account import VirtualModelProviderAccount
@@ -991,6 +1058,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AzureContainerRegistry": ".azure_container_registry",
     "AzureContentSafetyCategory": ".azure_content_safety_category",
     "AzureContentSafetyGuardrailConfig": ".azure_content_safety_guardrail_config",
+    "AzureContentSafetyGuardrailConfigAuthData": ".azure_content_safety_guardrail_config_auth_data",
     "AzureContentSafetyGuardrailConfigConfig": ".azure_content_safety_guardrail_config_config",
     "AzureFoundryModel": ".azure_foundry_model",
     "AzureFoundryModelAuthData": ".azure_foundry_model_auth_data",
@@ -999,12 +1067,19 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AzureKeyAuth": ".azure_key_auth",
     "AzureOAuth": ".azure_o_auth",
     "AzureOpenAiModel": ".azure_open_ai_model",
+    "AzureOpenAiModelDeploymentType": ".azure_open_ai_model_deployment_type",
+    "AzureOpenAiModelRegion": ".azure_open_ai_model_region",
     "AzureOpenAiProviderAccount": ".azure_open_ai_provider_account",
     "AzureOpenAiProviderAccountAuthData": ".azure_open_ai_provider_account_auth_data",
     "AzurePiiCategory": ".azure_pii_category",
     "AzurePiiGuardrailConfig": ".azure_pii_guardrail_config",
+    "AzurePiiGuardrailConfigAuthData": ".azure_pii_guardrail_config_auth_data",
     "AzurePiiGuardrailConfigConfig": ".azure_pii_guardrail_config_config",
     "AzurePiiGuardrailConfigConfigDomain": ".azure_pii_guardrail_config_config_domain",
+    "AzurePiiGuardrailConfigOperation": ".azure_pii_guardrail_config_operation",
+    "AzurePromptShieldGuardrailConfig": ".azure_prompt_shield_guardrail_config",
+    "AzurePromptShieldGuardrailConfigAuthData": ".azure_prompt_shield_guardrail_config_auth_data",
+    "AzurePromptShieldGuardrailConfigConfig": ".azure_prompt_shield_guardrail_config_config",
     "AzureProviderAccount": ".azure_provider_account",
     "AzureReposIntegration": ".azure_repos_integration",
     "AzureVault": ".azure_vault",
@@ -1033,9 +1108,16 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BuildBuildSource": ".build_build_source",
     "BuildBuildSpec": ".build_build_spec",
     "BuildInfo": ".build_info",
+    "BuildSecret": ".build_secret",
     "BuildStatus": ".build_status",
     "Canary": ".canary",
     "CanaryStep": ".canary_step",
+    "CartesiaApiKeyAuth": ".cartesia_api_key_auth",
+    "CartesiaModel": ".cartesia_model",
+    "CartesiaProviderAccount": ".cartesia_provider_account",
+    "CartesiaProviderAccountCartesiaVersion": ".cartesia_provider_account_cartesia_version",
+    "CedarGuardrailConfig": ".cedar_guardrail_config",
+    "CedarGuardrailConfigConfig": ".cedar_guardrail_config_config",
     "CerebrasIntegrations": ".cerebras_integrations",
     "CerebrasKeyAuth": ".cerebras_key_auth",
     "CerebrasModel": ".cerebras_model",
@@ -1090,6 +1172,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CustomIntegrations": ".custom_integrations",
     "CustomJwtAuthIntegration": ".custom_jwt_auth_integration",
     "CustomProviderAccount": ".custom_provider_account",
+    "CustomRegexPattern": ".custom_regex_pattern",
     "CustomTlsSettings": ".custom_tls_settings",
     "CustomUsernamePasswordArtifactsRegistry": ".custom_username_password_artifacts_registry",
     "DataAccessRule": ".data_access_rule",
@@ -1104,6 +1187,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DatabricksProviderAccountAuthData": ".databricks_provider_account_auth_data",
     "DatabricksServicePrincipalAuth": ".databricks_service_principal_auth",
     "DeactivateUserResponse": ".deactivate_user_response",
+    "DeepgramApiKeyAuth": ".deepgram_api_key_auth",
+    "DeepgramModel": ".deepgram_model",
+    "DeepgramProviderAccount": ".deepgram_provider_account",
     "DeepinfraIntegrations": ".deepinfra_integrations",
     "DeepinfraKeyAuth": ".deepinfra_key_auth",
     "DeepinfraModel": ".deepinfra_model",
@@ -1130,6 +1216,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DockerhubProviderAccount": ".dockerhub_provider_account",
     "DockerhubRegistry": ".dockerhub_registry",
     "DynamicVolumeConfig": ".dynamic_volume_config",
+    "ElevenLabsApiKeyAuth": ".eleven_labs_api_key_auth",
+    "ElevenLabsModel": ".eleven_labs_model",
+    "ElevenLabsProviderAccount": ".eleven_labs_provider_account",
     "Email": ".email",
     "EmailNotificationChannel": ".email_notification_channel",
     "EmptyResponse": ".empty_response",
@@ -1184,6 +1273,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GatewayDataRoutingConfigDestinationMetadataCondition": ".gateway_data_routing_config_destination_metadata_condition",
     "GatewayDataRoutingConfigDestinationStorage": ".gateway_data_routing_config_destination_storage",
     "GatewayDataRoutingConfigDestinationStorageStorage": ".gateway_data_routing_config_destination_storage_storage",
+    "GatewayDataType": ".gateway_data_type",
     "GatewayLoggingConfig": ".gateway_logging_config",
     "GatewayLoggingRule": ".gateway_logging_rule",
     "GatewayLoggingWhen": ".gateway_logging_when",
@@ -1202,6 +1292,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GcpGsm": ".gcp_gsm",
     "GcpIntegrations": ".gcp_integrations",
     "GcpKeyFileAuth": ".gcp_key_file_auth",
+    "GcpKeyFileAuthKeyFileContent": ".gcp_key_file_auth_key_file_content",
     "GcpProviderAccount": ".gcp_provider_account",
     "GcpRegion": ".gcp_region",
     "GcpTpu": ".gcp_tpu",
@@ -1248,9 +1339,19 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GlobalSettings": ".global_settings",
     "GluonFramework": ".gluon_framework",
     "GoogleGeminiProviderAccount": ".google_gemini_provider_account",
+    "GoogleModelArmorApiKeyAuth": ".google_model_armor_api_key_auth",
+    "GoogleModelArmorGuardrailConfig": ".google_model_armor_guardrail_config",
+    "GoogleModelArmorGuardrailConfigAuthData": ".google_model_armor_guardrail_config_auth_data",
+    "GoogleModelArmorGuardrailConfigConfig": ".google_model_armor_guardrail_config_config",
+    "GoogleModelArmorKeyFileAuth": ".google_model_armor_key_file_auth",
+    "GoogleModelArmorKeyFileAuthKeyFileContent": ".google_model_armor_key_file_auth_key_file_content",
     "GoogleVertexProviderAccount": ".google_vertex_provider_account",
     "Graph": ".graph",
     "GraphChartType": ".graph_chart_type",
+    "GraySwanCygnalApiKeyAuth": ".gray_swan_cygnal_api_key_auth",
+    "GraySwanCygnalGuardrailConfig": ".gray_swan_cygnal_guardrail_config",
+    "GraySwanCygnalGuardrailConfigConfig": ".gray_swan_cygnal_guardrail_config_config",
+    "GraySwanCygnalGuardrailConfigConfigReasoningMode": ".gray_swan_cygnal_guardrail_config_config_reasoning_mode",
     "GroqIntegrations": ".groq_integrations",
     "GroqKeyAuth": ".groq_key_auth",
     "GroqModel": ".groq_model",
@@ -1290,6 +1391,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InferMethodName": ".infer_method_name",
     "InfraProviderAccount": ".infra_provider_account",
     "IngressControllerConfig": ".ingress_controller_config",
+    "InlineSpecSource": ".inline_spec_source",
+    "InlineSpecSourceOpenapiSpec": ".inline_spec_source_openapi_spec",
     "InputOutputBasedCostMetricValue": ".input_output_based_cost_metric_value",
     "Intercept": ".intercept",
     "InterceptRulesItem": ".intercept_rules_item",
@@ -1380,14 +1483,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "McpServerIntegration": ".mcp_server_integration",
     "McpServerIntegrationTransport": ".mcp_server_integration_transport",
     "McpServerIntegrations": ".mcp_server_integrations",
+    "McpServerManifest": ".mcp_server_manifest",
     "McpServerOAuth2": ".mcp_server_o_auth2",
     "McpServerOAuth2JwtSource": ".mcp_server_o_auth2jwt_source",
     "McpServerPassthrough": ".mcp_server_passthrough",
     "McpServerProviderAccount": ".mcp_server_provider_account",
+    "McpServerSource": ".mcp_server_source",
     "McpServerToolDetails": ".mcp_server_tool_details",
     "McpServerWithFqn": ".mcp_server_with_fqn",
     "McpServerWithUrl": ".mcp_server_with_url",
     "McpTool": ".mcp_tool",
+    "McpToolSetting": ".mcp_tool_setting",
     "Metadata": ".metadata",
     "Metric": ".metric",
     "MimeType": ".mime_type",
@@ -1439,12 +1545,21 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OllamaModel": ".ollama_model",
     "OllamaProviderAccount": ".ollama_provider_account",
     "OnnxFramework": ".onnx_framework",
+    "OpaAuth": ".opa_auth",
+    "OpaBearerAuth": ".opa_bearer_auth",
+    "OpaGuardrailConfig": ".opa_guardrail_config",
+    "OpaGuardrailConfigConfig": ".opa_guardrail_config_config",
+    "OpaHeaderAuth": ".opa_header_auth",
     "OpenAiIntegrations": ".open_ai_integrations",
     "OpenAiModel": ".open_ai_model",
     "OpenAiModerationsGuardrailConfig": ".open_ai_moderations_guardrail_config",
     "OpenAiModerationsGuardrailConfigConfig": ".open_ai_moderations_guardrail_config_config",
     "OpenAiModerationsGuardrailConfigConfigCategoryThresholdsValue": ".open_ai_moderations_guardrail_config_config_category_thresholds_value",
     "OpenAiModerationsGuardrailConfigConfigCategoryThresholdsValueHarassment": ".open_ai_moderations_guardrail_config_config_category_thresholds_value_harassment",
+    "OpenApiSpecSource": ".open_api_spec_source",
+    "OpenApimcpServerManifest": ".open_apimcp_server_manifest",
+    "OpenApimcpToolSetting": ".open_apimcp_tool_setting",
+    "OpenApimcpToolSettingMethod": ".open_apimcp_tool_setting_method",
     "OpenRouterApiKeyAuth": ".open_router_api_key_auth",
     "OpenRouterIntegrations": ".open_router_integrations",
     "OpenRouterModel": ".open_router_model",
@@ -1521,6 +1636,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PortAppProtocol": ".port_app_protocol",
     "PortAuth": ".port_auth",
     "PortProtocol": ".port_protocol",
+    "PresetRegexPattern": ".preset_regex_pattern",
+    "PresetRegexPatternEnum": ".preset_regex_pattern_enum",
     "PresignedUrlObject": ".presigned_url_object",
     "PriorityBasedLoadBalanceTarget": ".priority_based_load_balance_target",
     "PriorityBasedLoadBalancing": ".priority_based_load_balancing",
@@ -1556,8 +1673,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RateLimitWhen": ".rate_limit_when",
     "Recommendation": ".recommendation",
     "RefusalContentPart": ".refusal_content_part",
+    "RegexGuardrailConfig": ".regex_guardrail_config",
+    "RegexGuardrailConfigConfig": ".regex_guardrail_config_config",
+    "RegexGuardrailConfigOperation": ".regex_guardrail_config_operation",
     "RegisterUsersResponse": ".register_users_response",
+    "RemoteMcpServerManifest": ".remote_mcp_server_manifest",
     "RemoteSource": ".remote_source",
+    "RemoteSpecSource": ".remote_spec_source",
     "Resources": ".resources",
     "ResourcesDevicesItem": ".resources_devices_item",
     "ResourcesNode": ".resources_node",
@@ -1684,6 +1806,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TerminateJobResponse": ".terminate_job_response",
     "TextContentPart": ".text_content_part",
     "TextContentPartText": ".text_content_part_text",
+    "TfyContentModerationGuardrailConfig": ".tfy_content_moderation_guardrail_config",
+    "TfyContentModerationGuardrailConfigConfig": ".tfy_content_moderation_guardrail_config_config",
+    "TfyPiiGuardrailConfig": ".tfy_pii_guardrail_config",
+    "TfyPiiGuardrailConfigConfig": ".tfy_pii_guardrail_config_config",
+    "TfyPiiGuardrailConfigOperation": ".tfy_pii_guardrail_config_operation",
+    "TfyPromptInjectionGuardrailConfig": ".tfy_prompt_injection_guardrail_config",
     "TogetherAiIntegrations": ".together_ai_integrations",
     "TogetherAiKeyAuth": ".together_ai_key_auth",
     "TogetherAiModel": ".together_ai_model",
@@ -1717,6 +1845,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateSecretInput": ".update_secret_input",
     "UpdateUserRolesResponse": ".update_user_roles_response",
     "UpgradeData": ".upgrade_data",
+    "UploadSpecSource": ".upload_spec_source",
     "UsageCodeSnippet": ".usage_code_snippet",
     "User": ".user",
     "UserMessage": ".user_message",
@@ -1728,11 +1857,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Uv": ".uv",
     "ValidationError": ".validation_error",
     "ValidationErrorLocItem": ".validation_error_loc_item",
+    "VertexKeyFileAuth": ".vertex_key_file_auth",
+    "VertexKeyFileAuthKeyFileContent": ".vertex_key_file_auth_key_file_content",
     "VertexModel": ".vertex_model",
     "VirtualAccount": ".virtual_account",
     "VirtualAccountManifest": ".virtual_account_manifest",
     "VirtualAccountOwnedBy": ".virtual_account_owned_by",
     "VirtualMcpServerIntegration": ".virtual_mcp_server_integration",
+    "VirtualMcpServerManifest": ".virtual_mcp_server_manifest",
     "VirtualMcpServerSource": ".virtual_mcp_server_source",
     "VirtualModel": ".virtual_model",
     "VirtualModelProviderAccount": ".virtual_model_provider_account",
@@ -1887,6 +2019,7 @@ __all__ = [
     "AzureContainerRegistry",
     "AzureContentSafetyCategory",
     "AzureContentSafetyGuardrailConfig",
+    "AzureContentSafetyGuardrailConfigAuthData",
     "AzureContentSafetyGuardrailConfigConfig",
     "AzureFoundryModel",
     "AzureFoundryModelAuthData",
@@ -1895,12 +2028,19 @@ __all__ = [
     "AzureKeyAuth",
     "AzureOAuth",
     "AzureOpenAiModel",
+    "AzureOpenAiModelDeploymentType",
+    "AzureOpenAiModelRegion",
     "AzureOpenAiProviderAccount",
     "AzureOpenAiProviderAccountAuthData",
     "AzurePiiCategory",
     "AzurePiiGuardrailConfig",
+    "AzurePiiGuardrailConfigAuthData",
     "AzurePiiGuardrailConfigConfig",
     "AzurePiiGuardrailConfigConfigDomain",
+    "AzurePiiGuardrailConfigOperation",
+    "AzurePromptShieldGuardrailConfig",
+    "AzurePromptShieldGuardrailConfigAuthData",
+    "AzurePromptShieldGuardrailConfigConfig",
     "AzureProviderAccount",
     "AzureReposIntegration",
     "AzureVault",
@@ -1929,9 +2069,16 @@ __all__ = [
     "BuildBuildSource",
     "BuildBuildSpec",
     "BuildInfo",
+    "BuildSecret",
     "BuildStatus",
     "Canary",
     "CanaryStep",
+    "CartesiaApiKeyAuth",
+    "CartesiaModel",
+    "CartesiaProviderAccount",
+    "CartesiaProviderAccountCartesiaVersion",
+    "CedarGuardrailConfig",
+    "CedarGuardrailConfigConfig",
     "CerebrasIntegrations",
     "CerebrasKeyAuth",
     "CerebrasModel",
@@ -1986,6 +2133,7 @@ __all__ = [
     "CustomIntegrations",
     "CustomJwtAuthIntegration",
     "CustomProviderAccount",
+    "CustomRegexPattern",
     "CustomTlsSettings",
     "CustomUsernamePasswordArtifactsRegistry",
     "DataAccessRule",
@@ -2000,6 +2148,9 @@ __all__ = [
     "DatabricksProviderAccountAuthData",
     "DatabricksServicePrincipalAuth",
     "DeactivateUserResponse",
+    "DeepgramApiKeyAuth",
+    "DeepgramModel",
+    "DeepgramProviderAccount",
     "DeepinfraIntegrations",
     "DeepinfraKeyAuth",
     "DeepinfraModel",
@@ -2026,6 +2177,9 @@ __all__ = [
     "DockerhubProviderAccount",
     "DockerhubRegistry",
     "DynamicVolumeConfig",
+    "ElevenLabsApiKeyAuth",
+    "ElevenLabsModel",
+    "ElevenLabsProviderAccount",
     "Email",
     "EmailNotificationChannel",
     "EmptyResponse",
@@ -2080,6 +2234,7 @@ __all__ = [
     "GatewayDataRoutingConfigDestinationMetadataCondition",
     "GatewayDataRoutingConfigDestinationStorage",
     "GatewayDataRoutingConfigDestinationStorageStorage",
+    "GatewayDataType",
     "GatewayLoggingConfig",
     "GatewayLoggingRule",
     "GatewayLoggingWhen",
@@ -2098,6 +2253,7 @@ __all__ = [
     "GcpGsm",
     "GcpIntegrations",
     "GcpKeyFileAuth",
+    "GcpKeyFileAuthKeyFileContent",
     "GcpProviderAccount",
     "GcpRegion",
     "GcpTpu",
@@ -2144,9 +2300,19 @@ __all__ = [
     "GlobalSettings",
     "GluonFramework",
     "GoogleGeminiProviderAccount",
+    "GoogleModelArmorApiKeyAuth",
+    "GoogleModelArmorGuardrailConfig",
+    "GoogleModelArmorGuardrailConfigAuthData",
+    "GoogleModelArmorGuardrailConfigConfig",
+    "GoogleModelArmorKeyFileAuth",
+    "GoogleModelArmorKeyFileAuthKeyFileContent",
     "GoogleVertexProviderAccount",
     "Graph",
     "GraphChartType",
+    "GraySwanCygnalApiKeyAuth",
+    "GraySwanCygnalGuardrailConfig",
+    "GraySwanCygnalGuardrailConfigConfig",
+    "GraySwanCygnalGuardrailConfigConfigReasoningMode",
     "GroqIntegrations",
     "GroqKeyAuth",
     "GroqModel",
@@ -2186,6 +2352,8 @@ __all__ = [
     "InferMethodName",
     "InfraProviderAccount",
     "IngressControllerConfig",
+    "InlineSpecSource",
+    "InlineSpecSourceOpenapiSpec",
     "InputOutputBasedCostMetricValue",
     "Intercept",
     "InterceptRulesItem",
@@ -2276,14 +2444,17 @@ __all__ = [
     "McpServerIntegration",
     "McpServerIntegrationTransport",
     "McpServerIntegrations",
+    "McpServerManifest",
     "McpServerOAuth2",
     "McpServerOAuth2JwtSource",
     "McpServerPassthrough",
     "McpServerProviderAccount",
+    "McpServerSource",
     "McpServerToolDetails",
     "McpServerWithFqn",
     "McpServerWithUrl",
     "McpTool",
+    "McpToolSetting",
     "Metadata",
     "Metric",
     "MimeType",
@@ -2335,12 +2506,21 @@ __all__ = [
     "OllamaModel",
     "OllamaProviderAccount",
     "OnnxFramework",
+    "OpaAuth",
+    "OpaBearerAuth",
+    "OpaGuardrailConfig",
+    "OpaGuardrailConfigConfig",
+    "OpaHeaderAuth",
     "OpenAiIntegrations",
     "OpenAiModel",
     "OpenAiModerationsGuardrailConfig",
     "OpenAiModerationsGuardrailConfigConfig",
     "OpenAiModerationsGuardrailConfigConfigCategoryThresholdsValue",
     "OpenAiModerationsGuardrailConfigConfigCategoryThresholdsValueHarassment",
+    "OpenApiSpecSource",
+    "OpenApimcpServerManifest",
+    "OpenApimcpToolSetting",
+    "OpenApimcpToolSettingMethod",
     "OpenRouterApiKeyAuth",
     "OpenRouterIntegrations",
     "OpenRouterModel",
@@ -2417,6 +2597,8 @@ __all__ = [
     "PortAppProtocol",
     "PortAuth",
     "PortProtocol",
+    "PresetRegexPattern",
+    "PresetRegexPatternEnum",
     "PresignedUrlObject",
     "PriorityBasedLoadBalanceTarget",
     "PriorityBasedLoadBalancing",
@@ -2452,8 +2634,13 @@ __all__ = [
     "RateLimitWhen",
     "Recommendation",
     "RefusalContentPart",
+    "RegexGuardrailConfig",
+    "RegexGuardrailConfigConfig",
+    "RegexGuardrailConfigOperation",
     "RegisterUsersResponse",
+    "RemoteMcpServerManifest",
     "RemoteSource",
+    "RemoteSpecSource",
     "Resources",
     "ResourcesDevicesItem",
     "ResourcesNode",
@@ -2580,6 +2767,12 @@ __all__ = [
     "TerminateJobResponse",
     "TextContentPart",
     "TextContentPartText",
+    "TfyContentModerationGuardrailConfig",
+    "TfyContentModerationGuardrailConfigConfig",
+    "TfyPiiGuardrailConfig",
+    "TfyPiiGuardrailConfigConfig",
+    "TfyPiiGuardrailConfigOperation",
+    "TfyPromptInjectionGuardrailConfig",
     "TogetherAiIntegrations",
     "TogetherAiKeyAuth",
     "TogetherAiModel",
@@ -2613,6 +2806,7 @@ __all__ = [
     "UpdateSecretInput",
     "UpdateUserRolesResponse",
     "UpgradeData",
+    "UploadSpecSource",
     "UsageCodeSnippet",
     "User",
     "UserMessage",
@@ -2624,11 +2818,14 @@ __all__ = [
     "Uv",
     "ValidationError",
     "ValidationErrorLocItem",
+    "VertexKeyFileAuth",
+    "VertexKeyFileAuthKeyFileContent",
     "VertexModel",
     "VirtualAccount",
     "VirtualAccountManifest",
     "VirtualAccountOwnedBy",
     "VirtualMcpServerIntegration",
+    "VirtualMcpServerManifest",
     "VirtualMcpServerSource",
     "VirtualModel",
     "VirtualModelProviderAccount",

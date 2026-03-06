@@ -112,7 +112,7 @@ class RawWorkspacesClient:
         self,
         *,
         manifest: WorkspaceManifest,
-        dry_run: typing.Optional[bool] = OMIT,
+        dry_run: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetWorkspaceResponse]:
         """
@@ -412,7 +412,7 @@ class AsyncRawWorkspacesClient:
         self,
         *,
         manifest: WorkspaceManifest,
-        dry_run: typing.Optional[bool] = OMIT,
+        dry_run: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetWorkspaceResponse]:
         """

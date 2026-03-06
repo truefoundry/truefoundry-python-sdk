@@ -8,19 +8,168 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class AzurePiiCategory(enum.StrEnum):
-    ALL = "all"
+    ALL = "*"
+    ABA_ROUTING_NUMBER = "ABARoutingNumber"
+    ADDRESS = "Address"
+    AGE = "Age"
+    AR_NATIONAL_IDENTITY_NUMBER = "ARNationalIdentityNumber"
+    AU_BANK_ACCOUNT_NUMBER = "AUBankAccountNumber"
+    AU_DRIVERS_LICENSE_NUMBER = "AUDriversLicenseNumber"
+    AU_MEDICAL_ACCOUNT_NUMBER = "AUMedicalAccountNumber"
+    AU_PASSPORT_NUMBER = "AUPassportNumber"
+    AU_TAX_FILE_NUMBER = "AUTaxFileNumber"
+    AU_BUSINESS_NUMBER = "AUBusinessNumber"
+    AU_COMPANY_NUMBER = "AUCompanyNumber"
+    AT_IDENTITY_CARD = "ATIdentityCard"
+    AT_TAX_IDENTIFICATION_NUMBER = "ATTaxIdentificationNumber"
+    AT_VALUE_ADDED_TAX_NUMBER = "ATValueAddedTaxNumber"
+    AZURE_DOCUMENT_DB_AUTH_KEY = "AzureDocumentDBAuthKey"
+    AZURE_IAAS_DATABASE_CONNECTION_AND_SQL_STRING = "AzureIAASDatabaseConnectionAndSQLString"
+    AZURE_IO_T_CONNECTION_STRING = "AzureIoTConnectionString"
+    AZURE_PUBLISH_SETTING_PASSWORD = "AzurePublishSettingPassword"
+    AZURE_REDIS_CACHE_STRING = "AzureRedisCacheString"
+    AZURE_SAS = "AzureSAS"
+    AZURE_SERVICE_BUS_STRING = "AzureServiceBusString"
+    AZURE_STORAGE_ACCOUNT_KEY = "AzureStorageAccountKey"
+    AZURE_STORAGE_ACCOUNT_GENERIC = "AzureStorageAccountGeneric"
+    BANK_ACCOUNT_NUMBER = "BankAccountNumber"
+    BE_NATIONAL_NUMBER = "BENationalNumber"
+    BE_VALUE_ADDED_TAX_NUMBER = "BEValueAddedTaxNumber"
+    BRCPF_NUMBER = "BRCPFNumber"
+    BR_LEGAL_ENTITY_NUMBER = "BRLegalEntityNumber"
+    BR_NATIONAL_IDRG = "BRNationalIDRG"
+    BG_UNIFORM_CIVIL_NUMBER = "BGUniformCivilNumber"
+    CA_BANK_ACCOUNT_NUMBER = "CABankAccountNumber"
+    CA_DRIVERS_LICENSE_NUMBER = "CADriversLicenseNumber"
+    CA_HEALTH_SERVICE_NUMBER = "CAHealthServiceNumber"
+    CA_PASSPORT_NUMBER = "CAPassportNumber"
+    CA_PERSONAL_HEALTH_ID = "CAPersonalHealthID"
+    CA_SOCIAL_INSURANCE_NUMBER = "CASocialInsuranceNumber"
+    CL_IDENTITY_CARD_NUMBER = "CLIdentityCardNumber"
+    CN_RESIDENT_IDENTITY_CARD_NUMBER = "CNResidentIdentityCardNumber"
+    CREDIT_CARD_NUMBER = "CreditCardNumber"
+    HR_IDENTITY_CARD_NUMBER = "HRIdentityCardNumber"
+    HR_NATIONAL_ID_CARD_NUMBER = "HRNationalIDCardNumber"
+    HR_PERSONAL_IDENTIFICATION_NUMBER = "HRPersonalIdentificationNumber"
+    CY_IDENTITY_CARD = "CYIdentityCard"
+    CY_TAX_IDENTIFICATION_NUMBER = "CYTaxIdentificationNumber"
+    CZ_PERSONAL_IDENTITY_NUMBER = "CZPersonalIdentityNumber"
+    DATE = "Date"
+    DATE_TIME = "DateTime"
+    DK_PERSONAL_IDENTIFICATION_NUMBER = "DKPersonalIdentificationNumber"
+    DEA_NUMBER = "DEANumber"
+    EMAIL = "Email"
+    EE_PERSONAL_IDENTIFICATION_CODE = "EEPersonalIdentificationCode"
+    EU_DEBIT_CARD_NUMBER = "EUDebitCardNumber"
+    EU_DRIVERS_LICENSE_NUMBER = "EUDriversLicenseNumber"
+    EUGPS_COORDINATES = "EUGPSCoordinates"
+    EU_NATIONAL_IDENTIFICATION_NUMBER = "EUNationalIdentificationNumber"
+    EU_PASSPORT_NUMBER = "EUPassportNumber"
+    EU_SOCIAL_SECURITY_NUMBER = "EUSocialSecurityNumber"
+    EU_TAX_IDENTIFICATION_NUMBER = "EUTaxIdentificationNumber"
+    FI_EUROPEAN_HEALTH_NUMBER = "FIEuropeanHealthNumber"
+    FI_NATIONAL_ID = "FINationalID"
+    FI_PASSPORT_NUMBER = "FIPassportNumber"
+    FR_DRIVERS_LICENSE_NUMBER = "FRDriversLicenseNumber"
+    FR_HEALTH_INSURANCE_NUMBER = "FRHealthInsuranceNumber"
+    FR_NATIONAL_ID = "FRNationalID"
+    FR_PASSPORT_NUMBER = "FRPassportNumber"
+    FR_SOCIAL_SECURITY_NUMBER = "FRSocialSecurityNumber"
+    FR_TAX_IDENTIFICATION_NUMBER = "FRTaxIdentificationNumber"
+    FR_VALUE_ADDED_TAX_NUMBER = "FRValueAddedTaxNumber"
+    DE_DRIVERS_LICENSE_NUMBER = "DEDriversLicenseNumber"
+    DE_PASSPORT_NUMBER = "DEPassportNumber"
+    DE_IDENTITY_CARD_NUMBER = "DEIdentityCardNumber"
+    DE_TAX_IDENTIFICATION_NUMBER = "DETaxIdentificationNumber"
+    DE_VALUE_ADDED_TAX_NUMBER = "DEValueAddedTaxNumber"
+    GR_NATIONAL_ID_CARD = "GRNationalIDCard"
+    GR_TAX_IDENTIFICATION_NUMBER = "GRTaxIdentificationNumber"
+    HK_IDENTITY_CARD_NUMBER = "HKIdentityCardNumber"
+    HU_VALUE_ADDED_TAX_NUMBER = "HUValueAddedTaxNumber"
+    HU_PERSONAL_IDENTIFICATION_NUMBER = "HUPersonalIdentificationNumber"
+    HU_TAX_IDENTIFICATION_NUMBER = "HUTaxIdentificationNumber"
+    IN_PERMANENT_ACCOUNT_NUMBER = "INPermanentAccountNumber"
+    IN_UNIQUE_IDENTIFICATION_NUMBER = "INUniqueIdentificationNumber"
+    ID_IDENTITY_CARD_NUMBER = "IDIdentityCardNumber"
+    INTERNATIONAL_BANKING_ACCOUNT_NUMBER = "InternationalBankingAccountNumber"
+    IP_ADDRESS = "IPAddress"
+    IE_PERSONAL_PUBLIC_SERVICE_NUMBER = "IEPersonalPublicServiceNumber"
+    IL_BANK_ACCOUNT_NUMBER = "ILBankAccountNumber"
+    IL_NATIONAL_ID = "ILNationalID"
+    IT_DRIVERS_LICENSE_NUMBER = "ITDriversLicenseNumber"
+    IT_FISCAL_CODE = "ITFiscalCode"
+    IT_VALUE_ADDED_TAX_NUMBER = "ITValueAddedTaxNumber"
+    JP_BANK_ACCOUNT_NUMBER = "JPBankAccountNumber"
+    JP_DRIVERS_LICENSE_NUMBER = "JPDriversLicenseNumber"
+    JP_PASSPORT_NUMBER = "JPPassportNumber"
+    JP_RESIDENT_REGISTRATION_NUMBER = "JPResidentRegistrationNumber"
+    JP_SOCIAL_INSURANCE_NUMBER = "JPSocialInsuranceNumber"
+    JP_MY_NUMBER_CORPORATE = "JPMyNumberCorporate"
+    JP_MY_NUMBER_PERSONAL = "JPMyNumberPersonal"
+    JP_RESIDENCE_CARD_NUMBER = "JPResidenceCardNumber"
+    LV_PERSONAL_CODE = "LVPersonalCode"
+    LT_PERSONAL_CODE = "LTPersonalCode"
+    LU_NATIONAL_IDENTIFICATION_NUMBER_NATURAL = "LUNationalIdentificationNumberNatural"
+    LU_NATIONAL_IDENTIFICATION_NUMBER_NON_NATURAL = "LUNationalIdentificationNumberNonNatural"
+    MY_IDENTITY_CARD_NUMBER = "MYIdentityCardNumber"
+    MT_IDENTITY_CARD_NUMBER = "MTIdentityCardNumber"
+    MT_TAX_ID_NUMBER = "MTTaxIDNumber"
+    NL_CITIZENS_SERVICE_NUMBER = "NLCitizensServiceNumber"
+    NL_TAX_IDENTIFICATION_NUMBER = "NLTaxIdentificationNumber"
+    NL_VALUE_ADDED_TAX_NUMBER = "NLValueAddedTaxNumber"
+    NZ_BANK_ACCOUNT_NUMBER = "NZBankAccountNumber"
+    NZ_DRIVERS_LICENSE_NUMBER = "NZDriversLicenseNumber"
+    NZ_INLAND_REVENUE_NUMBER = "NZInlandRevenueNumber"
+    NZ_MINISTRY_OF_HEALTH_NUMBER = "NZMinistryOfHealthNumber"
+    NZ_SOCIAL_WELFARE_NUMBER = "NZSocialWelfareNumber"
+    NO_IDENTITY_NUMBER = "NOIdentityNumber"
+    ORGANIZATION = "Organization"
     PERSON = "Person"
     PERSON_TYPE = "PersonType"
+    PH_UNIFIED_MULTI_PURPOSE_ID_NUMBER = "PHUnifiedMultiPurposeIDNumber"
     PHONE_NUMBER = "PhoneNumber"
-    ORGANIZATION = "Organization"
-    ADDRESS = "Address"
-    EMAIL = "Email"
+    PL_IDENTITY_CARD = "PLIdentityCard"
+    PL_NATIONAL_ID = "PLNationalID"
+    PL_PASSPORT_NUMBER = "PLPassportNumber"
+    PL_TAX_IDENTIFICATION_NUMBER = "PLTaxIdentificationNumber"
+    PLREGON_NUMBER = "PLREGONNumber"
+    PT_CITIZEN_CARD_NUMBER = "PTCitizenCardNumber"
+    PT_TAX_IDENTIFICATION_NUMBER = "PTTaxIdentificationNumber"
+    RO_PERSONAL_NUMERICAL_CODE = "ROPersonalNumericalCode"
+    RU_PASSPORT_NUMBER_DOMESTIC = "RUPassportNumberDomestic"
+    RU_PASSPORT_NUMBER_INTERNATIONAL = "RUPassportNumberInternational"
+    SA_NATIONAL_ID = "SANationalID"
+    SG_NATIONAL_REGISTRATION_IDENTITY_CARD_NUMBER = "SGNationalRegistrationIdentityCardNumber"
+    SK_PERSONAL_NUMBER = "SKPersonalNumber"
+    SI_TAX_IDENTIFICATION_NUMBER = "SITaxIdentificationNumber"
+    SI_UNIQUE_MASTER_CITIZEN_NUMBER = "SIUniqueMasterCitizenNumber"
+    ZA_IDENTIFICATION_NUMBER = "ZAIdentificationNumber"
+    KR_RESIDENT_REGISTRATION_NUMBER = "KRResidentRegistrationNumber"
+    ESDNI = "ESDNI"
+    ES_SOCIAL_SECURITY_NUMBER = "ESSocialSecurityNumber"
+    ES_TAX_IDENTIFICATION_NUMBER = "ESTaxIdentificationNumber"
+    AZURE_SQL_CONNECTION_STRING = "AzureSQLConnectionString"
+    SE_NATIONAL_ID = "SENationalID"
+    SE_PASSPORT_NUMBER = "SEPassportNumber"
+    SE_TAX_IDENTIFICATION_NUMBER = "SETaxIdentificationNumber"
+    SWIFT_CODE = "SWIFTCode"
+    CH_SOCIAL_SECURITY_NUMBER = "CHSocialSecurityNumber"
+    TW_NATIONAL_ID = "TWNationalID"
+    TW_PASSPORT_NUMBER = "TWPassportNumber"
+    TW_RESIDENT_CERTIFICATE = "TWResidentCertificate"
+    TH_POPULATION_IDENTIFICATION_CODE = "THPopulationIdentificationCode"
+    TR_NATIONAL_IDENTIFICATION_NUMBER = "TRNationalIdentificationNumber"
+    UK_DRIVERS_LICENSE_NUMBER = "UKDriversLicenseNumber"
+    UK_ELECTORAL_ROLL_NUMBER = "UKElectoralRollNumber"
+    UK_NATIONAL_HEALTH_NUMBER = "UKNationalHealthNumber"
+    UK_NATIONAL_INSURANCE_NUMBER = "UKNationalInsuranceNumber"
+    UK_UNIQUE_TAXPAYER_NUMBER = "UKUniqueTaxpayerNumber"
+    USUK_PASSPORT_NUMBER = "USUKPassportNumber"
+    US_BANK_ACCOUNT_NUMBER = "USBankAccountNumber"
+    US_DRIVERS_LICENSE_NUMBER = "USDriversLicenseNumber"
+    US_INDIVIDUAL_TAXPAYER_IDENTIFICATION = "USIndividualTaxpayerIdentification"
+    US_SOCIAL_SECURITY_NUMBER = "USSocialSecurityNumber"
     URL = "URL"
-    IP_ADDRESS = "IP Address"
-    DATE_TIME = "DateTime"
-    BANK_ACCOUNT_NUMBER = "BankAccountNumber"
-    DRIVERS_LICENSE_NUMBER = "DriversLicenseNumber"
-    PASSPORT_NUMBER = "PassportNumber"
     _UNKNOWN = "__AZUREPIICATEGORY_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
@@ -35,44 +184,491 @@ class AzurePiiCategory(enum.StrEnum):
     def visit(
         self,
         all_: typing.Callable[[], T_Result],
+        aba_routing_number: typing.Callable[[], T_Result],
+        address: typing.Callable[[], T_Result],
+        age: typing.Callable[[], T_Result],
+        ar_national_identity_number: typing.Callable[[], T_Result],
+        au_bank_account_number: typing.Callable[[], T_Result],
+        au_drivers_license_number: typing.Callable[[], T_Result],
+        au_medical_account_number: typing.Callable[[], T_Result],
+        au_passport_number: typing.Callable[[], T_Result],
+        au_tax_file_number: typing.Callable[[], T_Result],
+        au_business_number: typing.Callable[[], T_Result],
+        au_company_number: typing.Callable[[], T_Result],
+        at_identity_card: typing.Callable[[], T_Result],
+        at_tax_identification_number: typing.Callable[[], T_Result],
+        at_value_added_tax_number: typing.Callable[[], T_Result],
+        azure_document_db_auth_key: typing.Callable[[], T_Result],
+        azure_iaas_database_connection_and_sql_string: typing.Callable[[], T_Result],
+        azure_io_t_connection_string: typing.Callable[[], T_Result],
+        azure_publish_setting_password: typing.Callable[[], T_Result],
+        azure_redis_cache_string: typing.Callable[[], T_Result],
+        azure_sas: typing.Callable[[], T_Result],
+        azure_service_bus_string: typing.Callable[[], T_Result],
+        azure_storage_account_key: typing.Callable[[], T_Result],
+        azure_storage_account_generic: typing.Callable[[], T_Result],
+        bank_account_number: typing.Callable[[], T_Result],
+        be_national_number: typing.Callable[[], T_Result],
+        be_value_added_tax_number: typing.Callable[[], T_Result],
+        brcpf_number: typing.Callable[[], T_Result],
+        br_legal_entity_number: typing.Callable[[], T_Result],
+        br_national_idrg: typing.Callable[[], T_Result],
+        bg_uniform_civil_number: typing.Callable[[], T_Result],
+        ca_bank_account_number: typing.Callable[[], T_Result],
+        ca_drivers_license_number: typing.Callable[[], T_Result],
+        ca_health_service_number: typing.Callable[[], T_Result],
+        ca_passport_number: typing.Callable[[], T_Result],
+        ca_personal_health_id: typing.Callable[[], T_Result],
+        ca_social_insurance_number: typing.Callable[[], T_Result],
+        cl_identity_card_number: typing.Callable[[], T_Result],
+        cn_resident_identity_card_number: typing.Callable[[], T_Result],
+        credit_card_number: typing.Callable[[], T_Result],
+        hr_identity_card_number: typing.Callable[[], T_Result],
+        hr_national_id_card_number: typing.Callable[[], T_Result],
+        hr_personal_identification_number: typing.Callable[[], T_Result],
+        cy_identity_card: typing.Callable[[], T_Result],
+        cy_tax_identification_number: typing.Callable[[], T_Result],
+        cz_personal_identity_number: typing.Callable[[], T_Result],
+        date: typing.Callable[[], T_Result],
+        date_time: typing.Callable[[], T_Result],
+        dk_personal_identification_number: typing.Callable[[], T_Result],
+        dea_number: typing.Callable[[], T_Result],
+        email: typing.Callable[[], T_Result],
+        ee_personal_identification_code: typing.Callable[[], T_Result],
+        eu_debit_card_number: typing.Callable[[], T_Result],
+        eu_drivers_license_number: typing.Callable[[], T_Result],
+        eugps_coordinates: typing.Callable[[], T_Result],
+        eu_national_identification_number: typing.Callable[[], T_Result],
+        eu_passport_number: typing.Callable[[], T_Result],
+        eu_social_security_number: typing.Callable[[], T_Result],
+        eu_tax_identification_number: typing.Callable[[], T_Result],
+        fi_european_health_number: typing.Callable[[], T_Result],
+        fi_national_id: typing.Callable[[], T_Result],
+        fi_passport_number: typing.Callable[[], T_Result],
+        fr_drivers_license_number: typing.Callable[[], T_Result],
+        fr_health_insurance_number: typing.Callable[[], T_Result],
+        fr_national_id: typing.Callable[[], T_Result],
+        fr_passport_number: typing.Callable[[], T_Result],
+        fr_social_security_number: typing.Callable[[], T_Result],
+        fr_tax_identification_number: typing.Callable[[], T_Result],
+        fr_value_added_tax_number: typing.Callable[[], T_Result],
+        de_drivers_license_number: typing.Callable[[], T_Result],
+        de_passport_number: typing.Callable[[], T_Result],
+        de_identity_card_number: typing.Callable[[], T_Result],
+        de_tax_identification_number: typing.Callable[[], T_Result],
+        de_value_added_tax_number: typing.Callable[[], T_Result],
+        gr_national_id_card: typing.Callable[[], T_Result],
+        gr_tax_identification_number: typing.Callable[[], T_Result],
+        hk_identity_card_number: typing.Callable[[], T_Result],
+        hu_value_added_tax_number: typing.Callable[[], T_Result],
+        hu_personal_identification_number: typing.Callable[[], T_Result],
+        hu_tax_identification_number: typing.Callable[[], T_Result],
+        in_permanent_account_number: typing.Callable[[], T_Result],
+        in_unique_identification_number: typing.Callable[[], T_Result],
+        id_identity_card_number: typing.Callable[[], T_Result],
+        international_banking_account_number: typing.Callable[[], T_Result],
+        ip_address: typing.Callable[[], T_Result],
+        ie_personal_public_service_number: typing.Callable[[], T_Result],
+        il_bank_account_number: typing.Callable[[], T_Result],
+        il_national_id: typing.Callable[[], T_Result],
+        it_drivers_license_number: typing.Callable[[], T_Result],
+        it_fiscal_code: typing.Callable[[], T_Result],
+        it_value_added_tax_number: typing.Callable[[], T_Result],
+        jp_bank_account_number: typing.Callable[[], T_Result],
+        jp_drivers_license_number: typing.Callable[[], T_Result],
+        jp_passport_number: typing.Callable[[], T_Result],
+        jp_resident_registration_number: typing.Callable[[], T_Result],
+        jp_social_insurance_number: typing.Callable[[], T_Result],
+        jp_my_number_corporate: typing.Callable[[], T_Result],
+        jp_my_number_personal: typing.Callable[[], T_Result],
+        jp_residence_card_number: typing.Callable[[], T_Result],
+        lv_personal_code: typing.Callable[[], T_Result],
+        lt_personal_code: typing.Callable[[], T_Result],
+        lu_national_identification_number_natural: typing.Callable[[], T_Result],
+        lu_national_identification_number_non_natural: typing.Callable[[], T_Result],
+        my_identity_card_number: typing.Callable[[], T_Result],
+        mt_identity_card_number: typing.Callable[[], T_Result],
+        mt_tax_id_number: typing.Callable[[], T_Result],
+        nl_citizens_service_number: typing.Callable[[], T_Result],
+        nl_tax_identification_number: typing.Callable[[], T_Result],
+        nl_value_added_tax_number: typing.Callable[[], T_Result],
+        nz_bank_account_number: typing.Callable[[], T_Result],
+        nz_drivers_license_number: typing.Callable[[], T_Result],
+        nz_inland_revenue_number: typing.Callable[[], T_Result],
+        nz_ministry_of_health_number: typing.Callable[[], T_Result],
+        nz_social_welfare_number: typing.Callable[[], T_Result],
+        no_identity_number: typing.Callable[[], T_Result],
+        organization: typing.Callable[[], T_Result],
         person: typing.Callable[[], T_Result],
         person_type: typing.Callable[[], T_Result],
+        ph_unified_multi_purpose_id_number: typing.Callable[[], T_Result],
         phone_number: typing.Callable[[], T_Result],
-        organization: typing.Callable[[], T_Result],
-        address: typing.Callable[[], T_Result],
-        email: typing.Callable[[], T_Result],
+        pl_identity_card: typing.Callable[[], T_Result],
+        pl_national_id: typing.Callable[[], T_Result],
+        pl_passport_number: typing.Callable[[], T_Result],
+        pl_tax_identification_number: typing.Callable[[], T_Result],
+        plregon_number: typing.Callable[[], T_Result],
+        pt_citizen_card_number: typing.Callable[[], T_Result],
+        pt_tax_identification_number: typing.Callable[[], T_Result],
+        ro_personal_numerical_code: typing.Callable[[], T_Result],
+        ru_passport_number_domestic: typing.Callable[[], T_Result],
+        ru_passport_number_international: typing.Callable[[], T_Result],
+        sa_national_id: typing.Callable[[], T_Result],
+        sg_national_registration_identity_card_number: typing.Callable[[], T_Result],
+        sk_personal_number: typing.Callable[[], T_Result],
+        si_tax_identification_number: typing.Callable[[], T_Result],
+        si_unique_master_citizen_number: typing.Callable[[], T_Result],
+        za_identification_number: typing.Callable[[], T_Result],
+        kr_resident_registration_number: typing.Callable[[], T_Result],
+        esdni: typing.Callable[[], T_Result],
+        es_social_security_number: typing.Callable[[], T_Result],
+        es_tax_identification_number: typing.Callable[[], T_Result],
+        azure_sql_connection_string: typing.Callable[[], T_Result],
+        se_national_id: typing.Callable[[], T_Result],
+        se_passport_number: typing.Callable[[], T_Result],
+        se_tax_identification_number: typing.Callable[[], T_Result],
+        swift_code: typing.Callable[[], T_Result],
+        ch_social_security_number: typing.Callable[[], T_Result],
+        tw_national_id: typing.Callable[[], T_Result],
+        tw_passport_number: typing.Callable[[], T_Result],
+        tw_resident_certificate: typing.Callable[[], T_Result],
+        th_population_identification_code: typing.Callable[[], T_Result],
+        tr_national_identification_number: typing.Callable[[], T_Result],
+        uk_drivers_license_number: typing.Callable[[], T_Result],
+        uk_electoral_roll_number: typing.Callable[[], T_Result],
+        uk_national_health_number: typing.Callable[[], T_Result],
+        uk_national_insurance_number: typing.Callable[[], T_Result],
+        uk_unique_taxpayer_number: typing.Callable[[], T_Result],
+        usuk_passport_number: typing.Callable[[], T_Result],
+        us_bank_account_number: typing.Callable[[], T_Result],
+        us_drivers_license_number: typing.Callable[[], T_Result],
+        us_individual_taxpayer_identification: typing.Callable[[], T_Result],
+        us_social_security_number: typing.Callable[[], T_Result],
         url: typing.Callable[[], T_Result],
-        ip_address: typing.Callable[[], T_Result],
-        date_time: typing.Callable[[], T_Result],
-        bank_account_number: typing.Callable[[], T_Result],
-        drivers_license_number: typing.Callable[[], T_Result],
-        passport_number: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is AzurePiiCategory.ALL:
             return all_()
+        if self is AzurePiiCategory.ABA_ROUTING_NUMBER:
+            return aba_routing_number()
+        if self is AzurePiiCategory.ADDRESS:
+            return address()
+        if self is AzurePiiCategory.AGE:
+            return age()
+        if self is AzurePiiCategory.AR_NATIONAL_IDENTITY_NUMBER:
+            return ar_national_identity_number()
+        if self is AzurePiiCategory.AU_BANK_ACCOUNT_NUMBER:
+            return au_bank_account_number()
+        if self is AzurePiiCategory.AU_DRIVERS_LICENSE_NUMBER:
+            return au_drivers_license_number()
+        if self is AzurePiiCategory.AU_MEDICAL_ACCOUNT_NUMBER:
+            return au_medical_account_number()
+        if self is AzurePiiCategory.AU_PASSPORT_NUMBER:
+            return au_passport_number()
+        if self is AzurePiiCategory.AU_TAX_FILE_NUMBER:
+            return au_tax_file_number()
+        if self is AzurePiiCategory.AU_BUSINESS_NUMBER:
+            return au_business_number()
+        if self is AzurePiiCategory.AU_COMPANY_NUMBER:
+            return au_company_number()
+        if self is AzurePiiCategory.AT_IDENTITY_CARD:
+            return at_identity_card()
+        if self is AzurePiiCategory.AT_TAX_IDENTIFICATION_NUMBER:
+            return at_tax_identification_number()
+        if self is AzurePiiCategory.AT_VALUE_ADDED_TAX_NUMBER:
+            return at_value_added_tax_number()
+        if self is AzurePiiCategory.AZURE_DOCUMENT_DB_AUTH_KEY:
+            return azure_document_db_auth_key()
+        if self is AzurePiiCategory.AZURE_IAAS_DATABASE_CONNECTION_AND_SQL_STRING:
+            return azure_iaas_database_connection_and_sql_string()
+        if self is AzurePiiCategory.AZURE_IO_T_CONNECTION_STRING:
+            return azure_io_t_connection_string()
+        if self is AzurePiiCategory.AZURE_PUBLISH_SETTING_PASSWORD:
+            return azure_publish_setting_password()
+        if self is AzurePiiCategory.AZURE_REDIS_CACHE_STRING:
+            return azure_redis_cache_string()
+        if self is AzurePiiCategory.AZURE_SAS:
+            return azure_sas()
+        if self is AzurePiiCategory.AZURE_SERVICE_BUS_STRING:
+            return azure_service_bus_string()
+        if self is AzurePiiCategory.AZURE_STORAGE_ACCOUNT_KEY:
+            return azure_storage_account_key()
+        if self is AzurePiiCategory.AZURE_STORAGE_ACCOUNT_GENERIC:
+            return azure_storage_account_generic()
+        if self is AzurePiiCategory.BANK_ACCOUNT_NUMBER:
+            return bank_account_number()
+        if self is AzurePiiCategory.BE_NATIONAL_NUMBER:
+            return be_national_number()
+        if self is AzurePiiCategory.BE_VALUE_ADDED_TAX_NUMBER:
+            return be_value_added_tax_number()
+        if self is AzurePiiCategory.BRCPF_NUMBER:
+            return brcpf_number()
+        if self is AzurePiiCategory.BR_LEGAL_ENTITY_NUMBER:
+            return br_legal_entity_number()
+        if self is AzurePiiCategory.BR_NATIONAL_IDRG:
+            return br_national_idrg()
+        if self is AzurePiiCategory.BG_UNIFORM_CIVIL_NUMBER:
+            return bg_uniform_civil_number()
+        if self is AzurePiiCategory.CA_BANK_ACCOUNT_NUMBER:
+            return ca_bank_account_number()
+        if self is AzurePiiCategory.CA_DRIVERS_LICENSE_NUMBER:
+            return ca_drivers_license_number()
+        if self is AzurePiiCategory.CA_HEALTH_SERVICE_NUMBER:
+            return ca_health_service_number()
+        if self is AzurePiiCategory.CA_PASSPORT_NUMBER:
+            return ca_passport_number()
+        if self is AzurePiiCategory.CA_PERSONAL_HEALTH_ID:
+            return ca_personal_health_id()
+        if self is AzurePiiCategory.CA_SOCIAL_INSURANCE_NUMBER:
+            return ca_social_insurance_number()
+        if self is AzurePiiCategory.CL_IDENTITY_CARD_NUMBER:
+            return cl_identity_card_number()
+        if self is AzurePiiCategory.CN_RESIDENT_IDENTITY_CARD_NUMBER:
+            return cn_resident_identity_card_number()
+        if self is AzurePiiCategory.CREDIT_CARD_NUMBER:
+            return credit_card_number()
+        if self is AzurePiiCategory.HR_IDENTITY_CARD_NUMBER:
+            return hr_identity_card_number()
+        if self is AzurePiiCategory.HR_NATIONAL_ID_CARD_NUMBER:
+            return hr_national_id_card_number()
+        if self is AzurePiiCategory.HR_PERSONAL_IDENTIFICATION_NUMBER:
+            return hr_personal_identification_number()
+        if self is AzurePiiCategory.CY_IDENTITY_CARD:
+            return cy_identity_card()
+        if self is AzurePiiCategory.CY_TAX_IDENTIFICATION_NUMBER:
+            return cy_tax_identification_number()
+        if self is AzurePiiCategory.CZ_PERSONAL_IDENTITY_NUMBER:
+            return cz_personal_identity_number()
+        if self is AzurePiiCategory.DATE:
+            return date()
+        if self is AzurePiiCategory.DATE_TIME:
+            return date_time()
+        if self is AzurePiiCategory.DK_PERSONAL_IDENTIFICATION_NUMBER:
+            return dk_personal_identification_number()
+        if self is AzurePiiCategory.DEA_NUMBER:
+            return dea_number()
+        if self is AzurePiiCategory.EMAIL:
+            return email()
+        if self is AzurePiiCategory.EE_PERSONAL_IDENTIFICATION_CODE:
+            return ee_personal_identification_code()
+        if self is AzurePiiCategory.EU_DEBIT_CARD_NUMBER:
+            return eu_debit_card_number()
+        if self is AzurePiiCategory.EU_DRIVERS_LICENSE_NUMBER:
+            return eu_drivers_license_number()
+        if self is AzurePiiCategory.EUGPS_COORDINATES:
+            return eugps_coordinates()
+        if self is AzurePiiCategory.EU_NATIONAL_IDENTIFICATION_NUMBER:
+            return eu_national_identification_number()
+        if self is AzurePiiCategory.EU_PASSPORT_NUMBER:
+            return eu_passport_number()
+        if self is AzurePiiCategory.EU_SOCIAL_SECURITY_NUMBER:
+            return eu_social_security_number()
+        if self is AzurePiiCategory.EU_TAX_IDENTIFICATION_NUMBER:
+            return eu_tax_identification_number()
+        if self is AzurePiiCategory.FI_EUROPEAN_HEALTH_NUMBER:
+            return fi_european_health_number()
+        if self is AzurePiiCategory.FI_NATIONAL_ID:
+            return fi_national_id()
+        if self is AzurePiiCategory.FI_PASSPORT_NUMBER:
+            return fi_passport_number()
+        if self is AzurePiiCategory.FR_DRIVERS_LICENSE_NUMBER:
+            return fr_drivers_license_number()
+        if self is AzurePiiCategory.FR_HEALTH_INSURANCE_NUMBER:
+            return fr_health_insurance_number()
+        if self is AzurePiiCategory.FR_NATIONAL_ID:
+            return fr_national_id()
+        if self is AzurePiiCategory.FR_PASSPORT_NUMBER:
+            return fr_passport_number()
+        if self is AzurePiiCategory.FR_SOCIAL_SECURITY_NUMBER:
+            return fr_social_security_number()
+        if self is AzurePiiCategory.FR_TAX_IDENTIFICATION_NUMBER:
+            return fr_tax_identification_number()
+        if self is AzurePiiCategory.FR_VALUE_ADDED_TAX_NUMBER:
+            return fr_value_added_tax_number()
+        if self is AzurePiiCategory.DE_DRIVERS_LICENSE_NUMBER:
+            return de_drivers_license_number()
+        if self is AzurePiiCategory.DE_PASSPORT_NUMBER:
+            return de_passport_number()
+        if self is AzurePiiCategory.DE_IDENTITY_CARD_NUMBER:
+            return de_identity_card_number()
+        if self is AzurePiiCategory.DE_TAX_IDENTIFICATION_NUMBER:
+            return de_tax_identification_number()
+        if self is AzurePiiCategory.DE_VALUE_ADDED_TAX_NUMBER:
+            return de_value_added_tax_number()
+        if self is AzurePiiCategory.GR_NATIONAL_ID_CARD:
+            return gr_national_id_card()
+        if self is AzurePiiCategory.GR_TAX_IDENTIFICATION_NUMBER:
+            return gr_tax_identification_number()
+        if self is AzurePiiCategory.HK_IDENTITY_CARD_NUMBER:
+            return hk_identity_card_number()
+        if self is AzurePiiCategory.HU_VALUE_ADDED_TAX_NUMBER:
+            return hu_value_added_tax_number()
+        if self is AzurePiiCategory.HU_PERSONAL_IDENTIFICATION_NUMBER:
+            return hu_personal_identification_number()
+        if self is AzurePiiCategory.HU_TAX_IDENTIFICATION_NUMBER:
+            return hu_tax_identification_number()
+        if self is AzurePiiCategory.IN_PERMANENT_ACCOUNT_NUMBER:
+            return in_permanent_account_number()
+        if self is AzurePiiCategory.IN_UNIQUE_IDENTIFICATION_NUMBER:
+            return in_unique_identification_number()
+        if self is AzurePiiCategory.ID_IDENTITY_CARD_NUMBER:
+            return id_identity_card_number()
+        if self is AzurePiiCategory.INTERNATIONAL_BANKING_ACCOUNT_NUMBER:
+            return international_banking_account_number()
+        if self is AzurePiiCategory.IP_ADDRESS:
+            return ip_address()
+        if self is AzurePiiCategory.IE_PERSONAL_PUBLIC_SERVICE_NUMBER:
+            return ie_personal_public_service_number()
+        if self is AzurePiiCategory.IL_BANK_ACCOUNT_NUMBER:
+            return il_bank_account_number()
+        if self is AzurePiiCategory.IL_NATIONAL_ID:
+            return il_national_id()
+        if self is AzurePiiCategory.IT_DRIVERS_LICENSE_NUMBER:
+            return it_drivers_license_number()
+        if self is AzurePiiCategory.IT_FISCAL_CODE:
+            return it_fiscal_code()
+        if self is AzurePiiCategory.IT_VALUE_ADDED_TAX_NUMBER:
+            return it_value_added_tax_number()
+        if self is AzurePiiCategory.JP_BANK_ACCOUNT_NUMBER:
+            return jp_bank_account_number()
+        if self is AzurePiiCategory.JP_DRIVERS_LICENSE_NUMBER:
+            return jp_drivers_license_number()
+        if self is AzurePiiCategory.JP_PASSPORT_NUMBER:
+            return jp_passport_number()
+        if self is AzurePiiCategory.JP_RESIDENT_REGISTRATION_NUMBER:
+            return jp_resident_registration_number()
+        if self is AzurePiiCategory.JP_SOCIAL_INSURANCE_NUMBER:
+            return jp_social_insurance_number()
+        if self is AzurePiiCategory.JP_MY_NUMBER_CORPORATE:
+            return jp_my_number_corporate()
+        if self is AzurePiiCategory.JP_MY_NUMBER_PERSONAL:
+            return jp_my_number_personal()
+        if self is AzurePiiCategory.JP_RESIDENCE_CARD_NUMBER:
+            return jp_residence_card_number()
+        if self is AzurePiiCategory.LV_PERSONAL_CODE:
+            return lv_personal_code()
+        if self is AzurePiiCategory.LT_PERSONAL_CODE:
+            return lt_personal_code()
+        if self is AzurePiiCategory.LU_NATIONAL_IDENTIFICATION_NUMBER_NATURAL:
+            return lu_national_identification_number_natural()
+        if self is AzurePiiCategory.LU_NATIONAL_IDENTIFICATION_NUMBER_NON_NATURAL:
+            return lu_national_identification_number_non_natural()
+        if self is AzurePiiCategory.MY_IDENTITY_CARD_NUMBER:
+            return my_identity_card_number()
+        if self is AzurePiiCategory.MT_IDENTITY_CARD_NUMBER:
+            return mt_identity_card_number()
+        if self is AzurePiiCategory.MT_TAX_ID_NUMBER:
+            return mt_tax_id_number()
+        if self is AzurePiiCategory.NL_CITIZENS_SERVICE_NUMBER:
+            return nl_citizens_service_number()
+        if self is AzurePiiCategory.NL_TAX_IDENTIFICATION_NUMBER:
+            return nl_tax_identification_number()
+        if self is AzurePiiCategory.NL_VALUE_ADDED_TAX_NUMBER:
+            return nl_value_added_tax_number()
+        if self is AzurePiiCategory.NZ_BANK_ACCOUNT_NUMBER:
+            return nz_bank_account_number()
+        if self is AzurePiiCategory.NZ_DRIVERS_LICENSE_NUMBER:
+            return nz_drivers_license_number()
+        if self is AzurePiiCategory.NZ_INLAND_REVENUE_NUMBER:
+            return nz_inland_revenue_number()
+        if self is AzurePiiCategory.NZ_MINISTRY_OF_HEALTH_NUMBER:
+            return nz_ministry_of_health_number()
+        if self is AzurePiiCategory.NZ_SOCIAL_WELFARE_NUMBER:
+            return nz_social_welfare_number()
+        if self is AzurePiiCategory.NO_IDENTITY_NUMBER:
+            return no_identity_number()
+        if self is AzurePiiCategory.ORGANIZATION:
+            return organization()
         if self is AzurePiiCategory.PERSON:
             return person()
         if self is AzurePiiCategory.PERSON_TYPE:
             return person_type()
+        if self is AzurePiiCategory.PH_UNIFIED_MULTI_PURPOSE_ID_NUMBER:
+            return ph_unified_multi_purpose_id_number()
         if self is AzurePiiCategory.PHONE_NUMBER:
             return phone_number()
-        if self is AzurePiiCategory.ORGANIZATION:
-            return organization()
-        if self is AzurePiiCategory.ADDRESS:
-            return address()
-        if self is AzurePiiCategory.EMAIL:
-            return email()
+        if self is AzurePiiCategory.PL_IDENTITY_CARD:
+            return pl_identity_card()
+        if self is AzurePiiCategory.PL_NATIONAL_ID:
+            return pl_national_id()
+        if self is AzurePiiCategory.PL_PASSPORT_NUMBER:
+            return pl_passport_number()
+        if self is AzurePiiCategory.PL_TAX_IDENTIFICATION_NUMBER:
+            return pl_tax_identification_number()
+        if self is AzurePiiCategory.PLREGON_NUMBER:
+            return plregon_number()
+        if self is AzurePiiCategory.PT_CITIZEN_CARD_NUMBER:
+            return pt_citizen_card_number()
+        if self is AzurePiiCategory.PT_TAX_IDENTIFICATION_NUMBER:
+            return pt_tax_identification_number()
+        if self is AzurePiiCategory.RO_PERSONAL_NUMERICAL_CODE:
+            return ro_personal_numerical_code()
+        if self is AzurePiiCategory.RU_PASSPORT_NUMBER_DOMESTIC:
+            return ru_passport_number_domestic()
+        if self is AzurePiiCategory.RU_PASSPORT_NUMBER_INTERNATIONAL:
+            return ru_passport_number_international()
+        if self is AzurePiiCategory.SA_NATIONAL_ID:
+            return sa_national_id()
+        if self is AzurePiiCategory.SG_NATIONAL_REGISTRATION_IDENTITY_CARD_NUMBER:
+            return sg_national_registration_identity_card_number()
+        if self is AzurePiiCategory.SK_PERSONAL_NUMBER:
+            return sk_personal_number()
+        if self is AzurePiiCategory.SI_TAX_IDENTIFICATION_NUMBER:
+            return si_tax_identification_number()
+        if self is AzurePiiCategory.SI_UNIQUE_MASTER_CITIZEN_NUMBER:
+            return si_unique_master_citizen_number()
+        if self is AzurePiiCategory.ZA_IDENTIFICATION_NUMBER:
+            return za_identification_number()
+        if self is AzurePiiCategory.KR_RESIDENT_REGISTRATION_NUMBER:
+            return kr_resident_registration_number()
+        if self is AzurePiiCategory.ESDNI:
+            return esdni()
+        if self is AzurePiiCategory.ES_SOCIAL_SECURITY_NUMBER:
+            return es_social_security_number()
+        if self is AzurePiiCategory.ES_TAX_IDENTIFICATION_NUMBER:
+            return es_tax_identification_number()
+        if self is AzurePiiCategory.AZURE_SQL_CONNECTION_STRING:
+            return azure_sql_connection_string()
+        if self is AzurePiiCategory.SE_NATIONAL_ID:
+            return se_national_id()
+        if self is AzurePiiCategory.SE_PASSPORT_NUMBER:
+            return se_passport_number()
+        if self is AzurePiiCategory.SE_TAX_IDENTIFICATION_NUMBER:
+            return se_tax_identification_number()
+        if self is AzurePiiCategory.SWIFT_CODE:
+            return swift_code()
+        if self is AzurePiiCategory.CH_SOCIAL_SECURITY_NUMBER:
+            return ch_social_security_number()
+        if self is AzurePiiCategory.TW_NATIONAL_ID:
+            return tw_national_id()
+        if self is AzurePiiCategory.TW_PASSPORT_NUMBER:
+            return tw_passport_number()
+        if self is AzurePiiCategory.TW_RESIDENT_CERTIFICATE:
+            return tw_resident_certificate()
+        if self is AzurePiiCategory.TH_POPULATION_IDENTIFICATION_CODE:
+            return th_population_identification_code()
+        if self is AzurePiiCategory.TR_NATIONAL_IDENTIFICATION_NUMBER:
+            return tr_national_identification_number()
+        if self is AzurePiiCategory.UK_DRIVERS_LICENSE_NUMBER:
+            return uk_drivers_license_number()
+        if self is AzurePiiCategory.UK_ELECTORAL_ROLL_NUMBER:
+            return uk_electoral_roll_number()
+        if self is AzurePiiCategory.UK_NATIONAL_HEALTH_NUMBER:
+            return uk_national_health_number()
+        if self is AzurePiiCategory.UK_NATIONAL_INSURANCE_NUMBER:
+            return uk_national_insurance_number()
+        if self is AzurePiiCategory.UK_UNIQUE_TAXPAYER_NUMBER:
+            return uk_unique_taxpayer_number()
+        if self is AzurePiiCategory.USUK_PASSPORT_NUMBER:
+            return usuk_passport_number()
+        if self is AzurePiiCategory.US_BANK_ACCOUNT_NUMBER:
+            return us_bank_account_number()
+        if self is AzurePiiCategory.US_DRIVERS_LICENSE_NUMBER:
+            return us_drivers_license_number()
+        if self is AzurePiiCategory.US_INDIVIDUAL_TAXPAYER_IDENTIFICATION:
+            return us_individual_taxpayer_identification()
+        if self is AzurePiiCategory.US_SOCIAL_SECURITY_NUMBER:
+            return us_social_security_number()
         if self is AzurePiiCategory.URL:
             return url()
-        if self is AzurePiiCategory.IP_ADDRESS:
-            return ip_address()
-        if self is AzurePiiCategory.DATE_TIME:
-            return date_time()
-        if self is AzurePiiCategory.BANK_ACCOUNT_NUMBER:
-            return bank_account_number()
-        if self is AzurePiiCategory.DRIVERS_LICENSE_NUMBER:
-            return drivers_license_number()
-        if self is AzurePiiCategory.PASSPORT_NUMBER:
-            return passport_number()
         return _unknown_member(self._value_)

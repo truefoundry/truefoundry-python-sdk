@@ -8,6 +8,11 @@ from .palo_alto_prisma_airs_guardrail_config_config_mode import PaloAltoPrismaAi
 
 
 class PaloAltoPrismaAirsGuardrailConfigConfig(UniversalBaseModel):
+    """
+    +uiType=Ignore
+    +uiProps={"forwardJsonKey": true}
+    """
+
     base_url: typing.Optional[str] = pydantic.Field(default=None)
     """
     Optional override for the base URL for Palo Alto Prisma AIRS. Defaults to https://service.api.aisecurity.paloaltonetworks.com/v1/ if not provided.

@@ -7,6 +7,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class CustomGuardrailConfigConfig(UniversalBaseModel):
+    """
+    +uiType=Ignore
+    +uiProps={"forwardJsonKey": true}
+    """
+
     url: str = pydantic.Field()
     """
     The URL of the Guardrail to send a post request to.

@@ -11,6 +11,11 @@ from .subject import Subject
 
 
 class JobRun(UniversalBaseModel):
+    id: str = pydantic.Field()
+    """
+    JobRun ID
+    """
+
     name: str = pydantic.Field()
     """
     JobRun Name
@@ -95,6 +100,27 @@ class JobRun(UniversalBaseModel):
     )
     """
     Spark UI Url
+    """
+
+    application_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="applicationId")] = (
+        pydantic.Field(alias="applicationId", default=None)
+    )
+    """
+    Application ID
+    """
+
+    deployment_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="deploymentId")] = (
+        pydantic.Field(alias="deploymentId", default=None)
+    )
+    """
+    Deployment ID
+    """
+
+    tenant_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="tenantName")] = pydantic.Field(
+        alias="tenantName", default=None
+    )
+    """
+    Tenant Name
     """
 
     if IS_PYDANTIC_V2:

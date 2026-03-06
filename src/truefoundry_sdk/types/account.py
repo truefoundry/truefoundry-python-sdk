@@ -12,7 +12,6 @@ from .subject import Subject
 
 class Account(UniversalBaseModel):
     id: typing.Optional[str] = None
-    name: typing.Optional[str] = None
     tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")] = pydantic.Field(
         alias="tenantName"
     )

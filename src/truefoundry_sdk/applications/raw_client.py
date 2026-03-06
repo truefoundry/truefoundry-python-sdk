@@ -199,7 +199,7 @@ class RawApplicationsClient:
         self,
         *,
         manifest: typing.Dict[str, typing.Any],
-        dry_run: typing.Optional[bool] = OMIT,
+        dry_run: typing.Optional[bool] = False,
         force_deploy: typing.Optional[bool] = OMIT,
         trigger_on_deploy: typing.Optional[bool] = OMIT,
         workspace_id: typing.Optional[str] = OMIT,
@@ -417,6 +417,70 @@ class RawApplicationsClient:
                     DeleteApplicationResponse,
                     parse_obj_as(
                         type_=DeleteApplicationResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def redeploy(
+        self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[GetApplicationDeploymentResponse]:
+        """
+        Creates a new deployment with the same manifest as the given deployment.
+
+        Parameters
+        ----------
+        id : str
+            Application id of the application
+
+        deployment_id : str
+            Deployment id of the deployment
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetApplicationDeploymentResponse]
+            Returns the new deployment.
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/redeploy",
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetApplicationDeploymentResponse,
+                    parse_obj_as(
+                        type_=GetApplicationDeploymentResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -840,7 +904,7 @@ class AsyncRawApplicationsClient:
         self,
         *,
         manifest: typing.Dict[str, typing.Any],
-        dry_run: typing.Optional[bool] = OMIT,
+        dry_run: typing.Optional[bool] = False,
         force_deploy: typing.Optional[bool] = OMIT,
         trigger_on_deploy: typing.Optional[bool] = OMIT,
         workspace_id: typing.Optional[str] = OMIT,
@@ -1058,6 +1122,70 @@ class AsyncRawApplicationsClient:
                     DeleteApplicationResponse,
                     parse_obj_as(
                         type_=DeleteApplicationResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def redeploy(
+        self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[GetApplicationDeploymentResponse]:
+        """
+        Creates a new deployment with the same manifest as the given deployment.
+
+        Parameters
+        ----------
+        id : str
+            Application id of the application
+
+        deployment_id : str
+            Deployment id of the deployment
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetApplicationDeploymentResponse]
+            Returns the new deployment.
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/redeploy",
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetApplicationDeploymentResponse,
+                    parse_obj_as(
+                        type_=GetApplicationDeploymentResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

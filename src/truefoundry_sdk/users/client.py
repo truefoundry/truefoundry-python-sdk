@@ -45,7 +45,6 @@ class UsersClient:
         offset: typing.Optional[int] = 0,
         query: typing.Optional[str] = None,
         show_invalid_users: typing.Optional[bool] = None,
-        include_virtual_accounts: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[User, ListUsersResponse]:
         """
@@ -63,9 +62,6 @@ class UsersClient:
 
         show_invalid_users : typing.Optional[bool]
             Show Deactivated users
-
-        include_virtual_accounts : typing.Optional[str]
-            Include virtual accounts
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -88,7 +84,6 @@ class UsersClient:
             offset=0,
             query="query",
             show_invalid_users=True,
-            include_virtual_accounts="includeVirtualAccounts",
         )
         for item in response:
             yield item
@@ -101,7 +96,6 @@ class UsersClient:
             offset=offset,
             query=query,
             show_invalid_users=show_invalid_users,
-            include_virtual_accounts=include_virtual_accounts,
             request_options=request_options,
         )
 
@@ -521,7 +515,6 @@ class AsyncUsersClient:
         offset: typing.Optional[int] = 0,
         query: typing.Optional[str] = None,
         show_invalid_users: typing.Optional[bool] = None,
-        include_virtual_accounts: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[User, ListUsersResponse]:
         """
@@ -539,9 +532,6 @@ class AsyncUsersClient:
 
         show_invalid_users : typing.Optional[bool]
             Show Deactivated users
-
-        include_virtual_accounts : typing.Optional[str]
-            Include virtual accounts
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -569,7 +559,6 @@ class AsyncUsersClient:
                 offset=0,
                 query="query",
                 show_invalid_users=True,
-                include_virtual_accounts="includeVirtualAccounts",
             )
             async for item in response:
                 yield item
@@ -586,7 +575,6 @@ class AsyncUsersClient:
             offset=offset,
             query=query,
             show_invalid_users=show_invalid_users,
-            include_virtual_accounts=include_virtual_accounts,
             request_options=request_options,
         )
 

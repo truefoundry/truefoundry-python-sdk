@@ -39,7 +39,6 @@ class RoleWithResourceResourceType(enum.StrEnum):
     AGENT = "agent"
     AGENT_APP = "agent-app"
     GATEWAY_INSTALLATION = "gateway-installation"
-    GATEWAY_DATASET = "gateway-dataset"
     VIRTUAL_ACCOUNT = "virtual-account"
     SSO_BASED_IDENTITY = "sso-based-identity"
     EXTERNAL_IDENTITY = "external-identity"
@@ -89,7 +88,6 @@ class RoleWithResourceResourceType(enum.StrEnum):
         agent: typing.Callable[[], T_Result],
         agent_app: typing.Callable[[], T_Result],
         gateway_installation: typing.Callable[[], T_Result],
-        gateway_dataset: typing.Callable[[], T_Result],
         virtual_account: typing.Callable[[], T_Result],
         sso_based_identity: typing.Callable[[], T_Result],
         external_identity: typing.Callable[[], T_Result],
@@ -159,8 +157,6 @@ class RoleWithResourceResourceType(enum.StrEnum):
             return agent_app()
         if self is RoleWithResourceResourceType.GATEWAY_INSTALLATION:
             return gateway_installation()
-        if self is RoleWithResourceResourceType.GATEWAY_DATASET:
-            return gateway_dataset()
         if self is RoleWithResourceResourceType.VIRTUAL_ACCOUNT:
             return virtual_account()
         if self is RoleWithResourceResourceType.SSO_BASED_IDENTITY:

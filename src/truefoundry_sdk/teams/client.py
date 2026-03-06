@@ -88,7 +88,7 @@ class TeamsClient:
         self,
         *,
         manifest: TeamManifest,
-        dry_run: typing.Optional[bool] = OMIT,
+        dry_run: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetTeamResponse:
         """
@@ -275,7 +275,7 @@ class AsyncTeamsClient:
         self,
         *,
         manifest: TeamManifest,
-        dry_run: typing.Optional[bool] = OMIT,
+        dry_run: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetTeamResponse:
         """

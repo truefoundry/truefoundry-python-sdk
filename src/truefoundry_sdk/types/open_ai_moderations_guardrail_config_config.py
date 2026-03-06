@@ -10,6 +10,11 @@ from .open_ai_moderations_guardrail_config_config_category_thresholds_value impo
 
 
 class OpenAiModerationsGuardrailConfigConfig(UniversalBaseModel):
+    """
+    +uiType=Ignore
+    +uiProps={"forwardJsonKey": true}
+    """
+
     model: str = pydantic.Field(default="omni-moderation-latest")
     """
     The model to use for the OpenAI Moderation API.

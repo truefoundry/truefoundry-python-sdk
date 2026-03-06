@@ -14,7 +14,6 @@ from .workspace_manifest import WorkspaceManifest
 class Workspace(UniversalBaseModel):
     id: str
     fqn: str
-    name: str
     tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")] = pydantic.Field(
         alias="tenantName"
     )

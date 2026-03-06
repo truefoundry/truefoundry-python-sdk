@@ -7,9 +7,14 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class SecretDetectionGuardrailConfigConfig(UniversalBaseModel):
-    redaction_text: typing.Optional[str] = pydantic.Field(default="***REDACTED***")
     """
-    Text to use when redacting detected secrets in logs and error messages. Defaults to '***REDACTED***'.Only applicable in mutate mode.
+    +uiType=Ignore
+    +uiProps={"forwardJsonKey": true}
+    """
+
+    redaction_text: typing.Optional[str] = pydantic.Field(default="[REDACTED]")
+    """
+    Text to use when redacting detected secrets in logs and error messages. Defaults to '[REDACTED]'.Only applicable in mutate mode.
     """
 
     if IS_PYDANTIC_V2:
