@@ -4,6 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .mcp_server_o_auth2grant_type import McpServerOAuth2GrantType
 from .mcp_server_o_auth2jwt_source import McpServerOAuth2JwtSource
 
 
@@ -17,7 +18,12 @@ class McpServerOAuth2(UniversalBaseModel):
     OAuth2 authentication
     """
 
-    authorization_url: str = pydantic.Field()
+    grant_type: McpServerOAuth2GrantType = pydantic.Field()
+    """
+    The OAuth2 grant type to use for authentication.
+    """
+
+    authorization_url: typing.Optional[str] = pydantic.Field(default=None)
     """
     URL for the authorization request
     """

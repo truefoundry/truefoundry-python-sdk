@@ -19,9 +19,7 @@ class AzureContentSafetyGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
-    description: typing.Optional[str] = pydantic.Field(
-        default="Azure Content Safety for hate, self-harm, sexual, and violence detection"
-    )
+    description: typing.Optional[str] = pydantic.Field(default=None)
     """
     Optional description for this Guardrail Config.
     """

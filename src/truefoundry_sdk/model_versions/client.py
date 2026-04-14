@@ -35,17 +35,22 @@ class ModelVersionsClient:
         *,
         model_version_id: str,
         tags: typing.Sequence[str],
-        force: typing.Optional[bool] = False,
+        force: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EmptyResponse:
         """
+        Apply tags to a model version.
+
         Parameters
         ----------
         model_version_id : str
+            ID of the model version to apply tags to
 
         tags : typing.Sequence[str]
+            List of tags to apply to the model version
 
         force : typing.Optional[bool]
+            Whether to overwrite existing tags if they conflict
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -53,7 +58,7 @@ class ModelVersionsClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful tag application
 
         Examples
         --------
@@ -75,7 +80,7 @@ class ModelVersionsClient:
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetModelVersionResponse:
         """
-        Get model version API
+        Get a model version by its ID.
 
         Parameters
         ----------
@@ -87,7 +92,7 @@ class ModelVersionsClient:
         Returns
         -------
         GetModelVersionResponse
-            Successful Response
+            The model version data
 
         Examples
         --------
@@ -106,7 +111,7 @@ class ModelVersionsClient:
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
         """
-        Delete model versions API
+        Delete a model version by its ID.
 
         Parameters
         ----------
@@ -118,7 +123,7 @@ class ModelVersionsClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful deletion
 
         Examples
         --------
@@ -152,31 +157,42 @@ class ModelVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[ModelVersion, ListModelVersionsResponse]:
         """
-        List model version API
+        List model versions with optional filtering by tag, FQN, model ID, ML Repo, name, version, run IDs, or run steps.
 
         Parameters
         ----------
         tag : typing.Optional[str]
+            Tag to filter model versions by
 
         fqn : typing.Optional[str]
+            Fully qualified name to filter model versions by (format: 'model:{tenant_name}/{ml_repo_name}/{model_name}' or 'model:{tenant_name}/{ml_repo_name}/{model_name}:{version}')
 
         model_id : typing.Optional[str]
+            ID of the model to filter versions by
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter model versions by
 
         name : typing.Optional[str]
+            Name of the model to filter versions by
 
         version : typing.Optional[int]
+            Version number (positive integer) or 'latest' to filter by specific version
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            List of run IDs to filter model versions by
 
         run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+            List of run step numbers to filter model versions by
 
         offset : typing.Optional[int]
+            Number of model versions to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of model versions to return
 
         include_internal_metadata : typing.Optional[bool]
+            Whether to include internal metadata in the response
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -184,7 +200,7 @@ class ModelVersionsClient:
         Returns
         -------
         SyncPager[ModelVersion, ListModelVersionsResponse]
-            Successful Response
+            List of model versions matching the query with pagination information
 
         Examples
         --------
@@ -247,17 +263,22 @@ class AsyncModelVersionsClient:
         *,
         model_version_id: str,
         tags: typing.Sequence[str],
-        force: typing.Optional[bool] = False,
+        force: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EmptyResponse:
         """
+        Apply tags to a model version.
+
         Parameters
         ----------
         model_version_id : str
+            ID of the model version to apply tags to
 
         tags : typing.Sequence[str]
+            List of tags to apply to the model version
 
         force : typing.Optional[bool]
+            Whether to overwrite existing tags if they conflict
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -265,7 +286,7 @@ class AsyncModelVersionsClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful tag application
 
         Examples
         --------
@@ -295,7 +316,7 @@ class AsyncModelVersionsClient:
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetModelVersionResponse:
         """
-        Get model version API
+        Get a model version by its ID.
 
         Parameters
         ----------
@@ -307,7 +328,7 @@ class AsyncModelVersionsClient:
         Returns
         -------
         GetModelVersionResponse
-            Successful Response
+            The model version data
 
         Examples
         --------
@@ -334,7 +355,7 @@ class AsyncModelVersionsClient:
 
     async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
         """
-        Delete model versions API
+        Delete a model version by its ID.
 
         Parameters
         ----------
@@ -346,7 +367,7 @@ class AsyncModelVersionsClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful deletion
 
         Examples
         --------
@@ -388,31 +409,42 @@ class AsyncModelVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[ModelVersion, ListModelVersionsResponse]:
         """
-        List model version API
+        List model versions with optional filtering by tag, FQN, model ID, ML Repo, name, version, run IDs, or run steps.
 
         Parameters
         ----------
         tag : typing.Optional[str]
+            Tag to filter model versions by
 
         fqn : typing.Optional[str]
+            Fully qualified name to filter model versions by (format: 'model:{tenant_name}/{ml_repo_name}/{model_name}' or 'model:{tenant_name}/{ml_repo_name}/{model_name}:{version}')
 
         model_id : typing.Optional[str]
+            ID of the model to filter versions by
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter model versions by
 
         name : typing.Optional[str]
+            Name of the model to filter versions by
 
         version : typing.Optional[int]
+            Version number (positive integer) or 'latest' to filter by specific version
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            List of run IDs to filter model versions by
 
         run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+            List of run step numbers to filter model versions by
 
         offset : typing.Optional[int]
+            Number of model versions to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of model versions to return
 
         include_internal_metadata : typing.Optional[bool]
+            Whether to include internal metadata in the response
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -420,7 +452,7 @@ class AsyncModelVersionsClient:
         Returns
         -------
         AsyncPager[ModelVersion, ListModelVersionsResponse]
-            Successful Response
+            List of model versions matching the query with pagination information
 
         Examples
         --------

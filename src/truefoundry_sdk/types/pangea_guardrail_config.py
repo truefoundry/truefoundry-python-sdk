@@ -20,9 +20,7 @@ class PangeaGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
-    description: typing.Optional[str] = pydantic.Field(
-        default="Pangea textGuard for text security or PII detection and redaction"
-    )
+    description: typing.Optional[str] = pydantic.Field(default=None)
     """
     Optional description for this Guardrail Config.
     """
@@ -41,7 +39,7 @@ class PangeaGuardrailConfig(UniversalBaseModel):
     The operation type to use for the Guardrail. Validate guardrails are used to validate requests and mutate can validate as well as mutate requests.
     """
 
-    priority: typing.Optional[int] = pydantic.Field(default=1)
+    priority: typing.Optional[int] = pydantic.Field(default=None)
     """
     Execution order for mutate guardrails. Lower values run first. Only applicable when operation is mutate.
     """

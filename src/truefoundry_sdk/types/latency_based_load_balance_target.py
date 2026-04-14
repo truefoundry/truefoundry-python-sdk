@@ -4,6 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .headers_override import HeadersOverride
 from .retry_config import RetryConfig
 
 
@@ -23,7 +24,7 @@ class LatencyBasedLoadBalanceTarget(UniversalBaseModel):
     Status Codes for which the request will fallback to other targets. If the status code is not present in fallback_status_codes, it fails immediately.
     """
 
-    fallback_candidate: typing.Optional[bool] = pydantic.Field(default=True)
+    fallback_candidate: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether this target is a fallback candidate.  If set to false, this model will not be considered as a fallback option for targets of this load-balance-rule
     """
@@ -31,6 +32,12 @@ class LatencyBasedLoadBalanceTarget(UniversalBaseModel):
     override_params: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     Optional parameters to override in the request
+    """
+
+    headers_override: typing.Optional[HeadersOverride] = None
+    metadata_match: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
+    """
+    Optional metadata key-value pairs that must match incoming request metadata headers for this target to be considered for routing.
     """
 
     if IS_PYDANTIC_V2:

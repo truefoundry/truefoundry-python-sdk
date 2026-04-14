@@ -6,8 +6,9 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.pagination import AsyncPager, SyncPager
+from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
@@ -18,6 +19,7 @@ from ..types.empty_response import EmptyResponse
 from ..types.get_artifact_response import GetArtifactResponse
 from ..types.get_artifact_version_response import GetArtifactVersionResponse
 from ..types.list_artifacts_response import ListArtifactsResponse
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -31,6 +33,8 @@ class RawArtifactsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetArtifactResponse]:
         """
+        Get an artifact by its ID.
+
         Parameters
         ----------
         id : str
@@ -41,10 +45,10 @@ class RawArtifactsClient:
         Returns
         -------
         HttpResponse[GetArtifactResponse]
-            Successful Response
+            The artifact data
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/artifacts/{jsonable_encoder(id)}",
+            f"api/ml/v1/artifacts/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -72,12 +76,18 @@ class RawArtifactsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[EmptyResponse]:
         """
+        Delete an artifact by its ID.
+
         Parameters
         ----------
         id : str
@@ -88,10 +98,10 @@ class RawArtifactsClient:
         Returns
         -------
         HttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/artifacts/{jsonable_encoder(id)}",
+            f"api/ml/v1/artifacts/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -119,6 +129,10 @@ class RawArtifactsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def list(
@@ -134,21 +148,30 @@ class RawArtifactsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Artifact, ListArtifactsResponse]:
         """
+        List artifacts with optional filtering by FQN, ML Repo, name, or run ID.
+
         Parameters
         ----------
         fqn : typing.Optional[str]
+            Fully qualified name to filter artifacts by (format: '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}')
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter artifacts by
 
         name : typing.Optional[str]
+            Name of the artifact to filter by
 
         offset : typing.Optional[int]
+            Number of artifacts to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of artifacts to return
 
         run_id : typing.Optional[str]
+            ID of the run to filter artifacts by
 
         include_empty_artifacts : typing.Optional[bool]
+            Whether to include artifacts that have no versions
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -156,7 +179,7 @@ class RawArtifactsClient:
         Returns
         -------
         SyncPager[Artifact, ListArtifactsResponse]
-            Successful Response
+            List of artifacts matching the query with pagination information
         """
         offset = offset if offset is not None else 0
 
@@ -210,15 +233,22 @@ class RawArtifactsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create_or_update(
         self, *, manifest: ArtifactManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetArtifactVersionResponse]:
         """
+        Create or update an artifact version.
+
         Parameters
         ----------
         manifest : ArtifactManifest
+            Manifest containing metadata for the artifact to apply
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -226,7 +256,7 @@ class RawArtifactsClient:
         Returns
         -------
         HttpResponse[GetArtifactVersionResponse]
-            Successful Response
+            The created or updated artifact version
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/artifact-versions",
@@ -266,6 +296,10 @@ class RawArtifactsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -277,6 +311,8 @@ class AsyncRawArtifactsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetArtifactResponse]:
         """
+        Get an artifact by its ID.
+
         Parameters
         ----------
         id : str
@@ -287,10 +323,10 @@ class AsyncRawArtifactsClient:
         Returns
         -------
         AsyncHttpResponse[GetArtifactResponse]
-            Successful Response
+            The artifact data
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/artifacts/{jsonable_encoder(id)}",
+            f"api/ml/v1/artifacts/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -318,12 +354,18 @@ class AsyncRawArtifactsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[EmptyResponse]:
         """
+        Delete an artifact by its ID.
+
         Parameters
         ----------
         id : str
@@ -334,10 +376,10 @@ class AsyncRawArtifactsClient:
         Returns
         -------
         AsyncHttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/artifacts/{jsonable_encoder(id)}",
+            f"api/ml/v1/artifacts/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -365,6 +407,10 @@ class AsyncRawArtifactsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def list(
@@ -380,21 +426,30 @@ class AsyncRawArtifactsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Artifact, ListArtifactsResponse]:
         """
+        List artifacts with optional filtering by FQN, ML Repo, name, or run ID.
+
         Parameters
         ----------
         fqn : typing.Optional[str]
+            Fully qualified name to filter artifacts by (format: '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}')
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter artifacts by
 
         name : typing.Optional[str]
+            Name of the artifact to filter by
 
         offset : typing.Optional[int]
+            Number of artifacts to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of artifacts to return
 
         run_id : typing.Optional[str]
+            ID of the run to filter artifacts by
 
         include_empty_artifacts : typing.Optional[bool]
+            Whether to include artifacts that have no versions
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -402,7 +457,7 @@ class AsyncRawArtifactsClient:
         Returns
         -------
         AsyncPager[Artifact, ListArtifactsResponse]
-            Successful Response
+            List of artifacts matching the query with pagination information
         """
         offset = offset if offset is not None else 0
 
@@ -459,15 +514,22 @@ class AsyncRawArtifactsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create_or_update(
         self, *, manifest: ArtifactManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetArtifactVersionResponse]:
         """
+        Create or update an artifact version.
+
         Parameters
         ----------
         manifest : ArtifactManifest
+            Manifest containing metadata for the artifact to apply
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -475,7 +537,7 @@ class AsyncRawArtifactsClient:
         Returns
         -------
         AsyncHttpResponse[GetArtifactVersionResponse]
-            Successful Response
+            The created or updated artifact version
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/artifact-versions",
@@ -515,4 +577,8 @@ class AsyncRawArtifactsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

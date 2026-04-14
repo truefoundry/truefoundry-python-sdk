@@ -36,6 +36,11 @@ class AwsParameterStore(UniversalBaseModel):
     List of subjects that are authorized to access this integration. List of user fqn in format <user_type>:<username>.
     """
 
+    kms_arn: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ARN of the KMS key to use for encryption.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:

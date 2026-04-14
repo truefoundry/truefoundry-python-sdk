@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .enforcing_strategy import EnforcingStrategy
 from .google_model_armor_guardrail_config_auth_data import GoogleModelArmorGuardrailConfigAuthData
 from .google_model_armor_guardrail_config_config import GoogleModelArmorGuardrailConfigConfig
+from .google_model_armor_guardrail_config_operation import GoogleModelArmorGuardrailConfigOperation
 
 
 class GoogleModelArmorGuardrailConfig(UniversalBaseModel):
@@ -19,9 +20,7 @@ class GoogleModelArmorGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
-    description: typing.Optional[str] = pydantic.Field(
-        default="Google Cloud Model Armor for prompt injection, harmful content, PII, and malicious URI detection"
-    )
+    description: typing.Optional[str] = pydantic.Field(default=None)
     """
     Optional description for this Guardrail Config.
     """
@@ -39,9 +38,14 @@ class GoogleModelArmorGuardrailConfig(UniversalBaseModel):
     Authentication credentials for Google Cloud Model Armor
     """
 
-    operation: typing.Literal["validate"] = pydantic.Field(default="validate")
+    operation: GoogleModelArmorGuardrailConfigOperation = pydantic.Field()
     """
-    The operation type for this guardrail. Google Model Armor guardrails can only be used for validation.
+    The operation type to use for the Guardrail. Validate guardrails are used to validate requests and mutate can validate as well as mutate requests.
+    """
+
+    priority: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Execution order for mutate guardrails. Lower values run first. Only applicable when operation is mutate.
     """
 
     enforcing_strategy: EnforcingStrategy

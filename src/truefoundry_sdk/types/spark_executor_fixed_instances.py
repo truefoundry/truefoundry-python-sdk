@@ -16,7 +16,7 @@ class SparkExecutorFixedInstances(UniversalBaseModel):
     +value=fixed
     """
 
-    count: int = pydantic.Field(default=1)
+    count: int = pydantic.Field()
     """
     Number of instances to start
     """

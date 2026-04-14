@@ -6,21 +6,25 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.pagination import AsyncPager, SyncPager
+from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..errors.conflict_error import ConflictError
+from ..errors.forbidden_error import ForbiddenError
 from ..errors.not_found_error import NotFoundError
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.delete_team_response import DeleteTeamResponse
+from ..types.get_team_permissions_response import GetTeamPermissionsResponse
 from ..types.get_team_response import GetTeamResponse
 from ..types.http_error import HttpError
 from ..types.list_teams_response import ListTeamsResponse
 from ..types.team import Team
 from ..types.team_manifest import TeamManifest
 from .types.teams_list_request_type import TeamsListRequestType
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -93,13 +97,17 @@ class RawTeamsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create_or_update(
         self,
         *,
         manifest: TeamManifest,
-        dry_run: typing.Optional[bool] = False,
+        dry_run: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetTeamResponse]:
         """
@@ -171,6 +179,10 @@ class RawTeamsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[GetTeamResponse]:
@@ -191,7 +203,7 @@ class RawTeamsClient:
             Returns the Team associated with provided team id
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/teams/{jsonable_encoder(id)}",
+            f"api/svc/v1/teams/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -219,6 +231,10 @@ class RawTeamsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -241,7 +257,7 @@ class RawTeamsClient:
             Successfully deleted the team.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/teams/{jsonable_encoder(id)}",
+            f"api/svc/v1/teams/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -280,6 +296,75 @@ class RawTeamsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def get_permissions(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[GetTeamPermissionsResponse]:
+        """
+        Get all role bindings associated with a team.
+
+        Parameters
+        ----------
+        id : str
+            Team Id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetTeamPermissionsResponse]
+            Returns role bindings for the team.
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/teams/{encode_path_param(id)}/permissions",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetTeamPermissionsResponse,
+                    parse_obj_as(
+                        type_=GetTeamPermissionsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -353,13 +438,17 @@ class AsyncRawTeamsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create_or_update(
         self,
         *,
         manifest: TeamManifest,
-        dry_run: typing.Optional[bool] = False,
+        dry_run: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetTeamResponse]:
         """
@@ -431,6 +520,10 @@ class AsyncRawTeamsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -453,7 +546,7 @@ class AsyncRawTeamsClient:
             Returns the Team associated with provided team id
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/teams/{jsonable_encoder(id)}",
+            f"api/svc/v1/teams/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -481,6 +574,10 @@ class AsyncRawTeamsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -503,7 +600,7 @@ class AsyncRawTeamsClient:
             Successfully deleted the team.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/teams/{jsonable_encoder(id)}",
+            f"api/svc/v1/teams/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -542,4 +639,73 @@ class AsyncRawTeamsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_permissions(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[GetTeamPermissionsResponse]:
+        """
+        Get all role bindings associated with a team.
+
+        Parameters
+        ----------
+        id : str
+            Team Id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetTeamPermissionsResponse]
+            Returns role bindings for the team.
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/teams/{encode_path_param(id)}/permissions",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetTeamPermissionsResponse,
+                    parse_obj_as(
+                        type_=GetTeamPermissionsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

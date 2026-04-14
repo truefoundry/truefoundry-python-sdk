@@ -9,20 +9,16 @@ from ..core.serialization import FieldMetadata
 
 
 class AddonComponentStatus(UniversalBaseModel):
-    health_status: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="healthStatus")] = (
-        pydantic.Field(alias="healthStatus", default=None)
-    )
-    """
-    Health status of the addon
-    """
-
-    sync_status: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="syncStatus")] = pydantic.Field(
-        alias="syncStatus", default=None
-    )
-    """
-    Sync status of the addon
-    """
-
+    health_status: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="healthStatus"),
+        pydantic.Field(alias="healthStatus", description="Health status of the addon"),
+    ] = None
+    sync_status: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="syncStatus"),
+        pydantic.Field(alias="syncStatus", description="Sync status of the addon"),
+    ] = None
     installed: bool = pydantic.Field()
     """
     Indicates whether the addon is installed

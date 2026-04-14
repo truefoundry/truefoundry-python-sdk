@@ -18,32 +18,34 @@ from .upgrade_data import UpgradeData
 
 class AddonComponent(UniversalBaseModel):
     name: AddonComponentName
-    app_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="appName")] = pydantic.Field(
-        alias="appName", default=None
-    )
+    app_name: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="appName"), pydantic.Field(alias="appName")
+    ] = None
     namespace: typing.Optional[str] = None
-    application_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="applicationId")] = (
-        pydantic.Field(alias="applicationId", default=None)
-    )
+    application_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="applicationId"), pydantic.Field(alias="applicationId")
+    ] = None
     description: typing.Optional[str] = None
     path: typing.Optional[str] = None
-    addon_folder: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="addonFolder")] = (
-        pydantic.Field(alias="addonFolder", default=None)
-    )
+    addon_folder: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="addonFolder"), pydantic.Field(alias="addonFolder")
+    ] = None
     installed: typing.Optional[bool] = None
     status: typing.Optional[AddonComponentStatus] = None
     version: typing.Optional[str] = None
     manifest: typing.Optional[typing.Dict[str, typing.Any]] = None
     installation_source: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="installationSource")
-    ] = pydantic.Field(alias="installationSource", default=None)
+        typing.Optional[str], FieldMetadata(alias="installationSource"), pydantic.Field(alias="installationSource")
+    ] = None
     unsupported_cluster_types: typing_extensions.Annotated[
-        typing.Optional[typing.List[ClusterType]], FieldMetadata(alias="unsupportedClusterTypes")
-    ] = pydantic.Field(alias="unsupportedClusterTypes", default=None)
+        typing.Optional[typing.List[ClusterType]],
+        FieldMetadata(alias="unsupportedClusterTypes"),
+        pydantic.Field(alias="unsupportedClusterTypes"),
+    ] = None
     required: typing.Optional[bool] = None
-    known_cr_ds: typing_extensions.Annotated[typing.Optional[typing.List[str]], FieldMetadata(alias="knownCRDs")] = (
-        pydantic.Field(alias="knownCRDs", default=None)
-    )
+    known_cr_ds: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]], FieldMetadata(alias="knownCRDs"), pydantic.Field(alias="knownCRDs")
+    ] = None
     source: typing.Optional[AddOnComponentSource] = None
     upgrades: typing.Optional[UpgradeData] = None
     labels: typing.Optional[typing.List[str]] = None
@@ -52,9 +54,13 @@ class AddonComponent(UniversalBaseModel):
     Recommendations
     """
 
-    workspace_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="workspaceId")] = (
-        pydantic.Field(alias="workspaceId", default=None)
-    )
+    workspace_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="workspaceId"), pydantic.Field(alias="workspaceId")
+    ] = None
+    metadata: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    """
+    Addon metadata. autopilotEnabled is true when the backing addon application has autopilot enabled; otherwise false.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

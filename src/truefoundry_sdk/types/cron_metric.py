@@ -45,7 +45,7 @@ class CronMetric(UniversalBaseModel):
     ```
     """
 
-    timezone: str = pydantic.Field(default="UTC")
+    timezone: str = pydantic.Field()
     """
     Timezone against which the cron schedule will be calculated, e.g. "Asia/Tokyo". Default is machine's local time.
     https://docs.truefoundry.com/docs/list-of-supported-timezones

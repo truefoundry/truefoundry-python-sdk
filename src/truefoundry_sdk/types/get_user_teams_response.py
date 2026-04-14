@@ -4,13 +4,13 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .team import Team
+from .user_team_info import UserTeamInfo
 
 
 class GetUserTeamsResponse(UniversalBaseModel):
-    data: typing.List[Team] = pydantic.Field()
+    data: typing.List[UserTeamInfo] = pydantic.Field()
     """
-    Teams where user is a member
+    Teams where user is a member, with their role
     """
 
     if IS_PYDANTIC_V2:

@@ -59,7 +59,7 @@ class Job(UniversalBaseModel):
     Configure alerts to be sent when the job starts/fails/completes
     """
 
-    retries: typing.Optional[int] = pydantic.Field(default=0)
+    retries: typing.Optional[int] = pydantic.Field(default=None)
     """
     Specify the maximum number of attempts to retry a job before it is marked as failed.
     """

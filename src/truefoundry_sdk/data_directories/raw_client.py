@@ -6,8 +6,9 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.pagination import AsyncPager, SyncPager
+from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
@@ -22,6 +23,7 @@ from ..types.list_data_directories_response import ListDataDirectoriesResponse
 from ..types.list_files_response import ListFilesResponse
 from ..types.multi_part_upload_response import MultiPartUploadResponse
 from ..types.operation import Operation
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -37,13 +39,6 @@ class RawDataDirectoriesClient:
         """
         Get a data directory by its ID.
 
-        Args:
-            id (str): The ID of the data directory to retrieve
-            user_info: Current authenticated user info
-
-        Returns:
-            DataDirectoryResponse: Response containing the retrieved data directory
-
         Parameters
         ----------
         id : str
@@ -54,10 +49,10 @@ class RawDataDirectoriesClient:
         Returns
         -------
         HttpResponse[GetDataDirectoryResponse]
-            Successful Response
+            The data directory data
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/data-directories/{jsonable_encoder(id)}",
+            f"api/ml/v1/data-directories/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -85,6 +80,10 @@ class RawDataDirectoriesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -95,15 +94,7 @@ class RawDataDirectoriesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[EmptyResponse]:
         """
-        Delete a data directory and optionally its contents.
-
-        Args:
-            id: Unique identifier of the data directory to delete
-            delete_contents: If True, also deletes the data directory's contents
-            user_info: Authenticated user information
-
-        Returns:
-            EmptyResponse: Empty response indicating successful deletion
+        Delete a data directory, optionally including its contents.
 
         Parameters
         ----------
@@ -117,10 +108,10 @@ class RawDataDirectoriesClient:
         Returns
         -------
         HttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/data-directories/{jsonable_encoder(id)}",
+            f"api/ml/v1/data-directories/{encode_path_param(id)}",
             method="DELETE",
             params={
                 "delete_contents": delete_contents,
@@ -151,6 +142,10 @@ class RawDataDirectoriesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def list(
@@ -164,30 +159,24 @@ class RawDataDirectoriesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[DataDirectory, ListDataDirectoriesResponse]:
         """
-        List all data directories with optional filtering and pagination.
-
-        Args:
-            filters: Query parameters for filtering and pagination
-                - ml_repo_id: Filter data directories by ml repo ID
-                - name: Optional filter data directories by name
-                - limit: Optional maximum number of data directories to return
-                - offset: Optional number of data directories to skip
-            user_info: Authenticated user information
-
-        Returns:
-            ListDataDirectoriesResponse: List of data directories and pagination info
+        List data directories with optional filtering by FQN, ML Repo, or name.
 
         Parameters
         ----------
         fqn : typing.Optional[str]
+            Fully qualified name to filter data directories by
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter data directories by
 
         name : typing.Optional[str]
+            Name of the data directory to filter by
 
         limit : typing.Optional[int]
+            Maximum number of data directories to return
 
         offset : typing.Optional[int]
+            Number of data directories to skip for pagination
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -195,7 +184,7 @@ class RawDataDirectoriesClient:
         Returns
         -------
         SyncPager[DataDirectory, ListDataDirectoriesResponse]
-            Successful Response
+            List of data directories matching the query with pagination information
         """
         offset = offset if offset is not None else 0
 
@@ -245,15 +234,22 @@ class RawDataDirectoriesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create_or_update(
         self, *, manifest: DataDirectoryManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetDataDirectoryResponse]:
         """
+        Create or update a data directory.
+
         Parameters
         ----------
         manifest : DataDirectoryManifest
+            Manifest containing metadata for the data directory to apply
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -261,7 +257,7 @@ class RawDataDirectoriesClient:
         Returns
         -------
         HttpResponse[GetDataDirectoryResponse]
-            Successful Response
+            The created or updated data directory
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/data-directories",
@@ -301,6 +297,10 @@ class RawDataDirectoriesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def list_files(
@@ -313,24 +313,21 @@ class RawDataDirectoriesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[FileInfo, ListFilesResponse]:
         """
-        List files in a dataset.
-
-        Args:
-            request_dto: Request containing dataset ID, path, page token and limit
-            user_info: Authenticated user information
-
-        Returns:
-            ListFilesResponse: Response containing files and pagination info
+        List files and directories in a data directory.
 
         Parameters
         ----------
         id : str
+            ID of the artifact version to list files from
 
         path : typing.Optional[str]
+            Relative path within the artifact version to list files from (defaults to root)
 
         limit : typing.Optional[int]
+            Maximum number of files/directories to return
 
         page_token : typing.Optional[str]
+            Token to retrieve the next page of results
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -338,7 +335,7 @@ class RawDataDirectoriesClient:
         Returns
         -------
         SyncPager[FileInfo, ListFilesResponse]
-            Successful Response
+            List of files and directories with pagination information
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/data-directories/files",
@@ -392,26 +389,25 @@ class RawDataDirectoriesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete_files(
         self, *, id: str, paths: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[EmptyResponse]:
         """
-        Delete files from the dataset.
-
-        Args:
-            request_dto: Request containing dataset ID and paths
-            user_info: Authenticated user information
-
-        Returns:
-            EmptyResponse: Empty response indicating successful deletion
+        Delete files from a data directory.
 
         Parameters
         ----------
         id : str
+            ID of the artifact version to delete files from
 
         paths : typing.Sequence[str]
+            List of relative file paths within the artifact version to delete
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -419,7 +415,7 @@ class RawDataDirectoriesClient:
         Returns
         -------
         HttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/data-directories/files",
@@ -458,6 +454,10 @@ class RawDataDirectoriesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_signed_urls(
@@ -469,22 +469,18 @@ class RawDataDirectoriesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetSignedUrLsResponse]:
         """
-        Get signed URLs for a dataset.
-
-        Args:
-            request_dto: Request containing dataset ID, paths and operation
-            user_info: Authenticated user information
-
-        Returns:
-            GetSignedURLsResponse: Response containing signed URLs
+        Get pre-signed URLs for reading or writing files in a data directory.
 
         Parameters
         ----------
         id : str
+            ID of the artifact version to get signed URLs for
 
         paths : typing.Sequence[str]
+            List of relative file paths within the artifact version to get signed URLs for
 
         operation : Operation
+            Operation type for the signed URL (e.g., 'READ' or 'WRITE')
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -492,7 +488,7 @@ class RawDataDirectoriesClient:
         Returns
         -------
         HttpResponse[GetSignedUrLsResponse]
-            Successful Response
+            List of signed URLs for the requested file paths
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/data-directories/signed-urls",
@@ -532,28 +528,28 @@ class RawDataDirectoriesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create_multipart_upload(
         self, *, id: str, path: str, num_parts: int, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[MultiPartUploadResponse]:
         """
-        Create a multipart upload for a dataset
-
-        Args:
-            request_dto: Request containing dataset ID, path and number of parts
-            user_info: Authenticated user information
-
-        Returns:
-            MultiPartUploadResponse: Response containing multipart upload info
+        Create a multipart upload for large files in a data directory.
 
         Parameters
         ----------
         id : str
+            ID of the artifact version to upload files to
 
         path : str
+            Relative path within the artifact version where the file should be uploaded
 
         num_parts : int
+            Number of parts to split the upload into for multipart upload
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -561,7 +557,7 @@ class RawDataDirectoriesClient:
         Returns
         -------
         HttpResponse[MultiPartUploadResponse]
-            Successful Response
+            Multipart upload information including signed URLs for each part
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/data-directories/signed-urls/multipart",
@@ -601,6 +597,10 @@ class RawDataDirectoriesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -614,13 +614,6 @@ class AsyncRawDataDirectoriesClient:
         """
         Get a data directory by its ID.
 
-        Args:
-            id (str): The ID of the data directory to retrieve
-            user_info: Current authenticated user info
-
-        Returns:
-            DataDirectoryResponse: Response containing the retrieved data directory
-
         Parameters
         ----------
         id : str
@@ -631,10 +624,10 @@ class AsyncRawDataDirectoriesClient:
         Returns
         -------
         AsyncHttpResponse[GetDataDirectoryResponse]
-            Successful Response
+            The data directory data
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/data-directories/{jsonable_encoder(id)}",
+            f"api/ml/v1/data-directories/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -662,6 +655,10 @@ class AsyncRawDataDirectoriesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -672,15 +669,7 @@ class AsyncRawDataDirectoriesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[EmptyResponse]:
         """
-        Delete a data directory and optionally its contents.
-
-        Args:
-            id: Unique identifier of the data directory to delete
-            delete_contents: If True, also deletes the data directory's contents
-            user_info: Authenticated user information
-
-        Returns:
-            EmptyResponse: Empty response indicating successful deletion
+        Delete a data directory, optionally including its contents.
 
         Parameters
         ----------
@@ -694,10 +683,10 @@ class AsyncRawDataDirectoriesClient:
         Returns
         -------
         AsyncHttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/data-directories/{jsonable_encoder(id)}",
+            f"api/ml/v1/data-directories/{encode_path_param(id)}",
             method="DELETE",
             params={
                 "delete_contents": delete_contents,
@@ -728,6 +717,10 @@ class AsyncRawDataDirectoriesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def list(
@@ -741,30 +734,24 @@ class AsyncRawDataDirectoriesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[DataDirectory, ListDataDirectoriesResponse]:
         """
-        List all data directories with optional filtering and pagination.
-
-        Args:
-            filters: Query parameters for filtering and pagination
-                - ml_repo_id: Filter data directories by ml repo ID
-                - name: Optional filter data directories by name
-                - limit: Optional maximum number of data directories to return
-                - offset: Optional number of data directories to skip
-            user_info: Authenticated user information
-
-        Returns:
-            ListDataDirectoriesResponse: List of data directories and pagination info
+        List data directories with optional filtering by FQN, ML Repo, or name.
 
         Parameters
         ----------
         fqn : typing.Optional[str]
+            Fully qualified name to filter data directories by
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter data directories by
 
         name : typing.Optional[str]
+            Name of the data directory to filter by
 
         limit : typing.Optional[int]
+            Maximum number of data directories to return
 
         offset : typing.Optional[int]
+            Number of data directories to skip for pagination
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -772,7 +759,7 @@ class AsyncRawDataDirectoriesClient:
         Returns
         -------
         AsyncPager[DataDirectory, ListDataDirectoriesResponse]
-            Successful Response
+            List of data directories matching the query with pagination information
         """
         offset = offset if offset is not None else 0
 
@@ -825,15 +812,22 @@ class AsyncRawDataDirectoriesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create_or_update(
         self, *, manifest: DataDirectoryManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetDataDirectoryResponse]:
         """
+        Create or update a data directory.
+
         Parameters
         ----------
         manifest : DataDirectoryManifest
+            Manifest containing metadata for the data directory to apply
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -841,7 +835,7 @@ class AsyncRawDataDirectoriesClient:
         Returns
         -------
         AsyncHttpResponse[GetDataDirectoryResponse]
-            Successful Response
+            The created or updated data directory
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/data-directories",
@@ -881,6 +875,10 @@ class AsyncRawDataDirectoriesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def list_files(
@@ -893,24 +891,21 @@ class AsyncRawDataDirectoriesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[FileInfo, ListFilesResponse]:
         """
-        List files in a dataset.
-
-        Args:
-            request_dto: Request containing dataset ID, path, page token and limit
-            user_info: Authenticated user information
-
-        Returns:
-            ListFilesResponse: Response containing files and pagination info
+        List files and directories in a data directory.
 
         Parameters
         ----------
         id : str
+            ID of the artifact version to list files from
 
         path : typing.Optional[str]
+            Relative path within the artifact version to list files from (defaults to root)
 
         limit : typing.Optional[int]
+            Maximum number of files/directories to return
 
         page_token : typing.Optional[str]
+            Token to retrieve the next page of results
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -918,7 +913,7 @@ class AsyncRawDataDirectoriesClient:
         Returns
         -------
         AsyncPager[FileInfo, ListFilesResponse]
-            Successful Response
+            List of files and directories with pagination information
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/data-directories/files",
@@ -975,26 +970,25 @@ class AsyncRawDataDirectoriesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete_files(
         self, *, id: str, paths: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[EmptyResponse]:
         """
-        Delete files from the dataset.
-
-        Args:
-            request_dto: Request containing dataset ID and paths
-            user_info: Authenticated user information
-
-        Returns:
-            EmptyResponse: Empty response indicating successful deletion
+        Delete files from a data directory.
 
         Parameters
         ----------
         id : str
+            ID of the artifact version to delete files from
 
         paths : typing.Sequence[str]
+            List of relative file paths within the artifact version to delete
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1002,7 +996,7 @@ class AsyncRawDataDirectoriesClient:
         Returns
         -------
         AsyncHttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/data-directories/files",
@@ -1041,6 +1035,10 @@ class AsyncRawDataDirectoriesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_signed_urls(
@@ -1052,22 +1050,18 @@ class AsyncRawDataDirectoriesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetSignedUrLsResponse]:
         """
-        Get signed URLs for a dataset.
-
-        Args:
-            request_dto: Request containing dataset ID, paths and operation
-            user_info: Authenticated user information
-
-        Returns:
-            GetSignedURLsResponse: Response containing signed URLs
+        Get pre-signed URLs for reading or writing files in a data directory.
 
         Parameters
         ----------
         id : str
+            ID of the artifact version to get signed URLs for
 
         paths : typing.Sequence[str]
+            List of relative file paths within the artifact version to get signed URLs for
 
         operation : Operation
+            Operation type for the signed URL (e.g., 'READ' or 'WRITE')
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1075,7 +1069,7 @@ class AsyncRawDataDirectoriesClient:
         Returns
         -------
         AsyncHttpResponse[GetSignedUrLsResponse]
-            Successful Response
+            List of signed URLs for the requested file paths
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/data-directories/signed-urls",
@@ -1115,28 +1109,28 @@ class AsyncRawDataDirectoriesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create_multipart_upload(
         self, *, id: str, path: str, num_parts: int, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[MultiPartUploadResponse]:
         """
-        Create a multipart upload for a dataset
-
-        Args:
-            request_dto: Request containing dataset ID, path and number of parts
-            user_info: Authenticated user information
-
-        Returns:
-            MultiPartUploadResponse: Response containing multipart upload info
+        Create a multipart upload for large files in a data directory.
 
         Parameters
         ----------
         id : str
+            ID of the artifact version to upload files to
 
         path : str
+            Relative path within the artifact version where the file should be uploaded
 
         num_parts : int
+            Number of parts to split the upload into for multipart upload
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1144,7 +1138,7 @@ class AsyncRawDataDirectoriesClient:
         Returns
         -------
         AsyncHttpResponse[MultiPartUploadResponse]
-            Successful Response
+            Multipart upload information including signed URLs for each part
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/data-directories/signed-urls/multipart",
@@ -1184,4 +1178,8 @@ class AsyncRawDataDirectoriesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

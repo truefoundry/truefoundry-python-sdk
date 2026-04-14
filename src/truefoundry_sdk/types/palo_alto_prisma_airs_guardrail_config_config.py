@@ -28,6 +28,11 @@ class PaloAltoPrismaAirsGuardrailConfigConfig(UniversalBaseModel):
     Execution mode for the guardrail. Sync waits for the guardrail check to complete before proceeding. Async triggers the check without waiting. Defaults to sync.
     """
 
+    metadata_key_mapping: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
+    """
+    Map Palo Alto AIRS metadata fields to TrueFoundry request metadata keys. Key is the Palo Alto AIRS metadata field name, value is the corresponding key from X-TFY-METADATA header on the TrueFoundry side. Example: {"app_user": "user_email", "ai_model": "model_name"}. Reserved AIRS keys: ai_model, app_user, app_name. [Docs](https://www.truefoundry.com/docs/ai-gateway/palo-alto-airs)
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:

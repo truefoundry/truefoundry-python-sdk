@@ -8,6 +8,7 @@ from .aws_bedrock_provider_account import AwsBedrockProviderAccount
 from .aws_sagemaker_provider_account import AwsSagemakerProviderAccount
 from .azure_foundry_provider_account import AzureFoundryProviderAccount
 from .azure_open_ai_provider_account import AzureOpenAiProviderAccount
+from .baseten_provider_account import BasetenProviderAccount
 from .cartesia_provider_account import CartesiaProviderAccount
 from .cerebras_provider_account import CerebrasProviderAccount
 from .cloudera_provider_account import ClouderaProviderAccount
@@ -57,6 +58,7 @@ ModelProviderAccount = typing.Union[
     OpenRouterProviderAccount,
     SambaNovaProviderAccount,
     XaiProviderAccount,
+    BasetenProviderAccount,
     AwsSagemakerProviderAccount,
     CerebrasProviderAccount,
     SnowflakeCortexProviderAccount,

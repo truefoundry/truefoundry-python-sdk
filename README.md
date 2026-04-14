@@ -42,16 +42,14 @@ Instantiate and use the client with the following:
 
 ```python
 from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk.applications import (
-    ApplicationsListRequestDeviceTypeFilter,
-    ApplicationsListRequestLifecycleStage,
-)
+from truefoundry_sdk.applications import ApplicationsListRequestDeviceTypeFilter, ApplicationsListRequestLifecycleStage
 
 client = TrueFoundry(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.applications.list(
+
+client.applications.list(
     limit=10,
     offset=0,
     application_id="applicationId",
@@ -70,11 +68,6 @@ response = client.applications.list(
     lifecycle_stage=ApplicationsListRequestLifecycleStage.ACTIVE,
     is_recommendation_present_and_visible=True,
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 ```
 
 ## Async Client
@@ -83,21 +76,18 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 
 ```python
 import asyncio
+from truefoundry_sdk.applications import ApplicationsListRequestDeviceTypeFilter, ApplicationsListRequestLifecycleStage
 
 from truefoundry_sdk import AsyncTrueFoundry
-from truefoundry_sdk.applications import (
-    ApplicationsListRequestDeviceTypeFilter,
-    ApplicationsListRequestLifecycleStage,
-)
 
 client = AsyncTrueFoundry(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
 
 async def main() -> None:
-    response = await client.applications.list(
+    await client.applications.list(
         limit=10,
         offset=0,
         application_id="applicationId",
@@ -116,12 +106,6 @@ async def main() -> None:
         lifecycle_stage=ApplicationsListRequestLifecycleStage.ACTIVE,
         is_recommendation_present_and_visible=True,
     )
-    async for item in response:
-        yield item
-
-    # alternatively, you can paginate page-by-page
-    async for page in response.iter_pages():
-        yield page
 
 
 asyncio.run(main())
@@ -148,27 +132,37 @@ Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used 
 
 ```python
 from truefoundry_sdk import TrueFoundry
+from truefoundry_sdk.applications import ApplicationsListRequestDeviceTypeFilter, ApplicationsListRequestLifecycleStage
 
 client = TrueFoundry(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.users.list(
+
+client.applications.list(
     limit=10,
     offset=0,
-    query="query",
-    show_invalid_users=True,
+    application_id="applicationId",
+    workspace_id="workspaceId",
+    application_name="applicationName",
+    fqn="fqn",
+    workspace_fqn="workspaceFqn",
+    application_type="applicationType",
+    name_search_query="nameSearchQuery",
+    environment_id="environmentId",
+    cluster_id="clusterId",
+    application_set_id="applicationSetId",
+    paused=True,
+    device_type_filter=ApplicationsListRequestDeviceTypeFilter.CPU,
+    last_deployed_by_subjects="lastDeployedBySubjects",
+    lifecycle_stage=ApplicationsListRequestLifecycleStage.ACTIVE,
+    is_recommendation_present_and_visible=True,
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 ```
 
 ```python
 # You can also iterate through pages and access the typed response per page
-pager = client.users.list(...)
+pager = client.applications.list(...)
 for page in pager.iter_pages():
     print(page.response)  # access the typed response for each page
     for item in page:
@@ -188,11 +182,7 @@ from truefoundry_sdk import TrueFoundry
 client = TrueFoundry(
     ...,
 )
-response = client.applications.with_raw_response.list(...)
-print(response.headers)  # access the response headers
-print(response.status_code)  # access the response status code
-print(response.data)  # access the underlying object
-pager = client.users.list(...)
+pager = client.applications.list(...)
 print(pager.response)  # access the typed response for the first page
 for item in pager:
     print(item)  # access the underlying object(s)
@@ -227,14 +217,9 @@ client.applications.list(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from truefoundry_sdk import TrueFoundry
 
-client = TrueFoundry(
-    ...,
-    timeout=20.0,
-)
-
+client = TrueFoundry(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.applications.list(..., request_options={

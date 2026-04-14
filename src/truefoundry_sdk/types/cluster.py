@@ -15,22 +15,20 @@ class Cluster(UniversalBaseModel):
     id: str
     fqn: str
     manifest: ClusterManifest
-    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")] = pydantic.Field(
-        alias="tenantName"
-    )
-    account_id: typing_extensions.Annotated[str, FieldMetadata(alias="accountId")] = pydantic.Field(alias="accountId")
+    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName"), pydantic.Field(alias="tenantName")]
+    account_id: typing_extensions.Annotated[str, FieldMetadata(alias="accountId"), pydantic.Field(alias="accountId")]
     created_by_subject: typing_extensions.Annotated[
-        typing.Optional[Subject], FieldMetadata(alias="createdBySubject")
-    ] = pydantic.Field(alias="createdBySubject", default=None)
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field(
-        alias="createdAt"
-    )
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")] = pydantic.Field(
-        alias="updatedAt"
-    )
-    created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = pydantic.Field(
-        alias="createdBy", default=None
-    )
+        typing.Optional[Subject], FieldMetadata(alias="createdBySubject"), pydantic.Field(alias="createdBySubject")
+    ] = None
+    created_at: typing_extensions.Annotated[
+        dt.datetime, FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime, FieldMetadata(alias="updatedAt"), pydantic.Field(alias="updatedAt")
+    ]
+    created_by: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="createdBy"), pydantic.Field(alias="createdBy")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

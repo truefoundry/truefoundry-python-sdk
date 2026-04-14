@@ -6,8 +6,9 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.pagination import AsyncPager, SyncPager
+from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
@@ -25,6 +26,7 @@ from ..types.secret_group import SecretGroup
 from ..types.secret_group_manifest import SecretGroupManifest
 from ..types.secret_input import SecretInput
 from ..types.update_secret_input import UpdateSecretInput
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -103,6 +105,10 @@ class RawSecretGroupsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
@@ -186,10 +192,18 @@ class RawSecretGroupsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create_or_update(
-        self, *, manifest: SecretGroupManifest, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        manifest: SecretGroupManifest,
+        dry_run: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetSecretGroupResponse]:
         """
         Creates a new secret group or updates an existing one based on the provided manifest.
@@ -198,6 +212,9 @@ class RawSecretGroupsClient:
         ----------
         manifest : SecretGroupManifest
             Secret Group Manifest
+
+        dry_run : typing.Optional[bool]
+            Validate the manifest and collaborators without persisting or updating authorizations and secret groups
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -214,6 +231,7 @@ class RawSecretGroupsClient:
                 "manifest": convert_and_respect_annotation_metadata(
                     object_=manifest, annotation=SecretGroupManifest, direction="write"
                 ),
+                "dryRun": dry_run,
             },
             headers={
                 "content-type": "application/json",
@@ -289,6 +307,10 @@ class RawSecretGroupsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
@@ -311,7 +333,7 @@ class RawSecretGroupsClient:
             Returns the Secret Group associated with provided id
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/secret-groups/{jsonable_encoder(id)}",
+            f"api/svc/v1/secret-groups/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -350,6 +372,10 @@ class RawSecretGroupsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update(
@@ -378,7 +404,7 @@ class RawSecretGroupsClient:
             Returns the updated secret group without associated secrets.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/secret-groups/{jsonable_encoder(id)}",
+            f"api/svc/v1/secret-groups/{encode_path_param(id)}",
             method="PUT",
             json={
                 "secrets": convert_and_respect_annotation_metadata(
@@ -448,6 +474,10 @@ class RawSecretGroupsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -470,7 +500,7 @@ class RawSecretGroupsClient:
             Deletes Secret Group.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/secret-groups/{jsonable_encoder(id)}",
+            f"api/svc/v1/secret-groups/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -509,6 +539,10 @@ class RawSecretGroupsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -588,6 +622,10 @@ class AsyncRawSecretGroupsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
@@ -671,10 +709,18 @@ class AsyncRawSecretGroupsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create_or_update(
-        self, *, manifest: SecretGroupManifest, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        manifest: SecretGroupManifest,
+        dry_run: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetSecretGroupResponse]:
         """
         Creates a new secret group or updates an existing one based on the provided manifest.
@@ -683,6 +729,9 @@ class AsyncRawSecretGroupsClient:
         ----------
         manifest : SecretGroupManifest
             Secret Group Manifest
+
+        dry_run : typing.Optional[bool]
+            Validate the manifest and collaborators without persisting or updating authorizations and secret groups
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -699,6 +748,7 @@ class AsyncRawSecretGroupsClient:
                 "manifest": convert_and_respect_annotation_metadata(
                     object_=manifest, annotation=SecretGroupManifest, direction="write"
                 ),
+                "dryRun": dry_run,
             },
             headers={
                 "content-type": "application/json",
@@ -774,6 +824,10 @@ class AsyncRawSecretGroupsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -796,7 +850,7 @@ class AsyncRawSecretGroupsClient:
             Returns the Secret Group associated with provided id
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/secret-groups/{jsonable_encoder(id)}",
+            f"api/svc/v1/secret-groups/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -835,6 +889,10 @@ class AsyncRawSecretGroupsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update(
@@ -863,7 +921,7 @@ class AsyncRawSecretGroupsClient:
             Returns the updated secret group without associated secrets.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/secret-groups/{jsonable_encoder(id)}",
+            f"api/svc/v1/secret-groups/{encode_path_param(id)}",
             method="PUT",
             json={
                 "secrets": convert_and_respect_annotation_metadata(
@@ -933,6 +991,10 @@ class AsyncRawSecretGroupsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -955,7 +1017,7 @@ class AsyncRawSecretGroupsClient:
             Deletes Secret Group.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/secret-groups/{jsonable_encoder(id)}",
+            f"api/svc/v1/secret-groups/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -994,4 +1056,8 @@ class AsyncRawSecretGroupsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

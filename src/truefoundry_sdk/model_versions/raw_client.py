@@ -6,8 +6,9 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.pagination import AsyncPager, SyncPager
+from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
@@ -15,6 +16,7 @@ from ..types.empty_response import EmptyResponse
 from ..types.get_model_version_response import GetModelVersionResponse
 from ..types.list_model_versions_response import ListModelVersionsResponse
 from ..types.model_version import ModelVersion
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -29,17 +31,22 @@ class RawModelVersionsClient:
         *,
         model_version_id: str,
         tags: typing.Sequence[str],
-        force: typing.Optional[bool] = False,
+        force: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[EmptyResponse]:
         """
+        Apply tags to a model version.
+
         Parameters
         ----------
         model_version_id : str
+            ID of the model version to apply tags to
 
         tags : typing.Sequence[str]
+            List of tags to apply to the model version
 
         force : typing.Optional[bool]
+            Whether to overwrite existing tags if they conflict
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -47,7 +54,7 @@ class RawModelVersionsClient:
         Returns
         -------
         HttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful tag application
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/model-versions/tags",
@@ -87,13 +94,17 @@ class RawModelVersionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetModelVersionResponse]:
         """
-        Get model version API
+        Get a model version by its ID.
 
         Parameters
         ----------
@@ -105,10 +116,10 @@ class RawModelVersionsClient:
         Returns
         -------
         HttpResponse[GetModelVersionResponse]
-            Successful Response
+            The model version data
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/model-versions/{jsonable_encoder(id)}",
+            f"api/ml/v1/model-versions/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -136,13 +147,17 @@ class RawModelVersionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[EmptyResponse]:
         """
-        Delete model versions API
+        Delete a model version by its ID.
 
         Parameters
         ----------
@@ -154,10 +169,10 @@ class RawModelVersionsClient:
         Returns
         -------
         HttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/model-versions/{jsonable_encoder(id)}",
+            f"api/ml/v1/model-versions/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -185,6 +200,10 @@ class RawModelVersionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def list(
@@ -204,31 +223,42 @@ class RawModelVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[ModelVersion, ListModelVersionsResponse]:
         """
-        List model version API
+        List model versions with optional filtering by tag, FQN, model ID, ML Repo, name, version, run IDs, or run steps.
 
         Parameters
         ----------
         tag : typing.Optional[str]
+            Tag to filter model versions by
 
         fqn : typing.Optional[str]
+            Fully qualified name to filter model versions by (format: 'model:{tenant_name}/{ml_repo_name}/{model_name}' or 'model:{tenant_name}/{ml_repo_name}/{model_name}:{version}')
 
         model_id : typing.Optional[str]
+            ID of the model to filter versions by
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter model versions by
 
         name : typing.Optional[str]
+            Name of the model to filter versions by
 
         version : typing.Optional[int]
+            Version number (positive integer) or 'latest' to filter by specific version
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            List of run IDs to filter model versions by
 
         run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+            List of run step numbers to filter model versions by
 
         offset : typing.Optional[int]
+            Number of model versions to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of model versions to return
 
         include_internal_metadata : typing.Optional[bool]
+            Whether to include internal metadata in the response
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -236,7 +266,7 @@ class RawModelVersionsClient:
         Returns
         -------
         SyncPager[ModelVersion, ListModelVersionsResponse]
-            Successful Response
+            List of model versions matching the query with pagination information
         """
         offset = offset if offset is not None else 0
 
@@ -298,6 +328,10 @@ class RawModelVersionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -310,17 +344,22 @@ class AsyncRawModelVersionsClient:
         *,
         model_version_id: str,
         tags: typing.Sequence[str],
-        force: typing.Optional[bool] = False,
+        force: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[EmptyResponse]:
         """
+        Apply tags to a model version.
+
         Parameters
         ----------
         model_version_id : str
+            ID of the model version to apply tags to
 
         tags : typing.Sequence[str]
+            List of tags to apply to the model version
 
         force : typing.Optional[bool]
+            Whether to overwrite existing tags if they conflict
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -328,7 +367,7 @@ class AsyncRawModelVersionsClient:
         Returns
         -------
         AsyncHttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful tag application
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/model-versions/tags",
@@ -368,13 +407,17 @@ class AsyncRawModelVersionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetModelVersionResponse]:
         """
-        Get model version API
+        Get a model version by its ID.
 
         Parameters
         ----------
@@ -386,10 +429,10 @@ class AsyncRawModelVersionsClient:
         Returns
         -------
         AsyncHttpResponse[GetModelVersionResponse]
-            Successful Response
+            The model version data
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/model-versions/{jsonable_encoder(id)}",
+            f"api/ml/v1/model-versions/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -417,13 +460,17 @@ class AsyncRawModelVersionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[EmptyResponse]:
         """
-        Delete model versions API
+        Delete a model version by its ID.
 
         Parameters
         ----------
@@ -435,10 +482,10 @@ class AsyncRawModelVersionsClient:
         Returns
         -------
         AsyncHttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/model-versions/{jsonable_encoder(id)}",
+            f"api/ml/v1/model-versions/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -466,6 +513,10 @@ class AsyncRawModelVersionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def list(
@@ -485,31 +536,42 @@ class AsyncRawModelVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[ModelVersion, ListModelVersionsResponse]:
         """
-        List model version API
+        List model versions with optional filtering by tag, FQN, model ID, ML Repo, name, version, run IDs, or run steps.
 
         Parameters
         ----------
         tag : typing.Optional[str]
+            Tag to filter model versions by
 
         fqn : typing.Optional[str]
+            Fully qualified name to filter model versions by (format: 'model:{tenant_name}/{ml_repo_name}/{model_name}' or 'model:{tenant_name}/{ml_repo_name}/{model_name}:{version}')
 
         model_id : typing.Optional[str]
+            ID of the model to filter versions by
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter model versions by
 
         name : typing.Optional[str]
+            Name of the model to filter versions by
 
         version : typing.Optional[int]
+            Version number (positive integer) or 'latest' to filter by specific version
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            List of run IDs to filter model versions by
 
         run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+            List of run step numbers to filter model versions by
 
         offset : typing.Optional[int]
+            Number of model versions to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of model versions to return
 
         include_internal_metadata : typing.Optional[bool]
+            Whether to include internal metadata in the response
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -517,7 +579,7 @@ class AsyncRawModelVersionsClient:
         Returns
         -------
         AsyncPager[ModelVersion, ListModelVersionsResponse]
-            Successful Response
+            List of model versions matching the query with pagination information
         """
         offset = offset if offset is not None else 0
 
@@ -582,4 +644,8 @@ class AsyncRawModelVersionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

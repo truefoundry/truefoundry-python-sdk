@@ -17,7 +17,7 @@ class Uv(UniversalBaseModel):
     +value=uv
     """
 
-    uv_version: typing.Optional[str] = pydantic.Field(default="latest")
+    uv_version: typing.Optional[str] = pydantic.Field(default=None)
     """
     UV version to use
     """

@@ -29,12 +29,11 @@ class Log(UniversalBaseModel):
     Log Time
     """
 
-    container_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="containerName")] = (
-        pydantic.Field(alias="containerName", default=None)
-    )
-    """
-    Container Name
-    """
+    container_name: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="containerName"),
+        pydantic.Field(alias="containerName", description="Container Name"),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

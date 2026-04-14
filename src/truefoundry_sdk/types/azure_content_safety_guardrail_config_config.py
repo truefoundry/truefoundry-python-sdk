@@ -18,7 +18,7 @@ class AzureContentSafetyGuardrailConfigConfig(UniversalBaseModel):
     Name of your Azure Content Safety resource where the service is deployed (e.g., my-content-safety)
     """
 
-    api_version: str = pydantic.Field(default="2024-09-01")
+    api_version: str = pydantic.Field()
     """
     API version for the Content Safety API
     """
@@ -33,7 +33,7 @@ class AzureContentSafetyGuardrailConfigConfig(UniversalBaseModel):
     Names of custom blocklists created in Azure Content Safety to check text against. Leave empty if not using custom blocklists
     """
 
-    severity_threshold: float = pydantic.Field(default=2.0)
+    severity_threshold: float = pydantic.Field()
     """
     Minimum severity level (0-6) to flag content. Higher values are more restrictive. 0=Safe, 2=Low risk, 4=Medium risk, 6=High risk
     """

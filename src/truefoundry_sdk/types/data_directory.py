@@ -10,15 +10,50 @@ from .subject import Subject
 
 
 class DataDirectory(UniversalBaseModel):
-    id: str
-    ml_repo_id: str
-    name: str
-    fqn: str
-    created_by_subject: Subject
-    created_at: dt.datetime
-    updated_at: dt.datetime
-    manifest: DataDirectoryManifest
-    usage_code_snippet: typing.Optional[str] = None
+    id: str = pydantic.Field()
+    """
+    Unique identifier for the data directory
+    """
+
+    ml_repo_id: str = pydantic.Field()
+    """
+    ID of the ML Repo that this data directory belongs to
+    """
+
+    name: str = pydantic.Field()
+    """
+    Name of the data directory
+    """
+
+    fqn: str = pydantic.Field()
+    """
+    Fully qualified name of the data directory
+    """
+
+    created_by_subject: Subject = pydantic.Field()
+    """
+    Subject (user, team, or service account) that created this data directory
+    """
+
+    created_at: dt.datetime = pydantic.Field()
+    """
+    Timestamp when the data directory was created
+    """
+
+    updated_at: dt.datetime = pydantic.Field()
+    """
+    Timestamp when the data directory was last updated
+    """
+
+    manifest: DataDirectoryManifest = pydantic.Field()
+    """
+    Manifest containing metadata for the data directory
+    """
+
+    usage_code_snippet: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Code snippet demonstrating how to use this data directory
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

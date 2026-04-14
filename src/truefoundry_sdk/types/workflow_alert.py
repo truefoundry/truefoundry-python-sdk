@@ -13,12 +13,12 @@ class WorkflowAlert(UniversalBaseModel):
     """
 
     notification_target: typing.Optional[NotificationTarget] = None
-    on_completion: typing.Optional[bool] = pydantic.Field(default=False)
+    on_completion: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Send an alert when the job completes
     """
 
-    on_failure: typing.Optional[bool] = pydantic.Field(default=True)
+    on_failure: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Send an alert when the job fails
     """

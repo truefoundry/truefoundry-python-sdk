@@ -21,7 +21,7 @@ class TtlRegistry(UniversalBaseModel):
     The name of the integration that will be displayed in the TrueFoundry UI.
     """
 
-    registry_url: str = pydantic.Field(default="https://ttl.sh")
+    registry_url: str = pydantic.Field()
     """
     The URL of the registry.
     """

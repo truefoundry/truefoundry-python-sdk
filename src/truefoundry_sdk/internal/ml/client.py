@@ -33,9 +33,12 @@ class MlClient:
         self, *, manifest: ApplyMlEntityRequestManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> ApplyMlEntityResponse:
         """
+        Create or update an ML entity (model, prompt, artifact, or data directory).
+
         Parameters
         ----------
         manifest : ApplyMlEntityRequestManifest
+            Manifest containing metadata for the ML entity to apply (model, prompt, artifact, agent skill, or data directory)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -43,7 +46,7 @@ class MlClient:
         Returns
         -------
         ApplyMlEntityResponse
-            Successful Response
+            The created or updated ML entity
 
         Examples
         --------
@@ -69,9 +72,12 @@ class MlClient:
         self, *, manifest: DeleteMlEntityRequestManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> EmptyResponse:
         """
+        Delete an ML entity (model, prompt, artifact, agent skill, data directory, or ML Repo) by manifest.
+
         Parameters
         ----------
         manifest : DeleteMlEntityRequestManifest
+            Manifest identifying the ML entity to delete (model, prompt, artifact, agent skill, data directory, or ML Repo)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -79,7 +85,7 @@ class MlClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful deletion
 
         Examples
         --------
@@ -121,9 +127,12 @@ class AsyncMlClient:
         self, *, manifest: ApplyMlEntityRequestManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> ApplyMlEntityResponse:
         """
+        Create or update an ML entity (model, prompt, artifact, or data directory).
+
         Parameters
         ----------
         manifest : ApplyMlEntityRequestManifest
+            Manifest containing metadata for the ML entity to apply (model, prompt, artifact, agent skill, or data directory)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -131,7 +140,7 @@ class AsyncMlClient:
         Returns
         -------
         ApplyMlEntityResponse
-            Successful Response
+            The created or updated ML entity
 
         Examples
         --------
@@ -169,9 +178,12 @@ class AsyncMlClient:
         self, *, manifest: DeleteMlEntityRequestManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> EmptyResponse:
         """
+        Delete an ML entity (model, prompt, artifact, agent skill, data directory, or ML Repo) by manifest.
+
         Parameters
         ----------
         manifest : DeleteMlEntityRequestManifest
+            Manifest identifying the ML entity to delete (model, prompt, artifact, agent skill, data directory, or ML Repo)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -179,7 +191,7 @@ class AsyncMlClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful deletion
 
         Examples
         --------

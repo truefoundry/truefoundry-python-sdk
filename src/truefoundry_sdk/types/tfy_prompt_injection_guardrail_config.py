@@ -17,7 +17,7 @@ class TfyPromptInjectionGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
-    description: typing.Optional[str] = pydantic.Field(default="Prompt injection guardrail, managed by TrueFoundry")
+    description: typing.Optional[str] = pydantic.Field(default=None)
     """
     Optional description for this Guardrail Config.
     """

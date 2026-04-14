@@ -13,21 +13,21 @@ from .helm import Helm
 
 class UpgradeData(UniversalBaseModel):
     diff: typing.Optional[typing.List["IChange"]] = None
-    current_manifest: typing_extensions.Annotated[typing.Optional[Helm], FieldMetadata(alias="currentManifest")] = (
-        pydantic.Field(alias="currentManifest", default=None)
-    )
-    desired_manifest: typing_extensions.Annotated[typing.Optional[Helm], FieldMetadata(alias="desiredManifest")] = (
-        pydantic.Field(alias="desiredManifest", default=None)
-    )
-    upgrade_possible: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="upgradePossible")] = (
-        pydantic.Field(alias="upgradePossible", default=None)
-    )
+    current_manifest: typing_extensions.Annotated[
+        typing.Optional[Helm], FieldMetadata(alias="currentManifest"), pydantic.Field(alias="currentManifest")
+    ] = None
+    desired_manifest: typing_extensions.Annotated[
+        typing.Optional[Helm], FieldMetadata(alias="desiredManifest"), pydantic.Field(alias="desiredManifest")
+    ] = None
+    upgrade_possible: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="upgradePossible"), pydantic.Field(alias="upgradePossible")
+    ] = None
     conflict_fields: typing_extensions.Annotated[
-        typing.Optional[typing.List[str]], FieldMetadata(alias="conflictFields")
-    ] = pydantic.Field(alias="conflictFields", default=None)
-    has_conflict: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="hasConflict")] = (
-        pydantic.Field(alias="hasConflict", default=None)
-    )
+        typing.Optional[typing.List[str]], FieldMetadata(alias="conflictFields"), pydantic.Field(alias="conflictFields")
+    ] = None
+    has_conflict: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="hasConflict"), pydantic.Field(alias="hasConflict")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

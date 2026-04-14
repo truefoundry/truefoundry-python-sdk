@@ -14,30 +14,28 @@ from .workspace_manifest import WorkspaceManifest
 class Workspace(UniversalBaseModel):
     id: str
     fqn: str
-    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")] = pydantic.Field(
-        alias="tenantName"
-    )
-    cluster_id: typing_extensions.Annotated[str, FieldMetadata(alias="clusterId")] = pydantic.Field(alias="clusterId")
-    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")] = pydantic.Field(
-        alias="createdBySubject"
-    )
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field(
-        alias="createdAt"
-    )
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")] = pydantic.Field(
-        alias="updatedAt"
-    )
-    environment_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="environmentId")] = (
-        pydantic.Field(alias="environmentId", default=None)
-    )
+    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName"), pydantic.Field(alias="tenantName")]
+    cluster_id: typing_extensions.Annotated[str, FieldMetadata(alias="clusterId"), pydantic.Field(alias="clusterId")]
+    created_by_subject: typing_extensions.Annotated[
+        Subject, FieldMetadata(alias="createdBySubject"), pydantic.Field(alias="createdBySubject")
+    ]
+    created_at: typing_extensions.Annotated[
+        dt.datetime, FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime, FieldMetadata(alias="updatedAt"), pydantic.Field(alias="updatedAt")
+    ]
+    environment_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="environmentId"), pydantic.Field(alias="environmentId")
+    ] = None
     manifest: WorkspaceManifest
-    account_id: typing_extensions.Annotated[str, FieldMetadata(alias="accountId")] = pydantic.Field(alias="accountId")
-    is_system_ws: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isSystemWs")] = (
-        pydantic.Field(alias="isSystemWs", default=None)
-    )
-    created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = pydantic.Field(
-        alias="createdBy", default=None
-    )
+    account_id: typing_extensions.Annotated[str, FieldMetadata(alias="accountId"), pydantic.Field(alias="accountId")]
+    is_system_ws: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="isSystemWs"), pydantic.Field(alias="isSystemWs")
+    ] = None
+    created_by: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="createdBy"), pydantic.Field(alias="createdBy")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -16,7 +16,7 @@ class CustomRegexPattern(UniversalBaseModel):
     A custom regex pattern to match against content (e.g., "\\\\b\\\\d{3}-\\\\d{2}-\\\\d{4}\\\\b" for SSN)
     """
 
-    redaction_text: typing.Optional[str] = pydantic.Field(default="[REDACTED]")
+    redaction_text: typing.Optional[str] = pydantic.Field(default=None)
     """
     Text to use when redacting matched content (only applicable in mutate mode). Defaults to '[REDACTED]'.
     """

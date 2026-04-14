@@ -16,12 +16,12 @@ class SparkBuild(UniversalBaseModel):
     +value=tfy-spark-buildpack
     """
 
-    spark_version: str = pydantic.Field(default="3.5.2")
+    spark_version: str = pydantic.Field()
     """
     Spark version should match the spark version installed in the image.
     """
 
-    build_context_path: str = pydantic.Field(default="./")
+    build_context_path: str = pydantic.Field()
     """
     Build path relative to project root path.
     """

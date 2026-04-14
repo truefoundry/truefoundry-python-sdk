@@ -19,9 +19,7 @@ class GraySwanCygnalGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
-    description: typing.Optional[str] = pydantic.Field(
-        default="GraySwan Cygnal for policy violation and content safety monitoring"
-    )
+    description: typing.Optional[str] = pydantic.Field(default=None)
     """
     Optional description for this Guardrail Config.
     """

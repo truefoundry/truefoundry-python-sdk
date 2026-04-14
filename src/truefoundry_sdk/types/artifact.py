@@ -11,16 +11,59 @@ from .subject import Subject
 
 
 class Artifact(UniversalBaseModel):
-    id: str
-    ml_repo_id: str
-    type: ArtifactType
-    name: str
-    fqn: str
-    created_by_subject: Subject
-    created_at: typing.Optional[dt.datetime] = None
-    updated_at: typing.Optional[dt.datetime] = None
-    latest_version: typing.Optional[BaseArtifactVersion] = None
-    run_steps: typing.Optional[typing.List[int]] = None
+    """
+    Generic artifact API DTO including run-step linkage for ML runs.
+    """
+
+    id: str = pydantic.Field()
+    """
+    Unique identifier for the artifact
+    """
+
+    ml_repo_id: str = pydantic.Field()
+    """
+    ID of the ML Repo that this artifact belongs to
+    """
+
+    type: ArtifactType = pydantic.Field()
+    """
+    Type of the artifact (e.g., 'artifact', 'model', 'chat_prompt', 'agent_skill', 'plot', 'image')
+    """
+
+    name: str = pydantic.Field()
+    """
+    Name of the artifact (alphanumeric characters, hyphens, and underscores only, max 256 characters)
+    """
+
+    fqn: str = pydantic.Field()
+    """
+    Fully qualified name of the artifact in the format '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}'
+    """
+
+    created_by_subject: Subject = pydantic.Field()
+    """
+    Subject (user, team, or service account) that created this artifact
+    """
+
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Timestamp when the artifact was created
+    """
+
+    updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Timestamp when the artifact was last updated
+    """
+
+    latest_version: typing.Optional[BaseArtifactVersion] = pydantic.Field(default=None)
+    """
+    The most recent version of this artifact
+    """
+
+    run_steps: typing.Optional[typing.List[int]] = pydantic.Field(default=None)
+    """
+    List of run step numbers where this artifact was created or updated
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

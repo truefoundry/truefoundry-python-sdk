@@ -9,9 +9,9 @@ from ..core.serialization import FieldMetadata
 
 
 class TeamMetadata(UniversalBaseModel):
-    created_by_scim: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="createdByScim")] = (
-        pydantic.Field(alias="createdByScim", default=None)
-    )
+    created_by_scim: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="createdByScim"), pydantic.Field(alias="createdByScim")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

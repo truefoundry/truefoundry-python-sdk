@@ -16,23 +16,17 @@ class ModelManifest(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    Name of the entity
+    Name of the model (alphanumeric characters, hyphens, and underscores only, max 256 characters)
     """
 
-    description: typing.Optional[str] = None
     metadata: typing.Dict[str, typing.Any] = pydantic.Field()
     """
     Key value metadata. Should be valid JSON. For e.g. `{"business-unit": "sales", "quality": "good", "rating": 4.5}`
     """
 
-    version_alias: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Version alias is alternate, ideally human readable, version string to reference an artifact version. It should start with `v` followed by alphanumeric and it can include `.` and `-` in between (e.g. `v1.0.0`, `v1-prod`, `v3-dev`, etc)
-    """
-
     ml_repo: str = pydantic.Field()
     """
-    Name of the ML Repo
+    Name of the ML Repo that this model belongs to (must start and end with alphanumeric, 2-100 characters)
     """
 
     version: typing.Optional[int] = pydantic.Field(default=None)
@@ -41,6 +35,12 @@ class ModelManifest(UniversalBaseModel):
     """
 
     type: typing.Literal["model-version"] = "model-version"
+    description: typing.Optional[str] = None
+    version_alias: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Version alias is alternate, ideally human readable, version string to reference an artifact version. It should start with `v` followed by alphanumeric and it can include `.` and `-` in between (e.g. `v1.0.0`, `v1-prod`, `v3-dev`, etc)
+    """
+
     source: ModelManifestSource
     framework: typing.Optional[ModelManifestFramework] = pydantic.Field(default=None)
     """
@@ -48,7 +48,7 @@ class ModelManifest(UniversalBaseModel):
     """
 
     environment: typing.Optional[ModelVersionEnvironment] = None
-    step: typing.Optional[int] = pydantic.Field(default=0)
+    step: typing.Optional[int] = pydantic.Field(default=None)
     """
     Step/Epoch number in an iterative training loop the model version was created. Generally useful when logging a model version from a MLRepo Run
     """

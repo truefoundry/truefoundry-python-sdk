@@ -23,6 +23,7 @@ from .notebook import Notebook
 from .policy_manifest import PolicyManifest
 from .provider_accounts import ProviderAccounts
 from .r_studio import RStudio
+from .role_binding_manifest import RoleBindingManifest
 from .role_manifest import RoleManifest
 from .secret_group_manifest import SecretGroupManifest
 from .service import Service
@@ -68,4 +69,5 @@ TrueFoundryDeleteRequestManifest = typing.Union[
     EnvironmentManifest,
     TracingProjectManifest,
     McpServerManifest,
+    RoleBindingManifest,
 ]

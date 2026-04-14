@@ -4,9 +4,9 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...types.create_docker_repository_response import CreateDockerRepositoryResponse
+from ...types.get_docker_registry_credentials_response import GetDockerRegistryCredentialsResponse
 from .raw_client import AsyncRawDockerRegistriesClient, RawDockerRegistriesClient
-from .types.docker_registries_create_repository_response import DockerRegistriesCreateRepositoryResponse
-from .types.docker_registries_get_credentials_response import DockerRegistriesGetCredentialsResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -34,7 +34,7 @@ class DockerRegistriesClient:
         application_name: str,
         workspace_fqn: str,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> DockerRegistriesCreateRepositoryResponse:
+    ) -> CreateDockerRepositoryResponse:
         """
         Create a docker repository in the provided workspace.
 
@@ -54,7 +54,7 @@ class DockerRegistriesClient:
 
         Returns
         -------
-        DockerRegistriesCreateRepositoryResponse
+        CreateDockerRepositoryResponse
             Returns the Repository name.
 
         Examples
@@ -82,7 +82,7 @@ class DockerRegistriesClient:
         fqn: typing.Optional[str] = None,
         cluster_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> DockerRegistriesGetCredentialsResponse:
+    ) -> GetDockerRegistryCredentialsResponse:
         """
         Get docker registry credentials for building and pushing an image.
 
@@ -99,7 +99,7 @@ class DockerRegistriesClient:
 
         Returns
         -------
-        DockerRegistriesGetCredentialsResponse
+        GetDockerRegistryCredentialsResponse
             Returns the docker registry credentials.
 
         Examples
@@ -141,7 +141,7 @@ class AsyncDockerRegistriesClient:
         application_name: str,
         workspace_fqn: str,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> DockerRegistriesCreateRepositoryResponse:
+    ) -> CreateDockerRepositoryResponse:
         """
         Create a docker repository in the provided workspace.
 
@@ -161,7 +161,7 @@ class AsyncDockerRegistriesClient:
 
         Returns
         -------
-        DockerRegistriesCreateRepositoryResponse
+        CreateDockerRepositoryResponse
             Returns the Repository name.
 
         Examples
@@ -197,7 +197,7 @@ class AsyncDockerRegistriesClient:
         fqn: typing.Optional[str] = None,
         cluster_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> DockerRegistriesGetCredentialsResponse:
+    ) -> GetDockerRegistryCredentialsResponse:
         """
         Get docker registry credentials for building and pushing an image.
 
@@ -214,7 +214,7 @@ class AsyncDockerRegistriesClient:
 
         Returns
         -------
-        DockerRegistriesGetCredentialsResponse
+        GetDockerRegistryCredentialsResponse
             Returns the docker registry credentials.
 
         Examples

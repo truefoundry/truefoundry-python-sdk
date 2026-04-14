@@ -6,8 +6,9 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.pagination import AsyncPager, SyncPager
+from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
@@ -21,6 +22,7 @@ from ..types.http_error import HttpError
 from ..types.list_ml_repos_response import ListMlReposResponse
 from ..types.ml_repo import MlRepo
 from ..types.ml_repo_manifest import MlRepoManifest
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -31,7 +33,11 @@ class RawMlReposClient:
         self._client_wrapper = client_wrapper
 
     def create_or_update(
-        self, *, manifest: MlRepoManifest, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        manifest: MlRepoManifest,
+        dry_run: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetMlRepoResponse]:
         """
         Creates or updates an MLRepo entity based on the provided manifest.
@@ -40,6 +46,9 @@ class RawMlReposClient:
         ----------
         manifest : MlRepoManifest
             MLRepo manifest
+
+        dry_run : typing.Optional[bool]
+            Validate the manifest and collaborators without persisting changes or updating artifact location in the database
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -56,6 +65,7 @@ class RawMlReposClient:
                 "manifest": convert_and_respect_annotation_metadata(
                     object_=manifest, annotation=MlRepoManifest, direction="write"
                 ),
+                "dryRun": dry_run,
             },
             headers={
                 "content-type": "application/json",
@@ -120,19 +130,17 @@ class RawMlReposClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetMlRepoResponse]:
         """
-        Get a ml repo by id
-        Args:
-            id: Unique identifier of the ml repo to get
-            user_info: Authenticated user information
-
-        Returns:
-            GetMLRepoResponse: The ml repo
+        Get an ML Repo by its ID.
 
         Parameters
         ----------
@@ -144,10 +152,10 @@ class RawMlReposClient:
         Returns
         -------
         HttpResponse[GetMlRepoResponse]
-            Successful Response
+            The ML Repo data
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/ml-repos/{jsonable_encoder(id)}",
+            f"api/ml/v1/ml-repos/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -175,19 +183,17 @@ class RawMlReposClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[EmptyResponse]:
         """
-        Delete a ml repo
-        Args:
-            id: Unique identifier of the ml repo to delete
-            user_info: Authenticated user information
-
-        Returns:
-            EmptyResponse: Empty response indicating successful deletion
+        Delete an ML Repo by its ID.
 
         Parameters
         ----------
@@ -199,10 +205,10 @@ class RawMlReposClient:
         Returns
         -------
         HttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/ml-repos/{jsonable_encoder(id)}",
+            f"api/ml/v1/ml-repos/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -230,6 +236,10 @@ class RawMlReposClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def list(
@@ -241,21 +251,18 @@ class RawMlReposClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[MlRepo, ListMlReposResponse]:
         """
-        List ml repos
-        Args:
-            filters: Filters for the ml repos
-            user_info: Authenticated user information
-
-        Returns:
-            ListMLReposResponse: List of ml repos
+        List ML Repos with optional filtering by name.
 
         Parameters
         ----------
         name : typing.Optional[str]
+            Name of the ML Repo to filter by
 
         limit : typing.Optional[int]
+            Maximum number of ML Repos to return
 
         offset : typing.Optional[int]
+            Number of ML Repos to skip for pagination
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -263,7 +270,7 @@ class RawMlReposClient:
         Returns
         -------
         SyncPager[MlRepo, ListMlReposResponse]
-            Successful Response
+            List of ML Repos matching the query with pagination information
         """
         offset = offset if offset is not None else 0
 
@@ -309,6 +316,10 @@ class RawMlReposClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -317,7 +328,11 @@ class AsyncRawMlReposClient:
         self._client_wrapper = client_wrapper
 
     async def create_or_update(
-        self, *, manifest: MlRepoManifest, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        manifest: MlRepoManifest,
+        dry_run: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetMlRepoResponse]:
         """
         Creates or updates an MLRepo entity based on the provided manifest.
@@ -326,6 +341,9 @@ class AsyncRawMlReposClient:
         ----------
         manifest : MlRepoManifest
             MLRepo manifest
+
+        dry_run : typing.Optional[bool]
+            Validate the manifest and collaborators without persisting changes or updating artifact location in the database
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -342,6 +360,7 @@ class AsyncRawMlReposClient:
                 "manifest": convert_and_respect_annotation_metadata(
                     object_=manifest, annotation=MlRepoManifest, direction="write"
                 ),
+                "dryRun": dry_run,
             },
             headers={
                 "content-type": "application/json",
@@ -406,19 +425,17 @@ class AsyncRawMlReposClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetMlRepoResponse]:
         """
-        Get a ml repo by id
-        Args:
-            id: Unique identifier of the ml repo to get
-            user_info: Authenticated user information
-
-        Returns:
-            GetMLRepoResponse: The ml repo
+        Get an ML Repo by its ID.
 
         Parameters
         ----------
@@ -430,10 +447,10 @@ class AsyncRawMlReposClient:
         Returns
         -------
         AsyncHttpResponse[GetMlRepoResponse]
-            Successful Response
+            The ML Repo data
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/ml-repos/{jsonable_encoder(id)}",
+            f"api/ml/v1/ml-repos/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -461,19 +478,17 @@ class AsyncRawMlReposClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[EmptyResponse]:
         """
-        Delete a ml repo
-        Args:
-            id: Unique identifier of the ml repo to delete
-            user_info: Authenticated user information
-
-        Returns:
-            EmptyResponse: Empty response indicating successful deletion
+        Delete an ML Repo by its ID.
 
         Parameters
         ----------
@@ -485,10 +500,10 @@ class AsyncRawMlReposClient:
         Returns
         -------
         AsyncHttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/ml-repos/{jsonable_encoder(id)}",
+            f"api/ml/v1/ml-repos/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -516,6 +531,10 @@ class AsyncRawMlReposClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def list(
@@ -527,21 +546,18 @@ class AsyncRawMlReposClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[MlRepo, ListMlReposResponse]:
         """
-        List ml repos
-        Args:
-            filters: Filters for the ml repos
-            user_info: Authenticated user information
-
-        Returns:
-            ListMLReposResponse: List of ml repos
+        List ML Repos with optional filtering by name.
 
         Parameters
         ----------
         name : typing.Optional[str]
+            Name of the ML Repo to filter by
 
         limit : typing.Optional[int]
+            Maximum number of ML Repos to return
 
         offset : typing.Optional[int]
+            Number of ML Repos to skip for pagination
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -549,7 +565,7 @@ class AsyncRawMlReposClient:
         Returns
         -------
         AsyncPager[MlRepo, ListMlReposResponse]
-            Successful Response
+            List of ML Repos matching the query with pagination information
         """
         offset = offset if offset is not None else 0
 
@@ -598,4 +614,8 @@ class AsyncRawMlReposClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

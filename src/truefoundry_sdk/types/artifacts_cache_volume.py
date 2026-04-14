@@ -16,7 +16,7 @@ class ArtifactsCacheVolume(UniversalBaseModel):
     Storage class of the Volume where artifacts will be cached
     """
 
-    cache_size: int = pydantic.Field(default=200)
+    cache_size: int = pydantic.Field()
     """
     Size of the Volume (in GB) where artifacts will be cached. Should be greater than twice the size of artifacts getting cached
     """

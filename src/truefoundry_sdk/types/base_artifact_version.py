@@ -10,15 +10,40 @@ from .subject import Subject
 
 
 class BaseArtifactVersion(UniversalBaseModel):
-    id: str
-    fqn: str
-    created_by_subject: Subject
-    created_at: typing.Optional[dt.datetime] = None
-    updated_at: typing.Optional[dt.datetime] = None
+    """
+    Shared artifact-version fields (identity, manifest union, ML repo).
+    """
+
+    id: str = pydantic.Field()
+    """
+    Unique identifier for the artifact version
+    """
+
+    fqn: str = pydantic.Field()
+    """
+    Fully qualified name of the artifact version in the format '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}:{version}'
+    """
+
+    created_by_subject: Subject = pydantic.Field()
+    """
+    Subject (user, team, or service account) that created this artifact version
+    """
+
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Timestamp when the artifact version was created
+    """
+
+    updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Timestamp when the artifact version was last updated
+    """
+
     manifest: typing.Optional[BaseArtifactVersionManifest] = None
-    usage_code_snippet: typing.Optional[str] = None
-    ml_repo_id: str
-    tags: typing.Optional[typing.List[str]] = None
+    ml_repo_id: str = pydantic.Field()
+    """
+    ID of the ML Repo that this artifact version belongs to
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

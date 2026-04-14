@@ -6,11 +6,13 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
+from ...core.parse_error import ParsingError
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
 from ...errors.not_found_error import NotFoundError
-from .types.docker_registries_create_repository_response import DockerRegistriesCreateRepositoryResponse
-from .types.docker_registries_get_credentials_response import DockerRegistriesGetCredentialsResponse
+from ...types.create_docker_repository_response import CreateDockerRepositoryResponse
+from ...types.get_docker_registry_credentials_response import GetDockerRegistryCredentialsResponse
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -27,7 +29,7 @@ class RawDockerRegistriesClient:
         application_name: str,
         workspace_fqn: str,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[DockerRegistriesCreateRepositoryResponse]:
+    ) -> HttpResponse[CreateDockerRepositoryResponse]:
         """
         Create a docker repository in the provided workspace.
 
@@ -47,7 +49,7 @@ class RawDockerRegistriesClient:
 
         Returns
         -------
-        HttpResponse[DockerRegistriesCreateRepositoryResponse]
+        HttpResponse[CreateDockerRepositoryResponse]
             Returns the Repository name.
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -67,9 +69,9 @@ class RawDockerRegistriesClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    DockerRegistriesCreateRepositoryResponse,
+                    CreateDockerRepositoryResponse,
                     parse_obj_as(
-                        type_=DockerRegistriesCreateRepositoryResponse,  # type: ignore
+                        type_=CreateDockerRepositoryResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -88,6 +90,10 @@ class RawDockerRegistriesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_credentials(
@@ -96,7 +102,7 @@ class RawDockerRegistriesClient:
         fqn: typing.Optional[str] = None,
         cluster_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[DockerRegistriesGetCredentialsResponse]:
+    ) -> HttpResponse[GetDockerRegistryCredentialsResponse]:
         """
         Get docker registry credentials for building and pushing an image.
 
@@ -113,7 +119,7 @@ class RawDockerRegistriesClient:
 
         Returns
         -------
-        HttpResponse[DockerRegistriesGetCredentialsResponse]
+        HttpResponse[GetDockerRegistryCredentialsResponse]
             Returns the docker registry credentials.
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -128,9 +134,9 @@ class RawDockerRegistriesClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    DockerRegistriesGetCredentialsResponse,
+                    GetDockerRegistryCredentialsResponse,
                     parse_obj_as(
-                        type_=DockerRegistriesGetCredentialsResponse,  # type: ignore
+                        type_=GetDockerRegistryCredentialsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -138,6 +144,10 @@ class RawDockerRegistriesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -152,7 +162,7 @@ class AsyncRawDockerRegistriesClient:
         application_name: str,
         workspace_fqn: str,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[DockerRegistriesCreateRepositoryResponse]:
+    ) -> AsyncHttpResponse[CreateDockerRepositoryResponse]:
         """
         Create a docker repository in the provided workspace.
 
@@ -172,7 +182,7 @@ class AsyncRawDockerRegistriesClient:
 
         Returns
         -------
-        AsyncHttpResponse[DockerRegistriesCreateRepositoryResponse]
+        AsyncHttpResponse[CreateDockerRepositoryResponse]
             Returns the Repository name.
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -192,9 +202,9 @@ class AsyncRawDockerRegistriesClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    DockerRegistriesCreateRepositoryResponse,
+                    CreateDockerRepositoryResponse,
                     parse_obj_as(
-                        type_=DockerRegistriesCreateRepositoryResponse,  # type: ignore
+                        type_=CreateDockerRepositoryResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -213,6 +223,10 @@ class AsyncRawDockerRegistriesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_credentials(
@@ -221,7 +235,7 @@ class AsyncRawDockerRegistriesClient:
         fqn: typing.Optional[str] = None,
         cluster_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[DockerRegistriesGetCredentialsResponse]:
+    ) -> AsyncHttpResponse[GetDockerRegistryCredentialsResponse]:
         """
         Get docker registry credentials for building and pushing an image.
 
@@ -238,7 +252,7 @@ class AsyncRawDockerRegistriesClient:
 
         Returns
         -------
-        AsyncHttpResponse[DockerRegistriesGetCredentialsResponse]
+        AsyncHttpResponse[GetDockerRegistryCredentialsResponse]
             Returns the docker registry credentials.
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -253,9 +267,9 @@ class AsyncRawDockerRegistriesClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    DockerRegistriesGetCredentialsResponse,
+                    GetDockerRegistryCredentialsResponse,
                     parse_obj_as(
-                        type_=DockerRegistriesGetCredentialsResponse,  # type: ignore
+                        type_=GetDockerRegistryCredentialsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -263,4 +277,8 @@ class AsyncRawDockerRegistriesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

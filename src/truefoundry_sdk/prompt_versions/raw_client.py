@@ -6,8 +6,9 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.pagination import AsyncPager, SyncPager
+from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
@@ -15,6 +16,7 @@ from ..types.empty_response import EmptyResponse
 from ..types.get_prompt_version_response import GetPromptVersionResponse
 from ..types.list_prompt_versions_response import ListPromptVersionsResponse
 from ..types.prompt_version import PromptVersion
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -29,17 +31,22 @@ class RawPromptVersionsClient:
         *,
         prompt_version_id: str,
         tags: typing.Sequence[str],
-        force: typing.Optional[bool] = False,
+        force: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[EmptyResponse]:
         """
+        Apply tags to a prompt version.
+
         Parameters
         ----------
         prompt_version_id : str
+            ID of the prompt version to apply tags to
 
         tags : typing.Sequence[str]
+            List of tags to apply to the prompt version
 
         force : typing.Optional[bool]
+            Whether to overwrite existing tags if they conflict
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -47,7 +54,7 @@ class RawPromptVersionsClient:
         Returns
         -------
         HttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful tag application
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/prompt-versions/tags",
@@ -87,13 +94,17 @@ class RawPromptVersionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetPromptVersionResponse]:
         """
-        Get prompt version API
+        Get a prompt version by its ID.
 
         Parameters
         ----------
@@ -105,10 +116,10 @@ class RawPromptVersionsClient:
         Returns
         -------
         HttpResponse[GetPromptVersionResponse]
-            Successful Response
+            The prompt version data
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/prompt-versions/{jsonable_encoder(id)}",
+            f"api/ml/v1/prompt-versions/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -136,13 +147,17 @@ class RawPromptVersionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[EmptyResponse]:
         """
-        Delete prompt versions API
+        Delete a prompt version by its ID.
 
         Parameters
         ----------
@@ -154,10 +169,10 @@ class RawPromptVersionsClient:
         Returns
         -------
         HttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/prompt-versions/{jsonable_encoder(id)}",
+            f"api/ml/v1/prompt-versions/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -185,6 +200,10 @@ class RawPromptVersionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def list(
@@ -201,25 +220,33 @@ class RawPromptVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[PromptVersion, ListPromptVersionsResponse]:
         """
-        List prompt version API
+        List prompt versions with optional filtering by tag, FQN, prompt ID, ML Repo, name, or version.
 
         Parameters
         ----------
         tag : typing.Optional[str]
+            Tag to filter prompt versions by
 
         fqn : typing.Optional[str]
+            Fully qualified name to filter prompt versions by (format: 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}' or 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}:{version}')
 
         prompt_id : typing.Optional[str]
+            ID of the prompt to filter versions by
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter prompt versions by
 
         name : typing.Optional[str]
+            Name of the prompt to filter versions by
 
         version : typing.Optional[int]
+            Version number (positive integer) or 'latest' to filter by specific version
 
         offset : typing.Optional[int]
+            Number of prompt versions to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of prompt versions to return
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -227,7 +254,7 @@ class RawPromptVersionsClient:
         Returns
         -------
         SyncPager[PromptVersion, ListPromptVersionsResponse]
-            Successful Response
+            List of prompt versions matching the query with pagination information
         """
         offset = offset if offset is not None else 0
 
@@ -283,6 +310,10 @@ class RawPromptVersionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -295,17 +326,22 @@ class AsyncRawPromptVersionsClient:
         *,
         prompt_version_id: str,
         tags: typing.Sequence[str],
-        force: typing.Optional[bool] = False,
+        force: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[EmptyResponse]:
         """
+        Apply tags to a prompt version.
+
         Parameters
         ----------
         prompt_version_id : str
+            ID of the prompt version to apply tags to
 
         tags : typing.Sequence[str]
+            List of tags to apply to the prompt version
 
         force : typing.Optional[bool]
+            Whether to overwrite existing tags if they conflict
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -313,7 +349,7 @@ class AsyncRawPromptVersionsClient:
         Returns
         -------
         AsyncHttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful tag application
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/prompt-versions/tags",
@@ -353,13 +389,17 @@ class AsyncRawPromptVersionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetPromptVersionResponse]:
         """
-        Get prompt version API
+        Get a prompt version by its ID.
 
         Parameters
         ----------
@@ -371,10 +411,10 @@ class AsyncRawPromptVersionsClient:
         Returns
         -------
         AsyncHttpResponse[GetPromptVersionResponse]
-            Successful Response
+            The prompt version data
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/prompt-versions/{jsonable_encoder(id)}",
+            f"api/ml/v1/prompt-versions/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -402,13 +442,17 @@ class AsyncRawPromptVersionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[EmptyResponse]:
         """
-        Delete prompt versions API
+        Delete a prompt version by its ID.
 
         Parameters
         ----------
@@ -420,10 +464,10 @@ class AsyncRawPromptVersionsClient:
         Returns
         -------
         AsyncHttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/prompt-versions/{jsonable_encoder(id)}",
+            f"api/ml/v1/prompt-versions/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -451,6 +495,10 @@ class AsyncRawPromptVersionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def list(
@@ -467,25 +515,33 @@ class AsyncRawPromptVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[PromptVersion, ListPromptVersionsResponse]:
         """
-        List prompt version API
+        List prompt versions with optional filtering by tag, FQN, prompt ID, ML Repo, name, or version.
 
         Parameters
         ----------
         tag : typing.Optional[str]
+            Tag to filter prompt versions by
 
         fqn : typing.Optional[str]
+            Fully qualified name to filter prompt versions by (format: 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}' or 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}:{version}')
 
         prompt_id : typing.Optional[str]
+            ID of the prompt to filter versions by
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter prompt versions by
 
         name : typing.Optional[str]
+            Name of the prompt to filter versions by
 
         version : typing.Optional[int]
+            Version number (positive integer) or 'latest' to filter by specific version
 
         offset : typing.Optional[int]
+            Number of prompt versions to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of prompt versions to return
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -493,7 +549,7 @@ class AsyncRawPromptVersionsClient:
         Returns
         -------
         AsyncPager[PromptVersion, ListPromptVersionsResponse]
-            Successful Response
+            List of prompt versions matching the query with pagination information
         """
         offset = offset if offset is not None else 0
 
@@ -552,4 +608,8 @@ class AsyncRawPromptVersionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

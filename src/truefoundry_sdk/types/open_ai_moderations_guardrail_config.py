@@ -19,9 +19,7 @@ class OpenAiModerationsGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
-    description: typing.Optional[str] = pydantic.Field(
-        default="OpenAI content moderation for hate, harassment, self-harm, sexual, violence, and illicit content"
-    )
+    description: typing.Optional[str] = pydantic.Field(default=None)
     """
     Optional description for this Guardrail Config.
     """

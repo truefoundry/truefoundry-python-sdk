@@ -19,9 +19,7 @@ class PaloAltoPrismaAirsGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
-    description: typing.Optional[str] = pydantic.Field(
-        default="Palo Alto Prisma AIRS for AI security and content validation"
-    )
+    description: typing.Optional[str] = pydantic.Field(default=None)
     """
     Optional description for this Guardrail Config.
     """

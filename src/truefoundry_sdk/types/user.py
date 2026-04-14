@@ -15,25 +15,25 @@ from .user_metadata import UserMetadata
 class User(UniversalBaseModel):
     id: str
     email: str
-    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")] = pydantic.Field(
-        alias="tenantName"
-    )
+    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName"), pydantic.Field(alias="tenantName")]
     metadata: UserMetadata
     roles: typing.Optional[typing.List[str]] = None
     roles_with_resource: typing_extensions.Annotated[
-        typing.Optional[typing.List[RoleWithResource]], FieldMetadata(alias="rolesWithResource")
-    ] = pydantic.Field(alias="rolesWithResource", default=None)
+        typing.Optional[typing.List[RoleWithResource]],
+        FieldMetadata(alias="rolesWithResource"),
+        pydantic.Field(alias="rolesWithResource"),
+    ] = None
     accounts: typing.Optional[typing.List[AccountInfo]] = None
     active: bool
-    is_editable: typing_extensions.Annotated[bool, FieldMetadata(alias="isEditable")] = pydantic.Field(
-        alias="isEditable"
-    )
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field(
-        alias="createdAt"
-    )
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")] = pydantic.Field(
-        alias="updatedAt"
-    )
+    is_editable: typing_extensions.Annotated[
+        bool, FieldMetadata(alias="isEditable"), pydantic.Field(alias="isEditable")
+    ]
+    created_at: typing_extensions.Annotated[
+        dt.datetime, FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime, FieldMetadata(alias="updatedAt"), pydantic.Field(alias="updatedAt")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class Autoshutdown(UniversalBaseModel):
-    wait_time: int = pydantic.Field(default=900)
+    wait_time: int = pydantic.Field()
     """
     The period to wait after the last received request before scaling the replicas to 0. This value should be high enough to allow for the replicas of the service to come up to avoid premature scaling down.
     """

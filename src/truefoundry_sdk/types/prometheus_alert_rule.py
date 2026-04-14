@@ -29,18 +29,21 @@ class PrometheusAlertRule(UniversalBaseModel):
     Enter a valid PromQL expression that defines the condition for triggering this alert. The alert will fire when this expression evaluates to true for the duration specified in the duration to trigger alert field.
     """
 
-    for_: typing_extensions.Annotated[float, FieldMetadata(alias="for")] = pydantic.Field(alias="for")
-    """
-    The prometheus expression must remain true for this duration (in seconds) before the alert is triggered. If the condition becomes false before this time elapses, the alert will not fire.
-    """
-
+    for_: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="for"),
+        pydantic.Field(
+            alias="for",
+            description="The prometheus expression must remain true for this duration (in seconds) before the alert is triggered. If the condition becomes false before this time elapses, the alert will not fire.",
+        ),
+    ]
     severity: AlertSeverity
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     Description of the alert rule which will be displayed in the alert rule list. This can be used to provide more context about the alert rule.
     """
 
-    notification_enabled: bool = pydantic.Field(default=True)
+    notification_enabled: bool = pydantic.Field()
     """
     When enabled, notifications will be sent to all configured target channels when the alert conditions are met.
     """

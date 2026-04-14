@@ -9,8 +9,15 @@ from .token_pagination import TokenPagination
 
 
 class ListFilesResponse(UniversalBaseModel):
-    data: typing.List[FileInfo]
-    pagination: TokenPagination
+    data: typing.List[FileInfo] = pydantic.Field()
+    """
+    List of files and directories in the artifact version
+    """
+
+    pagination: TokenPagination = pydantic.Field()
+    """
+    Pagination information including page tokens for navigation
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

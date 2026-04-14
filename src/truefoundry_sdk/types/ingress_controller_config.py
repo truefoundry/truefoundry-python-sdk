@@ -7,12 +7,12 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class IngressControllerConfig(UniversalBaseModel):
-    ingress_class_name: str = pydantic.Field(default="nginx")
+    ingress_class_name: str = pydantic.Field()
     """
     Ingress Class Name
     """
 
-    tls_enabled: typing.Optional[bool] = pydantic.Field(default=False)
+    tls_enabled: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether TLS is managed by the ingress controller. If enabled, the ingress object will have TLS configuration.
     """

@@ -6,8 +6,9 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.pagination import AsyncPager, SyncPager
+from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
@@ -23,6 +24,7 @@ from ..types.is_cluster_connected_response import IsClusterConnectedResponse
 from ..types.list_cluster_addons_response import ListClusterAddonsResponse
 from ..types.list_clusters_response import ListClustersResponse
 from .types.clusters_delete_response import ClustersDeleteResponse
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -100,13 +102,17 @@ class RawClustersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create_or_update(
         self,
         *,
         manifest: ClusterManifest,
-        dry_run: typing.Optional[bool] = False,
+        dry_run: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetClusterResponse]:
         """
@@ -189,6 +195,10 @@ class RawClustersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
@@ -211,7 +221,7 @@ class RawClustersClient:
             Return the cluster associated with provided id
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/clusters/{jsonable_encoder(id)}",
+            f"api/svc/v1/clusters/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -250,6 +260,10 @@ class RawClustersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -272,7 +286,7 @@ class RawClustersClient:
             Returns success message on successful deletion
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/clusters/{jsonable_encoder(id)}",
+            f"api/svc/v1/clusters/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -311,6 +325,10 @@ class RawClustersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_addons(
@@ -344,7 +362,7 @@ class RawClustersClient:
             Returns a paginated list of addons for the cluster
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/clusters/{jsonable_encoder(id)}/get-addons",
+            f"api/svc/v1/clusters/{encode_path_param(id)}/get-addons",
             method="GET",
             params={
                 "limit": limit,
@@ -387,6 +405,10 @@ class RawClustersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def is_connected(
@@ -409,7 +431,7 @@ class RawClustersClient:
             Returns the status of provided cluster
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/clusters/{jsonable_encoder(id)}/is-connected",
+            f"api/svc/v1/clusters/{encode_path_param(id)}/is-connected",
             method="GET",
             request_options=request_options,
         )
@@ -437,6 +459,10 @@ class RawClustersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -515,13 +541,17 @@ class AsyncRawClustersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create_or_update(
         self,
         *,
         manifest: ClusterManifest,
-        dry_run: typing.Optional[bool] = False,
+        dry_run: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetClusterResponse]:
         """
@@ -604,6 +634,10 @@ class AsyncRawClustersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -626,7 +660,7 @@ class AsyncRawClustersClient:
             Return the cluster associated with provided id
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/clusters/{jsonable_encoder(id)}",
+            f"api/svc/v1/clusters/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -665,6 +699,10 @@ class AsyncRawClustersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -687,7 +725,7 @@ class AsyncRawClustersClient:
             Returns success message on successful deletion
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/clusters/{jsonable_encoder(id)}",
+            f"api/svc/v1/clusters/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -726,6 +764,10 @@ class AsyncRawClustersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_addons(
@@ -759,7 +801,7 @@ class AsyncRawClustersClient:
             Returns a paginated list of addons for the cluster
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/clusters/{jsonable_encoder(id)}/get-addons",
+            f"api/svc/v1/clusters/{encode_path_param(id)}/get-addons",
             method="GET",
             params={
                 "limit": limit,
@@ -802,6 +844,10 @@ class AsyncRawClustersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def is_connected(
@@ -824,7 +870,7 @@ class AsyncRawClustersClient:
             Returns the status of provided cluster
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/clusters/{jsonable_encoder(id)}/is-connected",
+            f"api/svc/v1/clusters/{encode_path_param(id)}/is-connected",
             method="GET",
             request_options=request_options,
         )
@@ -852,4 +898,8 @@ class AsyncRawClustersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

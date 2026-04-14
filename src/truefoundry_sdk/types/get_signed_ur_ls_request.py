@@ -8,9 +8,20 @@ from .operation import Operation
 
 
 class GetSignedUrLsRequest(UniversalBaseModel):
-    id: str
-    paths: typing.List[str]
-    operation: Operation
+    id: str = pydantic.Field()
+    """
+    ID of the artifact version to get signed URLs for
+    """
+
+    paths: typing.List[str] = pydantic.Field()
+    """
+    List of relative file paths within the artifact version to get signed URLs for
+    """
+
+    operation: Operation = pydantic.Field()
+    """
+    Operation type for the signed URL (e.g., 'READ' or 'WRITE')
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

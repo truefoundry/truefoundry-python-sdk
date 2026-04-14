@@ -19,9 +19,7 @@ class RegexGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
-    description: typing.Optional[str] = pydantic.Field(
-        default="Regex pattern matching for content filtering or redaction"
-    )
+    description: typing.Optional[str] = pydantic.Field(default=None)
     """
     Optional description for this Guardrail Config.
     """
@@ -39,7 +37,7 @@ class RegexGuardrailConfig(UniversalBaseModel):
     Validate blocks when pattern matches. Mutate replaces matched text and continues.
     """
 
-    priority: typing.Optional[int] = pydantic.Field(default=1)
+    priority: typing.Optional[int] = pydantic.Field(default=None)
     """
     Execution order for mutate guardrails. Lower values run first. Only applicable when operation is mutate.
     """

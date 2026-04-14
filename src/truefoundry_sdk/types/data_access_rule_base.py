@@ -22,7 +22,7 @@ class DataAccessRuleBase(UniversalBaseModel):
     Description of the rule
     """
 
-    enabled: typing.Optional[bool] = pydantic.Field(default=True)
+    enabled: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether this rule is enabled
     """

@@ -9,7 +9,7 @@ from ..core.serialization import FieldMetadata
 
 
 class AccountInfo(UniversalBaseModel):
-    account_id: typing_extensions.Annotated[str, FieldMetadata(alias="accountId")] = pydantic.Field(alias="accountId")
+    account_id: typing_extensions.Annotated[str, FieldMetadata(alias="accountId"), pydantic.Field(alias="accountId")]
     name: str
 
     if IS_PYDANTIC_V2:

@@ -10,31 +10,39 @@ from .subject_type import SubjectType
 
 
 class Subject(UniversalBaseModel):
-    subject_id: typing_extensions.Annotated[str, FieldMetadata(alias="subjectId")] = pydantic.Field(alias="subjectId")
-    """
-    Subject ID
-    """
-
-    subject_type: typing_extensions.Annotated[SubjectType, FieldMetadata(alias="subjectType")] = pydantic.Field(
-        alias="subjectType"
-    )
-    """
-    Subject type
-    """
-
-    subject_slug: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="subjectSlug")] = (
-        pydantic.Field(alias="subjectSlug", default=None)
-    )
-    """
-    Subject slug
-    """
-
+    subject_id: typing_extensions.Annotated[
+        str, FieldMetadata(alias="subjectId"), pydantic.Field(alias="subjectId", description="Subject ID")
+    ]
+    subject_type: typing_extensions.Annotated[
+        SubjectType, FieldMetadata(alias="subjectType"), pydantic.Field(alias="subjectType", description="Subject type")
+    ]
+    subject_slug: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="subjectSlug"),
+        pydantic.Field(alias="subjectSlug", description="Subject slug"),
+    ] = None
     subject_display_name: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="subjectDisplayName")
-    ] = pydantic.Field(alias="subjectDisplayName", default=None)
-    """
-    Subject display name
-    """
+        typing.Optional[str],
+        FieldMetadata(alias="subjectDisplayName"),
+        pydantic.Field(alias="subjectDisplayName", description="Subject display name"),
+    ] = None
+    subject_pat_name: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="subjectPatName"),
+        pydantic.Field(alias="subjectPatName", description="Subject PAT name"),
+    ] = None
+    subject_controller_name: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="subjectControllerName"),
+        pydantic.Field(alias="subjectControllerName"),
+    ] = None
+    subject_external_identity_slug: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="subjectExternalIdentitySlug"),
+        pydantic.Field(
+            alias="subjectExternalIdentitySlug", description="External identity slug (external_identity_id:sub:email)"
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

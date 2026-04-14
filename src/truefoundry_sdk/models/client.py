@@ -34,6 +34,8 @@ class ModelsClient:
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetModelResponse:
         """
+        Get a model by its ID.
+
         Parameters
         ----------
         id : str
@@ -44,7 +46,7 @@ class ModelsClient:
         Returns
         -------
         GetModelResponse
-            Successful Response
+            The model data
 
         Examples
         --------
@@ -63,6 +65,8 @@ class ModelsClient:
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
         """
+        Delete a model by its ID.
+
         Parameters
         ----------
         id : str
@@ -73,7 +77,7 @@ class ModelsClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful deletion
 
         Examples
         --------
@@ -103,21 +107,30 @@ class ModelsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Model, ListModelsResponse]:
         """
+        List models with optional filtering by FQN, ML Repo, name, or run ID.
+
         Parameters
         ----------
         fqn : typing.Optional[str]
+            Fully qualified name to filter models by (format: 'model:{tenant_name}/{ml_repo_name}/{model_name}')
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter models by
 
         name : typing.Optional[str]
+            Name of the model to filter by
 
         offset : typing.Optional[int]
+            Number of models to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of models to return
 
         run_id : typing.Optional[str]
+            ID of the run to filter models by
 
         include_empty_models : typing.Optional[bool]
+            Whether to include models that have no versions
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -125,7 +138,7 @@ class ModelsClient:
         Returns
         -------
         SyncPager[Model, ListModelsResponse]
-            Successful Response
+            List of models matching the query with pagination information
 
         Examples
         --------
@@ -165,9 +178,12 @@ class ModelsClient:
         self, *, manifest: ModelManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetModelVersionResponse:
         """
+        Create or update a model version.
+
         Parameters
         ----------
         manifest : ModelManifest
+            Manifest containing metadata for the model to apply
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -175,7 +191,7 @@ class ModelsClient:
         Returns
         -------
         GetModelVersionResponse
-            Successful Response
+            The created or updated model version
 
         Examples
         --------
@@ -215,6 +231,8 @@ class AsyncModelsClient:
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetModelResponse:
         """
+        Get a model by its ID.
+
         Parameters
         ----------
         id : str
@@ -225,7 +243,7 @@ class AsyncModelsClient:
         Returns
         -------
         GetModelResponse
-            Successful Response
+            The model data
 
         Examples
         --------
@@ -252,6 +270,8 @@ class AsyncModelsClient:
 
     async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
         """
+        Delete a model by its ID.
+
         Parameters
         ----------
         id : str
@@ -262,7 +282,7 @@ class AsyncModelsClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful deletion
 
         Examples
         --------
@@ -300,21 +320,30 @@ class AsyncModelsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Model, ListModelsResponse]:
         """
+        List models with optional filtering by FQN, ML Repo, name, or run ID.
+
         Parameters
         ----------
         fqn : typing.Optional[str]
+            Fully qualified name to filter models by (format: 'model:{tenant_name}/{ml_repo_name}/{model_name}')
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter models by
 
         name : typing.Optional[str]
+            Name of the model to filter by
 
         offset : typing.Optional[int]
+            Number of models to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of models to return
 
         run_id : typing.Optional[str]
+            ID of the run to filter models by
 
         include_empty_models : typing.Optional[bool]
+            Whether to include models that have no versions
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -322,7 +351,7 @@ class AsyncModelsClient:
         Returns
         -------
         AsyncPager[Model, ListModelsResponse]
-            Successful Response
+            List of models matching the query with pagination information
 
         Examples
         --------
@@ -371,9 +400,12 @@ class AsyncModelsClient:
         self, *, manifest: ModelManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetModelVersionResponse:
         """
+        Create or update a model version.
+
         Parameters
         ----------
         manifest : ModelManifest
+            Manifest containing metadata for the model to apply
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -381,7 +413,7 @@ class AsyncModelsClient:
         Returns
         -------
         GetModelVersionResponse
-            Successful Response
+            The created or updated model version
 
         Examples
         --------

@@ -39,6 +39,9 @@ class VirtualAccountsClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         name_search_query: typing.Optional[str] = None,
+        owned_by_teams: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        is_expired: typing.Optional[bool] = None,
+        filter: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[VirtualAccount, ListVirtualAccountResponse]:
         """
@@ -54,6 +57,15 @@ class VirtualAccountsClient:
 
         name_search_query : typing.Optional[str]
             Return virtual accounts with names that contain this string
+
+        owned_by_teams : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Return virtual accounts owned by these teams
+
+        is_expired : typing.Optional[bool]
+            Filter virtual accounts by expiration status. true = expired, false = not expired
+
+        filter : typing.Optional[str]
+            JSON string: structured filter tree (AND/OR groups, column leaves on `name`, json_map leaves on manifest.tags).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -75,6 +87,8 @@ class VirtualAccountsClient:
             limit=10,
             offset=0,
             name_search_query="nameSearchQuery",
+            is_expired=True,
+            filter="filter",
         )
         for item in response:
             yield item
@@ -83,14 +97,20 @@ class VirtualAccountsClient:
             yield page
         """
         return self._raw_client.list(
-            limit=limit, offset=offset, name_search_query=name_search_query, request_options=request_options
+            limit=limit,
+            offset=offset,
+            name_search_query=name_search_query,
+            owned_by_teams=owned_by_teams,
+            is_expired=is_expired,
+            filter=filter,
+            request_options=request_options,
         )
 
     def create_or_update(
         self,
         *,
         manifest: VirtualAccountManifest,
-        dry_run: typing.Optional[bool] = False,
+        dry_run: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetVirtualAccountResponse:
         """
@@ -369,6 +389,9 @@ class AsyncVirtualAccountsClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         name_search_query: typing.Optional[str] = None,
+        owned_by_teams: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        is_expired: typing.Optional[bool] = None,
+        filter: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[VirtualAccount, ListVirtualAccountResponse]:
         """
@@ -384,6 +407,15 @@ class AsyncVirtualAccountsClient:
 
         name_search_query : typing.Optional[str]
             Return virtual accounts with names that contain this string
+
+        owned_by_teams : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Return virtual accounts owned by these teams
+
+        is_expired : typing.Optional[bool]
+            Filter virtual accounts by expiration status. true = expired, false = not expired
+
+        filter : typing.Optional[str]
+            JSON string: structured filter tree (AND/OR groups, column leaves on `name`, json_map leaves on manifest.tags).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -410,6 +442,8 @@ class AsyncVirtualAccountsClient:
                 limit=10,
                 offset=0,
                 name_search_query="nameSearchQuery",
+                is_expired=True,
+                filter="filter",
             )
             async for item in response:
                 yield item
@@ -422,14 +456,20 @@ class AsyncVirtualAccountsClient:
         asyncio.run(main())
         """
         return await self._raw_client.list(
-            limit=limit, offset=offset, name_search_query=name_search_query, request_options=request_options
+            limit=limit,
+            offset=offset,
+            name_search_query=name_search_query,
+            owned_by_teams=owned_by_teams,
+            is_expired=is_expired,
+            filter=filter,
+            request_options=request_options,
         )
 
     async def create_or_update(
         self,
         *,
         manifest: VirtualAccountManifest,
-        dry_run: typing.Optional[bool] = False,
+        dry_run: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetVirtualAccountResponse:
         """

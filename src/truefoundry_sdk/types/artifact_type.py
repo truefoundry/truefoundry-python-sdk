@@ -17,6 +17,7 @@ class ArtifactType(enum.StrEnum):
     PLOT = "plot"
     IMAGE = "image"
     CHAT_PROMPT = "chat_prompt"
+    AGENT_SKILL = "agent_skill"
     _UNKNOWN = "__ARTIFACTTYPE_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
@@ -35,6 +36,7 @@ class ArtifactType(enum.StrEnum):
         plot: typing.Callable[[], T_Result],
         image: typing.Callable[[], T_Result],
         chat_prompt: typing.Callable[[], T_Result],
+        agent_skill: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is ArtifactType.ARTIFACT:
@@ -47,4 +49,6 @@ class ArtifactType(enum.StrEnum):
             return image()
         if self is ArtifactType.CHAT_PROMPT:
             return chat_prompt()
+        if self is ArtifactType.AGENT_SKILL:
+            return agent_skill()
         return _unknown_member(self._value_)

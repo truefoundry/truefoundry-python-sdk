@@ -21,7 +21,6 @@ if typing.TYPE_CHECKING:
         workflows,
     )
     from .ai_gateway import AiGatewayGetGatewayConfigRequestType
-    from .docker_registries import DockerRegistriesCreateRepositoryResponse, DockerRegistriesGetCredentialsResponse
     from .metrics import MetricsGetChartsRequestFilterEntity
     from .ml import ApplyMlEntityRequestManifest, DeleteMlEntityRequestManifest
     from .workflows import WorkflowsExecuteWorkflowResponse
@@ -29,8 +28,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AiGatewayGetGatewayConfigRequestType": ".ai_gateway",
     "ApplyMlEntityRequestManifest": ".ml",
     "DeleteMlEntityRequestManifest": ".ml",
-    "DockerRegistriesCreateRepositoryResponse": ".docker_registries",
-    "DockerRegistriesGetCredentialsResponse": ".docker_registries",
     "MetricsGetChartsRequestFilterEntity": ".metrics",
     "WorkflowsExecuteWorkflowResponse": ".workflows",
     "ai_gateway": ".ai_gateway",
@@ -73,8 +70,6 @@ __all__ = [
     "AiGatewayGetGatewayConfigRequestType",
     "ApplyMlEntityRequestManifest",
     "DeleteMlEntityRequestManifest",
-    "DockerRegistriesCreateRepositoryResponse",
-    "DockerRegistriesGetCredentialsResponse",
     "MetricsGetChartsRequestFilterEntity",
     "WorkflowsExecuteWorkflowResponse",
     "ai_gateway",

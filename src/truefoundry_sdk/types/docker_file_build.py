@@ -18,12 +18,12 @@ class DockerFileBuild(UniversalBaseModel):
     +value=dockerfile
     """
 
-    dockerfile_path: str = pydantic.Field(default="./Dockerfile")
+    dockerfile_path: str = pydantic.Field()
     """
     The file path of the Dockerfile relative to project root path.
     """
 
-    build_context_path: str = pydantic.Field(default="./")
+    build_context_path: str = pydantic.Field()
     """
     Build context path for the Dockerfile relative to project root path.
     """

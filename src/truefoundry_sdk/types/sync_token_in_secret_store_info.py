@@ -9,11 +9,11 @@ from ..core.serialization import FieldMetadata
 
 
 class SyncTokenInSecretStoreInfo(UniversalBaseModel):
-    updated_at: typing_extensions.Annotated[str, FieldMetadata(alias="updatedAt")] = pydantic.Field(alias="updatedAt")
-    """
-    ISO timestamp of when the token was synced
-    """
-
+    updated_at: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="updatedAt"),
+        pydantic.Field(alias="updatedAt", description="ISO timestamp of when the token was synced"),
+    ]
     error: typing.Optional[str] = pydantic.Field(default=None)
     """
     Error message if sync failed

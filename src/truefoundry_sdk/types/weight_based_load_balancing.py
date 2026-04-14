@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .load_balance_target import LoadBalanceTarget
+from .sticky_routing import StickyRouting
 
 
 class WeightBasedLoadBalancing(UniversalBaseModel):
@@ -17,6 +18,8 @@ class WeightBasedLoadBalancing(UniversalBaseModel):
     """
     List of targets for load balancing with weights
     """
+
+    sticky_routing: typing.Optional[StickyRouting] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

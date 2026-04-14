@@ -2,6 +2,7 @@
 
 import typing
 
+from .akto_guardrail_config import AktoGuardrailConfig
 from .aws_bedrock_guardrail_config import AwsBedrockGuardrailConfig
 from .azure_content_safety_guardrail_config import AzureContentSafetyGuardrailConfig
 from .azure_pii_guardrail_config import AzurePiiGuardrailConfig
@@ -18,13 +19,13 @@ from .open_ai_moderations_guardrail_config import OpenAiModerationsGuardrailConf
 from .palo_alto_prisma_airs_guardrail_config import PaloAltoPrismaAirsGuardrailConfig
 from .pangea_guardrail_config import PangeaGuardrailConfig
 from .patronus_guardrail_config import PatronusGuardrailConfig
-from .prompt_foo_guardrail_config import PromptFooGuardrailConfig
 from .regex_guardrail_config import RegexGuardrailConfig
 from .secret_detection_guardrail_config import SecretDetectionGuardrailConfig
 from .sql_sanitizer_guardrail_config import SqlSanitizerGuardrailConfig
 from .tfy_content_moderation_guardrail_config import TfyContentModerationGuardrailConfig
 from .tfy_pii_guardrail_config import TfyPiiGuardrailConfig
 from .tfy_prompt_injection_guardrail_config import TfyPromptInjectionGuardrailConfig
+from .troj_ai_guardrail_config import TrojAiGuardrailConfig
 
 GuardrailConfigIntegrations = typing.Union[
     OpenAiModerationsGuardrailConfig,
@@ -35,7 +36,6 @@ GuardrailConfigIntegrations = typing.Union[
     AzurePromptShieldGuardrailConfig,
     EnkryptAiGuardrailConfig,
     PaloAltoPrismaAirsGuardrailConfig,
-    PromptFooGuardrailConfig,
     FiddlerGuardrailConfig,
     PangeaGuardrailConfig,
     PatronusGuardrailConfig,
@@ -50,4 +50,6 @@ GuardrailConfigIntegrations = typing.Union[
     OpaGuardrailConfig,
     GoogleModelArmorGuardrailConfig,
     GraySwanCygnalGuardrailConfig,
+    AktoGuardrailConfig,
+    TrojAiGuardrailConfig,
 ]

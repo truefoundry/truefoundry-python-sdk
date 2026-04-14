@@ -14,12 +14,12 @@ class AgentSkill(UniversalBaseModel):
     description: str
     tags: typing.Optional[typing.List[str]] = None
     examples: typing.Optional[typing.List[str]] = None
-    input_modes: typing_extensions.Annotated[typing.Optional[typing.List[str]], FieldMetadata(alias="inputModes")] = (
-        pydantic.Field(alias="inputModes", default=None)
-    )
-    output_modes: typing_extensions.Annotated[typing.Optional[typing.List[str]], FieldMetadata(alias="outputModes")] = (
-        pydantic.Field(alias="outputModes", default=None)
-    )
+    input_modes: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]], FieldMetadata(alias="inputModes"), pydantic.Field(alias="inputModes")
+    ] = None
+    output_modes: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]], FieldMetadata(alias="outputModes"), pydantic.Field(alias="outputModes")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

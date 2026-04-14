@@ -9,9 +9,9 @@ from ..core.serialization import FieldMetadata
 
 
 class SubjectClause(UniversalBaseModel):
-    in_: typing_extensions.Annotated[typing.Optional[typing.List[str]], FieldMetadata(alias="in")] = pydantic.Field(
-        alias="in", default=None
-    )
+    in_: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]], FieldMetadata(alias="in"), pydantic.Field(alias="in")
+    ] = None
     not_in: typing.Optional[typing.List[str]] = None
 
     if IS_PYDANTIC_V2:

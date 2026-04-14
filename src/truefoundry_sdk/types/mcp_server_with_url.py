@@ -27,7 +27,7 @@ class McpServerWithUrl(UniversalBaseModel):
     The headers to send to the MCP server
     """
 
-    enable_all_tools: bool = pydantic.Field(default=False)
+    enable_all_tools: bool = pydantic.Field()
     """
     Whether to enable all tools from the MCP server
     """

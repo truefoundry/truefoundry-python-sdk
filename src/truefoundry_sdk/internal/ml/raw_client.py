@@ -6,6 +6,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
+from ...core.parse_error import ParsingError
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
 from ...core.serialization import convert_and_respect_annotation_metadata
@@ -14,6 +15,7 @@ from ...types.apply_ml_entity_response import ApplyMlEntityResponse
 from ...types.empty_response import EmptyResponse
 from .types.apply_ml_entity_request_manifest import ApplyMlEntityRequestManifest
 from .types.delete_ml_entity_request_manifest import DeleteMlEntityRequestManifest
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -27,9 +29,12 @@ class RawMlClient:
         self, *, manifest: ApplyMlEntityRequestManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[ApplyMlEntityResponse]:
         """
+        Create or update an ML entity (model, prompt, artifact, or data directory).
+
         Parameters
         ----------
         manifest : ApplyMlEntityRequestManifest
+            Manifest containing metadata for the ML entity to apply (model, prompt, artifact, agent skill, or data directory)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -37,7 +42,7 @@ class RawMlClient:
         Returns
         -------
         HttpResponse[ApplyMlEntityResponse]
-            Successful Response
+            The created or updated ML entity
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/apply",
@@ -77,15 +82,22 @@ class RawMlClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
         self, *, manifest: DeleteMlEntityRequestManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[EmptyResponse]:
         """
+        Delete an ML entity (model, prompt, artifact, agent skill, data directory, or ML Repo) by manifest.
+
         Parameters
         ----------
         manifest : DeleteMlEntityRequestManifest
+            Manifest identifying the ML entity to delete (model, prompt, artifact, agent skill, data directory, or ML Repo)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -93,7 +105,7 @@ class RawMlClient:
         Returns
         -------
         HttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/delete",
@@ -133,6 +145,10 @@ class RawMlClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -144,9 +160,12 @@ class AsyncRawMlClient:
         self, *, manifest: ApplyMlEntityRequestManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[ApplyMlEntityResponse]:
         """
+        Create or update an ML entity (model, prompt, artifact, or data directory).
+
         Parameters
         ----------
         manifest : ApplyMlEntityRequestManifest
+            Manifest containing metadata for the ML entity to apply (model, prompt, artifact, agent skill, or data directory)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -154,7 +173,7 @@ class AsyncRawMlClient:
         Returns
         -------
         AsyncHttpResponse[ApplyMlEntityResponse]
-            Successful Response
+            The created or updated ML entity
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/apply",
@@ -194,15 +213,22 @@ class AsyncRawMlClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
         self, *, manifest: DeleteMlEntityRequestManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[EmptyResponse]:
         """
+        Delete an ML entity (model, prompt, artifact, agent skill, data directory, or ML Repo) by manifest.
+
         Parameters
         ----------
         manifest : DeleteMlEntityRequestManifest
+            Manifest identifying the ML entity to delete (model, prompt, artifact, agent skill, data directory, or ML Repo)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -210,7 +236,7 @@ class AsyncRawMlClient:
         Returns
         -------
         AsyncHttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/delete",
@@ -250,4 +276,8 @@ class AsyncRawMlClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

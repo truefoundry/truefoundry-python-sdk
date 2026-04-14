@@ -9,11 +9,13 @@ T_Result = typing.TypeVar("T_Result")
 
 class AzureOpenAiModelDeploymentType(enum.StrEnum):
     """
-    Global: worldwide processing, Data Zone: US/EU processing only
+    Global: worldwide processing; Data zone (US): US data zone processing; Data zone (EU): EU data zone processing; Standard: single-region processing
     """
 
+    STANDARD = "standard"
+    DATAZONE_US = "datazone_us"
+    DATAZONE_EU = "datazone_eu"
     GLOBAL = "global"
-    DATA_ZONE = "data-zone"
     _UNKNOWN = "__AZUREOPENAIMODELDEPLOYMENTTYPE_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
@@ -27,12 +29,18 @@ class AzureOpenAiModelDeploymentType(enum.StrEnum):
 
     def visit(
         self,
+        standard: typing.Callable[[], T_Result],
+        datazone_us: typing.Callable[[], T_Result],
+        datazone_eu: typing.Callable[[], T_Result],
         global_: typing.Callable[[], T_Result],
-        data_zone: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
+        if self is AzureOpenAiModelDeploymentType.STANDARD:
+            return standard()
+        if self is AzureOpenAiModelDeploymentType.DATAZONE_US:
+            return datazone_us()
+        if self is AzureOpenAiModelDeploymentType.DATAZONE_EU:
+            return datazone_eu()
         if self is AzureOpenAiModelDeploymentType.GLOBAL:
             return global_()
-        if self is AzureOpenAiModelDeploymentType.DATA_ZONE:
-            return data_zone()
         return _unknown_member(self._value_)

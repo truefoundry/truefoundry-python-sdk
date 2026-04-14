@@ -11,17 +11,69 @@ from .usage_code_snippet import UsageCodeSnippet
 
 
 class PromptVersion(UniversalBaseModel):
-    id: str
-    fqn: str
-    created_by_subject: Subject
-    created_at: typing.Optional[dt.datetime] = None
-    updated_at: typing.Optional[dt.datetime] = None
-    manifest: ChatPromptManifest
-    usage_code_snippet: typing.Optional[str] = None
-    ml_repo_id: str
-    tags: typing.Optional[typing.List[str]] = None
-    usage_code_snippets: typing.Optional[typing.List[UsageCodeSnippet]] = None
-    prompt_id: str
+    """
+    Tags, optional version alias, and SDK usage snippet (models, prompts, generic artifacts).
+    """
+
+    id: str = pydantic.Field()
+    """
+    Unique identifier for the artifact version
+    """
+
+    fqn: str = pydantic.Field()
+    """
+    Fully qualified name of the artifact version in the format '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}:{version}'
+    """
+
+    created_by_subject: Subject = pydantic.Field()
+    """
+    Subject (user, team, or service account) that created this artifact version
+    """
+
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Timestamp when the artifact version was created
+    """
+
+    updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Timestamp when the artifact version was last updated
+    """
+
+    manifest: ChatPromptManifest = pydantic.Field()
+    """
+    Manifest containing metadata specific to the chat prompt version
+    """
+
+    ml_repo_id: str = pydantic.Field()
+    """
+    ID of the ML Repo that this artifact version belongs to
+    """
+
+    tags: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    List of tags associated with this artifact version for filtering and organization
+    """
+
+    version_alias: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Optional human-readable version alias (e.g. v1.0.0)
+    """
+
+    usage_code_snippet: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Code snippet demonstrating how to use this artifact version
+    """
+
+    usage_code_snippets: typing.Optional[typing.List[UsageCodeSnippet]] = pydantic.Field(default=None)
+    """
+    List of code snippets demonstrating how to use this prompt version in different languages
+    """
+
+    prompt_id: str = pydantic.Field()
+    """
+    ID of the parent prompt that this version belongs to
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

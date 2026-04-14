@@ -17,7 +17,7 @@ class HeaderMatch(UniversalBaseModel):
     Header name to match on
     """
 
-    exact_match: str = pydantic.Field(default="")
+    exact_match: str = pydantic.Field()
     """
     Header value to match on
     """

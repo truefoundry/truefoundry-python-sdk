@@ -18,7 +18,7 @@ class GatewayDataRoutingConfigDestination(GatewayDataRoutingConfigDestinationSto
     Name for the destination
     """
 
-    enabled: bool = pydantic.Field(default=True)
+    enabled: bool = pydantic.Field()
     """
     Whether this destination is enabled
     """

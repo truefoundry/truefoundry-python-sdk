@@ -26,7 +26,7 @@ class Service(BaseService):
     """
 
     auto_shutdown: typing.Optional[Autoshutdown] = None
-    allow_interception: typing.Optional[bool] = pydantic.Field(default=False)
+    allow_interception: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether to allow intercepts to be applied for this service.
     This would inject an additional sidecar in each pod of the service. Not recommended on production

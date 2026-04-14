@@ -15,42 +15,46 @@ from .user_metadata import UserMetadata
 
 class Session(UniversalBaseModel):
     id: str
-    user_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="userName")] = pydantic.Field(
-        alias="userName", default=None
-    )
-    subject_slug: typing_extensions.Annotated[str, FieldMetadata(alias="subjectSlug")] = pydantic.Field(
-        alias="subjectSlug"
-    )
+    user_name: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="userName"), pydantic.Field(alias="userName")
+    ] = None
+    subject_slug: typing_extensions.Annotated[
+        str, FieldMetadata(alias="subjectSlug"), pydantic.Field(alias="subjectSlug")
+    ]
     subject_controller_name: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="subjectControllerName")
-    ] = pydantic.Field(alias="subjectControllerName", default=None)
-    subject_pat_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="subjectPatName")] = (
-        pydantic.Field(alias="subjectPatName", default=None)
-    )
+        typing.Optional[str],
+        FieldMetadata(alias="subjectControllerName"),
+        pydantic.Field(alias="subjectControllerName"),
+    ] = None
+    subject_pat_name: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="subjectPatName"), pydantic.Field(alias="subjectPatName")
+    ] = None
     email: typing.Optional[str] = None
-    subject_type: typing_extensions.Annotated[SubjectType, FieldMetadata(alias="subjectType")] = pydantic.Field(
-        alias="subjectType"
-    )
-    tenant_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="tenantName")] = pydantic.Field(
-        alias="tenantName", default=None
-    )
+    subject_type: typing_extensions.Annotated[
+        SubjectType, FieldMetadata(alias="subjectType"), pydantic.Field(alias="subjectType")
+    ]
+    tenant_name: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="tenantName"), pydantic.Field(alias="tenantName")
+    ] = None
     roles: typing.List[str]
     teams: typing.List[SessionTeam]
     accounts: typing.List[SessionAccount]
     metadata: typing.Optional[UserMetadata] = None
-    is_billing_enabled: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isBillingEnabled")] = (
-        pydantic.Field(alias="isBillingEnabled", default=None)
-    )
+    is_billing_enabled: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="isBillingEnabled"), pydantic.Field(alias="isBillingEnabled")
+    ] = None
     service_account_metadata: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, typing.Any]], FieldMetadata(alias="serviceAccountMetadata")
-    ] = pydantic.Field(alias="serviceAccountMetadata", default=None)
+        typing.Optional[typing.Dict[str, typing.Any]],
+        FieldMetadata(alias="serviceAccountMetadata"),
+        pydantic.Field(alias="serviceAccountMetadata"),
+    ] = None
     account: typing.Optional[Account] = None
-    root_account: typing_extensions.Annotated[typing.Optional[Account], FieldMetadata(alias="rootAccount")] = (
-        pydantic.Field(alias="rootAccount", default=None)
-    )
-    effective_user_id: typing_extensions.Annotated[str, FieldMetadata(alias="effectiveUserId")] = pydantic.Field(
-        alias="effectiveUserId"
-    )
+    root_account: typing_extensions.Annotated[
+        typing.Optional[Account], FieldMetadata(alias="rootAccount"), pydantic.Field(alias="rootAccount")
+    ] = None
+    effective_user_id: typing_extensions.Annotated[
+        str, FieldMetadata(alias="effectiveUserId"), pydantic.Field(alias="effectiveUserId")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -21,9 +21,7 @@ class CustomGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
-    description: typing.Optional[str] = pydantic.Field(
-        default="Custom guardrail server for validate or mutate via HTTP endpoint"
-    )
+    description: typing.Optional[str] = pydantic.Field(default=None)
     """
     Optional description for this Guardrail Config.
     """
@@ -47,7 +45,7 @@ class CustomGuardrailConfig(UniversalBaseModel):
     Validate guardrails are run in parallel while mutate guardrails are run sequentially.
     """
 
-    priority: typing.Optional[int] = pydantic.Field(default=1)
+    priority: typing.Optional[int] = pydantic.Field(default=None)
     """
     Execution order for mutate guardrails. Lower values run first. Only applicable when operation is mutate.
     """

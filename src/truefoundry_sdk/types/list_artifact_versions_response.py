@@ -9,8 +9,15 @@ from .pagination import Pagination
 
 
 class ListArtifactVersionsResponse(UniversalBaseModel):
-    data: typing.List[ArtifactVersion]
-    pagination: Pagination
+    data: typing.List[ArtifactVersion] = pydantic.Field()
+    """
+    List of artifact versions matching the query
+    """
+
+    pagination: Pagination = pydantic.Field()
+    """
+    Pagination information including total count, offset, and limit
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

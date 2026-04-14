@@ -23,7 +23,7 @@ class PythonBuild(UniversalBaseModel):
     Python version to run your application. Should be one of the tags listed on [Official Python Docker Page](https://hub.docker.com/_/python)
     """
 
-    build_context_path: str = pydantic.Field(default="./")
+    build_context_path: str = pydantic.Field()
     """
     Build path relative to project root path.
     """

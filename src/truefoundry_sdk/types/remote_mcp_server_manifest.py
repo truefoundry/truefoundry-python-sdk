@@ -50,9 +50,9 @@ class RemoteMcpServerManifest(UniversalBaseModel):
     Users and Teams that have access to this MCP Server
     """
 
-    owned_by: typing_extensions.Annotated[typing.Optional[OwnedBy], FieldMetadata(alias="ownedBy")] = pydantic.Field(
-        alias="ownedBy", default=None
-    )
+    owned_by: typing_extensions.Annotated[
+        typing.Optional[OwnedBy], FieldMetadata(alias="ownedBy"), pydantic.Field(alias="ownedBy")
+    ] = None
     tags: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     Key-value pairs to categorize this MCP Server (e.g., by owner or environment).

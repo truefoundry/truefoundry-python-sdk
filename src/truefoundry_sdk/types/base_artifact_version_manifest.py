@@ -2,8 +2,9 @@
 
 import typing
 
+from .agent_skill_manifest import AgentSkillManifest
 from .artifact_manifest import ArtifactManifest
 from .chat_prompt_manifest import ChatPromptManifest
 from .model_manifest import ModelManifest
 
-BaseArtifactVersionManifest = typing.Union[ModelManifest, ChatPromptManifest, ArtifactManifest]
+BaseArtifactVersionManifest = typing.Union[ModelManifest, ChatPromptManifest, ArtifactManifest, AgentSkillManifest]

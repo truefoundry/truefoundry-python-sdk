@@ -6,8 +6,9 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.pagination import AsyncPager, SyncPager
+from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
@@ -22,6 +23,7 @@ from ..types.list_workspaces_response import ListWorkspacesResponse
 from ..types.workspace import Workspace
 from ..types.workspace_manifest import WorkspaceManifest
 from .types.workspaces_delete_response import WorkspacesDeleteResponse
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -39,10 +41,11 @@ class RawWorkspacesClient:
         cluster_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
+        include_cluster: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Workspace, ListWorkspacesResponse]:
         """
-        List workspaces associated with the user. Optional filters include clusterId, fqn, and workspace name. Pagination is available based on query parameters.
+        List workspaces associated with the user. Optional filters include clusterId, fqn, and workspace name.
 
         Parameters
         ----------
@@ -60,6 +63,9 @@ class RawWorkspacesClient:
 
         fqn : typing.Optional[str]
             Workspace FQN
+
+        include_cluster : typing.Optional[bool]
+            When true, each workspace includes cluster information
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -80,6 +86,7 @@ class RawWorkspacesClient:
                 "clusterId": cluster_id,
                 "name": name,
                 "fqn": fqn,
+                "includeCluster": include_cluster,
             },
             request_options=request_options,
         )
@@ -100,19 +107,24 @@ class RawWorkspacesClient:
                     cluster_id=cluster_id,
                     name=name,
                     fqn=fqn,
+                    include_cluster=include_cluster,
                     request_options=request_options,
                 )
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create_or_update(
         self,
         *,
         manifest: WorkspaceManifest,
-        dry_run: typing.Optional[bool] = False,
+        dry_run: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetWorkspaceResponse]:
         """
@@ -208,6 +220,85 @@ class RawWorkspacesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def search(
+        self,
+        *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
+        filter: typing.Optional[str] = None,
+        include_cluster: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncPager[Workspace, ListWorkspacesResponse]:
+        """
+        List workspaces the user can read with optional structured `filter` (name, id, environmentId, cluster_fqn) and pagination.
+
+        Parameters
+        ----------
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
+        filter : typing.Optional[str]
+            JSON string containing array of search filters with string, type and operator
+
+        include_cluster : typing.Optional[bool]
+            When true, each workspace includes cluster information
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[Workspace, ListWorkspacesResponse]
+            Paginated workspaces matching the filter.
+        """
+        offset = offset if offset is not None else 0
+
+        _response = self._client_wrapper.httpx_client.request(
+            "api/svc/v1/workspaces/search",
+            method="GET",
+            params={
+                "limit": limit,
+                "offset": offset,
+                "filter": filter,
+                "includeCluster": include_cluster,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    ListWorkspacesResponse,
+                    parse_obj_as(
+                        type_=ListWorkspacesResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                _items = _parsed_response.data
+                _has_next = True
+                _get_next = lambda: self.search(
+                    limit=limit,
+                    offset=offset + len(_items or []),
+                    filter=filter,
+                    include_cluster=include_cluster,
+                    request_options=request_options,
+                )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
@@ -230,7 +321,7 @@ class RawWorkspacesClient:
             Returns the workspaces associated with provided workspace id
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/workspaces/{jsonable_encoder(id)}",
+            f"api/svc/v1/workspaces/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -258,6 +349,10 @@ class RawWorkspacesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -282,7 +377,7 @@ class RawWorkspacesClient:
             Successfully deletes the workspace and returns the workspace details along with a confirmation message.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/workspaces/{jsonable_encoder(id)}",
+            f"api/svc/v1/workspaces/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -321,6 +416,10 @@ class RawWorkspacesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -336,10 +435,11 @@ class AsyncRawWorkspacesClient:
         cluster_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
+        include_cluster: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Workspace, ListWorkspacesResponse]:
         """
-        List workspaces associated with the user. Optional filters include clusterId, fqn, and workspace name. Pagination is available based on query parameters.
+        List workspaces associated with the user. Optional filters include clusterId, fqn, and workspace name.
 
         Parameters
         ----------
@@ -357,6 +457,9 @@ class AsyncRawWorkspacesClient:
 
         fqn : typing.Optional[str]
             Workspace FQN
+
+        include_cluster : typing.Optional[bool]
+            When true, each workspace includes cluster information
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -377,6 +480,7 @@ class AsyncRawWorkspacesClient:
                 "clusterId": cluster_id,
                 "name": name,
                 "fqn": fqn,
+                "includeCluster": include_cluster,
             },
             request_options=request_options,
         )
@@ -399,6 +503,7 @@ class AsyncRawWorkspacesClient:
                         cluster_id=cluster_id,
                         name=name,
                         fqn=fqn,
+                        include_cluster=include_cluster,
                         request_options=request_options,
                     )
 
@@ -406,13 +511,17 @@ class AsyncRawWorkspacesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create_or_update(
         self,
         *,
         manifest: WorkspaceManifest,
-        dry_run: typing.Optional[bool] = False,
+        dry_run: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetWorkspaceResponse]:
         """
@@ -508,6 +617,88 @@ class AsyncRawWorkspacesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def search(
+        self,
+        *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
+        filter: typing.Optional[str] = None,
+        include_cluster: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncPager[Workspace, ListWorkspacesResponse]:
+        """
+        List workspaces the user can read with optional structured `filter` (name, id, environmentId, cluster_fqn) and pagination.
+
+        Parameters
+        ----------
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
+        filter : typing.Optional[str]
+            JSON string containing array of search filters with string, type and operator
+
+        include_cluster : typing.Optional[bool]
+            When true, each workspace includes cluster information
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[Workspace, ListWorkspacesResponse]
+            Paginated workspaces matching the filter.
+        """
+        offset = offset if offset is not None else 0
+
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/svc/v1/workspaces/search",
+            method="GET",
+            params={
+                "limit": limit,
+                "offset": offset,
+                "filter": filter,
+                "includeCluster": include_cluster,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    ListWorkspacesResponse,
+                    parse_obj_as(
+                        type_=ListWorkspacesResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                _items = _parsed_response.data
+                _has_next = True
+
+                async def _get_next():
+                    return await self.search(
+                        limit=limit,
+                        offset=offset + len(_items or []),
+                        filter=filter,
+                        include_cluster=include_cluster,
+                        request_options=request_options,
+                    )
+
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -530,7 +721,7 @@ class AsyncRawWorkspacesClient:
             Returns the workspaces associated with provided workspace id
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/workspaces/{jsonable_encoder(id)}",
+            f"api/svc/v1/workspaces/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -558,6 +749,10 @@ class AsyncRawWorkspacesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -582,7 +777,7 @@ class AsyncRawWorkspacesClient:
             Successfully deletes the workspace and returns the workspace details along with a confirmation message.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/workspaces/{jsonable_encoder(id)}",
+            f"api/svc/v1/workspaces/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -621,4 +816,8 @@ class AsyncRawWorkspacesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

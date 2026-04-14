@@ -6,8 +6,9 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.pagination import AsyncPager, SyncPager
+from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..errors.bad_request_error import BadRequestError
@@ -20,6 +21,7 @@ from ..types.http_error import HttpError
 from ..types.list_personal_access_token_response import ListPersonalAccessTokenResponse
 from ..types.revoke_all_personal_access_token_response import RevokeAllPersonalAccessTokenResponse
 from ..types.virtual_account import VirtualAccount
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -34,6 +36,7 @@ class RawPersonalAccessTokensClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
+        name_search_query: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[VirtualAccount, ListPersonalAccessTokenResponse]:
         """
@@ -46,6 +49,9 @@ class RawPersonalAccessTokensClient:
 
         offset : typing.Optional[int]
             Number of items to skip
+
+        name_search_query : typing.Optional[str]
+            Return personal access tokens with names that contain this string
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -63,6 +69,7 @@ class RawPersonalAccessTokensClient:
             params={
                 "limit": limit,
                 "offset": offset,
+                "nameSearchQuery": name_search_query,
             },
             request_options=request_options,
         )
@@ -80,12 +87,17 @@ class RawPersonalAccessTokensClient:
                 _get_next = lambda: self.list(
                     limit=limit,
                     offset=offset + len(_items or []),
+                    name_search_query=name_search_query,
                     request_options=request_options,
                 )
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
@@ -167,6 +179,10 @@ class RawPersonalAccessTokensClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def revoke_all(
@@ -224,6 +240,10 @@ class RawPersonalAccessTokensClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -246,7 +266,7 @@ class RawPersonalAccessTokensClient:
             Personal Access Token deleted successfully
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/personal-access-tokens/{jsonable_encoder(id)}",
+            f"api/svc/v1/personal-access-tokens/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -274,6 +294,10 @@ class RawPersonalAccessTokensClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
@@ -295,7 +319,7 @@ class RawPersonalAccessTokensClient:
             Personal Access Token found successfully and returned with token
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/personal-access-tokens/{jsonable_encoder(name)}",
+            f"api/svc/v1/personal-access-tokens/{encode_path_param(name)}",
             method="GET",
             request_options=request_options,
         )
@@ -323,6 +347,10 @@ class RawPersonalAccessTokensClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -335,6 +363,7 @@ class AsyncRawPersonalAccessTokensClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
+        name_search_query: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[VirtualAccount, ListPersonalAccessTokenResponse]:
         """
@@ -347,6 +376,9 @@ class AsyncRawPersonalAccessTokensClient:
 
         offset : typing.Optional[int]
             Number of items to skip
+
+        name_search_query : typing.Optional[str]
+            Return personal access tokens with names that contain this string
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -364,6 +396,7 @@ class AsyncRawPersonalAccessTokensClient:
             params={
                 "limit": limit,
                 "offset": offset,
+                "nameSearchQuery": name_search_query,
             },
             request_options=request_options,
         )
@@ -383,6 +416,7 @@ class AsyncRawPersonalAccessTokensClient:
                     return await self.list(
                         limit=limit,
                         offset=offset + len(_items or []),
+                        name_search_query=name_search_query,
                         request_options=request_options,
                     )
 
@@ -390,6 +424,10 @@ class AsyncRawPersonalAccessTokensClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
@@ -471,6 +509,10 @@ class AsyncRawPersonalAccessTokensClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def revoke_all(
@@ -528,6 +570,10 @@ class AsyncRawPersonalAccessTokensClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -550,7 +596,7 @@ class AsyncRawPersonalAccessTokensClient:
             Personal Access Token deleted successfully
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/personal-access-tokens/{jsonable_encoder(id)}",
+            f"api/svc/v1/personal-access-tokens/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -578,6 +624,10 @@ class AsyncRawPersonalAccessTokensClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -599,7 +649,7 @@ class AsyncRawPersonalAccessTokensClient:
             Personal Access Token found successfully and returned with token
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/personal-access-tokens/{jsonable_encoder(name)}",
+            f"api/svc/v1/personal-access-tokens/{encode_path_param(name)}",
             method="GET",
             request_options=request_options,
         )
@@ -627,4 +677,8 @@ class AsyncRawPersonalAccessTokensClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

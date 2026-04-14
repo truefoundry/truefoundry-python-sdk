@@ -18,7 +18,7 @@ class TfyContentModerationGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
-    description: typing.Optional[str] = pydantic.Field(default="Content moderation guardrail, managed by TrueFoundry")
+    description: typing.Optional[str] = pydantic.Field(default=None)
     """
     Optional description for this Guardrail Config.
     """

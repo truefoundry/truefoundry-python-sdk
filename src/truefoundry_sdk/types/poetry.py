@@ -17,7 +17,7 @@ class Poetry(UniversalBaseModel):
     +value=poetry
     """
 
-    poetry_version: typing.Optional[str] = pydantic.Field(default="latest")
+    poetry_version: typing.Optional[str] = pydantic.Field(default=None)
     """
     Poetry version to use
     """

@@ -7,47 +7,47 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class SqlSanitizerGuardrailConfigConfig(UniversalBaseModel):
-    block_drop: typing.Optional[bool] = pydantic.Field(default=True)
+    block_drop: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Block SQL DROP statements as dangerous operations.
     """
 
-    block_truncate: typing.Optional[bool] = pydantic.Field(default=True)
+    block_truncate: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Block SQL TRUNCATE statements as dangerous operations.
     """
 
-    block_alter: typing.Optional[bool] = pydantic.Field(default=True)
+    block_alter: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Block SQL ALTER statements as dangerous operations.
     """
 
-    block_grant: typing.Optional[bool] = pydantic.Field(default=True)
+    block_grant: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Block SQL GRANT statements as dangerous operations.
     """
 
-    block_revoke: typing.Optional[bool] = pydantic.Field(default=True)
+    block_revoke: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Block SQL REVOKE statements as dangerous operations.
     """
 
-    strip_comments: typing.Optional[bool] = pydantic.Field(default=True)
+    strip_comments: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Remove SQL comments (-- and block comments) from queries. In mutate mode, comments are stripped from the output.
     """
 
-    block_delete_without_where: typing.Optional[bool] = pydantic.Field(default=True)
+    block_delete_without_where: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Flag DELETE FROM statements that lack a WHERE clause as potentially dangerous.
     """
 
-    block_update_without_where: typing.Optional[bool] = pydantic.Field(default=True)
+    block_update_without_where: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Flag UPDATE statements that lack a WHERE clause as potentially dangerous.
     """
 
-    require_parameterization: typing.Optional[bool] = pydantic.Field(default=False)
+    require_parameterization: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Detect naive string interpolation patterns (+, %., {}) that may indicate SQL injection vulnerabilities.
     """

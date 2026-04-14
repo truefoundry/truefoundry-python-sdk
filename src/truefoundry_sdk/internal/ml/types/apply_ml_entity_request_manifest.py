@@ -2,9 +2,12 @@
 
 import typing
 
+from ....types.agent_skill_manifest import AgentSkillManifest
 from ....types.artifact_manifest import ArtifactManifest
 from ....types.chat_prompt_manifest import ChatPromptManifest
 from ....types.data_directory_manifest import DataDirectoryManifest
 from ....types.model_manifest import ModelManifest
 
-ApplyMlEntityRequestManifest = typing.Union[ModelManifest, ChatPromptManifest, ArtifactManifest, DataDirectoryManifest]
+ApplyMlEntityRequestManifest = typing.Union[
+    ModelManifest, ChatPromptManifest, ArtifactManifest, AgentSkillManifest, DataDirectoryManifest
+]

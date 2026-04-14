@@ -14,11 +14,14 @@ class PrivatePricingTier(UniversalBaseModel):
     Pricing tier for volume-based pricing (per 1000 tokens)
     """
 
-    from_: typing_extensions.Annotated[int, FieldMetadata(alias="from")] = pydantic.Field(alias="from")
-    """
-    Token count threshold where this pricing tier begins (e.g., 200000 for 200k tokens)
-    """
-
+    from_: typing_extensions.Annotated[
+        int,
+        FieldMetadata(alias="from"),
+        pydantic.Field(
+            alias="from",
+            description="Token count threshold where this pricing tier begins (e.g., 200000 for 200k tokens)",
+        ),
+    ]
     cost_per_token: NonNegativeFloat
 
     if IS_PYDANTIC_V2:

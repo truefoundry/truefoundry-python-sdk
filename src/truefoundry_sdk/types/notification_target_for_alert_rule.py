@@ -5,5 +5,6 @@ import typing
 from .email import Email
 from .pager_duty import PagerDuty
 from .slack_bot import SlackBot
+from .slack_webhook import SlackWebhook
 
-NotificationTargetForAlertRule = typing.Union[Email, SlackBot, PagerDuty]
+NotificationTargetForAlertRule = typing.Union[Email, SlackWebhook, SlackBot, PagerDuty]

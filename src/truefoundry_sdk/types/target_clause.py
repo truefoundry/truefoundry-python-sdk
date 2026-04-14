@@ -7,15 +7,16 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
 from .in_not_in_operator import InNotInOperator
+from .mcp_tools_operator import McpToolsOperator
 
 
 class TargetClause(UniversalBaseModel):
-    mcp_servers: typing_extensions.Annotated[typing.Optional[InNotInOperator], FieldMetadata(alias="mcpServers")] = (
-        pydantic.Field(alias="mcpServers", default=None)
-    )
-    mcp_tools: typing_extensions.Annotated[typing.Optional[InNotInOperator], FieldMetadata(alias="mcpTools")] = (
-        pydantic.Field(alias="mcpTools", default=None)
-    )
+    mcp_servers: typing_extensions.Annotated[
+        typing.Optional[InNotInOperator], FieldMetadata(alias="mcpServers"), pydantic.Field(alias="mcpServers")
+    ] = None
+    mcp_tools: typing_extensions.Annotated[
+        typing.Optional[McpToolsOperator], FieldMetadata(alias="mcpTools"), pydantic.Field(alias="mcpTools")
+    ] = None
     model: typing.Optional[InNotInOperator] = None
 
     if IS_PYDANTIC_V2:

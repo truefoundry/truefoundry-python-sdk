@@ -40,13 +40,6 @@ class DataDirectoriesClient:
         """
         Get a data directory by its ID.
 
-        Args:
-            id (str): The ID of the data directory to retrieve
-            user_info: Current authenticated user info
-
-        Returns:
-            DataDirectoryResponse: Response containing the retrieved data directory
-
         Parameters
         ----------
         id : str
@@ -57,7 +50,7 @@ class DataDirectoriesClient:
         Returns
         -------
         GetDataDirectoryResponse
-            Successful Response
+            The data directory data
 
         Examples
         --------
@@ -82,15 +75,7 @@ class DataDirectoriesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EmptyResponse:
         """
-        Delete a data directory and optionally its contents.
-
-        Args:
-            id: Unique identifier of the data directory to delete
-            delete_contents: If True, also deletes the data directory's contents
-            user_info: Authenticated user information
-
-        Returns:
-            EmptyResponse: Empty response indicating successful deletion
+        Delete a data directory, optionally including its contents.
 
         Parameters
         ----------
@@ -104,7 +89,7 @@ class DataDirectoriesClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful deletion
 
         Examples
         --------
@@ -133,30 +118,24 @@ class DataDirectoriesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[DataDirectory, ListDataDirectoriesResponse]:
         """
-        List all data directories with optional filtering and pagination.
-
-        Args:
-            filters: Query parameters for filtering and pagination
-                - ml_repo_id: Filter data directories by ml repo ID
-                - name: Optional filter data directories by name
-                - limit: Optional maximum number of data directories to return
-                - offset: Optional number of data directories to skip
-            user_info: Authenticated user information
-
-        Returns:
-            ListDataDirectoriesResponse: List of data directories and pagination info
+        List data directories with optional filtering by FQN, ML Repo, or name.
 
         Parameters
         ----------
         fqn : typing.Optional[str]
+            Fully qualified name to filter data directories by
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter data directories by
 
         name : typing.Optional[str]
+            Name of the data directory to filter by
 
         limit : typing.Optional[int]
+            Maximum number of data directories to return
 
         offset : typing.Optional[int]
+            Number of data directories to skip for pagination
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -164,7 +143,7 @@ class DataDirectoriesClient:
         Returns
         -------
         SyncPager[DataDirectory, ListDataDirectoriesResponse]
-            Successful Response
+            List of data directories matching the query with pagination information
 
         Examples
         --------
@@ -195,9 +174,12 @@ class DataDirectoriesClient:
         self, *, manifest: DataDirectoryManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetDataDirectoryResponse:
         """
+        Create or update a data directory.
+
         Parameters
         ----------
         manifest : DataDirectoryManifest
+            Manifest containing metadata for the data directory to apply
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -205,7 +187,7 @@ class DataDirectoriesClient:
         Returns
         -------
         GetDataDirectoryResponse
-            Successful Response
+            The created or updated data directory
 
         Examples
         --------
@@ -241,24 +223,21 @@ class DataDirectoriesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[FileInfo, ListFilesResponse]:
         """
-        List files in a dataset.
-
-        Args:
-            request_dto: Request containing dataset ID, path, page token and limit
-            user_info: Authenticated user information
-
-        Returns:
-            ListFilesResponse: Response containing files and pagination info
+        List files and directories in a data directory.
 
         Parameters
         ----------
         id : str
+            ID of the artifact version to list files from
 
         path : typing.Optional[str]
+            Relative path within the artifact version to list files from (defaults to root)
 
         limit : typing.Optional[int]
+            Maximum number of files/directories to return
 
         page_token : typing.Optional[str]
+            Token to retrieve the next page of results
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -266,7 +245,7 @@ class DataDirectoriesClient:
         Returns
         -------
         SyncPager[FileInfo, ListFilesResponse]
-            Successful Response
+            List of files and directories with pagination information
 
         Examples
         --------
@@ -293,20 +272,15 @@ class DataDirectoriesClient:
         self, *, id: str, paths: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
     ) -> EmptyResponse:
         """
-        Delete files from the dataset.
-
-        Args:
-            request_dto: Request containing dataset ID and paths
-            user_info: Authenticated user information
-
-        Returns:
-            EmptyResponse: Empty response indicating successful deletion
+        Delete files from a data directory.
 
         Parameters
         ----------
         id : str
+            ID of the artifact version to delete files from
 
         paths : typing.Sequence[str]
+            List of relative file paths within the artifact version to delete
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -314,7 +288,7 @@ class DataDirectoriesClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful deletion
 
         Examples
         --------
@@ -341,22 +315,18 @@ class DataDirectoriesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSignedUrLsResponse:
         """
-        Get signed URLs for a dataset.
-
-        Args:
-            request_dto: Request containing dataset ID, paths and operation
-            user_info: Authenticated user information
-
-        Returns:
-            GetSignedURLsResponse: Response containing signed URLs
+        Get pre-signed URLs for reading or writing files in a data directory.
 
         Parameters
         ----------
         id : str
+            ID of the artifact version to get signed URLs for
 
         paths : typing.Sequence[str]
+            List of relative file paths within the artifact version to get signed URLs for
 
         operation : Operation
+            Operation type for the signed URL (e.g., 'READ' or 'WRITE')
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -364,7 +334,7 @@ class DataDirectoriesClient:
         Returns
         -------
         GetSignedUrLsResponse
-            Successful Response
+            List of signed URLs for the requested file paths
 
         Examples
         --------
@@ -389,22 +359,18 @@ class DataDirectoriesClient:
         self, *, id: str, path: str, num_parts: int, request_options: typing.Optional[RequestOptions] = None
     ) -> MultiPartUploadResponse:
         """
-        Create a multipart upload for a dataset
-
-        Args:
-            request_dto: Request containing dataset ID, path and number of parts
-            user_info: Authenticated user information
-
-        Returns:
-            MultiPartUploadResponse: Response containing multipart upload info
+        Create a multipart upload for large files in a data directory.
 
         Parameters
         ----------
         id : str
+            ID of the artifact version to upload files to
 
         path : str
+            Relative path within the artifact version where the file should be uploaded
 
         num_parts : int
+            Number of parts to split the upload into for multipart upload
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -412,7 +378,7 @@ class DataDirectoriesClient:
         Returns
         -------
         MultiPartUploadResponse
-            Successful Response
+            Multipart upload information including signed URLs for each part
 
         Examples
         --------
@@ -455,13 +421,6 @@ class AsyncDataDirectoriesClient:
         """
         Get a data directory by its ID.
 
-        Args:
-            id (str): The ID of the data directory to retrieve
-            user_info: Current authenticated user info
-
-        Returns:
-            DataDirectoryResponse: Response containing the retrieved data directory
-
         Parameters
         ----------
         id : str
@@ -472,7 +431,7 @@ class AsyncDataDirectoriesClient:
         Returns
         -------
         GetDataDirectoryResponse
-            Successful Response
+            The data directory data
 
         Examples
         --------
@@ -505,15 +464,7 @@ class AsyncDataDirectoriesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EmptyResponse:
         """
-        Delete a data directory and optionally its contents.
-
-        Args:
-            id: Unique identifier of the data directory to delete
-            delete_contents: If True, also deletes the data directory's contents
-            user_info: Authenticated user information
-
-        Returns:
-            EmptyResponse: Empty response indicating successful deletion
+        Delete a data directory, optionally including its contents.
 
         Parameters
         ----------
@@ -527,7 +478,7 @@ class AsyncDataDirectoriesClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful deletion
 
         Examples
         --------
@@ -564,30 +515,24 @@ class AsyncDataDirectoriesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[DataDirectory, ListDataDirectoriesResponse]:
         """
-        List all data directories with optional filtering and pagination.
-
-        Args:
-            filters: Query parameters for filtering and pagination
-                - ml_repo_id: Filter data directories by ml repo ID
-                - name: Optional filter data directories by name
-                - limit: Optional maximum number of data directories to return
-                - offset: Optional number of data directories to skip
-            user_info: Authenticated user information
-
-        Returns:
-            ListDataDirectoriesResponse: List of data directories and pagination info
+        List data directories with optional filtering by FQN, ML Repo, or name.
 
         Parameters
         ----------
         fqn : typing.Optional[str]
+            Fully qualified name to filter data directories by
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter data directories by
 
         name : typing.Optional[str]
+            Name of the data directory to filter by
 
         limit : typing.Optional[int]
+            Maximum number of data directories to return
 
         offset : typing.Optional[int]
+            Number of data directories to skip for pagination
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -595,7 +540,7 @@ class AsyncDataDirectoriesClient:
         Returns
         -------
         AsyncPager[DataDirectory, ListDataDirectoriesResponse]
-            Successful Response
+            List of data directories matching the query with pagination information
 
         Examples
         --------
@@ -635,9 +580,12 @@ class AsyncDataDirectoriesClient:
         self, *, manifest: DataDirectoryManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetDataDirectoryResponse:
         """
+        Create or update a data directory.
+
         Parameters
         ----------
         manifest : DataDirectoryManifest
+            Manifest containing metadata for the data directory to apply
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -645,7 +593,7 @@ class AsyncDataDirectoriesClient:
         Returns
         -------
         GetDataDirectoryResponse
-            Successful Response
+            The created or updated data directory
 
         Examples
         --------
@@ -689,24 +637,21 @@ class AsyncDataDirectoriesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[FileInfo, ListFilesResponse]:
         """
-        List files in a dataset.
-
-        Args:
-            request_dto: Request containing dataset ID, path, page token and limit
-            user_info: Authenticated user information
-
-        Returns:
-            ListFilesResponse: Response containing files and pagination info
+        List files and directories in a data directory.
 
         Parameters
         ----------
         id : str
+            ID of the artifact version to list files from
 
         path : typing.Optional[str]
+            Relative path within the artifact version to list files from (defaults to root)
 
         limit : typing.Optional[int]
+            Maximum number of files/directories to return
 
         page_token : typing.Optional[str]
+            Token to retrieve the next page of results
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -714,7 +659,7 @@ class AsyncDataDirectoriesClient:
         Returns
         -------
         AsyncPager[FileInfo, ListFilesResponse]
-            Successful Response
+            List of files and directories with pagination information
 
         Examples
         --------
@@ -750,20 +695,15 @@ class AsyncDataDirectoriesClient:
         self, *, id: str, paths: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
     ) -> EmptyResponse:
         """
-        Delete files from the dataset.
-
-        Args:
-            request_dto: Request containing dataset ID and paths
-            user_info: Authenticated user information
-
-        Returns:
-            EmptyResponse: Empty response indicating successful deletion
+        Delete files from a data directory.
 
         Parameters
         ----------
         id : str
+            ID of the artifact version to delete files from
 
         paths : typing.Sequence[str]
+            List of relative file paths within the artifact version to delete
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -771,7 +711,7 @@ class AsyncDataDirectoriesClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful deletion
 
         Examples
         --------
@@ -806,22 +746,18 @@ class AsyncDataDirectoriesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSignedUrLsResponse:
         """
-        Get signed URLs for a dataset.
-
-        Args:
-            request_dto: Request containing dataset ID, paths and operation
-            user_info: Authenticated user information
-
-        Returns:
-            GetSignedURLsResponse: Response containing signed URLs
+        Get pre-signed URLs for reading or writing files in a data directory.
 
         Parameters
         ----------
         id : str
+            ID of the artifact version to get signed URLs for
 
         paths : typing.Sequence[str]
+            List of relative file paths within the artifact version to get signed URLs for
 
         operation : Operation
+            Operation type for the signed URL (e.g., 'READ' or 'WRITE')
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -829,7 +765,7 @@ class AsyncDataDirectoriesClient:
         Returns
         -------
         GetSignedUrLsResponse
-            Successful Response
+            List of signed URLs for the requested file paths
 
         Examples
         --------
@@ -862,22 +798,18 @@ class AsyncDataDirectoriesClient:
         self, *, id: str, path: str, num_parts: int, request_options: typing.Optional[RequestOptions] = None
     ) -> MultiPartUploadResponse:
         """
-        Create a multipart upload for a dataset
-
-        Args:
-            request_dto: Request containing dataset ID, path and number of parts
-            user_info: Authenticated user information
-
-        Returns:
-            MultiPartUploadResponse: Response containing multipart upload info
+        Create a multipart upload for large files in a data directory.
 
         Parameters
         ----------
         id : str
+            ID of the artifact version to upload files to
 
         path : str
+            Relative path within the artifact version where the file should be uploaded
 
         num_parts : int
+            Number of parts to split the upload into for multipart upload
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -885,7 +817,7 @@ class AsyncDataDirectoriesClient:
         Returns
         -------
         MultiPartUploadResponse
-            Successful Response
+            Multipart upload information including signed URLs for each part
 
         Examples
         --------

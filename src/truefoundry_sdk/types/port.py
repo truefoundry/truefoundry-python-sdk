@@ -14,7 +14,7 @@ class Port(UniversalBaseModel):
     Describes the ports the service should be exposed to.
     """
 
-    port: int = pydantic.Field(default=80)
+    port: int = pydantic.Field()
     """
     Port number to expose.
     """
@@ -24,7 +24,7 @@ class Port(UniversalBaseModel):
     Protocol for the port.
     """
 
-    expose: bool = pydantic.Field(default=True)
+    expose: bool = pydantic.Field()
     """
     Expose the port
     """

@@ -42,17 +42,22 @@ class ArtifactVersionsClient:
         *,
         artifact_version_id: str,
         tags: typing.Sequence[str],
-        force: typing.Optional[bool] = False,
+        force: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EmptyResponse:
         """
+        Apply tags to an artifact version.
+
         Parameters
         ----------
         artifact_version_id : str
+            ID of the artifact version to apply tags to
 
         tags : typing.Sequence[str]
+            List of tags to apply to the artifact version
 
         force : typing.Optional[bool]
+            Whether to overwrite existing tags if they conflict
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -60,7 +65,7 @@ class ArtifactVersionsClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful tag application
 
         Examples
         --------
@@ -82,7 +87,7 @@ class ArtifactVersionsClient:
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetArtifactVersionResponse:
         """
-        Get artifact version API
+        Get an artifact version by its ID.
 
         Parameters
         ----------
@@ -94,7 +99,7 @@ class ArtifactVersionsClient:
         Returns
         -------
         GetArtifactVersionResponse
-            Successful Response
+            The artifact version data
 
         Examples
         --------
@@ -113,7 +118,7 @@ class ArtifactVersionsClient:
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
         """
-        Delete artifact versions API
+        Delete an artifact version by its ID.
 
         Parameters
         ----------
@@ -125,7 +130,7 @@ class ArtifactVersionsClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful deletion
 
         Examples
         --------
@@ -159,31 +164,42 @@ class ArtifactVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[ArtifactVersion, ListArtifactVersionsResponse]:
         """
-        List artifact version API
+        List artifact versions with optional filtering by tag, FQN, artifact ID, ML Repo, name, version, run IDs, or run steps.
 
         Parameters
         ----------
         tag : typing.Optional[str]
+            Tag to filter artifact versions by
 
         fqn : typing.Optional[str]
+            Fully qualified name to filter artifact versions by (format: '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}' or '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}:{version}')
 
         artifact_id : typing.Optional[str]
+            ID of the artifact to filter versions by
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter artifact versions by
 
         name : typing.Optional[str]
+            Name of the artifact to filter versions by
 
         version : typing.Optional[int]
+            Version number (positive integer) or 'latest' to filter by specific version
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            List of run IDs to filter artifact versions by
 
         run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+            List of run step numbers to filter artifact versions by
 
         offset : typing.Optional[int]
+            Number of artifact versions to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of artifact versions to return
 
         include_internal_metadata : typing.Optional[bool]
+            Whether to include internal metadata in the response
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -191,7 +207,7 @@ class ArtifactVersionsClient:
         Returns
         -------
         SyncPager[ArtifactVersion, ListArtifactVersionsResponse]
-            Successful Response
+            List of artifact versions matching the query with pagination information
 
         Examples
         --------
@@ -242,13 +258,18 @@ class ArtifactVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSignedUrLsResponse:
         """
+        Get pre-signed URLs for reading or writing files in an artifact version.
+
         Parameters
         ----------
         id : str
+            ID of the artifact version to get signed URLs for
 
         paths : typing.Sequence[str]
+            List of relative file paths within the artifact version to get signed URLs for
 
         operation : Operation
+            Operation type for the signed URL (e.g., 'READ' or 'WRITE')
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -256,7 +277,7 @@ class ArtifactVersionsClient:
         Returns
         -------
         GetSignedUrLsResponse
-            Successful Response
+            List of signed URLs for the requested file paths
 
         Examples
         --------
@@ -281,13 +302,18 @@ class ArtifactVersionsClient:
         self, *, id: str, path: str, num_parts: int, request_options: typing.Optional[RequestOptions] = None
     ) -> MultiPartUploadResponse:
         """
+        Create a multipart upload for large files in an artifact version.
+
         Parameters
         ----------
         id : str
+            ID of the artifact version to upload files to
 
         path : str
+            Relative path within the artifact version where the file should be uploaded
 
         num_parts : int
+            Number of parts to split the upload into for multipart upload
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -295,7 +321,7 @@ class ArtifactVersionsClient:
         Returns
         -------
         MultiPartUploadResponse
-            Successful Response
+            Multipart upload information including signed URLs for each part
 
         Examples
         --------
@@ -320,9 +346,12 @@ class ArtifactVersionsClient:
         self, *, manifest: StageArtifactRequestManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> StageArtifactResponse:
         """
+        Stage an artifact version for upload, returning storage location and version ID.
+
         Parameters
         ----------
         manifest : StageArtifactRequestManifest
+            Manifest containing metadata for the artifact to be staged (model or generic artifact)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -330,7 +359,7 @@ class ArtifactVersionsClient:
         Returns
         -------
         StageArtifactResponse
-            Successful Response
+            Staging information including version ID, storage root, and artifact ID
 
         Examples
         --------
@@ -362,15 +391,21 @@ class ArtifactVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[FileInfo, ListFilesResponse]:
         """
+        List files and directories in an artifact version.
+
         Parameters
         ----------
         id : str
+            ID of the artifact version to list files from
 
         path : typing.Optional[str]
+            Relative path within the artifact version to list files from (defaults to root)
 
         limit : typing.Optional[int]
+            Maximum number of files/directories to return
 
         page_token : typing.Optional[str]
+            Token to retrieve the next page of results
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -378,7 +413,7 @@ class ArtifactVersionsClient:
         Returns
         -------
         SyncPager[FileInfo, ListFilesResponse]
-            Successful Response
+            List of files and directories with pagination information
 
         Examples
         --------
@@ -403,9 +438,12 @@ class ArtifactVersionsClient:
 
     def mark_stage_failure(self, *, id: str, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
         """
+        Mark a staged artifact version as failed.
+
         Parameters
         ----------
         id : str
+            ID of the staged artifact version to mark as failed
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -413,7 +451,7 @@ class ArtifactVersionsClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful failure marking
 
         Examples
         --------
@@ -451,17 +489,22 @@ class AsyncArtifactVersionsClient:
         *,
         artifact_version_id: str,
         tags: typing.Sequence[str],
-        force: typing.Optional[bool] = False,
+        force: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EmptyResponse:
         """
+        Apply tags to an artifact version.
+
         Parameters
         ----------
         artifact_version_id : str
+            ID of the artifact version to apply tags to
 
         tags : typing.Sequence[str]
+            List of tags to apply to the artifact version
 
         force : typing.Optional[bool]
+            Whether to overwrite existing tags if they conflict
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -469,7 +512,7 @@ class AsyncArtifactVersionsClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful tag application
 
         Examples
         --------
@@ -501,7 +544,7 @@ class AsyncArtifactVersionsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetArtifactVersionResponse:
         """
-        Get artifact version API
+        Get an artifact version by its ID.
 
         Parameters
         ----------
@@ -513,7 +556,7 @@ class AsyncArtifactVersionsClient:
         Returns
         -------
         GetArtifactVersionResponse
-            Successful Response
+            The artifact version data
 
         Examples
         --------
@@ -540,7 +583,7 @@ class AsyncArtifactVersionsClient:
 
     async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
         """
-        Delete artifact versions API
+        Delete an artifact version by its ID.
 
         Parameters
         ----------
@@ -552,7 +595,7 @@ class AsyncArtifactVersionsClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful deletion
 
         Examples
         --------
@@ -594,31 +637,42 @@ class AsyncArtifactVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[ArtifactVersion, ListArtifactVersionsResponse]:
         """
-        List artifact version API
+        List artifact versions with optional filtering by tag, FQN, artifact ID, ML Repo, name, version, run IDs, or run steps.
 
         Parameters
         ----------
         tag : typing.Optional[str]
+            Tag to filter artifact versions by
 
         fqn : typing.Optional[str]
+            Fully qualified name to filter artifact versions by (format: '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}' or '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}:{version}')
 
         artifact_id : typing.Optional[str]
+            ID of the artifact to filter versions by
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter artifact versions by
 
         name : typing.Optional[str]
+            Name of the artifact to filter versions by
 
         version : typing.Optional[int]
+            Version number (positive integer) or 'latest' to filter by specific version
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            List of run IDs to filter artifact versions by
 
         run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+            List of run step numbers to filter artifact versions by
 
         offset : typing.Optional[int]
+            Number of artifact versions to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of artifact versions to return
 
         include_internal_metadata : typing.Optional[bool]
+            Whether to include internal metadata in the response
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -626,7 +680,7 @@ class AsyncArtifactVersionsClient:
         Returns
         -------
         AsyncPager[ArtifactVersion, ListArtifactVersionsResponse]
-            Successful Response
+            List of artifact versions matching the query with pagination information
 
         Examples
         --------
@@ -686,13 +740,18 @@ class AsyncArtifactVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSignedUrLsResponse:
         """
+        Get pre-signed URLs for reading or writing files in an artifact version.
+
         Parameters
         ----------
         id : str
+            ID of the artifact version to get signed URLs for
 
         paths : typing.Sequence[str]
+            List of relative file paths within the artifact version to get signed URLs for
 
         operation : Operation
+            Operation type for the signed URL (e.g., 'READ' or 'WRITE')
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -700,7 +759,7 @@ class AsyncArtifactVersionsClient:
         Returns
         -------
         GetSignedUrLsResponse
-            Successful Response
+            List of signed URLs for the requested file paths
 
         Examples
         --------
@@ -733,13 +792,18 @@ class AsyncArtifactVersionsClient:
         self, *, id: str, path: str, num_parts: int, request_options: typing.Optional[RequestOptions] = None
     ) -> MultiPartUploadResponse:
         """
+        Create a multipart upload for large files in an artifact version.
+
         Parameters
         ----------
         id : str
+            ID of the artifact version to upload files to
 
         path : str
+            Relative path within the artifact version where the file should be uploaded
 
         num_parts : int
+            Number of parts to split the upload into for multipart upload
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -747,7 +811,7 @@ class AsyncArtifactVersionsClient:
         Returns
         -------
         MultiPartUploadResponse
-            Successful Response
+            Multipart upload information including signed URLs for each part
 
         Examples
         --------
@@ -780,9 +844,12 @@ class AsyncArtifactVersionsClient:
         self, *, manifest: StageArtifactRequestManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> StageArtifactResponse:
         """
+        Stage an artifact version for upload, returning storage location and version ID.
+
         Parameters
         ----------
         manifest : StageArtifactRequestManifest
+            Manifest containing metadata for the artifact to be staged (model or generic artifact)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -790,7 +857,7 @@ class AsyncArtifactVersionsClient:
         Returns
         -------
         StageArtifactResponse
-            Successful Response
+            Staging information including version ID, storage root, and artifact ID
 
         Examples
         --------
@@ -834,15 +901,21 @@ class AsyncArtifactVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[FileInfo, ListFilesResponse]:
         """
+        List files and directories in an artifact version.
+
         Parameters
         ----------
         id : str
+            ID of the artifact version to list files from
 
         path : typing.Optional[str]
+            Relative path within the artifact version to list files from (defaults to root)
 
         limit : typing.Optional[int]
+            Maximum number of files/directories to return
 
         page_token : typing.Optional[str]
+            Token to retrieve the next page of results
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -850,7 +923,7 @@ class AsyncArtifactVersionsClient:
         Returns
         -------
         AsyncPager[FileInfo, ListFilesResponse]
-            Successful Response
+            List of files and directories with pagination information
 
         Examples
         --------
@@ -886,9 +959,12 @@ class AsyncArtifactVersionsClient:
         self, *, id: str, request_options: typing.Optional[RequestOptions] = None
     ) -> EmptyResponse:
         """
+        Mark a staged artifact version as failed.
+
         Parameters
         ----------
         id : str
+            ID of the staged artifact version to mark as failed
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -896,7 +972,7 @@ class AsyncArtifactVersionsClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful failure marking
 
         Examples
         --------

@@ -11,12 +11,12 @@ class AutoRotate(UniversalBaseModel):
     Enable Auto Rotation to automatically rotate the token
     """
 
-    auto_rotate_interval: int = pydantic.Field(default=360)
+    auto_rotate_interval: int = pydantic.Field()
     """
     Rotation Interval in days after which the token will be rotated. Minimum value is 30.
     """
 
-    grace_period: int = pydantic.Field(default=30)
+    grace_period: int = pydantic.Field()
     """
     Grace Period in days for which the token will be valid after rotation interval. Minimum value is 1.
     """

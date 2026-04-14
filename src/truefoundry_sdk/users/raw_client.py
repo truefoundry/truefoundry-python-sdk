@@ -6,8 +6,9 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.pagination import AsyncPager, SyncPager
+from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..errors.bad_request_error import BadRequestError
@@ -20,6 +21,7 @@ from ..types.activate_user_response import ActivateUserResponse
 from ..types.change_password_response import ChangePasswordResponse
 from ..types.deactivate_user_response import DeactivateUserResponse
 from ..types.delete_user_response import DeleteUserResponse
+from ..types.get_user_permissions_response import GetUserPermissionsResponse
 from ..types.get_user_resources_response import GetUserResourcesResponse
 from ..types.get_user_response import GetUserResponse
 from ..types.get_user_teams_response import GetUserTeamsResponse
@@ -29,6 +31,7 @@ from ..types.list_users_response import ListUsersResponse
 from ..types.register_users_response import RegisterUsersResponse
 from ..types.update_user_roles_response import UpdateUserRolesResponse
 from ..types.user import User
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -106,15 +109,19 @@ class RawUsersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def pre_register_users(
         self,
         *,
         email: str,
-        send_invite_email: typing.Optional[bool] = False,
-        skip_if_user_exists: typing.Optional[bool] = False,
-        dry_run: typing.Optional[bool] = False,
+        send_invite_email: typing.Optional[bool] = OMIT,
+        skip_if_user_exists: typing.Optional[bool] = OMIT,
+        dry_run: typing.Optional[bool] = OMIT,
         accept_invite_client_url: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[RegisterUsersResponse]:
@@ -208,6 +215,10 @@ class RawUsersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update_roles(
@@ -300,6 +311,10 @@ class RawUsersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[GetUserResponse]:
@@ -320,7 +335,7 @@ class RawUsersClient:
             Returns the User associated with provided User id
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/users/{jsonable_encoder(id)}",
+            f"api/svc/v1/users/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -348,10 +363,18 @@ class RawUsersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: str,
+        *,
+        tenant_name: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DeleteUserResponse]:
         """
         Delete user if they are not a collaborator in any resource and not part of any team other than everyone.
@@ -360,6 +383,9 @@ class RawUsersClient:
         ----------
         id : str
             User Id
+
+        tenant_name : typing.Optional[str]
+            Tenant name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -370,8 +396,11 @@ class RawUsersClient:
             User has been successfully deleted.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/users/{jsonable_encoder(id)}",
+            f"api/svc/v1/users/{encode_path_param(id)}",
             method="DELETE",
+            params={
+                "tenantName": tenant_name,
+            },
             request_options=request_options,
         )
         try:
@@ -420,6 +449,10 @@ class RawUsersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def invite_user(
@@ -503,10 +536,18 @@ class RawUsersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def deactivate(
-        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        email: str,
+        tenant_name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DeactivateUserResponse]:
         """
         Deactivate user associated with the provided email within the tenant.
@@ -515,6 +556,9 @@ class RawUsersClient:
         ----------
         email : str
             Email of the user
+
+        tenant_name : typing.Optional[str]
+            Tenant name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -529,6 +573,7 @@ class RawUsersClient:
             method="PATCH",
             json={
                 "email": email,
+                "tenantName": tenant_name,
             },
             headers={
                 "content-type": "application/json",
@@ -571,10 +616,18 @@ class RawUsersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def activate(
-        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        email: str,
+        tenant_name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ActivateUserResponse]:
         """
         Activate user associated with the provided email within the tenant.
@@ -583,6 +636,9 @@ class RawUsersClient:
         ----------
         email : str
             Email of the user
+
+        tenant_name : typing.Optional[str]
+            Tenant name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -597,6 +653,7 @@ class RawUsersClient:
             method="PATCH",
             json={
                 "email": email,
+                "tenantName": tenant_name,
             },
             headers={
                 "content-type": "application/json",
@@ -639,6 +696,10 @@ class RawUsersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def change_password(
@@ -698,6 +759,10 @@ class RawUsersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_resources(
@@ -720,7 +785,7 @@ class RawUsersClient:
             Returns all resources for the user.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/users/{jsonable_encoder(id)}/resources",
+            f"api/svc/v1/users/{encode_path_param(id)}/resources",
             method="GET",
             request_options=request_options,
         )
@@ -759,13 +824,82 @@ class RawUsersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def get_permissions(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[GetUserPermissionsResponse]:
+        """
+        Get all role bindings associated with a user, including team-inherited bindings.
+
+        Parameters
+        ----------
+        id : str
+            User Id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetUserPermissionsResponse]
+            Returns role bindings for the user (including team-inherited).
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/users/{encode_path_param(id)}/permissions",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetUserPermissionsResponse,
+                    parse_obj_as(
+                        type_=GetUserPermissionsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_teams(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetUserTeamsResponse]:
         """
-        Get all manual teams associated with a user.
+        Get all teams associated with a user, including their role in each team.
 
         Parameters
         ----------
@@ -778,10 +912,10 @@ class RawUsersClient:
         Returns
         -------
         HttpResponse[GetUserTeamsResponse]
-            Returns all manual teams for the user.
+            Returns all teams for the user with their roles.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/users/{jsonable_encoder(id)}/teams",
+            f"api/svc/v1/users/{encode_path_param(id)}/teams",
             method="GET",
             request_options=request_options,
         )
@@ -820,6 +954,10 @@ class RawUsersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -898,15 +1036,19 @@ class AsyncRawUsersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def pre_register_users(
         self,
         *,
         email: str,
-        send_invite_email: typing.Optional[bool] = False,
-        skip_if_user_exists: typing.Optional[bool] = False,
-        dry_run: typing.Optional[bool] = False,
+        send_invite_email: typing.Optional[bool] = OMIT,
+        skip_if_user_exists: typing.Optional[bool] = OMIT,
+        dry_run: typing.Optional[bool] = OMIT,
         accept_invite_client_url: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[RegisterUsersResponse]:
@@ -1000,6 +1142,10 @@ class AsyncRawUsersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update_roles(
@@ -1092,6 +1238,10 @@ class AsyncRawUsersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -1114,7 +1264,7 @@ class AsyncRawUsersClient:
             Returns the User associated with provided User id
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/users/{jsonable_encoder(id)}",
+            f"api/svc/v1/users/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -1142,10 +1292,18 @@ class AsyncRawUsersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: str,
+        *,
+        tenant_name: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DeleteUserResponse]:
         """
         Delete user if they are not a collaborator in any resource and not part of any team other than everyone.
@@ -1154,6 +1312,9 @@ class AsyncRawUsersClient:
         ----------
         id : str
             User Id
+
+        tenant_name : typing.Optional[str]
+            Tenant name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1164,8 +1325,11 @@ class AsyncRawUsersClient:
             User has been successfully deleted.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/users/{jsonable_encoder(id)}",
+            f"api/svc/v1/users/{encode_path_param(id)}",
             method="DELETE",
+            params={
+                "tenantName": tenant_name,
+            },
             request_options=request_options,
         )
         try:
@@ -1214,6 +1378,10 @@ class AsyncRawUsersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def invite_user(
@@ -1297,10 +1465,18 @@ class AsyncRawUsersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def deactivate(
-        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        email: str,
+        tenant_name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DeactivateUserResponse]:
         """
         Deactivate user associated with the provided email within the tenant.
@@ -1309,6 +1485,9 @@ class AsyncRawUsersClient:
         ----------
         email : str
             Email of the user
+
+        tenant_name : typing.Optional[str]
+            Tenant name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1323,6 +1502,7 @@ class AsyncRawUsersClient:
             method="PATCH",
             json={
                 "email": email,
+                "tenantName": tenant_name,
             },
             headers={
                 "content-type": "application/json",
@@ -1365,10 +1545,18 @@ class AsyncRawUsersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def activate(
-        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        email: str,
+        tenant_name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ActivateUserResponse]:
         """
         Activate user associated with the provided email within the tenant.
@@ -1377,6 +1565,9 @@ class AsyncRawUsersClient:
         ----------
         email : str
             Email of the user
+
+        tenant_name : typing.Optional[str]
+            Tenant name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1391,6 +1582,7 @@ class AsyncRawUsersClient:
             method="PATCH",
             json={
                 "email": email,
+                "tenantName": tenant_name,
             },
             headers={
                 "content-type": "application/json",
@@ -1433,6 +1625,10 @@ class AsyncRawUsersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def change_password(
@@ -1492,6 +1688,10 @@ class AsyncRawUsersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_resources(
@@ -1514,7 +1714,7 @@ class AsyncRawUsersClient:
             Returns all resources for the user.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/users/{jsonable_encoder(id)}/resources",
+            f"api/svc/v1/users/{encode_path_param(id)}/resources",
             method="GET",
             request_options=request_options,
         )
@@ -1553,13 +1753,82 @@ class AsyncRawUsersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_permissions(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[GetUserPermissionsResponse]:
+        """
+        Get all role bindings associated with a user, including team-inherited bindings.
+
+        Parameters
+        ----------
+        id : str
+            User Id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetUserPermissionsResponse]
+            Returns role bindings for the user (including team-inherited).
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/users/{encode_path_param(id)}/permissions",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetUserPermissionsResponse,
+                    parse_obj_as(
+                        type_=GetUserPermissionsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_teams(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetUserTeamsResponse]:
         """
-        Get all manual teams associated with a user.
+        Get all teams associated with a user, including their role in each team.
 
         Parameters
         ----------
@@ -1572,10 +1841,10 @@ class AsyncRawUsersClient:
         Returns
         -------
         AsyncHttpResponse[GetUserTeamsResponse]
-            Returns all manual teams for the user.
+            Returns all teams for the user with their roles.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/users/{jsonable_encoder(id)}/teams",
+            f"api/svc/v1/users/{encode_path_param(id)}/teams",
             method="GET",
             request_options=request_options,
         )
@@ -1614,4 +1883,8 @@ class AsyncRawUsersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

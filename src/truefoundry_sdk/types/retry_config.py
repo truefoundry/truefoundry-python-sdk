@@ -12,7 +12,7 @@ class RetryConfig(UniversalBaseModel):
     Number of attempts to retry the request
     """
 
-    delay: typing.Optional[int] = pydantic.Field(default=100)
+    delay: typing.Optional[int] = pydantic.Field(default=None)
     """
     Delay between retries in milliseconds
     """

@@ -2,6 +2,7 @@
 
 import typing
 
+from ....types.agent_skill_manifest import AgentSkillManifest
 from ....types.artifact_manifest import ArtifactManifest
 from ....types.chat_prompt_manifest import ChatPromptManifest
 from ....types.data_directory_manifest import DataDirectoryManifest
@@ -9,5 +10,5 @@ from ....types.ml_repo_manifest import MlRepoManifest
 from ....types.model_manifest import ModelManifest
 
 DeleteMlEntityRequestManifest = typing.Union[
-    ModelManifest, ChatPromptManifest, ArtifactManifest, DataDirectoryManifest, MlRepoManifest
+    ModelManifest, ChatPromptManifest, ArtifactManifest, AgentSkillManifest, DataDirectoryManifest, MlRepoManifest
 ]

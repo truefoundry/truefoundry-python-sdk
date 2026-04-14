@@ -20,7 +20,7 @@ class BaseWorkbenchInput(UniversalBaseModel):
     > Name can only contain alphanumeric characters and '-' and can be atmost 25 characters long
     """
 
-    home_directory_size: int = pydantic.Field(default=20)
+    home_directory_size: int = pydantic.Field()
     """
     Size of the home directory for the workbench (Persistent Storage)
     """

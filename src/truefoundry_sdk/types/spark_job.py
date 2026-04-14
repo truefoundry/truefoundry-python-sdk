@@ -40,7 +40,7 @@ class SparkJob(UniversalBaseModel):
     Configure environment variables to be injected in the service either as plain text. [Docs](https://docs.truefoundry.com/docs/env-variables)
     """
 
-    spark_conf: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    spark_conf: typing.Optional[typing.Dict[str, typing.Optional[str]]] = pydantic.Field(default=None)
     """
     Extra configuration properties to be passed to the spark job. [Docs](https://spark.apache.org/docs/latest/configuration.html)
     """
@@ -50,7 +50,7 @@ class SparkJob(UniversalBaseModel):
     Configure volumes to be mounted to driver and executors. [Docs](https://docs.truefoundry.com/docs/mounting-volumes-job)
     """
 
-    retries: typing.Optional[int] = pydantic.Field(default=0)
+    retries: typing.Optional[int] = pydantic.Field(default=None)
     """
     Specify the maximum number of attempts to retry a job before it is marked as failed.
     """

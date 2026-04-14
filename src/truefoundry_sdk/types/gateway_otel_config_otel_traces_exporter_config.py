@@ -2,7 +2,7 @@
 
 import typing
 
-from .otel_exporter_grpc_config import OtelExporterGrpcConfig
-from .otel_exporter_http_config import OtelExporterHttpConfig
+from .otel_traces_exporter_grpc_config import OtelTracesExporterGrpcConfig
+from .otel_traces_exporter_http_config import OtelTracesExporterHttpConfig
 
-GatewayOtelConfigOtelTracesExporterConfig = typing.Union[OtelExporterHttpConfig, OtelExporterGrpcConfig]
+GatewayOtelConfigOtelTracesExporterConfig = typing.Union[OtelTracesExporterHttpConfig, OtelTracesExporterGrpcConfig]
