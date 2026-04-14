@@ -50,8 +50,10 @@ if typing.TYPE_CHECKING:
     from .anthropic_model import AnthropicModel
     from .anthropic_provider_account import AnthropicProviderAccount
     from .application import Application
+    from .application_debug_info import ApplicationDebugInfo
     from .application_lifecycle_stage import ApplicationLifecycleStage
     from .application_metadata import ApplicationMetadata
+    from .application_problem import ApplicationProblem
     from .application_set import ApplicationSet
     from .application_set_components_item import ApplicationSetComponentsItem
     from .application_type import ApplicationType
@@ -620,6 +622,9 @@ if typing.TYPE_CHECKING:
     from .multi_part_upload import MultiPartUpload
     from .multi_part_upload_response import MultiPartUploadResponse
     from .multi_part_upload_storage_provider import MultiPartUploadStorageProvider
+    from .native_snowflake_flyte_task_template import NativeSnowflakeFlyteTaskTemplate
+    from .native_snowflake_flyte_task_template_config import NativeSnowflakeFlyteTaskTemplateConfig
+    from .native_snowflake_flyte_task_template_sql import NativeSnowflakeFlyteTaskTemplateSql
     from .nats_input_config import NatsInputConfig
     from .nats_metric_config import NatsMetricConfig
     from .nats_output_config import NatsOutputConfig
@@ -851,6 +856,9 @@ if typing.TYPE_CHECKING:
     from .snowflake_cortex_model import SnowflakeCortexModel
     from .snowflake_cortex_pat_token_auth import SnowflakeCortexPatTokenAuth
     from .snowflake_cortex_provider_account import SnowflakeCortexProviderAccount
+    from .snowflake_task_config import SnowflakeTaskConfig
+    from .snowflake_task_config_image import SnowflakeTaskConfigImage
+    from .snowflake_task_config_mounts_item import SnowflakeTaskConfigMountsItem
     from .sort_direction import SortDirection
     from .spa_cy_framework import SpaCyFramework
     from .span_attribute_filter import SpanAttributeFilter
@@ -969,6 +977,7 @@ if typing.TYPE_CHECKING:
     from .true_foundry_interactive_login import TrueFoundryInteractiveLogin
     from .true_foundry_managed_source import TrueFoundryManagedSource
     from .true_foundry_provider_account import TrueFoundryProviderAccount
+    from .truefoundry_flyte_task_template import TruefoundryFlyteTaskTemplate
     from .ttl_integrations import TtlIntegrations
     from .ttl_provider_account import TtlProviderAccount
     from .ttl_registry import TtlRegistry
@@ -1070,8 +1079,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AnthropicModel": ".anthropic_model",
     "AnthropicProviderAccount": ".anthropic_provider_account",
     "Application": ".application",
+    "ApplicationDebugInfo": ".application_debug_info",
     "ApplicationLifecycleStage": ".application_lifecycle_stage",
     "ApplicationMetadata": ".application_metadata",
+    "ApplicationProblem": ".application_problem",
     "ApplicationSet": ".application_set",
     "ApplicationSetComponentsItem": ".application_set_components_item",
     "ApplicationType": ".application_type",
@@ -1626,6 +1637,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MultiPartUpload": ".multi_part_upload",
     "MultiPartUploadResponse": ".multi_part_upload_response",
     "MultiPartUploadStorageProvider": ".multi_part_upload_storage_provider",
+    "NativeSnowflakeFlyteTaskTemplate": ".native_snowflake_flyte_task_template",
+    "NativeSnowflakeFlyteTaskTemplateConfig": ".native_snowflake_flyte_task_template_config",
+    "NativeSnowflakeFlyteTaskTemplateSql": ".native_snowflake_flyte_task_template_sql",
     "NatsInputConfig": ".nats_input_config",
     "NatsMetricConfig": ".nats_metric_config",
     "NatsOutputConfig": ".nats_output_config",
@@ -1860,6 +1874,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SnowflakeCortexModel": ".snowflake_cortex_model",
     "SnowflakeCortexPatTokenAuth": ".snowflake_cortex_pat_token_auth",
     "SnowflakeCortexProviderAccount": ".snowflake_cortex_provider_account",
+    "SnowflakeTaskConfig": ".snowflake_task_config",
+    "SnowflakeTaskConfigImage": ".snowflake_task_config_image",
+    "SnowflakeTaskConfigMountsItem": ".snowflake_task_config_mounts_item",
     "SortDirection": ".sort_direction",
     "SpaCyFramework": ".spa_cy_framework",
     "SpanAttributeFilter": ".span_attribute_filter",
@@ -1976,6 +1993,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TrueFoundryInteractiveLogin": ".true_foundry_interactive_login",
     "TrueFoundryManagedSource": ".true_foundry_managed_source",
     "TrueFoundryProviderAccount": ".true_foundry_provider_account",
+    "TruefoundryFlyteTaskTemplate": ".truefoundry_flyte_task_template",
     "TtlIntegrations": ".ttl_integrations",
     "TtlProviderAccount": ".ttl_provider_account",
     "TtlRegistry": ".ttl_registry",
@@ -2101,8 +2119,10 @@ __all__ = [
     "AnthropicModel",
     "AnthropicProviderAccount",
     "Application",
+    "ApplicationDebugInfo",
     "ApplicationLifecycleStage",
     "ApplicationMetadata",
+    "ApplicationProblem",
     "ApplicationSet",
     "ApplicationSetComponentsItem",
     "ApplicationType",
@@ -2657,6 +2677,9 @@ __all__ = [
     "MultiPartUpload",
     "MultiPartUploadResponse",
     "MultiPartUploadStorageProvider",
+    "NativeSnowflakeFlyteTaskTemplate",
+    "NativeSnowflakeFlyteTaskTemplateConfig",
+    "NativeSnowflakeFlyteTaskTemplateSql",
     "NatsInputConfig",
     "NatsMetricConfig",
     "NatsOutputConfig",
@@ -2891,6 +2914,9 @@ __all__ = [
     "SnowflakeCortexModel",
     "SnowflakeCortexPatTokenAuth",
     "SnowflakeCortexProviderAccount",
+    "SnowflakeTaskConfig",
+    "SnowflakeTaskConfigImage",
+    "SnowflakeTaskConfigMountsItem",
     "SortDirection",
     "SpaCyFramework",
     "SpanAttributeFilter",
@@ -3007,6 +3033,7 @@ __all__ = [
     "TrueFoundryInteractiveLogin",
     "TrueFoundryManagedSource",
     "TrueFoundryProviderAccount",
+    "TruefoundryFlyteTaskTemplate",
     "TtlIntegrations",
     "TtlProviderAccount",
     "TtlRegistry",

@@ -9,8 +9,10 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from ..core.serialization import FieldMetadata
+from .alert import Alert
 from .application_lifecycle_stage import ApplicationLifecycleStage
 from .application_metadata import ApplicationMetadata
+from .application_problem import ApplicationProblem
 from .application_type import ApplicationType
 from .recommendation import Recommendation
 from .subject import Subject
@@ -51,7 +53,7 @@ class Application(UniversalBaseModel):
     Recommendations for this application
     """
 
-    alerts: typing.Optional[typing.List[typing.List[typing.Any]]] = pydantic.Field(default=None)
+    alerts: typing.Optional[typing.List[Alert]] = pydantic.Field(default=None)
     """
     Alerts for this application
     """
@@ -62,12 +64,12 @@ class Application(UniversalBaseModel):
         pydantic.Field(alias="alertsSummary", description="Summary of alerts for this application"),
     ] = None
     application_debug_infos: typing_extensions.Annotated[
-        typing.Optional[typing.List[typing.List[typing.Any]]],
+        typing.Optional[typing.List["ApplicationDebugInfo"]],
         FieldMetadata(alias="applicationDebugInfos"),
         pydantic.Field(alias="applicationDebugInfos", description="Debug infos for this application"),
     ] = None
     potential_problems: typing_extensions.Annotated[
-        typing.Optional[typing.List[typing.List[typing.Any]]],
+        typing.Optional[typing.List[ApplicationProblem]],
         FieldMetadata(alias="potentialProblems"),
         pydantic.Field(alias="potentialProblems", description="Potential problems with the application"),
     ] = None
@@ -95,6 +97,7 @@ class Application(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .application_debug_info import ApplicationDebugInfo  # noqa: E402, I001
 from .deployment import Deployment  # noqa: E402, I001
 
-update_forward_refs(Application, Deployment=Deployment)
+update_forward_refs(Application, ApplicationDebugInfo=ApplicationDebugInfo, Deployment=Deployment)

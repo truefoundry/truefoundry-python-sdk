@@ -6,7 +6,8 @@ from .container_task_config import ContainerTaskConfig
 from .databricks_job_task_config import DatabricksJobTaskConfig
 from .py_spark_task_config import PySparkTaskConfig
 from .python_task_config import PythonTaskConfig
+from .snowflake_task_config import SnowflakeTaskConfig
 
 FlyteTaskCustomTruefoundry = typing.Union[
-    PythonTaskConfig, ContainerTaskConfig, PySparkTaskConfig, DatabricksJobTaskConfig
+    PythonTaskConfig, ContainerTaskConfig, PySparkTaskConfig, DatabricksJobTaskConfig, SnowflakeTaskConfig
 ]
