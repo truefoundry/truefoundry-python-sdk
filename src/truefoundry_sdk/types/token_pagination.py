@@ -14,19 +14,16 @@ class TokenPagination(UniversalBaseModel):
     Number of items per page
     """
 
-    next_page_token: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="nextPageToken")] = (
-        pydantic.Field(alias="nextPageToken", default=None)
-    )
-    """
-    Base64 encoded token for the next page
-    """
-
-    previous_page_token: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="previousPageToken")] = (
-        pydantic.Field(alias="previousPageToken", default=None)
-    )
-    """
-    Base64 encoded token for the previous page
-    """
+    next_page_token: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="nextPageToken"),
+        pydantic.Field(alias="nextPageToken", description="Base64 encoded token for the next page"),
+    ] = None
+    previous_page_token: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="previousPageToken"),
+        pydantic.Field(alias="previousPageToken", description="Base64 encoded token for the previous page"),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

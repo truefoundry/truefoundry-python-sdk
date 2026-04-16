@@ -20,6 +20,7 @@ from ..types.activate_user_response import ActivateUserResponse
 from ..types.change_password_response import ChangePasswordResponse
 from ..types.deactivate_user_response import DeactivateUserResponse
 from ..types.delete_user_response import DeleteUserResponse
+from ..types.get_user_permissions_response import GetUserPermissionsResponse
 from ..types.get_user_resources_response import GetUserResourcesResponse
 from ..types.get_user_response import GetUserResponse
 from ..types.get_user_teams_response import GetUserTeamsResponse
@@ -351,7 +352,11 @@ class RawUsersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: str,
+        *,
+        tenant_name: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DeleteUserResponse]:
         """
         Delete user if they are not a collaborator in any resource and not part of any team other than everyone.
@@ -360,6 +365,9 @@ class RawUsersClient:
         ----------
         id : str
             User Id
+
+        tenant_name : typing.Optional[str]
+            Tenant name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -372,6 +380,9 @@ class RawUsersClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/users/{jsonable_encoder(id)}",
             method="DELETE",
+            params={
+                "tenantName": tenant_name,
+            },
             request_options=request_options,
         )
         try:
@@ -506,7 +517,11 @@ class RawUsersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def deactivate(
-        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        email: str,
+        tenant_name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DeactivateUserResponse]:
         """
         Deactivate user associated with the provided email within the tenant.
@@ -515,6 +530,9 @@ class RawUsersClient:
         ----------
         email : str
             Email of the user
+
+        tenant_name : typing.Optional[str]
+            Tenant name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -529,6 +547,7 @@ class RawUsersClient:
             method="PATCH",
             json={
                 "email": email,
+                "tenantName": tenant_name,
             },
             headers={
                 "content-type": "application/json",
@@ -574,7 +593,11 @@ class RawUsersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def activate(
-        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        email: str,
+        tenant_name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ActivateUserResponse]:
         """
         Activate user associated with the provided email within the tenant.
@@ -583,6 +606,9 @@ class RawUsersClient:
         ----------
         email : str
             Email of the user
+
+        tenant_name : typing.Optional[str]
+            Tenant name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -597,6 +623,7 @@ class RawUsersClient:
             method="PATCH",
             json={
                 "email": email,
+                "tenantName": tenant_name,
             },
             headers={
                 "content-type": "application/json",
@@ -761,11 +788,72 @@ class RawUsersClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def get_permissions(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[GetUserPermissionsResponse]:
+        """
+        Get all role bindings associated with a user, including team-inherited bindings.
+
+        Parameters
+        ----------
+        id : str
+            User Id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetUserPermissionsResponse]
+            Returns role bindings for the user (including team-inherited).
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/users/{jsonable_encoder(id)}/permissions",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetUserPermissionsResponse,
+                    parse_obj_as(
+                        type_=GetUserPermissionsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def get_teams(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetUserTeamsResponse]:
         """
-        Get all manual teams associated with a user.
+        Get all teams associated with a user, including their role in each team.
 
         Parameters
         ----------
@@ -778,7 +866,7 @@ class RawUsersClient:
         Returns
         -------
         HttpResponse[GetUserTeamsResponse]
-            Returns all manual teams for the user.
+            Returns all teams for the user with their roles.
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/users/{jsonable_encoder(id)}/teams",
@@ -1145,7 +1233,11 @@ class AsyncRawUsersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: str,
+        *,
+        tenant_name: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DeleteUserResponse]:
         """
         Delete user if they are not a collaborator in any resource and not part of any team other than everyone.
@@ -1154,6 +1246,9 @@ class AsyncRawUsersClient:
         ----------
         id : str
             User Id
+
+        tenant_name : typing.Optional[str]
+            Tenant name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1166,6 +1261,9 @@ class AsyncRawUsersClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/users/{jsonable_encoder(id)}",
             method="DELETE",
+            params={
+                "tenantName": tenant_name,
+            },
             request_options=request_options,
         )
         try:
@@ -1300,7 +1398,11 @@ class AsyncRawUsersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def deactivate(
-        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        email: str,
+        tenant_name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DeactivateUserResponse]:
         """
         Deactivate user associated with the provided email within the tenant.
@@ -1309,6 +1411,9 @@ class AsyncRawUsersClient:
         ----------
         email : str
             Email of the user
+
+        tenant_name : typing.Optional[str]
+            Tenant name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1323,6 +1428,7 @@ class AsyncRawUsersClient:
             method="PATCH",
             json={
                 "email": email,
+                "tenantName": tenant_name,
             },
             headers={
                 "content-type": "application/json",
@@ -1368,7 +1474,11 @@ class AsyncRawUsersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def activate(
-        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        email: str,
+        tenant_name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ActivateUserResponse]:
         """
         Activate user associated with the provided email within the tenant.
@@ -1377,6 +1487,9 @@ class AsyncRawUsersClient:
         ----------
         email : str
             Email of the user
+
+        tenant_name : typing.Optional[str]
+            Tenant name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1391,6 +1504,7 @@ class AsyncRawUsersClient:
             method="PATCH",
             json={
                 "email": email,
+                "tenantName": tenant_name,
             },
             headers={
                 "content-type": "application/json",
@@ -1555,11 +1669,72 @@ class AsyncRawUsersClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    async def get_permissions(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[GetUserPermissionsResponse]:
+        """
+        Get all role bindings associated with a user, including team-inherited bindings.
+
+        Parameters
+        ----------
+        id : str
+            User Id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetUserPermissionsResponse]
+            Returns role bindings for the user (including team-inherited).
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/users/{jsonable_encoder(id)}/permissions",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetUserPermissionsResponse,
+                    parse_obj_as(
+                        type_=GetUserPermissionsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     async def get_teams(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetUserTeamsResponse]:
         """
-        Get all manual teams associated with a user.
+        Get all teams associated with a user, including their role in each team.
 
         Parameters
         ----------
@@ -1572,7 +1747,7 @@ class AsyncRawUsersClient:
         Returns
         -------
         AsyncHttpResponse[GetUserTeamsResponse]
-            Returns all manual teams for the user.
+            Returns all teams for the user with their roles.
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/users/{jsonable_encoder(id)}/teams",

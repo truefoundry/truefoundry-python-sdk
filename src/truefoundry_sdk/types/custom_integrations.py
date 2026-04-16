@@ -7,6 +7,7 @@ from .custom_helm_repo import CustomHelmRepo
 from .custom_jwt_auth_integration import CustomJwtAuthIntegration
 from .custom_username_password_artifacts_registry import CustomUsernamePasswordArtifactsRegistry
 from .email_notification_channel import EmailNotificationChannel
+from .generic_secret_store_integration import GenericSecretStoreIntegration
 
 CustomIntegrations = typing.Union[
     CustomUsernamePasswordArtifactsRegistry,
@@ -14,4 +15,5 @@ CustomIntegrations = typing.Union[
     CustomHelmRepo,
     CustomBlobStorage,
     CustomJwtAuthIntegration,
+    GenericSecretStoreIntegration,
 ]

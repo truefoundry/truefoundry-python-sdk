@@ -32,7 +32,11 @@ class MlReposClient:
         return self._raw_client
 
     def create_or_update(
-        self, *, manifest: MlRepoManifest, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        manifest: MlRepoManifest,
+        dry_run: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetMlRepoResponse:
         """
         Creates or updates an MLRepo entity based on the provided manifest.
@@ -41,6 +45,9 @@ class MlReposClient:
         ----------
         manifest : MlRepoManifest
             MLRepo manifest
+
+        dry_run : typing.Optional[bool]
+            Validate the manifest and collaborators without persisting changes or updating artifact location in the database
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -71,18 +78,14 @@ class MlReposClient:
             ),
         )
         """
-        _response = self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
+        _response = self._raw_client.create_or_update(
+            manifest=manifest, dry_run=dry_run, request_options=request_options
+        )
         return _response.data
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetMlRepoResponse:
         """
-        Get a ml repo by id
-        Args:
-            id: Unique identifier of the ml repo to get
-            user_info: Authenticated user information
-
-        Returns:
-            GetMLRepoResponse: The ml repo
+        Get an ML Repo by its ID.
 
         Parameters
         ----------
@@ -94,7 +97,7 @@ class MlReposClient:
         Returns
         -------
         GetMlRepoResponse
-            Successful Response
+            The ML Repo data
 
         Examples
         --------
@@ -113,13 +116,7 @@ class MlReposClient:
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
         """
-        Delete a ml repo
-        Args:
-            id: Unique identifier of the ml repo to delete
-            user_info: Authenticated user information
-
-        Returns:
-            EmptyResponse: Empty response indicating successful deletion
+        Delete an ML Repo by its ID.
 
         Parameters
         ----------
@@ -131,7 +128,7 @@ class MlReposClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful deletion
 
         Examples
         --------
@@ -157,21 +154,18 @@ class MlReposClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[MlRepo, ListMlReposResponse]:
         """
-        List ml repos
-        Args:
-            filters: Filters for the ml repos
-            user_info: Authenticated user information
-
-        Returns:
-            ListMLReposResponse: List of ml repos
+        List ML Repos with optional filtering by name.
 
         Parameters
         ----------
         name : typing.Optional[str]
+            Name of the ML Repo to filter by
 
         limit : typing.Optional[int]
+            Maximum number of ML Repos to return
 
         offset : typing.Optional[int]
+            Number of ML Repos to skip for pagination
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -179,7 +173,7 @@ class MlReposClient:
         Returns
         -------
         SyncPager[MlRepo, ListMlReposResponse]
-            Successful Response
+            List of ML Repos matching the query with pagination information
 
         Examples
         --------
@@ -219,7 +213,11 @@ class AsyncMlReposClient:
         return self._raw_client
 
     async def create_or_update(
-        self, *, manifest: MlRepoManifest, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        manifest: MlRepoManifest,
+        dry_run: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetMlRepoResponse:
         """
         Creates or updates an MLRepo entity based on the provided manifest.
@@ -228,6 +226,9 @@ class AsyncMlReposClient:
         ----------
         manifest : MlRepoManifest
             MLRepo manifest
+
+        dry_run : typing.Optional[bool]
+            Validate the manifest and collaborators without persisting changes or updating artifact location in the database
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -266,18 +267,14 @@ class AsyncMlReposClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
+        _response = await self._raw_client.create_or_update(
+            manifest=manifest, dry_run=dry_run, request_options=request_options
+        )
         return _response.data
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetMlRepoResponse:
         """
-        Get a ml repo by id
-        Args:
-            id: Unique identifier of the ml repo to get
-            user_info: Authenticated user information
-
-        Returns:
-            GetMLRepoResponse: The ml repo
+        Get an ML Repo by its ID.
 
         Parameters
         ----------
@@ -289,7 +286,7 @@ class AsyncMlReposClient:
         Returns
         -------
         GetMlRepoResponse
-            Successful Response
+            The ML Repo data
 
         Examples
         --------
@@ -316,13 +313,7 @@ class AsyncMlReposClient:
 
     async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
         """
-        Delete a ml repo
-        Args:
-            id: Unique identifier of the ml repo to delete
-            user_info: Authenticated user information
-
-        Returns:
-            EmptyResponse: Empty response indicating successful deletion
+        Delete an ML Repo by its ID.
 
         Parameters
         ----------
@@ -334,7 +325,7 @@ class AsyncMlReposClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful deletion
 
         Examples
         --------
@@ -368,21 +359,18 @@ class AsyncMlReposClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[MlRepo, ListMlReposResponse]:
         """
-        List ml repos
-        Args:
-            filters: Filters for the ml repos
-            user_info: Authenticated user information
-
-        Returns:
-            ListMLReposResponse: List of ml repos
+        List ML Repos with optional filtering by name.
 
         Parameters
         ----------
         name : typing.Optional[str]
+            Name of the ML Repo to filter by
 
         limit : typing.Optional[int]
+            Maximum number of ML Repos to return
 
         offset : typing.Optional[int]
+            Number of ML Repos to skip for pagination
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -390,7 +378,7 @@ class AsyncMlReposClient:
         Returns
         -------
         AsyncPager[MlRepo, ListMlReposResponse]
-            Successful Response
+            List of ML Repos matching the query with pagination information
 
         Examples
         --------

@@ -9,9 +9,9 @@ from ..core.serialization import FieldMetadata
 
 
 class FlyteLaunchPlanId(UniversalBaseModel):
-    resource_type: typing_extensions.Annotated[typing.Literal["LAUNCH_PLAN"], FieldMetadata(alias="resourceType")] = (
-        pydantic.Field(alias="resourceType", default="LAUNCH_PLAN")
-    )
+    resource_type: typing_extensions.Annotated[
+        typing.Literal["LAUNCH_PLAN"], FieldMetadata(alias="resourceType"), pydantic.Field(alias="resourceType")
+    ] = "LAUNCH_PLAN"
     name: str
 
     if IS_PYDANTIC_V2:

@@ -4,6 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .gateway_otel_config_otel_metrics_exporter_config import GatewayOtelConfigOtelMetricsExporterConfig
 from .gateway_otel_config_otel_traces_exporter_config import GatewayOtelConfigOtelTracesExporterConfig
 
 
@@ -18,7 +19,14 @@ class GatewayOtelConfig(UniversalBaseModel):
         default=None
     )
     """
-    Set this configuration to export LLM gateway OTEL traces to an external platform. Note that we only export OTEL traces via this configuration, this does not include OTEL metrics.
+    Set this configuration to export LLM gateway OTEL traces to an external platform. Note that we only export OTEL traces via this configuration.
+    """
+
+    otel_metrics_exporter_config: typing.Optional[GatewayOtelConfigOtelMetricsExporterConfig] = pydantic.Field(
+        default=None
+    )
+    """
+    Set this configuration to export LLM gateway OTEL metrics to an external platform. Note that we only export OTEL metrics via this configuration.
     """
 
     if IS_PYDANTIC_V2:

@@ -33,13 +33,18 @@ class RawPromptVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[EmptyResponse]:
         """
+        Apply tags to a prompt version.
+
         Parameters
         ----------
         prompt_version_id : str
+            ID of the prompt version to apply tags to
 
         tags : typing.Sequence[str]
+            List of tags to apply to the prompt version
 
         force : typing.Optional[bool]
+            Whether to overwrite existing tags if they conflict
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -47,7 +52,7 @@ class RawPromptVersionsClient:
         Returns
         -------
         HttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful tag application
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/prompt-versions/tags",
@@ -93,7 +98,7 @@ class RawPromptVersionsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetPromptVersionResponse]:
         """
-        Get prompt version API
+        Get a prompt version by its ID.
 
         Parameters
         ----------
@@ -105,7 +110,7 @@ class RawPromptVersionsClient:
         Returns
         -------
         HttpResponse[GetPromptVersionResponse]
-            Successful Response
+            The prompt version data
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/ml/v1/prompt-versions/{jsonable_encoder(id)}",
@@ -142,7 +147,7 @@ class RawPromptVersionsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[EmptyResponse]:
         """
-        Delete prompt versions API
+        Delete a prompt version by its ID.
 
         Parameters
         ----------
@@ -154,7 +159,7 @@ class RawPromptVersionsClient:
         Returns
         -------
         HttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/ml/v1/prompt-versions/{jsonable_encoder(id)}",
@@ -201,25 +206,33 @@ class RawPromptVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[PromptVersion, ListPromptVersionsResponse]:
         """
-        List prompt version API
+        List prompt versions with optional filtering by tag, FQN, prompt ID, ML Repo, name, or version.
 
         Parameters
         ----------
         tag : typing.Optional[str]
+            Tag to filter prompt versions by
 
         fqn : typing.Optional[str]
+            Fully qualified name to filter prompt versions by (format: 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}' or 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}:{version}')
 
         prompt_id : typing.Optional[str]
+            ID of the prompt to filter versions by
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter prompt versions by
 
         name : typing.Optional[str]
+            Name of the prompt to filter versions by
 
         version : typing.Optional[int]
+            Version number (positive integer) or 'latest' to filter by specific version
 
         offset : typing.Optional[int]
+            Number of prompt versions to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of prompt versions to return
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -227,7 +240,7 @@ class RawPromptVersionsClient:
         Returns
         -------
         SyncPager[PromptVersion, ListPromptVersionsResponse]
-            Successful Response
+            List of prompt versions matching the query with pagination information
         """
         offset = offset if offset is not None else 0
 
@@ -299,13 +312,18 @@ class AsyncRawPromptVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[EmptyResponse]:
         """
+        Apply tags to a prompt version.
+
         Parameters
         ----------
         prompt_version_id : str
+            ID of the prompt version to apply tags to
 
         tags : typing.Sequence[str]
+            List of tags to apply to the prompt version
 
         force : typing.Optional[bool]
+            Whether to overwrite existing tags if they conflict
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -313,7 +331,7 @@ class AsyncRawPromptVersionsClient:
         Returns
         -------
         AsyncHttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful tag application
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/prompt-versions/tags",
@@ -359,7 +377,7 @@ class AsyncRawPromptVersionsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetPromptVersionResponse]:
         """
-        Get prompt version API
+        Get a prompt version by its ID.
 
         Parameters
         ----------
@@ -371,7 +389,7 @@ class AsyncRawPromptVersionsClient:
         Returns
         -------
         AsyncHttpResponse[GetPromptVersionResponse]
-            Successful Response
+            The prompt version data
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/ml/v1/prompt-versions/{jsonable_encoder(id)}",
@@ -408,7 +426,7 @@ class AsyncRawPromptVersionsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[EmptyResponse]:
         """
-        Delete prompt versions API
+        Delete a prompt version by its ID.
 
         Parameters
         ----------
@@ -420,7 +438,7 @@ class AsyncRawPromptVersionsClient:
         Returns
         -------
         AsyncHttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/ml/v1/prompt-versions/{jsonable_encoder(id)}",
@@ -467,25 +485,33 @@ class AsyncRawPromptVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[PromptVersion, ListPromptVersionsResponse]:
         """
-        List prompt version API
+        List prompt versions with optional filtering by tag, FQN, prompt ID, ML Repo, name, or version.
 
         Parameters
         ----------
         tag : typing.Optional[str]
+            Tag to filter prompt versions by
 
         fqn : typing.Optional[str]
+            Fully qualified name to filter prompt versions by (format: 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}' or 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}:{version}')
 
         prompt_id : typing.Optional[str]
+            ID of the prompt to filter versions by
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter prompt versions by
 
         name : typing.Optional[str]
+            Name of the prompt to filter versions by
 
         version : typing.Optional[int]
+            Version number (positive integer) or 'latest' to filter by specific version
 
         offset : typing.Optional[int]
+            Number of prompt versions to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of prompt versions to return
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -493,7 +519,7 @@ class AsyncRawPromptVersionsClient:
         Returns
         -------
         AsyncPager[PromptVersion, ListPromptVersionsResponse]
-            Successful Response
+            List of prompt versions matching the query with pagination information
         """
         offset = offset if offset is not None else 0
 

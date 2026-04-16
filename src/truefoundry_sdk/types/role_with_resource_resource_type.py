@@ -27,6 +27,7 @@ class RoleWithResourceResourceType(enum.StrEnum):
     SERVICE_ACCOUNT = "service-account"
     LLM_GATEWAY = "llm-gateway"
     POLICY = "policy"
+    ROLE_BINDING = "role-binding"
     SETTINGS = "settings"
     PROVIDER_ACCOUNT = "provider-account"
     USER = "user"
@@ -76,6 +77,7 @@ class RoleWithResourceResourceType(enum.StrEnum):
         service_account: typing.Callable[[], T_Result],
         llm_gateway: typing.Callable[[], T_Result],
         policy: typing.Callable[[], T_Result],
+        role_binding: typing.Callable[[], T_Result],
         settings: typing.Callable[[], T_Result],
         provider_account: typing.Callable[[], T_Result],
         user: typing.Callable[[], T_Result],
@@ -133,6 +135,8 @@ class RoleWithResourceResourceType(enum.StrEnum):
             return llm_gateway()
         if self is RoleWithResourceResourceType.POLICY:
             return policy()
+        if self is RoleWithResourceResourceType.ROLE_BINDING:
+            return role_binding()
         if self is RoleWithResourceResourceType.SETTINGS:
             return settings()
         if self is RoleWithResourceResourceType.PROVIDER_ACCOUNT:

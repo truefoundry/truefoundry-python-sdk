@@ -13,6 +13,7 @@ class SubjectType(enum.StrEnum):
     SERVICEACCOUNT = "serviceaccount"
     VIRTUALACCOUNT = "virtualaccount"
     EXTERNAL_IDENTITY = "external-identity"
+    ROLE = "role"
     _UNKNOWN = "__SUBJECTTYPE_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
@@ -31,6 +32,7 @@ class SubjectType(enum.StrEnum):
         serviceaccount: typing.Callable[[], T_Result],
         virtualaccount: typing.Callable[[], T_Result],
         external_identity: typing.Callable[[], T_Result],
+        role: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is SubjectType.USER:
@@ -43,4 +45,6 @@ class SubjectType(enum.StrEnum):
             return virtualaccount()
         if self is SubjectType.EXTERNAL_IDENTITY:
             return external_identity()
+        if self is SubjectType.ROLE:
+            return role()
         return _unknown_member(self._value_)

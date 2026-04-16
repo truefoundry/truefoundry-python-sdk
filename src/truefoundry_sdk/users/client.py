@@ -9,6 +9,7 @@ from ..types.activate_user_response import ActivateUserResponse
 from ..types.change_password_response import ChangePasswordResponse
 from ..types.deactivate_user_response import DeactivateUserResponse
 from ..types.delete_user_response import DeleteUserResponse
+from ..types.get_user_permissions_response import GetUserPermissionsResponse
 from ..types.get_user_resources_response import GetUserResourcesResponse
 from ..types.get_user_response import GetUserResponse
 from ..types.get_user_teams_response import GetUserTeamsResponse
@@ -239,7 +240,13 @@ class UsersClient:
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
 
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> DeleteUserResponse:
+    def delete(
+        self,
+        id: str,
+        *,
+        tenant_name: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> DeleteUserResponse:
         """
         Delete user if they are not a collaborator in any resource and not part of any team other than everyone.
 
@@ -247,6 +254,9 @@ class UsersClient:
         ----------
         id : str
             User Id
+
+        tenant_name : typing.Optional[str]
+            Tenant name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -266,9 +276,10 @@ class UsersClient:
         )
         client.users.delete(
             id="id",
+            tenant_name="tenantName",
         )
         """
-        _response = self._raw_client.delete(id, request_options=request_options)
+        _response = self._raw_client.delete(id, tenant_name=tenant_name, request_options=request_options)
         return _response.data
 
     def invite_user(
@@ -312,7 +323,11 @@ class UsersClient:
         return _response.data
 
     def deactivate(
-        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        email: str,
+        tenant_name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> DeactivateUserResponse:
         """
         Deactivate user associated with the provided email within the tenant.
@@ -321,6 +336,9 @@ class UsersClient:
         ----------
         email : str
             Email of the user
+
+        tenant_name : typing.Optional[str]
+            Tenant name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -342,10 +360,16 @@ class UsersClient:
             email="email",
         )
         """
-        _response = self._raw_client.deactivate(email=email, request_options=request_options)
+        _response = self._raw_client.deactivate(email=email, tenant_name=tenant_name, request_options=request_options)
         return _response.data
 
-    def activate(self, *, email: str, request_options: typing.Optional[RequestOptions] = None) -> ActivateUserResponse:
+    def activate(
+        self,
+        *,
+        email: str,
+        tenant_name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ActivateUserResponse:
         """
         Activate user associated with the provided email within the tenant.
 
@@ -353,6 +377,9 @@ class UsersClient:
         ----------
         email : str
             Email of the user
+
+        tenant_name : typing.Optional[str]
+            Tenant name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -374,7 +401,7 @@ class UsersClient:
             email="email",
         )
         """
-        _response = self._raw_client.activate(email=email, request_options=request_options)
+        _response = self._raw_client.activate(email=email, tenant_name=tenant_name, request_options=request_options)
         return _response.data
 
     def change_password(
@@ -460,9 +487,43 @@ class UsersClient:
         _response = self._raw_client.get_resources(id, request_options=request_options)
         return _response.data
 
+    def get_permissions(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetUserPermissionsResponse:
+        """
+        Get all role bindings associated with a user, including team-inherited bindings.
+
+        Parameters
+        ----------
+        id : str
+            User Id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetUserPermissionsResponse
+            Returns role bindings for the user (including team-inherited).
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.users.get_permissions(
+            id="id",
+        )
+        """
+        _response = self._raw_client.get_permissions(id, request_options=request_options)
+        return _response.data
+
     def get_teams(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetUserTeamsResponse:
         """
-        Get all manual teams associated with a user.
+        Get all teams associated with a user, including their role in each team.
 
         Parameters
         ----------
@@ -475,7 +536,7 @@ class UsersClient:
         Returns
         -------
         GetUserTeamsResponse
-            Returns all manual teams for the user.
+            Returns all teams for the user with their roles.
 
         Examples
         --------
@@ -742,7 +803,13 @@ class AsyncUsersClient:
         _response = await self._raw_client.get(id, request_options=request_options)
         return _response.data
 
-    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> DeleteUserResponse:
+    async def delete(
+        self,
+        id: str,
+        *,
+        tenant_name: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> DeleteUserResponse:
         """
         Delete user if they are not a collaborator in any resource and not part of any team other than everyone.
 
@@ -750,6 +817,9 @@ class AsyncUsersClient:
         ----------
         id : str
             User Id
+
+        tenant_name : typing.Optional[str]
+            Tenant name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -774,12 +844,13 @@ class AsyncUsersClient:
         async def main() -> None:
             await client.users.delete(
                 id="id",
+                tenant_name="tenantName",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.delete(id, request_options=request_options)
+        _response = await self._raw_client.delete(id, tenant_name=tenant_name, request_options=request_options)
         return _response.data
 
     async def invite_user(
@@ -831,7 +902,11 @@ class AsyncUsersClient:
         return _response.data
 
     async def deactivate(
-        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        email: str,
+        tenant_name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> DeactivateUserResponse:
         """
         Deactivate user associated with the provided email within the tenant.
@@ -840,6 +915,9 @@ class AsyncUsersClient:
         ----------
         email : str
             Email of the user
+
+        tenant_name : typing.Optional[str]
+            Tenant name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -869,11 +947,17 @@ class AsyncUsersClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.deactivate(email=email, request_options=request_options)
+        _response = await self._raw_client.deactivate(
+            email=email, tenant_name=tenant_name, request_options=request_options
+        )
         return _response.data
 
     async def activate(
-        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        email: str,
+        tenant_name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ActivateUserResponse:
         """
         Activate user associated with the provided email within the tenant.
@@ -882,6 +966,9 @@ class AsyncUsersClient:
         ----------
         email : str
             Email of the user
+
+        tenant_name : typing.Optional[str]
+            Tenant name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -911,7 +998,9 @@ class AsyncUsersClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.activate(email=email, request_options=request_options)
+        _response = await self._raw_client.activate(
+            email=email, tenant_name=tenant_name, request_options=request_options
+        )
         return _response.data
 
     async def change_password(
@@ -1013,11 +1102,53 @@ class AsyncUsersClient:
         _response = await self._raw_client.get_resources(id, request_options=request_options)
         return _response.data
 
+    async def get_permissions(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetUserPermissionsResponse:
+        """
+        Get all role bindings associated with a user, including team-inherited bindings.
+
+        Parameters
+        ----------
+        id : str
+            User Id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetUserPermissionsResponse
+            Returns role bindings for the user (including team-inherited).
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.users.get_permissions(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_permissions(id, request_options=request_options)
+        return _response.data
+
     async def get_teams(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetUserTeamsResponse:
         """
-        Get all manual teams associated with a user.
+        Get all teams associated with a user, including their role in each team.
 
         Parameters
         ----------
@@ -1030,7 +1161,7 @@ class AsyncUsersClient:
         Returns
         -------
         GetUserTeamsResponse
-            Returns all manual teams for the user.
+            Returns all teams for the user with their roles.
 
         Examples
         --------

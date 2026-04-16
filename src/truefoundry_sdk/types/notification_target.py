@@ -3,7 +3,8 @@
 import typing
 
 from .email import Email
+from .pager_duty import PagerDuty
 from .slack_bot import SlackBot
 from .slack_webhook import SlackWebhook
 
-NotificationTarget = typing.Union[Email, SlackWebhook, SlackBot]
+NotificationTarget = typing.Union[Email, SlackWebhook, SlackBot, PagerDuty]

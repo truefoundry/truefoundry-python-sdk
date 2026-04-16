@@ -16,40 +16,42 @@ from .virtual_account_manifest import VirtualAccountManifest
 class VirtualAccount(UniversalBaseModel):
     id: str
     type: str
-    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")] = pydantic.Field(
-        alias="tenantName"
-    )
+    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName"), pydantic.Field(alias="tenantName")]
     manifest: typing.Optional[VirtualAccountManifest] = None
-    jwt_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="jwtId")] = pydantic.Field(
-        alias="jwtId", default=None
-    )
-    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")] = pydantic.Field(
-        alias="createdBySubject"
-    )
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field(
-        alias="createdAt"
-    )
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")] = pydantic.Field(
-        alias="updatedAt"
-    )
-    is_expired: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isExpired")] = pydantic.Field(
-        alias="isExpired", default=None
-    )
+    jwt_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="jwtId"), pydantic.Field(alias="jwtId")
+    ] = None
+    created_by_subject: typing_extensions.Annotated[
+        Subject, FieldMetadata(alias="createdBySubject"), pydantic.Field(alias="createdBySubject")
+    ]
+    created_at: typing_extensions.Annotated[
+        dt.datetime, FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime, FieldMetadata(alias="updatedAt"), pydantic.Field(alias="updatedAt")
+    ]
+    is_expired: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="isExpired"), pydantic.Field(alias="isExpired")
+    ] = None
     jwts: typing.Optional[typing.List[Jwt]] = None
-    account_id: typing_extensions.Annotated[str, FieldMetadata(alias="accountId")] = pydantic.Field(alias="accountId")
+    account_id: typing_extensions.Annotated[str, FieldMetadata(alias="accountId"), pydantic.Field(alias="accountId")]
     metadata: typing.Optional[typing.Dict[str, typing.Any]] = None
-    role_ids: typing_extensions.Annotated[typing.Optional[typing.List[str]], FieldMetadata(alias="roleIds")] = (
-        pydantic.Field(alias="roleIds", default=None)
-    )
+    role_ids: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]], FieldMetadata(alias="roleIds"), pydantic.Field(alias="roleIds")
+    ] = None
     roles_with_resource: typing_extensions.Annotated[
-        typing.Optional[typing.List[RoleWithResource]], FieldMetadata(alias="rolesWithResource")
-    ] = pydantic.Field(alias="rolesWithResource", default=None)
-    created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = pydantic.Field(
-        alias="createdBy", default=None
-    )
+        typing.Optional[typing.List[RoleWithResource]],
+        FieldMetadata(alias="rolesWithResource"),
+        pydantic.Field(alias="rolesWithResource"),
+    ] = None
+    created_by: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="createdBy"), pydantic.Field(alias="createdBy")
+    ] = None
     next_scheduled_rotation: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="nextScheduledRotation")
-    ] = pydantic.Field(alias="nextScheduledRotation", default=None)
+        typing.Optional[str],
+        FieldMetadata(alias="nextScheduledRotation"),
+        pydantic.Field(alias="nextScheduledRotation"),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -39,13 +39,18 @@ class PromptVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EmptyResponse:
         """
+        Apply tags to a prompt version.
+
         Parameters
         ----------
         prompt_version_id : str
+            ID of the prompt version to apply tags to
 
         tags : typing.Sequence[str]
+            List of tags to apply to the prompt version
 
         force : typing.Optional[bool]
+            Whether to overwrite existing tags if they conflict
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -53,7 +58,7 @@ class PromptVersionsClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful tag application
 
         Examples
         --------
@@ -75,7 +80,7 @@ class PromptVersionsClient:
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetPromptVersionResponse:
         """
-        Get prompt version API
+        Get a prompt version by its ID.
 
         Parameters
         ----------
@@ -87,7 +92,7 @@ class PromptVersionsClient:
         Returns
         -------
         GetPromptVersionResponse
-            Successful Response
+            The prompt version data
 
         Examples
         --------
@@ -106,7 +111,7 @@ class PromptVersionsClient:
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
         """
-        Delete prompt versions API
+        Delete a prompt version by its ID.
 
         Parameters
         ----------
@@ -118,7 +123,7 @@ class PromptVersionsClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful deletion
 
         Examples
         --------
@@ -149,25 +154,33 @@ class PromptVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[PromptVersion, ListPromptVersionsResponse]:
         """
-        List prompt version API
+        List prompt versions with optional filtering by tag, FQN, prompt ID, ML Repo, name, or version.
 
         Parameters
         ----------
         tag : typing.Optional[str]
+            Tag to filter prompt versions by
 
         fqn : typing.Optional[str]
+            Fully qualified name to filter prompt versions by (format: 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}' or 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}:{version}')
 
         prompt_id : typing.Optional[str]
+            ID of the prompt to filter versions by
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter prompt versions by
 
         name : typing.Optional[str]
+            Name of the prompt to filter versions by
 
         version : typing.Optional[int]
+            Version number (positive integer) or 'latest' to filter by specific version
 
         offset : typing.Optional[int]
+            Number of prompt versions to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of prompt versions to return
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -175,7 +188,7 @@ class PromptVersionsClient:
         Returns
         -------
         SyncPager[PromptVersion, ListPromptVersionsResponse]
-            Successful Response
+            List of prompt versions matching the query with pagination information
 
         Examples
         --------
@@ -238,13 +251,18 @@ class AsyncPromptVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EmptyResponse:
         """
+        Apply tags to a prompt version.
+
         Parameters
         ----------
         prompt_version_id : str
+            ID of the prompt version to apply tags to
 
         tags : typing.Sequence[str]
+            List of tags to apply to the prompt version
 
         force : typing.Optional[bool]
+            Whether to overwrite existing tags if they conflict
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -252,7 +270,7 @@ class AsyncPromptVersionsClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful tag application
 
         Examples
         --------
@@ -284,7 +302,7 @@ class AsyncPromptVersionsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetPromptVersionResponse:
         """
-        Get prompt version API
+        Get a prompt version by its ID.
 
         Parameters
         ----------
@@ -296,7 +314,7 @@ class AsyncPromptVersionsClient:
         Returns
         -------
         GetPromptVersionResponse
-            Successful Response
+            The prompt version data
 
         Examples
         --------
@@ -323,7 +341,7 @@ class AsyncPromptVersionsClient:
 
     async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
         """
-        Delete prompt versions API
+        Delete a prompt version by its ID.
 
         Parameters
         ----------
@@ -335,7 +353,7 @@ class AsyncPromptVersionsClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful deletion
 
         Examples
         --------
@@ -374,25 +392,33 @@ class AsyncPromptVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[PromptVersion, ListPromptVersionsResponse]:
         """
-        List prompt version API
+        List prompt versions with optional filtering by tag, FQN, prompt ID, ML Repo, name, or version.
 
         Parameters
         ----------
         tag : typing.Optional[str]
+            Tag to filter prompt versions by
 
         fqn : typing.Optional[str]
+            Fully qualified name to filter prompt versions by (format: 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}' or 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}:{version}')
 
         prompt_id : typing.Optional[str]
+            ID of the prompt to filter versions by
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter prompt versions by
 
         name : typing.Optional[str]
+            Name of the prompt to filter versions by
 
         version : typing.Optional[int]
+            Version number (positive integer) or 'latest' to filter by specific version
 
         offset : typing.Optional[int]
+            Number of prompt versions to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of prompt versions to return
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -400,7 +426,7 @@ class AsyncPromptVersionsClient:
         Returns
         -------
         AsyncPager[PromptVersion, ListPromptVersionsResponse]
-            Successful Response
+            List of prompt versions matching the query with pagination information
 
         Examples
         --------

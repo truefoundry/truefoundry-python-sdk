@@ -11,13 +11,11 @@ from .logs_search_operator_type import LogsSearchOperatorType
 
 
 class LogsFilterQuery(UniversalBaseModel):
-    match_string: typing_extensions.Annotated[str, FieldMetadata(alias="matchString")] = pydantic.Field(
-        alias="matchString"
-    )
-    """
-    String that needs to be matched
-    """
-
+    match_string: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="matchString"),
+        pydantic.Field(alias="matchString", description="String that needs to be matched"),
+    ]
     type: LogsFilterQueryType = pydantic.Field()
     """
     query filter type, `regex` or `substring`

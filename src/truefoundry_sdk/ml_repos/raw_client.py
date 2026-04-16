@@ -31,7 +31,11 @@ class RawMlReposClient:
         self._client_wrapper = client_wrapper
 
     def create_or_update(
-        self, *, manifest: MlRepoManifest, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        manifest: MlRepoManifest,
+        dry_run: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetMlRepoResponse]:
         """
         Creates or updates an MLRepo entity based on the provided manifest.
@@ -40,6 +44,9 @@ class RawMlReposClient:
         ----------
         manifest : MlRepoManifest
             MLRepo manifest
+
+        dry_run : typing.Optional[bool]
+            Validate the manifest and collaborators without persisting changes or updating artifact location in the database
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -56,6 +63,7 @@ class RawMlReposClient:
                 "manifest": convert_and_respect_annotation_metadata(
                     object_=manifest, annotation=MlRepoManifest, direction="write"
                 ),
+                "dryRun": dry_run,
             },
             headers={
                 "content-type": "application/json",
@@ -126,13 +134,7 @@ class RawMlReposClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetMlRepoResponse]:
         """
-        Get a ml repo by id
-        Args:
-            id: Unique identifier of the ml repo to get
-            user_info: Authenticated user information
-
-        Returns:
-            GetMLRepoResponse: The ml repo
+        Get an ML Repo by its ID.
 
         Parameters
         ----------
@@ -144,7 +146,7 @@ class RawMlReposClient:
         Returns
         -------
         HttpResponse[GetMlRepoResponse]
-            Successful Response
+            The ML Repo data
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/ml/v1/ml-repos/{jsonable_encoder(id)}",
@@ -181,13 +183,7 @@ class RawMlReposClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[EmptyResponse]:
         """
-        Delete a ml repo
-        Args:
-            id: Unique identifier of the ml repo to delete
-            user_info: Authenticated user information
-
-        Returns:
-            EmptyResponse: Empty response indicating successful deletion
+        Delete an ML Repo by its ID.
 
         Parameters
         ----------
@@ -199,7 +195,7 @@ class RawMlReposClient:
         Returns
         -------
         HttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/ml/v1/ml-repos/{jsonable_encoder(id)}",
@@ -241,21 +237,18 @@ class RawMlReposClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[MlRepo, ListMlReposResponse]:
         """
-        List ml repos
-        Args:
-            filters: Filters for the ml repos
-            user_info: Authenticated user information
-
-        Returns:
-            ListMLReposResponse: List of ml repos
+        List ML Repos with optional filtering by name.
 
         Parameters
         ----------
         name : typing.Optional[str]
+            Name of the ML Repo to filter by
 
         limit : typing.Optional[int]
+            Maximum number of ML Repos to return
 
         offset : typing.Optional[int]
+            Number of ML Repos to skip for pagination
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -263,7 +256,7 @@ class RawMlReposClient:
         Returns
         -------
         SyncPager[MlRepo, ListMlReposResponse]
-            Successful Response
+            List of ML Repos matching the query with pagination information
         """
         offset = offset if offset is not None else 0
 
@@ -317,7 +310,11 @@ class AsyncRawMlReposClient:
         self._client_wrapper = client_wrapper
 
     async def create_or_update(
-        self, *, manifest: MlRepoManifest, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        manifest: MlRepoManifest,
+        dry_run: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetMlRepoResponse]:
         """
         Creates or updates an MLRepo entity based on the provided manifest.
@@ -326,6 +323,9 @@ class AsyncRawMlReposClient:
         ----------
         manifest : MlRepoManifest
             MLRepo manifest
+
+        dry_run : typing.Optional[bool]
+            Validate the manifest and collaborators without persisting changes or updating artifact location in the database
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -342,6 +342,7 @@ class AsyncRawMlReposClient:
                 "manifest": convert_and_respect_annotation_metadata(
                     object_=manifest, annotation=MlRepoManifest, direction="write"
                 ),
+                "dryRun": dry_run,
             },
             headers={
                 "content-type": "application/json",
@@ -412,13 +413,7 @@ class AsyncRawMlReposClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetMlRepoResponse]:
         """
-        Get a ml repo by id
-        Args:
-            id: Unique identifier of the ml repo to get
-            user_info: Authenticated user information
-
-        Returns:
-            GetMLRepoResponse: The ml repo
+        Get an ML Repo by its ID.
 
         Parameters
         ----------
@@ -430,7 +425,7 @@ class AsyncRawMlReposClient:
         Returns
         -------
         AsyncHttpResponse[GetMlRepoResponse]
-            Successful Response
+            The ML Repo data
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/ml/v1/ml-repos/{jsonable_encoder(id)}",
@@ -467,13 +462,7 @@ class AsyncRawMlReposClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[EmptyResponse]:
         """
-        Delete a ml repo
-        Args:
-            id: Unique identifier of the ml repo to delete
-            user_info: Authenticated user information
-
-        Returns:
-            EmptyResponse: Empty response indicating successful deletion
+        Delete an ML Repo by its ID.
 
         Parameters
         ----------
@@ -485,7 +474,7 @@ class AsyncRawMlReposClient:
         Returns
         -------
         AsyncHttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/ml/v1/ml-repos/{jsonable_encoder(id)}",
@@ -527,21 +516,18 @@ class AsyncRawMlReposClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[MlRepo, ListMlReposResponse]:
         """
-        List ml repos
-        Args:
-            filters: Filters for the ml repos
-            user_info: Authenticated user information
-
-        Returns:
-            ListMLReposResponse: List of ml repos
+        List ML Repos with optional filtering by name.
 
         Parameters
         ----------
         name : typing.Optional[str]
+            Name of the ML Repo to filter by
 
         limit : typing.Optional[int]
+            Maximum number of ML Repos to return
 
         offset : typing.Optional[int]
+            Number of ML Repos to skip for pagination
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -549,7 +535,7 @@ class AsyncRawMlReposClient:
         Returns
         -------
         AsyncPager[MlRepo, ListMlReposResponse]
-            Successful Response
+            List of ML Repos matching the query with pagination information
         """
         offset = offset if offset is not None else 0
 

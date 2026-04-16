@@ -41,13 +41,18 @@ class RawArtifactVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[EmptyResponse]:
         """
+        Apply tags to an artifact version.
+
         Parameters
         ----------
         artifact_version_id : str
+            ID of the artifact version to apply tags to
 
         tags : typing.Sequence[str]
+            List of tags to apply to the artifact version
 
         force : typing.Optional[bool]
+            Whether to overwrite existing tags if they conflict
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -55,7 +60,7 @@ class RawArtifactVersionsClient:
         Returns
         -------
         HttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful tag application
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/artifact-versions/tags",
@@ -101,7 +106,7 @@ class RawArtifactVersionsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetArtifactVersionResponse]:
         """
-        Get artifact version API
+        Get an artifact version by its ID.
 
         Parameters
         ----------
@@ -113,7 +118,7 @@ class RawArtifactVersionsClient:
         Returns
         -------
         HttpResponse[GetArtifactVersionResponse]
-            Successful Response
+            The artifact version data
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/ml/v1/artifact-versions/{jsonable_encoder(id)}",
@@ -150,7 +155,7 @@ class RawArtifactVersionsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[EmptyResponse]:
         """
-        Delete artifact versions API
+        Delete an artifact version by its ID.
 
         Parameters
         ----------
@@ -162,7 +167,7 @@ class RawArtifactVersionsClient:
         Returns
         -------
         HttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/ml/v1/artifact-versions/{jsonable_encoder(id)}",
@@ -212,31 +217,42 @@ class RawArtifactVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[ArtifactVersion, ListArtifactVersionsResponse]:
         """
-        List artifact version API
+        List artifact versions with optional filtering by tag, FQN, artifact ID, ML Repo, name, version, run IDs, or run steps.
 
         Parameters
         ----------
         tag : typing.Optional[str]
+            Tag to filter artifact versions by
 
         fqn : typing.Optional[str]
+            Fully qualified name to filter artifact versions by (format: '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}' or '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}:{version}')
 
         artifact_id : typing.Optional[str]
+            ID of the artifact to filter versions by
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter artifact versions by
 
         name : typing.Optional[str]
+            Name of the artifact to filter versions by
 
         version : typing.Optional[int]
+            Version number (positive integer) or 'latest' to filter by specific version
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            List of run IDs to filter artifact versions by
 
         run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+            List of run step numbers to filter artifact versions by
 
         offset : typing.Optional[int]
+            Number of artifact versions to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of artifact versions to return
 
         include_internal_metadata : typing.Optional[bool]
+            Whether to include internal metadata in the response
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -244,7 +260,7 @@ class RawArtifactVersionsClient:
         Returns
         -------
         SyncPager[ArtifactVersion, ListArtifactVersionsResponse]
-            Successful Response
+            List of artifact versions matching the query with pagination information
         """
         offset = offset if offset is not None else 0
 
@@ -317,13 +333,18 @@ class RawArtifactVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetSignedUrLsResponse]:
         """
+        Get pre-signed URLs for reading or writing files in an artifact version.
+
         Parameters
         ----------
         id : str
+            ID of the artifact version to get signed URLs for
 
         paths : typing.Sequence[str]
+            List of relative file paths within the artifact version to get signed URLs for
 
         operation : Operation
+            Operation type for the signed URL (e.g., 'READ' or 'WRITE')
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -331,7 +352,7 @@ class RawArtifactVersionsClient:
         Returns
         -------
         HttpResponse[GetSignedUrLsResponse]
-            Successful Response
+            List of signed URLs for the requested file paths
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/artifact-versions/signed-urls",
@@ -377,13 +398,18 @@ class RawArtifactVersionsClient:
         self, *, id: str, path: str, num_parts: int, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[MultiPartUploadResponse]:
         """
+        Create a multipart upload for large files in an artifact version.
+
         Parameters
         ----------
         id : str
+            ID of the artifact version to upload files to
 
         path : str
+            Relative path within the artifact version where the file should be uploaded
 
         num_parts : int
+            Number of parts to split the upload into for multipart upload
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -391,7 +417,7 @@ class RawArtifactVersionsClient:
         Returns
         -------
         HttpResponse[MultiPartUploadResponse]
-            Successful Response
+            Multipart upload information including signed URLs for each part
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/artifact-versions/signed-urls/multipart",
@@ -437,9 +463,12 @@ class RawArtifactVersionsClient:
         self, *, manifest: StageArtifactRequestManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[StageArtifactResponse]:
         """
+        Stage an artifact version for upload, returning storage location and version ID.
+
         Parameters
         ----------
         manifest : StageArtifactRequestManifest
+            Manifest containing metadata for the artifact to be staged (model or generic artifact)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -447,7 +476,7 @@ class RawArtifactVersionsClient:
         Returns
         -------
         HttpResponse[StageArtifactResponse]
-            Successful Response
+            Staging information including version ID, storage root, and artifact ID
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/artifact-versions/stage",
@@ -499,15 +528,21 @@ class RawArtifactVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[FileInfo, ListFilesResponse]:
         """
+        List files and directories in an artifact version.
+
         Parameters
         ----------
         id : str
+            ID of the artifact version to list files from
 
         path : typing.Optional[str]
+            Relative path within the artifact version to list files from (defaults to root)
 
         limit : typing.Optional[int]
+            Maximum number of files/directories to return
 
         page_token : typing.Optional[str]
+            Token to retrieve the next page of results
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -515,7 +550,7 @@ class RawArtifactVersionsClient:
         Returns
         -------
         SyncPager[FileInfo, ListFilesResponse]
-            Successful Response
+            List of files and directories with pagination information
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/artifact-versions/files",
@@ -575,9 +610,12 @@ class RawArtifactVersionsClient:
         self, *, id: str, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[EmptyResponse]:
         """
+        Mark a staged artifact version as failed.
+
         Parameters
         ----------
         id : str
+            ID of the staged artifact version to mark as failed
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -585,7 +623,7 @@ class RawArtifactVersionsClient:
         Returns
         -------
         HttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful failure marking
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/artifact-versions/mark-stage-failure",
@@ -639,13 +677,18 @@ class AsyncRawArtifactVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[EmptyResponse]:
         """
+        Apply tags to an artifact version.
+
         Parameters
         ----------
         artifact_version_id : str
+            ID of the artifact version to apply tags to
 
         tags : typing.Sequence[str]
+            List of tags to apply to the artifact version
 
         force : typing.Optional[bool]
+            Whether to overwrite existing tags if they conflict
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -653,7 +696,7 @@ class AsyncRawArtifactVersionsClient:
         Returns
         -------
         AsyncHttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful tag application
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/artifact-versions/tags",
@@ -699,7 +742,7 @@ class AsyncRawArtifactVersionsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetArtifactVersionResponse]:
         """
-        Get artifact version API
+        Get an artifact version by its ID.
 
         Parameters
         ----------
@@ -711,7 +754,7 @@ class AsyncRawArtifactVersionsClient:
         Returns
         -------
         AsyncHttpResponse[GetArtifactVersionResponse]
-            Successful Response
+            The artifact version data
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/ml/v1/artifact-versions/{jsonable_encoder(id)}",
@@ -748,7 +791,7 @@ class AsyncRawArtifactVersionsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[EmptyResponse]:
         """
-        Delete artifact versions API
+        Delete an artifact version by its ID.
 
         Parameters
         ----------
@@ -760,7 +803,7 @@ class AsyncRawArtifactVersionsClient:
         Returns
         -------
         AsyncHttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/ml/v1/artifact-versions/{jsonable_encoder(id)}",
@@ -810,31 +853,42 @@ class AsyncRawArtifactVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[ArtifactVersion, ListArtifactVersionsResponse]:
         """
-        List artifact version API
+        List artifact versions with optional filtering by tag, FQN, artifact ID, ML Repo, name, version, run IDs, or run steps.
 
         Parameters
         ----------
         tag : typing.Optional[str]
+            Tag to filter artifact versions by
 
         fqn : typing.Optional[str]
+            Fully qualified name to filter artifact versions by (format: '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}' or '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}:{version}')
 
         artifact_id : typing.Optional[str]
+            ID of the artifact to filter versions by
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter artifact versions by
 
         name : typing.Optional[str]
+            Name of the artifact to filter versions by
 
         version : typing.Optional[int]
+            Version number (positive integer) or 'latest' to filter by specific version
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            List of run IDs to filter artifact versions by
 
         run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+            List of run step numbers to filter artifact versions by
 
         offset : typing.Optional[int]
+            Number of artifact versions to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of artifact versions to return
 
         include_internal_metadata : typing.Optional[bool]
+            Whether to include internal metadata in the response
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -842,7 +896,7 @@ class AsyncRawArtifactVersionsClient:
         Returns
         -------
         AsyncPager[ArtifactVersion, ListArtifactVersionsResponse]
-            Successful Response
+            List of artifact versions matching the query with pagination information
         """
         offset = offset if offset is not None else 0
 
@@ -918,13 +972,18 @@ class AsyncRawArtifactVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetSignedUrLsResponse]:
         """
+        Get pre-signed URLs for reading or writing files in an artifact version.
+
         Parameters
         ----------
         id : str
+            ID of the artifact version to get signed URLs for
 
         paths : typing.Sequence[str]
+            List of relative file paths within the artifact version to get signed URLs for
 
         operation : Operation
+            Operation type for the signed URL (e.g., 'READ' or 'WRITE')
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -932,7 +991,7 @@ class AsyncRawArtifactVersionsClient:
         Returns
         -------
         AsyncHttpResponse[GetSignedUrLsResponse]
-            Successful Response
+            List of signed URLs for the requested file paths
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/artifact-versions/signed-urls",
@@ -978,13 +1037,18 @@ class AsyncRawArtifactVersionsClient:
         self, *, id: str, path: str, num_parts: int, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[MultiPartUploadResponse]:
         """
+        Create a multipart upload for large files in an artifact version.
+
         Parameters
         ----------
         id : str
+            ID of the artifact version to upload files to
 
         path : str
+            Relative path within the artifact version where the file should be uploaded
 
         num_parts : int
+            Number of parts to split the upload into for multipart upload
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -992,7 +1056,7 @@ class AsyncRawArtifactVersionsClient:
         Returns
         -------
         AsyncHttpResponse[MultiPartUploadResponse]
-            Successful Response
+            Multipart upload information including signed URLs for each part
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/artifact-versions/signed-urls/multipart",
@@ -1038,9 +1102,12 @@ class AsyncRawArtifactVersionsClient:
         self, *, manifest: StageArtifactRequestManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[StageArtifactResponse]:
         """
+        Stage an artifact version for upload, returning storage location and version ID.
+
         Parameters
         ----------
         manifest : StageArtifactRequestManifest
+            Manifest containing metadata for the artifact to be staged (model or generic artifact)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1048,7 +1115,7 @@ class AsyncRawArtifactVersionsClient:
         Returns
         -------
         AsyncHttpResponse[StageArtifactResponse]
-            Successful Response
+            Staging information including version ID, storage root, and artifact ID
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/artifact-versions/stage",
@@ -1100,15 +1167,21 @@ class AsyncRawArtifactVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[FileInfo, ListFilesResponse]:
         """
+        List files and directories in an artifact version.
+
         Parameters
         ----------
         id : str
+            ID of the artifact version to list files from
 
         path : typing.Optional[str]
+            Relative path within the artifact version to list files from (defaults to root)
 
         limit : typing.Optional[int]
+            Maximum number of files/directories to return
 
         page_token : typing.Optional[str]
+            Token to retrieve the next page of results
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1116,7 +1189,7 @@ class AsyncRawArtifactVersionsClient:
         Returns
         -------
         AsyncPager[FileInfo, ListFilesResponse]
-            Successful Response
+            List of files and directories with pagination information
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/artifact-versions/files",
@@ -1179,9 +1252,12 @@ class AsyncRawArtifactVersionsClient:
         self, *, id: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[EmptyResponse]:
         """
+        Mark a staged artifact version as failed.
+
         Parameters
         ----------
         id : str
+            ID of the staged artifact version to mark as failed
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1189,7 +1265,7 @@ class AsyncRawArtifactVersionsClient:
         Returns
         -------
         AsyncHttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful failure marking
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/artifact-versions/mark-stage-failure",

@@ -7,9 +7,20 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class StageArtifactResponse(UniversalBaseModel):
-    id: str
-    storage_root: str
-    artifact_id: str
+    id: str = pydantic.Field()
+    """
+    ID of the staged artifact version
+    """
+
+    storage_root: str = pydantic.Field()
+    """
+    Root storage path where the artifact version files should be uploaded
+    """
+
+    artifact_id: str = pydantic.Field()
+    """
+    ID of the artifact that the staged version belongs to
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

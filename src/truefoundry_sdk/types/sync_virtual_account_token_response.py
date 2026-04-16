@@ -11,11 +11,12 @@ from .sync_token_in_secret_store_info import SyncTokenInSecretStoreInfo
 
 class SyncVirtualAccountTokenResponse(UniversalBaseModel):
     sync_token_in_secret_store_info: typing_extensions.Annotated[
-        SyncTokenInSecretStoreInfo, FieldMetadata(alias="syncTokenInSecretStoreInfo")
-    ] = pydantic.Field(alias="syncTokenInSecretStoreInfo")
-    """
-    Sync status including timestamp and error (if any)
-    """
+        SyncTokenInSecretStoreInfo,
+        FieldMetadata(alias="syncTokenInSecretStoreInfo"),
+        pydantic.Field(
+            alias="syncTokenInSecretStoreInfo", description="Sync status including timestamp and error (if any)"
+        ),
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

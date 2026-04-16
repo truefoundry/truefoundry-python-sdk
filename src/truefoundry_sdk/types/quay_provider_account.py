@@ -37,9 +37,9 @@ class QuayProviderAccount(UniversalBaseModel):
     List of integrations that are associated with the provider account.
     """
 
-    owned_by: typing_extensions.Annotated[typing.Optional[OwnedBy], FieldMetadata(alias="ownedBy")] = pydantic.Field(
-        alias="ownedBy", default=None
-    )
+    owned_by: typing_extensions.Annotated[
+        typing.Optional[OwnedBy], FieldMetadata(alias="ownedBy"), pydantic.Field(alias="ownedBy")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

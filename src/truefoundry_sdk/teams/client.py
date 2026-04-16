@@ -6,6 +6,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.delete_team_response import DeleteTeamResponse
+from ..types.get_team_permissions_response import GetTeamPermissionsResponse
 from ..types.get_team_response import GetTeamResponse
 from ..types.list_teams_response import ListTeamsResponse
 from ..types.team import Team
@@ -192,6 +193,40 @@ class TeamsClient:
         )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
+        return _response.data
+
+    def get_permissions(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetTeamPermissionsResponse:
+        """
+        Get all role bindings associated with a team.
+
+        Parameters
+        ----------
+        id : str
+            Team Id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetTeamPermissionsResponse
+            Returns role bindings for the team.
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.teams.get_permissions(
+            id="id",
+        )
+        """
+        _response = self._raw_client.get_permissions(id, request_options=request_options)
         return _response.data
 
 
@@ -403,4 +438,46 @@ class AsyncTeamsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
+        return _response.data
+
+    async def get_permissions(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetTeamPermissionsResponse:
+        """
+        Get all role bindings associated with a team.
+
+        Parameters
+        ----------
+        id : str
+            Team Id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetTeamPermissionsResponse
+            Returns role bindings for the team.
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.teams.get_permissions(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_permissions(id, request_options=request_options)
         return _response.data

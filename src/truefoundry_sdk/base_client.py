@@ -15,6 +15,8 @@ from .types.true_foundry_apply_response import TrueFoundryApplyResponse
 from .types.true_foundry_delete_request_manifest import TrueFoundryDeleteRequestManifest
 
 if typing.TYPE_CHECKING:
+    from .agent_skill_versions.client import AgentSkillVersionsClient, AsyncAgentSkillVersionsClient
+    from .agent_skills.client import AgentSkillsClient, AsyncAgentSkillsClient
     from .alerts.client import AlertsClient, AsyncAlertsClient
     from .application_versions.client import ApplicationVersionsClient, AsyncApplicationVersionsClient
     from .applications.client import ApplicationsClient, AsyncApplicationsClient
@@ -109,10 +111,10 @@ class BaseTrueFoundry:
         self._personal_access_tokens: typing.Optional[PersonalAccessTokensClient] = None
         self._virtual_accounts: typing.Optional[VirtualAccountsClient] = None
         self._clusters: typing.Optional[ClustersClient] = None
-        self._environments: typing.Optional[EnvironmentsClient] = None
         self._applications: typing.Optional[ApplicationsClient] = None
         self._application_versions: typing.Optional[ApplicationVersionsClient] = None
         self._jobs: typing.Optional[JobsClient] = None
+        self._environments: typing.Optional[EnvironmentsClient] = None
         self._workspaces: typing.Optional[WorkspacesClient] = None
         self._secrets: typing.Optional[SecretsClient] = None
         self._secret_groups: typing.Optional[SecretGroupsClient] = None
@@ -127,6 +129,8 @@ class BaseTrueFoundry:
         self._artifact_versions: typing.Optional[ArtifactVersionsClient] = None
         self._model_versions: typing.Optional[ModelVersionsClient] = None
         self._prompt_versions: typing.Optional[PromptVersionsClient] = None
+        self._agent_skills: typing.Optional[AgentSkillsClient] = None
+        self._agent_skill_versions: typing.Optional[AgentSkillVersionsClient] = None
         self._data_directories: typing.Optional[DataDirectoriesClient] = None
 
     @property
@@ -281,14 +285,6 @@ class BaseTrueFoundry:
         return self._clusters
 
     @property
-    def environments(self):
-        if self._environments is None:
-            from .environments.client import EnvironmentsClient  # noqa: E402
-
-            self._environments = EnvironmentsClient(client_wrapper=self._client_wrapper)
-        return self._environments
-
-    @property
     def applications(self):
         if self._applications is None:
             from .applications.client import ApplicationsClient  # noqa: E402
@@ -311,6 +307,14 @@ class BaseTrueFoundry:
 
             self._jobs = JobsClient(client_wrapper=self._client_wrapper)
         return self._jobs
+
+    @property
+    def environments(self):
+        if self._environments is None:
+            from .environments.client import EnvironmentsClient  # noqa: E402
+
+            self._environments = EnvironmentsClient(client_wrapper=self._client_wrapper)
+        return self._environments
 
     @property
     def workspaces(self):
@@ -425,6 +429,22 @@ class BaseTrueFoundry:
         return self._prompt_versions
 
     @property
+    def agent_skills(self):
+        if self._agent_skills is None:
+            from .agent_skills.client import AgentSkillsClient  # noqa: E402
+
+            self._agent_skills = AgentSkillsClient(client_wrapper=self._client_wrapper)
+        return self._agent_skills
+
+    @property
+    def agent_skill_versions(self):
+        if self._agent_skill_versions is None:
+            from .agent_skill_versions.client import AgentSkillVersionsClient  # noqa: E402
+
+            self._agent_skill_versions = AgentSkillVersionsClient(client_wrapper=self._client_wrapper)
+        return self._agent_skill_versions
+
+    @property
     def data_directories(self):
         if self._data_directories is None:
             from .data_directories.client import DataDirectoriesClient  # noqa: E402
@@ -498,10 +518,10 @@ class AsyncBaseTrueFoundry:
         self._personal_access_tokens: typing.Optional[AsyncPersonalAccessTokensClient] = None
         self._virtual_accounts: typing.Optional[AsyncVirtualAccountsClient] = None
         self._clusters: typing.Optional[AsyncClustersClient] = None
-        self._environments: typing.Optional[AsyncEnvironmentsClient] = None
         self._applications: typing.Optional[AsyncApplicationsClient] = None
         self._application_versions: typing.Optional[AsyncApplicationVersionsClient] = None
         self._jobs: typing.Optional[AsyncJobsClient] = None
+        self._environments: typing.Optional[AsyncEnvironmentsClient] = None
         self._workspaces: typing.Optional[AsyncWorkspacesClient] = None
         self._secrets: typing.Optional[AsyncSecretsClient] = None
         self._secret_groups: typing.Optional[AsyncSecretGroupsClient] = None
@@ -516,6 +536,8 @@ class AsyncBaseTrueFoundry:
         self._artifact_versions: typing.Optional[AsyncArtifactVersionsClient] = None
         self._model_versions: typing.Optional[AsyncModelVersionsClient] = None
         self._prompt_versions: typing.Optional[AsyncPromptVersionsClient] = None
+        self._agent_skills: typing.Optional[AsyncAgentSkillsClient] = None
+        self._agent_skill_versions: typing.Optional[AsyncAgentSkillVersionsClient] = None
         self._data_directories: typing.Optional[AsyncDataDirectoriesClient] = None
 
     @property
@@ -686,14 +708,6 @@ class AsyncBaseTrueFoundry:
         return self._clusters
 
     @property
-    def environments(self):
-        if self._environments is None:
-            from .environments.client import AsyncEnvironmentsClient  # noqa: E402
-
-            self._environments = AsyncEnvironmentsClient(client_wrapper=self._client_wrapper)
-        return self._environments
-
-    @property
     def applications(self):
         if self._applications is None:
             from .applications.client import AsyncApplicationsClient  # noqa: E402
@@ -716,6 +730,14 @@ class AsyncBaseTrueFoundry:
 
             self._jobs = AsyncJobsClient(client_wrapper=self._client_wrapper)
         return self._jobs
+
+    @property
+    def environments(self):
+        if self._environments is None:
+            from .environments.client import AsyncEnvironmentsClient  # noqa: E402
+
+            self._environments = AsyncEnvironmentsClient(client_wrapper=self._client_wrapper)
+        return self._environments
 
     @property
     def workspaces(self):
@@ -828,6 +850,22 @@ class AsyncBaseTrueFoundry:
 
             self._prompt_versions = AsyncPromptVersionsClient(client_wrapper=self._client_wrapper)
         return self._prompt_versions
+
+    @property
+    def agent_skills(self):
+        if self._agent_skills is None:
+            from .agent_skills.client import AsyncAgentSkillsClient  # noqa: E402
+
+            self._agent_skills = AsyncAgentSkillsClient(client_wrapper=self._client_wrapper)
+        return self._agent_skills
+
+    @property
+    def agent_skill_versions(self):
+        if self._agent_skill_versions is None:
+            from .agent_skill_versions.client import AsyncAgentSkillVersionsClient  # noqa: E402
+
+            self._agent_skill_versions = AsyncAgentSkillVersionsClient(client_wrapper=self._client_wrapper)
+        return self._agent_skill_versions
 
     @property
     def data_directories(self):

@@ -20,42 +20,44 @@ class Deployment(UniversalBaseModel):
     id: typing.Optional[str] = None
     version: typing.Optional[float] = None
     fqn: typing.Optional[str] = None
-    application_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="applicationId")] = (
-        pydantic.Field(alias="applicationId", default=None)
-    )
+    application_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="applicationId"), pydantic.Field(alias="applicationId")
+    ] = None
     manifest: DeploymentManifest
     application: typing.Optional["Application"] = None
-    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")] = pydantic.Field(
-        alias="createdBySubject"
-    )
-    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = (
-        pydantic.Field(alias="createdAt", default=None)
-    )
-    updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = (
-        pydantic.Field(alias="updatedAt", default=None)
-    )
+    created_by_subject: typing_extensions.Annotated[
+        Subject, FieldMetadata(alias="createdBySubject"), pydantic.Field(alias="createdBySubject")
+    ]
+    created_at: typing_extensions.Annotated[
+        typing.Optional[dt.datetime], FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
+    ] = None
+    updated_at: typing_extensions.Annotated[
+        typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt"), pydantic.Field(alias="updatedAt")
+    ] = None
     deployment_builds: typing_extensions.Annotated[
-        typing.Optional[typing.List[BuildInfo]], FieldMetadata(alias="deploymentBuilds")
-    ] = pydantic.Field(alias="deploymentBuilds", default=None)
+        typing.Optional[typing.List[BuildInfo]],
+        FieldMetadata(alias="deploymentBuilds"),
+        pydantic.Field(alias="deploymentBuilds"),
+    ] = None
     deployment_statuses: typing_extensions.Annotated[
-        typing.Optional[typing.List[DeploymentStatus]], FieldMetadata(alias="deploymentStatuses")
-    ] = pydantic.Field(alias="deploymentStatuses", default=None)
-    current_status_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="currentStatusId")] = (
-        pydantic.Field(alias="currentStatusId", default=None)
-    )
+        typing.Optional[typing.List[DeploymentStatus]],
+        FieldMetadata(alias="deploymentStatuses"),
+        pydantic.Field(alias="deploymentStatuses"),
+    ] = None
+    current_status_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="currentStatusId"), pydantic.Field(alias="currentStatusId")
+    ] = None
     current_status: typing_extensions.Annotated[
-        typing.Optional[DeploymentStatus], FieldMetadata(alias="currentStatus")
-    ] = pydantic.Field(alias="currentStatus", default=None)
+        typing.Optional[DeploymentStatus], FieldMetadata(alias="currentStatus"), pydantic.Field(alias="currentStatus")
+    ] = None
     applied_recommendations: typing_extensions.Annotated[
-        typing.Optional[typing.List[Recommendation]], FieldMetadata(alias="appliedRecommendations")
-    ] = pydantic.Field(alias="appliedRecommendations", default=None)
-    """
-    Applied recommendations for this deployment
-    """
-
-    created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = pydantic.Field(
-        alias="createdBy", default=None
-    )
+        typing.Optional[typing.List[Recommendation]],
+        FieldMetadata(alias="appliedRecommendations"),
+        pydantic.Field(alias="appliedRecommendations", description="Applied recommendations for this deployment"),
+    ] = None
+    created_by: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="createdBy"), pydantic.Field(alias="createdBy")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

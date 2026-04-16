@@ -45,7 +45,7 @@ class SecretDetectionGuardrailConfig(UniversalBaseModel):
     """
 
     enforcing_strategy: EnforcingStrategy
-    config: SecretDetectionGuardrailConfigConfig = pydantic.Field()
+    config: typing.Optional[SecretDetectionGuardrailConfigConfig] = pydantic.Field(default=None)
     """
     +uiType=Ignore
     +uiProps={"forwardJsonKey": true}

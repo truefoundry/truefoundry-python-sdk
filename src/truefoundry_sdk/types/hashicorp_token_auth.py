@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class HashicorpTokenAuth(UniversalBaseModel):
     """
-    Auth Data
+    Vault Token Auth
     """
 
     type: typing.Literal["token"] = pydantic.Field(default="token")

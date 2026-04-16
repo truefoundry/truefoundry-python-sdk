@@ -12,12 +12,10 @@ from .true_foundry_apply_response_existing_manifest import TrueFoundryApplyRespo
 
 class TrueFoundryApplyResponse(UniversalBaseModel):
     existing_manifest: typing_extensions.Annotated[
-        typing.Optional[TrueFoundryApplyResponseExistingManifest], FieldMetadata(alias="existingManifest")
-    ] = pydantic.Field(alias="existingManifest", default=None)
-    """
-    The existing manifest of the resource
-    """
-
+        typing.Optional[TrueFoundryApplyResponseExistingManifest],
+        FieldMetadata(alias="existingManifest"),
+        pydantic.Field(alias="existingManifest", description="The existing manifest of the resource"),
+    ] = None
     action: typing.Optional[TrueFoundryApplyResponseAction] = pydantic.Field(default=None)
     """
     The action performed: CREATE or UPDATE

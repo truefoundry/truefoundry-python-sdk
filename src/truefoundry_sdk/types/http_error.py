@@ -10,13 +10,9 @@ from .http_error_code import HttpErrorCode
 
 
 class HttpError(UniversalBaseModel):
-    status_code: typing_extensions.Annotated[int, FieldMetadata(alias="statusCode")] = pydantic.Field(
-        alias="statusCode"
-    )
-    """
-    HTTP Status Code
-    """
-
+    status_code: typing_extensions.Annotated[
+        int, FieldMetadata(alias="statusCode"), pydantic.Field(alias="statusCode", description="HTTP Status Code")
+    ]
     message: str = pydantic.Field()
     """
     Error Message

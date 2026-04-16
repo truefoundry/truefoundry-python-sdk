@@ -4,9 +4,6 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .open_ai_moderations_guardrail_config_config_category_thresholds_value import (
-    OpenAiModerationsGuardrailConfigConfigCategoryThresholdsValue,
-)
 
 
 class OpenAiModerationsGuardrailConfigConfig(UniversalBaseModel):
@@ -25,9 +22,7 @@ class OpenAiModerationsGuardrailConfigConfig(UniversalBaseModel):
     Optional custom base URL for OpenAI API. If not provided, the default base URL will be used.
     """
 
-    category_thresholds: typing.Optional[
-        typing.Dict[str, OpenAiModerationsGuardrailConfigConfigCategoryThresholdsValue]
-    ] = None
+    category_thresholds: typing.Optional[typing.Dict[str, float]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -13,12 +13,20 @@ class TaskPySparkBuild(UniversalBaseModel):
 
     type: typing.Literal["task-pyspark-build"] = pydantic.Field(default="task-pyspark-build")
     """
+    +uiType=Hidden
     +value=task-pyspark-build
     """
 
     spark_version: str = pydantic.Field(default="3.5.2")
     """
     Spark version should match the spark version installed in the image.
+    """
+
+    container_image: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Custom container image URI. If provided, this image is used instead of the
+    default Spark base image (public.ecr.aws/bitnami/spark). The image must be
+    Debian-based and have Python and Spark pre-installed.
     """
 
     docker_registry: typing.Optional[str] = pydantic.Field(default=None)

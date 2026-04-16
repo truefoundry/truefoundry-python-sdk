@@ -34,6 +34,8 @@ class PromptsClient:
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetPromptResponse:
         """
+        Get a prompt by its ID.
+
         Parameters
         ----------
         id : str
@@ -44,7 +46,7 @@ class PromptsClient:
         Returns
         -------
         GetPromptResponse
-            Successful Response
+            The prompt data
 
         Examples
         --------
@@ -63,6 +65,8 @@ class PromptsClient:
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
         """
+        Delete a prompt by its ID.
+
         Parameters
         ----------
         id : str
@@ -73,7 +77,7 @@ class PromptsClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful deletion
 
         Examples
         --------
@@ -102,19 +106,27 @@ class PromptsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Prompt, ListPromptsResponse]:
         """
+        List prompts with optional filtering by FQN, ML Repo, or name.
+
         Parameters
         ----------
         fqn : typing.Optional[str]
+            Fully qualified name to filter prompts by (format: 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}')
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter prompts by
 
         name : typing.Optional[str]
+            Name of the prompt to filter by
 
         offset : typing.Optional[int]
+            Number of prompts to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of prompts to return
 
         include_empty_prompts : typing.Optional[bool]
+            Whether to include prompts that have no versions
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -122,7 +134,7 @@ class PromptsClient:
         Returns
         -------
         SyncPager[Prompt, ListPromptsResponse]
-            Successful Response
+            List of prompts matching the query with pagination information
 
         Examples
         --------
@@ -160,9 +172,12 @@ class PromptsClient:
         self, *, manifest: ChatPromptManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetPromptVersionResponse:
         """
+        Create or update a prompt version.
+
         Parameters
         ----------
         manifest : ChatPromptManifest
+            Manifest containing metadata for the prompt to apply
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -170,7 +185,7 @@ class PromptsClient:
         Returns
         -------
         GetPromptVersionResponse
-            Successful Response
+            The created or updated prompt version
 
         Examples
         --------
@@ -214,6 +229,8 @@ class AsyncPromptsClient:
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetPromptResponse:
         """
+        Get a prompt by its ID.
+
         Parameters
         ----------
         id : str
@@ -224,7 +241,7 @@ class AsyncPromptsClient:
         Returns
         -------
         GetPromptResponse
-            Successful Response
+            The prompt data
 
         Examples
         --------
@@ -251,6 +268,8 @@ class AsyncPromptsClient:
 
     async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
         """
+        Delete a prompt by its ID.
+
         Parameters
         ----------
         id : str
@@ -261,7 +280,7 @@ class AsyncPromptsClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful deletion
 
         Examples
         --------
@@ -298,19 +317,27 @@ class AsyncPromptsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Prompt, ListPromptsResponse]:
         """
+        List prompts with optional filtering by FQN, ML Repo, or name.
+
         Parameters
         ----------
         fqn : typing.Optional[str]
+            Fully qualified name to filter prompts by (format: 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}')
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter prompts by
 
         name : typing.Optional[str]
+            Name of the prompt to filter by
 
         offset : typing.Optional[int]
+            Number of prompts to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of prompts to return
 
         include_empty_prompts : typing.Optional[bool]
+            Whether to include prompts that have no versions
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -318,7 +345,7 @@ class AsyncPromptsClient:
         Returns
         -------
         AsyncPager[Prompt, ListPromptsResponse]
-            Successful Response
+            List of prompts matching the query with pagination information
 
         Examples
         --------
@@ -365,9 +392,12 @@ class AsyncPromptsClient:
         self, *, manifest: ChatPromptManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetPromptVersionResponse:
         """
+        Create or update a prompt version.
+
         Parameters
         ----------
         manifest : ChatPromptManifest
+            Manifest containing metadata for the prompt to apply
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -375,7 +405,7 @@ class AsyncPromptsClient:
         Returns
         -------
         GetPromptVersionResponse
-            Successful Response
+            The created or updated prompt version
 
         Examples
         --------

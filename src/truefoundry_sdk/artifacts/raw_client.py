@@ -31,6 +31,8 @@ class RawArtifactsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetArtifactResponse]:
         """
+        Get an artifact by its ID.
+
         Parameters
         ----------
         id : str
@@ -41,7 +43,7 @@ class RawArtifactsClient:
         Returns
         -------
         HttpResponse[GetArtifactResponse]
-            Successful Response
+            The artifact data
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/ml/v1/artifacts/{jsonable_encoder(id)}",
@@ -78,6 +80,8 @@ class RawArtifactsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[EmptyResponse]:
         """
+        Delete an artifact by its ID.
+
         Parameters
         ----------
         id : str
@@ -88,7 +92,7 @@ class RawArtifactsClient:
         Returns
         -------
         HttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/ml/v1/artifacts/{jsonable_encoder(id)}",
@@ -134,21 +138,30 @@ class RawArtifactsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Artifact, ListArtifactsResponse]:
         """
+        List artifacts with optional filtering by FQN, ML Repo, name, or run ID.
+
         Parameters
         ----------
         fqn : typing.Optional[str]
+            Fully qualified name to filter artifacts by (format: '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}')
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter artifacts by
 
         name : typing.Optional[str]
+            Name of the artifact to filter by
 
         offset : typing.Optional[int]
+            Number of artifacts to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of artifacts to return
 
         run_id : typing.Optional[str]
+            ID of the run to filter artifacts by
 
         include_empty_artifacts : typing.Optional[bool]
+            Whether to include artifacts that have no versions
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -156,7 +169,7 @@ class RawArtifactsClient:
         Returns
         -------
         SyncPager[Artifact, ListArtifactsResponse]
-            Successful Response
+            List of artifacts matching the query with pagination information
         """
         offset = offset if offset is not None else 0
 
@@ -216,9 +229,12 @@ class RawArtifactsClient:
         self, *, manifest: ArtifactManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetArtifactVersionResponse]:
         """
+        Create or update an artifact version.
+
         Parameters
         ----------
         manifest : ArtifactManifest
+            Manifest containing metadata for the artifact to apply
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -226,7 +242,7 @@ class RawArtifactsClient:
         Returns
         -------
         HttpResponse[GetArtifactVersionResponse]
-            Successful Response
+            The created or updated artifact version
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/artifact-versions",
@@ -277,6 +293,8 @@ class AsyncRawArtifactsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetArtifactResponse]:
         """
+        Get an artifact by its ID.
+
         Parameters
         ----------
         id : str
@@ -287,7 +305,7 @@ class AsyncRawArtifactsClient:
         Returns
         -------
         AsyncHttpResponse[GetArtifactResponse]
-            Successful Response
+            The artifact data
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/ml/v1/artifacts/{jsonable_encoder(id)}",
@@ -324,6 +342,8 @@ class AsyncRawArtifactsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[EmptyResponse]:
         """
+        Delete an artifact by its ID.
+
         Parameters
         ----------
         id : str
@@ -334,7 +354,7 @@ class AsyncRawArtifactsClient:
         Returns
         -------
         AsyncHttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/ml/v1/artifacts/{jsonable_encoder(id)}",
@@ -380,21 +400,30 @@ class AsyncRawArtifactsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Artifact, ListArtifactsResponse]:
         """
+        List artifacts with optional filtering by FQN, ML Repo, name, or run ID.
+
         Parameters
         ----------
         fqn : typing.Optional[str]
+            Fully qualified name to filter artifacts by (format: '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}')
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter artifacts by
 
         name : typing.Optional[str]
+            Name of the artifact to filter by
 
         offset : typing.Optional[int]
+            Number of artifacts to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of artifacts to return
 
         run_id : typing.Optional[str]
+            ID of the run to filter artifacts by
 
         include_empty_artifacts : typing.Optional[bool]
+            Whether to include artifacts that have no versions
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -402,7 +431,7 @@ class AsyncRawArtifactsClient:
         Returns
         -------
         AsyncPager[Artifact, ListArtifactsResponse]
-            Successful Response
+            List of artifacts matching the query with pagination information
         """
         offset = offset if offset is not None else 0
 
@@ -465,9 +494,12 @@ class AsyncRawArtifactsClient:
         self, *, manifest: ArtifactManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetArtifactVersionResponse]:
         """
+        Create or update an artifact version.
+
         Parameters
         ----------
         manifest : ArtifactManifest
+            Manifest containing metadata for the artifact to apply
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -475,7 +507,7 @@ class AsyncRawArtifactsClient:
         Returns
         -------
         AsyncHttpResponse[GetArtifactVersionResponse]
-            Successful Response
+            The created or updated artifact version
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/artifact-versions",

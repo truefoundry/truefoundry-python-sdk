@@ -34,6 +34,8 @@ class ArtifactsClient:
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetArtifactResponse:
         """
+        Get an artifact by its ID.
+
         Parameters
         ----------
         id : str
@@ -44,7 +46,7 @@ class ArtifactsClient:
         Returns
         -------
         GetArtifactResponse
-            Successful Response
+            The artifact data
 
         Examples
         --------
@@ -63,6 +65,8 @@ class ArtifactsClient:
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
         """
+        Delete an artifact by its ID.
+
         Parameters
         ----------
         id : str
@@ -73,7 +77,7 @@ class ArtifactsClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful deletion
 
         Examples
         --------
@@ -103,21 +107,30 @@ class ArtifactsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Artifact, ListArtifactsResponse]:
         """
+        List artifacts with optional filtering by FQN, ML Repo, name, or run ID.
+
         Parameters
         ----------
         fqn : typing.Optional[str]
+            Fully qualified name to filter artifacts by (format: '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}')
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter artifacts by
 
         name : typing.Optional[str]
+            Name of the artifact to filter by
 
         offset : typing.Optional[int]
+            Number of artifacts to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of artifacts to return
 
         run_id : typing.Optional[str]
+            ID of the run to filter artifacts by
 
         include_empty_artifacts : typing.Optional[bool]
+            Whether to include artifacts that have no versions
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -125,7 +138,7 @@ class ArtifactsClient:
         Returns
         -------
         SyncPager[Artifact, ListArtifactsResponse]
-            Successful Response
+            List of artifacts matching the query with pagination information
 
         Examples
         --------
@@ -165,9 +178,12 @@ class ArtifactsClient:
         self, *, manifest: ArtifactManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetArtifactVersionResponse:
         """
+        Create or update an artifact version.
+
         Parameters
         ----------
         manifest : ArtifactManifest
+            Manifest containing metadata for the artifact to apply
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -175,7 +191,7 @@ class ArtifactsClient:
         Returns
         -------
         GetArtifactVersionResponse
-            Successful Response
+            The created or updated artifact version
 
         Examples
         --------
@@ -219,6 +235,8 @@ class AsyncArtifactsClient:
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetArtifactResponse:
         """
+        Get an artifact by its ID.
+
         Parameters
         ----------
         id : str
@@ -229,7 +247,7 @@ class AsyncArtifactsClient:
         Returns
         -------
         GetArtifactResponse
-            Successful Response
+            The artifact data
 
         Examples
         --------
@@ -256,6 +274,8 @@ class AsyncArtifactsClient:
 
     async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
         """
+        Delete an artifact by its ID.
+
         Parameters
         ----------
         id : str
@@ -266,7 +286,7 @@ class AsyncArtifactsClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful deletion
 
         Examples
         --------
@@ -304,21 +324,30 @@ class AsyncArtifactsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Artifact, ListArtifactsResponse]:
         """
+        List artifacts with optional filtering by FQN, ML Repo, name, or run ID.
+
         Parameters
         ----------
         fqn : typing.Optional[str]
+            Fully qualified name to filter artifacts by (format: '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}')
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter artifacts by
 
         name : typing.Optional[str]
+            Name of the artifact to filter by
 
         offset : typing.Optional[int]
+            Number of artifacts to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of artifacts to return
 
         run_id : typing.Optional[str]
+            ID of the run to filter artifacts by
 
         include_empty_artifacts : typing.Optional[bool]
+            Whether to include artifacts that have no versions
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -326,7 +355,7 @@ class AsyncArtifactsClient:
         Returns
         -------
         AsyncPager[Artifact, ListArtifactsResponse]
-            Successful Response
+            List of artifacts matching the query with pagination information
 
         Examples
         --------
@@ -375,9 +404,12 @@ class AsyncArtifactsClient:
         self, *, manifest: ArtifactManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetArtifactVersionResponse:
         """
+        Create or update an artifact version.
+
         Parameters
         ----------
         manifest : ArtifactManifest
+            Manifest containing metadata for the artifact to apply
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -385,7 +417,7 @@ class AsyncArtifactsClient:
         Returns
         -------
         GetArtifactVersionResponse
-            Successful Response
+            The created or updated artifact version
 
         Examples
         --------

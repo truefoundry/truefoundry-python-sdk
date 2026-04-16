@@ -8,7 +8,10 @@ from .apply_ml_entity_response_data import ApplyMlEntityResponseData
 
 
 class ApplyMlEntityResponse(UniversalBaseModel):
-    data: ApplyMlEntityResponseData
+    data: ApplyMlEntityResponseData = pydantic.Field()
+    """
+    The created or updated ML entity (model version, prompt version, agent skill version, artifact version, or data directory)
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

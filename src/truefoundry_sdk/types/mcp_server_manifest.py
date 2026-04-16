@@ -4,6 +4,9 @@ import typing
 
 from .open_apimcp_server_manifest import OpenApimcpServerManifest
 from .remote_mcp_server_manifest import RemoteMcpServerManifest
+from .stdio_mcp_server_manifest import StdioMcpServerManifest
 from .virtual_mcp_server_manifest import VirtualMcpServerManifest
 
-McpServerManifest = typing.Union[RemoteMcpServerManifest, VirtualMcpServerManifest, OpenApimcpServerManifest]
+McpServerManifest = typing.Union[
+    RemoteMcpServerManifest, VirtualMcpServerManifest, OpenApimcpServerManifest, StdioMcpServerManifest
+]

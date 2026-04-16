@@ -9,6 +9,7 @@ if typing.TYPE_CHECKING:
     from .resources import Resources
     from .resources_devices_item import ResourcesDevicesItem
     from .resources_node import ResourcesNode
+    from .a2a_framework import A2AFramework
     from .account import Account
     from .account_info import AccountInfo
     from .activate_user_response import ActivateUserResponse
@@ -16,14 +17,23 @@ if typing.TYPE_CHECKING:
     from .addon_component import AddonComponent
     from .addon_component_name import AddonComponentName
     from .addon_component_status import AddonComponentStatus
+    from .agent_framework import AgentFramework
     from .agent_manifest import AgentManifest
     from .agent_skill import AgentSkill
+    from .agent_skill_manifest import AgentSkillManifest
+    from .agent_skill_manifest_source import AgentSkillManifestSource
+    from .agent_skill_source_blob_storage import AgentSkillSourceBlobStorage
+    from .agent_skill_source_inline import AgentSkillSourceInline
+    from .agent_skill_version import AgentSkillVersion
     from .agent_source import AgentSource
     from .ai21integrations import Ai21Integrations
     from .ai21key_auth import Ai21KeyAuth
     from .ai21model import Ai21Model
     from .ai21provider_account import Ai21ProviderAccount
     from .ai_features_settings import AiFeaturesSettings
+    from .akto_guardrail_config import AktoGuardrailConfig
+    from .akto_guardrail_config_config import AktoGuardrailConfigConfig
+    from .akto_token_auth import AktoTokenAuth
     from .alert import Alert
     from .alert_config import AlertConfig
     from .alert_config_resource import AlertConfigResource
@@ -116,7 +126,6 @@ if typing.TYPE_CHECKING:
     from .azure_o_auth import AzureOAuth
     from .azure_open_ai_model import AzureOpenAiModel
     from .azure_open_ai_model_deployment_type import AzureOpenAiModelDeploymentType
-    from .azure_open_ai_model_region import AzureOpenAiModelRegion
     from .azure_open_ai_provider_account import AzureOpenAiProviderAccount
     from .azure_open_ai_provider_account_auth_data import AzureOpenAiProviderAccountAuthData
     from .azure_pii_category import AzurePiiCategory
@@ -136,11 +145,16 @@ if typing.TYPE_CHECKING:
     from .base_autoscaling import BaseAutoscaling
     from .base_o_auth2login import BaseOAuth2Login
     from .base_o_auth2login_jwt_source import BaseOAuth2LoginJwtSource
+    from .base_remote_agent import BaseRemoteAgent
     from .base_service import BaseService
     from .base_service_image import BaseServiceImage
     from .base_service_mounts_item import BaseServiceMountsItem
     from .base_workbench_input import BaseWorkbenchInput
     from .base_workbench_input_mounts_item import BaseWorkbenchInputMountsItem
+    from .baseten_integrations import BasetenIntegrations
+    from .baseten_key_auth import BasetenKeyAuth
+    from .baseten_model import BasetenModel
+    from .baseten_provider_account import BasetenProviderAccount
     from .basic_auth_creds import BasicAuthCreds
     from .bedrock_model import BedrockModel
     from .bitbucket_integration import BitbucketIntegration
@@ -205,22 +219,33 @@ if typing.TYPE_CHECKING:
     from .container_task_config_mounts_item import ContainerTaskConfigMountsItem
     from .core_nats_output_config import CoreNatsOutputConfig
     from .cpu_utilization_metric import CpuUtilizationMetric
+    from .create_docker_repository_response import CreateDockerRepositoryResponse
     from .create_multi_part_upload_request import CreateMultiPartUploadRequest
     from .create_personal_access_token_response import CreatePersonalAccessTokenResponse
     from .cron_metric import CronMetric
+    from .custom_agent_server_auth import CustomAgentServerAuth
     from .custom_basic_auth import CustomBasicAuth
     from .custom_bearer_auth import CustomBearerAuth
     from .custom_blob_storage import CustomBlobStorage
+    from .custom_endpoint import CustomEndpoint
+    from .custom_endpoint_auth_data import CustomEndpointAuthData
+    from .custom_endpoint_integrations import CustomEndpointIntegrations
+    from .custom_endpoint_provider_account import CustomEndpointProviderAccount
+    from .custom_endpoint_provider_account_auth_data import CustomEndpointProviderAccountAuthData
+    from .custom_framework import CustomFramework
     from .custom_guardrail_config import CustomGuardrailConfig
     from .custom_guardrail_config_auth_data import CustomGuardrailConfigAuthData
     from .custom_guardrail_config_config import CustomGuardrailConfigConfig
     from .custom_guardrail_config_operation import CustomGuardrailConfigOperation
     from .custom_guardrail_config_target import CustomGuardrailConfigTarget
+    from .custom_header_auth import CustomHeaderAuth
     from .custom_helm_repo import CustomHelmRepo
     from .custom_integrations import CustomIntegrations
     from .custom_jwt_auth_integration import CustomJwtAuthIntegration
     from .custom_provider_account import CustomProviderAccount
     from .custom_regex_pattern import CustomRegexPattern
+    from .custom_server_header_auth import CustomServerHeaderAuth
+    from .custom_server_passthrough import CustomServerPassthrough
     from .custom_tls_settings import CustomTlsSettings
     from .custom_username_password_artifacts_registry import CustomUsernamePasswordArtifactsRegistry
     from .data_access_rule import DataAccessRule
@@ -230,6 +255,8 @@ if typing.TYPE_CHECKING:
     from .data_directory_manifest_source import DataDirectoryManifestSource
     from .databricks_api_key_auth import DatabricksApiKeyAuth
     from .databricks_integrations import DatabricksIntegrations
+    from .databricks_job_task_config import DatabricksJobTaskConfig
+    from .databricks_job_task_config_image import DatabricksJobTaskConfigImage
     from .databricks_model import DatabricksModel
     from .databricks_provider_account import DatabricksProviderAccount
     from .databricks_provider_account_auth_data import DatabricksProviderAccountAuthData
@@ -341,6 +368,7 @@ if typing.TYPE_CHECKING:
     from .gateway_metadata_rule import GatewayMetadataRule
     from .gateway_metadata_when import GatewayMetadataWhen
     from .gateway_otel_config import GatewayOtelConfig
+    from .gateway_otel_config_otel_metrics_exporter_config import GatewayOtelConfigOtelMetricsExporterConfig
     from .gateway_otel_config_otel_traces_exporter_config import GatewayOtelConfigOtelTracesExporterConfig
     from .gateway_request_metadata_filter import GatewayRequestMetadataFilter
     from .gateway_request_metadata_filter_operator import GatewayRequestMetadataFilterOperator
@@ -357,6 +385,9 @@ if typing.TYPE_CHECKING:
     from .gcp_region import GcpRegion
     from .gcp_tpu import GcpTpu
     from .gemini_model import GeminiModel
+    from .generic_secret_store_integration import GenericSecretStoreIntegration
+    from .get_agent_skill_response import GetAgentSkillResponse
+    from .get_agent_skill_version_response import GetAgentSkillVersionResponse
     from .get_alerts_response import GetAlertsResponse
     from .get_application_deployment_response import GetApplicationDeploymentResponse
     from .get_application_response import GetApplicationResponse
@@ -367,6 +398,7 @@ if typing.TYPE_CHECKING:
     from .get_charts_response import GetChartsResponse
     from .get_cluster_response import GetClusterResponse
     from .get_data_directory_response import GetDataDirectoryResponse
+    from .get_docker_registry_credentials_response import GetDockerRegistryCredentialsResponse
     from .get_environment_response import GetEnvironmentResponse
     from .get_events_response import GetEventsResponse
     from .get_job_run_response import GetJobRunResponse
@@ -382,8 +414,10 @@ if typing.TYPE_CHECKING:
     from .get_signed_ur_ls_request import GetSignedUrLsRequest
     from .get_signed_ur_ls_response import GetSignedUrLsResponse
     from .get_suggested_deployment_endpoint_response import GetSuggestedDeploymentEndpointResponse
+    from .get_team_permissions_response import GetTeamPermissionsResponse
     from .get_team_response import GetTeamResponse
     from .get_token_for_virtual_account_response import GetTokenForVirtualAccountResponse
+    from .get_user_permissions_response import GetUserPermissionsResponse
     from .get_user_resources_response import GetUserResourcesResponse
     from .get_user_response import GetUserResponse
     from .get_user_teams_response import GetUserTeamsResponse
@@ -403,6 +437,7 @@ if typing.TYPE_CHECKING:
     from .google_model_armor_guardrail_config import GoogleModelArmorGuardrailConfig
     from .google_model_armor_guardrail_config_auth_data import GoogleModelArmorGuardrailConfigAuthData
     from .google_model_armor_guardrail_config_config import GoogleModelArmorGuardrailConfigConfig
+    from .google_model_armor_guardrail_config_operation import GoogleModelArmorGuardrailConfigOperation
     from .google_model_armor_key_file_auth import GoogleModelArmorKeyFileAuth
     from .google_model_armor_key_file_auth_key_file_content import GoogleModelArmorKeyFileAuthKeyFileContent
     from .google_vertex_provider_account import GoogleVertexProviderAccount
@@ -425,12 +460,15 @@ if typing.TYPE_CHECKING:
     from .guardrails_rule import GuardrailsRule
     from .guardrails_when import GuardrailsWhen
     from .h2o_framework import H2OFramework
+    from .hashicorp_app_role_auth import HashicorpAppRoleAuth
     from .hashicorp_integrations import HashicorpIntegrations
     from .hashicorp_provider_account import HashicorpProviderAccount
     from .hashicorp_token_auth import HashicorpTokenAuth
     from .hashicorp_vault_integration import HashicorpVaultIntegration
+    from .hashicorp_vault_integration_auth_data import HashicorpVaultIntegrationAuthData
     from .header_match import HeaderMatch
     from .header_routing_config import HeaderRoutingConfig
+    from .headers_override import HeadersOverride
     from .health_probe import HealthProbe
     from .helm import Helm
     from .helm_repo import HelmRepo
@@ -494,8 +532,11 @@ if typing.TYPE_CHECKING:
     from .latency_based_load_balance_target import LatencyBasedLoadBalanceTarget
     from .latency_based_load_balancing import LatencyBasedLoadBalancing
     from .latency_based_load_balancing_rule import LatencyBasedLoadBalancingRule
+    from .legacy_agent_manifest import LegacyAgentManifest
     from .library_name import LibraryName
     from .light_gbm_framework import LightGbmFramework
+    from .list_agent_skill_versions_response import ListAgentSkillVersionsResponse
+    from .list_agent_skills_response import ListAgentSkillsResponse
     from .list_application_deployments_response import ListApplicationDeploymentsResponse
     from .list_applications_response import ListApplicationsResponse
     from .list_artifact_versions_response import ListArtifactVersionsResponse
@@ -540,13 +581,17 @@ if typing.TYPE_CHECKING:
     from .logs_sorting_direction import LogsSortingDirection
     from .manual import Manual
     from .mcp_server_auth import McpServerAuth
+    from .mcp_server_env_auth import McpServerEnvAuth
+    from .mcp_server_env_auth_auth_level import McpServerEnvAuthAuthLevel
     from .mcp_server_header_auth import McpServerHeaderAuth
+    from .mcp_server_header_auth_auth_level import McpServerHeaderAuthAuthLevel
     from .mcp_server_header_override_auth import McpServerHeaderOverrideAuth
     from .mcp_server_integration import McpServerIntegration
     from .mcp_server_integration_transport import McpServerIntegrationTransport
     from .mcp_server_integrations import McpServerIntegrations
     from .mcp_server_manifest import McpServerManifest
     from .mcp_server_o_auth2 import McpServerOAuth2
+    from .mcp_server_o_auth2grant_type import McpServerOAuth2GrantType
     from .mcp_server_o_auth2jwt_source import McpServerOAuth2JwtSource
     from .mcp_server_passthrough import McpServerPassthrough
     from .mcp_server_provider_account import McpServerProviderAccount
@@ -556,6 +601,9 @@ if typing.TYPE_CHECKING:
     from .mcp_server_with_url import McpServerWithUrl
     from .mcp_tool import McpTool
     from .mcp_tool_setting import McpToolSetting
+    from .mcp_tool_target import McpToolTarget
+    from .mcp_tools_operator import McpToolsOperator
+    from .mcp_tools_operator_condition import McpToolsOperatorCondition
     from .metadata import Metadata
     from .metric import Metric
     from .mime_type import MimeType
@@ -616,12 +664,6 @@ if typing.TYPE_CHECKING:
     from .open_ai_model import OpenAiModel
     from .open_ai_moderations_guardrail_config import OpenAiModerationsGuardrailConfig
     from .open_ai_moderations_guardrail_config_config import OpenAiModerationsGuardrailConfigConfig
-    from .open_ai_moderations_guardrail_config_config_category_thresholds_value import (
-        OpenAiModerationsGuardrailConfigConfigCategoryThresholdsValue,
-    )
-    from .open_ai_moderations_guardrail_config_config_category_thresholds_value_harassment import (
-        OpenAiModerationsGuardrailConfigConfigCategoryThresholdsValueHarassment,
-    )
     from .open_api_spec_source import OpenApiSpecSource
     from .open_apimcp_server_manifest import OpenApimcpServerManifest
     from .open_apimcp_tool_setting import OpenApimcpToolSetting
@@ -633,10 +675,15 @@ if typing.TYPE_CHECKING:
     from .openai_api_key_auth import OpenaiApiKeyAuth
     from .openai_provider_account import OpenaiProviderAccount
     from .operation import Operation
-    from .otel_exporter_grpc_config import OtelExporterGrpcConfig
-    from .otel_exporter_http_config import OtelExporterHttpConfig
-    from .otel_exporter_http_config_encoding import OtelExporterHttpConfigEncoding
-    from .otel_exporter_span_attribute_filter import OtelExporterSpanAttributeFilter
+    from .otel_exporter_grpc_config_base import OtelExporterGrpcConfigBase
+    from .otel_exporter_http_config_base import OtelExporterHttpConfigBase
+    from .otel_exporter_http_config_base_encoding import OtelExporterHttpConfigBaseEncoding
+    from .otel_metrics_exporter_grpc_config import OtelMetricsExporterGrpcConfig
+    from .otel_metrics_exporter_http_config import OtelMetricsExporterHttpConfig
+    from .otel_traces_exporter_common_config import OtelTracesExporterCommonConfig
+    from .otel_traces_exporter_grpc_config import OtelTracesExporterGrpcConfig
+    from .otel_traces_exporter_http_config import OtelTracesExporterHttpConfig
+    from .otel_traces_exporter_span_attribute_filter import OtelTracesExporterSpanAttributeFilter
     from .own_data_access_rule import OwnDataAccessRule
     from .owned_by import OwnedBy
     from .paddle_framework import PaddleFramework
@@ -711,10 +758,6 @@ if typing.TYPE_CHECKING:
     from .private_pricing_tier import PrivatePricingTier
     from .prometheus_alert_rule import PrometheusAlertRule
     from .prompt import Prompt
-    from .prompt_foo_guard_type import PromptFooGuardType
-    from .prompt_foo_guardrail_config import PromptFooGuardrailConfig
-    from .prompt_foo_guardrail_config_config import PromptFooGuardrailConfigConfig
-    from .prompt_foo_guardrail_config_operation import PromptFooGuardrailConfigOperation
     from .prompt_source import PromptSource
     from .prompt_version import PromptVersion
     from .provider_accounts import ProviderAccounts
@@ -743,16 +786,26 @@ if typing.TYPE_CHECKING:
     from .regex_guardrail_config_config import RegexGuardrailConfigConfig
     from .regex_guardrail_config_operation import RegexGuardrailConfigOperation
     from .register_users_response import RegisterUsersResponse
+    from .remote_agent import RemoteAgent
     from .remote_mcp_server_manifest import RemoteMcpServerManifest
     from .remote_source import RemoteSource
     from .remote_spec_source import RemoteSpecSource
+    from .response_format_json_object import ResponseFormatJsonObject
+    from .response_format_json_schema import ResponseFormatJsonSchema
+    from .response_format_json_schema_json_schema import ResponseFormatJsonSchemaJsonSchema
+    from .response_format_text import ResponseFormatText
     from .retry_config import RetryConfig
     from .revoke_all_personal_access_token_response import RevokeAllPersonalAccessTokenResponse
+    from .role_binding_manifest import RoleBindingManifest
+    from .role_binding_permission import RoleBindingPermission
+    from .role_binding_subject import RoleBindingSubject
+    from .role_binding_subject_type import RoleBindingSubjectType
     from .role_manifest import RoleManifest
     from .role_with_resource import RoleWithResource
     from .role_with_resource_resource_type import RoleWithResourceResourceType
     from .rolling import Rolling
     from .rps_metric import RpsMetric
+    from .sagemaker_assumed_role_based_auth import SagemakerAssumedRoleBasedAuth
     from .sagemaker_model import SagemakerModel
     from .samba_nova_integrations import SambaNovaIntegrations
     from .samba_nova_key_auth import SambaNovaKeyAuth
@@ -771,6 +824,7 @@ if typing.TYPE_CHECKING:
     from .secret_mount import SecretMount
     from .secret_store_config import SecretStoreConfig
     from .secret_version import SecretVersion
+    from .self_hosted_agent import SelfHostedAgent
     from .self_hosted_model import SelfHostedModel
     from .self_hosted_model_auth_data import SelfHostedModelAuthData
     from .self_hosted_model_integrations import SelfHostedModelIntegrations
@@ -844,12 +898,17 @@ if typing.TYPE_CHECKING:
     from .stage_artifact_response import StageArtifactResponse
     from .static_volume_config import StaticVolumeConfig
     from .stats_models_framework import StatsModelsFramework
+    from .stdio_mcp_server_manifest import StdioMcpServerManifest
+    from .sticky_routing import StickyRouting
+    from .sticky_session_identifier import StickySessionIdentifier
+    from .sticky_session_identifier_source import StickySessionIdentifierSource
     from .string_data_mount import StringDataMount
     from .sub_agent import SubAgent
     from .subject import Subject
     from .subject_clause import SubjectClause
     from .subject_condition_group import SubjectConditionGroup
     from .subject_condition_group_operator import SubjectConditionGroupOperator
+    from .subject_permission import SubjectPermission
     from .subject_type import SubjectType
     from .sync_token_in_secret_store_info import SyncTokenInSecretStoreInfo
     from .sync_virtual_account_token_response import SyncVirtualAccountTokenResponse
@@ -891,6 +950,22 @@ if typing.TYPE_CHECKING:
     from .tracing_project_storage_config import TracingProjectStorageConfig
     from .transformers_framework import TransformersFramework
     from .trigger_job_run_response import TriggerJobRunResponse
+    from .troj_ai_client_id_auth import TrojAiClientIdAuth
+    from .troj_ai_guardrail_config import TrojAiGuardrailConfig
+    from .troj_ai_guardrail_config_config import TrojAiGuardrailConfigConfig
+    from .troj_ai_guardrail_config_operation import TrojAiGuardrailConfigOperation
+    from .true_foundry_agent_manifest import TrueFoundryAgentManifest
+    from .true_foundry_agent_manifest_model_params import TrueFoundryAgentManifestModelParams
+    from .true_foundry_agent_manifest_model_params_reasoning_effort import (
+        TrueFoundryAgentManifestModelParamsReasoningEffort,
+    )
+    from .true_foundry_agent_manifest_response_format import TrueFoundryAgentManifestResponseFormat
+    from .true_foundry_agent_manifest_sandbox import TrueFoundryAgentManifestSandbox
+    from .true_foundry_agent_mcp_server import TrueFoundryAgentMcpServer
+    from .true_foundry_agent_mcp_tool import TrueFoundryAgentMcpTool
+    from .true_foundry_agent_skill import TrueFoundryAgentSkill
+    from .true_foundry_agent_user_message import TrueFoundryAgentUserMessage
+    from .true_foundry_agent_variable import TrueFoundryAgentVariable
     from .true_foundry_apply_request_manifest import TrueFoundryApplyRequestManifest
     from .true_foundry_apply_response import TrueFoundryApplyResponse
     from .true_foundry_apply_response_action import TrueFoundryApplyResponseAction
@@ -917,6 +992,7 @@ if typing.TYPE_CHECKING:
     from .user_metadata import UserMetadata
     from .user_metadata_tenant_role_managed_by import UserMetadataTenantRoleManagedBy
     from .user_resource import UserResource
+    from .user_team_info import UserTeamInfo
     from .uv import Uv
     from .validation_error import ValidationError
     from .validation_error_loc_item import ValidationErrorLocItem
@@ -961,6 +1037,7 @@ if typing.TYPE_CHECKING:
     from .xg_boost_model_schema import XgBoostModelSchema
     from .xg_boost_serialization_format import XgBoostSerializationFormat
 _dynamic_imports: typing.Dict[str, str] = {
+    "A2AFramework": ".a2a_framework",
     "Account": ".account",
     "AccountInfo": ".account_info",
     "ActivateUserResponse": ".activate_user_response",
@@ -968,14 +1045,23 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AddonComponent": ".addon_component",
     "AddonComponentName": ".addon_component_name",
     "AddonComponentStatus": ".addon_component_status",
+    "AgentFramework": ".agent_framework",
     "AgentManifest": ".agent_manifest",
     "AgentSkill": ".agent_skill",
+    "AgentSkillManifest": ".agent_skill_manifest",
+    "AgentSkillManifestSource": ".agent_skill_manifest_source",
+    "AgentSkillSourceBlobStorage": ".agent_skill_source_blob_storage",
+    "AgentSkillSourceInline": ".agent_skill_source_inline",
+    "AgentSkillVersion": ".agent_skill_version",
     "AgentSource": ".agent_source",
     "Ai21Integrations": ".ai21integrations",
     "Ai21KeyAuth": ".ai21key_auth",
     "Ai21Model": ".ai21model",
     "Ai21ProviderAccount": ".ai21provider_account",
     "AiFeaturesSettings": ".ai_features_settings",
+    "AktoGuardrailConfig": ".akto_guardrail_config",
+    "AktoGuardrailConfigConfig": ".akto_guardrail_config_config",
+    "AktoTokenAuth": ".akto_token_auth",
     "Alert": ".alert",
     "AlertConfig": ".alert_config",
     "AlertConfigResource": ".alert_config_resource",
@@ -1068,7 +1154,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AzureOAuth": ".azure_o_auth",
     "AzureOpenAiModel": ".azure_open_ai_model",
     "AzureOpenAiModelDeploymentType": ".azure_open_ai_model_deployment_type",
-    "AzureOpenAiModelRegion": ".azure_open_ai_model_region",
     "AzureOpenAiProviderAccount": ".azure_open_ai_provider_account",
     "AzureOpenAiProviderAccountAuthData": ".azure_open_ai_provider_account_auth_data",
     "AzurePiiCategory": ".azure_pii_category",
@@ -1088,11 +1173,16 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BaseAutoscaling": ".base_autoscaling",
     "BaseOAuth2Login": ".base_o_auth2login",
     "BaseOAuth2LoginJwtSource": ".base_o_auth2login_jwt_source",
+    "BaseRemoteAgent": ".base_remote_agent",
     "BaseService": ".base_service",
     "BaseServiceImage": ".base_service_image",
     "BaseServiceMountsItem": ".base_service_mounts_item",
     "BaseWorkbenchInput": ".base_workbench_input",
     "BaseWorkbenchInputMountsItem": ".base_workbench_input_mounts_item",
+    "BasetenIntegrations": ".baseten_integrations",
+    "BasetenKeyAuth": ".baseten_key_auth",
+    "BasetenModel": ".baseten_model",
+    "BasetenProviderAccount": ".baseten_provider_account",
     "BasicAuthCreds": ".basic_auth_creds",
     "BedrockModel": ".bedrock_model",
     "BitbucketIntegration": ".bitbucket_integration",
@@ -1157,22 +1247,33 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ContainerTaskConfigMountsItem": ".container_task_config_mounts_item",
     "CoreNatsOutputConfig": ".core_nats_output_config",
     "CpuUtilizationMetric": ".cpu_utilization_metric",
+    "CreateDockerRepositoryResponse": ".create_docker_repository_response",
     "CreateMultiPartUploadRequest": ".create_multi_part_upload_request",
     "CreatePersonalAccessTokenResponse": ".create_personal_access_token_response",
     "CronMetric": ".cron_metric",
+    "CustomAgentServerAuth": ".custom_agent_server_auth",
     "CustomBasicAuth": ".custom_basic_auth",
     "CustomBearerAuth": ".custom_bearer_auth",
     "CustomBlobStorage": ".custom_blob_storage",
+    "CustomEndpoint": ".custom_endpoint",
+    "CustomEndpointAuthData": ".custom_endpoint_auth_data",
+    "CustomEndpointIntegrations": ".custom_endpoint_integrations",
+    "CustomEndpointProviderAccount": ".custom_endpoint_provider_account",
+    "CustomEndpointProviderAccountAuthData": ".custom_endpoint_provider_account_auth_data",
+    "CustomFramework": ".custom_framework",
     "CustomGuardrailConfig": ".custom_guardrail_config",
     "CustomGuardrailConfigAuthData": ".custom_guardrail_config_auth_data",
     "CustomGuardrailConfigConfig": ".custom_guardrail_config_config",
     "CustomGuardrailConfigOperation": ".custom_guardrail_config_operation",
     "CustomGuardrailConfigTarget": ".custom_guardrail_config_target",
+    "CustomHeaderAuth": ".custom_header_auth",
     "CustomHelmRepo": ".custom_helm_repo",
     "CustomIntegrations": ".custom_integrations",
     "CustomJwtAuthIntegration": ".custom_jwt_auth_integration",
     "CustomProviderAccount": ".custom_provider_account",
     "CustomRegexPattern": ".custom_regex_pattern",
+    "CustomServerHeaderAuth": ".custom_server_header_auth",
+    "CustomServerPassthrough": ".custom_server_passthrough",
     "CustomTlsSettings": ".custom_tls_settings",
     "CustomUsernamePasswordArtifactsRegistry": ".custom_username_password_artifacts_registry",
     "DataAccessRule": ".data_access_rule",
@@ -1182,6 +1283,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DataDirectoryManifestSource": ".data_directory_manifest_source",
     "DatabricksApiKeyAuth": ".databricks_api_key_auth",
     "DatabricksIntegrations": ".databricks_integrations",
+    "DatabricksJobTaskConfig": ".databricks_job_task_config",
+    "DatabricksJobTaskConfigImage": ".databricks_job_task_config_image",
     "DatabricksModel": ".databricks_model",
     "DatabricksProviderAccount": ".databricks_provider_account",
     "DatabricksProviderAccountAuthData": ".databricks_provider_account_auth_data",
@@ -1281,6 +1384,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GatewayMetadataRule": ".gateway_metadata_rule",
     "GatewayMetadataWhen": ".gateway_metadata_when",
     "GatewayOtelConfig": ".gateway_otel_config",
+    "GatewayOtelConfigOtelMetricsExporterConfig": ".gateway_otel_config_otel_metrics_exporter_config",
     "GatewayOtelConfigOtelTracesExporterConfig": ".gateway_otel_config_otel_traces_exporter_config",
     "GatewayRequestMetadataFilter": ".gateway_request_metadata_filter",
     "GatewayRequestMetadataFilterOperator": ".gateway_request_metadata_filter_operator",
@@ -1297,6 +1401,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GcpRegion": ".gcp_region",
     "GcpTpu": ".gcp_tpu",
     "GeminiModel": ".gemini_model",
+    "GenericSecretStoreIntegration": ".generic_secret_store_integration",
+    "GetAgentSkillResponse": ".get_agent_skill_response",
+    "GetAgentSkillVersionResponse": ".get_agent_skill_version_response",
     "GetAlertsResponse": ".get_alerts_response",
     "GetApplicationDeploymentResponse": ".get_application_deployment_response",
     "GetApplicationResponse": ".get_application_response",
@@ -1307,6 +1414,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetChartsResponse": ".get_charts_response",
     "GetClusterResponse": ".get_cluster_response",
     "GetDataDirectoryResponse": ".get_data_directory_response",
+    "GetDockerRegistryCredentialsResponse": ".get_docker_registry_credentials_response",
     "GetEnvironmentResponse": ".get_environment_response",
     "GetEventsResponse": ".get_events_response",
     "GetJobRunResponse": ".get_job_run_response",
@@ -1322,8 +1430,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetSignedUrLsRequest": ".get_signed_ur_ls_request",
     "GetSignedUrLsResponse": ".get_signed_ur_ls_response",
     "GetSuggestedDeploymentEndpointResponse": ".get_suggested_deployment_endpoint_response",
+    "GetTeamPermissionsResponse": ".get_team_permissions_response",
     "GetTeamResponse": ".get_team_response",
     "GetTokenForVirtualAccountResponse": ".get_token_for_virtual_account_response",
+    "GetUserPermissionsResponse": ".get_user_permissions_response",
     "GetUserResourcesResponse": ".get_user_resources_response",
     "GetUserResponse": ".get_user_response",
     "GetUserTeamsResponse": ".get_user_teams_response",
@@ -1343,6 +1453,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GoogleModelArmorGuardrailConfig": ".google_model_armor_guardrail_config",
     "GoogleModelArmorGuardrailConfigAuthData": ".google_model_armor_guardrail_config_auth_data",
     "GoogleModelArmorGuardrailConfigConfig": ".google_model_armor_guardrail_config_config",
+    "GoogleModelArmorGuardrailConfigOperation": ".google_model_armor_guardrail_config_operation",
     "GoogleModelArmorKeyFileAuth": ".google_model_armor_key_file_auth",
     "GoogleModelArmorKeyFileAuthKeyFileContent": ".google_model_armor_key_file_auth_key_file_content",
     "GoogleVertexProviderAccount": ".google_vertex_provider_account",
@@ -1363,12 +1474,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GuardrailsRule": ".guardrails_rule",
     "GuardrailsWhen": ".guardrails_when",
     "H2OFramework": ".h2o_framework",
+    "HashicorpAppRoleAuth": ".hashicorp_app_role_auth",
     "HashicorpIntegrations": ".hashicorp_integrations",
     "HashicorpProviderAccount": ".hashicorp_provider_account",
     "HashicorpTokenAuth": ".hashicorp_token_auth",
     "HashicorpVaultIntegration": ".hashicorp_vault_integration",
+    "HashicorpVaultIntegrationAuthData": ".hashicorp_vault_integration_auth_data",
     "HeaderMatch": ".header_match",
     "HeaderRoutingConfig": ".header_routing_config",
+    "HeadersOverride": ".headers_override",
     "HealthProbe": ".health_probe",
     "Helm": ".helm",
     "HelmRepo": ".helm_repo",
@@ -1432,8 +1546,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LatencyBasedLoadBalanceTarget": ".latency_based_load_balance_target",
     "LatencyBasedLoadBalancing": ".latency_based_load_balancing",
     "LatencyBasedLoadBalancingRule": ".latency_based_load_balancing_rule",
+    "LegacyAgentManifest": ".legacy_agent_manifest",
     "LibraryName": ".library_name",
     "LightGbmFramework": ".light_gbm_framework",
+    "ListAgentSkillVersionsResponse": ".list_agent_skill_versions_response",
+    "ListAgentSkillsResponse": ".list_agent_skills_response",
     "ListApplicationDeploymentsResponse": ".list_application_deployments_response",
     "ListApplicationsResponse": ".list_applications_response",
     "ListArtifactVersionsResponse": ".list_artifact_versions_response",
@@ -1478,13 +1595,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LogsSortingDirection": ".logs_sorting_direction",
     "Manual": ".manual",
     "McpServerAuth": ".mcp_server_auth",
+    "McpServerEnvAuth": ".mcp_server_env_auth",
+    "McpServerEnvAuthAuthLevel": ".mcp_server_env_auth_auth_level",
     "McpServerHeaderAuth": ".mcp_server_header_auth",
+    "McpServerHeaderAuthAuthLevel": ".mcp_server_header_auth_auth_level",
     "McpServerHeaderOverrideAuth": ".mcp_server_header_override_auth",
     "McpServerIntegration": ".mcp_server_integration",
     "McpServerIntegrationTransport": ".mcp_server_integration_transport",
     "McpServerIntegrations": ".mcp_server_integrations",
     "McpServerManifest": ".mcp_server_manifest",
     "McpServerOAuth2": ".mcp_server_o_auth2",
+    "McpServerOAuth2GrantType": ".mcp_server_o_auth2grant_type",
     "McpServerOAuth2JwtSource": ".mcp_server_o_auth2jwt_source",
     "McpServerPassthrough": ".mcp_server_passthrough",
     "McpServerProviderAccount": ".mcp_server_provider_account",
@@ -1494,6 +1615,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "McpServerWithUrl": ".mcp_server_with_url",
     "McpTool": ".mcp_tool",
     "McpToolSetting": ".mcp_tool_setting",
+    "McpToolTarget": ".mcp_tool_target",
+    "McpToolsOperator": ".mcp_tools_operator",
+    "McpToolsOperatorCondition": ".mcp_tools_operator_condition",
     "Metadata": ".metadata",
     "Metric": ".metric",
     "MimeType": ".mime_type",
@@ -1554,8 +1678,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OpenAiModel": ".open_ai_model",
     "OpenAiModerationsGuardrailConfig": ".open_ai_moderations_guardrail_config",
     "OpenAiModerationsGuardrailConfigConfig": ".open_ai_moderations_guardrail_config_config",
-    "OpenAiModerationsGuardrailConfigConfigCategoryThresholdsValue": ".open_ai_moderations_guardrail_config_config_category_thresholds_value",
-    "OpenAiModerationsGuardrailConfigConfigCategoryThresholdsValueHarassment": ".open_ai_moderations_guardrail_config_config_category_thresholds_value_harassment",
     "OpenApiSpecSource": ".open_api_spec_source",
     "OpenApimcpServerManifest": ".open_apimcp_server_manifest",
     "OpenApimcpToolSetting": ".open_apimcp_tool_setting",
@@ -1567,10 +1689,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OpenaiApiKeyAuth": ".openai_api_key_auth",
     "OpenaiProviderAccount": ".openai_provider_account",
     "Operation": ".operation",
-    "OtelExporterGrpcConfig": ".otel_exporter_grpc_config",
-    "OtelExporterHttpConfig": ".otel_exporter_http_config",
-    "OtelExporterHttpConfigEncoding": ".otel_exporter_http_config_encoding",
-    "OtelExporterSpanAttributeFilter": ".otel_exporter_span_attribute_filter",
+    "OtelExporterGrpcConfigBase": ".otel_exporter_grpc_config_base",
+    "OtelExporterHttpConfigBase": ".otel_exporter_http_config_base",
+    "OtelExporterHttpConfigBaseEncoding": ".otel_exporter_http_config_base_encoding",
+    "OtelMetricsExporterGrpcConfig": ".otel_metrics_exporter_grpc_config",
+    "OtelMetricsExporterHttpConfig": ".otel_metrics_exporter_http_config",
+    "OtelTracesExporterCommonConfig": ".otel_traces_exporter_common_config",
+    "OtelTracesExporterGrpcConfig": ".otel_traces_exporter_grpc_config",
+    "OtelTracesExporterHttpConfig": ".otel_traces_exporter_http_config",
+    "OtelTracesExporterSpanAttributeFilter": ".otel_traces_exporter_span_attribute_filter",
     "OwnDataAccessRule": ".own_data_access_rule",
     "OwnedBy": ".owned_by",
     "PaddleFramework": ".paddle_framework",
@@ -1645,10 +1772,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PrivatePricingTier": ".private_pricing_tier",
     "PrometheusAlertRule": ".prometheus_alert_rule",
     "Prompt": ".prompt",
-    "PromptFooGuardType": ".prompt_foo_guard_type",
-    "PromptFooGuardrailConfig": ".prompt_foo_guardrail_config",
-    "PromptFooGuardrailConfigConfig": ".prompt_foo_guardrail_config_config",
-    "PromptFooGuardrailConfigOperation": ".prompt_foo_guardrail_config_operation",
     "PromptSource": ".prompt_source",
     "PromptVersion": ".prompt_version",
     "ProviderAccounts": ".provider_accounts",
@@ -1677,19 +1800,29 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RegexGuardrailConfigConfig": ".regex_guardrail_config_config",
     "RegexGuardrailConfigOperation": ".regex_guardrail_config_operation",
     "RegisterUsersResponse": ".register_users_response",
+    "RemoteAgent": ".remote_agent",
     "RemoteMcpServerManifest": ".remote_mcp_server_manifest",
     "RemoteSource": ".remote_source",
     "RemoteSpecSource": ".remote_spec_source",
     "Resources": ".resources",
     "ResourcesDevicesItem": ".resources_devices_item",
     "ResourcesNode": ".resources_node",
+    "ResponseFormatJsonObject": ".response_format_json_object",
+    "ResponseFormatJsonSchema": ".response_format_json_schema",
+    "ResponseFormatJsonSchemaJsonSchema": ".response_format_json_schema_json_schema",
+    "ResponseFormatText": ".response_format_text",
     "RetryConfig": ".retry_config",
     "RevokeAllPersonalAccessTokenResponse": ".revoke_all_personal_access_token_response",
+    "RoleBindingManifest": ".role_binding_manifest",
+    "RoleBindingPermission": ".role_binding_permission",
+    "RoleBindingSubject": ".role_binding_subject",
+    "RoleBindingSubjectType": ".role_binding_subject_type",
     "RoleManifest": ".role_manifest",
     "RoleWithResource": ".role_with_resource",
     "RoleWithResourceResourceType": ".role_with_resource_resource_type",
     "Rolling": ".rolling",
     "RpsMetric": ".rps_metric",
+    "SagemakerAssumedRoleBasedAuth": ".sagemaker_assumed_role_based_auth",
     "SagemakerModel": ".sagemaker_model",
     "SambaNovaIntegrations": ".samba_nova_integrations",
     "SambaNovaKeyAuth": ".samba_nova_key_auth",
@@ -1708,6 +1841,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SecretMount": ".secret_mount",
     "SecretStoreConfig": ".secret_store_config",
     "SecretVersion": ".secret_version",
+    "SelfHostedAgent": ".self_hosted_agent",
     "SelfHostedModel": ".self_hosted_model",
     "SelfHostedModelAuthData": ".self_hosted_model_auth_data",
     "SelfHostedModelIntegrations": ".self_hosted_model_integrations",
@@ -1781,12 +1915,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StageArtifactResponse": ".stage_artifact_response",
     "StaticVolumeConfig": ".static_volume_config",
     "StatsModelsFramework": ".stats_models_framework",
+    "StdioMcpServerManifest": ".stdio_mcp_server_manifest",
+    "StickyRouting": ".sticky_routing",
+    "StickySessionIdentifier": ".sticky_session_identifier",
+    "StickySessionIdentifierSource": ".sticky_session_identifier_source",
     "StringDataMount": ".string_data_mount",
     "SubAgent": ".sub_agent",
     "Subject": ".subject",
     "SubjectClause": ".subject_clause",
     "SubjectConditionGroup": ".subject_condition_group",
     "SubjectConditionGroupOperator": ".subject_condition_group_operator",
+    "SubjectPermission": ".subject_permission",
     "SubjectType": ".subject_type",
     "SyncTokenInSecretStoreInfo": ".sync_token_in_secret_store_info",
     "SyncVirtualAccountTokenResponse": ".sync_virtual_account_token_response",
@@ -1828,6 +1967,20 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TracingProjectStorageConfig": ".tracing_project_storage_config",
     "TransformersFramework": ".transformers_framework",
     "TriggerJobRunResponse": ".trigger_job_run_response",
+    "TrojAiClientIdAuth": ".troj_ai_client_id_auth",
+    "TrojAiGuardrailConfig": ".troj_ai_guardrail_config",
+    "TrojAiGuardrailConfigConfig": ".troj_ai_guardrail_config_config",
+    "TrojAiGuardrailConfigOperation": ".troj_ai_guardrail_config_operation",
+    "TrueFoundryAgentManifest": ".true_foundry_agent_manifest",
+    "TrueFoundryAgentManifestModelParams": ".true_foundry_agent_manifest_model_params",
+    "TrueFoundryAgentManifestModelParamsReasoningEffort": ".true_foundry_agent_manifest_model_params_reasoning_effort",
+    "TrueFoundryAgentManifestResponseFormat": ".true_foundry_agent_manifest_response_format",
+    "TrueFoundryAgentManifestSandbox": ".true_foundry_agent_manifest_sandbox",
+    "TrueFoundryAgentMcpServer": ".true_foundry_agent_mcp_server",
+    "TrueFoundryAgentMcpTool": ".true_foundry_agent_mcp_tool",
+    "TrueFoundryAgentSkill": ".true_foundry_agent_skill",
+    "TrueFoundryAgentUserMessage": ".true_foundry_agent_user_message",
+    "TrueFoundryAgentVariable": ".true_foundry_agent_variable",
     "TrueFoundryApplyRequestManifest": ".true_foundry_apply_request_manifest",
     "TrueFoundryApplyResponse": ".true_foundry_apply_response",
     "TrueFoundryApplyResponseAction": ".true_foundry_apply_response_action",
@@ -1854,6 +2007,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UserMetadata": ".user_metadata",
     "UserMetadataTenantRoleManagedBy": ".user_metadata_tenant_role_managed_by",
     "UserResource": ".user_resource",
+    "UserTeamInfo": ".user_team_info",
     "Uv": ".uv",
     "ValidationError": ".validation_error",
     "ValidationErrorLocItem": ".validation_error_loc_item",
@@ -1922,6 +2076,7 @@ def __dir__():
 
 
 __all__ = [
+    "A2AFramework",
     "Account",
     "AccountInfo",
     "ActivateUserResponse",
@@ -1929,14 +2084,23 @@ __all__ = [
     "AddonComponent",
     "AddonComponentName",
     "AddonComponentStatus",
+    "AgentFramework",
     "AgentManifest",
     "AgentSkill",
+    "AgentSkillManifest",
+    "AgentSkillManifestSource",
+    "AgentSkillSourceBlobStorage",
+    "AgentSkillSourceInline",
+    "AgentSkillVersion",
     "AgentSource",
     "Ai21Integrations",
     "Ai21KeyAuth",
     "Ai21Model",
     "Ai21ProviderAccount",
     "AiFeaturesSettings",
+    "AktoGuardrailConfig",
+    "AktoGuardrailConfigConfig",
+    "AktoTokenAuth",
     "Alert",
     "AlertConfig",
     "AlertConfigResource",
@@ -2029,7 +2193,6 @@ __all__ = [
     "AzureOAuth",
     "AzureOpenAiModel",
     "AzureOpenAiModelDeploymentType",
-    "AzureOpenAiModelRegion",
     "AzureOpenAiProviderAccount",
     "AzureOpenAiProviderAccountAuthData",
     "AzurePiiCategory",
@@ -2049,11 +2212,16 @@ __all__ = [
     "BaseAutoscaling",
     "BaseOAuth2Login",
     "BaseOAuth2LoginJwtSource",
+    "BaseRemoteAgent",
     "BaseService",
     "BaseServiceImage",
     "BaseServiceMountsItem",
     "BaseWorkbenchInput",
     "BaseWorkbenchInputMountsItem",
+    "BasetenIntegrations",
+    "BasetenKeyAuth",
+    "BasetenModel",
+    "BasetenProviderAccount",
     "BasicAuthCreds",
     "BedrockModel",
     "BitbucketIntegration",
@@ -2118,22 +2286,33 @@ __all__ = [
     "ContainerTaskConfigMountsItem",
     "CoreNatsOutputConfig",
     "CpuUtilizationMetric",
+    "CreateDockerRepositoryResponse",
     "CreateMultiPartUploadRequest",
     "CreatePersonalAccessTokenResponse",
     "CronMetric",
+    "CustomAgentServerAuth",
     "CustomBasicAuth",
     "CustomBearerAuth",
     "CustomBlobStorage",
+    "CustomEndpoint",
+    "CustomEndpointAuthData",
+    "CustomEndpointIntegrations",
+    "CustomEndpointProviderAccount",
+    "CustomEndpointProviderAccountAuthData",
+    "CustomFramework",
     "CustomGuardrailConfig",
     "CustomGuardrailConfigAuthData",
     "CustomGuardrailConfigConfig",
     "CustomGuardrailConfigOperation",
     "CustomGuardrailConfigTarget",
+    "CustomHeaderAuth",
     "CustomHelmRepo",
     "CustomIntegrations",
     "CustomJwtAuthIntegration",
     "CustomProviderAccount",
     "CustomRegexPattern",
+    "CustomServerHeaderAuth",
+    "CustomServerPassthrough",
     "CustomTlsSettings",
     "CustomUsernamePasswordArtifactsRegistry",
     "DataAccessRule",
@@ -2143,6 +2322,8 @@ __all__ = [
     "DataDirectoryManifestSource",
     "DatabricksApiKeyAuth",
     "DatabricksIntegrations",
+    "DatabricksJobTaskConfig",
+    "DatabricksJobTaskConfigImage",
     "DatabricksModel",
     "DatabricksProviderAccount",
     "DatabricksProviderAccountAuthData",
@@ -2242,6 +2423,7 @@ __all__ = [
     "GatewayMetadataRule",
     "GatewayMetadataWhen",
     "GatewayOtelConfig",
+    "GatewayOtelConfigOtelMetricsExporterConfig",
     "GatewayOtelConfigOtelTracesExporterConfig",
     "GatewayRequestMetadataFilter",
     "GatewayRequestMetadataFilterOperator",
@@ -2258,6 +2440,9 @@ __all__ = [
     "GcpRegion",
     "GcpTpu",
     "GeminiModel",
+    "GenericSecretStoreIntegration",
+    "GetAgentSkillResponse",
+    "GetAgentSkillVersionResponse",
     "GetAlertsResponse",
     "GetApplicationDeploymentResponse",
     "GetApplicationResponse",
@@ -2268,6 +2453,7 @@ __all__ = [
     "GetChartsResponse",
     "GetClusterResponse",
     "GetDataDirectoryResponse",
+    "GetDockerRegistryCredentialsResponse",
     "GetEnvironmentResponse",
     "GetEventsResponse",
     "GetJobRunResponse",
@@ -2283,8 +2469,10 @@ __all__ = [
     "GetSignedUrLsRequest",
     "GetSignedUrLsResponse",
     "GetSuggestedDeploymentEndpointResponse",
+    "GetTeamPermissionsResponse",
     "GetTeamResponse",
     "GetTokenForVirtualAccountResponse",
+    "GetUserPermissionsResponse",
     "GetUserResourcesResponse",
     "GetUserResponse",
     "GetUserTeamsResponse",
@@ -2304,6 +2492,7 @@ __all__ = [
     "GoogleModelArmorGuardrailConfig",
     "GoogleModelArmorGuardrailConfigAuthData",
     "GoogleModelArmorGuardrailConfigConfig",
+    "GoogleModelArmorGuardrailConfigOperation",
     "GoogleModelArmorKeyFileAuth",
     "GoogleModelArmorKeyFileAuthKeyFileContent",
     "GoogleVertexProviderAccount",
@@ -2324,12 +2513,15 @@ __all__ = [
     "GuardrailsRule",
     "GuardrailsWhen",
     "H2OFramework",
+    "HashicorpAppRoleAuth",
     "HashicorpIntegrations",
     "HashicorpProviderAccount",
     "HashicorpTokenAuth",
     "HashicorpVaultIntegration",
+    "HashicorpVaultIntegrationAuthData",
     "HeaderMatch",
     "HeaderRoutingConfig",
+    "HeadersOverride",
     "HealthProbe",
     "Helm",
     "HelmRepo",
@@ -2393,8 +2585,11 @@ __all__ = [
     "LatencyBasedLoadBalanceTarget",
     "LatencyBasedLoadBalancing",
     "LatencyBasedLoadBalancingRule",
+    "LegacyAgentManifest",
     "LibraryName",
     "LightGbmFramework",
+    "ListAgentSkillVersionsResponse",
+    "ListAgentSkillsResponse",
     "ListApplicationDeploymentsResponse",
     "ListApplicationsResponse",
     "ListArtifactVersionsResponse",
@@ -2439,13 +2634,17 @@ __all__ = [
     "LogsSortingDirection",
     "Manual",
     "McpServerAuth",
+    "McpServerEnvAuth",
+    "McpServerEnvAuthAuthLevel",
     "McpServerHeaderAuth",
+    "McpServerHeaderAuthAuthLevel",
     "McpServerHeaderOverrideAuth",
     "McpServerIntegration",
     "McpServerIntegrationTransport",
     "McpServerIntegrations",
     "McpServerManifest",
     "McpServerOAuth2",
+    "McpServerOAuth2GrantType",
     "McpServerOAuth2JwtSource",
     "McpServerPassthrough",
     "McpServerProviderAccount",
@@ -2455,6 +2654,9 @@ __all__ = [
     "McpServerWithUrl",
     "McpTool",
     "McpToolSetting",
+    "McpToolTarget",
+    "McpToolsOperator",
+    "McpToolsOperatorCondition",
     "Metadata",
     "Metric",
     "MimeType",
@@ -2515,8 +2717,6 @@ __all__ = [
     "OpenAiModel",
     "OpenAiModerationsGuardrailConfig",
     "OpenAiModerationsGuardrailConfigConfig",
-    "OpenAiModerationsGuardrailConfigConfigCategoryThresholdsValue",
-    "OpenAiModerationsGuardrailConfigConfigCategoryThresholdsValueHarassment",
     "OpenApiSpecSource",
     "OpenApimcpServerManifest",
     "OpenApimcpToolSetting",
@@ -2528,10 +2728,15 @@ __all__ = [
     "OpenaiApiKeyAuth",
     "OpenaiProviderAccount",
     "Operation",
-    "OtelExporterGrpcConfig",
-    "OtelExporterHttpConfig",
-    "OtelExporterHttpConfigEncoding",
-    "OtelExporterSpanAttributeFilter",
+    "OtelExporterGrpcConfigBase",
+    "OtelExporterHttpConfigBase",
+    "OtelExporterHttpConfigBaseEncoding",
+    "OtelMetricsExporterGrpcConfig",
+    "OtelMetricsExporterHttpConfig",
+    "OtelTracesExporterCommonConfig",
+    "OtelTracesExporterGrpcConfig",
+    "OtelTracesExporterHttpConfig",
+    "OtelTracesExporterSpanAttributeFilter",
     "OwnDataAccessRule",
     "OwnedBy",
     "PaddleFramework",
@@ -2606,10 +2811,6 @@ __all__ = [
     "PrivatePricingTier",
     "PrometheusAlertRule",
     "Prompt",
-    "PromptFooGuardType",
-    "PromptFooGuardrailConfig",
-    "PromptFooGuardrailConfigConfig",
-    "PromptFooGuardrailConfigOperation",
     "PromptSource",
     "PromptVersion",
     "ProviderAccounts",
@@ -2638,19 +2839,29 @@ __all__ = [
     "RegexGuardrailConfigConfig",
     "RegexGuardrailConfigOperation",
     "RegisterUsersResponse",
+    "RemoteAgent",
     "RemoteMcpServerManifest",
     "RemoteSource",
     "RemoteSpecSource",
     "Resources",
     "ResourcesDevicesItem",
     "ResourcesNode",
+    "ResponseFormatJsonObject",
+    "ResponseFormatJsonSchema",
+    "ResponseFormatJsonSchemaJsonSchema",
+    "ResponseFormatText",
     "RetryConfig",
     "RevokeAllPersonalAccessTokenResponse",
+    "RoleBindingManifest",
+    "RoleBindingPermission",
+    "RoleBindingSubject",
+    "RoleBindingSubjectType",
     "RoleManifest",
     "RoleWithResource",
     "RoleWithResourceResourceType",
     "Rolling",
     "RpsMetric",
+    "SagemakerAssumedRoleBasedAuth",
     "SagemakerModel",
     "SambaNovaIntegrations",
     "SambaNovaKeyAuth",
@@ -2669,6 +2880,7 @@ __all__ = [
     "SecretMount",
     "SecretStoreConfig",
     "SecretVersion",
+    "SelfHostedAgent",
     "SelfHostedModel",
     "SelfHostedModelAuthData",
     "SelfHostedModelIntegrations",
@@ -2742,12 +2954,17 @@ __all__ = [
     "StageArtifactResponse",
     "StaticVolumeConfig",
     "StatsModelsFramework",
+    "StdioMcpServerManifest",
+    "StickyRouting",
+    "StickySessionIdentifier",
+    "StickySessionIdentifierSource",
     "StringDataMount",
     "SubAgent",
     "Subject",
     "SubjectClause",
     "SubjectConditionGroup",
     "SubjectConditionGroupOperator",
+    "SubjectPermission",
     "SubjectType",
     "SyncTokenInSecretStoreInfo",
     "SyncVirtualAccountTokenResponse",
@@ -2789,6 +3006,20 @@ __all__ = [
     "TracingProjectStorageConfig",
     "TransformersFramework",
     "TriggerJobRunResponse",
+    "TrojAiClientIdAuth",
+    "TrojAiGuardrailConfig",
+    "TrojAiGuardrailConfigConfig",
+    "TrojAiGuardrailConfigOperation",
+    "TrueFoundryAgentManifest",
+    "TrueFoundryAgentManifestModelParams",
+    "TrueFoundryAgentManifestModelParamsReasoningEffort",
+    "TrueFoundryAgentManifestResponseFormat",
+    "TrueFoundryAgentManifestSandbox",
+    "TrueFoundryAgentMcpServer",
+    "TrueFoundryAgentMcpTool",
+    "TrueFoundryAgentSkill",
+    "TrueFoundryAgentUserMessage",
+    "TrueFoundryAgentVariable",
     "TrueFoundryApplyRequestManifest",
     "TrueFoundryApplyResponse",
     "TrueFoundryApplyResponseAction",
@@ -2815,6 +3046,7 @@ __all__ = [
     "UserMetadata",
     "UserMetadataTenantRoleManagedBy",
     "UserResource",
+    "UserTeamInfo",
     "Uv",
     "ValidationError",
     "ValidationErrorLocItem",

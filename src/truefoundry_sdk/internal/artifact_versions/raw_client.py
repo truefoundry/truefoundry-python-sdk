@@ -35,33 +35,45 @@ class RawArtifactVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[InternalListArtifactVersionsResponseDataItem, InternalListArtifactVersionsResponse]:
         """
-        List artifact version API
+        List artifact versions with internal metadata, optionally including model versions.
 
         Parameters
         ----------
         tag : typing.Optional[str]
+            Tag to filter artifact versions by
 
         fqn : typing.Optional[str]
+            Fully qualified name to filter artifact versions by (format: '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}' or '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}:{version}')
 
         artifact_id : typing.Optional[str]
+            ID of the artifact to filter versions by
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter artifact versions by
 
         name : typing.Optional[str]
+            Name of the artifact to filter versions by
 
         version : typing.Optional[int]
+            Version number (positive integer) or 'latest' to filter by specific version
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            List of run IDs to filter artifact versions by
 
         run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+            List of run step numbers to filter artifact versions by
 
         offset : typing.Optional[int]
+            Number of artifact versions to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of artifact versions to return
 
         include_internal_metadata : typing.Optional[bool]
+            Whether to include internal metadata in the response
 
         include_model_versions : typing.Optional[bool]
+            Whether to include model versions in the results (internal use only)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -69,7 +81,7 @@ class RawArtifactVersionsClient:
         Returns
         -------
         SyncPager[InternalListArtifactVersionsResponseDataItem, InternalListArtifactVersionsResponse]
-            Successful Response
+            List of artifact versions with internal metadata and pagination information
         """
         offset = offset if offset is not None else 0
 
@@ -158,33 +170,45 @@ class AsyncRawArtifactVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[InternalListArtifactVersionsResponseDataItem, InternalListArtifactVersionsResponse]:
         """
-        List artifact version API
+        List artifact versions with internal metadata, optionally including model versions.
 
         Parameters
         ----------
         tag : typing.Optional[str]
+            Tag to filter artifact versions by
 
         fqn : typing.Optional[str]
+            Fully qualified name to filter artifact versions by (format: '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}' or '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}:{version}')
 
         artifact_id : typing.Optional[str]
+            ID of the artifact to filter versions by
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter artifact versions by
 
         name : typing.Optional[str]
+            Name of the artifact to filter versions by
 
         version : typing.Optional[int]
+            Version number (positive integer) or 'latest' to filter by specific version
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            List of run IDs to filter artifact versions by
 
         run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+            List of run step numbers to filter artifact versions by
 
         offset : typing.Optional[int]
+            Number of artifact versions to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of artifact versions to return
 
         include_internal_metadata : typing.Optional[bool]
+            Whether to include internal metadata in the response
 
         include_model_versions : typing.Optional[bool]
+            Whether to include model versions in the results (internal use only)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -192,7 +216,7 @@ class AsyncRawArtifactVersionsClient:
         Returns
         -------
         AsyncPager[InternalListArtifactVersionsResponseDataItem, InternalListArtifactVersionsResponse]
-            Successful Response
+            List of artifact versions with internal metadata and pagination information
         """
         offset = offset if offset is not None else 0
 

@@ -9,8 +9,15 @@ from .pagination import Pagination
 
 
 class ListMlReposResponse(UniversalBaseModel):
-    data: typing.List[MlRepo]
-    pagination: Pagination
+    data: typing.List[MlRepo] = pydantic.Field()
+    """
+    List of ML Repos matching the query
+    """
+
+    pagination: Pagination = pydantic.Field()
+    """
+    Pagination information including total count, offset, and limit
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

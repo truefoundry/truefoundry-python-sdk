@@ -9,12 +9,11 @@ from ....core.serialization import FieldMetadata
 
 
 class WorkflowsExecuteWorkflowResponse(UniversalBaseModel):
-    execution_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="executionName")] = (
-        pydantic.Field(alias="executionName", default=None)
-    )
-    """
-    The name of the execution
-    """
+    execution_name: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="executionName"),
+        pydantic.Field(alias="executionName", description="The name of the execution"),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

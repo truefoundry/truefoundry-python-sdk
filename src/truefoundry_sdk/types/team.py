@@ -15,25 +15,23 @@ from .team_metadata import TeamMetadata
 class Team(UniversalBaseModel):
     id: str
     description: str
-    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")] = pydantic.Field(
-        alias="tenantName"
-    )
-    account_id: typing_extensions.Annotated[str, FieldMetadata(alias="accountId")] = pydantic.Field(alias="accountId")
-    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")] = pydantic.Field(
-        alias="createdBySubject"
-    )
+    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName"), pydantic.Field(alias="tenantName")]
+    account_id: typing_extensions.Annotated[str, FieldMetadata(alias="accountId"), pydantic.Field(alias="accountId")]
+    created_by_subject: typing_extensions.Annotated[
+        Subject, FieldMetadata(alias="createdBySubject"), pydantic.Field(alias="createdBySubject")
+    ]
     members: typing.Optional[typing.List[str]] = None
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field(
-        alias="createdAt"
-    )
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")] = pydantic.Field(
-        alias="updatedAt"
-    )
+    created_at: typing_extensions.Annotated[
+        dt.datetime, FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime, FieldMetadata(alias="updatedAt"), pydantic.Field(alias="updatedAt")
+    ]
     manifest: TeamManifest
     metadata: typing.Optional[TeamMetadata] = None
-    is_editable: typing_extensions.Annotated[bool, FieldMetadata(alias="isEditable")] = pydantic.Field(
-        alias="isEditable"
-    )
+    is_editable: typing_extensions.Annotated[
+        bool, FieldMetadata(alias="isEditable"), pydantic.Field(alias="isEditable")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

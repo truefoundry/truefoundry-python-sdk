@@ -34,6 +34,7 @@ class RawPersonalAccessTokensClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
+        name_search_query: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[VirtualAccount, ListPersonalAccessTokenResponse]:
         """
@@ -46,6 +47,9 @@ class RawPersonalAccessTokensClient:
 
         offset : typing.Optional[int]
             Number of items to skip
+
+        name_search_query : typing.Optional[str]
+            Return personal access tokens with names that contain this string
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -63,6 +67,7 @@ class RawPersonalAccessTokensClient:
             params={
                 "limit": limit,
                 "offset": offset,
+                "nameSearchQuery": name_search_query,
             },
             request_options=request_options,
         )
@@ -80,6 +85,7 @@ class RawPersonalAccessTokensClient:
                 _get_next = lambda: self.list(
                     limit=limit,
                     offset=offset + len(_items or []),
+                    name_search_query=name_search_query,
                     request_options=request_options,
                 )
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
@@ -335,6 +341,7 @@ class AsyncRawPersonalAccessTokensClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
+        name_search_query: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[VirtualAccount, ListPersonalAccessTokenResponse]:
         """
@@ -347,6 +354,9 @@ class AsyncRawPersonalAccessTokensClient:
 
         offset : typing.Optional[int]
             Number of items to skip
+
+        name_search_query : typing.Optional[str]
+            Return personal access tokens with names that contain this string
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -364,6 +374,7 @@ class AsyncRawPersonalAccessTokensClient:
             params={
                 "limit": limit,
                 "offset": offset,
+                "nameSearchQuery": name_search_query,
             },
             request_options=request_options,
         )
@@ -383,6 +394,7 @@ class AsyncRawPersonalAccessTokensClient:
                     return await self.list(
                         limit=limit,
                         offset=offset + len(_items or []),
+                        name_search_query=name_search_query,
                         request_options=request_options,
                     )
 

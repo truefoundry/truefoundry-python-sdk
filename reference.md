@@ -649,6 +649,7 @@ client = TrueFoundry(
 )
 client.users.delete(
     id="id",
+    tenant_name="tenantName",
 )
 
 ```
@@ -666,6 +667,14 @@ client.users.delete(
 <dd>
 
 **id:** `str` — User Id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tenant_name:** `typing.Optional[str]` — Tenant name
     
 </dd>
 </dl>
@@ -824,6 +833,14 @@ client.users.deactivate(
 <dl>
 <dd>
 
+**tenant_name:** `typing.Optional[str]` — Tenant name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -888,6 +905,14 @@ client.users.activate(
 <dd>
 
 **email:** `str` — Email of the user
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tenant_name:** `typing.Optional[str]` — Tenant name
     
 </dd>
 </dl>
@@ -1067,6 +1092,77 @@ client.users.get_resources(
 </dl>
 </details>
 
+<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">get_permissions</a>(...) -&gt; AsyncHttpResponse[GetUserPermissionsResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all role bindings associated with a user, including team-inherited bindings.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.users.get_permissions(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — User Id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">get_teams</a>(...) -&gt; AsyncHttpResponse[GetUserTeamsResponse]</code></summary>
 <dl>
 <dd>
@@ -1079,7 +1175,7 @@ client.users.get_resources(
 <dl>
 <dd>
 
-Get all manual teams associated with a user.
+Get all teams associated with a user, including their role in each team.
 </dd>
 </dl>
 </dd>
@@ -1458,6 +1554,77 @@ client.teams.delete(
 </dl>
 </details>
 
+<details><summary><code>client.teams.<a href="src/truefoundry_sdk/teams/client.py">get_permissions</a>(...) -&gt; AsyncHttpResponse[GetTeamPermissionsResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all role bindings associated with a team.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.teams.get_permissions(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — Team Id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## PersonalAccessTokens
 <details><summary><code>client.personal_access_tokens.<a href="src/truefoundry_sdk/personal_access_tokens/client.py">list</a>(...) -&gt; AsyncPager[VirtualAccount, ListPersonalAccessTokenResponse]</code></summary>
 <dl>
@@ -1495,6 +1662,7 @@ client = TrueFoundry(
 response = client.personal_access_tokens.list(
     limit=10,
     offset=0,
+    name_search_query="nameSearchQuery",
 )
 for item in response:
     yield item
@@ -1525,6 +1693,14 @@ for page in response.iter_pages():
 <dd>
 
 **offset:** `typing.Optional[int]` — Number of items to skip
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name_search_query:** `typing.Optional[str]` — Return personal access tokens with names that contain this string
     
 </dd>
 </dl>
@@ -1882,6 +2058,8 @@ response = client.virtual_accounts.list(
     limit=10,
     offset=0,
     name_search_query="nameSearchQuery",
+    is_expired=True,
+    filter="filter",
 )
 for item in response:
     yield item
@@ -1920,6 +2098,30 @@ for page in response.iter_pages():
 <dd>
 
 **name_search_query:** `typing.Optional[str]` — Return virtual accounts with names that contain this string
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**owned_by_teams:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Return virtual accounts owned by these teams
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_expired:** `typing.Optional[bool]` — Filter virtual accounts by expiration status. true = expired, false = not expired
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filter:** `typing.Optional[str]` — JSON string: structured filter tree (AND/OR groups, column leaves on `name`, json_map leaves on manifest.tags).
     
 </dd>
 </dl>
@@ -2934,323 +3136,6 @@ client.clusters.is_connected(
 <dd>
 
 **id:** `str` — Cluster id of the cluster
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Environments
-<details><summary><code>client.environments.<a href="src/truefoundry_sdk/environments/client.py">list</a>(...) -&gt; AsyncPager[Environment, ListEnvironmentsResponse]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List environments, if no environments are found, default environments are created and returned. Pagination is available based on query parameters
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-response = client.environments.list(
-    limit=10,
-    offset=0,
-)
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**limit:** `typing.Optional[int]` — Number of items per page
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**offset:** `typing.Optional[int]` — Number of items to skip
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.environments.<a href="src/truefoundry_sdk/environments/client.py">create_or_update</a>(...) -&gt; AsyncHttpResponse[GetEnvironmentResponse]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Creates a new Environment or updates an existing Environment.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import (
-    EnvironmentColor,
-    EnvironmentManifest,
-    EnvironmentOptimizeFor,
-    TrueFoundry,
-)
-
-client = TrueFoundry(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.environments.create_or_update(
-    manifest=EnvironmentManifest(
-        name="name",
-        color=EnvironmentColor(),
-        is_production=True,
-        optimize_for=EnvironmentOptimizeFor.COST,
-    ),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**manifest:** `EnvironmentManifest` — Environment Manifest
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**dry_run:** `typing.Optional[bool]` — Dry run
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.environments.<a href="src/truefoundry_sdk/environments/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetEnvironmentResponse]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get Environment associated with the provided id.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.environments.get(
-    id="id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `str` — Environment id
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.environments.<a href="src/truefoundry_sdk/environments/client.py">delete</a>(...) -&gt; AsyncHttpResponse[bool]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete Environment associated with the provided id.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.environments.delete(
-    id="id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `str` — Environment id
     
 </dd>
 </dl>
@@ -4738,6 +4623,323 @@ client.jobs.terminate(
 </dl>
 </details>
 
+## Environments
+<details><summary><code>client.environments.<a href="src/truefoundry_sdk/environments/client.py">list</a>(...) -&gt; AsyncPager[Environment, ListEnvironmentsResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List environments, if no environments are found, default environments are created and returned. Pagination is available based on query parameters
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.environments.list(
+    limit=10,
+    offset=0,
+)
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[int]` — Number of items per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**offset:** `typing.Optional[int]` — Number of items to skip
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.environments.<a href="src/truefoundry_sdk/environments/client.py">create_or_update</a>(...) -&gt; AsyncHttpResponse[GetEnvironmentResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a new Environment or updates an existing Environment.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import (
+    EnvironmentColor,
+    EnvironmentManifest,
+    EnvironmentOptimizeFor,
+    TrueFoundry,
+)
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.environments.create_or_update(
+    manifest=EnvironmentManifest(
+        name="name",
+        color=EnvironmentColor(),
+        is_production=True,
+        optimize_for=EnvironmentOptimizeFor.COST,
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**manifest:** `EnvironmentManifest` — Environment Manifest
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dry_run:** `typing.Optional[bool]` — Dry run
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.environments.<a href="src/truefoundry_sdk/environments/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetEnvironmentResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get Environment associated with the provided id.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.environments.get(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — Environment id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.environments.<a href="src/truefoundry_sdk/environments/client.py">delete</a>(...) -&gt; AsyncHttpResponse[bool]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete Environment associated with the provided id.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.environments.delete(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — Environment id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Workspaces
 <details><summary><code>client.workspaces.<a href="src/truefoundry_sdk/workspaces/client.py">list</a>(...) -&gt; AsyncPager[Workspace, ListWorkspacesResponse]</code></summary>
 <dl>
@@ -4751,7 +4953,7 @@ client.jobs.terminate(
 <dl>
 <dd>
 
-List workspaces associated with the user. Optional filters include clusterId, fqn, and workspace name. Pagination is available based on query parameters.
+List workspaces associated with the user. Optional filters include clusterId, fqn, and workspace name.
 </dd>
 </dl>
 </dd>
@@ -4778,6 +4980,7 @@ response = client.workspaces.list(
     cluster_id="clusterId",
     name="name",
     fqn="fqn",
+    include_cluster=True,
 )
 for item in response:
     yield item
@@ -4832,6 +5035,14 @@ for page in response.iter_pages():
 <dd>
 
 **fqn:** `typing.Optional[str]` — Workspace FQN
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_cluster:** `typing.Optional[bool]` — When true, each workspace includes cluster information
     
 </dd>
 </dl>
@@ -4914,6 +5125,109 @@ client.workspaces.create_or_update(
 <dd>
 
 **dry_run:** `typing.Optional[bool]` — Dry run the request
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspaces.<a href="src/truefoundry_sdk/workspaces/client.py">search</a>(...) -&gt; AsyncPager[Workspace, ListWorkspacesResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List workspaces the user can read with optional structured `filter` (name, id, environmentId, cluster_fqn) and pagination.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.workspaces.search(
+    limit=10,
+    offset=0,
+    filter="filter",
+    include_cluster=True,
+)
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[int]` — Number of items per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**offset:** `typing.Optional[int]` — Number of items to skip
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filter:** `typing.Optional[str]` — JSON string containing array of search filters with string, type and operator
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_cluster:** `typing.Optional[bool]` — When true, each workspace includes cluster information
     
 </dd>
 </dl>
@@ -5594,6 +5908,14 @@ client.secret_groups.create_or_update(
 <dd>
 
 **manifest:** `SecretGroupManifest` — Secret Group Manifest
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dry_run:** `typing.Optional[bool]` — Validate the manifest and collaborators without persisting or updating authorizations and secret groups
     
 </dd>
 </dl>
@@ -6352,6 +6674,14 @@ client.ml_repos.create_or_update(
 <dl>
 <dd>
 
+**dry_run:** `typing.Optional[bool]` — Validate the manifest and collaborators without persisting changes or updating artifact location in the database
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -6376,13 +6706,7 @@ client.ml_repos.create_or_update(
 <dl>
 <dd>
 
-Get a ml repo by id
-Args:
-    id: Unique identifier of the ml repo to get
-    user_info: Authenticated user information
-
-Returns:
-    GetMLRepoResponse: The ml repo
+Get an ML Repo by its ID.
 </dd>
 </dl>
 </dd>
@@ -6453,13 +6777,7 @@ client.ml_repos.get(
 <dl>
 <dd>
 
-Delete a ml repo
-Args:
-    id: Unique identifier of the ml repo to delete
-    user_info: Authenticated user information
-
-Returns:
-    EmptyResponse: Empty response indicating successful deletion
+Delete an ML Repo by its ID.
 </dd>
 </dl>
 </dd>
@@ -6530,13 +6848,7 @@ client.ml_repos.delete(
 <dl>
 <dd>
 
-List ml repos
-Args:
-    filters: Filters for the ml repos
-    user_info: Authenticated user information
-
-Returns:
-    ListMLReposResponse: List of ml repos
+List ML Repos with optional filtering by name.
 </dd>
 </dl>
 </dd>
@@ -6582,7 +6894,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**name:** `typing.Optional[str]` 
+**name:** `typing.Optional[str]` — Name of the ML Repo to filter by
     
 </dd>
 </dl>
@@ -6590,7 +6902,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` 
+**limit:** `typing.Optional[int]` — Maximum number of ML Repos to return
     
 </dd>
 </dl>
@@ -6598,7 +6910,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**offset:** `typing.Optional[int]` 
+**offset:** `typing.Optional[int]` — Number of ML Repos to skip for pagination
     
 </dd>
 </dl>
@@ -6798,6 +7110,20 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get an artifact by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -6854,6 +7180,20 @@ client.artifacts.get(
 <details><summary><code>client.artifacts.<a href="src/truefoundry_sdk/artifacts/client.py">delete</a>(...) -&gt; AsyncHttpResponse[EmptyResponse]</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete an artifact by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -6912,6 +7252,20 @@ client.artifacts.delete(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List artifacts with optional filtering by FQN, ML Repo, name, or run ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -6956,7 +7310,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**fqn:** `typing.Optional[str]` 
+**fqn:** `typing.Optional[str]` — Fully qualified name to filter artifacts by (format: '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}')
     
 </dd>
 </dl>
@@ -6964,7 +7318,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**ml_repo_id:** `typing.Optional[str]` 
+**ml_repo_id:** `typing.Optional[str]` — ID of the ML Repo to filter artifacts by
     
 </dd>
 </dl>
@@ -6972,7 +7326,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**name:** `typing.Optional[str]` 
+**name:** `typing.Optional[str]` — Name of the artifact to filter by
     
 </dd>
 </dl>
@@ -6980,7 +7334,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**offset:** `typing.Optional[int]` 
+**offset:** `typing.Optional[int]` — Number of artifacts to skip for pagination
     
 </dd>
 </dl>
@@ -6988,7 +7342,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` 
+**limit:** `typing.Optional[int]` — Maximum number of artifacts to return
     
 </dd>
 </dl>
@@ -6996,7 +7350,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**run_id:** `typing.Optional[str]` 
+**run_id:** `typing.Optional[str]` — ID of the run to filter artifacts by
     
 </dd>
 </dl>
@@ -7004,7 +7358,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**include_empty_artifacts:** `typing.Optional[bool]` 
+**include_empty_artifacts:** `typing.Optional[bool]` — Whether to include artifacts that have no versions
     
 </dd>
 </dl>
@@ -7027,6 +7381,20 @@ for page in response.iter_pages():
 <details><summary><code>client.artifacts.<a href="src/truefoundry_sdk/artifacts/client.py">create_or_update</a>(...) -&gt; AsyncHttpResponse[GetArtifactVersionResponse]</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create or update an artifact version.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -7070,7 +7438,7 @@ client.artifacts.create_or_update(
 <dl>
 <dd>
 
-**manifest:** `ArtifactManifest` 
+**manifest:** `ArtifactManifest` — Manifest containing metadata for the artifact to apply
     
 </dd>
 </dl>
@@ -7094,6 +7462,20 @@ client.artifacts.create_or_update(
 <details><summary><code>client.prompts.<a href="src/truefoundry_sdk/prompts/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetPromptResponse]</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a prompt by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -7152,6 +7534,20 @@ client.prompts.get(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a prompt by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -7209,6 +7605,20 @@ client.prompts.delete(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List prompts with optional filtering by FQN, ML Repo, or name.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -7252,7 +7662,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**fqn:** `typing.Optional[str]` 
+**fqn:** `typing.Optional[str]` — Fully qualified name to filter prompts by (format: 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}')
     
 </dd>
 </dl>
@@ -7260,7 +7670,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**ml_repo_id:** `typing.Optional[str]` 
+**ml_repo_id:** `typing.Optional[str]` — ID of the ML Repo to filter prompts by
     
 </dd>
 </dl>
@@ -7268,7 +7678,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**name:** `typing.Optional[str]` 
+**name:** `typing.Optional[str]` — Name of the prompt to filter by
     
 </dd>
 </dl>
@@ -7276,7 +7686,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**offset:** `typing.Optional[int]` 
+**offset:** `typing.Optional[int]` — Number of prompts to skip for pagination
     
 </dd>
 </dl>
@@ -7284,7 +7694,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` 
+**limit:** `typing.Optional[int]` — Maximum number of prompts to return
     
 </dd>
 </dl>
@@ -7292,7 +7702,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**include_empty_prompts:** `typing.Optional[bool]` 
+**include_empty_prompts:** `typing.Optional[bool]` — Whether to include prompts that have no versions
     
 </dd>
 </dl>
@@ -7315,6 +7725,20 @@ for page in response.iter_pages():
 <details><summary><code>client.prompts.<a href="src/truefoundry_sdk/prompts/client.py">create_or_update</a>(...) -&gt; AsyncHttpResponse[GetPromptVersionResponse]</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create or update a prompt version.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -7358,7 +7782,7 @@ client.prompts.create_or_update(
 <dl>
 <dd>
 
-**manifest:** `ChatPromptManifest` 
+**manifest:** `ChatPromptManifest` — Manifest containing metadata for the prompt to apply
     
 </dd>
 </dl>
@@ -7382,6 +7806,20 @@ client.prompts.create_or_update(
 <details><summary><code>client.models.<a href="src/truefoundry_sdk/models/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetModelResponse]</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a model by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -7440,6 +7878,20 @@ client.models.get(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a model by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -7497,6 +7949,20 @@ client.models.delete(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List models with optional filtering by FQN, ML Repo, name, or run ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -7541,7 +8007,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**fqn:** `typing.Optional[str]` 
+**fqn:** `typing.Optional[str]` — Fully qualified name to filter models by (format: 'model:{tenant_name}/{ml_repo_name}/{model_name}')
     
 </dd>
 </dl>
@@ -7549,7 +8015,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**ml_repo_id:** `typing.Optional[str]` 
+**ml_repo_id:** `typing.Optional[str]` — ID of the ML Repo to filter models by
     
 </dd>
 </dl>
@@ -7557,7 +8023,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**name:** `typing.Optional[str]` 
+**name:** `typing.Optional[str]` — Name of the model to filter by
     
 </dd>
 </dl>
@@ -7565,7 +8031,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**offset:** `typing.Optional[int]` 
+**offset:** `typing.Optional[int]` — Number of models to skip for pagination
     
 </dd>
 </dl>
@@ -7573,7 +8039,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` 
+**limit:** `typing.Optional[int]` — Maximum number of models to return
     
 </dd>
 </dl>
@@ -7581,7 +8047,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**run_id:** `typing.Optional[str]` 
+**run_id:** `typing.Optional[str]` — ID of the run to filter models by
     
 </dd>
 </dl>
@@ -7589,7 +8055,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**include_empty_models:** `typing.Optional[bool]` 
+**include_empty_models:** `typing.Optional[bool]` — Whether to include models that have no versions
     
 </dd>
 </dl>
@@ -7612,6 +8078,20 @@ for page in response.iter_pages():
 <details><summary><code>client.models.<a href="src/truefoundry_sdk/models/client.py">create_or_update</a>(...) -&gt; AsyncHttpResponse[GetModelVersionResponse]</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create or update a model version.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -7651,7 +8131,7 @@ client.models.create_or_update(
 <dl>
 <dd>
 
-**manifest:** `ModelManifest` 
+**manifest:** `ModelManifest` — Manifest containing metadata for the model to apply
     
 </dd>
 </dl>
@@ -7675,6 +8155,20 @@ client.models.create_or_update(
 <details><summary><code>client.artifact_versions.<a href="src/truefoundry_sdk/artifact_versions/client.py">apply_tags</a>(...) -&gt; AsyncHttpResponse[EmptyResponse]</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Apply tags to an artifact version.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -7710,7 +8204,7 @@ client.artifact_versions.apply_tags(
 <dl>
 <dd>
 
-**artifact_version_id:** `str` 
+**artifact_version_id:** `str` — ID of the artifact version to apply tags to
     
 </dd>
 </dl>
@@ -7718,7 +8212,7 @@ client.artifact_versions.apply_tags(
 <dl>
 <dd>
 
-**tags:** `typing.Sequence[str]` 
+**tags:** `typing.Sequence[str]` — List of tags to apply to the artifact version
     
 </dd>
 </dl>
@@ -7726,7 +8220,7 @@ client.artifact_versions.apply_tags(
 <dl>
 <dd>
 
-**force:** `typing.Optional[bool]` 
+**force:** `typing.Optional[bool]` — Whether to overwrite existing tags if they conflict
     
 </dd>
 </dl>
@@ -7758,7 +8252,7 @@ client.artifact_versions.apply_tags(
 <dl>
 <dd>
 
-Get artifact version API
+Get an artifact version by its ID.
 </dd>
 </dl>
 </dd>
@@ -7829,7 +8323,7 @@ client.artifact_versions.get(
 <dl>
 <dd>
 
-Delete artifact versions API
+Delete an artifact version by its ID.
 </dd>
 </dl>
 </dd>
@@ -7900,7 +8394,7 @@ client.artifact_versions.delete(
 <dl>
 <dd>
 
-List artifact version API
+List artifact versions with optional filtering by tag, FQN, artifact ID, ML Repo, name, version, run IDs, or run steps.
 </dd>
 </dl>
 </dd>
@@ -7952,7 +8446,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**tag:** `typing.Optional[str]` 
+**tag:** `typing.Optional[str]` — Tag to filter artifact versions by
     
 </dd>
 </dl>
@@ -7960,7 +8454,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**fqn:** `typing.Optional[str]` 
+**fqn:** `typing.Optional[str]` — Fully qualified name to filter artifact versions by (format: '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}' or '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}:{version}')
     
 </dd>
 </dl>
@@ -7968,7 +8462,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**artifact_id:** `typing.Optional[str]` 
+**artifact_id:** `typing.Optional[str]` — ID of the artifact to filter versions by
     
 </dd>
 </dl>
@@ -7976,7 +8470,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**ml_repo_id:** `typing.Optional[str]` 
+**ml_repo_id:** `typing.Optional[str]` — ID of the ML Repo to filter artifact versions by
     
 </dd>
 </dl>
@@ -7984,7 +8478,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**name:** `typing.Optional[str]` 
+**name:** `typing.Optional[str]` — Name of the artifact to filter versions by
     
 </dd>
 </dl>
@@ -7992,7 +8486,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**version:** `typing.Optional[int]` 
+**version:** `typing.Optional[int]` — Version number (positive integer) or 'latest' to filter by specific version
     
 </dd>
 </dl>
@@ -8000,7 +8494,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**run_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` 
+**run_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — List of run IDs to filter artifact versions by
     
 </dd>
 </dl>
@@ -8008,7 +8502,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**run_steps:** `typing.Optional[typing.Union[int, typing.Sequence[int]]]` 
+**run_steps:** `typing.Optional[typing.Union[int, typing.Sequence[int]]]` — List of run step numbers to filter artifact versions by
     
 </dd>
 </dl>
@@ -8016,7 +8510,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**offset:** `typing.Optional[int]` 
+**offset:** `typing.Optional[int]` — Number of artifact versions to skip for pagination
     
 </dd>
 </dl>
@@ -8024,7 +8518,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` 
+**limit:** `typing.Optional[int]` — Maximum number of artifact versions to return
     
 </dd>
 </dl>
@@ -8032,7 +8526,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**include_internal_metadata:** `typing.Optional[bool]` 
+**include_internal_metadata:** `typing.Optional[bool]` — Whether to include internal metadata in the response
     
 </dd>
 </dl>
@@ -8055,6 +8549,20 @@ for page in response.iter_pages():
 <details><summary><code>client.artifact_versions.<a href="src/truefoundry_sdk/artifact_versions/client.py">get_signed_urls</a>(...) -&gt; AsyncHttpResponse[GetSignedUrLsResponse]</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get pre-signed URLs for reading or writing files in an artifact version.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -8091,7 +8599,7 @@ client.artifact_versions.get_signed_urls(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — ID of the artifact version to get signed URLs for
     
 </dd>
 </dl>
@@ -8099,7 +8607,7 @@ client.artifact_versions.get_signed_urls(
 <dl>
 <dd>
 
-**paths:** `typing.Sequence[str]` 
+**paths:** `typing.Sequence[str]` — List of relative file paths within the artifact version to get signed URLs for
     
 </dd>
 </dl>
@@ -8107,7 +8615,7 @@ client.artifact_versions.get_signed_urls(
 <dl>
 <dd>
 
-**operation:** `Operation` 
+**operation:** `Operation` — Operation type for the signed URL (e.g., 'READ' or 'WRITE')
     
 </dd>
 </dl>
@@ -8130,6 +8638,20 @@ client.artifact_versions.get_signed_urls(
 <details><summary><code>client.artifact_versions.<a href="src/truefoundry_sdk/artifact_versions/client.py">create_multi_part_upload</a>(...) -&gt; AsyncHttpResponse[MultiPartUploadResponse]</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a multipart upload for large files in an artifact version.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -8166,7 +8688,7 @@ client.artifact_versions.create_multi_part_upload(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — ID of the artifact version to upload files to
     
 </dd>
 </dl>
@@ -8174,7 +8696,7 @@ client.artifact_versions.create_multi_part_upload(
 <dl>
 <dd>
 
-**path:** `str` 
+**path:** `str` — Relative path within the artifact version where the file should be uploaded
     
 </dd>
 </dl>
@@ -8182,7 +8704,7 @@ client.artifact_versions.create_multi_part_upload(
 <dl>
 <dd>
 
-**num_parts:** `int` 
+**num_parts:** `int` — Number of parts to split the upload into for multipart upload
     
 </dd>
 </dl>
@@ -8205,6 +8727,20 @@ client.artifact_versions.create_multi_part_upload(
 <details><summary><code>client.artifact_versions.<a href="src/truefoundry_sdk/artifact_versions/client.py">stage</a>(...) -&gt; AsyncHttpResponse[StageArtifactResponse]</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Stage an artifact version for upload, returning storage location and version ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -8244,7 +8780,7 @@ client.artifact_versions.stage(
 <dl>
 <dd>
 
-**manifest:** `StageArtifactRequestManifest` 
+**manifest:** `StageArtifactRequestManifest` — Manifest containing metadata for the artifact to be staged (model or generic artifact)
     
 </dd>
 </dl>
@@ -8267,6 +8803,20 @@ client.artifact_versions.stage(
 <details><summary><code>client.artifact_versions.<a href="src/truefoundry_sdk/artifact_versions/client.py">list_files</a>(...) -&gt; AsyncPager[FileInfo, ListFilesResponse]</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List files and directories in an artifact version.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -8306,7 +8856,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — ID of the artifact version to list files from
     
 </dd>
 </dl>
@@ -8314,7 +8864,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**path:** `typing.Optional[str]` 
+**path:** `typing.Optional[str]` — Relative path within the artifact version to list files from (defaults to root)
     
 </dd>
 </dl>
@@ -8322,7 +8872,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` 
+**limit:** `typing.Optional[int]` — Maximum number of files/directories to return
     
 </dd>
 </dl>
@@ -8330,7 +8880,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**page_token:** `typing.Optional[str]` 
+**page_token:** `typing.Optional[str]` — Token to retrieve the next page of results
     
 </dd>
 </dl>
@@ -8353,6 +8903,20 @@ for page in response.iter_pages():
 <details><summary><code>client.artifact_versions.<a href="src/truefoundry_sdk/artifact_versions/client.py">mark_stage_failure</a>(...) -&gt; AsyncHttpResponse[EmptyResponse]</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Mark a staged artifact version as failed.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -8387,7 +8951,7 @@ client.artifact_versions.mark_stage_failure(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — ID of the staged artifact version to mark as failed
     
 </dd>
 </dl>
@@ -8411,6 +8975,20 @@ client.artifact_versions.mark_stage_failure(
 <details><summary><code>client.model_versions.<a href="src/truefoundry_sdk/model_versions/client.py">apply_tags</a>(...) -&gt; AsyncHttpResponse[EmptyResponse]</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Apply tags to a model version.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -8446,7 +9024,7 @@ client.model_versions.apply_tags(
 <dl>
 <dd>
 
-**model_version_id:** `str` 
+**model_version_id:** `str` — ID of the model version to apply tags to
     
 </dd>
 </dl>
@@ -8454,7 +9032,7 @@ client.model_versions.apply_tags(
 <dl>
 <dd>
 
-**tags:** `typing.Sequence[str]` 
+**tags:** `typing.Sequence[str]` — List of tags to apply to the model version
     
 </dd>
 </dl>
@@ -8462,7 +9040,7 @@ client.model_versions.apply_tags(
 <dl>
 <dd>
 
-**force:** `typing.Optional[bool]` 
+**force:** `typing.Optional[bool]` — Whether to overwrite existing tags if they conflict
     
 </dd>
 </dl>
@@ -8494,7 +9072,7 @@ client.model_versions.apply_tags(
 <dl>
 <dd>
 
-Get model version API
+Get a model version by its ID.
 </dd>
 </dl>
 </dd>
@@ -8565,7 +9143,7 @@ client.model_versions.get(
 <dl>
 <dd>
 
-Delete model versions API
+Delete a model version by its ID.
 </dd>
 </dl>
 </dd>
@@ -8636,7 +9214,7 @@ client.model_versions.delete(
 <dl>
 <dd>
 
-List model version API
+List model versions with optional filtering by tag, FQN, model ID, ML Repo, name, version, run IDs, or run steps.
 </dd>
 </dl>
 </dd>
@@ -8688,7 +9266,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**tag:** `typing.Optional[str]` 
+**tag:** `typing.Optional[str]` — Tag to filter model versions by
     
 </dd>
 </dl>
@@ -8696,7 +9274,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**fqn:** `typing.Optional[str]` 
+**fqn:** `typing.Optional[str]` — Fully qualified name to filter model versions by (format: 'model:{tenant_name}/{ml_repo_name}/{model_name}' or 'model:{tenant_name}/{ml_repo_name}/{model_name}:{version}')
     
 </dd>
 </dl>
@@ -8704,7 +9282,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[str]` 
+**model_id:** `typing.Optional[str]` — ID of the model to filter versions by
     
 </dd>
 </dl>
@@ -8712,7 +9290,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**ml_repo_id:** `typing.Optional[str]` 
+**ml_repo_id:** `typing.Optional[str]` — ID of the ML Repo to filter model versions by
     
 </dd>
 </dl>
@@ -8720,7 +9298,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**name:** `typing.Optional[str]` 
+**name:** `typing.Optional[str]` — Name of the model to filter versions by
     
 </dd>
 </dl>
@@ -8728,7 +9306,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**version:** `typing.Optional[int]` 
+**version:** `typing.Optional[int]` — Version number (positive integer) or 'latest' to filter by specific version
     
 </dd>
 </dl>
@@ -8736,7 +9314,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**run_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` 
+**run_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — List of run IDs to filter model versions by
     
 </dd>
 </dl>
@@ -8744,7 +9322,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**run_steps:** `typing.Optional[typing.Union[int, typing.Sequence[int]]]` 
+**run_steps:** `typing.Optional[typing.Union[int, typing.Sequence[int]]]` — List of run step numbers to filter model versions by
     
 </dd>
 </dl>
@@ -8752,7 +9330,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**offset:** `typing.Optional[int]` 
+**offset:** `typing.Optional[int]` — Number of model versions to skip for pagination
     
 </dd>
 </dl>
@@ -8760,7 +9338,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` 
+**limit:** `typing.Optional[int]` — Maximum number of model versions to return
     
 </dd>
 </dl>
@@ -8768,7 +9346,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**include_internal_metadata:** `typing.Optional[bool]` 
+**include_internal_metadata:** `typing.Optional[bool]` — Whether to include internal metadata in the response
     
 </dd>
 </dl>
@@ -8792,6 +9370,20 @@ for page in response.iter_pages():
 <details><summary><code>client.prompt_versions.<a href="src/truefoundry_sdk/prompt_versions/client.py">apply_tags</a>(...) -&gt; AsyncHttpResponse[EmptyResponse]</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Apply tags to a prompt version.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -8827,7 +9419,7 @@ client.prompt_versions.apply_tags(
 <dl>
 <dd>
 
-**prompt_version_id:** `str` 
+**prompt_version_id:** `str` — ID of the prompt version to apply tags to
     
 </dd>
 </dl>
@@ -8835,7 +9427,7 @@ client.prompt_versions.apply_tags(
 <dl>
 <dd>
 
-**tags:** `typing.Sequence[str]` 
+**tags:** `typing.Sequence[str]` — List of tags to apply to the prompt version
     
 </dd>
 </dl>
@@ -8843,7 +9435,7 @@ client.prompt_versions.apply_tags(
 <dl>
 <dd>
 
-**force:** `typing.Optional[bool]` 
+**force:** `typing.Optional[bool]` — Whether to overwrite existing tags if they conflict
     
 </dd>
 </dl>
@@ -8875,7 +9467,7 @@ client.prompt_versions.apply_tags(
 <dl>
 <dd>
 
-Get prompt version API
+Get a prompt version by its ID.
 </dd>
 </dl>
 </dd>
@@ -8946,7 +9538,7 @@ client.prompt_versions.get(
 <dl>
 <dd>
 
-Delete prompt versions API
+Delete a prompt version by its ID.
 </dd>
 </dl>
 </dd>
@@ -9017,7 +9609,7 @@ client.prompt_versions.delete(
 <dl>
 <dd>
 
-List prompt version API
+List prompt versions with optional filtering by tag, FQN, prompt ID, ML Repo, name, or version.
 </dd>
 </dl>
 </dd>
@@ -9068,7 +9660,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**tag:** `typing.Optional[str]` 
+**tag:** `typing.Optional[str]` — Tag to filter prompt versions by
     
 </dd>
 </dl>
@@ -9076,7 +9668,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**fqn:** `typing.Optional[str]` 
+**fqn:** `typing.Optional[str]` — Fully qualified name to filter prompt versions by (format: 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}' or 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}:{version}')
     
 </dd>
 </dl>
@@ -9084,7 +9676,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**prompt_id:** `typing.Optional[str]` 
+**prompt_id:** `typing.Optional[str]` — ID of the prompt to filter versions by
     
 </dd>
 </dl>
@@ -9092,7 +9684,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**ml_repo_id:** `typing.Optional[str]` 
+**ml_repo_id:** `typing.Optional[str]` — ID of the ML Repo to filter prompt versions by
     
 </dd>
 </dl>
@@ -9100,7 +9692,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**name:** `typing.Optional[str]` 
+**name:** `typing.Optional[str]` — Name of the prompt to filter versions by
     
 </dd>
 </dl>
@@ -9108,7 +9700,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**version:** `typing.Optional[int]` 
+**version:** `typing.Optional[int]` — Version number (positive integer) or 'latest' to filter by specific version
     
 </dd>
 </dl>
@@ -9116,7 +9708,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**offset:** `typing.Optional[int]` 
+**offset:** `typing.Optional[int]` — Number of prompt versions to skip for pagination
     
 </dd>
 </dl>
@@ -9124,7 +9716,598 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` 
+**limit:** `typing.Optional[int]` — Maximum number of prompt versions to return
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## AgentSkills
+<details><summary><code>client.agent_skills.<a href="src/truefoundry_sdk/agent_skills/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetAgentSkillResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get an agent skill artifact by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.agent_skills.get(
+    agent_skill_id="agent_skill_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_skill_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agent_skills.<a href="src/truefoundry_sdk/agent_skills/client.py">delete</a>(...) -&gt; AsyncHttpResponse[EmptyResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete an agent skill artifact by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.agent_skills.delete(
+    agent_skill_id="agent_skill_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_skill_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agent_skills.<a href="src/truefoundry_sdk/agent_skills/client.py">list</a>(...) -&gt; AsyncPager[AgentSkill, ListAgentSkillsResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List agent skills with optional filtering by FQN, ML Repo, or name. When present, `latest_version.manifest.source` is `blob-storage` with `description` only; use GET agent skill version for full SKILL.md (inline `source` with `skill_md`).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.agent_skills.list(
+    fqn="fqn",
+    ml_repo_id="ml_repo_id",
+    name="name",
+    offset=1,
+    limit=1,
+    include_empty_agent_skills=True,
+)
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**fqn:** `typing.Optional[str]` — Fully qualified name to filter agent skills by (format: 'agent_skill:{tenant}/{ml_repo}/{agent_skill_name}')
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ml_repo_id:** `typing.Optional[str]` — ML Repo ID filter
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — Agent skill name filter
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**offset:** `typing.Optional[int]` — Pagination offset
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[int]` — Page size
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_empty_agent_skills:** `typing.Optional[bool]` — Whether to include agent skills that have no versions
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agent_skills.<a href="src/truefoundry_sdk/agent_skills/client.py">create_or_update</a>(...) -&gt; AsyncHttpResponse[GetAgentSkillVersionResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create or update an agent skill version from a manifest.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import (
+    AgentSkillManifest,
+    AgentSkillSourceInline,
+    TrueFoundry,
+)
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.agent_skills.create_or_update(
+    manifest=AgentSkillManifest(
+        name="name",
+        metadata={"key": "value"},
+        ml_repo="ml_repo",
+        source=AgentSkillSourceInline(
+            skill_md="skill_md",
+        ),
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**manifest:** `AgentSkillManifest` — Manifest containing metadata for the agent skill to apply
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## AgentSkillVersions
+<details><summary><code>client.agent_skill_versions.<a href="src/truefoundry_sdk/agent_skill_versions/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetAgentSkillVersionResponse]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.agent_skill_versions.get(
+    agent_skill_version_id="agent_skill_version_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_skill_version_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agent_skill_versions.<a href="src/truefoundry_sdk/agent_skill_versions/client.py">delete</a>(...) -&gt; AsyncHttpResponse[EmptyResponse]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.agent_skill_versions.delete(
+    agent_skill_version_id="agent_skill_version_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_skill_version_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agent_skill_versions.<a href="src/truefoundry_sdk/agent_skill_versions/client.py">list</a>(...) -&gt; AsyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List agent skill versions. Each manifest has `source.type` `blob-storage` and `description` only; use GET for full SKILL.md content.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.agent_skill_versions.list(
+    fqn="fqn",
+    agent_skill_id="agent_skill_id",
+    ml_repo_id="ml_repo_id",
+    name="name",
+    version=1,
+    offset=1,
+    limit=1,
+)
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**fqn:** `typing.Optional[str]` — FQN filter for agent skill versions
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agent_skill_id:** `typing.Optional[str]` — Parent agent skill artifact ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ml_repo_id:** `typing.Optional[str]` — ML Repo ID filter
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — Agent skill name filter
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version:** `typing.Optional[int]` — Version number or 'latest'
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**offset:** `typing.Optional[int]` — Pagination offset
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[int]` — Page size
     
 </dd>
 </dl>
@@ -9158,13 +10341,6 @@ for page in response.iter_pages():
 <dd>
 
 Get a data directory by its ID.
-
-Args:
-    id (str): The ID of the data directory to retrieve
-    user_info: Current authenticated user info
-
-Returns:
-    DataDirectoryResponse: Response containing the retrieved data directory
 </dd>
 </dl>
 </dd>
@@ -9235,15 +10411,7 @@ client.data_directories.get(
 <dl>
 <dd>
 
-Delete a data directory and optionally its contents.
-
-Args:
-    id: Unique identifier of the data directory to delete
-    delete_contents: If True, also deletes the data directory's contents
-    user_info: Authenticated user information
-
-Returns:
-    EmptyResponse: Empty response indicating successful deletion
+Delete a data directory, optionally including its contents.
 </dd>
 </dl>
 </dd>
@@ -9323,18 +10491,7 @@ client.data_directories.delete(
 <dl>
 <dd>
 
-List all data directories with optional filtering and pagination.
-
-Args:
-    filters: Query parameters for filtering and pagination
-        - ml_repo_id: Filter data directories by ml repo ID
-        - name: Optional filter data directories by name
-        - limit: Optional maximum number of data directories to return
-        - offset: Optional number of data directories to skip
-    user_info: Authenticated user information
-
-Returns:
-    ListDataDirectoriesResponse: List of data directories and pagination info
+List data directories with optional filtering by FQN, ML Repo, or name.
 </dd>
 </dl>
 </dd>
@@ -9382,7 +10539,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**fqn:** `typing.Optional[str]` 
+**fqn:** `typing.Optional[str]` — Fully qualified name to filter data directories by
     
 </dd>
 </dl>
@@ -9390,7 +10547,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**ml_repo_id:** `typing.Optional[str]` 
+**ml_repo_id:** `typing.Optional[str]` — ID of the ML Repo to filter data directories by
     
 </dd>
 </dl>
@@ -9398,7 +10555,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**name:** `typing.Optional[str]` 
+**name:** `typing.Optional[str]` — Name of the data directory to filter by
     
 </dd>
 </dl>
@@ -9406,7 +10563,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` 
+**limit:** `typing.Optional[int]` — Maximum number of data directories to return
     
 </dd>
 </dl>
@@ -9414,7 +10571,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**offset:** `typing.Optional[int]` 
+**offset:** `typing.Optional[int]` — Number of data directories to skip for pagination
     
 </dd>
 </dl>
@@ -9437,6 +10594,20 @@ for page in response.iter_pages():
 <details><summary><code>client.data_directories.<a href="src/truefoundry_sdk/data_directories/client.py">create_or_update</a>(...) -&gt; AsyncHttpResponse[GetDataDirectoryResponse]</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create or update a data directory.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -9480,7 +10651,7 @@ client.data_directories.create_or_update(
 <dl>
 <dd>
 
-**manifest:** `DataDirectoryManifest` 
+**manifest:** `DataDirectoryManifest` — Manifest containing metadata for the data directory to apply
     
 </dd>
 </dl>
@@ -9512,14 +10683,7 @@ client.data_directories.create_or_update(
 <dl>
 <dd>
 
-List files in a dataset.
-
-Args:
-    request_dto: Request containing dataset ID, path, page token and limit
-    user_info: Authenticated user information
-
-Returns:
-    ListFilesResponse: Response containing files and pagination info
+List files and directories in a data directory.
 </dd>
 </dl>
 </dd>
@@ -9563,7 +10727,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — ID of the artifact version to list files from
     
 </dd>
 </dl>
@@ -9571,7 +10735,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**path:** `typing.Optional[str]` 
+**path:** `typing.Optional[str]` — Relative path within the artifact version to list files from (defaults to root)
     
 </dd>
 </dl>
@@ -9579,7 +10743,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` 
+**limit:** `typing.Optional[int]` — Maximum number of files/directories to return
     
 </dd>
 </dl>
@@ -9587,7 +10751,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**page_token:** `typing.Optional[str]` 
+**page_token:** `typing.Optional[str]` — Token to retrieve the next page of results
     
 </dd>
 </dl>
@@ -9619,14 +10783,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-Delete files from the dataset.
-
-Args:
-    request_dto: Request containing dataset ID and paths
-    user_info: Authenticated user information
-
-Returns:
-    EmptyResponse: Empty response indicating successful deletion
+Delete files from a data directory.
 </dd>
 </dl>
 </dd>
@@ -9666,7 +10823,7 @@ client.data_directories.delete_files(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — ID of the artifact version to delete files from
     
 </dd>
 </dl>
@@ -9674,7 +10831,7 @@ client.data_directories.delete_files(
 <dl>
 <dd>
 
-**paths:** `typing.Sequence[str]` 
+**paths:** `typing.Sequence[str]` — List of relative file paths within the artifact version to delete
     
 </dd>
 </dl>
@@ -9706,14 +10863,7 @@ client.data_directories.delete_files(
 <dl>
 <dd>
 
-Get signed URLs for a dataset.
-
-Args:
-    request_dto: Request containing dataset ID, paths and operation
-    user_info: Authenticated user information
-
-Returns:
-    GetSignedURLsResponse: Response containing signed URLs
+Get pre-signed URLs for reading or writing files in a data directory.
 </dd>
 </dl>
 </dd>
@@ -9754,7 +10904,7 @@ client.data_directories.get_signed_urls(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — ID of the artifact version to get signed URLs for
     
 </dd>
 </dl>
@@ -9762,7 +10912,7 @@ client.data_directories.get_signed_urls(
 <dl>
 <dd>
 
-**paths:** `typing.Sequence[str]` 
+**paths:** `typing.Sequence[str]` — List of relative file paths within the artifact version to get signed URLs for
     
 </dd>
 </dl>
@@ -9770,7 +10920,7 @@ client.data_directories.get_signed_urls(
 <dl>
 <dd>
 
-**operation:** `Operation` 
+**operation:** `Operation` — Operation type for the signed URL (e.g., 'READ' or 'WRITE')
     
 </dd>
 </dl>
@@ -9802,14 +10952,7 @@ client.data_directories.get_signed_urls(
 <dl>
 <dd>
 
-Create a multipart upload for a dataset
-
-Args:
-    request_dto: Request containing dataset ID, path and number of parts
-    user_info: Authenticated user information
-
-Returns:
-    MultiPartUploadResponse: Response containing multipart upload info
+Create a multipart upload for large files in a data directory.
 </dd>
 </dl>
 </dd>
@@ -9850,7 +10993,7 @@ client.data_directories.create_multipart_upload(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — ID of the artifact version to upload files to
     
 </dd>
 </dl>
@@ -9858,7 +11001,7 @@ client.data_directories.create_multipart_upload(
 <dl>
 <dd>
 
-**path:** `str` 
+**path:** `str` — Relative path within the artifact version where the file should be uploaded
     
 </dd>
 </dl>
@@ -9866,7 +11009,7 @@ client.data_directories.create_multipart_upload(
 <dl>
 <dd>
 
-**num_parts:** `int` 
+**num_parts:** `int` — Number of parts to split the upload into for multipart upload
     
 </dd>
 </dl>
@@ -10855,7 +11998,7 @@ client.internal.vcs.get_authenticated_url(
 </details>
 
 ## Internal DockerRegistries
-<details><summary><code>client.internal.docker_registries.<a href="src/truefoundry_sdk/internal/docker_registries/client.py">create_repository</a>(...) -&gt; AsyncHttpResponse[DockerRegistriesCreateRepositoryResponse]</code></summary>
+<details><summary><code>client.internal.docker_registries.<a href="src/truefoundry_sdk/internal/docker_registries/client.py">create_repository</a>(...) -&gt; AsyncHttpResponse[CreateDockerRepositoryResponse]</code></summary>
 <dl>
 <dd>
 
@@ -10944,7 +12087,7 @@ client.internal.docker_registries.create_repository(
 </dl>
 </details>
 
-<details><summary><code>client.internal.docker_registries.<a href="src/truefoundry_sdk/internal/docker_registries/client.py">get_credentials</a>(...) -&gt; AsyncHttpResponse[DockerRegistriesGetCredentialsResponse]</code></summary>
+<details><summary><code>client.internal.docker_registries.<a href="src/truefoundry_sdk/internal/docker_registries/client.py">get_credentials</a>(...) -&gt; AsyncHttpResponse[GetDockerRegistryCredentialsResponse]</code></summary>
 <dl>
 <dd>
 
@@ -11253,7 +12396,7 @@ client.internal.build_logs.get(
 <dl>
 <dd>
 
-List artifact version API
+List artifact versions with internal metadata, optionally including model versions.
 </dd>
 </dl>
 </dd>
@@ -11306,7 +12449,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**tag:** `typing.Optional[str]` 
+**tag:** `typing.Optional[str]` — Tag to filter artifact versions by
     
 </dd>
 </dl>
@@ -11314,7 +12457,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**fqn:** `typing.Optional[str]` 
+**fqn:** `typing.Optional[str]` — Fully qualified name to filter artifact versions by (format: '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}' or '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}:{version}')
     
 </dd>
 </dl>
@@ -11322,7 +12465,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**artifact_id:** `typing.Optional[str]` 
+**artifact_id:** `typing.Optional[str]` — ID of the artifact to filter versions by
     
 </dd>
 </dl>
@@ -11330,7 +12473,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**ml_repo_id:** `typing.Optional[str]` 
+**ml_repo_id:** `typing.Optional[str]` — ID of the ML Repo to filter artifact versions by
     
 </dd>
 </dl>
@@ -11338,7 +12481,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**name:** `typing.Optional[str]` 
+**name:** `typing.Optional[str]` — Name of the artifact to filter versions by
     
 </dd>
 </dl>
@@ -11346,7 +12489,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**version:** `typing.Optional[int]` 
+**version:** `typing.Optional[int]` — Version number (positive integer) or 'latest' to filter by specific version
     
 </dd>
 </dl>
@@ -11354,7 +12497,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**run_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` 
+**run_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — List of run IDs to filter artifact versions by
     
 </dd>
 </dl>
@@ -11362,7 +12505,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**run_steps:** `typing.Optional[typing.Union[int, typing.Sequence[int]]]` 
+**run_steps:** `typing.Optional[typing.Union[int, typing.Sequence[int]]]` — List of run step numbers to filter artifact versions by
     
 </dd>
 </dl>
@@ -11370,7 +12513,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**offset:** `typing.Optional[int]` 
+**offset:** `typing.Optional[int]` — Number of artifact versions to skip for pagination
     
 </dd>
 </dl>
@@ -11378,7 +12521,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` 
+**limit:** `typing.Optional[int]` — Maximum number of artifact versions to return
     
 </dd>
 </dl>
@@ -11386,7 +12529,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**include_internal_metadata:** `typing.Optional[bool]` 
+**include_internal_metadata:** `typing.Optional[bool]` — Whether to include internal metadata in the response
     
 </dd>
 </dl>
@@ -11394,7 +12537,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**include_model_versions:** `typing.Optional[bool]` 
+**include_model_versions:** `typing.Optional[bool]` — Whether to include model versions in the results (internal use only)
     
 </dd>
 </dl>
@@ -11418,6 +12561,20 @@ for page in response.iter_pages():
 <details><summary><code>client.internal.ml.<a href="src/truefoundry_sdk/internal/ml/client.py">apply</a>(...) -&gt; AsyncHttpResponse[ApplyMlEntityResponse]</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create or update an ML entity (model, prompt, artifact, or data directory).
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -11457,7 +12614,7 @@ client.internal.ml.apply(
 <dl>
 <dd>
 
-**manifest:** `ApplyMlEntityRequestManifest` 
+**manifest:** `ApplyMlEntityRequestManifest` — Manifest containing metadata for the ML entity to apply (model, prompt, artifact, agent skill, or data directory)
     
 </dd>
 </dl>
@@ -11480,6 +12637,20 @@ client.internal.ml.apply(
 <details><summary><code>client.internal.ml.<a href="src/truefoundry_sdk/internal/ml/client.py">delete</a>(...) -&gt; AsyncHttpResponse[EmptyResponse]</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete an ML entity (model, prompt, artifact, agent skill, data directory, or ML Repo) by manifest.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -11519,7 +12690,7 @@ client.internal.ml.delete(
 <dl>
 <dd>
 
-**manifest:** `DeleteMlEntityRequestManifest` 
+**manifest:** `DeleteMlEntityRequestManifest` — Manifest identifying the ML entity to delete (model, prompt, artifact, agent skill, data directory, or ML Repo)
     
 </dd>
 </dl>

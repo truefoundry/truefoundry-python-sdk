@@ -9,20 +9,16 @@ from ..core.serialization import FieldMetadata
 
 
 class SparkJobTriggerInput(UniversalBaseModel):
-    main_class: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="mainClass")] = pydantic.Field(
-        alias="mainClass", default=None
-    )
-    """
-    Main Class for Spark Job
-    """
-
+    main_class: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="mainClass"),
+        pydantic.Field(alias="mainClass", description="Main Class for Spark Job"),
+    ] = None
     main_application_file: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="mainApplicationFile")
-    ] = pydantic.Field(alias="mainApplicationFile", default=None)
-    """
-    Main Application File for Spark Job
-    """
-
+        typing.Optional[str],
+        FieldMetadata(alias="mainApplicationFile"),
+        pydantic.Field(alias="mainApplicationFile", description="Main Application File for Spark Job"),
+    ] = None
     arguments: typing.Optional[str] = pydantic.Field(default=None)
     """
     Arguments to pass to the main application file

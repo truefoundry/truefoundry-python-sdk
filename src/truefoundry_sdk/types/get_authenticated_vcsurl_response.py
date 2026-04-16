@@ -9,12 +9,11 @@ from ..core.serialization import FieldMetadata
 
 
 class GetAuthenticatedVcsurlResponse(UniversalBaseModel):
-    authenticated_url: typing_extensions.Annotated[str, FieldMetadata(alias="authenticatedURL")] = pydantic.Field(
-        alias="authenticatedURL"
-    )
-    """
-    Authenticated URL to access the repository
-    """
+    authenticated_url: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="authenticatedURL"),
+        pydantic.Field(alias="authenticatedURL", description="Authenticated URL to access the repository"),
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

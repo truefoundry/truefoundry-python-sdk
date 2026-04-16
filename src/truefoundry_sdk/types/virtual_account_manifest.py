@@ -37,9 +37,13 @@ class VirtualAccountManifest(UniversalBaseModel):
     auto_rotate: typing.Optional[AutoRotate] = None
     notification_target: typing.Optional[NotificationTarget] = None
     secret_store_config: typing.Optional[SecretStoreConfig] = None
-    owned_by: typing_extensions.Annotated[typing.Optional[VirtualAccountOwnedBy], FieldMetadata(alias="ownedBy")] = (
-        pydantic.Field(alias="ownedBy", default=None)
-    )
+    owned_by: typing_extensions.Annotated[
+        typing.Optional[VirtualAccountOwnedBy], FieldMetadata(alias="ownedBy"), pydantic.Field(alias="ownedBy")
+    ] = None
+    tags: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    """
+    Key-value pairs to categorize this Virtual Account (e.g., by owner or environment).
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -5,7 +5,6 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .azure_open_ai_model_deployment_type import AzureOpenAiModelDeploymentType
-from .azure_open_ai_model_region import AzureOpenAiModelRegion
 from .model_cost_metric import ModelCostMetric
 from .model_type import ModelType
 
@@ -40,14 +39,9 @@ class AzureOpenAiModel(UniversalBaseModel):
     The foundation model identifier (e.g., gpt-4o-2024-11-20)
     """
 
-    deployment_type: typing.Optional[AzureOpenAiModelDeploymentType] = pydantic.Field(default=None)
+    deployment_type: AzureOpenAiModelDeploymentType = pydantic.Field()
     """
-    Global: worldwide processing, Data Zone: US/EU processing only
-    """
-
-    region: typing.Optional[AzureOpenAiModelRegion] = pydantic.Field(default=None)
-    """
-    The Azure region for data-zone deployments
+    Global: worldwide processing; Data zone (US): US data zone processing; Data zone (EU): EU data zone processing; Standard: single-region processing
     """
 
     model_types: typing.List[ModelType] = pydantic.Field()

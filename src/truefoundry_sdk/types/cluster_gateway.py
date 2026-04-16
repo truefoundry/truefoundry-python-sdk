@@ -12,13 +12,11 @@ class ClusterGateway(UniversalBaseModel):
     uid: typing.Optional[str] = None
     name: str
     hosts: typing.List[str]
-    is_tie_breaker: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isTieBreaker")] = (
-        pydantic.Field(alias="isTieBreaker", default=None)
-    )
-    """
-    Used when there are 2 gateways with same host
-    """
-
+    is_tie_breaker: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="isTieBreaker"),
+        pydantic.Field(alias="isTieBreaker", description="Used when there are 2 gateways with same host"),
+    ] = None
     selector: typing.Dict[str, str]
 
     if IS_PYDANTIC_V2:

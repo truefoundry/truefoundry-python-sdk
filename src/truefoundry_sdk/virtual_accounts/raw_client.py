@@ -36,6 +36,9 @@ class RawVirtualAccountsClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         name_search_query: typing.Optional[str] = None,
+        owned_by_teams: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        is_expired: typing.Optional[bool] = None,
+        filter: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[VirtualAccount, ListVirtualAccountResponse]:
         """
@@ -51,6 +54,15 @@ class RawVirtualAccountsClient:
 
         name_search_query : typing.Optional[str]
             Return virtual accounts with names that contain this string
+
+        owned_by_teams : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Return virtual accounts owned by these teams
+
+        is_expired : typing.Optional[bool]
+            Filter virtual accounts by expiration status. true = expired, false = not expired
+
+        filter : typing.Optional[str]
+            JSON string: structured filter tree (AND/OR groups, column leaves on `name`, json_map leaves on manifest.tags).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -69,6 +81,9 @@ class RawVirtualAccountsClient:
                 "limit": limit,
                 "offset": offset,
                 "nameSearchQuery": name_search_query,
+                "ownedByTeams": owned_by_teams,
+                "isExpired": is_expired,
+                "filter": filter,
             },
             request_options=request_options,
         )
@@ -87,6 +102,9 @@ class RawVirtualAccountsClient:
                     limit=limit,
                     offset=offset + len(_items or []),
                     name_search_query=name_search_query,
+                    owned_by_teams=owned_by_teams,
+                    is_expired=is_expired,
+                    filter=filter,
                     request_options=request_options,
                 )
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
@@ -467,6 +485,9 @@ class AsyncRawVirtualAccountsClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         name_search_query: typing.Optional[str] = None,
+        owned_by_teams: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        is_expired: typing.Optional[bool] = None,
+        filter: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[VirtualAccount, ListVirtualAccountResponse]:
         """
@@ -482,6 +503,15 @@ class AsyncRawVirtualAccountsClient:
 
         name_search_query : typing.Optional[str]
             Return virtual accounts with names that contain this string
+
+        owned_by_teams : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Return virtual accounts owned by these teams
+
+        is_expired : typing.Optional[bool]
+            Filter virtual accounts by expiration status. true = expired, false = not expired
+
+        filter : typing.Optional[str]
+            JSON string: structured filter tree (AND/OR groups, column leaves on `name`, json_map leaves on manifest.tags).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -500,6 +530,9 @@ class AsyncRawVirtualAccountsClient:
                 "limit": limit,
                 "offset": offset,
                 "nameSearchQuery": name_search_query,
+                "ownedByTeams": owned_by_teams,
+                "isExpired": is_expired,
+                "filter": filter,
             },
             request_options=request_options,
         )
@@ -520,6 +553,9 @@ class AsyncRawVirtualAccountsClient:
                         limit=limit,
                         offset=offset + len(_items or []),
                         name_search_query=name_search_query,
+                        owned_by_teams=owned_by_teams,
+                        is_expired=is_expired,
+                        filter=filter,
                         request_options=request_options,
                     )
 

@@ -13,6 +13,7 @@ class TaskPythonBuild(UniversalBaseModel):
 
     type: typing.Literal["task-python-build"] = pydantic.Field(default="task-python-build")
     """
+    +uiType=Hidden
     +value=task-python-build
     """
 

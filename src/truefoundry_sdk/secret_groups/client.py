@@ -146,7 +146,11 @@ class SecretGroupsClient:
         return _response.data
 
     def create_or_update(
-        self, *, manifest: SecretGroupManifest, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        manifest: SecretGroupManifest,
+        dry_run: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSecretGroupResponse:
         """
         Creates a new secret group or updates an existing one based on the provided manifest.
@@ -155,6 +159,9 @@ class SecretGroupsClient:
         ----------
         manifest : SecretGroupManifest
             Secret Group Manifest
+
+        dry_run : typing.Optional[bool]
+            Validate the manifest and collaborators without persisting or updating authorizations and secret groups
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -185,7 +192,9 @@ class SecretGroupsClient:
             ),
         )
         """
-        _response = self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
+        _response = self._raw_client.create_or_update(
+            manifest=manifest, dry_run=dry_run, request_options=request_options
+        )
         return _response.data
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetSecretGroupResponse:
@@ -443,7 +452,11 @@ class AsyncSecretGroupsClient:
         return _response.data
 
     async def create_or_update(
-        self, *, manifest: SecretGroupManifest, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        manifest: SecretGroupManifest,
+        dry_run: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSecretGroupResponse:
         """
         Creates a new secret group or updates an existing one based on the provided manifest.
@@ -452,6 +465,9 @@ class AsyncSecretGroupsClient:
         ----------
         manifest : SecretGroupManifest
             Secret Group Manifest
+
+        dry_run : typing.Optional[bool]
+            Validate the manifest and collaborators without persisting or updating authorizations and secret groups
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -490,7 +506,9 @@ class AsyncSecretGroupsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create_or_update(manifest=manifest, request_options=request_options)
+        _response = await self._raw_client.create_or_update(
+            manifest=manifest, dry_run=dry_run, request_options=request_options
+        )
         return _response.data
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetSecretGroupResponse:

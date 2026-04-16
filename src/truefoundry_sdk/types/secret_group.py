@@ -15,29 +15,27 @@ from .subject import Subject
 class SecretGroup(UniversalBaseModel):
     id: typing.Optional[str] = None
     fqn: typing.Optional[str] = None
-    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName")] = pydantic.Field(
-        alias="tenantName"
-    )
-    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")] = pydantic.Field(
-        alias="createdBySubject"
-    )
-    associated_secrets: typing_extensions.Annotated[typing.List["Secret"], FieldMetadata(alias="associatedSecrets")] = (
-        pydantic.Field(alias="associatedSecrets")
-    )
-    integration_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="integrationId")] = (
-        pydantic.Field(alias="integrationId", default=None)
-    )
+    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName"), pydantic.Field(alias="tenantName")]
+    created_by_subject: typing_extensions.Annotated[
+        Subject, FieldMetadata(alias="createdBySubject"), pydantic.Field(alias="createdBySubject")
+    ]
+    associated_secrets: typing_extensions.Annotated[
+        typing.List["Secret"], FieldMetadata(alias="associatedSecrets"), pydantic.Field(alias="associatedSecrets")
+    ]
+    integration_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="integrationId"), pydantic.Field(alias="integrationId")
+    ] = None
     manifest: typing.Optional[typing.Dict[str, typing.Any]] = None
-    account_id: typing_extensions.Annotated[str, FieldMetadata(alias="accountId")] = pydantic.Field(alias="accountId")
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field(
-        alias="createdAt"
-    )
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")] = pydantic.Field(
-        alias="updatedAt"
-    )
-    created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = pydantic.Field(
-        alias="createdBy", default=None
-    )
+    account_id: typing_extensions.Annotated[str, FieldMetadata(alias="accountId"), pydantic.Field(alias="accountId")]
+    created_at: typing_extensions.Annotated[
+        dt.datetime, FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime, FieldMetadata(alias="updatedAt"), pydantic.Field(alias="updatedAt")
+    ]
+    created_by: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="createdBy"), pydantic.Field(alias="createdBy")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

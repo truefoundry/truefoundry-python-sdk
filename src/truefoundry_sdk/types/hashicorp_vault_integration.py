@@ -4,7 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .hashicorp_token_auth import HashicorpTokenAuth
+from .hashicorp_vault_integration_auth_data import HashicorpVaultIntegrationAuthData
 
 
 class HashicorpVaultIntegration(UniversalBaseModel):
@@ -29,12 +29,17 @@ class HashicorpVaultIntegration(UniversalBaseModel):
     The URL of the HashiCorp Vault server (e.g., https://vault.example.com:8200).
     """
 
-    kv_mount_path: typing.Optional[str] = pydantic.Field(default=None)
+    kv_mount_path: str = pydantic.Field()
     """
-    Mount path of the KV v2 engine vault to use for secrets. The default value is tfy-secrets
+    Mount path of the KV v2 engine vault to use for secrets.
     """
 
-    auth_data: HashicorpTokenAuth
+    root_path: typing.Optional[str] = None
+    auth_data: HashicorpVaultIntegrationAuthData = pydantic.Field()
+    """
+    Authentication data for the Vault integration.
+    """
+
     authorized_subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     List of subjects that are authorized to access this integration. List of user fqn in format <user_type>:<username>.

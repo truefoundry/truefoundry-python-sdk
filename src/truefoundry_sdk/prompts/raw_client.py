@@ -31,6 +31,8 @@ class RawPromptsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetPromptResponse]:
         """
+        Get a prompt by its ID.
+
         Parameters
         ----------
         id : str
@@ -41,7 +43,7 @@ class RawPromptsClient:
         Returns
         -------
         HttpResponse[GetPromptResponse]
-            Successful Response
+            The prompt data
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/ml/v1/prompts/{jsonable_encoder(id)}",
@@ -78,6 +80,8 @@ class RawPromptsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[EmptyResponse]:
         """
+        Delete a prompt by its ID.
+
         Parameters
         ----------
         id : str
@@ -88,7 +92,7 @@ class RawPromptsClient:
         Returns
         -------
         HttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/ml/v1/prompts/{jsonable_encoder(id)}",
@@ -133,19 +137,27 @@ class RawPromptsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Prompt, ListPromptsResponse]:
         """
+        List prompts with optional filtering by FQN, ML Repo, or name.
+
         Parameters
         ----------
         fqn : typing.Optional[str]
+            Fully qualified name to filter prompts by (format: 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}')
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter prompts by
 
         name : typing.Optional[str]
+            Name of the prompt to filter by
 
         offset : typing.Optional[int]
+            Number of prompts to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of prompts to return
 
         include_empty_prompts : typing.Optional[bool]
+            Whether to include prompts that have no versions
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -153,7 +165,7 @@ class RawPromptsClient:
         Returns
         -------
         SyncPager[Prompt, ListPromptsResponse]
-            Successful Response
+            List of prompts matching the query with pagination information
         """
         offset = offset if offset is not None else 0
 
@@ -211,9 +223,12 @@ class RawPromptsClient:
         self, *, manifest: ChatPromptManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetPromptVersionResponse]:
         """
+        Create or update a prompt version.
+
         Parameters
         ----------
         manifest : ChatPromptManifest
+            Manifest containing metadata for the prompt to apply
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -221,7 +236,7 @@ class RawPromptsClient:
         Returns
         -------
         HttpResponse[GetPromptVersionResponse]
-            Successful Response
+            The created or updated prompt version
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/prompt-versions",
@@ -272,6 +287,8 @@ class AsyncRawPromptsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetPromptResponse]:
         """
+        Get a prompt by its ID.
+
         Parameters
         ----------
         id : str
@@ -282,7 +299,7 @@ class AsyncRawPromptsClient:
         Returns
         -------
         AsyncHttpResponse[GetPromptResponse]
-            Successful Response
+            The prompt data
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/ml/v1/prompts/{jsonable_encoder(id)}",
@@ -319,6 +336,8 @@ class AsyncRawPromptsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[EmptyResponse]:
         """
+        Delete a prompt by its ID.
+
         Parameters
         ----------
         id : str
@@ -329,7 +348,7 @@ class AsyncRawPromptsClient:
         Returns
         -------
         AsyncHttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/ml/v1/prompts/{jsonable_encoder(id)}",
@@ -374,19 +393,27 @@ class AsyncRawPromptsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Prompt, ListPromptsResponse]:
         """
+        List prompts with optional filtering by FQN, ML Repo, or name.
+
         Parameters
         ----------
         fqn : typing.Optional[str]
+            Fully qualified name to filter prompts by (format: 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}')
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter prompts by
 
         name : typing.Optional[str]
+            Name of the prompt to filter by
 
         offset : typing.Optional[int]
+            Number of prompts to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of prompts to return
 
         include_empty_prompts : typing.Optional[bool]
+            Whether to include prompts that have no versions
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -394,7 +421,7 @@ class AsyncRawPromptsClient:
         Returns
         -------
         AsyncPager[Prompt, ListPromptsResponse]
-            Successful Response
+            List of prompts matching the query with pagination information
         """
         offset = offset if offset is not None else 0
 
@@ -455,9 +482,12 @@ class AsyncRawPromptsClient:
         self, *, manifest: ChatPromptManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetPromptVersionResponse]:
         """
+        Create or update a prompt version.
+
         Parameters
         ----------
         manifest : ChatPromptManifest
+            Manifest containing metadata for the prompt to apply
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -465,7 +495,7 @@ class AsyncRawPromptsClient:
         Returns
         -------
         AsyncHttpResponse[GetPromptVersionResponse]
-            Successful Response
+            The created or updated prompt version
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/prompt-versions",

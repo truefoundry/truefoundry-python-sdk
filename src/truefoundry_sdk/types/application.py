@@ -23,31 +23,31 @@ class Application(UniversalBaseModel):
     fqn: typing.Optional[str] = None
     name: typing.Optional[str] = None
     type: typing.Optional[ApplicationType] = None
-    created_by_subject: typing_extensions.Annotated[Subject, FieldMetadata(alias="createdBySubject")] = pydantic.Field(
-        alias="createdBySubject"
-    )
-    tenant_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="tenantName")] = pydantic.Field(
-        alias="tenantName", default=None
-    )
+    created_by_subject: typing_extensions.Annotated[
+        Subject, FieldMetadata(alias="createdBySubject"), pydantic.Field(alias="createdBySubject")
+    ]
+    tenant_name: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="tenantName"), pydantic.Field(alias="tenantName")
+    ] = None
     metadata: typing.Optional[ApplicationMetadata] = None
-    lifecycle_stage: typing_extensions.Annotated[ApplicationLifecycleStage, FieldMetadata(alias="lifecycleStage")] = (
-        pydantic.Field(alias="lifecycleStage")
-    )
-    workspace_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="workspaceId")] = (
-        pydantic.Field(alias="workspaceId", default=None)
-    )
-    last_version: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="lastVersion")] = (
-        pydantic.Field(alias="lastVersion", default=None)
-    )
-    active_version: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="activeVersion")] = (
-        pydantic.Field(alias="activeVersion", default=None)
-    )
-    created_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAt")] = (
-        pydantic.Field(alias="createdAt", default=None)
-    )
-    updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = (
-        pydantic.Field(alias="updatedAt", default=None)
-    )
+    lifecycle_stage: typing_extensions.Annotated[
+        ApplicationLifecycleStage, FieldMetadata(alias="lifecycleStage"), pydantic.Field(alias="lifecycleStage")
+    ]
+    workspace_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="workspaceId"), pydantic.Field(alias="workspaceId")
+    ] = None
+    last_version: typing_extensions.Annotated[
+        typing.Optional[int], FieldMetadata(alias="lastVersion"), pydantic.Field(alias="lastVersion")
+    ] = None
+    active_version: typing_extensions.Annotated[
+        typing.Optional[int], FieldMetadata(alias="activeVersion"), pydantic.Field(alias="activeVersion")
+    ] = None
+    created_at: typing_extensions.Annotated[
+        typing.Optional[dt.datetime], FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
+    ] = None
+    updated_at: typing_extensions.Annotated[
+        typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt"), pydantic.Field(alias="updatedAt")
+    ] = None
     recommendations: typing.Optional[typing.List[Recommendation]] = pydantic.Field(default=None)
     """
     Recommendations for this application
@@ -59,40 +59,34 @@ class Application(UniversalBaseModel):
     """
 
     alerts_summary: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, typing.Any]], FieldMetadata(alias="alertsSummary")
-    ] = pydantic.Field(alias="alertsSummary", default=None)
-    """
-    Summary of alerts for this application
-    """
-
+        typing.Optional[typing.Dict[str, typing.Any]],
+        FieldMetadata(alias="alertsSummary"),
+        pydantic.Field(alias="alertsSummary", description="Summary of alerts for this application"),
+    ] = None
     application_debug_infos: typing_extensions.Annotated[
-        typing.Optional[typing.List["ApplicationDebugInfo"]], FieldMetadata(alias="applicationDebugInfos")
-    ] = pydantic.Field(alias="applicationDebugInfos", default=None)
-    """
-    Debug infos for this application
-    """
-
+        typing.Optional[typing.List["ApplicationDebugInfo"]],
+        FieldMetadata(alias="applicationDebugInfos"),
+        pydantic.Field(alias="applicationDebugInfos", description="Debug infos for this application"),
+    ] = None
     potential_problems: typing_extensions.Annotated[
-        typing.Optional[typing.List[ApplicationProblem]], FieldMetadata(alias="potentialProblems")
-    ] = pydantic.Field(alias="potentialProblems", default=None)
-    """
-    Potential problems with the application
-    """
-
+        typing.Optional[typing.List[ApplicationProblem]],
+        FieldMetadata(alias="potentialProblems"),
+        pydantic.Field(alias="potentialProblems", description="Potential problems with the application"),
+    ] = None
     autopilot: typing.Dict[str, typing.Any]
-    workspace_fqn: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="workspaceFqn")] = (
-        pydantic.Field(alias="workspaceFqn", default=None)
-    )
-    created_by: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="createdBy")] = pydantic.Field(
-        alias="createdBy", default=None
-    )
+    workspace_fqn: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="workspaceFqn"), pydantic.Field(alias="workspaceFqn")
+    ] = None
+    created_by: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="createdBy"), pydantic.Field(alias="createdBy")
+    ] = None
     deployment: typing.Optional["Deployment"] = None
     active_deployment_id: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="activeDeploymentId")
-    ] = pydantic.Field(alias="activeDeploymentId", default=None)
-    last_deployment_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="lastDeploymentId")] = (
-        pydantic.Field(alias="lastDeploymentId", default=None)
-    )
+        typing.Optional[str], FieldMetadata(alias="activeDeploymentId"), pydantic.Field(alias="activeDeploymentId")
+    ] = None
+    last_deployment_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="lastDeploymentId"), pydantic.Field(alias="lastDeploymentId")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

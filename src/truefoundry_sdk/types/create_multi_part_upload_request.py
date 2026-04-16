@@ -7,9 +7,20 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class CreateMultiPartUploadRequest(UniversalBaseModel):
-    id: str
-    path: str
-    num_parts: int
+    id: str = pydantic.Field()
+    """
+    ID of the artifact version to upload files to
+    """
+
+    path: str = pydantic.Field()
+    """
+    Relative path within the artifact version where the file should be uploaded
+    """
+
+    num_parts: int = pydantic.Field()
+    """
+    Number of parts to split the upload into for multipart upload
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

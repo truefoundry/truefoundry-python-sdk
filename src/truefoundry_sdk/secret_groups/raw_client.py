@@ -189,7 +189,11 @@ class RawSecretGroupsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create_or_update(
-        self, *, manifest: SecretGroupManifest, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        manifest: SecretGroupManifest,
+        dry_run: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetSecretGroupResponse]:
         """
         Creates a new secret group or updates an existing one based on the provided manifest.
@@ -198,6 +202,9 @@ class RawSecretGroupsClient:
         ----------
         manifest : SecretGroupManifest
             Secret Group Manifest
+
+        dry_run : typing.Optional[bool]
+            Validate the manifest and collaborators without persisting or updating authorizations and secret groups
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -214,6 +221,7 @@ class RawSecretGroupsClient:
                 "manifest": convert_and_respect_annotation_metadata(
                     object_=manifest, annotation=SecretGroupManifest, direction="write"
                 ),
+                "dryRun": dry_run,
             },
             headers={
                 "content-type": "application/json",
@@ -674,7 +682,11 @@ class AsyncRawSecretGroupsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create_or_update(
-        self, *, manifest: SecretGroupManifest, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        manifest: SecretGroupManifest,
+        dry_run: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetSecretGroupResponse]:
         """
         Creates a new secret group or updates an existing one based on the provided manifest.
@@ -683,6 +695,9 @@ class AsyncRawSecretGroupsClient:
         ----------
         manifest : SecretGroupManifest
             Secret Group Manifest
+
+        dry_run : typing.Optional[bool]
+            Validate the manifest and collaborators without persisting or updating authorizations and secret groups
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -699,6 +714,7 @@ class AsyncRawSecretGroupsClient:
                 "manifest": convert_and_respect_annotation_metadata(
                     object_=manifest, annotation=SecretGroupManifest, direction="write"
                 ),
+                "dryRun": dry_run,
             },
             headers={
                 "content-type": "application/json",

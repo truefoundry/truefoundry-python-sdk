@@ -13,6 +13,7 @@ class TaskDockerFileBuild(UniversalBaseModel):
 
     type: typing.Literal["task-dockerfile-build"] = pydantic.Field(default="task-dockerfile-build")
     """
+    +uiType=Hidden
     +value=dockerfile
     """
 

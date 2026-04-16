@@ -31,6 +31,8 @@ class RawModelsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetModelResponse]:
         """
+        Get a model by its ID.
+
         Parameters
         ----------
         id : str
@@ -41,7 +43,7 @@ class RawModelsClient:
         Returns
         -------
         HttpResponse[GetModelResponse]
-            Successful Response
+            The model data
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/ml/v1/models/{jsonable_encoder(id)}",
@@ -78,6 +80,8 @@ class RawModelsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[EmptyResponse]:
         """
+        Delete a model by its ID.
+
         Parameters
         ----------
         id : str
@@ -88,7 +92,7 @@ class RawModelsClient:
         Returns
         -------
         HttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/ml/v1/models/{jsonable_encoder(id)}",
@@ -134,21 +138,30 @@ class RawModelsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Model, ListModelsResponse]:
         """
+        List models with optional filtering by FQN, ML Repo, name, or run ID.
+
         Parameters
         ----------
         fqn : typing.Optional[str]
+            Fully qualified name to filter models by (format: 'model:{tenant_name}/{ml_repo_name}/{model_name}')
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter models by
 
         name : typing.Optional[str]
+            Name of the model to filter by
 
         offset : typing.Optional[int]
+            Number of models to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of models to return
 
         run_id : typing.Optional[str]
+            ID of the run to filter models by
 
         include_empty_models : typing.Optional[bool]
+            Whether to include models that have no versions
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -156,7 +169,7 @@ class RawModelsClient:
         Returns
         -------
         SyncPager[Model, ListModelsResponse]
-            Successful Response
+            List of models matching the query with pagination information
         """
         offset = offset if offset is not None else 0
 
@@ -216,9 +229,12 @@ class RawModelsClient:
         self, *, manifest: ModelManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetModelVersionResponse]:
         """
+        Create or update a model version.
+
         Parameters
         ----------
         manifest : ModelManifest
+            Manifest containing metadata for the model to apply
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -226,7 +242,7 @@ class RawModelsClient:
         Returns
         -------
         HttpResponse[GetModelVersionResponse]
-            Successful Response
+            The created or updated model version
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/model-versions",
@@ -277,6 +293,8 @@ class AsyncRawModelsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetModelResponse]:
         """
+        Get a model by its ID.
+
         Parameters
         ----------
         id : str
@@ -287,7 +305,7 @@ class AsyncRawModelsClient:
         Returns
         -------
         AsyncHttpResponse[GetModelResponse]
-            Successful Response
+            The model data
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/ml/v1/models/{jsonable_encoder(id)}",
@@ -324,6 +342,8 @@ class AsyncRawModelsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[EmptyResponse]:
         """
+        Delete a model by its ID.
+
         Parameters
         ----------
         id : str
@@ -334,7 +354,7 @@ class AsyncRawModelsClient:
         Returns
         -------
         AsyncHttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/ml/v1/models/{jsonable_encoder(id)}",
@@ -380,21 +400,30 @@ class AsyncRawModelsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Model, ListModelsResponse]:
         """
+        List models with optional filtering by FQN, ML Repo, name, or run ID.
+
         Parameters
         ----------
         fqn : typing.Optional[str]
+            Fully qualified name to filter models by (format: 'model:{tenant_name}/{ml_repo_name}/{model_name}')
 
         ml_repo_id : typing.Optional[str]
+            ID of the ML Repo to filter models by
 
         name : typing.Optional[str]
+            Name of the model to filter by
 
         offset : typing.Optional[int]
+            Number of models to skip for pagination
 
         limit : typing.Optional[int]
+            Maximum number of models to return
 
         run_id : typing.Optional[str]
+            ID of the run to filter models by
 
         include_empty_models : typing.Optional[bool]
+            Whether to include models that have no versions
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -402,7 +431,7 @@ class AsyncRawModelsClient:
         Returns
         -------
         AsyncPager[Model, ListModelsResponse]
-            Successful Response
+            List of models matching the query with pagination information
         """
         offset = offset if offset is not None else 0
 
@@ -465,9 +494,12 @@ class AsyncRawModelsClient:
         self, *, manifest: ModelManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetModelVersionResponse]:
         """
+        Create or update a model version.
+
         Parameters
         ----------
         manifest : ModelManifest
+            Manifest containing metadata for the model to apply
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -475,7 +507,7 @@ class AsyncRawModelsClient:
         Returns
         -------
         AsyncHttpResponse[GetModelVersionResponse]
-            Successful Response
+            The created or updated model version
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/model-versions",

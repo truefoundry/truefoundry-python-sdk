@@ -27,9 +27,12 @@ class RawMlClient:
         self, *, manifest: ApplyMlEntityRequestManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[ApplyMlEntityResponse]:
         """
+        Create or update an ML entity (model, prompt, artifact, or data directory).
+
         Parameters
         ----------
         manifest : ApplyMlEntityRequestManifest
+            Manifest containing metadata for the ML entity to apply (model, prompt, artifact, agent skill, or data directory)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -37,7 +40,7 @@ class RawMlClient:
         Returns
         -------
         HttpResponse[ApplyMlEntityResponse]
-            Successful Response
+            The created or updated ML entity
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/apply",
@@ -83,9 +86,12 @@ class RawMlClient:
         self, *, manifest: DeleteMlEntityRequestManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[EmptyResponse]:
         """
+        Delete an ML entity (model, prompt, artifact, agent skill, data directory, or ML Repo) by manifest.
+
         Parameters
         ----------
         manifest : DeleteMlEntityRequestManifest
+            Manifest identifying the ML entity to delete (model, prompt, artifact, agent skill, data directory, or ML Repo)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -93,7 +99,7 @@ class RawMlClient:
         Returns
         -------
         HttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/ml/v1/delete",
@@ -144,9 +150,12 @@ class AsyncRawMlClient:
         self, *, manifest: ApplyMlEntityRequestManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[ApplyMlEntityResponse]:
         """
+        Create or update an ML entity (model, prompt, artifact, or data directory).
+
         Parameters
         ----------
         manifest : ApplyMlEntityRequestManifest
+            Manifest containing metadata for the ML entity to apply (model, prompt, artifact, agent skill, or data directory)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -154,7 +163,7 @@ class AsyncRawMlClient:
         Returns
         -------
         AsyncHttpResponse[ApplyMlEntityResponse]
-            Successful Response
+            The created or updated ML entity
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/apply",
@@ -200,9 +209,12 @@ class AsyncRawMlClient:
         self, *, manifest: DeleteMlEntityRequestManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[EmptyResponse]:
         """
+        Delete an ML entity (model, prompt, artifact, agent skill, data directory, or ML Repo) by manifest.
+
         Parameters
         ----------
         manifest : DeleteMlEntityRequestManifest
+            Manifest identifying the ML entity to delete (model, prompt, artifact, agent skill, data directory, or ML Repo)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -210,7 +222,7 @@ class AsyncRawMlClient:
         Returns
         -------
         AsyncHttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/ml/v1/delete",

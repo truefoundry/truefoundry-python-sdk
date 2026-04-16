@@ -4,11 +4,12 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .mcp_server_header_auth_auth_level import McpServerHeaderAuthAuthLevel
 
 
 class McpServerHeaderAuth(UniversalBaseModel):
     """
-    Static API key or token authentication via request headers. All users share the same credentials.
+    Authenticate using a static key or token sent as a request header. Choose shared vs individual credentials below.
     """
 
     type: typing.Literal["header"] = pydantic.Field(default="header")
@@ -16,7 +17,15 @@ class McpServerHeaderAuth(UniversalBaseModel):
     +value=header
     """
 
-    headers: typing.Dict[str, str]
+    headers: typing.Dict[str, str] = pydantic.Field()
+    """
+    Map each header name to its value. For shared, enter the actual value. For individual, use a placeholder that will be filled in by each user (e.g. Bearer {{API_KEY}}).
+    """
+
+    auth_level: McpServerHeaderAuthAuthLevel = pydantic.Field()
+    """
+    Level at which this authentication will be applied. Values: global (default), per_user
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

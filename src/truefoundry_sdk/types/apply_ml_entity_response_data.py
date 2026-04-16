@@ -2,9 +2,10 @@
 
 import typing
 
+from .agent_skill_version import AgentSkillVersion
 from .artifact_version import ArtifactVersion
 from .data_directory import DataDirectory
 from .model_version import ModelVersion
 from .prompt_version import PromptVersion
 
-ApplyMlEntityResponseData = typing.Union[ModelVersion, PromptVersion, ArtifactVersion, DataDirectory]
+ApplyMlEntityResponseData = typing.Union[ModelVersion, PromptVersion, AgentSkillVersion, ArtifactVersion, DataDirectory]

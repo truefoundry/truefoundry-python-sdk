@@ -39,10 +39,11 @@ class WorkspacesClient:
         cluster_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
+        include_cluster: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Workspace, ListWorkspacesResponse]:
         """
-        List workspaces associated with the user. Optional filters include clusterId, fqn, and workspace name. Pagination is available based on query parameters.
+        List workspaces associated with the user. Optional filters include clusterId, fqn, and workspace name.
 
         Parameters
         ----------
@@ -60,6 +61,9 @@ class WorkspacesClient:
 
         fqn : typing.Optional[str]
             Workspace FQN
+
+        include_cluster : typing.Optional[bool]
+            When true, each workspace includes cluster information
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -83,6 +87,7 @@ class WorkspacesClient:
             cluster_id="clusterId",
             name="name",
             fqn="fqn",
+            include_cluster=True,
         )
         for item in response:
             yield item
@@ -91,7 +96,13 @@ class WorkspacesClient:
             yield page
         """
         return self._raw_client.list(
-            limit=limit, offset=offset, cluster_id=cluster_id, name=name, fqn=fqn, request_options=request_options
+            limit=limit,
+            offset=offset,
+            cluster_id=cluster_id,
+            name=name,
+            fqn=fqn,
+            include_cluster=include_cluster,
+            request_options=request_options,
         )
 
     def create_or_update(
@@ -141,6 +152,64 @@ class WorkspacesClient:
             manifest=manifest, dry_run=dry_run, request_options=request_options
         )
         return _response.data
+
+    def search(
+        self,
+        *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
+        filter: typing.Optional[str] = None,
+        include_cluster: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncPager[Workspace, ListWorkspacesResponse]:
+        """
+        List workspaces the user can read with optional structured `filter` (name, id, environmentId, cluster_fqn) and pagination.
+
+        Parameters
+        ----------
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
+        filter : typing.Optional[str]
+            JSON string containing array of search filters with string, type and operator
+
+        include_cluster : typing.Optional[bool]
+            When true, each workspace includes cluster information
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[Workspace, ListWorkspacesResponse]
+            Paginated workspaces matching the filter.
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.workspaces.search(
+            limit=10,
+            offset=0,
+            filter="filter",
+            include_cluster=True,
+        )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
+        """
+        return self._raw_client.search(
+            limit=limit, offset=offset, filter=filter, include_cluster=include_cluster, request_options=request_options
+        )
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetWorkspaceResponse:
         """
@@ -232,10 +301,11 @@ class AsyncWorkspacesClient:
         cluster_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
+        include_cluster: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Workspace, ListWorkspacesResponse]:
         """
-        List workspaces associated with the user. Optional filters include clusterId, fqn, and workspace name. Pagination is available based on query parameters.
+        List workspaces associated with the user. Optional filters include clusterId, fqn, and workspace name.
 
         Parameters
         ----------
@@ -253,6 +323,9 @@ class AsyncWorkspacesClient:
 
         fqn : typing.Optional[str]
             Workspace FQN
+
+        include_cluster : typing.Optional[bool]
+            When true, each workspace includes cluster information
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -281,6 +354,7 @@ class AsyncWorkspacesClient:
                 cluster_id="clusterId",
                 name="name",
                 fqn="fqn",
+                include_cluster=True,
             )
             async for item in response:
                 yield item
@@ -293,7 +367,13 @@ class AsyncWorkspacesClient:
         asyncio.run(main())
         """
         return await self._raw_client.list(
-            limit=limit, offset=offset, cluster_id=cluster_id, name=name, fqn=fqn, request_options=request_options
+            limit=limit,
+            offset=offset,
+            cluster_id=cluster_id,
+            name=name,
+            fqn=fqn,
+            include_cluster=include_cluster,
+            request_options=request_options,
         )
 
     async def create_or_update(
@@ -351,6 +431,73 @@ class AsyncWorkspacesClient:
             manifest=manifest, dry_run=dry_run, request_options=request_options
         )
         return _response.data
+
+    async def search(
+        self,
+        *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
+        filter: typing.Optional[str] = None,
+        include_cluster: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncPager[Workspace, ListWorkspacesResponse]:
+        """
+        List workspaces the user can read with optional structured `filter` (name, id, environmentId, cluster_fqn) and pagination.
+
+        Parameters
+        ----------
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
+        filter : typing.Optional[str]
+            JSON string containing array of search filters with string, type and operator
+
+        include_cluster : typing.Optional[bool]
+            When true, each workspace includes cluster information
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[Workspace, ListWorkspacesResponse]
+            Paginated workspaces matching the filter.
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.workspaces.search(
+                limit=10,
+                offset=0,
+                filter="filter",
+                include_cluster=True,
+            )
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
+        """
+        return await self._raw_client.search(
+            limit=limit, offset=offset, filter=filter, include_cluster=include_cluster, request_options=request_options
+        )
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetWorkspaceResponse:
         """
