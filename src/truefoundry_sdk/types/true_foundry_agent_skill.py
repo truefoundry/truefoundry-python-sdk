@@ -4,13 +4,18 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .flyte_task_custom import FlyteTaskCustom
-from .flyte_task_id import FlyteTaskId
 
 
-class TruefoundryFlyteTaskTemplate(UniversalBaseModel):
-    id: FlyteTaskId
-    custom: FlyteTaskCustom
+class TrueFoundryAgentSkill(UniversalBaseModel):
+    fqn: str = pydantic.Field()
+    """
+    Fully qualified name of the agent skill
+    """
+
+    eager: typing.Optional[bool] = pydantic.Field(default=False)
+    """
+    When true, the skill's markdown content is loaded into the agent context before the first turn
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

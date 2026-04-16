@@ -12,6 +12,7 @@ from .true_foundry_agent_manifest_model_params import TrueFoundryAgentManifestMo
 from .true_foundry_agent_manifest_response_format import TrueFoundryAgentManifestResponseFormat
 from .true_foundry_agent_manifest_sandbox import TrueFoundryAgentManifestSandbox
 from .true_foundry_agent_mcp_server import TrueFoundryAgentMcpServer
+from .true_foundry_agent_skill import TrueFoundryAgentSkill
 from .true_foundry_agent_user_message import TrueFoundryAgentUserMessage
 from .true_foundry_agent_variable import TrueFoundryAgentVariable
 
@@ -45,6 +46,11 @@ class TrueFoundryAgentManifest(UniversalBaseModel):
     model_params: typing.Optional[TrueFoundryAgentManifestModelParams] = pydantic.Field(default=None)
     """
     Model parameters (default and extra). Keys are param names, values are float, int, bool, or string.
+    """
+
+    skills: typing.Optional[typing.List[TrueFoundryAgentSkill]] = pydantic.Field(default=None)
+    """
+    List of agent skills to attach to this agent
     """
 
     mcp_servers: typing.Optional[typing.List[TrueFoundryAgentMcpServer]] = pydantic.Field(default=None)

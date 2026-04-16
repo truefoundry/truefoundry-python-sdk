@@ -13,6 +13,7 @@ from .cartesia_provider_account import CartesiaProviderAccount
 from .cerebras_provider_account import CerebrasProviderAccount
 from .cloudera_provider_account import ClouderaProviderAccount
 from .cohere_provider_account import CohereProviderAccount
+from .custom_endpoint_provider_account import CustomEndpointProviderAccount
 from .databricks_provider_account import DatabricksProviderAccount
 from .deepgram_provider_account import DeepgramProviderAccount
 from .deepinfra_provider_account import DeepinfraProviderAccount
@@ -66,4 +67,5 @@ ModelProviderAccount = typing.Union[
     DeepgramProviderAccount,
     CartesiaProviderAccount,
     VirtualModelProviderAccount,
+    CustomEndpointProviderAccount,
 ]

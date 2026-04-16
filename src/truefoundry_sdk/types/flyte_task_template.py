@@ -2,7 +2,20 @@
 
 import typing
 
-from .native_snowflake_flyte_task_template import NativeSnowflakeFlyteTaskTemplate
-from .truefoundry_flyte_task_template import TruefoundryFlyteTaskTemplate
+import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .flyte_task_custom import FlyteTaskCustom
+from .flyte_task_id import FlyteTaskId
 
-FlyteTaskTemplate = typing.Union[TruefoundryFlyteTaskTemplate, NativeSnowflakeFlyteTaskTemplate]
+
+class FlyteTaskTemplate(UniversalBaseModel):
+    id: FlyteTaskId
+    custom: FlyteTaskCustom
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            smart_union = True
+            extra = pydantic.Extra.allow

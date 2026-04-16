@@ -227,6 +227,11 @@ if typing.TYPE_CHECKING:
     from .custom_basic_auth import CustomBasicAuth
     from .custom_bearer_auth import CustomBearerAuth
     from .custom_blob_storage import CustomBlobStorage
+    from .custom_endpoint import CustomEndpoint
+    from .custom_endpoint_auth_data import CustomEndpointAuthData
+    from .custom_endpoint_integrations import CustomEndpointIntegrations
+    from .custom_endpoint_provider_account import CustomEndpointProviderAccount
+    from .custom_endpoint_provider_account_auth_data import CustomEndpointProviderAccountAuthData
     from .custom_framework import CustomFramework
     from .custom_guardrail_config import CustomGuardrailConfig
     from .custom_guardrail_config_auth_data import CustomGuardrailConfigAuthData
@@ -622,9 +627,6 @@ if typing.TYPE_CHECKING:
     from .multi_part_upload import MultiPartUpload
     from .multi_part_upload_response import MultiPartUploadResponse
     from .multi_part_upload_storage_provider import MultiPartUploadStorageProvider
-    from .native_snowflake_flyte_task_template import NativeSnowflakeFlyteTaskTemplate
-    from .native_snowflake_flyte_task_template_config import NativeSnowflakeFlyteTaskTemplateConfig
-    from .native_snowflake_flyte_task_template_sql import NativeSnowflakeFlyteTaskTemplateSql
     from .nats_input_config import NatsInputConfig
     from .nats_metric_config import NatsMetricConfig
     from .nats_output_config import NatsOutputConfig
@@ -856,9 +858,6 @@ if typing.TYPE_CHECKING:
     from .snowflake_cortex_model import SnowflakeCortexModel
     from .snowflake_cortex_pat_token_auth import SnowflakeCortexPatTokenAuth
     from .snowflake_cortex_provider_account import SnowflakeCortexProviderAccount
-    from .snowflake_task_config import SnowflakeTaskConfig
-    from .snowflake_task_config_image import SnowflakeTaskConfigImage
-    from .snowflake_task_config_mounts_item import SnowflakeTaskConfigMountsItem
     from .sort_direction import SortDirection
     from .spa_cy_framework import SpaCyFramework
     from .span_attribute_filter import SpanAttributeFilter
@@ -964,6 +963,7 @@ if typing.TYPE_CHECKING:
     from .true_foundry_agent_manifest_sandbox import TrueFoundryAgentManifestSandbox
     from .true_foundry_agent_mcp_server import TrueFoundryAgentMcpServer
     from .true_foundry_agent_mcp_tool import TrueFoundryAgentMcpTool
+    from .true_foundry_agent_skill import TrueFoundryAgentSkill
     from .true_foundry_agent_user_message import TrueFoundryAgentUserMessage
     from .true_foundry_agent_variable import TrueFoundryAgentVariable
     from .true_foundry_apply_request_manifest import TrueFoundryApplyRequestManifest
@@ -977,7 +977,6 @@ if typing.TYPE_CHECKING:
     from .true_foundry_interactive_login import TrueFoundryInteractiveLogin
     from .true_foundry_managed_source import TrueFoundryManagedSource
     from .true_foundry_provider_account import TrueFoundryProviderAccount
-    from .truefoundry_flyte_task_template import TruefoundryFlyteTaskTemplate
     from .ttl_integrations import TtlIntegrations
     from .ttl_provider_account import TtlProviderAccount
     from .ttl_registry import TtlRegistry
@@ -1256,6 +1255,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CustomBasicAuth": ".custom_basic_auth",
     "CustomBearerAuth": ".custom_bearer_auth",
     "CustomBlobStorage": ".custom_blob_storage",
+    "CustomEndpoint": ".custom_endpoint",
+    "CustomEndpointAuthData": ".custom_endpoint_auth_data",
+    "CustomEndpointIntegrations": ".custom_endpoint_integrations",
+    "CustomEndpointProviderAccount": ".custom_endpoint_provider_account",
+    "CustomEndpointProviderAccountAuthData": ".custom_endpoint_provider_account_auth_data",
     "CustomFramework": ".custom_framework",
     "CustomGuardrailConfig": ".custom_guardrail_config",
     "CustomGuardrailConfigAuthData": ".custom_guardrail_config_auth_data",
@@ -1637,9 +1641,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MultiPartUpload": ".multi_part_upload",
     "MultiPartUploadResponse": ".multi_part_upload_response",
     "MultiPartUploadStorageProvider": ".multi_part_upload_storage_provider",
-    "NativeSnowflakeFlyteTaskTemplate": ".native_snowflake_flyte_task_template",
-    "NativeSnowflakeFlyteTaskTemplateConfig": ".native_snowflake_flyte_task_template_config",
-    "NativeSnowflakeFlyteTaskTemplateSql": ".native_snowflake_flyte_task_template_sql",
     "NatsInputConfig": ".nats_input_config",
     "NatsMetricConfig": ".nats_metric_config",
     "NatsOutputConfig": ".nats_output_config",
@@ -1874,9 +1875,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SnowflakeCortexModel": ".snowflake_cortex_model",
     "SnowflakeCortexPatTokenAuth": ".snowflake_cortex_pat_token_auth",
     "SnowflakeCortexProviderAccount": ".snowflake_cortex_provider_account",
-    "SnowflakeTaskConfig": ".snowflake_task_config",
-    "SnowflakeTaskConfigImage": ".snowflake_task_config_image",
-    "SnowflakeTaskConfigMountsItem": ".snowflake_task_config_mounts_item",
     "SortDirection": ".sort_direction",
     "SpaCyFramework": ".spa_cy_framework",
     "SpanAttributeFilter": ".span_attribute_filter",
@@ -1980,6 +1978,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TrueFoundryAgentManifestSandbox": ".true_foundry_agent_manifest_sandbox",
     "TrueFoundryAgentMcpServer": ".true_foundry_agent_mcp_server",
     "TrueFoundryAgentMcpTool": ".true_foundry_agent_mcp_tool",
+    "TrueFoundryAgentSkill": ".true_foundry_agent_skill",
     "TrueFoundryAgentUserMessage": ".true_foundry_agent_user_message",
     "TrueFoundryAgentVariable": ".true_foundry_agent_variable",
     "TrueFoundryApplyRequestManifest": ".true_foundry_apply_request_manifest",
@@ -1993,7 +1992,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TrueFoundryInteractiveLogin": ".true_foundry_interactive_login",
     "TrueFoundryManagedSource": ".true_foundry_managed_source",
     "TrueFoundryProviderAccount": ".true_foundry_provider_account",
-    "TruefoundryFlyteTaskTemplate": ".truefoundry_flyte_task_template",
     "TtlIntegrations": ".ttl_integrations",
     "TtlProviderAccount": ".ttl_provider_account",
     "TtlRegistry": ".ttl_registry",
@@ -2296,6 +2294,11 @@ __all__ = [
     "CustomBasicAuth",
     "CustomBearerAuth",
     "CustomBlobStorage",
+    "CustomEndpoint",
+    "CustomEndpointAuthData",
+    "CustomEndpointIntegrations",
+    "CustomEndpointProviderAccount",
+    "CustomEndpointProviderAccountAuthData",
     "CustomFramework",
     "CustomGuardrailConfig",
     "CustomGuardrailConfigAuthData",
@@ -2677,9 +2680,6 @@ __all__ = [
     "MultiPartUpload",
     "MultiPartUploadResponse",
     "MultiPartUploadStorageProvider",
-    "NativeSnowflakeFlyteTaskTemplate",
-    "NativeSnowflakeFlyteTaskTemplateConfig",
-    "NativeSnowflakeFlyteTaskTemplateSql",
     "NatsInputConfig",
     "NatsMetricConfig",
     "NatsOutputConfig",
@@ -2914,9 +2914,6 @@ __all__ = [
     "SnowflakeCortexModel",
     "SnowflakeCortexPatTokenAuth",
     "SnowflakeCortexProviderAccount",
-    "SnowflakeTaskConfig",
-    "SnowflakeTaskConfigImage",
-    "SnowflakeTaskConfigMountsItem",
     "SortDirection",
     "SpaCyFramework",
     "SpanAttributeFilter",
@@ -3020,6 +3017,7 @@ __all__ = [
     "TrueFoundryAgentManifestSandbox",
     "TrueFoundryAgentMcpServer",
     "TrueFoundryAgentMcpTool",
+    "TrueFoundryAgentSkill",
     "TrueFoundryAgentUserMessage",
     "TrueFoundryAgentVariable",
     "TrueFoundryApplyRequestManifest",
@@ -3033,7 +3031,6 @@ __all__ = [
     "TrueFoundryInteractiveLogin",
     "TrueFoundryManagedSource",
     "TrueFoundryProviderAccount",
-    "TruefoundryFlyteTaskTemplate",
     "TtlIntegrations",
     "TtlProviderAccount",
     "TtlRegistry",
