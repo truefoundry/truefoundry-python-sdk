@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import encode_path_param
+from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
@@ -335,7 +335,7 @@ class RawUsersClient:
             Returns the User associated with provided User id
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/users/{encode_path_param(id)}",
+            f"api/svc/v1/users/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -396,7 +396,7 @@ class RawUsersClient:
             User has been successfully deleted.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/users/{encode_path_param(id)}",
+            f"api/svc/v1/users/{jsonable_encoder(id)}",
             method="DELETE",
             params={
                 "tenantName": tenant_name,
@@ -785,7 +785,7 @@ class RawUsersClient:
             Returns all resources for the user.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/users/{encode_path_param(id)}/resources",
+            f"api/svc/v1/users/{jsonable_encoder(id)}/resources",
             method="GET",
             request_options=request_options,
         )
@@ -850,7 +850,7 @@ class RawUsersClient:
             Returns role bindings for the user (including team-inherited).
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/users/{encode_path_param(id)}/permissions",
+            f"api/svc/v1/users/{jsonable_encoder(id)}/permissions",
             method="GET",
             request_options=request_options,
         )
@@ -915,7 +915,7 @@ class RawUsersClient:
             Returns all teams for the user with their roles.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/users/{encode_path_param(id)}/teams",
+            f"api/svc/v1/users/{jsonable_encoder(id)}/teams",
             method="GET",
             request_options=request_options,
         )
@@ -1264,7 +1264,7 @@ class AsyncRawUsersClient:
             Returns the User associated with provided User id
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/users/{encode_path_param(id)}",
+            f"api/svc/v1/users/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -1325,7 +1325,7 @@ class AsyncRawUsersClient:
             User has been successfully deleted.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/users/{encode_path_param(id)}",
+            f"api/svc/v1/users/{jsonable_encoder(id)}",
             method="DELETE",
             params={
                 "tenantName": tenant_name,
@@ -1714,7 +1714,7 @@ class AsyncRawUsersClient:
             Returns all resources for the user.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/users/{encode_path_param(id)}/resources",
+            f"api/svc/v1/users/{jsonable_encoder(id)}/resources",
             method="GET",
             request_options=request_options,
         )
@@ -1779,7 +1779,7 @@ class AsyncRawUsersClient:
             Returns role bindings for the user (including team-inherited).
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/users/{encode_path_param(id)}/permissions",
+            f"api/svc/v1/users/{jsonable_encoder(id)}/permissions",
             method="GET",
             request_options=request_options,
         )
@@ -1844,7 +1844,7 @@ class AsyncRawUsersClient:
             Returns all teams for the user with their roles.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/users/{encode_path_param(id)}/teams",
+            f"api/svc/v1/users/{jsonable_encoder(id)}/teams",
             method="GET",
             request_options=request_options,
         )

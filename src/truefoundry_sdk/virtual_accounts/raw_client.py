@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import encode_path_param
+from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
@@ -221,7 +221,7 @@ class RawVirtualAccountsClient:
             Returns the virtual account associated with the provided virtual account id
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/virtual-accounts/{encode_path_param(id)}",
+            f"api/svc/v1/virtual-accounts/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -275,7 +275,7 @@ class RawVirtualAccountsClient:
             Virtual account deleted successfully
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/virtual-accounts/{encode_path_param(id)}",
+            f"api/svc/v1/virtual-accounts/{jsonable_encoder(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -329,7 +329,7 @@ class RawVirtualAccountsClient:
             Token for the virtual account
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/virtual-accounts/{encode_path_param(id)}/token",
+            f"api/svc/v1/virtual-accounts/{jsonable_encoder(id)}/token",
             method="GET",
             request_options=request_options,
         )
@@ -372,7 +372,7 @@ class RawVirtualAccountsClient:
             Token synced successfully to secret store
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/virtual-accounts/{encode_path_param(id)}/sync-to-secret-store",
+            f"api/svc/v1/virtual-accounts/{jsonable_encoder(id)}/sync-to-secret-store",
             method="POST",
             request_options=request_options,
         )
@@ -440,7 +440,7 @@ class RawVirtualAccountsClient:
             Token for the virtual account
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/virtual-accounts/{encode_path_param(id)}/regenerate-token",
+            f"api/svc/v1/virtual-accounts/{jsonable_encoder(id)}/regenerate-token",
             method="POST",
             json={
                 "gracePeriodInDays": grace_period_in_days,
@@ -492,7 +492,7 @@ class RawVirtualAccountsClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/virtual-accounts/{encode_path_param(id)}/jwt/{encode_path_param(jwt_id)}",
+            f"api/svc/v1/virtual-accounts/{jsonable_encoder(id)}/jwt/{jsonable_encoder(jwt_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -705,7 +705,7 @@ class AsyncRawVirtualAccountsClient:
             Returns the virtual account associated with the provided virtual account id
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/virtual-accounts/{encode_path_param(id)}",
+            f"api/svc/v1/virtual-accounts/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -759,7 +759,7 @@ class AsyncRawVirtualAccountsClient:
             Virtual account deleted successfully
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/virtual-accounts/{encode_path_param(id)}",
+            f"api/svc/v1/virtual-accounts/{jsonable_encoder(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -813,7 +813,7 @@ class AsyncRawVirtualAccountsClient:
             Token for the virtual account
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/virtual-accounts/{encode_path_param(id)}/token",
+            f"api/svc/v1/virtual-accounts/{jsonable_encoder(id)}/token",
             method="GET",
             request_options=request_options,
         )
@@ -856,7 +856,7 @@ class AsyncRawVirtualAccountsClient:
             Token synced successfully to secret store
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/virtual-accounts/{encode_path_param(id)}/sync-to-secret-store",
+            f"api/svc/v1/virtual-accounts/{jsonable_encoder(id)}/sync-to-secret-store",
             method="POST",
             request_options=request_options,
         )
@@ -924,7 +924,7 @@ class AsyncRawVirtualAccountsClient:
             Token for the virtual account
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/virtual-accounts/{encode_path_param(id)}/regenerate-token",
+            f"api/svc/v1/virtual-accounts/{jsonable_encoder(id)}/regenerate-token",
             method="POST",
             json={
                 "gracePeriodInDays": grace_period_in_days,
@@ -976,7 +976,7 @@ class AsyncRawVirtualAccountsClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/virtual-accounts/{encode_path_param(id)}/jwt/{encode_path_param(jwt_id)}",
+            f"api/svc/v1/virtual-accounts/{jsonable_encoder(id)}/jwt/{jsonable_encoder(jwt_id)}",
             method="DELETE",
             request_options=request_options,
         )

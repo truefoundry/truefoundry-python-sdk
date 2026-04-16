@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import encode_path_param
+from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
@@ -155,7 +155,7 @@ class RawMlReposClient:
             The ML Repo data
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/ml-repos/{encode_path_param(id)}",
+            f"api/ml/v1/ml-repos/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -208,7 +208,7 @@ class RawMlReposClient:
             Empty response indicating successful deletion
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/ml-repos/{encode_path_param(id)}",
+            f"api/ml/v1/ml-repos/{jsonable_encoder(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -450,7 +450,7 @@ class AsyncRawMlReposClient:
             The ML Repo data
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/ml-repos/{encode_path_param(id)}",
+            f"api/ml/v1/ml-repos/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -503,7 +503,7 @@ class AsyncRawMlReposClient:
             Empty response indicating successful deletion
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/ml-repos/{encode_path_param(id)}",
+            f"api/ml/v1/ml-repos/{jsonable_encoder(id)}",
             method="DELETE",
             request_options=request_options,
         )

@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import encode_path_param
+from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
@@ -184,7 +184,7 @@ class RawEnvironmentsClient:
             Returns the Environment associated with the provided id
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/environments/{encode_path_param(id)}",
+            f"api/svc/v1/environments/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -225,7 +225,7 @@ class RawEnvironmentsClient:
             Returns true if the Environment is deleted successfully
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/environments/{encode_path_param(id)}",
+            f"api/svc/v1/environments/{jsonable_encoder(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -432,7 +432,7 @@ class AsyncRawEnvironmentsClient:
             Returns the Environment associated with the provided id
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/environments/{encode_path_param(id)}",
+            f"api/svc/v1/environments/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -475,7 +475,7 @@ class AsyncRawEnvironmentsClient:
             Returns true if the Environment is deleted successfully
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/environments/{encode_path_param(id)}",
+            f"api/svc/v1/environments/{jsonable_encoder(id)}",
             method="DELETE",
             request_options=request_options,
         )

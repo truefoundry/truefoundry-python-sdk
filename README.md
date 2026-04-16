@@ -42,7 +42,6 @@ Instantiate and use the client with the following:
 
 ```python
 from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk.applications import ApplicationsListRequestDeviceTypeFilter, ApplicationsListRequestLifecycleStage
 
 client = TrueFoundry(
     api_key="<token>",
@@ -63,9 +62,9 @@ client.applications.list(
     cluster_id="clusterId",
     application_set_id="applicationSetId",
     paused=True,
-    device_type_filter=ApplicationsListRequestDeviceTypeFilter.CPU,
+    device_type_filter="cpu",
     last_deployed_by_subjects="lastDeployedBySubjects",
-    lifecycle_stage=ApplicationsListRequestLifecycleStage.ACTIVE,
+    lifecycle_stage="active",
     is_recommendation_present_and_visible=True,
 )
 ```
@@ -76,7 +75,6 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 
 ```python
 import asyncio
-from truefoundry_sdk.applications import ApplicationsListRequestDeviceTypeFilter, ApplicationsListRequestLifecycleStage
 
 from truefoundry_sdk import AsyncTrueFoundry
 
@@ -101,9 +99,9 @@ async def main() -> None:
         cluster_id="clusterId",
         application_set_id="applicationSetId",
         paused=True,
-        device_type_filter=ApplicationsListRequestDeviceTypeFilter.CPU,
+        device_type_filter="cpu",
         last_deployed_by_subjects="lastDeployedBySubjects",
-        lifecycle_stage=ApplicationsListRequestLifecycleStage.ACTIVE,
+        lifecycle_stage="active",
         is_recommendation_present_and_visible=True,
     )
 
@@ -132,7 +130,6 @@ Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used 
 
 ```python
 from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk.applications import ApplicationsListRequestDeviceTypeFilter, ApplicationsListRequestLifecycleStage
 
 client = TrueFoundry(
     api_key="<token>",
@@ -153,9 +150,9 @@ client.applications.list(
     cluster_id="clusterId",
     application_set_id="applicationSetId",
     paused=True,
-    device_type_filter=ApplicationsListRequestDeviceTypeFilter.CPU,
+    device_type_filter="cpu",
     last_deployed_by_subjects="lastDeployedBySubjects",
-    lifecycle_stage=ApplicationsListRequestLifecycleStage.ACTIVE,
+    lifecycle_stage="active",
     is_recommendation_present_and_visible=True,
 )
 ```

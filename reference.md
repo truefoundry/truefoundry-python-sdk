@@ -1277,7 +1277,6 @@ Retrieve all teams associated with the authenticated user. If the user is a tena
 
 ```python
 from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk.teams import TeamsListRequestType
 
 client = TrueFoundry(
     api_key="<token>",
@@ -1287,7 +1286,7 @@ client = TrueFoundry(
 client.teams.list(
     limit=10,
     offset=0,
-    type=TeamsListRequestType.TEAM,
+    type="team",
 )
 
 ```
@@ -2803,7 +2802,7 @@ Create or Update cluster with provided manifest
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, ClusterManifest, ClusterManifestClusterType, Collaborator
+from truefoundry_sdk import TrueFoundry, ClusterManifest, Collaborator
 
 client = TrueFoundry(
     api_key="<token>",
@@ -2814,7 +2813,7 @@ client.clusters.create_or_update(
     manifest=ClusterManifest(
         type="cluster",
         name="name",
-        cluster_type=ClusterManifestClusterType.AWS_EKS,
+        cluster_type="aws-eks",
         environment_names=[
             "environment_names"
         ],
@@ -3204,7 +3203,6 @@ Retrieves a list of all latest applications. Supports filtering by application I
 
 ```python
 from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk.applications import ApplicationsListRequestDeviceTypeFilter, ApplicationsListRequestLifecycleStage
 
 client = TrueFoundry(
     api_key="<token>",
@@ -3225,9 +3223,9 @@ client.applications.list(
     cluster_id="clusterId",
     application_set_id="applicationSetId",
     paused=True,
-    device_type_filter=ApplicationsListRequestDeviceTypeFilter.CPU,
+    device_type_filter="cpu",
     last_deployed_by_subjects="lastDeployedBySubjects",
-    lifecycle_stage=ApplicationsListRequestLifecycleStage.ACTIVE,
+    lifecycle_stage="active",
     is_recommendation_present_and_visible=True,
 )
 
@@ -4191,7 +4189,7 @@ List Job Runs for provided Job Id. Filter the data based on parameters passed in
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, JobRunsSortBy, SortDirection
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="<token>",
@@ -4203,8 +4201,8 @@ client.jobs.list_runs(
     limit=10,
     offset=0,
     search_prefix="searchPrefix",
-    sort_by=JobRunsSortBy.START_TIME,
-    order=SortDirection.ASC,
+    sort_by="startTime",
+    order="asc",
 )
 
 ```
@@ -4751,7 +4749,7 @@ Creates a new Environment or updates an existing Environment.
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, EnvironmentManifest, EnvironmentColor, EnvironmentOptimizeFor
+from truefoundry_sdk import TrueFoundry, EnvironmentManifest, EnvironmentColor
 
 client = TrueFoundry(
     api_key="<token>",
@@ -4764,7 +4762,7 @@ client.environments.create_or_update(
         name="name",
         color=EnvironmentColor(),
         is_production=True,
-        optimize_for=EnvironmentOptimizeFor.COST,
+        optimize_for="COST",
     ),
 )
 
@@ -6316,7 +6314,7 @@ Get alerts for a given application or cluster filtered by start and end timestam
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, AlertStatus
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="<token>",
@@ -6328,7 +6326,7 @@ client.alerts.list(
     end_ts="endTs",
     cluster_id="clusterId",
     application_id="applicationId",
-    alert_status=AlertStatus.FIRING,
+    alert_status="firing",
 )
 
 ```
@@ -6425,7 +6423,7 @@ Fetch logs for various workload components, including Services, Jobs, Workflows,
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, LogsSortingDirection, LogsSearchFilterType, LogsSearchOperatorType
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="<token>",
@@ -6436,7 +6434,7 @@ client.logs.get(
     start_ts=1000000,
     end_ts=1000000,
     limit=1,
-    direction=LogsSortingDirection.ASC,
+    direction="asc",
     num_logs_to_ignore=1,
     application_id="applicationId",
     application_fqn="applicationFqn",
@@ -6447,8 +6445,8 @@ client.logs.get(
     pod_names_regex="podNamesRegex",
     search_filters="searchFilters",
     search_string="searchString",
-    search_type=LogsSearchFilterType.REGEX,
-    search_operator=LogsSearchOperatorType.EQUAL,
+    search_type="regex",
+    search_operator="equal",
 )
 
 ```
@@ -8585,7 +8583,7 @@ Get pre-signed URLs for reading or writing files in an artifact version.
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, Operation
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="<token>",
@@ -8597,7 +8595,7 @@ client.artifact_versions.get_signed_urls(
     paths=[
         "paths"
     ],
-    operation=Operation.READ,
+    operation="READ",
 )
 
 ```
@@ -10815,7 +10813,7 @@ Get pre-signed URLs for reading or writing files in a data directory.
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, Operation
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="<token>",
@@ -10827,7 +10825,7 @@ client.data_directories.get_signed_urls(
     paths=[
         "paths"
     ],
-    operation=Operation.READ,
+    operation="READ",
 )
 
 ```
@@ -11030,7 +11028,6 @@ Get Gateway configuration based on type for the tenant.
 
 ```python
 from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk.internal.ai_gateway import AiGatewayGetGatewayConfigRequestType
 
 client = TrueFoundry(
     api_key="<token>",
@@ -11038,7 +11035,7 @@ client = TrueFoundry(
 )
 
 client.internal.ai_gateway.get_gateway_config(
-    type=AiGatewayGetGatewayConfigRequestType.GATEWAY_RATE_LIMITING_CONFIG,
+    type="gateway-rate-limiting-config",
 )
 
 ```
@@ -11419,7 +11416,7 @@ Generate deployment endpoint based on the provided query parameters.
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, ApplicationType
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="<token>",
@@ -11427,7 +11424,7 @@ client = TrueFoundry(
 )
 
 client.internal.deployments.get_suggested_endpoint(
-    application_type=ApplicationType.ASYNC_SERVICE,
+    application_type="async-service",
     application_name="applicationName",
     workspace_id="workspaceId",
     base_domain="baseDomain",
@@ -11701,7 +11698,6 @@ List charts for a given Application based on parameters passed in the query.
 
 ```python
 from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk.internal.metrics import MetricsGetChartsRequestFilterEntity
 
 client = TrueFoundry(
     api_key="<token>",
@@ -11713,7 +11709,7 @@ client.internal.metrics.get_charts(
     application_id="applicationId",
     start_ts="startTs",
     end_ts="endTs",
-    filter_entity=MetricsGetChartsRequestFilterEntity.APPLICATION,
+    filter_entity="application",
     filter_query="filterQuery",
 )
 

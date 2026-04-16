@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import encode_path_param
+from ...core.jsonable_encoder import jsonable_encoder
 from ...core.parse_error import ParsingError
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
@@ -42,7 +42,7 @@ class RawApplicationsClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{encode_path_param(id)}/rollout/promote",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/rollout/promote",
             method="POST",
             params={
                 "full": full,
@@ -110,7 +110,7 @@ class RawApplicationsClient:
             Successfully retrieved the pod template hash to deployment version map.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{encode_path_param(id)}/pod-template-hash-deployment-version-map",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/pod-template-hash-deployment-version-map",
             method="GET",
             params={
                 "podTemplateHashes": pod_template_hashes,
@@ -174,7 +174,7 @@ class AsyncRawApplicationsClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{encode_path_param(id)}/rollout/promote",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/rollout/promote",
             method="POST",
             params={
                 "full": full,
@@ -242,7 +242,7 @@ class AsyncRawApplicationsClient:
             Successfully retrieved the pod template hash to deployment version map.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{encode_path_param(id)}/pod-template-hash-deployment-version-map",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/pod-template-hash-deployment-version-map",
             method="GET",
             params={
                 "podTemplateHashes": pod_template_hashes,

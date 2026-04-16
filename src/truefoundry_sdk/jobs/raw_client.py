@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import encode_path_param
+from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
@@ -97,7 +97,7 @@ class RawJobsClient:
         offset = offset if offset is not None else 0
 
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/jobs/{encode_path_param(job_id)}/runs",
+            f"api/svc/v1/jobs/{jsonable_encoder(job_id)}/runs",
             method="GET",
             params={
                 "limit": limit,
@@ -200,7 +200,7 @@ class RawJobsClient:
             Return JobRun details of the provided jobRunName
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/jobs/{encode_path_param(job_id)}/runs/{encode_path_param(job_run_name)}",
+            f"api/svc/v1/jobs/{jsonable_encoder(job_id)}/runs/{jsonable_encoder(job_run_name)}",
             method="GET",
             request_options=request_options,
         )
@@ -268,7 +268,7 @@ class RawJobsClient:
             Job Run deleted
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/jobs/{encode_path_param(job_id)}/runs/{encode_path_param(job_run_name)}",
+            f"api/svc/v1/jobs/{jsonable_encoder(job_id)}/runs/{jsonable_encoder(job_run_name)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -596,7 +596,7 @@ class AsyncRawJobsClient:
         offset = offset if offset is not None else 0
 
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/jobs/{encode_path_param(job_id)}/runs",
+            f"api/svc/v1/jobs/{jsonable_encoder(job_id)}/runs",
             method="GET",
             params={
                 "limit": limit,
@@ -702,7 +702,7 @@ class AsyncRawJobsClient:
             Return JobRun details of the provided jobRunName
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/jobs/{encode_path_param(job_id)}/runs/{encode_path_param(job_run_name)}",
+            f"api/svc/v1/jobs/{jsonable_encoder(job_id)}/runs/{jsonable_encoder(job_run_name)}",
             method="GET",
             request_options=request_options,
         )
@@ -770,7 +770,7 @@ class AsyncRawJobsClient:
             Job Run deleted
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/jobs/{encode_path_param(job_id)}/runs/{encode_path_param(job_run_name)}",
+            f"api/svc/v1/jobs/{jsonable_encoder(job_id)}/runs/{jsonable_encoder(job_run_name)}",
             method="DELETE",
             request_options=request_options,
         )

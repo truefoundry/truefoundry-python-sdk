@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import encode_path_param
+from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
@@ -356,7 +356,7 @@ class RawApplicationsClient:
             Application details retrieved successfully
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{encode_path_param(id)}",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -421,7 +421,7 @@ class RawApplicationsClient:
             Delete application response.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{encode_path_param(id)}",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -489,7 +489,7 @@ class RawApplicationsClient:
             Returns the new deployment.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{encode_path_param(id)}/deployments/{encode_path_param(deployment_id)}/redeploy",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/redeploy",
             method="POST",
             request_options=request_options,
         )
@@ -551,7 +551,7 @@ class RawApplicationsClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{encode_path_param(id)}/scale-to-zero",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/scale-to-zero",
             method="PATCH",
             request_options=request_options,
         )
@@ -631,7 +631,7 @@ class RawApplicationsClient:
             Scales back a paused applicaion to the original number of replicas
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{encode_path_param(id)}/scale-to-original",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/scale-to-original",
             method="PATCH",
             request_options=request_options,
         )
@@ -710,7 +710,7 @@ class RawApplicationsClient:
             Deployment cancelled successfully.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{encode_path_param(id)}/deployments/{encode_path_param(deployment_id)}/cancel",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/cancel",
             method="POST",
             request_options=request_options,
         )
@@ -1093,7 +1093,7 @@ class AsyncRawApplicationsClient:
             Application details retrieved successfully
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{encode_path_param(id)}",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -1158,7 +1158,7 @@ class AsyncRawApplicationsClient:
             Delete application response.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{encode_path_param(id)}",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -1226,7 +1226,7 @@ class AsyncRawApplicationsClient:
             Returns the new deployment.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{encode_path_param(id)}/deployments/{encode_path_param(deployment_id)}/redeploy",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/redeploy",
             method="POST",
             request_options=request_options,
         )
@@ -1290,7 +1290,7 @@ class AsyncRawApplicationsClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{encode_path_param(id)}/scale-to-zero",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/scale-to-zero",
             method="PATCH",
             request_options=request_options,
         )
@@ -1370,7 +1370,7 @@ class AsyncRawApplicationsClient:
             Scales back a paused applicaion to the original number of replicas
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{encode_path_param(id)}/scale-to-original",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/scale-to-original",
             method="PATCH",
             request_options=request_options,
         )
@@ -1449,7 +1449,7 @@ class AsyncRawApplicationsClient:
             Deployment cancelled successfully.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{encode_path_param(id)}/deployments/{encode_path_param(deployment_id)}/cancel",
+            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/cancel",
             method="POST",
             request_options=request_options,
         )

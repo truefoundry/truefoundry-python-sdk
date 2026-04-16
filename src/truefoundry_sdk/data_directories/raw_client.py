@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import encode_path_param
+from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
@@ -52,7 +52,7 @@ class RawDataDirectoriesClient:
             The data directory data
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/data-directories/{encode_path_param(id)}",
+            f"api/ml/v1/data-directories/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -111,7 +111,7 @@ class RawDataDirectoriesClient:
             Empty response indicating successful deletion
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/data-directories/{encode_path_param(id)}",
+            f"api/ml/v1/data-directories/{jsonable_encoder(id)}",
             method="DELETE",
             params={
                 "delete_contents": delete_contents,
@@ -627,7 +627,7 @@ class AsyncRawDataDirectoriesClient:
             The data directory data
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/data-directories/{encode_path_param(id)}",
+            f"api/ml/v1/data-directories/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -686,7 +686,7 @@ class AsyncRawDataDirectoriesClient:
             Empty response indicating successful deletion
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/data-directories/{encode_path_param(id)}",
+            f"api/ml/v1/data-directories/{jsonable_encoder(id)}",
             method="DELETE",
             params={
                 "delete_contents": delete_contents,

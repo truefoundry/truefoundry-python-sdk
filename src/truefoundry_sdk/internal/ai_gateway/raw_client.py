@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import encode_path_param
+from ...core.jsonable_encoder import jsonable_encoder
 from ...core.parse_error import ParsingError
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
@@ -39,7 +39,7 @@ class RawAiGatewayClient:
             Gateway configuration retrieved successfully
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/llm-gateway/config/{encode_path_param(type)}",
+            f"api/svc/v1/llm-gateway/config/{jsonable_encoder(type)}",
             method="GET",
             request_options=request_options,
         )
@@ -87,7 +87,7 @@ class AsyncRawAiGatewayClient:
             Gateway configuration retrieved successfully
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/llm-gateway/config/{encode_path_param(type)}",
+            f"api/svc/v1/llm-gateway/config/{jsonable_encoder(type)}",
             method="GET",
             request_options=request_options,
         )

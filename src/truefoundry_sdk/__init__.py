@@ -1064,7 +1064,6 @@ if typing.TYPE_CHECKING:
         virtual_accounts,
         workspaces,
     )
-    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .applications import (
         ApplicationsCancelDeploymentResponse,
         ApplicationsListRequestDeviceTypeFilter,
@@ -1341,8 +1340,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DeepinfraKeyAuth": ".types",
     "DeepinfraModel": ".types",
     "DeepinfraProviderAccount": ".types",
-    "DefaultAioHttpClient": "._default_clients",
-    "DefaultAsyncHttpxClient": "._default_clients",
     "DeleteApplicationResponse": ".types",
     "DeleteJobRunResponse": ".types",
     "DeletePersonalAccessTokenResponse": ".types",
@@ -2432,8 +2429,6 @@ __all__ = [
     "DeepinfraKeyAuth",
     "DeepinfraModel",
     "DeepinfraProviderAccount",
-    "DefaultAioHttpClient",
-    "DefaultAsyncHttpxClient",
     "DeleteApplicationResponse",
     "DeleteJobRunResponse",
     "DeletePersonalAccessTokenResponse",
