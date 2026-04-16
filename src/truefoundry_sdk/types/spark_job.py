@@ -50,7 +50,7 @@ class SparkJob(UniversalBaseModel):
     Configure volumes to be mounted to driver and executors. [Docs](https://docs.truefoundry.com/docs/mounting-volumes-job)
     """
 
-    retries: typing.Optional[int] = pydantic.Field(default=None)
+    retries: typing.Optional[int] = pydantic.Field(default=0)
     """
     Specify the maximum number of attempts to retry a job before it is marked as failed.
     """

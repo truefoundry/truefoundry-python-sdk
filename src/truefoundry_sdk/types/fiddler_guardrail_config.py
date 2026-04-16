@@ -19,7 +19,9 @@ class FiddlerGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
-    description: typing.Optional[str] = pydantic.Field(default=None)
+    description: typing.Optional[str] = pydantic.Field(
+        default="Fiddler for harmful content detection or response faithfulness checks"
+    )
     """
     Optional description for this Guardrail Config.
     """

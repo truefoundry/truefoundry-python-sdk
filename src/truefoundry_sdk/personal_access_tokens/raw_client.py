@@ -8,7 +8,6 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pagination import AsyncPager, SyncPager
-from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..errors.bad_request_error import BadRequestError
@@ -21,7 +20,6 @@ from ..types.http_error import HttpError
 from ..types.list_personal_access_token_response import ListPersonalAccessTokenResponse
 from ..types.revoke_all_personal_access_token_response import RevokeAllPersonalAccessTokenResponse
 from ..types.virtual_account import VirtualAccount
-from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -94,10 +92,6 @@ class RawPersonalAccessTokensClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
@@ -179,10 +173,6 @@ class RawPersonalAccessTokensClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def revoke_all(
@@ -240,10 +230,6 @@ class RawPersonalAccessTokensClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -294,10 +280,6 @@ class RawPersonalAccessTokensClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
@@ -347,10 +329,6 @@ class RawPersonalAccessTokensClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -424,10 +402,6 @@ class AsyncRawPersonalAccessTokensClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
@@ -509,10 +483,6 @@ class AsyncRawPersonalAccessTokensClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def revoke_all(
@@ -570,10 +540,6 @@ class AsyncRawPersonalAccessTokensClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -624,10 +590,6 @@ class AsyncRawPersonalAccessTokensClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -677,8 +639,4 @@ class AsyncRawPersonalAccessTokensClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

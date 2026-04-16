@@ -35,7 +35,7 @@ class MlReposClient:
         self,
         *,
         manifest: MlRepoManifest,
-        dry_run: typing.Optional[bool] = OMIT,
+        dry_run: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetMlRepoResponse:
         """
@@ -216,7 +216,7 @@ class AsyncMlReposClient:
         self,
         *,
         manifest: MlRepoManifest,
-        dry_run: typing.Optional[bool] = OMIT,
+        dry_run: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetMlRepoResponse:
         """

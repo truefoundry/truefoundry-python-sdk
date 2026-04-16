@@ -16,31 +16,31 @@ class CommonToolsSettings(UniversalBaseModel):
     +value=settings/common-tools
     """
 
-    web_search: bool = pydantic.Field()
+    web_search: bool = pydantic.Field(default=True)
     """
     Enable web search tool
     Allows model to search the web for information.
     """
 
-    code_executor: bool = pydantic.Field()
+    code_executor: bool = pydantic.Field(default=True)
     """
     Enable code executor tool
     Allows model to execute code and return the results.
     """
 
-    sandbox_exec: bool = pydantic.Field()
+    sandbox_exec: bool = pydantic.Field(default=True)
     """
     Enable sandbox executor tool
     Allows model to execute shell command in an isolated stateful sandbox environment.
     """
 
-    sequential_thinking: bool = pydantic.Field()
+    sequential_thinking: bool = pydantic.Field(default=True)
     """
     Enable sequential thinking tool
     Allows model to reason step-by-step to solve complex problems.
     """
 
-    web_scrape: bool = pydantic.Field()
+    web_scrape: bool = pydantic.Field(default=True)
     """
     Enable web scraping tool.
     Allows model to scrape content from web pages with intelligent format selection for structured or unstructured data.

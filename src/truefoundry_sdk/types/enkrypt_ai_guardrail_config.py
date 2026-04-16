@@ -20,7 +20,9 @@ class EnkryptAiGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
-    description: typing.Optional[str] = pydantic.Field(default=None)
+    description: typing.Optional[str] = pydantic.Field(
+        default="Enkrypt AI guardrails for content safety and policy enforcement"
+    )
     """
     Optional description for this Guardrail Config.
     """
@@ -40,7 +42,7 @@ class EnkryptAiGuardrailConfig(UniversalBaseModel):
     Validate guardrails are run in parallel while mutate guardrails are run sequentially.
     """
 
-    priority: typing.Optional[int] = pydantic.Field(default=None)
+    priority: typing.Optional[int] = pydantic.Field(default=1)
     """
     Execution order for mutate guardrails. Lower values run first. Only applicable when operation is mutate.
     """

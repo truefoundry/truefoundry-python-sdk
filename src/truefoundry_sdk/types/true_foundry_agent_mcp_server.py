@@ -13,7 +13,7 @@ class TrueFoundryAgentMcpServer(UniversalBaseModel):
     MCP server name
     """
 
-    deferred: typing.Optional[bool] = pydantic.Field(default=None)
+    deferred: typing.Optional[bool] = pydantic.Field(default=False)
     """
     When true, tools from this server are loaded lazily (deferred loading).
     """

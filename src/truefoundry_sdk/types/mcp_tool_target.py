@@ -12,7 +12,7 @@ class McpToolTarget(UniversalBaseModel):
     Name of the MCP server
     """
 
-    enable_all_tools: bool = pydantic.Field()
+    enable_all_tools: bool = pydantic.Field(default=False)
     """
     When enabled, all tools from this MCP server are targeted. Disable to select specific tools.
     """

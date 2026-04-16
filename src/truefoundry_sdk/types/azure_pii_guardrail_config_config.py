@@ -19,7 +19,7 @@ class AzurePiiGuardrailConfigConfig(UniversalBaseModel):
     Name of your Azure AI Language resource where the PII detection service is deployed (e.g., my-language-resource)
     """
 
-    api_version: str = pydantic.Field()
+    api_version: str = pydantic.Field(default="2024-11-01")
     """
     API version for the PII detection API
     """
@@ -39,12 +39,12 @@ class AzurePiiGuardrailConfigConfig(UniversalBaseModel):
     Categories of PII to detect.
     """
 
-    model_version: str = pydantic.Field()
+    model_version: str = pydantic.Field(default="latest")
     """
     Version of the PII detection model to use, use latest for the newest model or specify a specific version for consistency
     """
 
-    language: str = pydantic.Field()
+    language: str = pydantic.Field(default="en")
     """
     Language code for PII detection (e.g., en for English)
     """

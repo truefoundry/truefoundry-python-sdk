@@ -18,7 +18,9 @@ class CedarGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
-    description: typing.Optional[str] = pydantic.Field(default=None)
+    description: typing.Optional[str] = pydantic.Field(
+        default="Enforces access control policies using Cedar policy language"
+    )
     """
     Optional description for this Guardrail Config.
     """

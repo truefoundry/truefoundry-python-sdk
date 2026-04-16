@@ -19,7 +19,9 @@ class AktoGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
-    description: typing.Optional[str] = pydantic.Field(default=None)
+    description: typing.Optional[str] = pydantic.Field(
+        default="Akto guardrail for LLM security, prompt injection detection, and policy violation monitoring"
+    )
     """
     Optional description for this Guardrail Config.
     """

@@ -17,7 +17,9 @@ class CodeSafetyLinterGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
-    description: typing.Optional[str] = pydantic.Field(default=None)
+    description: typing.Optional[str] = pydantic.Field(
+        default="Detects unsafe code patterns in tool outputs (eval, exec, os.system, subprocess, rm -rf)"
+    )
     """
     Optional description for this Guardrail Config.
     """

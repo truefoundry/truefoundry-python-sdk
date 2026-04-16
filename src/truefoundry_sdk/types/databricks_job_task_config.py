@@ -48,7 +48,7 @@ class DatabricksJobTaskConfig(UniversalBaseModel):
     Maximum seconds to wait for the job run to complete. Used by CLI when polling.
     """
 
-    skip_wait_for_completion: typing.Optional[bool] = pydantic.Field(default=None)
+    skip_wait_for_completion: typing.Optional[bool] = pydantic.Field(default=False)
     """
     If false, the task waits for the Databricks job run to complete (trigger and poll). If true, only triggers the job and returns. Default false.
     """

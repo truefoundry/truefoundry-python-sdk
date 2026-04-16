@@ -20,7 +20,9 @@ class AzurePiiGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
-    description: typing.Optional[str] = pydantic.Field(default=None)
+    description: typing.Optional[str] = pydantic.Field(
+        default="Azure AI Language PII detection and redaction for sensitive data"
+    )
     """
     Optional description for this Guardrail Config.
     """
@@ -43,7 +45,7 @@ class AzurePiiGuardrailConfig(UniversalBaseModel):
     The operation type to use for the Guardrail. Validate guardrails are used to validate requests and mutate can validate as well as mutate requests. Validate guardrails are run in parallel while mutate guardrails are run sequentially.
     """
 
-    priority: typing.Optional[int] = pydantic.Field(default=None)
+    priority: typing.Optional[int] = pydantic.Field(default=1)
     """
     Execution order for mutate guardrails. Lower values run first. Only applicable when operation is mutate.
     """

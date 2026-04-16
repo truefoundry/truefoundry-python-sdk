@@ -109,7 +109,7 @@ class WorkspacesClient:
         self,
         *,
         manifest: WorkspaceManifest,
-        dry_run: typing.Optional[bool] = OMIT,
+        dry_run: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetWorkspaceResponse:
         """
@@ -380,7 +380,7 @@ class AsyncWorkspacesClient:
         self,
         *,
         manifest: WorkspaceManifest,
-        dry_run: typing.Optional[bool] = OMIT,
+        dry_run: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetWorkspaceResponse:
         """

@@ -149,7 +149,7 @@ class SecretGroupsClient:
         self,
         *,
         manifest: SecretGroupManifest,
-        dry_run: typing.Optional[bool] = OMIT,
+        dry_run: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSecretGroupResponse:
         """
@@ -455,7 +455,7 @@ class AsyncSecretGroupsClient:
         self,
         *,
         manifest: SecretGroupManifest,
-        dry_run: typing.Optional[bool] = OMIT,
+        dry_run: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSecretGroupResponse:
         """

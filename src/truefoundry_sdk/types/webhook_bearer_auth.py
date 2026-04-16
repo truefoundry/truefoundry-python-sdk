@@ -17,7 +17,7 @@ class WebhookBearerAuth(UniversalBaseModel):
     Bearer token for authentication
     """
 
-    prefix: str = pydantic.Field()
+    prefix: str = pydantic.Field(default="Bearer")
     """
     Prefix for the token
     """

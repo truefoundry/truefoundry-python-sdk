@@ -19,7 +19,9 @@ class AzurePromptShieldGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
-    description: typing.Optional[str] = pydantic.Field(default=None)
+    description: typing.Optional[str] = pydantic.Field(
+        default="Azure Prompt Shield for jailbreak and prompt injection detection"
+    )
     """
     Optional description for this Guardrail Config.
     """

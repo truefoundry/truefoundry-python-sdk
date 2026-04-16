@@ -19,7 +19,9 @@ class PatronusGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
-    description: typing.Optional[str] = pydantic.Field(default=None)
+    description: typing.Optional[str] = pydantic.Field(
+        default="Patronus evaluators for relevance, safety, PII, PHI, toxicity, and more"
+    )
     """
     Optional description for this Guardrail Config.
     """

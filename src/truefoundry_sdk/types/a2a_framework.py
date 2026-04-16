@@ -16,7 +16,7 @@ class A2AFramework(UniversalBaseModel):
     Type
     """
 
-    agent_card_path: str = pydantic.Field()
+    agent_card_path: str = pydantic.Field(default="/.well-known/agent-card.json")
     """
     Path to the agent card JSON, relative to the base URL
     """

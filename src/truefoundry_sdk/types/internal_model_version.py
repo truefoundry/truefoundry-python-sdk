@@ -75,7 +75,7 @@ class InternalModelVersion(UniversalBaseModel):
     List of metrics associated with this model version
     """
 
-    deployable: typing.Optional[bool] = pydantic.Field(default=None)
+    deployable: typing.Optional[bool] = pydantic.Field(default=False)
     """
     Whether this model version is ready for deployment
     """

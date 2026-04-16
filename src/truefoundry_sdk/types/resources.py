@@ -13,38 +13,38 @@ class Resources(UniversalBaseModel):
     Configure resource allocations, specify node constraints and capacity types to improve performance and reduce expenses. [Docs](https://www.truefoundry.com/docs/resources-cpu-memory-storage)
     """
 
-    cpu_request: float = pydantic.Field()
+    cpu_request: float = pydantic.Field(default=0.2)
     """
     Requested CPU which determines the minimum cost incurred. The CPU usage can exceed the requested
     amount, but not the value specified in the limit. 1 CPU means 1 CPU core. Fractional CPU can be requested
     like `0.5` or `0.05`
     """
 
-    cpu_limit: float = pydantic.Field()
+    cpu_limit: float = pydantic.Field(default=0.5)
     """
     CPU limit beyond which the usage cannot be exceeded. 1 CPU means 1 CPU core. Fractional CPU can be requested
     like `0.5`. CPU limit should be >= cpu request.
     """
 
-    memory_request: int = pydantic.Field()
+    memory_request: int = pydantic.Field(default=200)
     """
     Requested memory which determines the minimum cost incurred. The unit of memory is in megabytes(MB).
     So 1 means 1 MB and 2000 means 2GB.
     """
 
-    memory_limit: int = pydantic.Field()
+    memory_limit: int = pydantic.Field(default=500)
     """
     Memory limit after which the application will be killed with an OOM error. The unit of memory is
     in megabytes(MB). So 1 means 1 MB and 2000 means 2GB. MemoryLimit should be greater than memory request.
     """
 
-    ephemeral_storage_request: int = pydantic.Field()
+    ephemeral_storage_request: int = pydantic.Field(default=1000)
     """
     Requested disk storage. The unit of memory is in megabytes(MB).
     This is ephemeral storage and will be wiped out on pod restarts or eviction
     """
 
-    ephemeral_storage_limit: int = pydantic.Field()
+    ephemeral_storage_limit: int = pydantic.Field(default=2000)
     """
     Disk storage limit. The unit of memory is in megabytes(MB). Exceeding this limit will result in eviction.
     It should be greater than the request. This is ephemeral storage and will be wiped out on pod restarts or eviction

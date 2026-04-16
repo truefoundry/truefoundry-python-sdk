@@ -17,7 +17,7 @@ class AzurePromptShieldGuardrailConfigConfig(UniversalBaseModel):
     Name of your Azure Content Safety resource where the Prompt Shield service is deployed (e.g., my-content-safety)
     """
 
-    api_version: str = pydantic.Field()
+    api_version: str = pydantic.Field(default="2024-09-01")
     """
     API version for the Prompt Shield API
     """

@@ -35,7 +35,7 @@ class ModelVersionsClient:
         *,
         model_version_id: str,
         tags: typing.Sequence[str],
-        force: typing.Optional[bool] = OMIT,
+        force: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EmptyResponse:
         """
@@ -263,7 +263,7 @@ class AsyncModelVersionsClient:
         *,
         model_version_id: str,
         tags: typing.Sequence[str],
-        force: typing.Optional[bool] = OMIT,
+        force: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EmptyResponse:
         """

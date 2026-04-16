@@ -27,7 +27,7 @@ class KafkaOutputConfig(UniversalBaseModel):
     Kafka topic to publish to
     """
 
-    tls: bool = pydantic.Field()
+    tls: bool = pydantic.Field(default=True)
     """
     TLS configuration for SASL authentication
     """

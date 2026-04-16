@@ -16,12 +16,12 @@ class LocalSource(UniversalBaseModel):
     +value=local
     """
 
-    project_root_path: str = pydantic.Field()
+    project_root_path: str = pydantic.Field(default="./")
     """
     Local project root path.
     """
 
-    local_build: bool = pydantic.Field()
+    local_build: bool = pydantic.Field(default=True)
     """
     run docker build locally
     """

@@ -7,13 +7,11 @@ from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
 from ...core.jsonable_encoder import jsonable_encoder
-from ...core.parse_error import ParsingError
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
 from ...errors.bad_request_error import BadRequestError
 from ...errors.not_found_error import NotFoundError
 from .types.workflows_execute_workflow_response import WorkflowsExecuteWorkflowResponse
-from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -101,10 +99,6 @@ class RawWorkflowsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -190,8 +184,4 @@ class AsyncRawWorkflowsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

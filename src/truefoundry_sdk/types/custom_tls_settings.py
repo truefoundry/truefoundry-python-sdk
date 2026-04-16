@@ -11,7 +11,7 @@ class CustomTlsSettings(UniversalBaseModel):
     Configure TLS settings for secure connections with custom CA certificates.
     """
 
-    reject_unauthorized: bool = pydantic.Field()
+    reject_unauthorized: bool = pydantic.Field(default=True)
     """
     When set to true, it will reject any connection which is not authorized with the list of supplied CAs.
     """

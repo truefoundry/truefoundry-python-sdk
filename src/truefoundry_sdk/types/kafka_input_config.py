@@ -32,12 +32,12 @@ class KafkaInputConfig(UniversalBaseModel):
     The name of the consumer group to join for dynamic partition assignment
     """
 
-    tls: bool = pydantic.Field()
+    tls: bool = pydantic.Field(default=True)
     """
     TLS configuration for SASL authentication
     """
 
-    wait_time_seconds: typing.Optional[int] = pydantic.Field(default=None)
+    wait_time_seconds: typing.Optional[int] = pydantic.Field(default=10)
     """
     Wait timeout for long polling.
     """

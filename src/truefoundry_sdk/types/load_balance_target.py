@@ -29,7 +29,7 @@ class LoadBalanceTarget(UniversalBaseModel):
     Status Codes for which the request will fallback to other targets. If the status code is not present in fallback_status_codes, it fails immediately.
     """
 
-    fallback_candidate: typing.Optional[bool] = pydantic.Field(default=None)
+    fallback_candidate: typing.Optional[bool] = pydantic.Field(default=True)
     """
     Whether this target is a fallback candidate.  If set to false, this model will not be considered as a fallback option for targets of this load-balance-rule
     """

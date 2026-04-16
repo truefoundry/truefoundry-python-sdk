@@ -13,7 +13,7 @@ class TfyContentModerationGuardrailConfigConfig(UniversalBaseModel):
     +uiProps={"forwardJsonKey": true}
     """
 
-    severity_threshold: float = pydantic.Field()
+    severity_threshold: float = pydantic.Field(default=2.0)
     """
     Minimum severity level (0-6) to flag content. 0=Safe, 2=Low risk, 4=Medium risk, 6=High risk
     """

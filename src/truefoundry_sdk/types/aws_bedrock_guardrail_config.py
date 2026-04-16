@@ -20,7 +20,9 @@ class AwsBedrockGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
-    description: typing.Optional[str] = pydantic.Field(default=None)
+    description: typing.Optional[str] = pydantic.Field(
+        default="AWS Bedrock Guardrails for content filtering and safety policies"
+    )
     """
     Optional description for this Guardrail Config.
     """
@@ -44,7 +46,7 @@ class AwsBedrockGuardrailConfig(UniversalBaseModel):
     Validate guardrails are run in parallel while mutate guardrails are run sequentially.
     """
 
-    priority: typing.Optional[int] = pydantic.Field(default=None)
+    priority: typing.Optional[int] = pydantic.Field(default=1)
     """
     Execution order for mutate guardrails. Lower values run first. Only applicable when operation is mutate.
     """

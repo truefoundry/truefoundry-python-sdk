@@ -37,7 +37,7 @@ class StdioMcpServerManifest(UniversalBaseModel):
     +sort=400
     """
 
-    command: str = pydantic.Field()
+    command: str = pydantic.Field(default="npx")
     """
     Executable to run for the stdio MCP server process.
     """

@@ -12,7 +12,7 @@ class OpenAiModerationsGuardrailConfigConfig(UniversalBaseModel):
     +uiProps={"forwardJsonKey": true}
     """
 
-    model: str = pydantic.Field()
+    model: str = pydantic.Field(default="omni-moderation-latest")
     """
     The model to use for the OpenAI Moderation API.
     """

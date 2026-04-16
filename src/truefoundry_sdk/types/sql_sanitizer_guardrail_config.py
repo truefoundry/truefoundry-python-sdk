@@ -19,7 +19,9 @@ class SqlSanitizerGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
-    description: typing.Optional[str] = pydantic.Field(default=None)
+    description: typing.Optional[str] = pydantic.Field(
+        default="Detects and sanitizes risky SQL patterns (DROP, TRUNCATE, DELETE/UPDATE without WHERE, string interpolation)"
+    )
     """
     Optional description for this Guardrail Config.
     """
@@ -37,7 +39,7 @@ class SqlSanitizerGuardrailConfig(UniversalBaseModel):
     Validate (detect and block) or Mutate (detect, sanitize comments, and continue).
     """
 
-    priority: typing.Optional[int] = pydantic.Field(default=None)
+    priority: typing.Optional[int] = pydantic.Field(default=1)
     """
     Execution order for mutate guardrails. Lower values run first. Only applicable when operation is mutate.
     """

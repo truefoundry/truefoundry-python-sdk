@@ -37,7 +37,7 @@ class NatsInputConfig(UniversalBaseModel):
     Consumer name of input NATS
     """
 
-    wait_time_seconds: int = pydantic.Field()
+    wait_time_seconds: int = pydantic.Field(default=19)
     """
     Wait timeout for long polling.
     """

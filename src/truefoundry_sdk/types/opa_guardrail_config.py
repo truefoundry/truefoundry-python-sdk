@@ -19,7 +19,9 @@ class OpaGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
-    description: typing.Optional[str] = pydantic.Field(default=None)
+    description: typing.Optional[str] = pydantic.Field(
+        default="Open Policy Agent (OPA) for policy-based access control and validation"
+    )
     """
     Optional description for this Guardrail Config.
     """

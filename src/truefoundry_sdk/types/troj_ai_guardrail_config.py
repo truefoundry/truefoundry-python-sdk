@@ -20,7 +20,7 @@ class TrojAiGuardrailConfig(UniversalBaseModel):
     The name of the Guardrail Config.
     """
 
-    description: typing.Optional[str] = pydantic.Field(default=None)
+    description: typing.Optional[str] = pydantic.Field(default="TrojAI DEFEND firewall for real-time AI security")
     """
     Optional description for this Guardrail Config.
     """
@@ -40,7 +40,7 @@ class TrojAiGuardrailConfig(UniversalBaseModel):
     Validate guardrails are run in parallel while mutate guardrails are run sequentially.
     """
 
-    priority: typing.Optional[int] = pydantic.Field(default=None)
+    priority: typing.Optional[int] = pydantic.Field(default=1)
     """
     Execution order for mutate guardrails. Lower values run first. Only applicable when operation is mutate.
     """

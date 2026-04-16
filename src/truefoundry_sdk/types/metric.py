@@ -22,7 +22,7 @@ class Metric(UniversalBaseModel):
     Timestamp when the metric was recorded (epoch milliseconds)
     """
 
-    step: typing.Optional[int] = pydantic.Field(default=None)
+    step: typing.Optional[int] = pydantic.Field(default=0)
     """
     Training step number when the metric was recorded
     """

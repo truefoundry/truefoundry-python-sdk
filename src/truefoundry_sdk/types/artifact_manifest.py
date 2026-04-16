@@ -40,7 +40,7 @@ class ArtifactManifest(UniversalBaseModel):
     """
 
     source: ArtifactManifestSource
-    step: typing.Optional[int] = pydantic.Field(default=None)
+    step: typing.Optional[int] = pydantic.Field(default=0)
     """
     Step/Epoch number in an iterative training loop the artifact version was created. Generally useful when logging a model version from a MLRepo Run
     """

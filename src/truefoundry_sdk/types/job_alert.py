@@ -23,13 +23,13 @@ class JobAlert(UniversalBaseModel):
     """
 
     notification_target: typing.Optional[NotificationTarget] = None
-    on_start: typing.Optional[bool] = pydantic.Field(default=None)
+    on_start: typing.Optional[bool] = pydantic.Field(default=False)
     """
     Send an alert when the job starts
     """
 
-    on_completion: typing.Optional[bool] = None
-    on_failure: typing.Optional[bool] = pydantic.Field(default=None)
+    on_completion: typing.Optional[bool] = False
+    on_failure: typing.Optional[bool] = pydantic.Field(default=True)
     """
     Send an alert when the job fails
     """

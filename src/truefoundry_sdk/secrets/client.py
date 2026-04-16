@@ -32,11 +32,11 @@ class SecretsClient:
     def list(
         self,
         *,
-        limit: typing.Optional[int] = OMIT,
-        offset: typing.Optional[int] = OMIT,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         secret_fqns: typing.Optional[typing.Sequence[str]] = OMIT,
         secret_group_id: typing.Optional[str] = OMIT,
-        with_value: typing.Optional[bool] = OMIT,
+        with_value: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Secret, ListSecretsResponse]:
         """
@@ -184,11 +184,11 @@ class AsyncSecretsClient:
     async def list(
         self,
         *,
-        limit: typing.Optional[int] = OMIT,
-        offset: typing.Optional[int] = OMIT,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         secret_fqns: typing.Optional[typing.Sequence[str]] = OMIT,
         secret_group_id: typing.Optional[str] = OMIT,
-        with_value: typing.Optional[bool] = OMIT,
+        with_value: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Secret, ListSecretsResponse]:
         """

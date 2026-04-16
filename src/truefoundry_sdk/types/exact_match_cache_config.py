@@ -17,7 +17,7 @@ class ExactMatchCacheConfig(UniversalBaseModel):
     Cache namespace (defaults to 'default' if not provided)
     """
 
-    ttl: float = pydantic.Field()
+    ttl: float = pydantic.Field(default=3600.0)
     """
     Time-to-live for cached entries in seconds (max 3 days)
     """

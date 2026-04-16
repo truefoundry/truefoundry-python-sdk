@@ -32,12 +32,12 @@ class SmtpCredentials(UniversalBaseModel):
     The password for the SMTP server.
     """
 
-    port: int = pydantic.Field()
+    port: int = pydantic.Field(default=587)
     """
     The port of the SMTP server.
     """
 
-    tls: bool = pydantic.Field()
+    tls: bool = pydantic.Field(default=True)
     """
     Whether to use TLS for the SMTP server.
     """

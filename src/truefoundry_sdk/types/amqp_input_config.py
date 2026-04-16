@@ -26,7 +26,7 @@ class AmqpInputConfig(UniversalBaseModel):
     AMQP Queue Name
     """
 
-    wait_time_seconds: int = pydantic.Field()
+    wait_time_seconds: int = pydantic.Field(default=5)
     """
     Wait timeout for long polling.
     """

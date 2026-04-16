@@ -16,7 +16,7 @@ class SparkImage(UniversalBaseModel):
     +value=spark-image
     """
 
-    spark_version: str = pydantic.Field()
+    spark_version: str = pydantic.Field(default="3.5.2")
     """
     Spark version should match the spark version installed in the image.
     """

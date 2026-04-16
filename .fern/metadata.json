@@ -1,7 +1,7 @@
 {
-  "cliVersion": "4.68.0",
+  "cliVersion": "4.71.5",
   "generatorName": "fernapi/fern-python-sdk",
-  "generatorVersion": "4.64.1",
+  "generatorVersion": "4.54.3",
   "generatorConfig": {
     "package_name": "truefoundry_sdk",
     "pydantic_config": {
@@ -22,6 +22,6 @@
       "numpydoc": ">=1.7.0,<2.0.0"
     }
   },
-  "originGitCommit": "b21f8faecb9e7a36b5f7c48bcaf48d0bb6af465a",
+  "originGitCommit": "0a7e4e0f82186360e1999b049382462657c261cc",
   "sdkVersion": "0.0.0"
 }

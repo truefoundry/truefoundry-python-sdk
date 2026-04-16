@@ -11,7 +11,7 @@ class LoggingConfig(UniversalBaseModel):
     Logging configuration for the chat prompt
     """
 
-    enabled: bool = pydantic.Field()
+    enabled: bool = pydantic.Field(default=True)
     """
     Whether logging is enabled for the chat prompt
     """

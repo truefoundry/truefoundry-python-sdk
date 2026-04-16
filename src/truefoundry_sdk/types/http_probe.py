@@ -32,7 +32,7 @@ class HttpProbe(UniversalBaseModel):
     Host name to connect to, defaults to the pod IP
     """
 
-    scheme: typing.Optional[str] = pydantic.Field(default=None)
+    scheme: typing.Optional[str] = pydantic.Field(default="HTTP")
     """
     Scheme to use for connecting to the host
     """

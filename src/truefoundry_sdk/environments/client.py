@@ -80,7 +80,7 @@ class EnvironmentsClient:
         self,
         *,
         manifest: EnvironmentManifest,
-        dry_run: typing.Optional[bool] = OMIT,
+        dry_run: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetEnvironmentResponse:
         """
@@ -268,7 +268,7 @@ class AsyncEnvironmentsClient:
         self,
         *,
         manifest: EnvironmentManifest,
-        dry_run: typing.Optional[bool] = OMIT,
+        dry_run: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetEnvironmentResponse:
         """

@@ -48,7 +48,7 @@ class TracesClient:
         tracing_project_fqn: typing.Optional[str] = OMIT,
         data_routing_destination: typing.Optional[str] = OMIT,
         filters: typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]] = OMIT,
-        include_feedbacks: typing.Optional[bool] = OMIT,
+        include_feedbacks: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[TraceSpan, QuerySpansResponse]:
         """
@@ -176,7 +176,7 @@ class AsyncTracesClient:
         tracing_project_fqn: typing.Optional[str] = OMIT,
         data_routing_destination: typing.Optional[str] = OMIT,
         filters: typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]] = OMIT,
-        include_feedbacks: typing.Optional[bool] = OMIT,
+        include_feedbacks: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[TraceSpan, QuerySpansResponse]:
         """
