@@ -6,7 +6,8 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...core.jsonable_encoder import encode_path_param
+from ...core.parse_error import ParsingError
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
 from ...errors.bad_request_error import BadRequestError
@@ -16,6 +17,7 @@ from ...types.deployment_build import DeploymentBuild
 from ...types.deployment_status import DeploymentStatus
 from ...types.get_suggested_deployment_endpoint_response import GetSuggestedDeploymentEndpointResponse
 from ...types.presigned_url_object import PresignedUrlObject
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -48,7 +50,7 @@ class RawDeploymentsClient:
             Deployment statuses returned successfully.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/statuses",
+            f"api/svc/v1/apps/{encode_path_param(id)}/deployments/{encode_path_param(deployment_id)}/statuses",
             method="GET",
             request_options=request_options,
         )
@@ -76,6 +78,10 @@ class RawDeploymentsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_builds(
@@ -101,7 +107,7 @@ class RawDeploymentsClient:
             Deployment builds returned successfully.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/builds",
+            f"api/svc/v1/apps/{encode_path_param(id)}/deployments/{encode_path_param(deployment_id)}/builds",
             method="GET",
             request_options=request_options,
         )
@@ -129,6 +135,10 @@ class RawDeploymentsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_code_upload_url(
@@ -179,6 +189,10 @@ class RawDeploymentsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_suggested_endpoint(
@@ -260,6 +274,10 @@ class RawDeploymentsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -290,7 +308,7 @@ class AsyncRawDeploymentsClient:
             Deployment statuses returned successfully.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/statuses",
+            f"api/svc/v1/apps/{encode_path_param(id)}/deployments/{encode_path_param(deployment_id)}/statuses",
             method="GET",
             request_options=request_options,
         )
@@ -318,6 +336,10 @@ class AsyncRawDeploymentsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_builds(
@@ -343,7 +365,7 @@ class AsyncRawDeploymentsClient:
             Deployment builds returned successfully.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/builds",
+            f"api/svc/v1/apps/{encode_path_param(id)}/deployments/{encode_path_param(deployment_id)}/builds",
             method="GET",
             request_options=request_options,
         )
@@ -371,6 +393,10 @@ class AsyncRawDeploymentsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_code_upload_url(
@@ -421,6 +447,10 @@ class AsyncRawDeploymentsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_suggested_endpoint(
@@ -502,4 +532,8 @@ class AsyncRawDeploymentsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

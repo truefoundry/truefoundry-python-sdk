@@ -6,8 +6,9 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.pagination import AsyncPager, SyncPager
+from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..errors.bad_request_error import BadRequestError
@@ -26,6 +27,7 @@ from ..types.list_applications_response import ListApplicationsResponse
 from .types.applications_cancel_deployment_response import ApplicationsCancelDeploymentResponse
 from .types.applications_list_request_device_type_filter import ApplicationsListRequestDeviceTypeFilter
 from .types.applications_list_request_lifecycle_stage import ApplicationsListRequestLifecycleStage
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -193,6 +195,10 @@ class RawApplicationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create_or_update(
@@ -324,6 +330,10 @@ class RawApplicationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
@@ -346,7 +356,7 @@ class RawApplicationsClient:
             Application details retrieved successfully
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}",
+            f"api/svc/v1/apps/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -385,6 +395,10 @@ class RawApplicationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -407,7 +421,7 @@ class RawApplicationsClient:
             Delete application response.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}",
+            f"api/svc/v1/apps/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -446,6 +460,10 @@ class RawApplicationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def redeploy(
@@ -471,7 +489,7 @@ class RawApplicationsClient:
             Returns the new deployment.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/redeploy",
+            f"api/svc/v1/apps/{encode_path_param(id)}/deployments/{encode_path_param(deployment_id)}/redeploy",
             method="POST",
             request_options=request_options,
         )
@@ -510,6 +528,10 @@ class RawApplicationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def scale_to_zero(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
@@ -529,7 +551,7 @@ class RawApplicationsClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}/scale-to-zero",
+            f"api/svc/v1/apps/{encode_path_param(id)}/scale-to-zero",
             method="PATCH",
             request_options=request_options,
         )
@@ -583,6 +605,10 @@ class RawApplicationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def scale_to_original(
@@ -605,7 +631,7 @@ class RawApplicationsClient:
             Scales back a paused applicaion to the original number of replicas
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}/scale-to-original",
+            f"api/svc/v1/apps/{encode_path_param(id)}/scale-to-original",
             method="PATCH",
             request_options=request_options,
         )
@@ -655,6 +681,10 @@ class RawApplicationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def cancel_deployment(
@@ -680,7 +710,7 @@ class RawApplicationsClient:
             Deployment cancelled successfully.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/cancel",
+            f"api/svc/v1/apps/{encode_path_param(id)}/deployments/{encode_path_param(deployment_id)}/cancel",
             method="POST",
             request_options=request_options,
         )
@@ -730,6 +760,10 @@ class RawApplicationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -898,6 +932,10 @@ class AsyncRawApplicationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create_or_update(
@@ -1029,6 +1067,10 @@ class AsyncRawApplicationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -1051,7 +1093,7 @@ class AsyncRawApplicationsClient:
             Application details retrieved successfully
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}",
+            f"api/svc/v1/apps/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -1090,6 +1132,10 @@ class AsyncRawApplicationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -1112,7 +1158,7 @@ class AsyncRawApplicationsClient:
             Delete application response.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}",
+            f"api/svc/v1/apps/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -1151,6 +1197,10 @@ class AsyncRawApplicationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def redeploy(
@@ -1176,7 +1226,7 @@ class AsyncRawApplicationsClient:
             Returns the new deployment.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/redeploy",
+            f"api/svc/v1/apps/{encode_path_param(id)}/deployments/{encode_path_param(deployment_id)}/redeploy",
             method="POST",
             request_options=request_options,
         )
@@ -1215,6 +1265,10 @@ class AsyncRawApplicationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def scale_to_zero(
@@ -1236,7 +1290,7 @@ class AsyncRawApplicationsClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}/scale-to-zero",
+            f"api/svc/v1/apps/{encode_path_param(id)}/scale-to-zero",
             method="PATCH",
             request_options=request_options,
         )
@@ -1290,6 +1344,10 @@ class AsyncRawApplicationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def scale_to_original(
@@ -1312,7 +1370,7 @@ class AsyncRawApplicationsClient:
             Scales back a paused applicaion to the original number of replicas
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}/scale-to-original",
+            f"api/svc/v1/apps/{encode_path_param(id)}/scale-to-original",
             method="PATCH",
             request_options=request_options,
         )
@@ -1362,6 +1420,10 @@ class AsyncRawApplicationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def cancel_deployment(
@@ -1387,7 +1449,7 @@ class AsyncRawApplicationsClient:
             Deployment cancelled successfully.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{jsonable_encoder(id)}/deployments/{jsonable_encoder(deployment_id)}/cancel",
+            f"api/svc/v1/apps/{encode_path_param(id)}/deployments/{encode_path_param(deployment_id)}/cancel",
             method="POST",
             request_options=request_options,
         )
@@ -1437,4 +1499,8 @@ class AsyncRawApplicationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

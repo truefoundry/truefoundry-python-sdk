@@ -6,8 +6,9 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.pagination import AsyncPager, SyncPager
+from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
@@ -22,6 +23,7 @@ from ..types.list_workspaces_response import ListWorkspacesResponse
 from ..types.workspace import Workspace
 from ..types.workspace_manifest import WorkspaceManifest
 from .types.workspaces_delete_response import WorkspacesDeleteResponse
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -112,6 +114,10 @@ class RawWorkspacesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create_or_update(
@@ -214,6 +220,10 @@ class RawWorkspacesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def search(
@@ -285,6 +295,10 @@ class RawWorkspacesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
@@ -307,7 +321,7 @@ class RawWorkspacesClient:
             Returns the workspaces associated with provided workspace id
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/workspaces/{jsonable_encoder(id)}",
+            f"api/svc/v1/workspaces/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -335,6 +349,10 @@ class RawWorkspacesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -359,7 +377,7 @@ class RawWorkspacesClient:
             Successfully deletes the workspace and returns the workspace details along with a confirmation message.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/workspaces/{jsonable_encoder(id)}",
+            f"api/svc/v1/workspaces/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -398,6 +416,10 @@ class RawWorkspacesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -489,6 +511,10 @@ class AsyncRawWorkspacesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create_or_update(
@@ -591,6 +617,10 @@ class AsyncRawWorkspacesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def search(
@@ -665,6 +695,10 @@ class AsyncRawWorkspacesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -687,7 +721,7 @@ class AsyncRawWorkspacesClient:
             Returns the workspaces associated with provided workspace id
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/workspaces/{jsonable_encoder(id)}",
+            f"api/svc/v1/workspaces/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -715,6 +749,10 @@ class AsyncRawWorkspacesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -739,7 +777,7 @@ class AsyncRawWorkspacesClient:
             Successfully deletes the workspace and returns the workspace details along with a confirmation message.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/workspaces/{jsonable_encoder(id)}",
+            f"api/svc/v1/workspaces/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -778,4 +816,8 @@ class AsyncRawWorkspacesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

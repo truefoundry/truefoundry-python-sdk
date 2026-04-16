@@ -6,8 +6,9 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.pagination import AsyncPager, SyncPager
+from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
@@ -29,6 +30,7 @@ from ..types.sort_direction import SortDirection
 from ..types.terminate_job_response import TerminateJobResponse
 from ..types.trigger_job_run_response import TriggerJobRunResponse
 from .types.trigger_job_request_input import TriggerJobRequestInput
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -95,7 +97,7 @@ class RawJobsClient:
         offset = offset if offset is not None else 0
 
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/jobs/{jsonable_encoder(job_id)}/runs",
+            f"api/svc/v1/jobs/{encode_path_param(job_id)}/runs",
             method="GET",
             params={
                 "limit": limit,
@@ -169,6 +171,10 @@ class RawJobsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_run(
@@ -194,7 +200,7 @@ class RawJobsClient:
             Return JobRun details of the provided jobRunName
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/jobs/{jsonable_encoder(job_id)}/runs/{jsonable_encoder(job_run_name)}",
+            f"api/svc/v1/jobs/{encode_path_param(job_id)}/runs/{encode_path_param(job_run_name)}",
             method="GET",
             request_options=request_options,
         )
@@ -233,6 +239,10 @@ class RawJobsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete_run(
@@ -258,7 +268,7 @@ class RawJobsClient:
             Job Run deleted
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/jobs/{jsonable_encoder(job_id)}/runs/{jsonable_encoder(job_run_name)}",
+            f"api/svc/v1/jobs/{encode_path_param(job_id)}/runs/{encode_path_param(job_run_name)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -308,6 +318,10 @@ class RawJobsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def trigger(
@@ -420,6 +434,10 @@ class RawJobsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def terminate(
@@ -510,6 +528,10 @@ class RawJobsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -574,7 +596,7 @@ class AsyncRawJobsClient:
         offset = offset if offset is not None else 0
 
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/jobs/{jsonable_encoder(job_id)}/runs",
+            f"api/svc/v1/jobs/{encode_path_param(job_id)}/runs",
             method="GET",
             params={
                 "limit": limit,
@@ -651,6 +673,10 @@ class AsyncRawJobsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_run(
@@ -676,7 +702,7 @@ class AsyncRawJobsClient:
             Return JobRun details of the provided jobRunName
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/jobs/{jsonable_encoder(job_id)}/runs/{jsonable_encoder(job_run_name)}",
+            f"api/svc/v1/jobs/{encode_path_param(job_id)}/runs/{encode_path_param(job_run_name)}",
             method="GET",
             request_options=request_options,
         )
@@ -715,6 +741,10 @@ class AsyncRawJobsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete_run(
@@ -740,7 +770,7 @@ class AsyncRawJobsClient:
             Job Run deleted
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/jobs/{jsonable_encoder(job_id)}/runs/{jsonable_encoder(job_run_name)}",
+            f"api/svc/v1/jobs/{encode_path_param(job_id)}/runs/{encode_path_param(job_run_name)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -790,6 +820,10 @@ class AsyncRawJobsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def trigger(
@@ -902,6 +936,10 @@ class AsyncRawJobsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def terminate(
@@ -992,4 +1030,8 @@ class AsyncRawJobsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
