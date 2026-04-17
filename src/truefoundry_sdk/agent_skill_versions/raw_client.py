@@ -6,8 +6,9 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.pagination import AsyncPager, SyncPager
+from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
@@ -15,6 +16,7 @@ from ..types.agent_skill_version import AgentSkillVersion
 from ..types.empty_response import EmptyResponse
 from ..types.get_agent_skill_version_response import GetAgentSkillVersionResponse
 from ..types.list_agent_skill_versions_response import ListAgentSkillVersionsResponse
+from pydantic import ValidationError
 
 
 class RawAgentSkillVersionsClient:
@@ -38,7 +40,7 @@ class RawAgentSkillVersionsClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/agent-skill-versions/{jsonable_encoder(agent_skill_version_id)}",
+            f"api/ml/v1/agent-skill-versions/{encode_path_param(agent_skill_version_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -66,6 +68,10 @@ class RawAgentSkillVersionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -85,7 +91,7 @@ class RawAgentSkillVersionsClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/agent-skill-versions/{jsonable_encoder(agent_skill_version_id)}",
+            f"api/ml/v1/agent-skill-versions/{encode_path_param(agent_skill_version_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -113,6 +119,10 @@ class RawAgentSkillVersionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def list(
@@ -213,6 +223,10 @@ class RawAgentSkillVersionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -237,7 +251,7 @@ class AsyncRawAgentSkillVersionsClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/agent-skill-versions/{jsonable_encoder(agent_skill_version_id)}",
+            f"api/ml/v1/agent-skill-versions/{encode_path_param(agent_skill_version_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -265,6 +279,10 @@ class AsyncRawAgentSkillVersionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -284,7 +302,7 @@ class AsyncRawAgentSkillVersionsClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/agent-skill-versions/{jsonable_encoder(agent_skill_version_id)}",
+            f"api/ml/v1/agent-skill-versions/{encode_path_param(agent_skill_version_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -312,6 +330,10 @@ class AsyncRawAgentSkillVersionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def list(
@@ -415,4 +437,8 @@ class AsyncRawAgentSkillVersionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

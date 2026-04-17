@@ -1,12 +1,12 @@
 {
   "cliVersion": "4.71.5",
   "generatorName": "fernapi/fern-python-sdk",
-  "generatorVersion": "4.54.3",
+  "generatorVersion": "5.5.0",
   "generatorConfig": {
     "package_name": "truefoundry_sdk",
+    "use_request_defaults": "all",
     "pydantic_config": {
       "enum_type": "forward_compatible_python_enums",
-      "use_provided_defaults": true,
       "frozen": false
     },
     "client": {
@@ -22,6 +22,6 @@
       "numpydoc": ">=1.7.0,<2.0.0"
     }
   },
-  "originGitCommit": "9032a7936ba762178d26cc94a7500437e3d70f27",
+  "originGitCommit": "e2903127939fad8450d648a96c81176a2bb7cf59",
   "sdkVersion": "0.0.0"
 }

@@ -6,8 +6,9 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.pagination import AsyncPager, SyncPager
+from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..errors.failed_dependency_error import FailedDependencyError
@@ -17,6 +18,7 @@ from ..types.get_secret_response import GetSecretResponse
 from ..types.http_error import HttpError
 from ..types.list_secrets_response import ListSecretsResponse
 from ..types.secret import Secret
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -127,6 +129,10 @@ class RawSecretsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
@@ -149,7 +155,7 @@ class RawSecretsClient:
             Returns the Secret associated with provided id
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/secrets/{jsonable_encoder(id)}",
+            f"api/svc/v1/secrets/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -188,6 +194,10 @@ class RawSecretsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -217,7 +227,7 @@ class RawSecretsClient:
             Deletes a secret and its versions along with its values and returns the count of the deleted secrets.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/secrets/{jsonable_encoder(id)}",
+            f"api/svc/v1/secrets/{encode_path_param(id)}",
             method="DELETE",
             params={
                 "forceDelete": force_delete,
@@ -270,6 +280,10 @@ class RawSecretsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -381,6 +395,10 @@ class AsyncRawSecretsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -403,7 +421,7 @@ class AsyncRawSecretsClient:
             Returns the Secret associated with provided id
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/secrets/{jsonable_encoder(id)}",
+            f"api/svc/v1/secrets/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -442,6 +460,10 @@ class AsyncRawSecretsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -471,7 +493,7 @@ class AsyncRawSecretsClient:
             Deletes a secret and its versions along with its values and returns the count of the deleted secrets.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/secrets/{jsonable_encoder(id)}",
+            f"api/svc/v1/secrets/{encode_path_param(id)}",
             method="DELETE",
             params={
                 "forceDelete": force_delete,
@@ -524,4 +546,8 @@ class AsyncRawSecretsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
