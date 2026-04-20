@@ -1174,9 +1174,15 @@ description: "Complete Python SDK for TrueFoundry - Access and manage resources 
 ---
 ## Installation
 
-```bash
-pip install truefoundry
+<Info>
+  You need Python ≥ 3.9, ≤ 3.14 to use the Truefoundry Python SDK.
+</Info>
+
+```bash lines
+pip install -U "truefoundry"
 ```
+
+Please see the [Setup for CLI](/docs/setup-cli) for more details.
 
 <Tip>
 Looking for TypeScript SDK? Check out the [TrueFoundry TypeScript SDK](https://www.npmjs.com/package/truefoundry-sdk)
