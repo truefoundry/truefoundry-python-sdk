@@ -7,10 +7,10 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
 from .collaborator import Collaborator
-from .gcp_region import GcpRegion
+from .google_vertex_provider_account_auth_data import GoogleVertexProviderAccountAuthData
 from .owned_by import OwnedBy
-from .vertex_key_file_auth import VertexKeyFileAuth
 from .vertex_model import VertexModel
+from .vertex_region import VertexRegion
 
 
 class GoogleVertexProviderAccount(UniversalBaseModel):
@@ -33,8 +33,12 @@ class GoogleVertexProviderAccount(UniversalBaseModel):
     The Google Cloud project ID where Vertex AI is enabled
     """
 
-    region: GcpRegion
-    auth_data: typing.Optional[VertexKeyFileAuth] = None
+    region: VertexRegion
+    auth_data: typing.Optional[GoogleVertexProviderAccountAuthData] = pydantic.Field(default=None)
+    """
+    Service account key JSON, or Workload Identity Federation file (workload-identity-federation-file) with external_account JSON (e.g. create-cred-config). https://docs.truefoundry.com/gateway/google-vertex
+    """
+
     integrations: typing.List[VertexModel] = pydantic.Field()
     """
     List of integrations that are associated with the Google Vertex provider account

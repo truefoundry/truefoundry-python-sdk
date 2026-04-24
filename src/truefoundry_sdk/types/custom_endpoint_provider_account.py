@@ -8,7 +8,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
 from .collaborator import Collaborator
 from .custom_endpoint_integrations import CustomEndpointIntegrations
-from .custom_endpoint_provider_account_auth_data import CustomEndpointProviderAccountAuthData
+from .custom_endpoint_provider_account_endpoint_type import CustomEndpointProviderAccountEndpointType
+from .custom_header_auth import CustomHeaderAuth
 from .owned_by import OwnedBy
 
 
@@ -29,11 +30,12 @@ class CustomEndpointProviderAccount(UniversalBaseModel):
     The name of the custom endpoint provider account.
     """
 
-    auth_data: typing.Optional[CustomEndpointProviderAccountAuthData] = pydantic.Field(default=None)
+    endpoint_type: typing.Optional[CustomEndpointProviderAccountEndpointType] = pydantic.Field(default=None)
     """
-    Default authentication data for all endpoints under this account. Can be overridden at the endpoint level.
+    The type of service behind this endpoint (used for tracking purposes)
     """
 
+    auth_data: typing.Optional[CustomHeaderAuth] = None
     integrations: typing.List[CustomEndpointIntegrations] = pydantic.Field()
     """
     List of endpoint integrations associated with this provider account.

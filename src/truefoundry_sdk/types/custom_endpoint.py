@@ -4,7 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .custom_endpoint_auth_data import CustomEndpointAuthData
+from .custom_header_auth import CustomHeaderAuth
 from .custom_tls_settings import CustomTlsSettings
 
 
@@ -30,11 +30,7 @@ class CustomEndpoint(UniversalBaseModel):
     The target base URL to proxy requests to (e.g., https://my-service.example.com/v1)
     """
 
-    auth_data: typing.Optional[CustomEndpointAuthData] = pydantic.Field(default=None)
-    """
-    Authentication credentials for the upstream endpoint. Overrides account-level auth if set.
-    """
-
+    auth_data: typing.Optional[CustomHeaderAuth] = None
     headers: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
     """
     Custom headers forwarded to the upstream endpoint with every request. For example: `{"X-Custom-Header": "value"}`
