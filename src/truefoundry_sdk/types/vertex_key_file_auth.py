@@ -9,7 +9,7 @@ from .vertex_key_file_auth_key_file_content import VertexKeyFileAuthKeyFileConte
 
 class VertexKeyFileAuth(UniversalBaseModel):
     """
-    Google Cloud Key File Auth
+    Service account key file
     """
 
     type: typing.Literal["key-file"] = pydantic.Field(default="key-file")
@@ -19,7 +19,7 @@ class VertexKeyFileAuth(UniversalBaseModel):
 
     key_file_content: VertexKeyFileAuthKeyFileContent = pydantic.Field()
     """
-    The JSON content of your Google Cloud service account key file
+    JSON from a downloadable Google Cloud service account key (type service_account). Not for Workload Identity Federation; use authentication type Workload Identity Federation file (workload-identity-federation-file) for gcloud iam workload-identity-pools create-cred-config output.
     """
 
     if IS_PYDANTIC_V2:

@@ -5,7 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .header_routing_config import HeaderRoutingConfig
-from .model_type import ModelType
+from .virtual_model_model_type import VirtualModelModelType
 
 
 class VirtualModel(UniversalBaseModel):
@@ -23,7 +23,7 @@ class VirtualModel(UniversalBaseModel):
     +value=integration/model/virtual
     """
 
-    model_types: typing.List[ModelType] = pydantic.Field()
+    model_types: typing.List[VirtualModelModelType] = pydantic.Field()
     """
     Specify the type of the Virtual Model
     """

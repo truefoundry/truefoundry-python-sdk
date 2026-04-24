@@ -4,9 +4,9 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .gcp_region import GcpRegion
 from .model_cost_metric import ModelCostMetric
 from .model_type import ModelType
+from .vertex_region import VertexRegion
 
 
 class VertexModel(UniversalBaseModel):
@@ -29,7 +29,7 @@ class VertexModel(UniversalBaseModel):
     The Google Vertex AI model identifier (e.g., gemini-2.5-pro, anthropic/claude-sonnet-4-5@20250929). This is the model version name from Vertex AI's model catalog.
     """
 
-    region: typing.Optional[GcpRegion] = None
+    region: typing.Optional[VertexRegion] = None
     model_types: typing.List[ModelType] = pydantic.Field()
     """
     Specify the type of the Vertex AI model (e.g., chat, text, etc.)

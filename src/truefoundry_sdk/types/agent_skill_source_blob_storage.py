@@ -17,6 +17,11 @@ class AgentSkillSourceBlobStorage(UniversalBaseModel):
     1–1024 chars.
     """
 
+    uri: str = pydantic.Field()
+    """
+    Storage URI of the blob storage object where the skill is stored.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
