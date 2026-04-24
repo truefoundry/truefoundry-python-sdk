@@ -27,7 +27,7 @@ class AnthropicProviderAccount(UniversalBaseModel):
     The name of the Anthropic provider account
     """
 
-    auth_data: AnthropicKeyAuth
+    auth_data: typing.Optional[AnthropicKeyAuth] = None
     integrations: typing.Optional[typing.List[AnthropicIntegrations]] = pydantic.Field(default=None)
     """
     List of integrations that are associated with the Anthropic provider account

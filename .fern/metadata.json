@@ -22,6 +22,6 @@
       "numpydoc": ">=1.7.0,<2.0.0"
     }
   },
-  "originGitCommit": "e2903127939fad8450d648a96c81176a2bb7cf59",
-  "sdkVersion": "0.0.0"
+  "originGitCommit": "3cd4b100644a9765428dcfe024d3a3178e221009",
+  "sdkVersion": "0.3.2-rc.1"
 }

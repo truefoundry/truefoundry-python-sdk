@@ -12,9 +12,9 @@ class TrueFoundryAgentSkill(UniversalBaseModel):
     Fully qualified name of the agent skill
     """
 
-    eager: typing.Optional[bool] = pydantic.Field(default=False)
+    preload_skill_md: bool = pydantic.Field(default=False)
     """
-    When true, the skill's markdown content is loaded into the agent context before the first turn
+    If true, the SKILL.md content is injected into the agent context.
     """
 
     if IS_PYDANTIC_V2:
