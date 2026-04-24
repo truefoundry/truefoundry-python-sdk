@@ -4,5 +4,6 @@ import typing
 
 from .agent_skill_source_blob_storage import AgentSkillSourceBlobStorage
 from .agent_skill_source_inline import AgentSkillSourceInline
+from .agent_skill_source_local import AgentSkillSourceLocal
 
-AgentSkillManifestSource = typing.Union[AgentSkillSourceInline, AgentSkillSourceBlobStorage]
+AgentSkillManifestSource = typing.Union[AgentSkillSourceInline, AgentSkillSourceBlobStorage, AgentSkillSourceLocal]
