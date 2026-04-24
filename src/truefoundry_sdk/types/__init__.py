@@ -24,6 +24,7 @@ if typing.TYPE_CHECKING:
     from .agent_skill_manifest_source import AgentSkillManifestSource
     from .agent_skill_source_blob_storage import AgentSkillSourceBlobStorage
     from .agent_skill_source_inline import AgentSkillSourceInline
+    from .agent_skill_source_local import AgentSkillSourceLocal
     from .agent_skill_version import AgentSkillVersion
     from .agent_source import AgentSource
     from .ai21integrations import Ai21Integrations
@@ -1056,6 +1057,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentSkillManifestSource": ".agent_skill_manifest_source",
     "AgentSkillSourceBlobStorage": ".agent_skill_source_blob_storage",
     "AgentSkillSourceInline": ".agent_skill_source_inline",
+    "AgentSkillSourceLocal": ".agent_skill_source_local",
     "AgentSkillVersion": ".agent_skill_version",
     "AgentSource": ".agent_source",
     "Ai21Integrations": ".ai21integrations",
@@ -2099,6 +2101,7 @@ __all__ = [
     "AgentSkillManifestSource",
     "AgentSkillSourceBlobStorage",
     "AgentSkillSourceInline",
+    "AgentSkillSourceLocal",
     "AgentSkillVersion",
     "AgentSource",
     "Ai21Integrations",
