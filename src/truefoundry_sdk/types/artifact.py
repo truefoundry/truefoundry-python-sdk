@@ -27,7 +27,7 @@ class Artifact(UniversalBaseModel):
 
     type: ArtifactType = pydantic.Field()
     """
-    Type of the artifact (e.g., 'artifact', 'model', 'chat_prompt', 'agent_skill', 'plot', 'image')
+    Type of the artifact (e.g., 'artifact', 'model', 'chat_prompt', 'agent-skill', 'plot', 'image')
     """
 
     name: str = pydantic.Field()

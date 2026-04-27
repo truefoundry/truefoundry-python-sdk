@@ -9,7 +9,7 @@ from .agent_skill_manifest_source import AgentSkillManifestSource
 
 class AgentSkillManifest(UniversalBaseModel):
     """
-    Apply/API manifest: ML Repo and versioning; ``source`` is inline (apply) or blob-storage (stored).
+    Apply/API agent-skill manifest; ``source`` is inline (apply) or blob-storage (stored).
     """
 
     name: str = pydantic.Field()
@@ -24,7 +24,7 @@ class AgentSkillManifest(UniversalBaseModel):
 
     ml_repo: str = pydantic.Field()
     """
-    Name of the ML Repo that this agent skill belongs to
+    Name of the ML Repo
     """
 
     version: typing.Optional[int] = pydantic.Field(default=None)
@@ -32,7 +32,7 @@ class AgentSkillManifest(UniversalBaseModel):
     Version of the entity
     """
 
-    type: typing.Literal["agent_skill"] = "agent_skill"
+    type: typing.Literal["agent-skill"] = "agent-skill"
     source: AgentSkillManifestSource
 
     if IS_PYDANTIC_V2:

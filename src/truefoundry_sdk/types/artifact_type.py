@@ -17,7 +17,7 @@ class ArtifactType(enum.StrEnum):
     PLOT = "plot"
     IMAGE = "image"
     CHAT_PROMPT = "chat_prompt"
-    AGENT_SKILL = "agent_skill"
+    AGENT_SKILL = "agent-skill"
     _UNKNOWN = "__ARTIFACTTYPE_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
