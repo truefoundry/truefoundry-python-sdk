@@ -3301,7 +3301,7 @@ client.applications.list(
 <dl>
 <dd>
 
-**application_type:** `typing.Optional[str]` — Type of application (comma separated for multiple). Allowed Values: async-service, service, job, spark-job, helm, notebook, codeserver, rstudio, ssh-server, volume, application, application-set, intercept, workflow
+**application_type:** `typing.Optional[str]` — Type of application (comma separated for multiple). Allowed Values: async-service, service, job, spark-job, helm, notebook, spark-notebook, codeserver, rstudio, ssh-server, volume, application, application-set, intercept, workflow
     
 </dd>
 </dl>
@@ -9903,7 +9903,7 @@ client.agent_skills.list(
 <dl>
 <dd>
 
-**fqn:** `typing.Optional[str]` — Fully qualified name to filter agent skills by (format: 'agent_skill:{tenant}/{ml_repo}/{agent_skill_name}')
+**fqn:** `typing.Optional[str]` — Fully qualified name to filter agent skills by (format: 'agent-skill:{tenant}/{ml_repo}/{agent_skill_name}')
     
 </dd>
 </dl>
@@ -10004,7 +10004,7 @@ client.agent_skills.create_or_update(
             "key": "value"
         },
         ml_repo="ml_repo",
-        type="agent_skill",
+        type="agent-skill",
         source=AgentSkillSourceInline(
             type="inline",
             skill_md="skill_md",

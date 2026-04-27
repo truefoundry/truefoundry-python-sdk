@@ -86,7 +86,7 @@ class RawApplicationsClient:
             Fully qualified name (FQN) of the workspace
 
         application_type : typing.Optional[str]
-            Type of application (comma separated for multiple). Allowed Values: async-service, service, job, spark-job, helm, notebook, codeserver, rstudio, ssh-server, volume, application, application-set, intercept, workflow
+            Type of application (comma separated for multiple). Allowed Values: async-service, service, job, spark-job, helm, notebook, spark-notebook, codeserver, rstudio, ssh-server, volume, application, application-set, intercept, workflow
 
         name_search_query : typing.Optional[str]
             Search query for application name
@@ -820,7 +820,7 @@ class AsyncRawApplicationsClient:
             Fully qualified name (FQN) of the workspace
 
         application_type : typing.Optional[str]
-            Type of application (comma separated for multiple). Allowed Values: async-service, service, job, spark-job, helm, notebook, codeserver, rstudio, ssh-server, volume, application, application-set, intercept, workflow
+            Type of application (comma separated for multiple). Allowed Values: async-service, service, job, spark-job, helm, notebook, spark-notebook, codeserver, rstudio, ssh-server, volume, application, application-set, intercept, workflow
 
         name_search_query : typing.Optional[str]
             Search query for application name

@@ -14,6 +14,7 @@ class ApplicationType(enum.StrEnum):
     SPARK_JOB = "spark-job"
     HELM = "helm"
     NOTEBOOK = "notebook"
+    SPARK_NOTEBOOK = "spark-notebook"
     CODESERVER = "codeserver"
     RSTUDIO = "rstudio"
     SSH_SERVER = "ssh-server"
@@ -41,6 +42,7 @@ class ApplicationType(enum.StrEnum):
         spark_job: typing.Callable[[], T_Result],
         helm: typing.Callable[[], T_Result],
         notebook: typing.Callable[[], T_Result],
+        spark_notebook: typing.Callable[[], T_Result],
         codeserver: typing.Callable[[], T_Result],
         rstudio: typing.Callable[[], T_Result],
         ssh_server: typing.Callable[[], T_Result],
@@ -63,6 +65,8 @@ class ApplicationType(enum.StrEnum):
             return helm()
         if self is ApplicationType.NOTEBOOK:
             return notebook()
+        if self is ApplicationType.SPARK_NOTEBOOK:
+            return spark_notebook()
         if self is ApplicationType.CODESERVER:
             return codeserver()
         if self is ApplicationType.RSTUDIO:

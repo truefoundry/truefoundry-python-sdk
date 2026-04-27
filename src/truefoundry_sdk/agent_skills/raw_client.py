@@ -152,7 +152,7 @@ class RawAgentSkillsClient:
         Parameters
         ----------
         fqn : typing.Optional[str]
-            Fully qualified name to filter agent skills by (format: 'agent_skill:{tenant}/{ml_repo}/{agent_skill_name}')
+            Fully qualified name to filter agent skills by (format: 'agent-skill:{tenant}/{ml_repo}/{agent_skill_name}')
 
         ml_repo_id : typing.Optional[str]
             ML Repo ID filter
@@ -424,7 +424,7 @@ class AsyncRawAgentSkillsClient:
         Parameters
         ----------
         fqn : typing.Optional[str]
-            Fully qualified name to filter agent skills by (format: 'agent_skill:{tenant}/{ml_repo}/{agent_skill_name}')
+            Fully qualified name to filter agent skills by (format: 'agent-skill:{tenant}/{ml_repo}/{agent_skill_name}')
 
         ml_repo_id : typing.Optional[str]
             ML Repo ID filter
