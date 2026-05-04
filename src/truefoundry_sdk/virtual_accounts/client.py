@@ -87,6 +87,7 @@ class VirtualAccountsClient:
             limit=10,
             offset=0,
             name_search_query="nameSearchQuery",
+            owned_by_teams=["ownedByTeams"],
             is_expired=True,
             filter="filter",
         )
@@ -442,6 +443,7 @@ class AsyncVirtualAccountsClient:
                 limit=10,
                 offset=0,
                 name_search_query="nameSearchQuery",
+                owned_by_teams=["ownedByTeams"],
                 is_expired=True,
                 filter="filter",
             )

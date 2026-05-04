@@ -2076,6 +2076,9 @@ client.virtual_accounts.list(
     limit=10,
     offset=0,
     name_search_query="nameSearchQuery",
+    owned_by_teams=[
+        "ownedByTeams"
+    ],
     is_expired=True,
     filter="filter",
 )
@@ -4191,7 +4194,7 @@ List Job Runs for provided Job Id. Filter the data based on parameters passed in
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, JobRunsSortBy, SortDirection
+from truefoundry_sdk import TrueFoundry, JobRunsSortBy, SortDirection, JobRunStatus
 
 client = TrueFoundry(
     api_key="<token>",
@@ -4205,6 +4208,15 @@ client.jobs.list_runs(
     search_prefix="searchPrefix",
     sort_by=JobRunsSortBy.START_TIME,
     order=SortDirection.ASC,
+    triggered_by=[
+        "triggeredBy"
+    ],
+    status=[
+        JobRunStatus.CREATED
+    ],
+    version_numbers=[
+        1.1
+    ],
 )
 
 ```
@@ -6211,6 +6223,9 @@ client.events.get(
     end_ts="endTs",
     application_id="applicationId",
     application_fqn="applicationFqn",
+    pod_names=[
+        "podNames"
+    ],
     job_run_name="jobRunName",
 )
 
@@ -6444,6 +6459,9 @@ client.logs.get(
     job_run_name="jobRunName",
     pod_name="podName",
     container_name="containerName",
+    pod_names=[
+        "podNames"
+    ],
     pod_names_regex="podNamesRegex",
     search_filters="searchFilters",
     search_string="searchString",
@@ -8439,6 +8457,12 @@ client.artifact_versions.list(
     ml_repo_id="ml_repo_id",
     name="name",
     version=1,
+    run_ids=[
+        "run_ids"
+    ],
+    run_steps=[
+        1
+    ],
     offset=1,
     limit=1,
     include_internal_metadata=True,
@@ -9211,6 +9235,12 @@ client.model_versions.list(
     ml_repo_id="ml_repo_id",
     name="name",
     version=1,
+    run_ids=[
+        "run_ids"
+    ],
+    run_steps=[
+        1
+    ],
     offset=1,
     limit=1,
     include_internal_metadata=True,
@@ -12345,6 +12375,12 @@ client.internal.artifact_versions.list(
     ml_repo_id="ml_repo_id",
     name="name",
     version=1,
+    run_ids=[
+        "run_ids"
+    ],
+    run_steps=[
+        1
+    ],
     offset=1,
     limit=1,
     include_internal_metadata=True,
