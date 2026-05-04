@@ -78,6 +78,7 @@ class EventsClient:
             end_ts="endTs",
             application_id="applicationId",
             application_fqn="applicationFqn",
+            pod_names=["podNames"],
             job_run_name="jobRunName",
         )
         """
@@ -168,6 +169,7 @@ class AsyncEventsClient:
                 end_ts="endTs",
                 application_id="applicationId",
                 application_fqn="applicationFqn",
+                pod_names=["podNames"],
                 job_run_name="jobRunName",
             )
 

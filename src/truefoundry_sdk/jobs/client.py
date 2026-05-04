@@ -93,7 +93,12 @@ class JobsClient:
 
         Examples
         --------
-        from truefoundry_sdk import JobRunsSortBy, SortDirection, TrueFoundry
+        from truefoundry_sdk import (
+            JobRunsSortBy,
+            JobRunStatus,
+            SortDirection,
+            TrueFoundry,
+        )
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -106,6 +111,9 @@ class JobsClient:
             search_prefix="searchPrefix",
             sort_by=JobRunsSortBy.START_TIME,
             order=SortDirection.ASC,
+            triggered_by=["triggeredBy"],
+            status=[JobRunStatus.CREATED],
+            version_numbers=[1.1],
         )
         for item in response:
             yield item
@@ -369,7 +377,12 @@ class AsyncJobsClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import AsyncTrueFoundry, JobRunsSortBy, SortDirection
+        from truefoundry_sdk import (
+            AsyncTrueFoundry,
+            JobRunsSortBy,
+            JobRunStatus,
+            SortDirection,
+        )
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -385,6 +398,9 @@ class AsyncJobsClient:
                 search_prefix="searchPrefix",
                 sort_by=JobRunsSortBy.START_TIME,
                 order=SortDirection.ASC,
+                triggered_by=["triggeredBy"],
+                status=[JobRunStatus.CREATED],
+                version_numbers=[1.1],
             )
             async for item in response:
                 yield item
