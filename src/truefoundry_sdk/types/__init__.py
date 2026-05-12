@@ -456,6 +456,7 @@ if typing.TYPE_CHECKING:
     from .groq_provider_account import GroqProviderAccount
     from .guardrail_config_group import GuardrailConfigGroup
     from .guardrail_config_integrations import GuardrailConfigIntegrations
+    from .guardrail_settings import GuardrailSettings
     from .guardrails import Guardrails
     from .guardrails_config import GuardrailsConfig
     from .guardrails_rule import GuardrailsRule
@@ -482,6 +483,7 @@ if typing.TYPE_CHECKING:
     from .huggingface_artifact_source import HuggingfaceArtifactSource
     from .i_change import IChange
     from .i_change_operation import IChangeOperation
+    from .identity_provider_mapping import IdentityProviderMapping
     from .image import Image
     from .image_command import ImageCommand
     from .image_content_part import ImageContentPart
@@ -628,6 +630,7 @@ if typing.TYPE_CHECKING:
     from .multi_part_upload import MultiPartUpload
     from .multi_part_upload_response import MultiPartUploadResponse
     from .multi_part_upload_storage_provider import MultiPartUploadStorageProvider
+    from .native_snowflake_flyte_task_template import NativeSnowflakeFlyteTaskTemplate
     from .nats_input_config import NatsInputConfig
     from .nats_metric_config import NatsMetricConfig
     from .nats_output_config import NatsOutputConfig
@@ -728,6 +731,10 @@ if typing.TYPE_CHECKING:
     from .patronus_pii_evaluator import PatronusPiiEvaluator
     from .patronus_toxicity_criteria import PatronusToxicityCriteria
     from .patronus_toxicity_evaluator import PatronusToxicityEvaluator
+    from .per_million_characters_cost_metric import PerMillionCharactersCostMetric
+    from .per_million_characters_cost_metric_value import PerMillionCharactersCostMetricValue
+    from .per_minute_of_audio_cost_metric import PerMinuteOfAudioCostMetric
+    from .per_minute_of_audio_cost_metric_value import PerMinuteOfAudioCostMetricValue
     from .per_thousand_embedding_tokens_cost_metric import PerThousandEmbeddingTokensCostMetric
     from .per_thousand_tokens_cost_metric import PerThousandTokensCostMetric
     from .permissions import Permissions
@@ -854,11 +861,17 @@ if typing.TYPE_CHECKING:
     from .slack_webhook import SlackWebhook
     from .slack_webhook_auth import SlackWebhookAuth
     from .slack_webhook_integration import SlackWebhookIntegration
+    from .smallest_ai_api_key_auth import SmallestAiApiKeyAuth
+    from .smallest_ai_model import SmallestAiModel
+    from .smallest_ai_provider_account import SmallestAiProviderAccount
     from .smtp_credentials import SmtpCredentials
+    from .snowflake_config import SnowflakeConfig
     from .snowflake_cortex_integrations import SnowflakeCortexIntegrations
     from .snowflake_cortex_model import SnowflakeCortexModel
     from .snowflake_cortex_pat_token_auth import SnowflakeCortexPatTokenAuth
     from .snowflake_cortex_provider_account import SnowflakeCortexProviderAccount
+    from .snowflake_sql import SnowflakeSql
+    from .snowflake_task_config import SnowflakeTaskConfig
     from .sort_direction import SortDirection
     from .spa_cy_framework import SpaCyFramework
     from .span_attribute_filter import SpanAttributeFilter
@@ -978,6 +991,7 @@ if typing.TYPE_CHECKING:
     from .true_foundry_interactive_login import TrueFoundryInteractiveLogin
     from .true_foundry_managed_source import TrueFoundryManagedSource
     from .true_foundry_provider_account import TrueFoundryProviderAccount
+    from .truefoundry_flyte_task_template import TruefoundryFlyteTaskTemplate
     from .ttl_integrations import TtlIntegrations
     from .ttl_provider_account import TtlProviderAccount
     from .ttl_registry import TtlRegistry
@@ -1475,6 +1489,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GroqProviderAccount": ".groq_provider_account",
     "GuardrailConfigGroup": ".guardrail_config_group",
     "GuardrailConfigIntegrations": ".guardrail_config_integrations",
+    "GuardrailSettings": ".guardrail_settings",
     "Guardrails": ".guardrails",
     "GuardrailsConfig": ".guardrails_config",
     "GuardrailsRule": ".guardrails_rule",
@@ -1501,6 +1516,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "HuggingfaceArtifactSource": ".huggingface_artifact_source",
     "IChange": ".i_change",
     "IChangeOperation": ".i_change_operation",
+    "IdentityProviderMapping": ".identity_provider_mapping",
     "Image": ".image",
     "ImageCommand": ".image_command",
     "ImageContentPart": ".image_content_part",
@@ -1647,6 +1663,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MultiPartUpload": ".multi_part_upload",
     "MultiPartUploadResponse": ".multi_part_upload_response",
     "MultiPartUploadStorageProvider": ".multi_part_upload_storage_provider",
+    "NativeSnowflakeFlyteTaskTemplate": ".native_snowflake_flyte_task_template",
     "NatsInputConfig": ".nats_input_config",
     "NatsMetricConfig": ".nats_metric_config",
     "NatsOutputConfig": ".nats_output_config",
@@ -1747,6 +1764,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PatronusPiiEvaluator": ".patronus_pii_evaluator",
     "PatronusToxicityCriteria": ".patronus_toxicity_criteria",
     "PatronusToxicityEvaluator": ".patronus_toxicity_evaluator",
+    "PerMillionCharactersCostMetric": ".per_million_characters_cost_metric",
+    "PerMillionCharactersCostMetricValue": ".per_million_characters_cost_metric_value",
+    "PerMinuteOfAudioCostMetric": ".per_minute_of_audio_cost_metric",
+    "PerMinuteOfAudioCostMetricValue": ".per_minute_of_audio_cost_metric_value",
     "PerThousandEmbeddingTokensCostMetric": ".per_thousand_embedding_tokens_cost_metric",
     "PerThousandTokensCostMetric": ".per_thousand_tokens_cost_metric",
     "Permissions": ".permissions",
@@ -1876,11 +1897,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SlackWebhook": ".slack_webhook",
     "SlackWebhookAuth": ".slack_webhook_auth",
     "SlackWebhookIntegration": ".slack_webhook_integration",
+    "SmallestAiApiKeyAuth": ".smallest_ai_api_key_auth",
+    "SmallestAiModel": ".smallest_ai_model",
+    "SmallestAiProviderAccount": ".smallest_ai_provider_account",
     "SmtpCredentials": ".smtp_credentials",
+    "SnowflakeConfig": ".snowflake_config",
     "SnowflakeCortexIntegrations": ".snowflake_cortex_integrations",
     "SnowflakeCortexModel": ".snowflake_cortex_model",
     "SnowflakeCortexPatTokenAuth": ".snowflake_cortex_pat_token_auth",
     "SnowflakeCortexProviderAccount": ".snowflake_cortex_provider_account",
+    "SnowflakeSql": ".snowflake_sql",
+    "SnowflakeTaskConfig": ".snowflake_task_config",
     "SortDirection": ".sort_direction",
     "SpaCyFramework": ".spa_cy_framework",
     "SpanAttributeFilter": ".span_attribute_filter",
@@ -1998,6 +2025,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TrueFoundryInteractiveLogin": ".true_foundry_interactive_login",
     "TrueFoundryManagedSource": ".true_foundry_managed_source",
     "TrueFoundryProviderAccount": ".true_foundry_provider_account",
+    "TruefoundryFlyteTaskTemplate": ".truefoundry_flyte_task_template",
     "TtlIntegrations": ".ttl_integrations",
     "TtlProviderAccount": ".ttl_provider_account",
     "TtlRegistry": ".ttl_registry",
@@ -2519,6 +2547,7 @@ __all__ = [
     "GroqProviderAccount",
     "GuardrailConfigGroup",
     "GuardrailConfigIntegrations",
+    "GuardrailSettings",
     "Guardrails",
     "GuardrailsConfig",
     "GuardrailsRule",
@@ -2545,6 +2574,7 @@ __all__ = [
     "HuggingfaceArtifactSource",
     "IChange",
     "IChangeOperation",
+    "IdentityProviderMapping",
     "Image",
     "ImageCommand",
     "ImageContentPart",
@@ -2691,6 +2721,7 @@ __all__ = [
     "MultiPartUpload",
     "MultiPartUploadResponse",
     "MultiPartUploadStorageProvider",
+    "NativeSnowflakeFlyteTaskTemplate",
     "NatsInputConfig",
     "NatsMetricConfig",
     "NatsOutputConfig",
@@ -2791,6 +2822,10 @@ __all__ = [
     "PatronusPiiEvaluator",
     "PatronusToxicityCriteria",
     "PatronusToxicityEvaluator",
+    "PerMillionCharactersCostMetric",
+    "PerMillionCharactersCostMetricValue",
+    "PerMinuteOfAudioCostMetric",
+    "PerMinuteOfAudioCostMetricValue",
     "PerThousandEmbeddingTokensCostMetric",
     "PerThousandTokensCostMetric",
     "Permissions",
@@ -2920,11 +2955,17 @@ __all__ = [
     "SlackWebhook",
     "SlackWebhookAuth",
     "SlackWebhookIntegration",
+    "SmallestAiApiKeyAuth",
+    "SmallestAiModel",
+    "SmallestAiProviderAccount",
     "SmtpCredentials",
+    "SnowflakeConfig",
     "SnowflakeCortexIntegrations",
     "SnowflakeCortexModel",
     "SnowflakeCortexPatTokenAuth",
     "SnowflakeCortexProviderAccount",
+    "SnowflakeSql",
+    "SnowflakeTaskConfig",
     "SortDirection",
     "SpaCyFramework",
     "SpanAttributeFilter",
@@ -3042,6 +3083,7 @@ __all__ = [
     "TrueFoundryInteractiveLogin",
     "TrueFoundryManagedSource",
     "TrueFoundryProviderAccount",
+    "TruefoundryFlyteTaskTemplate",
     "TtlIntegrations",
     "TtlProviderAccount",
     "TtlRegistry",

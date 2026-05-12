@@ -9,6 +9,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class SpanAttributeFilterOperator(enum.StrEnum):
     EQUAL = "EQUAL"
+    NOT_EQUAL = "NOT_EQUAL"
     GREATER_THAN = "GREATER_THAN"
     LESS_THAN = "LESS_THAN"
     GREATER_THAN_EQUAL = "GREATER_THAN_EQUAL"
@@ -17,8 +18,11 @@ class SpanAttributeFilterOperator(enum.StrEnum):
     IN = "IN"
     NOT_IN = "NOT_IN"
     STRING_CONTAINS = "STRING_CONTAINS"
+    STRING_NOT_CONTAINS = "STRING_NOT_CONTAINS"
     STRING_STARTS_WITH = "STRING_STARTS_WITH"
+    STRING_NOT_STARTS_WITH = "STRING_NOT_STARTS_WITH"
     STRING_ENDS_WITH = "STRING_ENDS_WITH"
+    STRING_NOT_ENDS_WITH = "STRING_NOT_ENDS_WITH"
     ARRAY_HAS_ANY = "ARRAY_HAS_ANY"
     ARRAY_HAS_NONE = "ARRAY_HAS_NONE"
     PRESENT = "PRESENT"
@@ -37,6 +41,7 @@ class SpanAttributeFilterOperator(enum.StrEnum):
     def visit(
         self,
         equal: typing.Callable[[], T_Result],
+        not_equal: typing.Callable[[], T_Result],
         greater_than: typing.Callable[[], T_Result],
         less_than: typing.Callable[[], T_Result],
         greater_than_equal: typing.Callable[[], T_Result],
@@ -45,8 +50,11 @@ class SpanAttributeFilterOperator(enum.StrEnum):
         in_: typing.Callable[[], T_Result],
         not_in: typing.Callable[[], T_Result],
         string_contains: typing.Callable[[], T_Result],
+        string_not_contains: typing.Callable[[], T_Result],
         string_starts_with: typing.Callable[[], T_Result],
+        string_not_starts_with: typing.Callable[[], T_Result],
         string_ends_with: typing.Callable[[], T_Result],
+        string_not_ends_with: typing.Callable[[], T_Result],
         array_has_any: typing.Callable[[], T_Result],
         array_has_none: typing.Callable[[], T_Result],
         present: typing.Callable[[], T_Result],
@@ -55,6 +63,8 @@ class SpanAttributeFilterOperator(enum.StrEnum):
     ) -> T_Result:
         if self is SpanAttributeFilterOperator.EQUAL:
             return equal()
+        if self is SpanAttributeFilterOperator.NOT_EQUAL:
+            return not_equal()
         if self is SpanAttributeFilterOperator.GREATER_THAN:
             return greater_than()
         if self is SpanAttributeFilterOperator.LESS_THAN:
@@ -71,10 +81,16 @@ class SpanAttributeFilterOperator(enum.StrEnum):
             return not_in()
         if self is SpanAttributeFilterOperator.STRING_CONTAINS:
             return string_contains()
+        if self is SpanAttributeFilterOperator.STRING_NOT_CONTAINS:
+            return string_not_contains()
         if self is SpanAttributeFilterOperator.STRING_STARTS_WITH:
             return string_starts_with()
+        if self is SpanAttributeFilterOperator.STRING_NOT_STARTS_WITH:
+            return string_not_starts_with()
         if self is SpanAttributeFilterOperator.STRING_ENDS_WITH:
             return string_ends_with()
+        if self is SpanAttributeFilterOperator.STRING_NOT_ENDS_WITH:
+            return string_not_ends_with()
         if self is SpanAttributeFilterOperator.ARRAY_HAS_ANY:
             return array_has_any()
         if self is SpanAttributeFilterOperator.ARRAY_HAS_NONE:

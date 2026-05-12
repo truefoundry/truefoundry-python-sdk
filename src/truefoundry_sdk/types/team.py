@@ -32,6 +32,7 @@ class Team(UniversalBaseModel):
     is_editable: typing_extensions.Annotated[
         bool, FieldMetadata(alias="isEditable"), pydantic.Field(alias="isEditable")
     ]
+    roles: typing.Optional[typing.List[str]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

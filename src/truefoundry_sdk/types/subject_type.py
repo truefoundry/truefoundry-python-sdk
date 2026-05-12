@@ -8,6 +8,10 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class SubjectType(enum.StrEnum):
+    """
+    Type of the authenticated subject. "user" for human users, "serviceaccount" (also known as virtual account) for programmatic access.
+    """
+
     USER = "user"
     TEAM = "team"
     SERVICEACCOUNT = "serviceaccount"

@@ -15,6 +15,7 @@ class RoleWithResource(UniversalBaseModel):
         RoleWithResourceResourceType, FieldMetadata(alias="resourceType"), pydantic.Field(alias="resourceType")
     ]
     resource_id: typing_extensions.Annotated[str, FieldMetadata(alias="resourceId"), pydantic.Field(alias="resourceId")]
+    role_name: typing_extensions.Annotated[str, FieldMetadata(alias="roleName"), pydantic.Field(alias="roleName")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -30,6 +30,7 @@ from .palm_provider_account import PalmProviderAccount
 from .perplexity_ai_provider_account import PerplexityAiProviderAccount
 from .samba_nova_provider_account import SambaNovaProviderAccount
 from .self_hosted_model_provider_account import SelfHostedModelProviderAccount
+from .smallest_ai_provider_account import SmallestAiProviderAccount
 from .snowflake_cortex_provider_account import SnowflakeCortexProviderAccount
 from .together_ai_provider_account import TogetherAiProviderAccount
 from .virtual_model_provider_account import VirtualModelProviderAccount
@@ -66,6 +67,7 @@ ModelProviderAccount = typing.Union[
     ElevenLabsProviderAccount,
     DeepgramProviderAccount,
     CartesiaProviderAccount,
+    SmallestAiProviderAccount,
     VirtualModelProviderAccount,
     CustomEndpointProviderAccount,
 ]

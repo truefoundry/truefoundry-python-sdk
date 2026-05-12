@@ -29,6 +29,11 @@ class Session(UniversalBaseModel):
     subject_pat_name: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="subjectPatName"), pydantic.Field(alias="subjectPatName")
     ] = None
+    subject_external_identity_slug: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="subjectExternalIdentitySlug"),
+        pydantic.Field(alias="subjectExternalIdentitySlug"),
+    ] = None
     email: typing.Optional[str] = None
     subject_type: typing_extensions.Annotated[
         SubjectType, FieldMetadata(alias="subjectType"), pydantic.Field(alias="subjectType")

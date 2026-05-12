@@ -65,6 +65,11 @@ class McpServerOAuth2(UniversalBaseModel):
     List of scopes to request from the OAuth2 provider.
     """
 
+    additional_token_params: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
+    """
+    Extra key/value pairs sent on every token endpoint request (e.g. Auth0 'audience').
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:

@@ -7,6 +7,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
 from .auto_rotate import AutoRotate
+from .identity_provider_mapping import IdentityProviderMapping
 from .notification_target import NotificationTarget
 from .permissions import Permissions
 from .secret_store_config import SecretStoreConfig
@@ -43,6 +44,11 @@ class VirtualAccountManifest(UniversalBaseModel):
     tags: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     Key-value pairs to categorize this Virtual Account (e.g., by owner or environment).
+    """
+
+    identity_provider_mapping: typing.Optional[typing.List[IdentityProviderMapping]] = pydantic.Field(default=None)
+    """
+    Mappings from external identity provider claim value to this virtual account
     """
 
     if IS_PYDANTIC_V2:

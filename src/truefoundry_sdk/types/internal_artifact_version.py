@@ -39,7 +39,7 @@ class InternalArtifactVersion(UniversalBaseModel):
     Timestamp when the artifact version was last updated
     """
 
-    manifest: ArtifactManifest = pydantic.Field()
+    manifest: typing.Optional[ArtifactManifest] = pydantic.Field(default=None)
     """
     Manifest containing metadata for a generic artifact version
     """
@@ -77,6 +77,16 @@ class InternalArtifactVersion(UniversalBaseModel):
     artifact_size: typing.Optional[int] = pydantic.Field(default=None)
     """
     Total size of the artifact version in bytes (internal use only)
+    """
+
+    artifact_metadata: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    """
+    Metadata of the artifact version
+    """
+
+    internal_metadata: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    """
+    Internal metadata of the artifact version
     """
 
     if IS_PYDANTIC_V2:

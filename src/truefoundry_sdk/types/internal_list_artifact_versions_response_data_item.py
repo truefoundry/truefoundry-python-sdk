@@ -2,7 +2,11 @@
 
 import typing
 
+from .agent_skill_version import AgentSkillVersion
 from .internal_artifact_version import InternalArtifactVersion
 from .internal_model_version import InternalModelVersion
+from .prompt_version import PromptVersion
 
-InternalListArtifactVersionsResponseDataItem = typing.Union[InternalArtifactVersion, InternalModelVersion]
+InternalListArtifactVersionsResponseDataItem = typing.Union[
+    InternalArtifactVersion, InternalModelVersion, PromptVersion, AgentSkillVersion
+]
