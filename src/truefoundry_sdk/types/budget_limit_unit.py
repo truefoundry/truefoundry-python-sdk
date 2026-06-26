@@ -15,6 +15,7 @@ class BudgetLimitUnit(enum.StrEnum):
     COST_PER_DAY = "cost_per_day"
     COST_PER_MONTH = "cost_per_month"
     COST_PER_WEEK = "cost_per_week"
+    COST_PER_QUARTER = "cost_per_quarter"
     TOKENS_PER_DAY = "tokens_per_day"
     TOKENS_PER_MONTH = "tokens_per_month"
     _UNKNOWN = "__BUDGETLIMITUNIT_UNKNOWN__"
@@ -33,6 +34,7 @@ class BudgetLimitUnit(enum.StrEnum):
         cost_per_day: typing.Callable[[], T_Result],
         cost_per_month: typing.Callable[[], T_Result],
         cost_per_week: typing.Callable[[], T_Result],
+        cost_per_quarter: typing.Callable[[], T_Result],
         tokens_per_day: typing.Callable[[], T_Result],
         tokens_per_month: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
@@ -43,6 +45,8 @@ class BudgetLimitUnit(enum.StrEnum):
             return cost_per_month()
         if self is BudgetLimitUnit.COST_PER_WEEK:
             return cost_per_week()
+        if self is BudgetLimitUnit.COST_PER_QUARTER:
+            return cost_per_quarter()
         if self is BudgetLimitUnit.TOKENS_PER_DAY:
             return tokens_per_day()
         if self is BudgetLimitUnit.TOKENS_PER_MONTH:

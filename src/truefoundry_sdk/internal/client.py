@@ -9,7 +9,6 @@ from ..core.request_options import RequestOptions
 from .raw_client import AsyncRawInternalClient, RawInternalClient
 
 if typing.TYPE_CHECKING:
-    from .ai_gateway.client import AiGatewayClient, AsyncAiGatewayClient
     from .applications.client import ApplicationsClient, AsyncApplicationsClient
     from .artifact_versions.client import ArtifactVersionsClient, AsyncArtifactVersionsClient
     from .build_logs.client import AsyncBuildLogsClient, BuildLogsClient
@@ -18,7 +17,6 @@ if typing.TYPE_CHECKING:
     from .docker_registries.client import AsyncDockerRegistriesClient, DockerRegistriesClient
     from .metrics.client import AsyncMetricsClient, MetricsClient
     from .ml.client import AsyncMlClient, MlClient
-    from .users.client import AsyncUsersClient, UsersClient
     from .vcs.client import AsyncVcsClient, VcsClient
     from .workflows.client import AsyncWorkflowsClient, WorkflowsClient
 
@@ -27,8 +25,6 @@ class InternalClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawInternalClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
-        self._users: typing.Optional[UsersClient] = None
-        self._ai_gateway: typing.Optional[AiGatewayClient] = None
         self._clusters: typing.Optional[ClustersClient] = None
         self._deployments: typing.Optional[DeploymentsClient] = None
         self._applications: typing.Optional[ApplicationsClient] = None
@@ -88,22 +84,6 @@ class InternalClient:
         """
         _response = self._raw_client.get_id_from_fqn(type, fqn=fqn, request_options=request_options)
         return _response.data
-
-    @property
-    def users(self):
-        if self._users is None:
-            from .users.client import UsersClient  # noqa: E402
-
-            self._users = UsersClient(client_wrapper=self._client_wrapper)
-        return self._users
-
-    @property
-    def ai_gateway(self):
-        if self._ai_gateway is None:
-            from .ai_gateway.client import AiGatewayClient  # noqa: E402
-
-            self._ai_gateway = AiGatewayClient(client_wrapper=self._client_wrapper)
-        return self._ai_gateway
 
     @property
     def clusters(self):
@@ -190,8 +170,6 @@ class AsyncInternalClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawInternalClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
-        self._users: typing.Optional[AsyncUsersClient] = None
-        self._ai_gateway: typing.Optional[AsyncAiGatewayClient] = None
         self._clusters: typing.Optional[AsyncClustersClient] = None
         self._deployments: typing.Optional[AsyncDeploymentsClient] = None
         self._applications: typing.Optional[AsyncApplicationsClient] = None
@@ -259,22 +237,6 @@ class AsyncInternalClient:
         """
         _response = await self._raw_client.get_id_from_fqn(type, fqn=fqn, request_options=request_options)
         return _response.data
-
-    @property
-    def users(self):
-        if self._users is None:
-            from .users.client import AsyncUsersClient  # noqa: E402
-
-            self._users = AsyncUsersClient(client_wrapper=self._client_wrapper)
-        return self._users
-
-    @property
-    def ai_gateway(self):
-        if self._ai_gateway is None:
-            from .ai_gateway.client import AsyncAiGatewayClient  # noqa: E402
-
-            self._ai_gateway = AsyncAiGatewayClient(client_wrapper=self._client_wrapper)
-        return self._ai_gateway
 
     @property
     def clusters(self):

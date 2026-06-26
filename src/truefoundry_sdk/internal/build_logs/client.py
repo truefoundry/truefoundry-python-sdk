@@ -4,7 +4,6 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
-from ...types.logs_filter_query import LogsFilterQuery
 from ...types.logs_response import LogsResponse
 from .raw_client import AsyncRawBuildLogsClient, RawBuildLogsClient
 
@@ -32,12 +31,12 @@ class BuildLogsClient:
         end_ts: typing.Optional[str] = None,
         limit: typing.Optional[str] = None,
         direction: typing.Optional[str] = None,
-        filter_query: typing.Optional[LogsFilterQuery] = None,
+        filter_query: typing.Optional[str] = None,
         num_logs_to_ignore: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LogsResponse:
         """
-        Get logs for a given pipeline run by its name, with optional filters and time range.
+        Get logs emitted by the image build and deploy pipeline for a specific build of an application.
 
         Parameters
         ----------
@@ -56,8 +55,8 @@ class BuildLogsClient:
         direction : typing.Optional[str]
             Direction of sorting logs. Can be `asc` or `desc`
 
-        filter_query : typing.Optional[LogsFilterQuery]
-            Query to filter logs
+        filter_query : typing.Optional[str]
+            JSON-encoded filter object with shape `{ matchString, type, operator }`. `type` is `regex` or `substring`; `operator` is `equal` or `not_equal`.
 
         num_logs_to_ignore : typing.Optional[float]
             Number of logs corresponding to the starting timestamp to be ignored.
@@ -68,7 +67,7 @@ class BuildLogsClient:
         Returns
         -------
         LogsResponse
-            Successfully retrieved build logs for the pipeline run
+            Logs emitted by the build pipeline for the given pipeline run.
 
         Examples
         --------
@@ -84,6 +83,7 @@ class BuildLogsClient:
             end_ts="1635467891123456789",
             limit="limit",
             direction="direction",
+            filter_query='{"matchString":"error","type":"substring","operator":"equal"}',
             num_logs_to_ignore=1.1,
         )
         """
@@ -123,12 +123,12 @@ class AsyncBuildLogsClient:
         end_ts: typing.Optional[str] = None,
         limit: typing.Optional[str] = None,
         direction: typing.Optional[str] = None,
-        filter_query: typing.Optional[LogsFilterQuery] = None,
+        filter_query: typing.Optional[str] = None,
         num_logs_to_ignore: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LogsResponse:
         """
-        Get logs for a given pipeline run by its name, with optional filters and time range.
+        Get logs emitted by the image build and deploy pipeline for a specific build of an application.
 
         Parameters
         ----------
@@ -147,8 +147,8 @@ class AsyncBuildLogsClient:
         direction : typing.Optional[str]
             Direction of sorting logs. Can be `asc` or `desc`
 
-        filter_query : typing.Optional[LogsFilterQuery]
-            Query to filter logs
+        filter_query : typing.Optional[str]
+            JSON-encoded filter object with shape `{ matchString, type, operator }`. `type` is `regex` or `substring`; `operator` is `equal` or `not_equal`.
 
         num_logs_to_ignore : typing.Optional[float]
             Number of logs corresponding to the starting timestamp to be ignored.
@@ -159,7 +159,7 @@ class AsyncBuildLogsClient:
         Returns
         -------
         LogsResponse
-            Successfully retrieved build logs for the pipeline run
+            Logs emitted by the build pipeline for the given pipeline run.
 
         Examples
         --------
@@ -180,6 +180,7 @@ class AsyncBuildLogsClient:
                 end_ts="1635467891123456789",
                 limit="limit",
                 direction="direction",
+                filter_query='{"matchString":"error","type":"substring","operator":"equal"}',
                 num_logs_to_ignore=1.1,
             )
 

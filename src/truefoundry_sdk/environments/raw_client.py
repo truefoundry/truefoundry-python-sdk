@@ -38,7 +38,7 @@ class RawEnvironmentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Environment, ListEnvironmentsResponse]:
         """
-        List environments, if no environments are found, default environments are created and returned. Pagination is available based on query parameters
+        List environments the caller can read within the tenant.
 
         Parameters
         ----------
@@ -54,7 +54,7 @@ class RawEnvironmentsClient:
         Returns
         -------
         SyncPager[Environment, ListEnvironmentsResponse]
-            Returns a list of environment. If pagination parameters are provided, the response includes paginated data
+            Paginated list of environments for the tenant.
         """
         offset = offset if offset is not None else 0
 
@@ -101,15 +101,15 @@ class RawEnvironmentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetEnvironmentResponse]:
         """
-        Creates a new Environment or updates an existing Environment.
+        Create a new environment or update an existing one using the provided `EnvironmentManifest`. Matching is by `name` — if an environment with the same name exists it is updated, otherwise a new one is created.
 
         Parameters
         ----------
         manifest : EnvironmentManifest
-            Environment Manifest
+            Environment manifest. The environment is matched by `name` for upsert.
 
         dry_run : typing.Optional[bool]
-            Dry run
+            When true, validates the manifest without persisting changes.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -117,7 +117,7 @@ class RawEnvironmentsClient:
         Returns
         -------
         HttpResponse[GetEnvironmentResponse]
-            Returns the created or updated Environment
+            The created or updated environment.
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/svc/v1/environments",
@@ -168,12 +168,12 @@ class RawEnvironmentsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetEnvironmentResponse]:
         """
-        Get Environment associated with the provided id.
+        Get a single environment by its ID.
 
         Parameters
         ----------
         id : str
-            Environment id
+            System-generated environment ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -181,7 +181,7 @@ class RawEnvironmentsClient:
         Returns
         -------
         HttpResponse[GetEnvironmentResponse]
-            Returns the Environment associated with the provided id
+            The environment with the given ID.
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/environments/{encode_path_param(id)}",
@@ -209,12 +209,12 @@ class RawEnvironmentsClient:
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[bool]:
         """
-        Delete Environment associated with the provided id.
+        Permanently delete the environment with the given ID.
 
         Parameters
         ----------
         id : str
-            Environment id
+            System-generated environment ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -222,7 +222,7 @@ class RawEnvironmentsClient:
         Returns
         -------
         HttpResponse[bool]
-            Returns true if the Environment is deleted successfully
+            Returns true if the environment was deleted successfully.
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/environments/{encode_path_param(id)}",
@@ -283,7 +283,7 @@ class AsyncRawEnvironmentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Environment, ListEnvironmentsResponse]:
         """
-        List environments, if no environments are found, default environments are created and returned. Pagination is available based on query parameters
+        List environments the caller can read within the tenant.
 
         Parameters
         ----------
@@ -299,7 +299,7 @@ class AsyncRawEnvironmentsClient:
         Returns
         -------
         AsyncPager[Environment, ListEnvironmentsResponse]
-            Returns a list of environment. If pagination parameters are provided, the response includes paginated data
+            Paginated list of environments for the tenant.
         """
         offset = offset if offset is not None else 0
 
@@ -349,15 +349,15 @@ class AsyncRawEnvironmentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetEnvironmentResponse]:
         """
-        Creates a new Environment or updates an existing Environment.
+        Create a new environment or update an existing one using the provided `EnvironmentManifest`. Matching is by `name` — if an environment with the same name exists it is updated, otherwise a new one is created.
 
         Parameters
         ----------
         manifest : EnvironmentManifest
-            Environment Manifest
+            Environment manifest. The environment is matched by `name` for upsert.
 
         dry_run : typing.Optional[bool]
-            Dry run
+            When true, validates the manifest without persisting changes.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -365,7 +365,7 @@ class AsyncRawEnvironmentsClient:
         Returns
         -------
         AsyncHttpResponse[GetEnvironmentResponse]
-            Returns the created or updated Environment
+            The created or updated environment.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/svc/v1/environments",
@@ -416,12 +416,12 @@ class AsyncRawEnvironmentsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetEnvironmentResponse]:
         """
-        Get Environment associated with the provided id.
+        Get a single environment by its ID.
 
         Parameters
         ----------
         id : str
-            Environment id
+            System-generated environment ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -429,7 +429,7 @@ class AsyncRawEnvironmentsClient:
         Returns
         -------
         AsyncHttpResponse[GetEnvironmentResponse]
-            Returns the Environment associated with the provided id
+            The environment with the given ID.
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/environments/{encode_path_param(id)}",
@@ -459,12 +459,12 @@ class AsyncRawEnvironmentsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[bool]:
         """
-        Delete Environment associated with the provided id.
+        Permanently delete the environment with the given ID.
 
         Parameters
         ----------
         id : str
-            Environment id
+            System-generated environment ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -472,7 +472,7 @@ class AsyncRawEnvironmentsClient:
         Returns
         -------
         AsyncHttpResponse[bool]
-            Returns true if the Environment is deleted successfully
+            Returns true if the environment was deleted successfully.
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/environments/{encode_path_param(id)}",

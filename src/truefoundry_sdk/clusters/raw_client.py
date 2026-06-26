@@ -18,12 +18,12 @@ from ..errors.unauthorized_error import UnauthorizedError
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.cluster import Cluster
 from ..types.cluster_manifest import ClusterManifest
+from ..types.delete_cluster_response import DeleteClusterResponse
 from ..types.get_cluster_response import GetClusterResponse
 from ..types.http_error import HttpError
 from ..types.is_cluster_connected_response import IsClusterConnectedResponse
 from ..types.list_cluster_addons_response import ListClusterAddonsResponse
 from ..types.list_clusters_response import ListClustersResponse
-from .types.clusters_delete_response import ClustersDeleteResponse
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -39,10 +39,11 @@ class RawClustersClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
+        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Cluster, ListClustersResponse]:
         """
-        Retrieves a list of all latest Clusters. Pagination is available based on query parameters.
+        List clusters the caller can read.
 
         Parameters
         ----------
@@ -52,13 +53,16 @@ class RawClustersClient:
         offset : typing.Optional[int]
             Number of items to skip
 
+        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
         SyncPager[Cluster, ListClustersResponse]
-            Retrieve latest Clusters. If pagination parameters are provided, the response includes paginated data.
+            Paginated list of clusters.
         """
         offset = offset if offset is not None else 0
 
@@ -68,6 +72,7 @@ class RawClustersClient:
             params={
                 "limit": limit,
                 "offset": offset,
+                "attributes": attributes,
             },
             request_options=request_options,
         )
@@ -85,6 +90,7 @@ class RawClustersClient:
                 _get_next = lambda: self.list(
                     limit=limit,
                     offset=offset + len(_items or []),
+                    attributes=attributes,
                     request_options=request_options,
                 )
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
@@ -116,15 +122,15 @@ class RawClustersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetClusterResponse]:
         """
-        Create or Update cluster with provided manifest
+        Create a new cluster or update an existing one using the provided `ClusterManifest`. Matching is by `name` — if a cluster with the same name exists it is updated, otherwise a new one is created.
 
         Parameters
         ----------
         manifest : ClusterManifest
-            Cluster manifest
+            Full cluster manifest.
 
         dry_run : typing.Optional[bool]
-            Dry run the cluster creation/update
+            When true, validates the request without persisting changes.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -132,7 +138,7 @@ class RawClustersClient:
         Returns
         -------
         HttpResponse[GetClusterResponse]
-            Returns newly created/updated cluster on success
+            The created or updated cluster.
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/svc/v1/clusters",
@@ -205,12 +211,12 @@ class RawClustersClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetClusterResponse]:
         """
-        Get cluster associated with provided id
+        Get a single cluster by its ID.
 
         Parameters
         ----------
         id : str
-            Cluster id of the cluster
+            Unique identifier of the cluster.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -218,7 +224,7 @@ class RawClustersClient:
         Returns
         -------
         HttpResponse[GetClusterResponse]
-            Return the cluster associated with provided id
+            The cluster with the given ID.
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/clusters/{encode_path_param(id)}",
@@ -268,22 +274,22 @@ class RawClustersClient:
 
     def delete(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[ClustersDeleteResponse]:
+    ) -> HttpResponse[DeleteClusterResponse]:
         """
-        Delete cluster associated with provided cluster id
+        Permanently delete the cluster with the given ID. This action is irreversible.
 
         Parameters
         ----------
         id : str
-            Cluster id of the cluster
+            Unique identifier of the cluster.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[ClustersDeleteResponse]
-            Returns success message on successful deletion
+        HttpResponse[DeleteClusterResponse]
+            The cluster was deleted successfully.
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/clusters/{encode_path_param(id)}",
@@ -293,9 +299,9 @@ class RawClustersClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ClustersDeleteResponse,
+                    DeleteClusterResponse,
                     parse_obj_as(
-                        type_=ClustersDeleteResponse,  # type: ignore
+                        type_=DeleteClusterResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -337,15 +343,16 @@ class RawClustersClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
+        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListClusterAddonsResponse]:
         """
-        List addons for the provided cluster. Pagination is available based on query parameters.
+        List addons installed on the cluster.
 
         Parameters
         ----------
         id : str
-            Cluster id of the cluster
+            Unique identifier of the cluster.
 
         limit : typing.Optional[int]
             Number of items per page
@@ -353,13 +360,16 @@ class RawClustersClient:
         offset : typing.Optional[int]
             Number of items to skip
 
+        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
         HttpResponse[ListClusterAddonsResponse]
-            Returns a paginated list of addons for the cluster
+            Paginated list of addons for the cluster.
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/clusters/{encode_path_param(id)}/get-addons",
@@ -367,6 +377,7 @@ class RawClustersClient:
             params={
                 "limit": limit,
                 "offset": offset,
+                "attributes": attributes,
             },
             request_options=request_options,
         )
@@ -415,12 +426,12 @@ class RawClustersClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[IsClusterConnectedResponse]:
         """
-        Get the status of provided cluster
+        Get the connection status of the cluster agent to the control plane.
 
         Parameters
         ----------
         id : str
-            Cluster id of the cluster
+            Unique identifier of the cluster.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -428,7 +439,7 @@ class RawClustersClient:
         Returns
         -------
         HttpResponse[IsClusterConnectedResponse]
-            Returns the status of provided cluster
+            Connection status of the cluster.
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/clusters/{encode_path_param(id)}/is-connected",
@@ -475,10 +486,11 @@ class AsyncRawClustersClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
+        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Cluster, ListClustersResponse]:
         """
-        Retrieves a list of all latest Clusters. Pagination is available based on query parameters.
+        List clusters the caller can read.
 
         Parameters
         ----------
@@ -488,13 +500,16 @@ class AsyncRawClustersClient:
         offset : typing.Optional[int]
             Number of items to skip
 
+        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
         AsyncPager[Cluster, ListClustersResponse]
-            Retrieve latest Clusters. If pagination parameters are provided, the response includes paginated data.
+            Paginated list of clusters.
         """
         offset = offset if offset is not None else 0
 
@@ -504,6 +519,7 @@ class AsyncRawClustersClient:
             params={
                 "limit": limit,
                 "offset": offset,
+                "attributes": attributes,
             },
             request_options=request_options,
         )
@@ -523,6 +539,7 @@ class AsyncRawClustersClient:
                     return await self.list(
                         limit=limit,
                         offset=offset + len(_items or []),
+                        attributes=attributes,
                         request_options=request_options,
                     )
 
@@ -555,15 +572,15 @@ class AsyncRawClustersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetClusterResponse]:
         """
-        Create or Update cluster with provided manifest
+        Create a new cluster or update an existing one using the provided `ClusterManifest`. Matching is by `name` — if a cluster with the same name exists it is updated, otherwise a new one is created.
 
         Parameters
         ----------
         manifest : ClusterManifest
-            Cluster manifest
+            Full cluster manifest.
 
         dry_run : typing.Optional[bool]
-            Dry run the cluster creation/update
+            When true, validates the request without persisting changes.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -571,7 +588,7 @@ class AsyncRawClustersClient:
         Returns
         -------
         AsyncHttpResponse[GetClusterResponse]
-            Returns newly created/updated cluster on success
+            The created or updated cluster.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/svc/v1/clusters",
@@ -644,12 +661,12 @@ class AsyncRawClustersClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetClusterResponse]:
         """
-        Get cluster associated with provided id
+        Get a single cluster by its ID.
 
         Parameters
         ----------
         id : str
-            Cluster id of the cluster
+            Unique identifier of the cluster.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -657,7 +674,7 @@ class AsyncRawClustersClient:
         Returns
         -------
         AsyncHttpResponse[GetClusterResponse]
-            Return the cluster associated with provided id
+            The cluster with the given ID.
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/clusters/{encode_path_param(id)}",
@@ -707,22 +724,22 @@ class AsyncRawClustersClient:
 
     async def delete(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[ClustersDeleteResponse]:
+    ) -> AsyncHttpResponse[DeleteClusterResponse]:
         """
-        Delete cluster associated with provided cluster id
+        Permanently delete the cluster with the given ID. This action is irreversible.
 
         Parameters
         ----------
         id : str
-            Cluster id of the cluster
+            Unique identifier of the cluster.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[ClustersDeleteResponse]
-            Returns success message on successful deletion
+        AsyncHttpResponse[DeleteClusterResponse]
+            The cluster was deleted successfully.
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/clusters/{encode_path_param(id)}",
@@ -732,9 +749,9 @@ class AsyncRawClustersClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ClustersDeleteResponse,
+                    DeleteClusterResponse,
                     parse_obj_as(
-                        type_=ClustersDeleteResponse,  # type: ignore
+                        type_=DeleteClusterResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -776,15 +793,16 @@ class AsyncRawClustersClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
+        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListClusterAddonsResponse]:
         """
-        List addons for the provided cluster. Pagination is available based on query parameters.
+        List addons installed on the cluster.
 
         Parameters
         ----------
         id : str
-            Cluster id of the cluster
+            Unique identifier of the cluster.
 
         limit : typing.Optional[int]
             Number of items per page
@@ -792,13 +810,16 @@ class AsyncRawClustersClient:
         offset : typing.Optional[int]
             Number of items to skip
 
+        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
         AsyncHttpResponse[ListClusterAddonsResponse]
-            Returns a paginated list of addons for the cluster
+            Paginated list of addons for the cluster.
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/clusters/{encode_path_param(id)}/get-addons",
@@ -806,6 +827,7 @@ class AsyncRawClustersClient:
             params={
                 "limit": limit,
                 "offset": offset,
+                "attributes": attributes,
             },
             request_options=request_options,
         )
@@ -854,12 +876,12 @@ class AsyncRawClustersClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[IsClusterConnectedResponse]:
         """
-        Get the status of provided cluster
+        Get the connection status of the cluster agent to the control plane.
 
         Parameters
         ----------
         id : str
-            Cluster id of the cluster
+            Unique identifier of the cluster.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -867,7 +889,7 @@ class AsyncRawClustersClient:
         Returns
         -------
         AsyncHttpResponse[IsClusterConnectedResponse]
-            Returns the status of provided cluster
+            Connection status of the cluster.
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/clusters/{encode_path_param(id)}/is-connected",

@@ -12,10 +12,22 @@ from .workspace_manifest import WorkspaceManifest
 
 
 class Workspace(UniversalBaseModel):
-    id: str
-    fqn: str
+    id: str = pydantic.Field()
+    """
+    System-generated workspace ID.
+    """
+
+    fqn: str = pydantic.Field()
+    """
+    Human-readable Fully Qualified Name of the workspace.
+    """
+
     tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName"), pydantic.Field(alias="tenantName")]
-    cluster_id: typing_extensions.Annotated[str, FieldMetadata(alias="clusterId"), pydantic.Field(alias="clusterId")]
+    cluster_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="clusterId"),
+        pydantic.Field(alias="clusterId", description="System-generated ID of the cluster this workspace belongs to."),
+    ]
     created_by_subject: typing_extensions.Annotated[
         Subject, FieldMetadata(alias="createdBySubject"), pydantic.Field(alias="createdBySubject")
     ]
@@ -26,10 +38,18 @@ class Workspace(UniversalBaseModel):
         dt.datetime, FieldMetadata(alias="updatedAt"), pydantic.Field(alias="updatedAt")
     ]
     environment_id: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="environmentId"), pydantic.Field(alias="environmentId")
+        typing.Optional[str],
+        FieldMetadata(alias="environmentId"),
+        pydantic.Field(
+            alias="environmentId", description="System-generated ID of the environment this workspace belongs to."
+        ),
     ] = None
     manifest: WorkspaceManifest
-    account_id: typing_extensions.Annotated[str, FieldMetadata(alias="accountId"), pydantic.Field(alias="accountId")]
+    account_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="accountId"),
+        pydantic.Field(alias="accountId", description="System-generated ID of the account."),
+    ]
     is_system_ws: typing_extensions.Annotated[
         typing.Optional[bool], FieldMetadata(alias="isSystemWs"), pydantic.Field(alias="isSystemWs")
     ] = None

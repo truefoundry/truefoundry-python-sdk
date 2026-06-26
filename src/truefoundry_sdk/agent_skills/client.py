@@ -36,7 +36,7 @@ class AgentSkillsClient:
         self, agent_skill_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetAgentSkillResponse:
         """
-        Get an agent skill artifact by its ID.
+        Get an agent skill by its ID.
 
         Parameters
         ----------
@@ -48,7 +48,7 @@ class AgentSkillsClient:
         Returns
         -------
         GetAgentSkillResponse
-            Successful Response
+            The agent skill data
 
         Examples
         --------
@@ -67,7 +67,7 @@ class AgentSkillsClient:
 
     def delete(self, agent_skill_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
         """
-        Delete an agent skill artifact by its ID.
+        Delete an agent skill by its ID.
 
         Parameters
         ----------
@@ -79,7 +79,7 @@ class AgentSkillsClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful deletion
 
         Examples
         --------
@@ -108,7 +108,7 @@ class AgentSkillsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[AgentSkill, ListAgentSkillsResponse]:
         """
-        List agent skills with optional filtering by FQN, ML Repo, or name. When present, `latest_version.manifest.source` is `blob-storage` with `description` only; use GET agent skill version for full SKILL.md (inline `source` with `skill_md`).
+        List agent skills with optional filtering by FQN, ML Repo, or name.
 
         Parameters
         ----------
@@ -136,7 +136,7 @@ class AgentSkillsClient:
         Returns
         -------
         SyncPager[AgentSkill, ListAgentSkillsResponse]
-            Successful Response
+            List of agent skills matching the query with pagination information
 
         Examples
         --------
@@ -174,7 +174,7 @@ class AgentSkillsClient:
         self, *, manifest: AgentSkillManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetAgentSkillVersionResponse:
         """
-        Create or update an agent skill version from a manifest.
+        Create or update an agent skill version.
 
         Parameters
         ----------
@@ -235,7 +235,7 @@ class AsyncAgentSkillsClient:
         self, agent_skill_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetAgentSkillResponse:
         """
-        Get an agent skill artifact by its ID.
+        Get an agent skill by its ID.
 
         Parameters
         ----------
@@ -247,7 +247,7 @@ class AsyncAgentSkillsClient:
         Returns
         -------
         GetAgentSkillResponse
-            Successful Response
+            The agent skill data
 
         Examples
         --------
@@ -276,7 +276,7 @@ class AsyncAgentSkillsClient:
         self, agent_skill_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> EmptyResponse:
         """
-        Delete an agent skill artifact by its ID.
+        Delete an agent skill by its ID.
 
         Parameters
         ----------
@@ -288,7 +288,7 @@ class AsyncAgentSkillsClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful deletion
 
         Examples
         --------
@@ -325,7 +325,7 @@ class AsyncAgentSkillsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[AgentSkill, ListAgentSkillsResponse]:
         """
-        List agent skills with optional filtering by FQN, ML Repo, or name. When present, `latest_version.manifest.source` is `blob-storage` with `description` only; use GET agent skill version for full SKILL.md (inline `source` with `skill_md`).
+        List agent skills with optional filtering by FQN, ML Repo, or name.
 
         Parameters
         ----------
@@ -353,7 +353,7 @@ class AsyncAgentSkillsClient:
         Returns
         -------
         AsyncPager[AgentSkill, ListAgentSkillsResponse]
-            Successful Response
+            List of agent skills matching the query with pagination information
 
         Examples
         --------
@@ -400,7 +400,7 @@ class AsyncAgentSkillsClient:
         self, *, manifest: AgentSkillManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetAgentSkillVersionResponse:
         """
-        Create or update an agent skill version from a manifest.
+        Create or update an agent skill version.
 
         Parameters
         ----------

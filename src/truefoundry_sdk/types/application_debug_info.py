@@ -37,6 +37,5 @@ class ApplicationDebugInfo(UniversalBaseModel):
 
 
 from .application import Application  # noqa: E402, I001
-from .deployment import Deployment  # noqa: E402, I001
 
-update_forward_refs(ApplicationDebugInfo, Application=Application, Deployment=Deployment)
+update_forward_refs(ApplicationDebugInfo, Application=Application)

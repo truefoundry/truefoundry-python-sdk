@@ -10,7 +10,7 @@ from .alert import Alert
 class GetAlertsResponse(UniversalBaseModel):
     data: typing.Dict[str, typing.List[Alert]] = pydantic.Field()
     """
-    Object containing alert data grouped by alert name
+    Alerts grouped by alert name.
     """
 
     if IS_PYDANTIC_V2:

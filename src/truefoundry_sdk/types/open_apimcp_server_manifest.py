@@ -60,6 +60,11 @@ class OpenApimcpServerManifest(UniversalBaseModel):
     owned_by: typing_extensions.Annotated[
         typing.Optional[OwnedBy], FieldMetadata(alias="ownedBy"), pydantic.Field(alias="ownedBy")
     ] = None
+    additional_headers: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    """
+    Additional HTTP headers sent on each request to the upstream OpenAPI server. If the same header is set in both `additional_headers` and `auth_data`, the `auth_data` value wins.
+    """
+
     tags: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     Key-value pairs to categorize this OpenAPI MCP Server (e.g., by owner or environment).

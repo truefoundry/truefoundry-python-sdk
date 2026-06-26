@@ -8,9 +8,12 @@ from ..core.request_options import RequestOptions
 from ..types.delete_team_response import DeleteTeamResponse
 from ..types.get_team_permissions_response import GetTeamPermissionsResponse
 from ..types.get_team_response import GetTeamResponse
+from ..types.list_team_managers_response import ListTeamManagersResponse
+from ..types.list_team_members_response import ListTeamMembersResponse
 from ..types.list_teams_response import ListTeamsResponse
-from ..types.team import Team
+from ..types.team_dto import TeamDto
 from ..types.team_manifest import TeamManifest
+from ..types.team_subject_row import TeamSubjectRow
 from .raw_client import AsyncRawTeamsClient, RawTeamsClient
 from .types.teams_list_request_type import TeamsListRequestType
 
@@ -39,10 +42,11 @@ class TeamsClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         type: typing.Optional[TeamsListRequestType] = None,
+        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Team, ListTeamsResponse]:
+    ) -> SyncPager[TeamDto, ListTeamsResponse]:
         """
-        Retrieve all teams associated with the authenticated user. If the user is a tenant admin, returns all teams for the tenant. Pagination is available based on query parameters
+        List teams accessible to the current user.
 
         Parameters
         ----------
@@ -53,15 +57,18 @@ class TeamsClient:
             Number of items to skip
 
         type : typing.Optional[TeamsListRequestType]
-            Filter teams by type
+            Filter teams by type.
+
+        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Comma-separated list of attributes to return (e.g. `id,teamName`). When provided, only the specified fields are fetched. `id` is always included.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        SyncPager[Team, ListTeamsResponse]
-            Returns an array of teams associated with the user or tenant And also the response includes paginated data
+        SyncPager[TeamDto, ListTeamsResponse]
+            Paginated list of teams the caller has access to.
 
         Examples
         --------
@@ -76,6 +83,7 @@ class TeamsClient:
             limit=10,
             offset=0,
             type=TeamsListRequestType.TEAM,
+            attributes=["attributes"],
         )
         for item in response:
             yield item
@@ -83,7 +91,9 @@ class TeamsClient:
         for page in response.iter_pages():
             yield page
         """
-        return self._raw_client.list(limit=limit, offset=offset, type=type, request_options=request_options)
+        return self._raw_client.list(
+            limit=limit, offset=offset, type=type, attributes=attributes, request_options=request_options
+        )
 
     def create_or_update(
         self,
@@ -93,15 +103,15 @@ class TeamsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetTeamResponse:
         """
-        Creates a new team or updates an existing team. It ensures that the team name is unique, valid, and that the team has at least one member. The members of the team are added or updated based on the provided emails.
+        Create a new team or update an existing one using the provided TeamManifest. Matching is by name — if the name matches an existing team it is updated, otherwise a new one is created.
 
         Parameters
         ----------
         manifest : TeamManifest
-            Team manifest
+            The team manifest describing the team to create or update.
 
         dry_run : typing.Optional[bool]
-            Dry run
+            When true, validate the request without persisting any changes.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -109,7 +119,7 @@ class TeamsClient:
         Returns
         -------
         GetTeamResponse
-            Returns the created or updated team.
+            The created or updated team.
 
         Examples
         --------
@@ -131,14 +141,130 @@ class TeamsClient:
         )
         return _response.data
 
-    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetTeamResponse:
+    def list_members(
+        self,
+        id: str,
+        *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
+        filter: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncPager[TeamSubjectRow, ListTeamMembersResponse]:
         """
-        Get Team associated with provided team id
+        List users who are members of a team.
 
         Parameters
         ----------
         id : str
-            Team Id
+            System-generated team ID.
+
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
+        filter : typing.Optional[str]
+            JSON string: structured filter tree (AND/OR groups, column leaves on `email` and `userId`).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[TeamSubjectRow, ListTeamMembersResponse]
+            Paginated list of team members.
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.teams.list_members(
+            id="jqfwg345gi25n5ju2yz5iz6m",
+            limit=10,
+            offset=0,
+            filter='{"type":"AND","children":[{"column":"email","op":"STRING_CONTAINS","value":"@example.com"}]}',
+        )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
+        """
+        return self._raw_client.list_members(
+            id, limit=limit, offset=offset, filter=filter, request_options=request_options
+        )
+
+    def list_managers(
+        self,
+        id: str,
+        *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
+        filter: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncPager[TeamSubjectRow, ListTeamManagersResponse]:
+        """
+        List users who hold the team-manager role on a team.
+
+        Parameters
+        ----------
+        id : str
+            System-generated team ID.
+
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
+        filter : typing.Optional[str]
+            JSON string: structured filter tree (AND/OR groups, column leaves on `email` and `userId`).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[TeamSubjectRow, ListTeamManagersResponse]
+            Paginated list of team managers.
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.teams.list_managers(
+            id="jqfwg345gi25n5ju2yz5iz6m",
+            limit=10,
+            offset=0,
+            filter='{"type":"AND","children":[{"column":"email","op":"STRING_CONTAINS","value":"@example.com"}]}',
+        )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
+        """
+        return self._raw_client.list_managers(
+            id, limit=limit, offset=offset, filter=filter, request_options=request_options
+        )
+
+    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetTeamResponse:
+        """
+        Get a single team by its ID.
+
+        Parameters
+        ----------
+        id : str
+            System-generated team ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -146,7 +272,7 @@ class TeamsClient:
         Returns
         -------
         GetTeamResponse
-            Returns the Team associated with provided team id
+            The team with the given ID.
 
         Examples
         --------
@@ -157,7 +283,7 @@ class TeamsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.teams.get(
-            id="id",
+            id="jqfwg345gi25n5ju2yz5iz6m",
         )
         """
         _response = self._raw_client.get(id, request_options=request_options)
@@ -165,12 +291,12 @@ class TeamsClient:
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> DeleteTeamResponse:
         """
-        Deletes the Team associated with the provided Id.
+        Permanently delete the team with the given ID. This action is irreversible.
 
         Parameters
         ----------
         id : str
-            Team Id
+            System-generated team ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -189,7 +315,7 @@ class TeamsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.teams.delete(
-            id="id",
+            id="jqfwg345gi25n5ju2yz5iz6m",
         )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
@@ -204,7 +330,7 @@ class TeamsClient:
         Parameters
         ----------
         id : str
-            Team Id
+            System-generated team ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -212,7 +338,7 @@ class TeamsClient:
         Returns
         -------
         GetTeamPermissionsResponse
-            Returns role bindings for the team.
+            Role bindings for the team.
 
         Examples
         --------
@@ -223,7 +349,7 @@ class TeamsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.teams.get_permissions(
-            id="id",
+            id="jqfwg345gi25n5ju2yz5iz6m",
         )
         """
         _response = self._raw_client.get_permissions(id, request_options=request_options)
@@ -251,10 +377,11 @@ class AsyncTeamsClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         type: typing.Optional[TeamsListRequestType] = None,
+        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Team, ListTeamsResponse]:
+    ) -> AsyncPager[TeamDto, ListTeamsResponse]:
         """
-        Retrieve all teams associated with the authenticated user. If the user is a tenant admin, returns all teams for the tenant. Pagination is available based on query parameters
+        List teams accessible to the current user.
 
         Parameters
         ----------
@@ -265,15 +392,18 @@ class AsyncTeamsClient:
             Number of items to skip
 
         type : typing.Optional[TeamsListRequestType]
-            Filter teams by type
+            Filter teams by type.
+
+        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Comma-separated list of attributes to return (e.g. `id,teamName`). When provided, only the specified fields are fetched. `id` is always included.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncPager[Team, ListTeamsResponse]
-            Returns an array of teams associated with the user or tenant And also the response includes paginated data
+        AsyncPager[TeamDto, ListTeamsResponse]
+            Paginated list of teams the caller has access to.
 
         Examples
         --------
@@ -293,6 +423,7 @@ class AsyncTeamsClient:
                 limit=10,
                 offset=0,
                 type=TeamsListRequestType.TEAM,
+                attributes=["attributes"],
             )
             async for item in response:
                 yield item
@@ -304,7 +435,9 @@ class AsyncTeamsClient:
 
         asyncio.run(main())
         """
-        return await self._raw_client.list(limit=limit, offset=offset, type=type, request_options=request_options)
+        return await self._raw_client.list(
+            limit=limit, offset=offset, type=type, attributes=attributes, request_options=request_options
+        )
 
     async def create_or_update(
         self,
@@ -314,15 +447,15 @@ class AsyncTeamsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetTeamResponse:
         """
-        Creates a new team or updates an existing team. It ensures that the team name is unique, valid, and that the team has at least one member. The members of the team are added or updated based on the provided emails.
+        Create a new team or update an existing one using the provided TeamManifest. Matching is by name — if the name matches an existing team it is updated, otherwise a new one is created.
 
         Parameters
         ----------
         manifest : TeamManifest
-            Team manifest
+            The team manifest describing the team to create or update.
 
         dry_run : typing.Optional[bool]
-            Dry run
+            When true, validate the request without persisting any changes.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -330,7 +463,7 @@ class AsyncTeamsClient:
         Returns
         -------
         GetTeamResponse
-            Returns the created or updated team.
+            The created or updated team.
 
         Examples
         --------
@@ -360,14 +493,148 @@ class AsyncTeamsClient:
         )
         return _response.data
 
-    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetTeamResponse:
+    async def list_members(
+        self,
+        id: str,
+        *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
+        filter: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncPager[TeamSubjectRow, ListTeamMembersResponse]:
         """
-        Get Team associated with provided team id
+        List users who are members of a team.
 
         Parameters
         ----------
         id : str
-            Team Id
+            System-generated team ID.
+
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
+        filter : typing.Optional[str]
+            JSON string: structured filter tree (AND/OR groups, column leaves on `email` and `userId`).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[TeamSubjectRow, ListTeamMembersResponse]
+            Paginated list of team members.
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.teams.list_members(
+                id="jqfwg345gi25n5ju2yz5iz6m",
+                limit=10,
+                offset=0,
+                filter='{"type":"AND","children":[{"column":"email","op":"STRING_CONTAINS","value":"@example.com"}]}',
+            )
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
+        """
+        return await self._raw_client.list_members(
+            id, limit=limit, offset=offset, filter=filter, request_options=request_options
+        )
+
+    async def list_managers(
+        self,
+        id: str,
+        *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
+        filter: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncPager[TeamSubjectRow, ListTeamManagersResponse]:
+        """
+        List users who hold the team-manager role on a team.
+
+        Parameters
+        ----------
+        id : str
+            System-generated team ID.
+
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
+        filter : typing.Optional[str]
+            JSON string: structured filter tree (AND/OR groups, column leaves on `email` and `userId`).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[TeamSubjectRow, ListTeamManagersResponse]
+            Paginated list of team managers.
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.teams.list_managers(
+                id="jqfwg345gi25n5ju2yz5iz6m",
+                limit=10,
+                offset=0,
+                filter='{"type":"AND","children":[{"column":"email","op":"STRING_CONTAINS","value":"@example.com"}]}',
+            )
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
+        """
+        return await self._raw_client.list_managers(
+            id, limit=limit, offset=offset, filter=filter, request_options=request_options
+        )
+
+    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetTeamResponse:
+        """
+        Get a single team by its ID.
+
+        Parameters
+        ----------
+        id : str
+            System-generated team ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -375,7 +642,7 @@ class AsyncTeamsClient:
         Returns
         -------
         GetTeamResponse
-            Returns the Team associated with provided team id
+            The team with the given ID.
 
         Examples
         --------
@@ -391,7 +658,7 @@ class AsyncTeamsClient:
 
         async def main() -> None:
             await client.teams.get(
-                id="id",
+                id="jqfwg345gi25n5ju2yz5iz6m",
             )
 
 
@@ -402,12 +669,12 @@ class AsyncTeamsClient:
 
     async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> DeleteTeamResponse:
         """
-        Deletes the Team associated with the provided Id.
+        Permanently delete the team with the given ID. This action is irreversible.
 
         Parameters
         ----------
         id : str
-            Team Id
+            System-generated team ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -431,7 +698,7 @@ class AsyncTeamsClient:
 
         async def main() -> None:
             await client.teams.delete(
-                id="id",
+                id="jqfwg345gi25n5ju2yz5iz6m",
             )
 
 
@@ -449,7 +716,7 @@ class AsyncTeamsClient:
         Parameters
         ----------
         id : str
-            Team Id
+            System-generated team ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -457,7 +724,7 @@ class AsyncTeamsClient:
         Returns
         -------
         GetTeamPermissionsResponse
-            Returns role bindings for the team.
+            Role bindings for the team.
 
         Examples
         --------
@@ -473,7 +740,7 @@ class AsyncTeamsClient:
 
         async def main() -> None:
             await client.teams.get_permissions(
-                id="id",
+                id="jqfwg345gi25n5ju2yz5iz6m",
             )
 
 

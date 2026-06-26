@@ -6,7 +6,7 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
-from .bitbucket_integration import BitbucketIntegration
+from .bitbucket_integrations import BitbucketIntegrations
 from .owned_by import OwnedBy
 
 
@@ -25,7 +25,7 @@ class BitbucketProviderAccount(UniversalBaseModel):
     +uiProps={"disableEdit":true}
     """
 
-    integrations: typing.List[BitbucketIntegration] = pydantic.Field()
+    integrations: typing.List[BitbucketIntegrations] = pydantic.Field()
     """
     +uiType=IntegrationsGroup
     """

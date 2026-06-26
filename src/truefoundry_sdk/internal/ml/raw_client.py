@@ -29,7 +29,7 @@ class RawMlClient:
         self, *, manifest: ApplyMlEntityRequestManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[ApplyMlEntityResponse]:
         """
-        Create or update an ML entity (model, prompt, artifact, or data directory).
+        Create or update an ML entity (model, prompt, artifact, agent skill, or data directory).
 
         Parameters
         ----------
@@ -160,7 +160,7 @@ class AsyncRawMlClient:
         self, *, manifest: ApplyMlEntityRequestManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[ApplyMlEntityResponse]:
         """
-        Create or update an ML entity (model, prompt, artifact, or data directory).
+        Create or update an ML entity (model, prompt, artifact, agent skill, or data directory).
 
         Parameters
         ----------

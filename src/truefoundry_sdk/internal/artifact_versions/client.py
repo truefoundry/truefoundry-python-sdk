@@ -5,6 +5,7 @@ import typing
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.pagination import AsyncPager, SyncPager
 from ...core.request_options import RequestOptions
+from ...types.artifact_type import ArtifactType
 from ...types.internal_list_artifact_versions_response import InternalListArtifactVersionsResponse
 from ...types.internal_list_artifact_versions_response_data_item import InternalListArtifactVersionsResponseDataItem
 from .raw_client import AsyncRawArtifactVersionsClient, RawArtifactVersionsClient
@@ -40,6 +41,7 @@ class ArtifactVersionsClient:
         limit: typing.Optional[int] = 100,
         include_internal_metadata: typing.Optional[bool] = False,
         include_model_versions: typing.Optional[bool] = False,
+        artifact_types: typing.Optional[typing.Union[ArtifactType, typing.Sequence[ArtifactType]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[InternalListArtifactVersionsResponseDataItem, InternalListArtifactVersionsResponse]:
         """
@@ -83,6 +85,8 @@ class ArtifactVersionsClient:
         include_model_versions : typing.Optional[bool]
             Whether to include model versions in the results (internal use only)
 
+        artifact_types : typing.Optional[typing.Union[ArtifactType, typing.Sequence[ArtifactType]]]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -93,7 +97,7 @@ class ArtifactVersionsClient:
 
         Examples
         --------
-        from truefoundry_sdk import TrueFoundry
+        from truefoundry_sdk import ArtifactType, TrueFoundry
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -112,6 +116,7 @@ class ArtifactVersionsClient:
             limit=1,
             include_internal_metadata=True,
             include_model_versions=True,
+            artifact_types=[ArtifactType.ARTIFACT],
         )
         for item in response:
             yield item
@@ -132,6 +137,7 @@ class ArtifactVersionsClient:
             limit=limit,
             include_internal_metadata=include_internal_metadata,
             include_model_versions=include_model_versions,
+            artifact_types=artifact_types,
             request_options=request_options,
         )
 
@@ -166,6 +172,7 @@ class AsyncArtifactVersionsClient:
         limit: typing.Optional[int] = 100,
         include_internal_metadata: typing.Optional[bool] = False,
         include_model_versions: typing.Optional[bool] = False,
+        artifact_types: typing.Optional[typing.Union[ArtifactType, typing.Sequence[ArtifactType]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[InternalListArtifactVersionsResponseDataItem, InternalListArtifactVersionsResponse]:
         """
@@ -209,6 +216,8 @@ class AsyncArtifactVersionsClient:
         include_model_versions : typing.Optional[bool]
             Whether to include model versions in the results (internal use only)
 
+        artifact_types : typing.Optional[typing.Union[ArtifactType, typing.Sequence[ArtifactType]]]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -221,7 +230,7 @@ class AsyncArtifactVersionsClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import AsyncTrueFoundry
+        from truefoundry_sdk import ArtifactType, AsyncTrueFoundry
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -243,6 +252,7 @@ class AsyncArtifactVersionsClient:
                 limit=1,
                 include_internal_metadata=True,
                 include_model_versions=True,
+                artifact_types=[ArtifactType.ARTIFACT],
             )
             async for item in response:
                 yield item
@@ -267,5 +277,6 @@ class AsyncArtifactVersionsClient:
             limit=limit,
             include_internal_metadata=include_internal_metadata,
             include_model_versions=include_model_versions,
+            artifact_types=artifact_types,
             request_options=request_options,
         )

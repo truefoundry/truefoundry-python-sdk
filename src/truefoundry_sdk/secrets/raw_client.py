@@ -39,7 +39,7 @@ class RawSecretsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Secret, ListSecretsResponse]:
         """
-        List secrets associated with a user filtered with optional parameters passed in the body.
+        List secrets the caller has access to.
 
         Parameters
         ----------
@@ -50,10 +50,10 @@ class RawSecretsClient:
             Number of items to skip
 
         secret_fqns : typing.Optional[typing.Sequence[str]]
-            Array of FQNs
+            Filter by secret FQNs.
 
         secret_group_id : typing.Optional[str]
-            Secret Group Id of the secret gourp.
+            Filter by secret group ID.
 
         with_value : typing.Optional[bool]
             Whether to include the secret values in the response. Defaults to false.
@@ -64,7 +64,7 @@ class RawSecretsClient:
         Returns
         -------
         SyncPager[Secret, ListSecretsResponse]
-            Returns the secrets associated with a user filtered with optional parameters passed in the body.
+            Paginated list of secrets.
         """
         offset = offset if offset is not None else 0
 
@@ -139,12 +139,12 @@ class RawSecretsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetSecretResponse]:
         """
-        Get Secret associated with provided id. The secret value is not returned if the control plane has `DISABLE_SECRET_VALUE_VIEW` set
+        Get the secret with the specified ID. The secret value is omitted if value viewing is disabled on the control plane.
 
         Parameters
         ----------
         id : str
-            Secret Id of the secret.
+            Unique identifier of the secret.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -152,7 +152,7 @@ class RawSecretsClient:
         Returns
         -------
         HttpResponse[GetSecretResponse]
-            Returns the Secret associated with provided id
+            The requested secret.
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/secrets/{encode_path_param(id)}",
@@ -208,12 +208,12 @@ class RawSecretsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[float]:
         """
-        Deletes a secret and its versions along with its values.
+        Delete the secret and all its versions permanently.
 
         Parameters
         ----------
         id : str
-            Secret Id of the secret.
+            Unique identifier of the secret.
 
         force_delete : typing.Optional[bool]
             Whether to force delete the secret.
@@ -224,7 +224,7 @@ class RawSecretsClient:
         Returns
         -------
         HttpResponse[float]
-            Deletes a secret and its versions along with its values and returns the count of the deleted secrets.
+            Count of deleted secrets.
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/secrets/{encode_path_param(id)}",
@@ -302,7 +302,7 @@ class AsyncRawSecretsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Secret, ListSecretsResponse]:
         """
-        List secrets associated with a user filtered with optional parameters passed in the body.
+        List secrets the caller has access to.
 
         Parameters
         ----------
@@ -313,10 +313,10 @@ class AsyncRawSecretsClient:
             Number of items to skip
 
         secret_fqns : typing.Optional[typing.Sequence[str]]
-            Array of FQNs
+            Filter by secret FQNs.
 
         secret_group_id : typing.Optional[str]
-            Secret Group Id of the secret gourp.
+            Filter by secret group ID.
 
         with_value : typing.Optional[bool]
             Whether to include the secret values in the response. Defaults to false.
@@ -327,7 +327,7 @@ class AsyncRawSecretsClient:
         Returns
         -------
         AsyncPager[Secret, ListSecretsResponse]
-            Returns the secrets associated with a user filtered with optional parameters passed in the body.
+            Paginated list of secrets.
         """
         offset = offset if offset is not None else 0
 
@@ -405,12 +405,12 @@ class AsyncRawSecretsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetSecretResponse]:
         """
-        Get Secret associated with provided id. The secret value is not returned if the control plane has `DISABLE_SECRET_VALUE_VIEW` set
+        Get the secret with the specified ID. The secret value is omitted if value viewing is disabled on the control plane.
 
         Parameters
         ----------
         id : str
-            Secret Id of the secret.
+            Unique identifier of the secret.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -418,7 +418,7 @@ class AsyncRawSecretsClient:
         Returns
         -------
         AsyncHttpResponse[GetSecretResponse]
-            Returns the Secret associated with provided id
+            The requested secret.
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/secrets/{encode_path_param(id)}",
@@ -474,12 +474,12 @@ class AsyncRawSecretsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[float]:
         """
-        Deletes a secret and its versions along with its values.
+        Delete the secret and all its versions permanently.
 
         Parameters
         ----------
         id : str
-            Secret Id of the secret.
+            Unique identifier of the secret.
 
         force_delete : typing.Optional[bool]
             Whether to force delete the secret.
@@ -490,7 +490,7 @@ class AsyncRawSecretsClient:
         Returns
         -------
         AsyncHttpResponse[float]
-            Deletes a secret and its versions along with its values and returns the count of the deleted secrets.
+            Count of deleted secrets.
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/secrets/{encode_path_param(id)}",

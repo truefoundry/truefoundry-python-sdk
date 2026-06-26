@@ -6,7 +6,8 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
-from .owned_by import OwnedBy
+from .personal_access_token_manifest_token_type import PersonalAccessTokenManifestTokenType
+from .virtual_account_owned_by import VirtualAccountOwnedBy
 
 
 class PersonalAccessTokenManifest(UniversalBaseModel):
@@ -31,8 +32,12 @@ class PersonalAccessTokenManifest(UniversalBaseModel):
     """
 
     owned_by: typing_extensions.Annotated[
-        typing.Optional[OwnedBy], FieldMetadata(alias="ownedBy"), pydantic.Field(alias="ownedBy")
+        typing.Optional[VirtualAccountOwnedBy], FieldMetadata(alias="ownedBy"), pydantic.Field(alias="ownedBy")
     ] = None
+    token_type: typing.Optional[PersonalAccessTokenManifestTokenType] = pydantic.Field(default=None)
+    """
+    Format of the issued token. Leave empty to use the platform default.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

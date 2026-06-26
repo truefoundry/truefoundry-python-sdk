@@ -13,7 +13,11 @@ from .user_metadata import UserMetadata
 
 
 class User(UniversalBaseModel):
-    id: str
+    id: str = pydantic.Field()
+    """
+    System-generated user ID.
+    """
+
     email: str
     tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName"), pydantic.Field(alias="tenantName")]
     metadata: UserMetadata
@@ -34,6 +38,11 @@ class User(UniversalBaseModel):
     updated_at: typing_extensions.Annotated[
         dt.datetime, FieldMetadata(alias="updatedAt"), pydantic.Field(alias="updatedAt")
     ]
+    last_accessed_at: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="lastAccessedAt"),
+        pydantic.Field(alias="lastAccessedAt", description="Timestamp when the user last accessed the platform."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -12,8 +12,16 @@ from .subject import Subject
 
 
 class Cluster(UniversalBaseModel):
-    id: str
-    fqn: str
+    id: str = pydantic.Field()
+    """
+    System-generated cluster ID.
+    """
+
+    fqn: str = pydantic.Field()
+    """
+    Human-readable Fully Qualified Name of the cluster.
+    """
+
     manifest: ClusterManifest
     tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName"), pydantic.Field(alias="tenantName")]
     account_id: typing_extensions.Annotated[str, FieldMetadata(alias="accountId"), pydantic.Field(alias="accountId")]

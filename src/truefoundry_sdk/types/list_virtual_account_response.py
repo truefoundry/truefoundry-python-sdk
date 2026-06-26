@@ -11,12 +11,12 @@ from .virtual_account import VirtualAccount
 class ListVirtualAccountResponse(UniversalBaseModel):
     data: typing.List[VirtualAccount] = pydantic.Field()
     """
-    Array of Virtual Accounts
+    Array of virtual accounts matching the query.
     """
 
     pagination: Pagination = pydantic.Field()
     """
-    Pagination Information
+    Pagination metadata.
     """
 
     if IS_PYDANTIC_V2:

@@ -13,7 +13,7 @@ from .subject import Subject
 class JobRun(UniversalBaseModel):
     id: str = pydantic.Field()
     """
-    JobRun ID
+    System-generated job run ID.
     """
 
     name: str = pydantic.Field()

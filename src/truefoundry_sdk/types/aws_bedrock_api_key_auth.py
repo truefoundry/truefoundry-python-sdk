@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class AwsBedrockApiKeyAuth(UniversalBaseModel):
     """
-    AWS Bedrock API Key Auth
+    API Key Based
     """
 
     type: typing.Literal["api-key"] = pydantic.Field(default="api-key")

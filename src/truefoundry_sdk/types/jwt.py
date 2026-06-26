@@ -7,6 +7,7 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
+from .jwt_token_type import JwtTokenType
 
 
 class Jwt(UniversalBaseModel):
@@ -17,6 +18,9 @@ class Jwt(UniversalBaseModel):
     subject_id: typing_extensions.Annotated[str, FieldMetadata(alias="subjectId"), pydantic.Field(alias="subjectId")]
     metadata: typing.Optional[typing.Dict[str, typing.Any]] = None
     expiry: dt.datetime
+    token_type: typing_extensions.Annotated[
+        JwtTokenType, FieldMetadata(alias="tokenType"), pydantic.Field(alias="tokenType")
+    ]
     created_at: typing_extensions.Annotated[
         dt.datetime, FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
     ]

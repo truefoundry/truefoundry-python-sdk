@@ -25,6 +25,7 @@ from ..types.get_application_response import GetApplicationResponse
 from ..types.http_error import HttpError
 from ..types.list_applications_response import ListApplicationsResponse
 from .types.applications_cancel_deployment_response import ApplicationsCancelDeploymentResponse
+from .types.applications_list_request_application_type import ApplicationsListRequestApplicationType
 from .types.applications_list_request_device_type_filter import ApplicationsListRequestDeviceTypeFilter
 from .types.applications_list_request_lifecycle_stage import ApplicationsListRequestLifecycleStage
 from pydantic import ValidationError
@@ -47,7 +48,7 @@ class RawApplicationsClient:
         application_name: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         workspace_fqn: typing.Optional[str] = None,
-        application_type: typing.Optional[str] = None,
+        application_type: typing.Optional[ApplicationsListRequestApplicationType] = None,
         name_search_query: typing.Optional[str] = None,
         environment_id: typing.Optional[str] = None,
         cluster_id: typing.Optional[str] = None,
@@ -60,7 +61,7 @@ class RawApplicationsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Application, ListApplicationsResponse]:
         """
-        Retrieves a list of all latest applications. Supports filtering by application ID, name, type, and other parameters. Pagination is available based on query parameters.
+        List applications the caller can read.
 
         Parameters
         ----------
@@ -71,49 +72,49 @@ class RawApplicationsClient:
             Number of items to skip
 
         application_id : typing.Optional[str]
-            Application id of the application
+            Unique identifier of the application to filter by
 
         workspace_id : typing.Optional[str]
-            Workspace id of the application (comma separated for multiple)
+            Workspace IDs to filter by (comma-separated)
 
         application_name : typing.Optional[str]
-            Name of application
+            Exact application name to filter by. Takes precedence over nameSearchQuery if both are provided.
 
         fqn : typing.Optional[str]
-            Fully qualified name (FQN) of the application
+            FQN of the application to filter by.
 
         workspace_fqn : typing.Optional[str]
-            Fully qualified name (FQN) of the workspace
+            FQN of the workspace to filter by.
 
-        application_type : typing.Optional[str]
-            Type of application (comma separated for multiple). Allowed Values: async-service, service, job, spark-job, helm, notebook, spark-notebook, codeserver, rstudio, ssh-server, volume, application, application-set, intercept, workflow
+        application_type : typing.Optional[ApplicationsListRequestApplicationType]
+            Application type to filter by (comma-separated).
 
         name_search_query : typing.Optional[str]
-            Search query for application name
+            Substring search query for application name. Ignored if applicationName is also provided.
 
         environment_id : typing.Optional[str]
-            Filter by Environment ids of the application (comma separated for multiple)
+            Environment IDs to filter by (comma-separated)
 
         cluster_id : typing.Optional[str]
-            Filter by Cluster ids of the application (comma separated for multiple)
+            Cluster IDs to filter by (comma-separated)
 
         application_set_id : typing.Optional[str]
-            Filter by Application Set id of the application
+            Application set ID to filter by
 
         paused : typing.Optional[bool]
-            Filter by Application Paused status
+            Filter by explicit pause state (true = paused, false = not paused). Does not account for autoshutdown.
 
         device_type_filter : typing.Optional[ApplicationsListRequestDeviceTypeFilter]
-            Filter by device type of the application. Allowed values: cpu, nvidia_gpu, aws_inferentia, nvidia_mig_gpu, nvidia_timeslicing_gpu, gcp_tpu
+            Device type to filter by (comma-separated).
 
         last_deployed_by_subjects : typing.Optional[str]
-            Filter by last deployed by specific users
+            Subject slugs of last deployers to filter by (comma-separated). Email for users (e.g. user@example.com), name for virtual accounts.
 
         lifecycle_stage : typing.Optional[ApplicationsListRequestLifecycleStage]
-            Filter by application lifecycle state
+            Application lifecycle stage to filter by
 
         is_recommendation_present_and_visible : typing.Optional[bool]
-            Filter out applications with recommendations that are allowed to be shown
+            Whether the application has visible recommendations
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -121,7 +122,7 @@ class RawApplicationsClient:
         Returns
         -------
         SyncPager[Application, ListApplicationsResponse]
-            Retrieve latest applications based on the specified query parameters. If pagination parameters are provided, the response includes paginated data.
+            Paginated list of applications.
         """
         offset = offset if offset is not None else 0
 
@@ -215,7 +216,7 @@ class RawApplicationsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetApplicationDeploymentResponse]:
         """
-        Create a new Application Deployment based on the provided manifest.
+        Deploy an application from a manifest. Create the application if it does not exist, otherwise create a new deployment version. Return the resulting deployment.
 
         Parameters
         ----------
@@ -249,10 +250,7 @@ class RawApplicationsClient:
         Returns
         -------
         HttpResponse[GetApplicationDeploymentResponse]
-            Returns new deployment on successful creation
-                  - It also creates an application if not already present
-                  - validates third party requirements
-                  - updates application, version
+            The newly created deployment.
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/svc/v1/apps",
@@ -340,12 +338,12 @@ class RawApplicationsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetApplicationResponse]:
         """
-        Get Application associated with the provided application ID.
+        Get a single application by its ID.
 
         Parameters
         ----------
         id : str
-            Id of the application
+            Unique identifier of the application
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -353,7 +351,7 @@ class RawApplicationsClient:
         Returns
         -------
         HttpResponse[GetApplicationResponse]
-            Application details retrieved successfully
+            Application details.
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/apps/{encode_path_param(id)}",
@@ -405,12 +403,12 @@ class RawApplicationsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[DeleteApplicationResponse]:
         """
-        Delete Application associated with the provided application ID.
+        Permanently delete an application. This action cannot be undone.
 
         Parameters
         ----------
         id : str
-            Id of the application
+            Unique identifier of the application
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -418,7 +416,7 @@ class RawApplicationsClient:
         Returns
         -------
         HttpResponse[DeleteApplicationResponse]
-            Delete application response.
+            Application deleted or deletion initiated.
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/apps/{encode_path_param(id)}",
@@ -470,15 +468,15 @@ class RawApplicationsClient:
         self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetApplicationDeploymentResponse]:
         """
-        Creates a new deployment with the same manifest as the given deployment.
+        Redeploy an application by creating a new deployment version using the same manifest as the specified deployment.
 
         Parameters
         ----------
         id : str
-            Application id of the application
+            Unique identifier of the application
 
         deployment_id : str
-            Deployment id of the deployment
+            Unique identifier of the deployment
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -486,7 +484,7 @@ class RawApplicationsClient:
         Returns
         -------
         HttpResponse[GetApplicationDeploymentResponse]
-            Returns the new deployment.
+            The newly created deployment.
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/apps/{encode_path_param(id)}/deployments/{encode_path_param(deployment_id)}/redeploy",
@@ -536,12 +534,12 @@ class RawApplicationsClient:
 
     def scale_to_zero(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
         """
-        Pause a running application by scaling to 0 replicas
+        Pause a running application.
 
         Parameters
         ----------
         id : str
-            Id of the application
+            Unique identifier of the application
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -615,12 +613,12 @@ class RawApplicationsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Deployment]:
         """
-        Resume a paused application by scaling back to the original number of replicas
+        Resume a paused application.
 
         Parameters
         ----------
         id : str
-            Id of the application
+            Unique identifier of the application
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -628,7 +626,7 @@ class RawApplicationsClient:
         Returns
         -------
         HttpResponse[Deployment]
-            Scales back a paused applicaion to the original number of replicas
+            Application resumed successfully.
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/apps/{encode_path_param(id)}/scale-to-original",
@@ -691,15 +689,15 @@ class RawApplicationsClient:
         self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[ApplicationsCancelDeploymentResponse]:
         """
-        Cancel an ongoing deployment associated with the provided application ID and deployment ID.
+        Cancel an in-progress deployment.
 
         Parameters
         ----------
         id : str
-            Application id of the application
+            Unique identifier of the application
 
         deployment_id : str
-            Deployment id of the deployment
+            Unique identifier of the deployment
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -707,7 +705,7 @@ class RawApplicationsClient:
         Returns
         -------
         HttpResponse[ApplicationsCancelDeploymentResponse]
-            Deployment cancelled successfully.
+            Deployment cancelled.
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/apps/{encode_path_param(id)}/deployments/{encode_path_param(deployment_id)}/cancel",
@@ -781,7 +779,7 @@ class AsyncRawApplicationsClient:
         application_name: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         workspace_fqn: typing.Optional[str] = None,
-        application_type: typing.Optional[str] = None,
+        application_type: typing.Optional[ApplicationsListRequestApplicationType] = None,
         name_search_query: typing.Optional[str] = None,
         environment_id: typing.Optional[str] = None,
         cluster_id: typing.Optional[str] = None,
@@ -794,7 +792,7 @@ class AsyncRawApplicationsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Application, ListApplicationsResponse]:
         """
-        Retrieves a list of all latest applications. Supports filtering by application ID, name, type, and other parameters. Pagination is available based on query parameters.
+        List applications the caller can read.
 
         Parameters
         ----------
@@ -805,49 +803,49 @@ class AsyncRawApplicationsClient:
             Number of items to skip
 
         application_id : typing.Optional[str]
-            Application id of the application
+            Unique identifier of the application to filter by
 
         workspace_id : typing.Optional[str]
-            Workspace id of the application (comma separated for multiple)
+            Workspace IDs to filter by (comma-separated)
 
         application_name : typing.Optional[str]
-            Name of application
+            Exact application name to filter by. Takes precedence over nameSearchQuery if both are provided.
 
         fqn : typing.Optional[str]
-            Fully qualified name (FQN) of the application
+            FQN of the application to filter by.
 
         workspace_fqn : typing.Optional[str]
-            Fully qualified name (FQN) of the workspace
+            FQN of the workspace to filter by.
 
-        application_type : typing.Optional[str]
-            Type of application (comma separated for multiple). Allowed Values: async-service, service, job, spark-job, helm, notebook, spark-notebook, codeserver, rstudio, ssh-server, volume, application, application-set, intercept, workflow
+        application_type : typing.Optional[ApplicationsListRequestApplicationType]
+            Application type to filter by (comma-separated).
 
         name_search_query : typing.Optional[str]
-            Search query for application name
+            Substring search query for application name. Ignored if applicationName is also provided.
 
         environment_id : typing.Optional[str]
-            Filter by Environment ids of the application (comma separated for multiple)
+            Environment IDs to filter by (comma-separated)
 
         cluster_id : typing.Optional[str]
-            Filter by Cluster ids of the application (comma separated for multiple)
+            Cluster IDs to filter by (comma-separated)
 
         application_set_id : typing.Optional[str]
-            Filter by Application Set id of the application
+            Application set ID to filter by
 
         paused : typing.Optional[bool]
-            Filter by Application Paused status
+            Filter by explicit pause state (true = paused, false = not paused). Does not account for autoshutdown.
 
         device_type_filter : typing.Optional[ApplicationsListRequestDeviceTypeFilter]
-            Filter by device type of the application. Allowed values: cpu, nvidia_gpu, aws_inferentia, nvidia_mig_gpu, nvidia_timeslicing_gpu, gcp_tpu
+            Device type to filter by (comma-separated).
 
         last_deployed_by_subjects : typing.Optional[str]
-            Filter by last deployed by specific users
+            Subject slugs of last deployers to filter by (comma-separated). Email for users (e.g. user@example.com), name for virtual accounts.
 
         lifecycle_stage : typing.Optional[ApplicationsListRequestLifecycleStage]
-            Filter by application lifecycle state
+            Application lifecycle stage to filter by
 
         is_recommendation_present_and_visible : typing.Optional[bool]
-            Filter out applications with recommendations that are allowed to be shown
+            Whether the application has visible recommendations
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -855,7 +853,7 @@ class AsyncRawApplicationsClient:
         Returns
         -------
         AsyncPager[Application, ListApplicationsResponse]
-            Retrieve latest applications based on the specified query parameters. If pagination parameters are provided, the response includes paginated data.
+            Paginated list of applications.
         """
         offset = offset if offset is not None else 0
 
@@ -952,7 +950,7 @@ class AsyncRawApplicationsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetApplicationDeploymentResponse]:
         """
-        Create a new Application Deployment based on the provided manifest.
+        Deploy an application from a manifest. Create the application if it does not exist, otherwise create a new deployment version. Return the resulting deployment.
 
         Parameters
         ----------
@@ -986,10 +984,7 @@ class AsyncRawApplicationsClient:
         Returns
         -------
         AsyncHttpResponse[GetApplicationDeploymentResponse]
-            Returns new deployment on successful creation
-                  - It also creates an application if not already present
-                  - validates third party requirements
-                  - updates application, version
+            The newly created deployment.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/svc/v1/apps",
@@ -1077,12 +1072,12 @@ class AsyncRawApplicationsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetApplicationResponse]:
         """
-        Get Application associated with the provided application ID.
+        Get a single application by its ID.
 
         Parameters
         ----------
         id : str
-            Id of the application
+            Unique identifier of the application
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1090,7 +1085,7 @@ class AsyncRawApplicationsClient:
         Returns
         -------
         AsyncHttpResponse[GetApplicationResponse]
-            Application details retrieved successfully
+            Application details.
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/apps/{encode_path_param(id)}",
@@ -1142,12 +1137,12 @@ class AsyncRawApplicationsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[DeleteApplicationResponse]:
         """
-        Delete Application associated with the provided application ID.
+        Permanently delete an application. This action cannot be undone.
 
         Parameters
         ----------
         id : str
-            Id of the application
+            Unique identifier of the application
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1155,7 +1150,7 @@ class AsyncRawApplicationsClient:
         Returns
         -------
         AsyncHttpResponse[DeleteApplicationResponse]
-            Delete application response.
+            Application deleted or deletion initiated.
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/apps/{encode_path_param(id)}",
@@ -1207,15 +1202,15 @@ class AsyncRawApplicationsClient:
         self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetApplicationDeploymentResponse]:
         """
-        Creates a new deployment with the same manifest as the given deployment.
+        Redeploy an application by creating a new deployment version using the same manifest as the specified deployment.
 
         Parameters
         ----------
         id : str
-            Application id of the application
+            Unique identifier of the application
 
         deployment_id : str
-            Deployment id of the deployment
+            Unique identifier of the deployment
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1223,7 +1218,7 @@ class AsyncRawApplicationsClient:
         Returns
         -------
         AsyncHttpResponse[GetApplicationDeploymentResponse]
-            Returns the new deployment.
+            The newly created deployment.
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/apps/{encode_path_param(id)}/deployments/{encode_path_param(deployment_id)}/redeploy",
@@ -1275,12 +1270,12 @@ class AsyncRawApplicationsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
-        Pause a running application by scaling to 0 replicas
+        Pause a running application.
 
         Parameters
         ----------
         id : str
-            Id of the application
+            Unique identifier of the application
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1354,12 +1349,12 @@ class AsyncRawApplicationsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Deployment]:
         """
-        Resume a paused application by scaling back to the original number of replicas
+        Resume a paused application.
 
         Parameters
         ----------
         id : str
-            Id of the application
+            Unique identifier of the application
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1367,7 +1362,7 @@ class AsyncRawApplicationsClient:
         Returns
         -------
         AsyncHttpResponse[Deployment]
-            Scales back a paused applicaion to the original number of replicas
+            Application resumed successfully.
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/apps/{encode_path_param(id)}/scale-to-original",
@@ -1430,15 +1425,15 @@ class AsyncRawApplicationsClient:
         self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[ApplicationsCancelDeploymentResponse]:
         """
-        Cancel an ongoing deployment associated with the provided application ID and deployment ID.
+        Cancel an in-progress deployment.
 
         Parameters
         ----------
         id : str
-            Application id of the application
+            Unique identifier of the application
 
         deployment_id : str
-            Deployment id of the deployment
+            Unique identifier of the deployment
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1446,7 +1441,7 @@ class AsyncRawApplicationsClient:
         Returns
         -------
         AsyncHttpResponse[ApplicationsCancelDeploymentResponse]
-            Deployment cancelled successfully.
+            Deployment cancelled.
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/apps/{encode_path_param(id)}/deployments/{encode_path_param(deployment_id)}/cancel",

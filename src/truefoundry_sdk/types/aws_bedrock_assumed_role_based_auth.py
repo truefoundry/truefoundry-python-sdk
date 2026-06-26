@@ -9,7 +9,7 @@ from .aws_assumed_role_based_auth import AwsAssumedRoleBasedAuth
 
 class AwsBedrockAssumedRoleBasedAuth(AwsAssumedRoleBasedAuth):
     """
-    AWS Assumed Role Based Auth for Bedrock
+    Assumed Role Based
     """
 
     external_id: typing.Optional[str] = pydantic.Field(default=None)

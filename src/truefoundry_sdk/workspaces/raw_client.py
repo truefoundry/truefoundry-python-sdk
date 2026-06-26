@@ -17,12 +17,12 @@ from ..errors.expectation_failed_error import ExpectationFailedError
 from ..errors.forbidden_error import ForbiddenError
 from ..errors.not_found_error import NotFoundError
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
+from ..types.delete_workspace_response import DeleteWorkspaceResponse
 from ..types.get_workspace_response import GetWorkspaceResponse
 from ..types.http_error import HttpError
 from ..types.list_workspaces_response import ListWorkspacesResponse
 from ..types.workspace import Workspace
 from ..types.workspace_manifest import WorkspaceManifest
-from .types.workspaces_delete_response import WorkspacesDeleteResponse
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -42,10 +42,11 @@ class RawWorkspacesClient:
         name: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         include_cluster: typing.Optional[bool] = None,
+        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Workspace, ListWorkspacesResponse]:
         """
-        List workspaces associated with the user. Optional filters include clusterId, fqn, and workspace name.
+        List workspaces the caller can read.
 
         Parameters
         ----------
@@ -56,16 +57,19 @@ class RawWorkspacesClient:
             Number of items to skip
 
         cluster_id : typing.Optional[str]
-            ClusterId of the Cluster
+            System-generated cluster ID to filter by.
 
         name : typing.Optional[str]
-            Workspace Name
+            Filter workspaces by exact name match.
 
         fqn : typing.Optional[str]
-            Workspace FQN
+            Human-readable Fully Qualified Name to filter by.
 
         include_cluster : typing.Optional[bool]
-            When true, each workspace includes cluster information
+            When true, each workspace in the response includes summary information about its cluster.
+
+        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -73,7 +77,7 @@ class RawWorkspacesClient:
         Returns
         -------
         SyncPager[Workspace, ListWorkspacesResponse]
-            Returns all the workspaces associated with a user and also the response includes paginated data.
+            Paginated list of workspaces the caller has access to.
         """
         offset = offset if offset is not None else 0
 
@@ -87,6 +91,7 @@ class RawWorkspacesClient:
                 "name": name,
                 "fqn": fqn,
                 "includeCluster": include_cluster,
+                "attributes": attributes,
             },
             request_options=request_options,
         )
@@ -108,6 +113,7 @@ class RawWorkspacesClient:
                     name=name,
                     fqn=fqn,
                     include_cluster=include_cluster,
+                    attributes=attributes,
                     request_options=request_options,
                 )
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
@@ -128,7 +134,7 @@ class RawWorkspacesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetWorkspaceResponse]:
         """
-        Creates a new workspace or updates an existing one based on the provided manifest.
+        Create a new workspace or update an existing one using the provided WorkspaceManifest. Matching is by name and cluster — if both match an existing workspace it is updated, otherwise a new one is created.
 
         Parameters
         ----------
@@ -136,7 +142,7 @@ class RawWorkspacesClient:
             Workspace manifest
 
         dry_run : typing.Optional[bool]
-            Dry run the request
+            When true, validates the request without persisting changes.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -144,9 +150,7 @@ class RawWorkspacesClient:
         Returns
         -------
         HttpResponse[GetWorkspaceResponse]
-            - Creates or updates a workspace with given manifest
-                - Corresponding authorization entry with admin role is made using newly created workspace
-                - Attached with the cluster id where the workspace is created
+            The created or updated workspace.
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/svc/v1/workspaces",
@@ -236,7 +240,7 @@ class RawWorkspacesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Workspace, ListWorkspacesResponse]:
         """
-        List workspaces the user can read with optional structured `filter` (name, id, environmentId, cluster_fqn) and pagination.
+        Search workspaces using a structured filter expression. Return a paginated list of workspaces matching the filter criteria.
 
         Parameters
         ----------
@@ -247,10 +251,10 @@ class RawWorkspacesClient:
             Number of items to skip
 
         filter : typing.Optional[str]
-            JSON string containing array of search filters with string, type and operator
+            JSON-encoded filter string for structured search. Supported fields: name, id, environmentId, cluster_fqn. Supported operators: STRING_CONTAINS, STRING_STARTS_WITH, STRING_ENDS_WITH, EQUAL, IN, NOT_IN, IS_NULL.
 
         include_cluster : typing.Optional[bool]
-            When true, each workspace includes cluster information
+            When true, each workspace in the response includes summary information about its cluster.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -305,12 +309,12 @@ class RawWorkspacesClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetWorkspaceResponse]:
         """
-        Get workspace associated with provided workspace id
+        Get a single workspace by its ID.
 
         Parameters
         ----------
         id : str
-            Workspace id of the space
+            System-generated workspace ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -318,7 +322,7 @@ class RawWorkspacesClient:
         Returns
         -------
         HttpResponse[GetWorkspaceResponse]
-            Returns the workspaces associated with provided workspace id
+            The workspace with the given ID.
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/workspaces/{encode_path_param(id)}",
@@ -357,24 +361,22 @@ class RawWorkspacesClient:
 
     def delete(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[WorkspacesDeleteResponse]:
+    ) -> HttpResponse[DeleteWorkspaceResponse]:
         """
-        Deletes the workspace with the given workspace ID.
-            - Removes the associated namespace from the cluster.
-            - Deletes the corresponding authorization entry.
+        Permanently delete the workspace with the given ID. This action is irreversible.
 
         Parameters
         ----------
         id : str
-            Workspace id of the space
+            System-generated workspace ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[WorkspacesDeleteResponse]
-            Successfully deletes the workspace and returns the workspace details along with a confirmation message.
+        HttpResponse[DeleteWorkspaceResponse]
+            The deleted workspace details and a confirmation message.
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/workspaces/{encode_path_param(id)}",
@@ -384,9 +386,9 @@ class RawWorkspacesClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    WorkspacesDeleteResponse,
+                    DeleteWorkspaceResponse,
                     parse_obj_as(
-                        type_=WorkspacesDeleteResponse,  # type: ignore
+                        type_=DeleteWorkspaceResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -436,10 +438,11 @@ class AsyncRawWorkspacesClient:
         name: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         include_cluster: typing.Optional[bool] = None,
+        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Workspace, ListWorkspacesResponse]:
         """
-        List workspaces associated with the user. Optional filters include clusterId, fqn, and workspace name.
+        List workspaces the caller can read.
 
         Parameters
         ----------
@@ -450,16 +453,19 @@ class AsyncRawWorkspacesClient:
             Number of items to skip
 
         cluster_id : typing.Optional[str]
-            ClusterId of the Cluster
+            System-generated cluster ID to filter by.
 
         name : typing.Optional[str]
-            Workspace Name
+            Filter workspaces by exact name match.
 
         fqn : typing.Optional[str]
-            Workspace FQN
+            Human-readable Fully Qualified Name to filter by.
 
         include_cluster : typing.Optional[bool]
-            When true, each workspace includes cluster information
+            When true, each workspace in the response includes summary information about its cluster.
+
+        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -467,7 +473,7 @@ class AsyncRawWorkspacesClient:
         Returns
         -------
         AsyncPager[Workspace, ListWorkspacesResponse]
-            Returns all the workspaces associated with a user and also the response includes paginated data.
+            Paginated list of workspaces the caller has access to.
         """
         offset = offset if offset is not None else 0
 
@@ -481,6 +487,7 @@ class AsyncRawWorkspacesClient:
                 "name": name,
                 "fqn": fqn,
                 "includeCluster": include_cluster,
+                "attributes": attributes,
             },
             request_options=request_options,
         )
@@ -504,6 +511,7 @@ class AsyncRawWorkspacesClient:
                         name=name,
                         fqn=fqn,
                         include_cluster=include_cluster,
+                        attributes=attributes,
                         request_options=request_options,
                     )
 
@@ -525,7 +533,7 @@ class AsyncRawWorkspacesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetWorkspaceResponse]:
         """
-        Creates a new workspace or updates an existing one based on the provided manifest.
+        Create a new workspace or update an existing one using the provided WorkspaceManifest. Matching is by name and cluster — if both match an existing workspace it is updated, otherwise a new one is created.
 
         Parameters
         ----------
@@ -533,7 +541,7 @@ class AsyncRawWorkspacesClient:
             Workspace manifest
 
         dry_run : typing.Optional[bool]
-            Dry run the request
+            When true, validates the request without persisting changes.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -541,9 +549,7 @@ class AsyncRawWorkspacesClient:
         Returns
         -------
         AsyncHttpResponse[GetWorkspaceResponse]
-            - Creates or updates a workspace with given manifest
-                - Corresponding authorization entry with admin role is made using newly created workspace
-                - Attached with the cluster id where the workspace is created
+            The created or updated workspace.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/svc/v1/workspaces",
@@ -633,7 +639,7 @@ class AsyncRawWorkspacesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Workspace, ListWorkspacesResponse]:
         """
-        List workspaces the user can read with optional structured `filter` (name, id, environmentId, cluster_fqn) and pagination.
+        Search workspaces using a structured filter expression. Return a paginated list of workspaces matching the filter criteria.
 
         Parameters
         ----------
@@ -644,10 +650,10 @@ class AsyncRawWorkspacesClient:
             Number of items to skip
 
         filter : typing.Optional[str]
-            JSON string containing array of search filters with string, type and operator
+            JSON-encoded filter string for structured search. Supported fields: name, id, environmentId, cluster_fqn. Supported operators: STRING_CONTAINS, STRING_STARTS_WITH, STRING_ENDS_WITH, EQUAL, IN, NOT_IN, IS_NULL.
 
         include_cluster : typing.Optional[bool]
-            When true, each workspace includes cluster information
+            When true, each workspace in the response includes summary information about its cluster.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -705,12 +711,12 @@ class AsyncRawWorkspacesClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetWorkspaceResponse]:
         """
-        Get workspace associated with provided workspace id
+        Get a single workspace by its ID.
 
         Parameters
         ----------
         id : str
-            Workspace id of the space
+            System-generated workspace ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -718,7 +724,7 @@ class AsyncRawWorkspacesClient:
         Returns
         -------
         AsyncHttpResponse[GetWorkspaceResponse]
-            Returns the workspaces associated with provided workspace id
+            The workspace with the given ID.
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/workspaces/{encode_path_param(id)}",
@@ -757,24 +763,22 @@ class AsyncRawWorkspacesClient:
 
     async def delete(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[WorkspacesDeleteResponse]:
+    ) -> AsyncHttpResponse[DeleteWorkspaceResponse]:
         """
-        Deletes the workspace with the given workspace ID.
-            - Removes the associated namespace from the cluster.
-            - Deletes the corresponding authorization entry.
+        Permanently delete the workspace with the given ID. This action is irreversible.
 
         Parameters
         ----------
         id : str
-            Workspace id of the space
+            System-generated workspace ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[WorkspacesDeleteResponse]
-            Successfully deletes the workspace and returns the workspace details along with a confirmation message.
+        AsyncHttpResponse[DeleteWorkspaceResponse]
+            The deleted workspace details and a confirmation message.
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/workspaces/{encode_path_param(id)}",
@@ -784,9 +788,9 @@ class AsyncRawWorkspacesClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    WorkspacesDeleteResponse,
+                    DeleteWorkspaceResponse,
                     parse_obj_as(
-                        type_=WorkspacesDeleteResponse,  # type: ignore
+                        type_=DeleteWorkspaceResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

@@ -10,7 +10,7 @@ from .environment import Environment
 class GetEnvironmentResponse(UniversalBaseModel):
     data: Environment = pydantic.Field()
     """
-    Environment
+    The environment object.
     """
 
     if IS_PYDANTIC_V2:

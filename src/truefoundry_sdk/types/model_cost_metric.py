@@ -2,8 +2,18 @@
 
 import typing
 
+from .ocr_cost_metric import OcrCostMetric
+from .per_million_characters_cost_metric import PerMillionCharactersCostMetric
+from .per_minute_of_audio_cost_metric import PerMinuteOfAudioCostMetric
 from .per_thousand_embedding_tokens_cost_metric import PerThousandEmbeddingTokensCostMetric
 from .per_thousand_tokens_cost_metric import PerThousandTokensCostMetric
 from .public_cost_metric import PublicCostMetric
 
-ModelCostMetric = typing.Union[PerThousandTokensCostMetric, PerThousandEmbeddingTokensCostMetric, PublicCostMetric]
+ModelCostMetric = typing.Union[
+    PerThousandTokensCostMetric,
+    PerThousandEmbeddingTokensCostMetric,
+    PerMillionCharactersCostMetric,
+    PerMinuteOfAudioCostMetric,
+    OcrCostMetric,
+    PublicCostMetric,
+]

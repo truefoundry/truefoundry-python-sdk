@@ -42,7 +42,7 @@ Instantiate and use the client with the following:
 
 ```python
 from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk.applications import ApplicationsListRequestDeviceTypeFilter, ApplicationsListRequestLifecycleStage
+from truefoundry_sdk.applications import ApplicationsListRequestApplicationType, ApplicationsListRequestDeviceTypeFilter, ApplicationsListRequestLifecycleStage
 
 client = TrueFoundry(
     api_key="<token>",
@@ -57,7 +57,7 @@ client.applications.list(
     application_name="applicationName",
     fqn="fqn",
     workspace_fqn="workspaceFqn",
-    application_type="applicationType",
+    application_type=ApplicationsListRequestApplicationType.ASYNC_SERVICE,
     name_search_query="nameSearchQuery",
     environment_id="environmentId",
     cluster_id="clusterId",
@@ -76,7 +76,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 
 ```python
 import asyncio
-from truefoundry_sdk.applications import ApplicationsListRequestDeviceTypeFilter, ApplicationsListRequestLifecycleStage
+from truefoundry_sdk.applications import ApplicationsListRequestApplicationType, ApplicationsListRequestDeviceTypeFilter, ApplicationsListRequestLifecycleStage
 
 from truefoundry_sdk import AsyncTrueFoundry
 
@@ -95,7 +95,7 @@ async def main() -> None:
         application_name="applicationName",
         fqn="fqn",
         workspace_fqn="workspaceFqn",
-        application_type="applicationType",
+        application_type=ApplicationsListRequestApplicationType.ASYNC_SERVICE,
         name_search_query="nameSearchQuery",
         environment_id="environmentId",
         cluster_id="clusterId",
@@ -132,7 +132,7 @@ Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used 
 
 ```python
 from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk.applications import ApplicationsListRequestDeviceTypeFilter, ApplicationsListRequestLifecycleStage
+from truefoundry_sdk.applications import ApplicationsListRequestApplicationType, ApplicationsListRequestDeviceTypeFilter, ApplicationsListRequestLifecycleStage
 
 client = TrueFoundry(
     api_key="<token>",
@@ -147,7 +147,7 @@ client.applications.list(
     application_name="applicationName",
     fqn="fqn",
     workspace_fqn="workspaceFqn",
-    application_type="applicationType",
+    application_type=ApplicationsListRequestApplicationType.ASYNC_SERVICE,
     name_search_query="nameSearchQuery",
     environment_id="environmentId",
     cluster_id="clusterId",

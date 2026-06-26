@@ -10,7 +10,7 @@ from .team import Team
 class GetTeamResponse(UniversalBaseModel):
     data: Team = pydantic.Field()
     """
-    Teams
+    The requested team.
     """
 
     if IS_PYDANTIC_V2:

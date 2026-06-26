@@ -24,12 +24,12 @@ class RawClustersClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetAutoProvisioningStateResponse]:
         """
-        Get the auto provisioning status for the provided cluster
+        Get the auto-provisioning status for the specified cluster.
 
         Parameters
         ----------
         id : str
-            Cluster id of the cluster
+            Unique identifier of the cluster.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -40,7 +40,7 @@ class RawClustersClient:
             Returns the auto provisioning status for the cluster
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/clusters/{encode_path_param(id)}/autoprovisioning-state",
+            f"api/svc/v1/x/clusters/{encode_path_param(id)}/autoprovisioning-state",
             method="GET",
             request_options=request_options,
         )
@@ -83,12 +83,12 @@ class AsyncRawClustersClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetAutoProvisioningStateResponse]:
         """
-        Get the auto provisioning status for the provided cluster
+        Get the auto-provisioning status for the specified cluster.
 
         Parameters
         ----------
         id : str
-            Cluster id of the cluster
+            Unique identifier of the cluster.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -99,7 +99,7 @@ class AsyncRawClustersClient:
             Returns the auto provisioning status for the cluster
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/clusters/{encode_path_param(id)}/autoprovisioning-state",
+            f"api/svc/v1/x/clusters/{encode_path_param(id)}/autoprovisioning-state",
             method="GET",
             request_options=request_options,
         )

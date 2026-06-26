@@ -10,7 +10,7 @@ from .subject_permission import SubjectPermission
 class GetTeamPermissionsResponse(UniversalBaseModel):
     data: typing.List[SubjectPermission] = pydantic.Field()
     """
-    Role bindings for the team
+    Role bindings associated with the team.
     """
 
     if IS_PYDANTIC_V2:

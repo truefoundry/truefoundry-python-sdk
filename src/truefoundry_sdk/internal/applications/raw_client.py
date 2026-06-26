@@ -29,10 +29,10 @@ class RawApplicationsClient:
         Parameters
         ----------
         id : str
-            Id of the application
+            Unique identifier of the application
 
         full : typing.Optional[bool]
-            Whether to promote a rollout to full
+            Whether to promote the rollout to full traffic
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -42,7 +42,7 @@ class RawApplicationsClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{encode_path_param(id)}/rollout/promote",
+            f"api/svc/v1/x/apps/{encode_path_param(id)}/rollout/promote",
             method="POST",
             params={
                 "full": full,
@@ -91,15 +91,15 @@ class RawApplicationsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[typing.Dict[str, float]]:
         """
-        This endpoint fetches the pod template hash to deployment version map for a specific application.
+        Get the pod template hash to deployment version map for a specific application.
 
         Parameters
         ----------
         id : str
-            Id of the application
+            Unique identifier of the application
 
         pod_template_hashes : typing.Optional[str]
-            Pod Template Hashes (comma separated for multiple)
+            Pod template hashes to filter by (comma-separated)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -107,10 +107,10 @@ class RawApplicationsClient:
         Returns
         -------
         HttpResponse[typing.Dict[str, float]]
-            Successfully retrieved the pod template hash to deployment version map.
+            The pod template hash to deployment version map.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{encode_path_param(id)}/pod-template-hash-deployment-version-map",
+            f"api/svc/v1/x/apps/{encode_path_param(id)}/pod-template-hash-deployment-version-map",
             method="GET",
             params={
                 "podTemplateHashes": pod_template_hashes,
@@ -161,10 +161,10 @@ class AsyncRawApplicationsClient:
         Parameters
         ----------
         id : str
-            Id of the application
+            Unique identifier of the application
 
         full : typing.Optional[bool]
-            Whether to promote a rollout to full
+            Whether to promote the rollout to full traffic
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -174,7 +174,7 @@ class AsyncRawApplicationsClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{encode_path_param(id)}/rollout/promote",
+            f"api/svc/v1/x/apps/{encode_path_param(id)}/rollout/promote",
             method="POST",
             params={
                 "full": full,
@@ -223,15 +223,15 @@ class AsyncRawApplicationsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[typing.Dict[str, float]]:
         """
-        This endpoint fetches the pod template hash to deployment version map for a specific application.
+        Get the pod template hash to deployment version map for a specific application.
 
         Parameters
         ----------
         id : str
-            Id of the application
+            Unique identifier of the application
 
         pod_template_hashes : typing.Optional[str]
-            Pod Template Hashes (comma separated for multiple)
+            Pod template hashes to filter by (comma-separated)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -239,10 +239,10 @@ class AsyncRawApplicationsClient:
         Returns
         -------
         AsyncHttpResponse[typing.Dict[str, float]]
-            Successfully retrieved the pod template hash to deployment version map.
+            The pod template hash to deployment version map.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/apps/{encode_path_param(id)}/pod-template-hash-deployment-version-map",
+            f"api/svc/v1/x/apps/{encode_path_param(id)}/pod-template-hash-deployment-version-map",
             method="GET",
             params={
                 "podTemplateHashes": pod_template_hashes,

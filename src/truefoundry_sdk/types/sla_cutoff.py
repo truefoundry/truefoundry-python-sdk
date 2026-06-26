@@ -12,6 +12,11 @@ class SlaCutoff(UniversalBaseModel):
     Time per output token threshold in milliseconds. If time per output token exceeds this value, the target will be marked as unhealthy
     """
 
+    time_to_first_token_ms: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Time to first token threshold in milliseconds. If time to first token exceeds this value, the target will be marked as unhealthy
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:

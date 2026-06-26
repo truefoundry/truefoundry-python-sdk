@@ -27,7 +27,7 @@ class OpenaiProviderAccount(UniversalBaseModel):
     The name of the OpenAI provider account
     """
 
-    auth_data: OpenaiApiKeyAuth
+    auth_data: typing.Optional[OpenaiApiKeyAuth] = None
     base_url: typing.Optional[str] = pydantic.Field(default=None)
     """
     Optional custom base URL for OpenAI API
@@ -46,6 +46,10 @@ class OpenaiProviderAccount(UniversalBaseModel):
     owned_by: typing_extensions.Annotated[
         typing.Optional[OwnedBy], FieldMetadata(alias="ownedBy"), pydantic.Field(alias="ownedBy")
     ] = None
+    discount_percent: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Discount % applied to upstream list price for this provider account.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

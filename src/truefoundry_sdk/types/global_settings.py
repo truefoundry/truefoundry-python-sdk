@@ -4,6 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .guardrail_settings import GuardrailSettings
 from .logging_mode import LoggingMode
 from .retry_config import RetryConfig
 from .semantic_cache_settings import SemanticCacheSettings
@@ -23,6 +24,7 @@ class GlobalSettings(UniversalBaseModel):
     retry_settings: typing.Optional[RetryConfig] = None
     logging_settings: typing.Optional[LoggingMode] = None
     semantic_cache_settings: typing.Optional[SemanticCacheSettings] = None
+    guardrail_settings: typing.Optional[GuardrailSettings] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

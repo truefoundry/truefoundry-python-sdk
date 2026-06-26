@@ -11,28 +11,28 @@ from ..core.serialization import FieldMetadata
 class Log(UniversalBaseModel):
     job_name: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Job Name
+    Name of the job.
     """
 
     log: str = pydantic.Field()
     """
-    Log Content
+    Log line content.
     """
 
     stream: str = pydantic.Field()
     """
-    Log Stream
+    Log stream name.
     """
 
     time: str = pydantic.Field()
     """
-    Log Time
+    Log timestamp in nanoseconds from the Unix epoch.
     """
 
     container_name: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="containerName"),
-        pydantic.Field(alias="containerName", description="Container Name"),
+        pydantic.Field(alias="containerName", description="Name of the container that emitted the log."),
     ] = None
 
     if IS_PYDANTIC_V2:

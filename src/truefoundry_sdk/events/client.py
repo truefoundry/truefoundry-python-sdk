@@ -35,27 +35,27 @@ class EventsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetEventsResponse:
         """
-        Get Events for Pod, Job Run, Application. The events are sourced from Kubernetes as well as events captured by truefoundry. Optional query parameters include startTs, endTs for filtering.
+        Get events for an application, filtered by pod names, job run, or time range.
 
         Parameters
         ----------
         start_ts : typing.Optional[str]
-            Start timestamp (ISO format) for querying events
+            Start timestamp for filtering events (ISO 8601 format, UTC). Defaults to 24 hours before endTs. Must be less than or equal to endTs.
 
         end_ts : typing.Optional[str]
-            End timestamp (ISO format) for querying events
+            End timestamp for filtering events (ISO 8601 format, UTC). Defaults to current time. Must be greater than or equal to startTs.
 
         application_id : typing.Optional[str]
-            Application ID
+            Unique identifier of the application. Either applicationId or applicationFqn must be provided.
 
         application_fqn : typing.Optional[str]
-            Application FQN
+            Fully qualified name of the application. Either applicationId or applicationFqn must be provided.
 
         pod_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            Name of the pods
+            List of Kubernetes pod names to filter events. Cannot be provided together with jobRunName.
 
         job_run_name : typing.Optional[str]
-            Job run name
+            Name of the TrueFoundry job run. Cannot be provided together with podNames.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -63,7 +63,7 @@ class EventsClient:
         Returns
         -------
         GetEventsResponse
-            Returns a list of events matching the query parameters.
+            List of events matching the query parameters.
 
         Examples
         --------
@@ -121,27 +121,27 @@ class AsyncEventsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetEventsResponse:
         """
-        Get Events for Pod, Job Run, Application. The events are sourced from Kubernetes as well as events captured by truefoundry. Optional query parameters include startTs, endTs for filtering.
+        Get events for an application, filtered by pod names, job run, or time range.
 
         Parameters
         ----------
         start_ts : typing.Optional[str]
-            Start timestamp (ISO format) for querying events
+            Start timestamp for filtering events (ISO 8601 format, UTC). Defaults to 24 hours before endTs. Must be less than or equal to endTs.
 
         end_ts : typing.Optional[str]
-            End timestamp (ISO format) for querying events
+            End timestamp for filtering events (ISO 8601 format, UTC). Defaults to current time. Must be greater than or equal to startTs.
 
         application_id : typing.Optional[str]
-            Application ID
+            Unique identifier of the application. Either applicationId or applicationFqn must be provided.
 
         application_fqn : typing.Optional[str]
-            Application FQN
+            Fully qualified name of the application. Either applicationId or applicationFqn must be provided.
 
         pod_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            Name of the pods
+            List of Kubernetes pod names to filter events. Cannot be provided together with jobRunName.
 
         job_run_name : typing.Optional[str]
-            Job run name
+            Name of the TrueFoundry job run. Cannot be provided together with podNames.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -149,7 +149,7 @@ class AsyncEventsClient:
         Returns
         -------
         GetEventsResponse
-            Returns a list of events matching the query parameters.
+            List of events matching the query parameters.
 
         Examples
         --------

@@ -10,7 +10,7 @@ from .workspace import Workspace
 class GetWorkspaceResponse(UniversalBaseModel):
     data: Workspace = pydantic.Field()
     """
-    Workspace
+    The workspace object.
     """
 
     if IS_PYDANTIC_V2:

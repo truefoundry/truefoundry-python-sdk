@@ -8,6 +8,10 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class ApplicationLifecycleStage(enum.StrEnum):
+    """
+    Current lifecycle stage of the application
+    """
+
     ACTIVE = "active"
     DELETING = "deleting"
     DELETION_FAILED = "deletion_failed"

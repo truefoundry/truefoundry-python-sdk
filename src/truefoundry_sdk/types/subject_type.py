@@ -8,11 +8,16 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class SubjectType(enum.StrEnum):
+    """
+    Type of the authenticated subject. "user" for human users, "serviceaccount" (also known as virtual account) for programmatic access.
+    """
+
     USER = "user"
     TEAM = "team"
     SERVICEACCOUNT = "serviceaccount"
     VIRTUALACCOUNT = "virtualaccount"
     EXTERNAL_IDENTITY = "external-identity"
+    AGENT_IDENTITY = "agent-identity"
     ROLE = "role"
     _UNKNOWN = "__SUBJECTTYPE_UNKNOWN__"
     """
@@ -32,6 +37,7 @@ class SubjectType(enum.StrEnum):
         serviceaccount: typing.Callable[[], T_Result],
         virtualaccount: typing.Callable[[], T_Result],
         external_identity: typing.Callable[[], T_Result],
+        agent_identity: typing.Callable[[], T_Result],
         role: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
@@ -45,6 +51,8 @@ class SubjectType(enum.StrEnum):
             return virtualaccount()
         if self is SubjectType.EXTERNAL_IDENTITY:
             return external_identity()
+        if self is SubjectType.AGENT_IDENTITY:
+            return agent_identity()
         if self is SubjectType.ROLE:
             return role()
         return _unknown_member(self._value_)

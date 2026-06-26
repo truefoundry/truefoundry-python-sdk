@@ -41,9 +41,6 @@ class UserMetadata(UniversalBaseModel):
     sso_name: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="ssoName"), pydantic.Field(alias="ssoName")
     ] = None
-    is_primary_sso: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="isPrimarySSO"), pydantic.Field(alias="isPrimarySSO")
-    ] = None
     scim_user_object: typing_extensions.Annotated[
         typing.Optional[typing.Dict[str, typing.Any]],
         FieldMetadata(alias="scimUserObject"),

@@ -10,7 +10,7 @@ from .cluster import Cluster
 class GetClusterResponse(UniversalBaseModel):
     data: Cluster = pydantic.Field()
     """
-    Cluster
+    The cluster object.
     """
 
     if IS_PYDANTIC_V2:

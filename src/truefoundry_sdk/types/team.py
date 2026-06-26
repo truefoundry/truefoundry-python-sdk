@@ -13,25 +13,69 @@ from .team_metadata import TeamMetadata
 
 
 class Team(UniversalBaseModel):
-    id: str
-    description: str
-    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName"), pydantic.Field(alias="tenantName")]
-    account_id: typing_extensions.Annotated[str, FieldMetadata(alias="accountId"), pydantic.Field(alias="accountId")]
-    created_by_subject: typing_extensions.Annotated[
-        Subject, FieldMetadata(alias="createdBySubject"), pydantic.Field(alias="createdBySubject")
+    id: str = pydantic.Field()
+    """
+    System-generated team ID.
+    """
+
+    description: str = pydantic.Field()
+    """
+    A short description of the team.
+    """
+
+    tenant_name: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="tenantName"),
+        pydantic.Field(alias="tenantName", description="Tenant the team belongs to."),
     ]
-    members: typing.Optional[typing.List[str]] = None
+    account_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="accountId"),
+        pydantic.Field(alias="accountId", description="System-generated ID of the account that owns the team."),
+    ]
+    created_by_subject: typing_extensions.Annotated[
+        Subject,
+        FieldMetadata(alias="createdBySubject"),
+        pydantic.Field(
+            alias="createdBySubject", description="The subject (user or service account) that created the team."
+        ),
+    ]
+    members: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Email addresses of team members.
+    """
+
     created_at: typing_extensions.Annotated[
-        dt.datetime, FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
+        dt.datetime,
+        FieldMetadata(alias="createdAt"),
+        pydantic.Field(alias="createdAt", description="Timestamp when the team was created."),
     ]
     updated_at: typing_extensions.Annotated[
-        dt.datetime, FieldMetadata(alias="updatedAt"), pydantic.Field(alias="updatedAt")
+        dt.datetime,
+        FieldMetadata(alias="updatedAt"),
+        pydantic.Field(alias="updatedAt", description="Timestamp when the team was last updated."),
     ]
-    manifest: TeamManifest
-    metadata: typing.Optional[TeamMetadata] = None
+    manifest: TeamManifest = pydantic.Field()
+    """
+    The team manifest defining name, members, managers, and ownership.
+    """
+
+    metadata: typing.Optional[TeamMetadata] = pydantic.Field(default=None)
+    """
+    SCIM-related metadata for the team.
+    """
+
     is_editable: typing_extensions.Annotated[
-        bool, FieldMetadata(alias="isEditable"), pydantic.Field(alias="isEditable")
+        bool,
+        FieldMetadata(alias="isEditable"),
+        pydantic.Field(
+            alias="isEditable", description="Whether the team can be edited. SCIM-managed teams may be non-editable."
+        ),
     ]
+    roles: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Role names assigned to the team.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

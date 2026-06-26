@@ -37,19 +37,19 @@ class RawAlertsClient:
         Parameters
         ----------
         start_ts : typing.Optional[str]
-            Start timestamp (ISO format) for querying events
+            Start timestamp for filtering alerts (ISO 8601 format, UTC). Must be before endTs.
 
         end_ts : typing.Optional[str]
-            End timestamp (ISO format) for querying events
+            End timestamp for filtering alerts (ISO 8601 format, UTC). Must be after startTs.
 
         cluster_id : typing.Optional[str]
-            Cluster id
+            Unique identifier of the cluster.
 
         application_id : typing.Optional[str]
-            Application id
+            Unique identifier of the application.
 
         alert_status : typing.Optional[AlertStatus]
-            Alert status
+            Filter by alert status.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -133,19 +133,19 @@ class AsyncRawAlertsClient:
         Parameters
         ----------
         start_ts : typing.Optional[str]
-            Start timestamp (ISO format) for querying events
+            Start timestamp for filtering alerts (ISO 8601 format, UTC). Must be before endTs.
 
         end_ts : typing.Optional[str]
-            End timestamp (ISO format) for querying events
+            End timestamp for filtering alerts (ISO 8601 format, UTC). Must be after startTs.
 
         cluster_id : typing.Optional[str]
-            Cluster id
+            Unique identifier of the cluster.
 
         application_id : typing.Optional[str]
-            Application id
+            Unique identifier of the application.
 
         alert_status : typing.Optional[AlertStatus]
-            Alert status
+            Filter by alert status.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

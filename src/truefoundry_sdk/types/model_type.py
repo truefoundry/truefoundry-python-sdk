@@ -23,6 +23,7 @@ class ModelType(enum.StrEnum):
     MODERATION = "moderation"
     IMAGE = "image"
     RESPONSES = "responses"
+    OCR = "ocr"
     _UNKNOWN = "__MODELTYPE_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
@@ -47,6 +48,7 @@ class ModelType(enum.StrEnum):
         moderation: typing.Callable[[], T_Result],
         image: typing.Callable[[], T_Result],
         responses: typing.Callable[[], T_Result],
+        ocr: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is ModelType.CHAT:
@@ -71,4 +73,6 @@ class ModelType(enum.StrEnum):
             return image()
         if self is ModelType.RESPONSES:
             return responses()
+        if self is ModelType.OCR:
+            return ocr()
         return _unknown_member(self._value_)

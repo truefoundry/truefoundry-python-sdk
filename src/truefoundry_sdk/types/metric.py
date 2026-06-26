@@ -9,22 +9,22 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 class Metric(UniversalBaseModel):
     key: str = pydantic.Field()
     """
-    Name of the metric
+    Name of the metric.
     """
 
-    value: typing.Optional[float] = pydantic.Field(default=None)
+    value: float = pydantic.Field()
     """
-    Value of the metric
-    """
-
-    timestamp: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Timestamp when the metric was recorded (epoch milliseconds)
+    Numeric value of the metric.
     """
 
-    step: typing.Optional[int] = pydantic.Field(default=0)
+    timestamp: float = pydantic.Field()
     """
-    Training step number when the metric was recorded
+    Unix timestamp in milliseconds when the metric was logged.
+    """
+
+    step: float = pydantic.Field()
+    """
+    Training step at which the metric was logged.
     """
 
     if IS_PYDANTIC_V2:

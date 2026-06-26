@@ -13,6 +13,9 @@ class VirtualModelModelType(enum.StrEnum):
     EMBEDDING = "embedding"
     RERANK = "rerank"
     MODERATION = "moderation"
+    AUDIO_TRANSCRIPTION = "audio_transcription"
+    AUDIO_TRANSLATION = "audio_translation"
+    TEXT_TO_SPEECH = "text_to_speech"
     _UNKNOWN = "__VIRTUALMODELMODELTYPE_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
@@ -31,6 +34,9 @@ class VirtualModelModelType(enum.StrEnum):
         embedding: typing.Callable[[], T_Result],
         rerank: typing.Callable[[], T_Result],
         moderation: typing.Callable[[], T_Result],
+        audio_transcription: typing.Callable[[], T_Result],
+        audio_translation: typing.Callable[[], T_Result],
+        text_to_speech: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is VirtualModelModelType.CHAT:
@@ -43,4 +49,10 @@ class VirtualModelModelType(enum.StrEnum):
             return rerank()
         if self is VirtualModelModelType.MODERATION:
             return moderation()
+        if self is VirtualModelModelType.AUDIO_TRANSCRIPTION:
+            return audio_transcription()
+        if self is VirtualModelModelType.AUDIO_TRANSLATION:
+            return audio_translation()
+        if self is VirtualModelModelType.TEXT_TO_SPEECH:
+            return text_to_speech()
         return _unknown_member(self._value_)

@@ -12,6 +12,7 @@ from ..types.list_personal_access_token_response import ListPersonalAccessTokenR
 from ..types.revoke_all_personal_access_token_response import RevokeAllPersonalAccessTokenResponse
 from ..types.virtual_account import VirtualAccount
 from .raw_client import AsyncRawPersonalAccessTokensClient, RawPersonalAccessTokensClient
+from .types.create_personal_access_token_request_token_type import CreatePersonalAccessTokenRequestTokenType
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -41,7 +42,7 @@ class PersonalAccessTokensClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[VirtualAccount, ListPersonalAccessTokenResponse]:
         """
-        List Personal Access Tokens created by the user in the current tenant.
+        List personal access tokens created by the current user.
 
         Parameters
         ----------
@@ -52,7 +53,7 @@ class PersonalAccessTokensClient:
             Number of items to skip
 
         name_search_query : typing.Optional[str]
-            Return personal access tokens with names that contain this string
+            Return personal access tokens whose name contains this substring.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -60,7 +61,7 @@ class PersonalAccessTokensClient:
         Returns
         -------
         SyncPager[VirtualAccount, ListPersonalAccessTokenResponse]
-            Returns all Personal Access Tokens created by the user in the current tenant.
+            Paginated list of personal access tokens owned by the caller.
 
         Examples
         --------
@@ -73,7 +74,7 @@ class PersonalAccessTokensClient:
         response = client.personal_access_tokens.list(
             limit=10,
             offset=0,
-            name_search_query="nameSearchQuery",
+            name_search_query="ci-token",
         )
         for item in response:
             yield item
@@ -91,21 +92,29 @@ class PersonalAccessTokensClient:
         name: str,
         expiration_date: typing.Optional[str] = OMIT,
         account_name: typing.Optional[str] = OMIT,
+        team_name: typing.Optional[str] = OMIT,
+        token_type: typing.Optional[CreatePersonalAccessTokenRequestTokenType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreatePersonalAccessTokenResponse:
         """
-        Create Personal Access Token
+        Create a new personal access token for the current user.
 
         Parameters
         ----------
         name : str
-            serviceaccount name
+            Name for the personal access token. Must be 3-36 characters, start with a lowercase letter, end with a lowercase alphanumeric character, and contain only lowercase letters, numbers, and hyphens.
 
         expiration_date : typing.Optional[str]
-            Expiration date in ISO format (e.g. 2025-08-01T12:00)
+            Expiration date in ISO format. The token becomes invalid after this date.
 
         account_name : typing.Optional[str]
-            Account name that owns this PAT
+            Account name that owns this personal access token.
+
+        team_name : typing.Optional[str]
+            Team name that owns this personal access token.
+
+        token_type : typing.Optional[CreatePersonalAccessTokenRequestTokenType]
+            Format of the issued token. Leave empty to use the tenant override or platform default.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -113,7 +122,7 @@ class PersonalAccessTokensClient:
         Returns
         -------
         CreatePersonalAccessTokenResponse
-            Personal Access Token created successfully and returned
+            The newly created personal access token.
 
         Examples
         --------
@@ -124,11 +133,16 @@ class PersonalAccessTokensClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.personal_access_tokens.create(
-            name="name",
+            name="my-ci-token",
         )
         """
         _response = self._raw_client.create(
-            name=name, expiration_date=expiration_date, account_name=account_name, request_options=request_options
+            name=name,
+            expiration_date=expiration_date,
+            account_name=account_name,
+            team_name=team_name,
+            token_type=token_type,
+            request_options=request_options,
         )
         return _response.data
 
@@ -136,12 +150,12 @@ class PersonalAccessTokensClient:
         self, *, email: str, request_options: typing.Optional[RequestOptions] = None
     ) -> RevokeAllPersonalAccessTokenResponse:
         """
-        Revoke All Personal Access Tokens for the user with the given email
+        Revoke all personal access tokens belonging to the user with the given email. Requires tenant admin.
 
         Parameters
         ----------
         email : str
-            Email of the user to revoke all Personal Access Tokens for
+            Email of the user whose personal access tokens should be revoked.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -149,7 +163,7 @@ class PersonalAccessTokensClient:
         Returns
         -------
         RevokeAllPersonalAccessTokenResponse
-            All Personal Access Tokens revoked successfully
+            All personal access tokens for the user have been revoked.
 
         Examples
         --------
@@ -160,7 +174,7 @@ class PersonalAccessTokensClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.personal_access_tokens.revoke_all(
-            email="email",
+            email="alice@example.com",
         )
         """
         _response = self._raw_client.revoke_all(email=email, request_options=request_options)
@@ -170,12 +184,12 @@ class PersonalAccessTokensClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> DeletePersonalAccessTokenResponse:
         """
-        Delete Personal Access Token associated with the provided serviceAccountId
+        Permanently delete the personal access token with the given ID. This action is irreversible.
 
         Parameters
         ----------
         id : str
-            serviceaccount id
+            System-generated service account ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -183,7 +197,7 @@ class PersonalAccessTokensClient:
         Returns
         -------
         DeletePersonalAccessTokenResponse
-            Personal Access Token deleted successfully
+            Successfully deleted the personal access token.
 
         Examples
         --------
@@ -194,21 +208,28 @@ class PersonalAccessTokensClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.personal_access_tokens.delete(
-            id="id",
+            id="jqfwg345gi25n5ju2yz5iz6m",
         )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
 
     def get(
-        self, name: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        name: str,
+        *,
+        team_name: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetOrCreatePersonalAccessTokenResponse:
         """
-        Get an existing Personal Access Token by name, if it doesn't exist, it will create a new one and return the PAT data along with a fresh token.
+        Get an existing personal access token by name. If none exists, a new one is created and returned with a fresh token.
 
         Parameters
         ----------
         name : str
+
+        team_name : typing.Optional[str]
+            Team name that owns this PAT when a new PAT is created
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -216,7 +237,7 @@ class PersonalAccessTokensClient:
         Returns
         -------
         GetOrCreatePersonalAccessTokenResponse
-            Personal Access Token found successfully and returned with token
+            The personal access token data and authentication token.
 
         Examples
         --------
@@ -228,9 +249,10 @@ class PersonalAccessTokensClient:
         )
         client.personal_access_tokens.get(
             name="name",
+            team_name="teamName",
         )
         """
-        _response = self._raw_client.get(name, request_options=request_options)
+        _response = self._raw_client.get(name, team_name=team_name, request_options=request_options)
         return _response.data
 
 
@@ -258,7 +280,7 @@ class AsyncPersonalAccessTokensClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[VirtualAccount, ListPersonalAccessTokenResponse]:
         """
-        List Personal Access Tokens created by the user in the current tenant.
+        List personal access tokens created by the current user.
 
         Parameters
         ----------
@@ -269,7 +291,7 @@ class AsyncPersonalAccessTokensClient:
             Number of items to skip
 
         name_search_query : typing.Optional[str]
-            Return personal access tokens with names that contain this string
+            Return personal access tokens whose name contains this substring.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -277,7 +299,7 @@ class AsyncPersonalAccessTokensClient:
         Returns
         -------
         AsyncPager[VirtualAccount, ListPersonalAccessTokenResponse]
-            Returns all Personal Access Tokens created by the user in the current tenant.
+            Paginated list of personal access tokens owned by the caller.
 
         Examples
         --------
@@ -295,7 +317,7 @@ class AsyncPersonalAccessTokensClient:
             response = await client.personal_access_tokens.list(
                 limit=10,
                 offset=0,
-                name_search_query="nameSearchQuery",
+                name_search_query="ci-token",
             )
             async for item in response:
                 yield item
@@ -317,21 +339,29 @@ class AsyncPersonalAccessTokensClient:
         name: str,
         expiration_date: typing.Optional[str] = OMIT,
         account_name: typing.Optional[str] = OMIT,
+        team_name: typing.Optional[str] = OMIT,
+        token_type: typing.Optional[CreatePersonalAccessTokenRequestTokenType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreatePersonalAccessTokenResponse:
         """
-        Create Personal Access Token
+        Create a new personal access token for the current user.
 
         Parameters
         ----------
         name : str
-            serviceaccount name
+            Name for the personal access token. Must be 3-36 characters, start with a lowercase letter, end with a lowercase alphanumeric character, and contain only lowercase letters, numbers, and hyphens.
 
         expiration_date : typing.Optional[str]
-            Expiration date in ISO format (e.g. 2025-08-01T12:00)
+            Expiration date in ISO format. The token becomes invalid after this date.
 
         account_name : typing.Optional[str]
-            Account name that owns this PAT
+            Account name that owns this personal access token.
+
+        team_name : typing.Optional[str]
+            Team name that owns this personal access token.
+
+        token_type : typing.Optional[CreatePersonalAccessTokenRequestTokenType]
+            Format of the issued token. Leave empty to use the tenant override or platform default.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -339,7 +369,7 @@ class AsyncPersonalAccessTokensClient:
         Returns
         -------
         CreatePersonalAccessTokenResponse
-            Personal Access Token created successfully and returned
+            The newly created personal access token.
 
         Examples
         --------
@@ -355,14 +385,19 @@ class AsyncPersonalAccessTokensClient:
 
         async def main() -> None:
             await client.personal_access_tokens.create(
-                name="name",
+                name="my-ci-token",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
-            name=name, expiration_date=expiration_date, account_name=account_name, request_options=request_options
+            name=name,
+            expiration_date=expiration_date,
+            account_name=account_name,
+            team_name=team_name,
+            token_type=token_type,
+            request_options=request_options,
         )
         return _response.data
 
@@ -370,12 +405,12 @@ class AsyncPersonalAccessTokensClient:
         self, *, email: str, request_options: typing.Optional[RequestOptions] = None
     ) -> RevokeAllPersonalAccessTokenResponse:
         """
-        Revoke All Personal Access Tokens for the user with the given email
+        Revoke all personal access tokens belonging to the user with the given email. Requires tenant admin.
 
         Parameters
         ----------
         email : str
-            Email of the user to revoke all Personal Access Tokens for
+            Email of the user whose personal access tokens should be revoked.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -383,7 +418,7 @@ class AsyncPersonalAccessTokensClient:
         Returns
         -------
         RevokeAllPersonalAccessTokenResponse
-            All Personal Access Tokens revoked successfully
+            All personal access tokens for the user have been revoked.
 
         Examples
         --------
@@ -399,7 +434,7 @@ class AsyncPersonalAccessTokensClient:
 
         async def main() -> None:
             await client.personal_access_tokens.revoke_all(
-                email="email",
+                email="alice@example.com",
             )
 
 
@@ -412,12 +447,12 @@ class AsyncPersonalAccessTokensClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> DeletePersonalAccessTokenResponse:
         """
-        Delete Personal Access Token associated with the provided serviceAccountId
+        Permanently delete the personal access token with the given ID. This action is irreversible.
 
         Parameters
         ----------
         id : str
-            serviceaccount id
+            System-generated service account ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -425,7 +460,7 @@ class AsyncPersonalAccessTokensClient:
         Returns
         -------
         DeletePersonalAccessTokenResponse
-            Personal Access Token deleted successfully
+            Successfully deleted the personal access token.
 
         Examples
         --------
@@ -441,7 +476,7 @@ class AsyncPersonalAccessTokensClient:
 
         async def main() -> None:
             await client.personal_access_tokens.delete(
-                id="id",
+                id="jqfwg345gi25n5ju2yz5iz6m",
             )
 
 
@@ -451,14 +486,21 @@ class AsyncPersonalAccessTokensClient:
         return _response.data
 
     async def get(
-        self, name: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        name: str,
+        *,
+        team_name: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetOrCreatePersonalAccessTokenResponse:
         """
-        Get an existing Personal Access Token by name, if it doesn't exist, it will create a new one and return the PAT data along with a fresh token.
+        Get an existing personal access token by name. If none exists, a new one is created and returned with a fresh token.
 
         Parameters
         ----------
         name : str
+
+        team_name : typing.Optional[str]
+            Team name that owns this PAT when a new PAT is created
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -466,7 +508,7 @@ class AsyncPersonalAccessTokensClient:
         Returns
         -------
         GetOrCreatePersonalAccessTokenResponse
-            Personal Access Token found successfully and returned with token
+            The personal access token data and authentication token.
 
         Examples
         --------
@@ -483,10 +525,11 @@ class AsyncPersonalAccessTokensClient:
         async def main() -> None:
             await client.personal_access_tokens.get(
                 name="name",
+                team_name="teamName",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get(name, request_options=request_options)
+        _response = await self._raw_client.get(name, team_name=team_name, request_options=request_options)
         return _response.data

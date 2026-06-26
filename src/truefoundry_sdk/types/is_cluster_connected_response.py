@@ -12,7 +12,9 @@ class IsClusterConnectedResponse(UniversalBaseModel):
     is_connected: typing_extensions.Annotated[
         bool,
         FieldMetadata(alias="isConnected"),
-        pydantic.Field(alias="isConnected", description="Whether the cluster is connected"),
+        pydantic.Field(
+            alias="isConnected", description="Whether the cluster agent is currently connected to the control plane."
+        ),
     ]
 
     if IS_PYDANTIC_V2:

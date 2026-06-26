@@ -8,10 +8,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
 from .collaborator import Collaborator
 from .owned_by import OwnedBy
-from .true_foundry_agent_manifest_model_params import TrueFoundryAgentManifestModelParams
-from .true_foundry_agent_manifest_response_format import TrueFoundryAgentManifestResponseFormat
-from .true_foundry_agent_manifest_sandbox import TrueFoundryAgentManifestSandbox
+from .sample_agent_input import SampleAgentInput
+from .true_foundry_agent_config import TrueFoundryAgentConfig
 from .true_foundry_agent_mcp_server import TrueFoundryAgentMcpServer
+from .true_foundry_agent_model import TrueFoundryAgentModel
+from .true_foundry_agent_response_format import TrueFoundryAgentResponseFormat
 from .true_foundry_agent_skill import TrueFoundryAgentSkill
 from .true_foundry_agent_user_message import TrueFoundryAgentUserMessage
 from .true_foundry_agent_variable import TrueFoundryAgentVariable
@@ -38,16 +39,7 @@ class TrueFoundryAgentManifest(UniversalBaseModel):
     Tags for the Agent
     """
 
-    model: str = pydantic.Field()
-    """
-    Model for the Agent
-    """
-
-    model_params: typing.Optional[TrueFoundryAgentManifestModelParams] = pydantic.Field(default=None)
-    """
-    Model parameters (default and extra). Keys are param names, values are float, int, bool, or string.
-    """
-
+    model: TrueFoundryAgentModel
     skills: typing.Optional[typing.List[TrueFoundryAgentSkill]] = pydantic.Field(default=None)
     """
     List of agent skills to attach to this agent
@@ -55,12 +47,12 @@ class TrueFoundryAgentManifest(UniversalBaseModel):
 
     mcp_servers: typing.Optional[typing.List[TrueFoundryAgentMcpServer]] = pydantic.Field(default=None)
     """
-    List of MCP servers with name, enable_all_tools, and optional tools filter
+    List of MCP servers with tag-based tool enable/disable/preload/approval policy
     """
 
-    instruction: typing.Optional[str] = pydantic.Field(default=None)
+    instructions: typing.Optional[str] = pydantic.Field(default=None)
     """
-    System instruction or prompt for the agent
+    System instructions or prompt for the agent
     """
 
     messages: typing.Optional[typing.List[TrueFoundryAgentUserMessage]] = pydantic.Field(default=None)
@@ -73,21 +65,13 @@ class TrueFoundryAgentManifest(UniversalBaseModel):
     Variables keyed by name. Each has optional default_value and optional description.
     """
 
-    response_format: typing.Optional[TrueFoundryAgentManifestResponseFormat] = pydantic.Field(default=None)
+    sample_inputs: typing.Optional[typing.List[SampleAgentInput]] = pydantic.Field(default=None)
     """
-    JSON schema or structure for the agent response format
-    """
-
-    sandbox: typing.Optional[TrueFoundryAgentManifestSandbox] = pydantic.Field(default=None)
-    """
-    Sandbox execution settings
+    Sample inputs for your agent. These inputs are shown as an example in the "Agent Chat" page. (Click on Try Now in the agent listing page)
     """
 
-    iteration_limit: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Maximum number of iterations for the agent
-    """
-
+    response_format: typing.Optional[TrueFoundryAgentResponseFormat] = None
+    config: typing.Optional[TrueFoundryAgentConfig] = None
     collaborators: typing.List[Collaborator] = pydantic.Field()
     """
     List of users who have access to this Agent

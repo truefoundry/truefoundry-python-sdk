@@ -9,8 +9,8 @@ if typing.TYPE_CHECKING:
     from .resources import Resources
     from .resources_devices_item import ResourcesDevicesItem
     from .resources_node import ResourcesNode
+    from .a2a_agent_skill import A2AAgentSkill
     from .a2a_framework import A2AFramework
-    from .account import Account
     from .account_info import AccountInfo
     from .activate_user_response import ActivateUserResponse
     from .add_on_component_source import AddOnComponentSource
@@ -43,6 +43,7 @@ if typing.TYPE_CHECKING:
     from .alert_status import AlertStatus
     from .all_data_access_rule import AllDataAccessRule
     from .all_data_access_rule_filters_item import AllDataAccessRuleFiltersItem
+    from .allowed_values_constraint import AllowedValuesConstraint
     from .amqp_input_config import AmqpInputConfig
     from .amqp_metric_config import AmqpMetricConfig
     from .amqp_output_config import AmqpOutputConfig
@@ -57,7 +58,14 @@ if typing.TYPE_CHECKING:
     from .application_problem import ApplicationProblem
     from .application_set import ApplicationSet
     from .application_set_components_item import ApplicationSetComponentsItem
+    from .application_summary import ApplicationSummary
     from .application_type import ApplicationType
+    from .applies_to import AppliesTo
+    from .applies_to_aggregate import AppliesToAggregate
+    from .applies_to_metadata import AppliesToMetadata
+    from .applies_to_per_model import AppliesToPerModel
+    from .applies_to_per_user import AppliesToPerUser
+    from .applies_to_per_virtual_account import AppliesToPerVirtualAccount
     from .apply_ml_entity_response import ApplyMlEntityResponse
     from .apply_ml_entity_response_data import ApplyMlEntityResponseData
     from .artifact import Artifact
@@ -88,8 +96,17 @@ if typing.TYPE_CHECKING:
     from .aws_bedrock_guardrail_config_auth_data import AwsBedrockGuardrailConfigAuthData
     from .aws_bedrock_guardrail_config_config import AwsBedrockGuardrailConfigConfig
     from .aws_bedrock_guardrail_config_operation import AwsBedrockGuardrailConfigOperation
+    from .aws_bedrock_mantle_integrations import AwsBedrockMantleIntegrations
+    from .aws_bedrock_mantle_provider_account import AwsBedrockMantleProviderAccount
+    from .aws_bedrock_mantle_provider_account_auth_data import AwsBedrockMantleProviderAccountAuthData
     from .aws_bedrock_provider_account import AwsBedrockProviderAccount
     from .aws_bedrock_provider_account_auth_data import AwsBedrockProviderAccountAuthData
+    from .aws_claude_platform_api_key_auth import AwsClaudePlatformApiKeyAuth
+    from .aws_claude_platform_assumed_role_based_auth import AwsClaudePlatformAssumedRoleBasedAuth
+    from .aws_claude_platform_integrations import AwsClaudePlatformIntegrations
+    from .aws_claude_platform_model import AwsClaudePlatformModel
+    from .aws_claude_platform_provider_account import AwsClaudePlatformProviderAccount
+    from .aws_claude_platform_provider_account_auth_data import AwsClaudePlatformProviderAccountAuthData
     from .aws_ecr import AwsEcr
     from .aws_ecr_auth_data import AwsEcrAuthData
     from .aws_eks_integration import AwsEksIntegration
@@ -113,6 +130,7 @@ if typing.TYPE_CHECKING:
     from .azure_basic_auth import AzureBasicAuth
     from .azure_blob_storage import AzureBlobStorage
     from .azure_certificate_auth import AzureCertificateAuth
+    from .azure_client_secret_auth import AzureClientSecretAuth
     from .azure_connection_string_auth import AzureConnectionStringAuth
     from .azure_container_registry import AzureContainerRegistry
     from .azure_content_safety_category import AzureContentSafetyCategory
@@ -140,7 +158,9 @@ if typing.TYPE_CHECKING:
     from .azure_prompt_shield_guardrail_config_config import AzurePromptShieldGuardrailConfigConfig
     from .azure_provider_account import AzureProviderAccount
     from .azure_repos_integration import AzureReposIntegration
+    from .azure_repos_integration_auth_data import AzureReposIntegrationAuthData
     from .azure_vault import AzureVault
+    from .azure_workload_identity_auth import AzureWorkloadIdentityAuth
     from .base_artifact_version import BaseArtifactVersion
     from .base_artifact_version_manifest import BaseArtifactVersionManifest
     from .base_autoscaling import BaseAutoscaling
@@ -157,16 +177,26 @@ if typing.TYPE_CHECKING:
     from .baseten_model import BasetenModel
     from .baseten_provider_account import BasetenProviderAccount
     from .basic_auth_creds import BasicAuthCreds
+    from .bedrock_mantle_model import BedrockMantleModel
     from .bedrock_model import BedrockModel
+    from .bitbucket_data_center_integration import BitbucketDataCenterIntegration
     from .bitbucket_integration import BitbucketIntegration
+    from .bitbucket_integration_auth_data import BitbucketIntegrationAuthData
+    from .bitbucket_integrations import BitbucketIntegrations
     from .bitbucket_provider_account import BitbucketProviderAccount
     from .blob_storage_reference import BlobStorageReference
     from .blue_green import BlueGreen
     from .budget_alert import BudgetAlert
+    from .budget_alert_send_to import BudgetAlertSendTo
     from .budget_config import BudgetConfig
     from .budget_limit_unit import BudgetLimitUnit
+    from .budget_limits import BudgetLimits
     from .budget_rule import BudgetRule
+    from .budget_subjects_team_scoped import BudgetSubjectsTeamScoped
+    from .budget_subjects_tenant_scoped import BudgetSubjectsTenantScoped
     from .budget_when import BudgetWhen
+    from .budget_when_team_scoped import BudgetWhenTeamScoped
+    from .budget_when_tenant_scoped import BudgetWhenTenantScoped
     from .build import Build
     from .build_build_source import BuildBuildSource
     from .build_build_spec import BuildBuildSpec
@@ -213,6 +243,7 @@ if typing.TYPE_CHECKING:
     from .cohere_model import CohereModel
     from .cohere_provider_account import CohereProviderAccount
     from .collaborator import Collaborator
+    from .columns import Columns
     from .common_tools_settings import CommonToolsSettings
     from .config import Config
     from .container_task_config import ContainerTaskConfig
@@ -223,7 +254,12 @@ if typing.TYPE_CHECKING:
     from .create_docker_repository_response import CreateDockerRepositoryResponse
     from .create_multi_part_upload_request import CreateMultiPartUploadRequest
     from .create_personal_access_token_response import CreatePersonalAccessTokenResponse
+    from .create_run_response import CreateRunResponse
     from .cron_metric import CronMetric
+    from .crowd_strike_aidr_guardrail_config import CrowdStrikeAidrGuardrailConfig
+    from .crowd_strike_aidr_guardrail_config_config import CrowdStrikeAidrGuardrailConfigConfig
+    from .crowd_strike_aidr_guardrail_config_operation import CrowdStrikeAidrGuardrailConfigOperation
+    from .crowd_strike_aidr_key_auth import CrowdStrikeAidrKeyAuth
     from .custom_agent_server_auth import CustomAgentServerAuth
     from .custom_basic_auth import CustomBasicAuth
     from .custom_bearer_auth import CustomBearerAuth
@@ -232,6 +268,8 @@ if typing.TYPE_CHECKING:
     from .custom_endpoint_integrations import CustomEndpointIntegrations
     from .custom_endpoint_provider_account import CustomEndpointProviderAccount
     from .custom_endpoint_provider_account_endpoint_type import CustomEndpointProviderAccountEndpointType
+    from .custom_endpoint_provider_account_routing_type import CustomEndpointProviderAccountRoutingType
+    from .custom_endpoint_target_config import CustomEndpointTargetConfig
     from .custom_framework import CustomFramework
     from .custom_guardrail_config import CustomGuardrailConfig
     from .custom_guardrail_config_auth_data import CustomGuardrailConfigAuthData
@@ -270,12 +308,14 @@ if typing.TYPE_CHECKING:
     from .deepinfra_model import DeepinfraModel
     from .deepinfra_provider_account import DeepinfraProviderAccount
     from .delete_application_response import DeleteApplicationResponse
+    from .delete_cluster_response import DeleteClusterResponse
     from .delete_job_run_response import DeleteJobRunResponse
     from .delete_personal_access_token_response import DeletePersonalAccessTokenResponse
     from .delete_secret_group_response import DeleteSecretGroupResponse
     from .delete_team_response import DeleteTeamResponse
     from .delete_user_response import DeleteUserResponse
     from .delete_virtual_account_response import DeleteVirtualAccountResponse
+    from .delete_workspace_response import DeleteWorkspaceResponse
     from .deployment import Deployment
     from .deployment_build import DeploymentBuild
     from .deployment_manifest import DeploymentManifest
@@ -403,12 +443,15 @@ if typing.TYPE_CHECKING:
     from .get_events_response import GetEventsResponse
     from .get_job_run_response import GetJobRunResponse
     from .get_logs_response import GetLogsResponse
+    from .get_metric_history_response import GetMetricHistoryResponse
     from .get_ml_repo_response import GetMlRepoResponse
     from .get_model_response import GetModelResponse
     from .get_model_version_response import GetModelVersionResponse
     from .get_or_create_personal_access_token_response import GetOrCreatePersonalAccessTokenResponse
     from .get_prompt_response import GetPromptResponse
     from .get_prompt_version_response import GetPromptVersionResponse
+    from .get_run_columns_response import GetRunColumnsResponse
+    from .get_run_response import GetRunResponse
     from .get_secret_group_response import GetSecretGroupResponse
     from .get_secret_response import GetSecretResponse
     from .get_signed_ur_ls_request import GetSignedUrLsRequest
@@ -417,18 +460,17 @@ if typing.TYPE_CHECKING:
     from .get_team_permissions_response import GetTeamPermissionsResponse
     from .get_team_response import GetTeamResponse
     from .get_token_for_virtual_account_response import GetTokenForVirtualAccountResponse
-    from .get_user_permissions_response import GetUserPermissionsResponse
-    from .get_user_resources_response import GetUserResourcesResponse
     from .get_user_response import GetUserResponse
-    from .get_user_teams_response import GetUserTeamsResponse
     from .get_virtual_account_response import GetVirtualAccountResponse
     from .get_workspace_response import GetWorkspaceResponse
     from .git_helm_repo import GitHelmRepo
     from .git_repository_exists_response import GitRepositoryExistsResponse
     from .git_source import GitSource
     from .github_integration import GithubIntegration
+    from .github_integration_auth_data import GithubIntegrationAuthData
     from .github_provider_account import GithubProviderAccount
     from .gitlab_integration import GitlabIntegration
+    from .gitlab_integration_auth_data import GitlabIntegrationAuthData
     from .gitlab_provider_account import GitlabProviderAccount
     from .global_settings import GlobalSettings
     from .gluon_framework import GluonFramework
@@ -456,6 +498,7 @@ if typing.TYPE_CHECKING:
     from .groq_provider_account import GroqProviderAccount
     from .guardrail_config_group import GuardrailConfigGroup
     from .guardrail_config_integrations import GuardrailConfigIntegrations
+    from .guardrail_settings import GuardrailSettings
     from .guardrails import Guardrails
     from .guardrails_config import GuardrailsConfig
     from .guardrails_rule import GuardrailsRule
@@ -482,11 +525,13 @@ if typing.TYPE_CHECKING:
     from .huggingface_artifact_source import HuggingfaceArtifactSource
     from .i_change import IChange
     from .i_change_operation import IChangeOperation
+    from .identity_provider_mapping import IdentityProviderMapping
     from .image import Image
     from .image_command import ImageCommand
     from .image_content_part import ImageContentPart
     from .image_content_part_image_url import ImageContentPartImageUrl
     from .image_content_part_image_url_url import ImageContentPartImageUrlUrl
+    from .in_not_in_filter import InNotInFilter
     from .in_not_in_operator import InNotInOperator
     from .in_not_in_operator_condition import InNotInOperatorCondition
     from .infer_method_name import InferMethodName
@@ -524,11 +569,15 @@ if typing.TYPE_CHECKING:
     from .jwt import Jwt
     from .jwt_auth_config import JwtAuthConfig
     from .jwt_auth_config_claims_item import JwtAuthConfigClaimsItem
+    from .jwt_token_type import JwtTokenType
     from .kafka_input_config import KafkaInputConfig
     from .kafka_metric_config import KafkaMetricConfig
     from .kafka_output_config import KafkaOutputConfig
     from .kafka_sasl_auth import KafkaSaslAuth
     from .keras_framework import KerasFramework
+    from .key_presence_spec import KeyPresenceSpec
+    from .key_spec import KeySpec
+    from .key_value_spec import KeyValueSpec
     from .kustomize import Kustomize
     from .latency_based_load_balance_target import LatencyBasedLoadBalanceTarget
     from .latency_based_load_balancing import LatencyBasedLoadBalancing
@@ -549,6 +598,7 @@ if typing.TYPE_CHECKING:
     from .list_files_request import ListFilesRequest
     from .list_files_response import ListFilesResponse
     from .list_job_run_response import ListJobRunResponse
+    from .list_metric_history_response import ListMetricHistoryResponse
     from .list_ml_repos_response import ListMlReposResponse
     from .list_model_versions_response import ListModelVersionsResponse
     from .list_models_response import ListModelsResponse
@@ -557,6 +607,8 @@ if typing.TYPE_CHECKING:
     from .list_prompts_response import ListPromptsResponse
     from .list_secret_group_response import ListSecretGroupResponse
     from .list_secrets_response import ListSecretsResponse
+    from .list_team_managers_response import ListTeamManagersResponse
+    from .list_team_members_response import ListTeamMembersResponse
     from .list_teams_response import ListTeamsResponse
     from .list_users_response import ListUsersResponse
     from .list_virtual_account_response import ListVirtualAccountResponse
@@ -574,8 +626,6 @@ if typing.TYPE_CHECKING:
     from .logging_mode_always import LoggingModeAlways
     from .logging_mode_header_controlled import LoggingModeHeaderControlled
     from .logging_mode_never import LoggingModeNever
-    from .logs_filter_query import LogsFilterQuery
-    from .logs_filter_query_type import LogsFilterQueryType
     from .logs_response import LogsResponse
     from .logs_search_filter_type import LogsSearchFilterType
     from .logs_search_operator_type import LogsSearchOperatorType
@@ -594,6 +644,7 @@ if typing.TYPE_CHECKING:
     from .mcp_server_o_auth2 import McpServerOAuth2
     from .mcp_server_o_auth2grant_type import McpServerOAuth2GrantType
     from .mcp_server_o_auth2jwt_source import McpServerOAuth2JwtSource
+    from .mcp_server_o_auth2provider_auth0settings import McpServerOAuth2ProviderAuth0Settings
     from .mcp_server_passthrough import McpServerPassthrough
     from .mcp_server_provider_account import McpServerProviderAccount
     from .mcp_server_source import McpServerSource
@@ -601,12 +652,14 @@ if typing.TYPE_CHECKING:
     from .mcp_server_with_fqn import McpServerWithFqn
     from .mcp_server_with_url import McpServerWithUrl
     from .mcp_tool import McpTool
+    from .mcp_tool_annotations import McpToolAnnotations
     from .mcp_tool_setting import McpToolSetting
     from .mcp_tool_target import McpToolTarget
     from .mcp_tools_operator import McpToolsOperator
     from .mcp_tools_operator_condition import McpToolsOperatorCondition
     from .metadata import Metadata
     from .metric import Metric
+    from .metric_collection import MetricCollection
     from .mime_type import MimeType
     from .mirror_action import MirrorAction
     from .mistral_ai_integrations import MistralAiIntegrations
@@ -625,9 +678,15 @@ if typing.TYPE_CHECKING:
     from .model_type import ModelType
     from .model_version import ModelVersion
     from .model_version_environment import ModelVersionEnvironment
+    from .ms_teams_integrations import MsTeamsIntegrations
+    from .ms_teams_provider_account import MsTeamsProviderAccount
+    from .ms_teams_webhook import MsTeamsWebhook
+    from .ms_teams_webhook_auth import MsTeamsWebhookAuth
+    from .ms_teams_webhook_integration import MsTeamsWebhookIntegration
     from .multi_part_upload import MultiPartUpload
     from .multi_part_upload_response import MultiPartUploadResponse
     from .multi_part_upload_storage_provider import MultiPartUploadStorageProvider
+    from .native_snowflake_flyte_task_template import NativeSnowflakeFlyteTaskTemplate
     from .nats_input_config import NatsInputConfig
     from .nats_metric_config import NatsMetricConfig
     from .nats_output_config import NatsOutputConfig
@@ -651,6 +710,8 @@ if typing.TYPE_CHECKING:
     from .nvidia_timeslicing_gpu import NvidiaTimeslicingGpu
     from .o_auth2login_provider import OAuth2LoginProvider
     from .oci_repo import OciRepo
+    from .ocr_cost_metric import OcrCostMetric
+    from .ocr_cost_metric_value import OcrCostMetricValue
     from .ollama_integrations import OllamaIntegrations
     from .ollama_key_auth import OllamaKeyAuth
     from .ollama_model import OllamaModel
@@ -685,6 +746,7 @@ if typing.TYPE_CHECKING:
     from .otel_traces_exporter_grpc_config import OtelTracesExporterGrpcConfig
     from .otel_traces_exporter_http_config import OtelTracesExporterHttpConfig
     from .otel_traces_exporter_span_attribute_filter import OtelTracesExporterSpanAttributeFilter
+    from .override_limits import OverrideLimits
     from .own_data_access_rule import OwnDataAccessRule
     from .owned_by import OwnedBy
     from .paddle_framework import PaddleFramework
@@ -702,11 +764,6 @@ if typing.TYPE_CHECKING:
     from .palo_alto_prisma_airs_guardrail_config_config import PaloAltoPrismaAirsGuardrailConfigConfig
     from .palo_alto_prisma_airs_guardrail_config_config_mode import PaloAltoPrismaAirsGuardrailConfigConfigMode
     from .palo_alto_prisma_airs_key_auth import PaloAltoPrismaAirsKeyAuth
-    from .pangea_guard_type import PangeaGuardType
-    from .pangea_guardrail_config import PangeaGuardrailConfig
-    from .pangea_guardrail_config_config import PangeaGuardrailConfigConfig
-    from .pangea_guardrail_config_operation import PangeaGuardrailConfigOperation
-    from .pangea_key_auth import PangeaKeyAuth
     from .param import Param
     from .param_param_type import ParamParamType
     from .parameters import Parameters
@@ -728,14 +785,23 @@ if typing.TYPE_CHECKING:
     from .patronus_pii_evaluator import PatronusPiiEvaluator
     from .patronus_toxicity_criteria import PatronusToxicityCriteria
     from .patronus_toxicity_evaluator import PatronusToxicityEvaluator
+    from .per_metadata_override import PerMetadataOverride
+    from .per_million_characters_cost_metric import PerMillionCharactersCostMetric
+    from .per_million_characters_cost_metric_value import PerMillionCharactersCostMetricValue
+    from .per_minute_of_audio_cost_metric import PerMinuteOfAudioCostMetric
+    from .per_minute_of_audio_cost_metric_value import PerMinuteOfAudioCostMetricValue
+    from .per_model_override import PerModelOverride
     from .per_thousand_embedding_tokens_cost_metric import PerThousandEmbeddingTokensCostMetric
     from .per_thousand_tokens_cost_metric import PerThousandTokensCostMetric
+    from .per_user_override import PerUserOverride
+    from .per_virtual_account_override import PerVirtualAccountOverride
     from .permissions import Permissions
     from .perplexity_ai_key_auth import PerplexityAiKeyAuth
     from .perplexity_ai_model import PerplexityAiModel
     from .perplexity_ai_provider_account import PerplexityAiProviderAccount
     from .perplexity_integrations import PerplexityIntegrations
     from .personal_access_token_manifest import PersonalAccessTokenManifest
+    from .personal_access_token_manifest_token_type import PersonalAccessTokenManifestTokenType
     from .pip import Pip
     from .poetry import Poetry
     from .policy_actions import PolicyActions
@@ -783,6 +849,7 @@ if typing.TYPE_CHECKING:
     from .rate_limit_when import RateLimitWhen
     from .recommendation import Recommendation
     from .refusal_content_part import RefusalContentPart
+    from .regex_constraint import RegexConstraint
     from .regex_guardrail_config import RegexGuardrailConfig
     from .regex_guardrail_config_config import RegexGuardrailConfigConfig
     from .regex_guardrail_config_operation import RegexGuardrailConfigOperation
@@ -806,6 +873,12 @@ if typing.TYPE_CHECKING:
     from .role_with_resource_resource_type import RoleWithResourceResourceType
     from .rolling import Rolling
     from .rps_metric import RpsMetric
+    from .run import Run
+    from .run_data import RunData
+    from .run_info import RunInfo
+    from .run_param import RunParam
+    from .run_tag import RunTag
+    from .run_tag_input import RunTagInput
     from .sagemaker_assumed_role_based_auth import SagemakerAssumedRoleBasedAuth
     from .sagemaker_model import SagemakerModel
     from .samba_nova_integrations import SambaNovaIntegrations
@@ -815,6 +888,7 @@ if typing.TYPE_CHECKING:
     from .sample_agent_input import SampleAgentInput
     from .schedule import Schedule
     from .schedule_concurrency_policy import ScheduleConcurrencyPolicy
+    from .search_runs_response import SearchRunsResponse
     from .secret import Secret
     from .secret_detection_guardrail_config import SecretDetectionGuardrailConfig
     from .secret_detection_guardrail_config_config import SecretDetectionGuardrailConfigConfig
@@ -838,9 +912,6 @@ if typing.TYPE_CHECKING:
     from .service_autoscaling_metrics import ServiceAutoscalingMetrics
     from .service_replicas import ServiceReplicas
     from .service_rollout_strategy import ServiceRolloutStrategy
-    from .session import Session
-    from .session_account import SessionAccount
-    from .session_team import SessionTeam
     from .signed_url import SignedUrl
     from .sklearn_framework import SklearnFramework
     from .sklearn_model_schema import SklearnModelSchema
@@ -854,11 +925,17 @@ if typing.TYPE_CHECKING:
     from .slack_webhook import SlackWebhook
     from .slack_webhook_auth import SlackWebhookAuth
     from .slack_webhook_integration import SlackWebhookIntegration
+    from .smallest_ai_api_key_auth import SmallestAiApiKeyAuth
+    from .smallest_ai_model import SmallestAiModel
+    from .smallest_ai_provider_account import SmallestAiProviderAccount
     from .smtp_credentials import SmtpCredentials
+    from .snowflake_config import SnowflakeConfig
     from .snowflake_cortex_integrations import SnowflakeCortexIntegrations
     from .snowflake_cortex_model import SnowflakeCortexModel
     from .snowflake_cortex_pat_token_auth import SnowflakeCortexPatTokenAuth
     from .snowflake_cortex_provider_account import SnowflakeCortexProviderAccount
+    from .snowflake_sql import SnowflakeSql
+    from .snowflake_task_config import SnowflakeTaskConfig
     from .sort_direction import SortDirection
     from .spa_cy_framework import SpaCyFramework
     from .span_attribute_filter import SpanAttributeFilter
@@ -921,16 +998,26 @@ if typing.TYPE_CHECKING:
     from .task_py_spark_build import TaskPySparkBuild
     from .task_python_build import TaskPythonBuild
     from .team import Team
+    from .team_budget_config import TeamBudgetConfig
+    from .team_budget_config_mode import TeamBudgetConfigMode
     from .team_data_access_rule import TeamDataAccessRule
+    from .team_dto import TeamDto
     from .team_manifest import TeamManifest
     from .team_metadata import TeamMetadata
     from .team_owned_by import TeamOwnedBy
+    from .team_subject_row import TeamSubjectRow
+    from .tenant_budget_config import TenantBudgetConfig
+    from .tenant_budget_config_mode import TenantBudgetConfigMode
     from .tensor_flow_framework import TensorFlowFramework
     from .terminate_job_response import TerminateJobResponse
     from .text_content_part import TextContentPart
     from .text_content_part_text import TextContentPartText
     from .tfy_content_moderation_guardrail_config import TfyContentModerationGuardrailConfig
     from .tfy_content_moderation_guardrail_config_config import TfyContentModerationGuardrailConfigConfig
+    from .tfy_managed_mcp_server_manifest import TfyManagedMcpServerManifest
+    from .tfy_managed_mcp_server_o_auth import TfyManagedMcpServerOAuth
+    from .tfy_metadata_guardrail_config import TfyMetadataGuardrailConfig
+    from .tfy_metadata_guardrail_config_config import TfyMetadataGuardrailConfigConfig
     from .tfy_pii_guardrail_config import TfyPiiGuardrailConfig
     from .tfy_pii_guardrail_config_config import TfyPiiGuardrailConfigConfig
     from .tfy_pii_guardrail_config_operation import TfyPiiGuardrailConfigOperation
@@ -955,15 +1042,20 @@ if typing.TYPE_CHECKING:
     from .troj_ai_guardrail_config import TrojAiGuardrailConfig
     from .troj_ai_guardrail_config_config import TrojAiGuardrailConfigConfig
     from .troj_ai_guardrail_config_operation import TrojAiGuardrailConfigOperation
+    from .true_foundry_agent_ask_user_questions_config import TrueFoundryAgentAskUserQuestionsConfig
+    from .true_foundry_agent_compaction_config import TrueFoundryAgentCompactionConfig
+    from .true_foundry_agent_config import TrueFoundryAgentConfig
+    from .true_foundry_agent_context_management_config import TrueFoundryAgentContextManagementConfig
+    from .true_foundry_agent_dynamic_sub_agents_config import TrueFoundryAgentDynamicSubAgentsConfig
+    from .true_foundry_agent_generative_ui_config import TrueFoundryAgentGenerativeUiConfig
+    from .true_foundry_agent_large_tool_response_config import TrueFoundryAgentLargeToolResponseConfig
     from .true_foundry_agent_manifest import TrueFoundryAgentManifest
-    from .true_foundry_agent_manifest_model_params import TrueFoundryAgentManifestModelParams
-    from .true_foundry_agent_manifest_model_params_reasoning_effort import (
-        TrueFoundryAgentManifestModelParamsReasoningEffort,
-    )
-    from .true_foundry_agent_manifest_response_format import TrueFoundryAgentManifestResponseFormat
-    from .true_foundry_agent_manifest_sandbox import TrueFoundryAgentManifestSandbox
     from .true_foundry_agent_mcp_server import TrueFoundryAgentMcpServer
-    from .true_foundry_agent_mcp_tool import TrueFoundryAgentMcpTool
+    from .true_foundry_agent_model import TrueFoundryAgentModel
+    from .true_foundry_agent_model_params import TrueFoundryAgentModelParams
+    from .true_foundry_agent_model_params_reasoning_effort import TrueFoundryAgentModelParamsReasoningEffort
+    from .true_foundry_agent_response_format import TrueFoundryAgentResponseFormat
+    from .true_foundry_agent_sandbox_config import TrueFoundryAgentSandboxConfig
     from .true_foundry_agent_skill import TrueFoundryAgentSkill
     from .true_foundry_agent_user_message import TrueFoundryAgentUserMessage
     from .true_foundry_agent_variable import TrueFoundryAgentVariable
@@ -974,13 +1066,16 @@ if typing.TYPE_CHECKING:
     from .true_foundry_artifact_source import TrueFoundryArtifactSource
     from .true_foundry_dbssm import TrueFoundryDbssm
     from .true_foundry_delete_request_manifest import TrueFoundryDeleteRequestManifest
+    from .true_foundry_delete_response import TrueFoundryDeleteResponse
     from .true_foundry_integrations import TrueFoundryIntegrations
     from .true_foundry_interactive_login import TrueFoundryInteractiveLogin
     from .true_foundry_managed_source import TrueFoundryManagedSource
     from .true_foundry_provider_account import TrueFoundryProviderAccount
+    from .truefoundry_flyte_task_template import TruefoundryFlyteTaskTemplate
     from .ttl_integrations import TtlIntegrations
     from .ttl_provider_account import TtlProviderAccount
     from .ttl_registry import TtlRegistry
+    from .update_run_response import UpdateRunResponse
     from .update_secret_input import UpdateSecretInput
     from .update_user_roles_response import UpdateUserRolesResponse
     from .upgrade_data import UpgradeData
@@ -992,11 +1087,12 @@ if typing.TYPE_CHECKING:
     from .user_message_content_one_item import UserMessageContentOneItem
     from .user_metadata import UserMetadata
     from .user_metadata_tenant_role_managed_by import UserMetadataTenantRoleManagedBy
-    from .user_resource import UserResource
-    from .user_team_info import UserTeamInfo
     from .uv import Uv
     from .validation_error import ValidationError
     from .validation_error_loc_item import ValidationErrorLocItem
+    from .value_constraint import ValueConstraint
+    from .vcs_token_auth_data import VcsTokenAuthData
+    from .vcso_auth_auth_data import VcsoAuthAuthData
     from .vertex_key_file_auth import VertexKeyFileAuth
     from .vertex_key_file_auth_key_file_content import VertexKeyFileAuthKeyFileContent
     from .vertex_model import VertexModel
@@ -1005,6 +1101,7 @@ if typing.TYPE_CHECKING:
     from .vertex_wif_file_auth_key_file_content import VertexWifFileAuthKeyFileContent
     from .virtual_account import VirtualAccount
     from .virtual_account_manifest import VirtualAccountManifest
+    from .virtual_account_manifest_token_type import VirtualAccountManifestTokenType
     from .virtual_account_owned_by import VirtualAccountOwnedBy
     from .virtual_mcp_server_integration import VirtualMcpServerIntegration
     from .virtual_mcp_server_manifest import VirtualMcpServerManifest
@@ -1042,8 +1139,8 @@ if typing.TYPE_CHECKING:
     from .xg_boost_model_schema import XgBoostModelSchema
     from .xg_boost_serialization_format import XgBoostSerializationFormat
 _dynamic_imports: typing.Dict[str, str] = {
+    "A2AAgentSkill": ".a2a_agent_skill",
     "A2AFramework": ".a2a_framework",
-    "Account": ".account",
     "AccountInfo": ".account_info",
     "ActivateUserResponse": ".activate_user_response",
     "AddOnComponentSource": ".add_on_component_source",
@@ -1076,6 +1173,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AlertStatus": ".alert_status",
     "AllDataAccessRule": ".all_data_access_rule",
     "AllDataAccessRuleFiltersItem": ".all_data_access_rule_filters_item",
+    "AllowedValuesConstraint": ".allowed_values_constraint",
     "AmqpInputConfig": ".amqp_input_config",
     "AmqpMetricConfig": ".amqp_metric_config",
     "AmqpOutputConfig": ".amqp_output_config",
@@ -1090,7 +1188,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ApplicationProblem": ".application_problem",
     "ApplicationSet": ".application_set",
     "ApplicationSetComponentsItem": ".application_set_components_item",
+    "ApplicationSummary": ".application_summary",
     "ApplicationType": ".application_type",
+    "AppliesTo": ".applies_to",
+    "AppliesToAggregate": ".applies_to_aggregate",
+    "AppliesToMetadata": ".applies_to_metadata",
+    "AppliesToPerModel": ".applies_to_per_model",
+    "AppliesToPerUser": ".applies_to_per_user",
+    "AppliesToPerVirtualAccount": ".applies_to_per_virtual_account",
     "ApplyMlEntityResponse": ".apply_ml_entity_response",
     "ApplyMlEntityResponseData": ".apply_ml_entity_response_data",
     "Artifact": ".artifact",
@@ -1121,8 +1226,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AwsBedrockGuardrailConfigAuthData": ".aws_bedrock_guardrail_config_auth_data",
     "AwsBedrockGuardrailConfigConfig": ".aws_bedrock_guardrail_config_config",
     "AwsBedrockGuardrailConfigOperation": ".aws_bedrock_guardrail_config_operation",
+    "AwsBedrockMantleIntegrations": ".aws_bedrock_mantle_integrations",
+    "AwsBedrockMantleProviderAccount": ".aws_bedrock_mantle_provider_account",
+    "AwsBedrockMantleProviderAccountAuthData": ".aws_bedrock_mantle_provider_account_auth_data",
     "AwsBedrockProviderAccount": ".aws_bedrock_provider_account",
     "AwsBedrockProviderAccountAuthData": ".aws_bedrock_provider_account_auth_data",
+    "AwsClaudePlatformApiKeyAuth": ".aws_claude_platform_api_key_auth",
+    "AwsClaudePlatformAssumedRoleBasedAuth": ".aws_claude_platform_assumed_role_based_auth",
+    "AwsClaudePlatformIntegrations": ".aws_claude_platform_integrations",
+    "AwsClaudePlatformModel": ".aws_claude_platform_model",
+    "AwsClaudePlatformProviderAccount": ".aws_claude_platform_provider_account",
+    "AwsClaudePlatformProviderAccountAuthData": ".aws_claude_platform_provider_account_auth_data",
     "AwsEcr": ".aws_ecr",
     "AwsEcrAuthData": ".aws_ecr_auth_data",
     "AwsEksIntegration": ".aws_eks_integration",
@@ -1146,6 +1260,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AzureBasicAuth": ".azure_basic_auth",
     "AzureBlobStorage": ".azure_blob_storage",
     "AzureCertificateAuth": ".azure_certificate_auth",
+    "AzureClientSecretAuth": ".azure_client_secret_auth",
     "AzureConnectionStringAuth": ".azure_connection_string_auth",
     "AzureContainerRegistry": ".azure_container_registry",
     "AzureContentSafetyCategory": ".azure_content_safety_category",
@@ -1173,7 +1288,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AzurePromptShieldGuardrailConfigConfig": ".azure_prompt_shield_guardrail_config_config",
     "AzureProviderAccount": ".azure_provider_account",
     "AzureReposIntegration": ".azure_repos_integration",
+    "AzureReposIntegrationAuthData": ".azure_repos_integration_auth_data",
     "AzureVault": ".azure_vault",
+    "AzureWorkloadIdentityAuth": ".azure_workload_identity_auth",
     "BaseArtifactVersion": ".base_artifact_version",
     "BaseArtifactVersionManifest": ".base_artifact_version_manifest",
     "BaseAutoscaling": ".base_autoscaling",
@@ -1190,16 +1307,26 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BasetenModel": ".baseten_model",
     "BasetenProviderAccount": ".baseten_provider_account",
     "BasicAuthCreds": ".basic_auth_creds",
+    "BedrockMantleModel": ".bedrock_mantle_model",
     "BedrockModel": ".bedrock_model",
+    "BitbucketDataCenterIntegration": ".bitbucket_data_center_integration",
     "BitbucketIntegration": ".bitbucket_integration",
+    "BitbucketIntegrationAuthData": ".bitbucket_integration_auth_data",
+    "BitbucketIntegrations": ".bitbucket_integrations",
     "BitbucketProviderAccount": ".bitbucket_provider_account",
     "BlobStorageReference": ".blob_storage_reference",
     "BlueGreen": ".blue_green",
     "BudgetAlert": ".budget_alert",
+    "BudgetAlertSendTo": ".budget_alert_send_to",
     "BudgetConfig": ".budget_config",
     "BudgetLimitUnit": ".budget_limit_unit",
+    "BudgetLimits": ".budget_limits",
     "BudgetRule": ".budget_rule",
+    "BudgetSubjectsTeamScoped": ".budget_subjects_team_scoped",
+    "BudgetSubjectsTenantScoped": ".budget_subjects_tenant_scoped",
     "BudgetWhen": ".budget_when",
+    "BudgetWhenTeamScoped": ".budget_when_team_scoped",
+    "BudgetWhenTenantScoped": ".budget_when_tenant_scoped",
     "Build": ".build",
     "BuildBuildSource": ".build_build_source",
     "BuildBuildSpec": ".build_build_spec",
@@ -1246,6 +1373,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CohereModel": ".cohere_model",
     "CohereProviderAccount": ".cohere_provider_account",
     "Collaborator": ".collaborator",
+    "Columns": ".columns",
     "CommonToolsSettings": ".common_tools_settings",
     "Config": ".config",
     "ContainerTaskConfig": ".container_task_config",
@@ -1256,7 +1384,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateDockerRepositoryResponse": ".create_docker_repository_response",
     "CreateMultiPartUploadRequest": ".create_multi_part_upload_request",
     "CreatePersonalAccessTokenResponse": ".create_personal_access_token_response",
+    "CreateRunResponse": ".create_run_response",
     "CronMetric": ".cron_metric",
+    "CrowdStrikeAidrGuardrailConfig": ".crowd_strike_aidr_guardrail_config",
+    "CrowdStrikeAidrGuardrailConfigConfig": ".crowd_strike_aidr_guardrail_config_config",
+    "CrowdStrikeAidrGuardrailConfigOperation": ".crowd_strike_aidr_guardrail_config_operation",
+    "CrowdStrikeAidrKeyAuth": ".crowd_strike_aidr_key_auth",
     "CustomAgentServerAuth": ".custom_agent_server_auth",
     "CustomBasicAuth": ".custom_basic_auth",
     "CustomBearerAuth": ".custom_bearer_auth",
@@ -1265,6 +1398,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CustomEndpointIntegrations": ".custom_endpoint_integrations",
     "CustomEndpointProviderAccount": ".custom_endpoint_provider_account",
     "CustomEndpointProviderAccountEndpointType": ".custom_endpoint_provider_account_endpoint_type",
+    "CustomEndpointProviderAccountRoutingType": ".custom_endpoint_provider_account_routing_type",
+    "CustomEndpointTargetConfig": ".custom_endpoint_target_config",
     "CustomFramework": ".custom_framework",
     "CustomGuardrailConfig": ".custom_guardrail_config",
     "CustomGuardrailConfigAuthData": ".custom_guardrail_config_auth_data",
@@ -1303,12 +1438,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DeepinfraModel": ".deepinfra_model",
     "DeepinfraProviderAccount": ".deepinfra_provider_account",
     "DeleteApplicationResponse": ".delete_application_response",
+    "DeleteClusterResponse": ".delete_cluster_response",
     "DeleteJobRunResponse": ".delete_job_run_response",
     "DeletePersonalAccessTokenResponse": ".delete_personal_access_token_response",
     "DeleteSecretGroupResponse": ".delete_secret_group_response",
     "DeleteTeamResponse": ".delete_team_response",
     "DeleteUserResponse": ".delete_user_response",
     "DeleteVirtualAccountResponse": ".delete_virtual_account_response",
+    "DeleteWorkspaceResponse": ".delete_workspace_response",
     "Deployment": ".deployment",
     "DeploymentBuild": ".deployment_build",
     "DeploymentManifest": ".deployment_manifest",
@@ -1424,12 +1561,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetEventsResponse": ".get_events_response",
     "GetJobRunResponse": ".get_job_run_response",
     "GetLogsResponse": ".get_logs_response",
+    "GetMetricHistoryResponse": ".get_metric_history_response",
     "GetMlRepoResponse": ".get_ml_repo_response",
     "GetModelResponse": ".get_model_response",
     "GetModelVersionResponse": ".get_model_version_response",
     "GetOrCreatePersonalAccessTokenResponse": ".get_or_create_personal_access_token_response",
     "GetPromptResponse": ".get_prompt_response",
     "GetPromptVersionResponse": ".get_prompt_version_response",
+    "GetRunColumnsResponse": ".get_run_columns_response",
+    "GetRunResponse": ".get_run_response",
     "GetSecretGroupResponse": ".get_secret_group_response",
     "GetSecretResponse": ".get_secret_response",
     "GetSignedUrLsRequest": ".get_signed_ur_ls_request",
@@ -1438,18 +1578,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetTeamPermissionsResponse": ".get_team_permissions_response",
     "GetTeamResponse": ".get_team_response",
     "GetTokenForVirtualAccountResponse": ".get_token_for_virtual_account_response",
-    "GetUserPermissionsResponse": ".get_user_permissions_response",
-    "GetUserResourcesResponse": ".get_user_resources_response",
     "GetUserResponse": ".get_user_response",
-    "GetUserTeamsResponse": ".get_user_teams_response",
     "GetVirtualAccountResponse": ".get_virtual_account_response",
     "GetWorkspaceResponse": ".get_workspace_response",
     "GitHelmRepo": ".git_helm_repo",
     "GitRepositoryExistsResponse": ".git_repository_exists_response",
     "GitSource": ".git_source",
     "GithubIntegration": ".github_integration",
+    "GithubIntegrationAuthData": ".github_integration_auth_data",
     "GithubProviderAccount": ".github_provider_account",
     "GitlabIntegration": ".gitlab_integration",
+    "GitlabIntegrationAuthData": ".gitlab_integration_auth_data",
     "GitlabProviderAccount": ".gitlab_provider_account",
     "GlobalSettings": ".global_settings",
     "GluonFramework": ".gluon_framework",
@@ -1475,6 +1614,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GroqProviderAccount": ".groq_provider_account",
     "GuardrailConfigGroup": ".guardrail_config_group",
     "GuardrailConfigIntegrations": ".guardrail_config_integrations",
+    "GuardrailSettings": ".guardrail_settings",
     "Guardrails": ".guardrails",
     "GuardrailsConfig": ".guardrails_config",
     "GuardrailsRule": ".guardrails_rule",
@@ -1501,11 +1641,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "HuggingfaceArtifactSource": ".huggingface_artifact_source",
     "IChange": ".i_change",
     "IChangeOperation": ".i_change_operation",
+    "IdentityProviderMapping": ".identity_provider_mapping",
     "Image": ".image",
     "ImageCommand": ".image_command",
     "ImageContentPart": ".image_content_part",
     "ImageContentPartImageUrl": ".image_content_part_image_url",
     "ImageContentPartImageUrlUrl": ".image_content_part_image_url_url",
+    "InNotInFilter": ".in_not_in_filter",
     "InNotInOperator": ".in_not_in_operator",
     "InNotInOperatorCondition": ".in_not_in_operator_condition",
     "InferMethodName": ".infer_method_name",
@@ -1543,11 +1685,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Jwt": ".jwt",
     "JwtAuthConfig": ".jwt_auth_config",
     "JwtAuthConfigClaimsItem": ".jwt_auth_config_claims_item",
+    "JwtTokenType": ".jwt_token_type",
     "KafkaInputConfig": ".kafka_input_config",
     "KafkaMetricConfig": ".kafka_metric_config",
     "KafkaOutputConfig": ".kafka_output_config",
     "KafkaSaslAuth": ".kafka_sasl_auth",
     "KerasFramework": ".keras_framework",
+    "KeyPresenceSpec": ".key_presence_spec",
+    "KeySpec": ".key_spec",
+    "KeyValueSpec": ".key_value_spec",
     "Kustomize": ".kustomize",
     "LatencyBasedLoadBalanceTarget": ".latency_based_load_balance_target",
     "LatencyBasedLoadBalancing": ".latency_based_load_balancing",
@@ -1568,6 +1714,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListFilesRequest": ".list_files_request",
     "ListFilesResponse": ".list_files_response",
     "ListJobRunResponse": ".list_job_run_response",
+    "ListMetricHistoryResponse": ".list_metric_history_response",
     "ListMlReposResponse": ".list_ml_repos_response",
     "ListModelVersionsResponse": ".list_model_versions_response",
     "ListModelsResponse": ".list_models_response",
@@ -1576,6 +1723,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListPromptsResponse": ".list_prompts_response",
     "ListSecretGroupResponse": ".list_secret_group_response",
     "ListSecretsResponse": ".list_secrets_response",
+    "ListTeamManagersResponse": ".list_team_managers_response",
+    "ListTeamMembersResponse": ".list_team_members_response",
     "ListTeamsResponse": ".list_teams_response",
     "ListUsersResponse": ".list_users_response",
     "ListVirtualAccountResponse": ".list_virtual_account_response",
@@ -1593,8 +1742,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LoggingModeAlways": ".logging_mode_always",
     "LoggingModeHeaderControlled": ".logging_mode_header_controlled",
     "LoggingModeNever": ".logging_mode_never",
-    "LogsFilterQuery": ".logs_filter_query",
-    "LogsFilterQueryType": ".logs_filter_query_type",
     "LogsResponse": ".logs_response",
     "LogsSearchFilterType": ".logs_search_filter_type",
     "LogsSearchOperatorType": ".logs_search_operator_type",
@@ -1613,6 +1760,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "McpServerOAuth2": ".mcp_server_o_auth2",
     "McpServerOAuth2GrantType": ".mcp_server_o_auth2grant_type",
     "McpServerOAuth2JwtSource": ".mcp_server_o_auth2jwt_source",
+    "McpServerOAuth2ProviderAuth0Settings": ".mcp_server_o_auth2provider_auth0settings",
     "McpServerPassthrough": ".mcp_server_passthrough",
     "McpServerProviderAccount": ".mcp_server_provider_account",
     "McpServerSource": ".mcp_server_source",
@@ -1620,12 +1768,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "McpServerWithFqn": ".mcp_server_with_fqn",
     "McpServerWithUrl": ".mcp_server_with_url",
     "McpTool": ".mcp_tool",
+    "McpToolAnnotations": ".mcp_tool_annotations",
     "McpToolSetting": ".mcp_tool_setting",
     "McpToolTarget": ".mcp_tool_target",
     "McpToolsOperator": ".mcp_tools_operator",
     "McpToolsOperatorCondition": ".mcp_tools_operator_condition",
     "Metadata": ".metadata",
     "Metric": ".metric",
+    "MetricCollection": ".metric_collection",
     "MimeType": ".mime_type",
     "MirrorAction": ".mirror_action",
     "MistralAiIntegrations": ".mistral_ai_integrations",
@@ -1644,9 +1794,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ModelType": ".model_type",
     "ModelVersion": ".model_version",
     "ModelVersionEnvironment": ".model_version_environment",
+    "MsTeamsIntegrations": ".ms_teams_integrations",
+    "MsTeamsProviderAccount": ".ms_teams_provider_account",
+    "MsTeamsWebhook": ".ms_teams_webhook",
+    "MsTeamsWebhookAuth": ".ms_teams_webhook_auth",
+    "MsTeamsWebhookIntegration": ".ms_teams_webhook_integration",
     "MultiPartUpload": ".multi_part_upload",
     "MultiPartUploadResponse": ".multi_part_upload_response",
     "MultiPartUploadStorageProvider": ".multi_part_upload_storage_provider",
+    "NativeSnowflakeFlyteTaskTemplate": ".native_snowflake_flyte_task_template",
     "NatsInputConfig": ".nats_input_config",
     "NatsMetricConfig": ".nats_metric_config",
     "NatsOutputConfig": ".nats_output_config",
@@ -1670,6 +1826,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "NvidiaTimeslicingGpu": ".nvidia_timeslicing_gpu",
     "OAuth2LoginProvider": ".o_auth2login_provider",
     "OciRepo": ".oci_repo",
+    "OcrCostMetric": ".ocr_cost_metric",
+    "OcrCostMetricValue": ".ocr_cost_metric_value",
     "OllamaIntegrations": ".ollama_integrations",
     "OllamaKeyAuth": ".ollama_key_auth",
     "OllamaModel": ".ollama_model",
@@ -1704,6 +1862,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OtelTracesExporterGrpcConfig": ".otel_traces_exporter_grpc_config",
     "OtelTracesExporterHttpConfig": ".otel_traces_exporter_http_config",
     "OtelTracesExporterSpanAttributeFilter": ".otel_traces_exporter_span_attribute_filter",
+    "OverrideLimits": ".override_limits",
     "OwnDataAccessRule": ".own_data_access_rule",
     "OwnedBy": ".owned_by",
     "PaddleFramework": ".paddle_framework",
@@ -1721,11 +1880,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PaloAltoPrismaAirsGuardrailConfigConfig": ".palo_alto_prisma_airs_guardrail_config_config",
     "PaloAltoPrismaAirsGuardrailConfigConfigMode": ".palo_alto_prisma_airs_guardrail_config_config_mode",
     "PaloAltoPrismaAirsKeyAuth": ".palo_alto_prisma_airs_key_auth",
-    "PangeaGuardType": ".pangea_guard_type",
-    "PangeaGuardrailConfig": ".pangea_guardrail_config",
-    "PangeaGuardrailConfigConfig": ".pangea_guardrail_config_config",
-    "PangeaGuardrailConfigOperation": ".pangea_guardrail_config_operation",
-    "PangeaKeyAuth": ".pangea_key_auth",
     "Param": ".param",
     "ParamParamType": ".param_param_type",
     "Parameters": ".parameters",
@@ -1747,14 +1901,23 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PatronusPiiEvaluator": ".patronus_pii_evaluator",
     "PatronusToxicityCriteria": ".patronus_toxicity_criteria",
     "PatronusToxicityEvaluator": ".patronus_toxicity_evaluator",
+    "PerMetadataOverride": ".per_metadata_override",
+    "PerMillionCharactersCostMetric": ".per_million_characters_cost_metric",
+    "PerMillionCharactersCostMetricValue": ".per_million_characters_cost_metric_value",
+    "PerMinuteOfAudioCostMetric": ".per_minute_of_audio_cost_metric",
+    "PerMinuteOfAudioCostMetricValue": ".per_minute_of_audio_cost_metric_value",
+    "PerModelOverride": ".per_model_override",
     "PerThousandEmbeddingTokensCostMetric": ".per_thousand_embedding_tokens_cost_metric",
     "PerThousandTokensCostMetric": ".per_thousand_tokens_cost_metric",
+    "PerUserOverride": ".per_user_override",
+    "PerVirtualAccountOverride": ".per_virtual_account_override",
     "Permissions": ".permissions",
     "PerplexityAiKeyAuth": ".perplexity_ai_key_auth",
     "PerplexityAiModel": ".perplexity_ai_model",
     "PerplexityAiProviderAccount": ".perplexity_ai_provider_account",
     "PerplexityIntegrations": ".perplexity_integrations",
     "PersonalAccessTokenManifest": ".personal_access_token_manifest",
+    "PersonalAccessTokenManifestTokenType": ".personal_access_token_manifest_token_type",
     "Pip": ".pip",
     "Poetry": ".poetry",
     "PolicyActions": ".policy_actions",
@@ -1802,6 +1965,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RateLimitWhen": ".rate_limit_when",
     "Recommendation": ".recommendation",
     "RefusalContentPart": ".refusal_content_part",
+    "RegexConstraint": ".regex_constraint",
     "RegexGuardrailConfig": ".regex_guardrail_config",
     "RegexGuardrailConfigConfig": ".regex_guardrail_config_config",
     "RegexGuardrailConfigOperation": ".regex_guardrail_config_operation",
@@ -1828,6 +1992,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RoleWithResourceResourceType": ".role_with_resource_resource_type",
     "Rolling": ".rolling",
     "RpsMetric": ".rps_metric",
+    "Run": ".run",
+    "RunData": ".run_data",
+    "RunInfo": ".run_info",
+    "RunParam": ".run_param",
+    "RunTag": ".run_tag",
+    "RunTagInput": ".run_tag_input",
     "SagemakerAssumedRoleBasedAuth": ".sagemaker_assumed_role_based_auth",
     "SagemakerModel": ".sagemaker_model",
     "SambaNovaIntegrations": ".samba_nova_integrations",
@@ -1837,6 +2007,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SampleAgentInput": ".sample_agent_input",
     "Schedule": ".schedule",
     "ScheduleConcurrencyPolicy": ".schedule_concurrency_policy",
+    "SearchRunsResponse": ".search_runs_response",
     "Secret": ".secret",
     "SecretDetectionGuardrailConfig": ".secret_detection_guardrail_config",
     "SecretDetectionGuardrailConfigConfig": ".secret_detection_guardrail_config_config",
@@ -1860,9 +2031,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ServiceAutoscalingMetrics": ".service_autoscaling_metrics",
     "ServiceReplicas": ".service_replicas",
     "ServiceRolloutStrategy": ".service_rollout_strategy",
-    "Session": ".session",
-    "SessionAccount": ".session_account",
-    "SessionTeam": ".session_team",
     "SignedUrl": ".signed_url",
     "SklearnFramework": ".sklearn_framework",
     "SklearnModelSchema": ".sklearn_model_schema",
@@ -1876,11 +2044,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SlackWebhook": ".slack_webhook",
     "SlackWebhookAuth": ".slack_webhook_auth",
     "SlackWebhookIntegration": ".slack_webhook_integration",
+    "SmallestAiApiKeyAuth": ".smallest_ai_api_key_auth",
+    "SmallestAiModel": ".smallest_ai_model",
+    "SmallestAiProviderAccount": ".smallest_ai_provider_account",
     "SmtpCredentials": ".smtp_credentials",
+    "SnowflakeConfig": ".snowflake_config",
     "SnowflakeCortexIntegrations": ".snowflake_cortex_integrations",
     "SnowflakeCortexModel": ".snowflake_cortex_model",
     "SnowflakeCortexPatTokenAuth": ".snowflake_cortex_pat_token_auth",
     "SnowflakeCortexProviderAccount": ".snowflake_cortex_provider_account",
+    "SnowflakeSql": ".snowflake_sql",
+    "SnowflakeTaskConfig": ".snowflake_task_config",
     "SortDirection": ".sort_direction",
     "SpaCyFramework": ".spa_cy_framework",
     "SpanAttributeFilter": ".span_attribute_filter",
@@ -1943,16 +2117,26 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TaskPySparkBuild": ".task_py_spark_build",
     "TaskPythonBuild": ".task_python_build",
     "Team": ".team",
+    "TeamBudgetConfig": ".team_budget_config",
+    "TeamBudgetConfigMode": ".team_budget_config_mode",
     "TeamDataAccessRule": ".team_data_access_rule",
+    "TeamDto": ".team_dto",
     "TeamManifest": ".team_manifest",
     "TeamMetadata": ".team_metadata",
     "TeamOwnedBy": ".team_owned_by",
+    "TeamSubjectRow": ".team_subject_row",
+    "TenantBudgetConfig": ".tenant_budget_config",
+    "TenantBudgetConfigMode": ".tenant_budget_config_mode",
     "TensorFlowFramework": ".tensor_flow_framework",
     "TerminateJobResponse": ".terminate_job_response",
     "TextContentPart": ".text_content_part",
     "TextContentPartText": ".text_content_part_text",
     "TfyContentModerationGuardrailConfig": ".tfy_content_moderation_guardrail_config",
     "TfyContentModerationGuardrailConfigConfig": ".tfy_content_moderation_guardrail_config_config",
+    "TfyManagedMcpServerManifest": ".tfy_managed_mcp_server_manifest",
+    "TfyManagedMcpServerOAuth": ".tfy_managed_mcp_server_o_auth",
+    "TfyMetadataGuardrailConfig": ".tfy_metadata_guardrail_config",
+    "TfyMetadataGuardrailConfigConfig": ".tfy_metadata_guardrail_config_config",
     "TfyPiiGuardrailConfig": ".tfy_pii_guardrail_config",
     "TfyPiiGuardrailConfigConfig": ".tfy_pii_guardrail_config_config",
     "TfyPiiGuardrailConfigOperation": ".tfy_pii_guardrail_config_operation",
@@ -1977,13 +2161,20 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TrojAiGuardrailConfig": ".troj_ai_guardrail_config",
     "TrojAiGuardrailConfigConfig": ".troj_ai_guardrail_config_config",
     "TrojAiGuardrailConfigOperation": ".troj_ai_guardrail_config_operation",
+    "TrueFoundryAgentAskUserQuestionsConfig": ".true_foundry_agent_ask_user_questions_config",
+    "TrueFoundryAgentCompactionConfig": ".true_foundry_agent_compaction_config",
+    "TrueFoundryAgentConfig": ".true_foundry_agent_config",
+    "TrueFoundryAgentContextManagementConfig": ".true_foundry_agent_context_management_config",
+    "TrueFoundryAgentDynamicSubAgentsConfig": ".true_foundry_agent_dynamic_sub_agents_config",
+    "TrueFoundryAgentGenerativeUiConfig": ".true_foundry_agent_generative_ui_config",
+    "TrueFoundryAgentLargeToolResponseConfig": ".true_foundry_agent_large_tool_response_config",
     "TrueFoundryAgentManifest": ".true_foundry_agent_manifest",
-    "TrueFoundryAgentManifestModelParams": ".true_foundry_agent_manifest_model_params",
-    "TrueFoundryAgentManifestModelParamsReasoningEffort": ".true_foundry_agent_manifest_model_params_reasoning_effort",
-    "TrueFoundryAgentManifestResponseFormat": ".true_foundry_agent_manifest_response_format",
-    "TrueFoundryAgentManifestSandbox": ".true_foundry_agent_manifest_sandbox",
     "TrueFoundryAgentMcpServer": ".true_foundry_agent_mcp_server",
-    "TrueFoundryAgentMcpTool": ".true_foundry_agent_mcp_tool",
+    "TrueFoundryAgentModel": ".true_foundry_agent_model",
+    "TrueFoundryAgentModelParams": ".true_foundry_agent_model_params",
+    "TrueFoundryAgentModelParamsReasoningEffort": ".true_foundry_agent_model_params_reasoning_effort",
+    "TrueFoundryAgentResponseFormat": ".true_foundry_agent_response_format",
+    "TrueFoundryAgentSandboxConfig": ".true_foundry_agent_sandbox_config",
     "TrueFoundryAgentSkill": ".true_foundry_agent_skill",
     "TrueFoundryAgentUserMessage": ".true_foundry_agent_user_message",
     "TrueFoundryAgentVariable": ".true_foundry_agent_variable",
@@ -1994,13 +2185,16 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TrueFoundryArtifactSource": ".true_foundry_artifact_source",
     "TrueFoundryDbssm": ".true_foundry_dbssm",
     "TrueFoundryDeleteRequestManifest": ".true_foundry_delete_request_manifest",
+    "TrueFoundryDeleteResponse": ".true_foundry_delete_response",
     "TrueFoundryIntegrations": ".true_foundry_integrations",
     "TrueFoundryInteractiveLogin": ".true_foundry_interactive_login",
     "TrueFoundryManagedSource": ".true_foundry_managed_source",
     "TrueFoundryProviderAccount": ".true_foundry_provider_account",
+    "TruefoundryFlyteTaskTemplate": ".truefoundry_flyte_task_template",
     "TtlIntegrations": ".ttl_integrations",
     "TtlProviderAccount": ".ttl_provider_account",
     "TtlRegistry": ".ttl_registry",
+    "UpdateRunResponse": ".update_run_response",
     "UpdateSecretInput": ".update_secret_input",
     "UpdateUserRolesResponse": ".update_user_roles_response",
     "UpgradeData": ".upgrade_data",
@@ -2012,11 +2206,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UserMessageContentOneItem": ".user_message_content_one_item",
     "UserMetadata": ".user_metadata",
     "UserMetadataTenantRoleManagedBy": ".user_metadata_tenant_role_managed_by",
-    "UserResource": ".user_resource",
-    "UserTeamInfo": ".user_team_info",
     "Uv": ".uv",
     "ValidationError": ".validation_error",
     "ValidationErrorLocItem": ".validation_error_loc_item",
+    "ValueConstraint": ".value_constraint",
+    "VcsTokenAuthData": ".vcs_token_auth_data",
+    "VcsoAuthAuthData": ".vcso_auth_auth_data",
     "VertexKeyFileAuth": ".vertex_key_file_auth",
     "VertexKeyFileAuthKeyFileContent": ".vertex_key_file_auth_key_file_content",
     "VertexModel": ".vertex_model",
@@ -2025,6 +2220,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "VertexWifFileAuthKeyFileContent": ".vertex_wif_file_auth_key_file_content",
     "VirtualAccount": ".virtual_account",
     "VirtualAccountManifest": ".virtual_account_manifest",
+    "VirtualAccountManifestTokenType": ".virtual_account_manifest_token_type",
     "VirtualAccountOwnedBy": ".virtual_account_owned_by",
     "VirtualMcpServerIntegration": ".virtual_mcp_server_integration",
     "VirtualMcpServerManifest": ".virtual_mcp_server_manifest",
@@ -2086,8 +2282,8 @@ def __dir__():
 
 
 __all__ = [
+    "A2AAgentSkill",
     "A2AFramework",
-    "Account",
     "AccountInfo",
     "ActivateUserResponse",
     "AddOnComponentSource",
@@ -2120,6 +2316,7 @@ __all__ = [
     "AlertStatus",
     "AllDataAccessRule",
     "AllDataAccessRuleFiltersItem",
+    "AllowedValuesConstraint",
     "AmqpInputConfig",
     "AmqpMetricConfig",
     "AmqpOutputConfig",
@@ -2134,7 +2331,14 @@ __all__ = [
     "ApplicationProblem",
     "ApplicationSet",
     "ApplicationSetComponentsItem",
+    "ApplicationSummary",
     "ApplicationType",
+    "AppliesTo",
+    "AppliesToAggregate",
+    "AppliesToMetadata",
+    "AppliesToPerModel",
+    "AppliesToPerUser",
+    "AppliesToPerVirtualAccount",
     "ApplyMlEntityResponse",
     "ApplyMlEntityResponseData",
     "Artifact",
@@ -2165,8 +2369,17 @@ __all__ = [
     "AwsBedrockGuardrailConfigAuthData",
     "AwsBedrockGuardrailConfigConfig",
     "AwsBedrockGuardrailConfigOperation",
+    "AwsBedrockMantleIntegrations",
+    "AwsBedrockMantleProviderAccount",
+    "AwsBedrockMantleProviderAccountAuthData",
     "AwsBedrockProviderAccount",
     "AwsBedrockProviderAccountAuthData",
+    "AwsClaudePlatformApiKeyAuth",
+    "AwsClaudePlatformAssumedRoleBasedAuth",
+    "AwsClaudePlatformIntegrations",
+    "AwsClaudePlatformModel",
+    "AwsClaudePlatformProviderAccount",
+    "AwsClaudePlatformProviderAccountAuthData",
     "AwsEcr",
     "AwsEcrAuthData",
     "AwsEksIntegration",
@@ -2190,6 +2403,7 @@ __all__ = [
     "AzureBasicAuth",
     "AzureBlobStorage",
     "AzureCertificateAuth",
+    "AzureClientSecretAuth",
     "AzureConnectionStringAuth",
     "AzureContainerRegistry",
     "AzureContentSafetyCategory",
@@ -2217,7 +2431,9 @@ __all__ = [
     "AzurePromptShieldGuardrailConfigConfig",
     "AzureProviderAccount",
     "AzureReposIntegration",
+    "AzureReposIntegrationAuthData",
     "AzureVault",
+    "AzureWorkloadIdentityAuth",
     "BaseArtifactVersion",
     "BaseArtifactVersionManifest",
     "BaseAutoscaling",
@@ -2234,16 +2450,26 @@ __all__ = [
     "BasetenModel",
     "BasetenProviderAccount",
     "BasicAuthCreds",
+    "BedrockMantleModel",
     "BedrockModel",
+    "BitbucketDataCenterIntegration",
     "BitbucketIntegration",
+    "BitbucketIntegrationAuthData",
+    "BitbucketIntegrations",
     "BitbucketProviderAccount",
     "BlobStorageReference",
     "BlueGreen",
     "BudgetAlert",
+    "BudgetAlertSendTo",
     "BudgetConfig",
     "BudgetLimitUnit",
+    "BudgetLimits",
     "BudgetRule",
+    "BudgetSubjectsTeamScoped",
+    "BudgetSubjectsTenantScoped",
     "BudgetWhen",
+    "BudgetWhenTeamScoped",
+    "BudgetWhenTenantScoped",
     "Build",
     "BuildBuildSource",
     "BuildBuildSpec",
@@ -2290,6 +2516,7 @@ __all__ = [
     "CohereModel",
     "CohereProviderAccount",
     "Collaborator",
+    "Columns",
     "CommonToolsSettings",
     "Config",
     "ContainerTaskConfig",
@@ -2300,7 +2527,12 @@ __all__ = [
     "CreateDockerRepositoryResponse",
     "CreateMultiPartUploadRequest",
     "CreatePersonalAccessTokenResponse",
+    "CreateRunResponse",
     "CronMetric",
+    "CrowdStrikeAidrGuardrailConfig",
+    "CrowdStrikeAidrGuardrailConfigConfig",
+    "CrowdStrikeAidrGuardrailConfigOperation",
+    "CrowdStrikeAidrKeyAuth",
     "CustomAgentServerAuth",
     "CustomBasicAuth",
     "CustomBearerAuth",
@@ -2309,6 +2541,8 @@ __all__ = [
     "CustomEndpointIntegrations",
     "CustomEndpointProviderAccount",
     "CustomEndpointProviderAccountEndpointType",
+    "CustomEndpointProviderAccountRoutingType",
+    "CustomEndpointTargetConfig",
     "CustomFramework",
     "CustomGuardrailConfig",
     "CustomGuardrailConfigAuthData",
@@ -2347,12 +2581,14 @@ __all__ = [
     "DeepinfraModel",
     "DeepinfraProviderAccount",
     "DeleteApplicationResponse",
+    "DeleteClusterResponse",
     "DeleteJobRunResponse",
     "DeletePersonalAccessTokenResponse",
     "DeleteSecretGroupResponse",
     "DeleteTeamResponse",
     "DeleteUserResponse",
     "DeleteVirtualAccountResponse",
+    "DeleteWorkspaceResponse",
     "Deployment",
     "DeploymentBuild",
     "DeploymentManifest",
@@ -2468,12 +2704,15 @@ __all__ = [
     "GetEventsResponse",
     "GetJobRunResponse",
     "GetLogsResponse",
+    "GetMetricHistoryResponse",
     "GetMlRepoResponse",
     "GetModelResponse",
     "GetModelVersionResponse",
     "GetOrCreatePersonalAccessTokenResponse",
     "GetPromptResponse",
     "GetPromptVersionResponse",
+    "GetRunColumnsResponse",
+    "GetRunResponse",
     "GetSecretGroupResponse",
     "GetSecretResponse",
     "GetSignedUrLsRequest",
@@ -2482,18 +2721,17 @@ __all__ = [
     "GetTeamPermissionsResponse",
     "GetTeamResponse",
     "GetTokenForVirtualAccountResponse",
-    "GetUserPermissionsResponse",
-    "GetUserResourcesResponse",
     "GetUserResponse",
-    "GetUserTeamsResponse",
     "GetVirtualAccountResponse",
     "GetWorkspaceResponse",
     "GitHelmRepo",
     "GitRepositoryExistsResponse",
     "GitSource",
     "GithubIntegration",
+    "GithubIntegrationAuthData",
     "GithubProviderAccount",
     "GitlabIntegration",
+    "GitlabIntegrationAuthData",
     "GitlabProviderAccount",
     "GlobalSettings",
     "GluonFramework",
@@ -2519,6 +2757,7 @@ __all__ = [
     "GroqProviderAccount",
     "GuardrailConfigGroup",
     "GuardrailConfigIntegrations",
+    "GuardrailSettings",
     "Guardrails",
     "GuardrailsConfig",
     "GuardrailsRule",
@@ -2545,11 +2784,13 @@ __all__ = [
     "HuggingfaceArtifactSource",
     "IChange",
     "IChangeOperation",
+    "IdentityProviderMapping",
     "Image",
     "ImageCommand",
     "ImageContentPart",
     "ImageContentPartImageUrl",
     "ImageContentPartImageUrlUrl",
+    "InNotInFilter",
     "InNotInOperator",
     "InNotInOperatorCondition",
     "InferMethodName",
@@ -2587,11 +2828,15 @@ __all__ = [
     "Jwt",
     "JwtAuthConfig",
     "JwtAuthConfigClaimsItem",
+    "JwtTokenType",
     "KafkaInputConfig",
     "KafkaMetricConfig",
     "KafkaOutputConfig",
     "KafkaSaslAuth",
     "KerasFramework",
+    "KeyPresenceSpec",
+    "KeySpec",
+    "KeyValueSpec",
     "Kustomize",
     "LatencyBasedLoadBalanceTarget",
     "LatencyBasedLoadBalancing",
@@ -2612,6 +2857,7 @@ __all__ = [
     "ListFilesRequest",
     "ListFilesResponse",
     "ListJobRunResponse",
+    "ListMetricHistoryResponse",
     "ListMlReposResponse",
     "ListModelVersionsResponse",
     "ListModelsResponse",
@@ -2620,6 +2866,8 @@ __all__ = [
     "ListPromptsResponse",
     "ListSecretGroupResponse",
     "ListSecretsResponse",
+    "ListTeamManagersResponse",
+    "ListTeamMembersResponse",
     "ListTeamsResponse",
     "ListUsersResponse",
     "ListVirtualAccountResponse",
@@ -2637,8 +2885,6 @@ __all__ = [
     "LoggingModeAlways",
     "LoggingModeHeaderControlled",
     "LoggingModeNever",
-    "LogsFilterQuery",
-    "LogsFilterQueryType",
     "LogsResponse",
     "LogsSearchFilterType",
     "LogsSearchOperatorType",
@@ -2657,6 +2903,7 @@ __all__ = [
     "McpServerOAuth2",
     "McpServerOAuth2GrantType",
     "McpServerOAuth2JwtSource",
+    "McpServerOAuth2ProviderAuth0Settings",
     "McpServerPassthrough",
     "McpServerProviderAccount",
     "McpServerSource",
@@ -2664,12 +2911,14 @@ __all__ = [
     "McpServerWithFqn",
     "McpServerWithUrl",
     "McpTool",
+    "McpToolAnnotations",
     "McpToolSetting",
     "McpToolTarget",
     "McpToolsOperator",
     "McpToolsOperatorCondition",
     "Metadata",
     "Metric",
+    "MetricCollection",
     "MimeType",
     "MirrorAction",
     "MistralAiIntegrations",
@@ -2688,9 +2937,15 @@ __all__ = [
     "ModelType",
     "ModelVersion",
     "ModelVersionEnvironment",
+    "MsTeamsIntegrations",
+    "MsTeamsProviderAccount",
+    "MsTeamsWebhook",
+    "MsTeamsWebhookAuth",
+    "MsTeamsWebhookIntegration",
     "MultiPartUpload",
     "MultiPartUploadResponse",
     "MultiPartUploadStorageProvider",
+    "NativeSnowflakeFlyteTaskTemplate",
     "NatsInputConfig",
     "NatsMetricConfig",
     "NatsOutputConfig",
@@ -2714,6 +2969,8 @@ __all__ = [
     "NvidiaTimeslicingGpu",
     "OAuth2LoginProvider",
     "OciRepo",
+    "OcrCostMetric",
+    "OcrCostMetricValue",
     "OllamaIntegrations",
     "OllamaKeyAuth",
     "OllamaModel",
@@ -2748,6 +3005,7 @@ __all__ = [
     "OtelTracesExporterGrpcConfig",
     "OtelTracesExporterHttpConfig",
     "OtelTracesExporterSpanAttributeFilter",
+    "OverrideLimits",
     "OwnDataAccessRule",
     "OwnedBy",
     "PaddleFramework",
@@ -2765,11 +3023,6 @@ __all__ = [
     "PaloAltoPrismaAirsGuardrailConfigConfig",
     "PaloAltoPrismaAirsGuardrailConfigConfigMode",
     "PaloAltoPrismaAirsKeyAuth",
-    "PangeaGuardType",
-    "PangeaGuardrailConfig",
-    "PangeaGuardrailConfigConfig",
-    "PangeaGuardrailConfigOperation",
-    "PangeaKeyAuth",
     "Param",
     "ParamParamType",
     "Parameters",
@@ -2791,14 +3044,23 @@ __all__ = [
     "PatronusPiiEvaluator",
     "PatronusToxicityCriteria",
     "PatronusToxicityEvaluator",
+    "PerMetadataOverride",
+    "PerMillionCharactersCostMetric",
+    "PerMillionCharactersCostMetricValue",
+    "PerMinuteOfAudioCostMetric",
+    "PerMinuteOfAudioCostMetricValue",
+    "PerModelOverride",
     "PerThousandEmbeddingTokensCostMetric",
     "PerThousandTokensCostMetric",
+    "PerUserOverride",
+    "PerVirtualAccountOverride",
     "Permissions",
     "PerplexityAiKeyAuth",
     "PerplexityAiModel",
     "PerplexityAiProviderAccount",
     "PerplexityIntegrations",
     "PersonalAccessTokenManifest",
+    "PersonalAccessTokenManifestTokenType",
     "Pip",
     "Poetry",
     "PolicyActions",
@@ -2846,6 +3108,7 @@ __all__ = [
     "RateLimitWhen",
     "Recommendation",
     "RefusalContentPart",
+    "RegexConstraint",
     "RegexGuardrailConfig",
     "RegexGuardrailConfigConfig",
     "RegexGuardrailConfigOperation",
@@ -2872,6 +3135,12 @@ __all__ = [
     "RoleWithResourceResourceType",
     "Rolling",
     "RpsMetric",
+    "Run",
+    "RunData",
+    "RunInfo",
+    "RunParam",
+    "RunTag",
+    "RunTagInput",
     "SagemakerAssumedRoleBasedAuth",
     "SagemakerModel",
     "SambaNovaIntegrations",
@@ -2881,6 +3150,7 @@ __all__ = [
     "SampleAgentInput",
     "Schedule",
     "ScheduleConcurrencyPolicy",
+    "SearchRunsResponse",
     "Secret",
     "SecretDetectionGuardrailConfig",
     "SecretDetectionGuardrailConfigConfig",
@@ -2904,9 +3174,6 @@ __all__ = [
     "ServiceAutoscalingMetrics",
     "ServiceReplicas",
     "ServiceRolloutStrategy",
-    "Session",
-    "SessionAccount",
-    "SessionTeam",
     "SignedUrl",
     "SklearnFramework",
     "SklearnModelSchema",
@@ -2920,11 +3187,17 @@ __all__ = [
     "SlackWebhook",
     "SlackWebhookAuth",
     "SlackWebhookIntegration",
+    "SmallestAiApiKeyAuth",
+    "SmallestAiModel",
+    "SmallestAiProviderAccount",
     "SmtpCredentials",
+    "SnowflakeConfig",
     "SnowflakeCortexIntegrations",
     "SnowflakeCortexModel",
     "SnowflakeCortexPatTokenAuth",
     "SnowflakeCortexProviderAccount",
+    "SnowflakeSql",
+    "SnowflakeTaskConfig",
     "SortDirection",
     "SpaCyFramework",
     "SpanAttributeFilter",
@@ -2987,16 +3260,26 @@ __all__ = [
     "TaskPySparkBuild",
     "TaskPythonBuild",
     "Team",
+    "TeamBudgetConfig",
+    "TeamBudgetConfigMode",
     "TeamDataAccessRule",
+    "TeamDto",
     "TeamManifest",
     "TeamMetadata",
     "TeamOwnedBy",
+    "TeamSubjectRow",
+    "TenantBudgetConfig",
+    "TenantBudgetConfigMode",
     "TensorFlowFramework",
     "TerminateJobResponse",
     "TextContentPart",
     "TextContentPartText",
     "TfyContentModerationGuardrailConfig",
     "TfyContentModerationGuardrailConfigConfig",
+    "TfyManagedMcpServerManifest",
+    "TfyManagedMcpServerOAuth",
+    "TfyMetadataGuardrailConfig",
+    "TfyMetadataGuardrailConfigConfig",
     "TfyPiiGuardrailConfig",
     "TfyPiiGuardrailConfigConfig",
     "TfyPiiGuardrailConfigOperation",
@@ -3021,13 +3304,20 @@ __all__ = [
     "TrojAiGuardrailConfig",
     "TrojAiGuardrailConfigConfig",
     "TrojAiGuardrailConfigOperation",
+    "TrueFoundryAgentAskUserQuestionsConfig",
+    "TrueFoundryAgentCompactionConfig",
+    "TrueFoundryAgentConfig",
+    "TrueFoundryAgentContextManagementConfig",
+    "TrueFoundryAgentDynamicSubAgentsConfig",
+    "TrueFoundryAgentGenerativeUiConfig",
+    "TrueFoundryAgentLargeToolResponseConfig",
     "TrueFoundryAgentManifest",
-    "TrueFoundryAgentManifestModelParams",
-    "TrueFoundryAgentManifestModelParamsReasoningEffort",
-    "TrueFoundryAgentManifestResponseFormat",
-    "TrueFoundryAgentManifestSandbox",
     "TrueFoundryAgentMcpServer",
-    "TrueFoundryAgentMcpTool",
+    "TrueFoundryAgentModel",
+    "TrueFoundryAgentModelParams",
+    "TrueFoundryAgentModelParamsReasoningEffort",
+    "TrueFoundryAgentResponseFormat",
+    "TrueFoundryAgentSandboxConfig",
     "TrueFoundryAgentSkill",
     "TrueFoundryAgentUserMessage",
     "TrueFoundryAgentVariable",
@@ -3038,13 +3328,16 @@ __all__ = [
     "TrueFoundryArtifactSource",
     "TrueFoundryDbssm",
     "TrueFoundryDeleteRequestManifest",
+    "TrueFoundryDeleteResponse",
     "TrueFoundryIntegrations",
     "TrueFoundryInteractiveLogin",
     "TrueFoundryManagedSource",
     "TrueFoundryProviderAccount",
+    "TruefoundryFlyteTaskTemplate",
     "TtlIntegrations",
     "TtlProviderAccount",
     "TtlRegistry",
+    "UpdateRunResponse",
     "UpdateSecretInput",
     "UpdateUserRolesResponse",
     "UpgradeData",
@@ -3056,11 +3349,12 @@ __all__ = [
     "UserMessageContentOneItem",
     "UserMetadata",
     "UserMetadataTenantRoleManagedBy",
-    "UserResource",
-    "UserTeamInfo",
     "Uv",
     "ValidationError",
     "ValidationErrorLocItem",
+    "ValueConstraint",
+    "VcsTokenAuthData",
+    "VcsoAuthAuthData",
     "VertexKeyFileAuth",
     "VertexKeyFileAuthKeyFileContent",
     "VertexModel",
@@ -3069,6 +3363,7 @@ __all__ = [
     "VertexWifFileAuthKeyFileContent",
     "VirtualAccount",
     "VirtualAccountManifest",
+    "VirtualAccountManifestTokenType",
     "VirtualAccountOwnedBy",
     "VirtualMcpServerIntegration",
     "VirtualMcpServerManifest",

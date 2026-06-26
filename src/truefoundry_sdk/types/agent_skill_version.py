@@ -7,6 +7,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .agent_skill_manifest import AgentSkillManifest
 from .subject import Subject
+from .usage_code_snippet import UsageCodeSnippet
 
 
 class AgentSkillVersion(UniversalBaseModel):
@@ -52,6 +53,11 @@ class AgentSkillVersion(UniversalBaseModel):
     agent_skill_id: str = pydantic.Field()
     """
     ID of the parent agent skill artifact that this version belongs to
+    """
+
+    usage_code_snippets: typing.Optional[typing.List[UsageCodeSnippet]] = pydantic.Field(default=None)
+    """
+    Code snippets demonstrating how to download or use this agent skill version
     """
 
     if IS_PYDANTIC_V2:

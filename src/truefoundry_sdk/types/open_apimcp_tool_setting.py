@@ -4,6 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .mcp_tool_annotations import McpToolAnnotations
 from .open_apimcp_tool_setting_method import OpenApimcpToolSettingMethod
 
 
@@ -31,6 +32,8 @@ class OpenApimcpToolSetting(UniversalBaseModel):
     """
     Describe what this tool does. This helps AI models understand when to use it.
     """
+
+    annotations: typing.Optional[McpToolAnnotations] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

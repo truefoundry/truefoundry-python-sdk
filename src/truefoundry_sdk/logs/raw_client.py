@@ -24,9 +24,9 @@ class RawLogsClient:
     def get(
         self,
         *,
-        start_ts: typing.Optional[int] = None,
-        end_ts: typing.Optional[int] = None,
-        limit: typing.Optional[int] = None,
+        start_ts: typing.Optional[str] = None,
+        end_ts: typing.Optional[str] = None,
+        limit: typing.Optional[int] = 5000,
         direction: typing.Optional[LogsSortingDirection] = None,
         num_logs_to_ignore: typing.Optional[int] = None,
         application_id: typing.Optional[str] = None,
@@ -44,60 +44,60 @@ class RawLogsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetLogsResponse]:
         """
-        Fetch logs for various workload components, including Services, Jobs, Workflows, Job Runs, and Pods. Logs are filtered based on the provided query parameters.
+        Get runtime logs (stdout/stderr) emitted by the pods of a deployed application.
 
         Parameters
         ----------
-        start_ts : typing.Optional[int]
+        start_ts : typing.Optional[str]
             Start timestamp for querying logs, in nanoseconds from the Unix epoch.
 
-        end_ts : typing.Optional[int]
+        end_ts : typing.Optional[str]
             End timestamp for querying logs, in nanoseconds from the Unix epoch.
 
         limit : typing.Optional[int]
-            Max number of log lines to fetch
+            Maximum number of log lines to fetch.
 
         direction : typing.Optional[LogsSortingDirection]
-            Direction of sorting logs. Can be `asc` or `desc`
+            Direction of sorting logs by timestamp.
 
         num_logs_to_ignore : typing.Optional[int]
-            Number of logs corresponding to the starting timestamp to be ignored.
+            Number of log lines at the start timestamp to skip.
 
         application_id : typing.Optional[str]
-            Application ID
+            Unique identifier of the application. Either applicationId or applicationFqn must be provided.
 
         application_fqn : typing.Optional[str]
-            Application FQN
+            FQN of the application. Either applicationId or applicationFqn must be provided.
 
         deployment_id : typing.Optional[str]
-            Deployment ID
+            Unique identifier of the deployment.
 
         job_run_name : typing.Optional[str]
-            Name of the Job Run for which to fetch logs.
+            Name of the job run whose logs to fetch.
 
         pod_name : typing.Optional[str]
-            Name of Pod for which to fetch logs.
+            Name of a single pod whose logs to fetch. Cannot be used together with podNames or podNamesRegex.
 
         container_name : typing.Optional[str]
-            Name of the Container for which to fetch logs.
+            Name of the container whose logs to fetch.
 
         pod_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            List of pod names for which to fetch logs.
+            List of pod names whose logs to fetch. Cannot be used together with podName or podNamesRegex.
 
         pod_names_regex : typing.Optional[str]
-            Regex pattern for pod names to fetch logs.
+            Regex pattern matching pod names whose logs to fetch. Cannot be used together with podName or podNames.
 
         search_filters : typing.Optional[str]
-            JSON string containing array of search filters with string, type and operator
+            JSON-encoded array of search filters; each item is `{ string, type, operator }`. Takes precedence over `searchString` when provided.
 
         search_string : typing.Optional[str]
-            String that needs to be matched
+            Substring or regex to match against log content. Used when `searchFilters` is not provided.
 
         search_type : typing.Optional[LogsSearchFilterType]
-            Query filter type, `regex` `substring` `ignore_case_substring`
+            How `searchString` should be matched against log content.
 
         search_operator : typing.Optional[LogsSearchOperatorType]
-            Comparison operator for filter. `equal` or `not_equal`
+            Comparison operator applied to the `searchString` match.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -105,7 +105,7 @@ class RawLogsClient:
         Returns
         -------
         HttpResponse[GetLogsResponse]
-            Successfully retrieved logs for the workload
+            Logs matching the query parameters.
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/svc/v1/logs",
@@ -169,9 +169,9 @@ class AsyncRawLogsClient:
     async def get(
         self,
         *,
-        start_ts: typing.Optional[int] = None,
-        end_ts: typing.Optional[int] = None,
-        limit: typing.Optional[int] = None,
+        start_ts: typing.Optional[str] = None,
+        end_ts: typing.Optional[str] = None,
+        limit: typing.Optional[int] = 5000,
         direction: typing.Optional[LogsSortingDirection] = None,
         num_logs_to_ignore: typing.Optional[int] = None,
         application_id: typing.Optional[str] = None,
@@ -189,60 +189,60 @@ class AsyncRawLogsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetLogsResponse]:
         """
-        Fetch logs for various workload components, including Services, Jobs, Workflows, Job Runs, and Pods. Logs are filtered based on the provided query parameters.
+        Get runtime logs (stdout/stderr) emitted by the pods of a deployed application.
 
         Parameters
         ----------
-        start_ts : typing.Optional[int]
+        start_ts : typing.Optional[str]
             Start timestamp for querying logs, in nanoseconds from the Unix epoch.
 
-        end_ts : typing.Optional[int]
+        end_ts : typing.Optional[str]
             End timestamp for querying logs, in nanoseconds from the Unix epoch.
 
         limit : typing.Optional[int]
-            Max number of log lines to fetch
+            Maximum number of log lines to fetch.
 
         direction : typing.Optional[LogsSortingDirection]
-            Direction of sorting logs. Can be `asc` or `desc`
+            Direction of sorting logs by timestamp.
 
         num_logs_to_ignore : typing.Optional[int]
-            Number of logs corresponding to the starting timestamp to be ignored.
+            Number of log lines at the start timestamp to skip.
 
         application_id : typing.Optional[str]
-            Application ID
+            Unique identifier of the application. Either applicationId or applicationFqn must be provided.
 
         application_fqn : typing.Optional[str]
-            Application FQN
+            FQN of the application. Either applicationId or applicationFqn must be provided.
 
         deployment_id : typing.Optional[str]
-            Deployment ID
+            Unique identifier of the deployment.
 
         job_run_name : typing.Optional[str]
-            Name of the Job Run for which to fetch logs.
+            Name of the job run whose logs to fetch.
 
         pod_name : typing.Optional[str]
-            Name of Pod for which to fetch logs.
+            Name of a single pod whose logs to fetch. Cannot be used together with podNames or podNamesRegex.
 
         container_name : typing.Optional[str]
-            Name of the Container for which to fetch logs.
+            Name of the container whose logs to fetch.
 
         pod_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            List of pod names for which to fetch logs.
+            List of pod names whose logs to fetch. Cannot be used together with podName or podNamesRegex.
 
         pod_names_regex : typing.Optional[str]
-            Regex pattern for pod names to fetch logs.
+            Regex pattern matching pod names whose logs to fetch. Cannot be used together with podName or podNames.
 
         search_filters : typing.Optional[str]
-            JSON string containing array of search filters with string, type and operator
+            JSON-encoded array of search filters; each item is `{ string, type, operator }`. Takes precedence over `searchString` when provided.
 
         search_string : typing.Optional[str]
-            String that needs to be matched
+            Substring or regex to match against log content. Used when `searchFilters` is not provided.
 
         search_type : typing.Optional[LogsSearchFilterType]
-            Query filter type, `regex` `substring` `ignore_case_substring`
+            How `searchString` should be matched against log content.
 
         search_operator : typing.Optional[LogsSearchOperatorType]
-            Comparison operator for filter. `equal` or `not_equal`
+            Comparison operator applied to the `searchString` match.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -250,7 +250,7 @@ class AsyncRawLogsClient:
         Returns
         -------
         AsyncHttpResponse[GetLogsResponse]
-            Successfully retrieved logs for the workload
+            Logs matching the query parameters.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/svc/v1/logs",
