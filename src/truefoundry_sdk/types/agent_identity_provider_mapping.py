@@ -4,22 +4,21 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .notification_target import NotificationTarget
 
 
-class BudgetAlert(UniversalBaseModel):
+class AgentIdentityProviderMapping(UniversalBaseModel):
     """
-    Budget Alert
-    """
-
-    thresholds: typing.List[float] = pydantic.Field()
-    """
-    List of usage percentages (0-100) at which alerts should be triggered. Default thresholds are [75, 90, 95, 100].
+    Configuration for mapping IdP claim values to this agent identity
     """
 
-    notification_target: typing.List[NotificationTarget] = pydantic.Field()
+    identity_provider: str = pydantic.Field()
     """
-    Select where to send budget alert notifications
+    Name of the external identity provider
+    """
+
+    value: str = pydantic.Field()
+    """
+    Claim value that should resolve to this agent identity
     """
 
     if IS_PYDANTIC_V2:

@@ -1072,6 +1072,7 @@ client.teams.list(
     limit=10,
     offset=0,
     type=TeamsListRequestType.TEAM,
+    role="manager",
     attributes=[
         "attributes"
     ],
@@ -1108,6 +1109,14 @@ client.teams.list(
 <dd>
 
 **type:** `typing.Optional[TeamsListRequestType]` — Filter teams by type.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**role:** `typing.Optional[typing.Literal]` — Filter to teams where the caller holds this role. `manager` returns teams the caller can manage (team managers and admins).
     
 </dd>
 </dl>
@@ -6617,225 +6626,6 @@ client.alerts.list(
 </dl>
 </details>
 
-## Logs
-<details><summary><code>client.logs.<a href="src/truefoundry_sdk/logs/client.py">get</a>(...) -> GetLogsResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get runtime logs (stdout/stderr) emitted by the pods of a deployed application.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry, LogsSortingDirection, LogsSearchFilterType, LogsSearchOperatorType
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.logs.get(
-    start_ts="1779262323000000000",
-    end_ts="1779348723000000000",
-    limit=1,
-    direction=LogsSortingDirection.ASC,
-    num_logs_to_ignore=1,
-    application_id="applicationId",
-    application_fqn="applicationFqn",
-    deployment_id="deploymentId",
-    job_run_name="jobRunName",
-    pod_name="podName",
-    container_name="containerName",
-    pod_names=[
-        "podNames"
-    ],
-    pod_names_regex="podNamesRegex",
-    search_filters="[{\"string\":\"error\",\"type\":\"substring\",\"operator\":\"equal\"}]",
-    search_string="searchString",
-    search_type=LogsSearchFilterType.REGEX,
-    search_operator=LogsSearchOperatorType.EQUAL,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**start_ts:** `typing.Optional[str]` — Start timestamp for querying logs, in nanoseconds from the Unix epoch.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**end_ts:** `typing.Optional[str]` — End timestamp for querying logs, in nanoseconds from the Unix epoch.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**limit:** `typing.Optional[int]` — Maximum number of log lines to fetch.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**direction:** `typing.Optional[LogsSortingDirection]` — Direction of sorting logs by timestamp.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**num_logs_to_ignore:** `typing.Optional[int]` — Number of log lines at the start timestamp to skip.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**application_id:** `typing.Optional[str]` — Unique identifier of the application. Either applicationId or applicationFqn must be provided.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**application_fqn:** `typing.Optional[str]` — FQN of the application. Either applicationId or applicationFqn must be provided.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**deployment_id:** `typing.Optional[str]` — Unique identifier of the deployment.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**job_run_name:** `typing.Optional[str]` — Name of the job run whose logs to fetch.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**pod_name:** `typing.Optional[str]` — Name of a single pod whose logs to fetch. Cannot be used together with podNames or podNamesRegex.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**container_name:** `typing.Optional[str]` — Name of the container whose logs to fetch.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**pod_names:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — List of pod names whose logs to fetch. Cannot be used together with podName or podNamesRegex.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**pod_names_regex:** `typing.Optional[str]` — Regex pattern matching pod names whose logs to fetch. Cannot be used together with podName or podNames.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**search_filters:** `typing.Optional[str]` — JSON-encoded array of search filters; each item is `{ string, type, operator }`. Takes precedence over `searchString` when provided.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**search_string:** `typing.Optional[str]` — Substring or regex to match against log content. Used when `searchFilters` is not provided.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**search_type:** `typing.Optional[LogsSearchFilterType]` — How `searchString` should be matched against log content.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**search_operator:** `typing.Optional[LogsSearchOperatorType]` — Comparison operator applied to the `searchString` match.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## MlRepos
 <details><summary><code>client.ml_repos.<a href="src/truefoundry_sdk/ml_repos/client.py">create_or_update</a>(...) -> GetMlRepoResponse</code></summary>
 <dl>
@@ -7161,8 +6951,8 @@ client.ml_repos.list(
 </dl>
 </details>
 
-## Runs
-<details><summary><code>client.runs.<a href="src/truefoundry_sdk/runs/client.py">create</a>(...) -> CreateRunResponse</code></summary>
+## Logs
+<details><summary><code>client.logs.<a href="src/truefoundry_sdk/logs/client.py">get</a>(...) -> GetLogsResponse</code></summary>
 <dl>
 <dd>
 
@@ -7174,7 +6964,7 @@ client.ml_repos.list(
 <dl>
 <dd>
 
-Create a new run within an ML Repo.
+Get runtime logs (stdout/stderr) emitted by the pods of a deployed application.
 </dd>
 </dl>
 </dd>
@@ -7189,16 +6979,33 @@ Create a new run within an ML Repo.
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
+from truefoundry_sdk import TrueFoundry, LogsSortingDirection, LogsSearchFilterType, LogsSearchOperatorType
 
 client = TrueFoundry(
     api_key="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.runs.create(
-    experiment_id="experiment_id",
-    name="name",
+client.logs.get(
+    start_ts="1779262323000000000",
+    end_ts="1779348723000000000",
+    limit=1,
+    direction=LogsSortingDirection.ASC,
+    num_logs_to_ignore=1,
+    application_id="applicationId",
+    application_fqn="applicationFqn",
+    deployment_id="deploymentId",
+    job_run_name="jobRunName",
+    pod_name="podName",
+    container_name="containerName",
+    pod_names=[
+        "podNames"
+    ],
+    pod_names_regex="podNamesRegex",
+    search_filters="[{\"string\":\"error\",\"type\":\"substring\",\"operator\":\"equal\"}]",
+    search_string="searchString",
+    search_type=LogsSearchFilterType.REGEX,
+    search_operator=LogsSearchOperatorType.EQUAL,
 )
 
 ```
@@ -7215,7 +7022,7 @@ client.runs.create(
 <dl>
 <dd>
 
-**experiment_id:** `str` — System-generated unique identifier for the ML Repo.
+**start_ts:** `typing.Optional[str]` — Start timestamp for querying logs, in nanoseconds from the Unix epoch.
     
 </dd>
 </dl>
@@ -7223,7 +7030,7 @@ client.runs.create(
 <dl>
 <dd>
 
-**name:** `str` — Human-readable name of the run.
+**end_ts:** `typing.Optional[str]` — End timestamp for querying logs, in nanoseconds from the Unix epoch.
     
 </dd>
 </dl>
@@ -7231,7 +7038,7 @@ client.runs.create(
 <dl>
 <dd>
 
-**start_time:** `typing.Optional[float]` — Unix timestamp in milliseconds when the run started. Defaults to the current time.
+**limit:** `typing.Optional[int]` — Maximum number of log lines to fetch.
     
 </dd>
 </dl>
@@ -7239,7 +7046,7 @@ client.runs.create(
 <dl>
 <dd>
 
-**tags:** `typing.Optional[typing.List[RunTagInput]]` — Initial tags to set on the run.
+**direction:** `typing.Optional[LogsSortingDirection]` — Direction of sorting logs by timestamp.
     
 </dd>
 </dl>
@@ -7247,7 +7054,7 @@ client.runs.create(
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Description of the run.
+**num_logs_to_ignore:** `typing.Optional[int]` — Number of log lines at the start timestamp to skip.
     
 </dd>
 </dl>
@@ -7255,71 +7062,7 @@ client.runs.create(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.runs.<a href="src/truefoundry_sdk/runs/client.py">get_columns</a>(...) -> GetRunColumnsResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List distinct metric, parameter, and tag keys for runs in an ML Repo.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.runs.get_columns(
-    experiment_id="experiment_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**experiment_id:** `str` — System-generated unique identifier for the ML Repo.
+**application_id:** `typing.Optional[str]` — Unique identifier of the application. Either applicationId or applicationFqn must be provided.
     
 </dd>
 </dl>
@@ -7327,71 +7070,7 @@ client.runs.get_columns(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.runs.<a href="src/truefoundry_sdk/runs/client.py">get</a>(...) -> GetRunResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get metadata, metrics, params, and tags for a run.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.runs.get(
-    id="id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `str` — System-generated unique identifier for the run.
+**application_fqn:** `typing.Optional[str]` — FQN of the application. Either applicationId or applicationFqn must be provided.
     
 </dd>
 </dl>
@@ -7399,71 +7078,7 @@ client.runs.get(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.runs.<a href="src/truefoundry_sdk/runs/client.py">update</a>(...) -> UpdateRunResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update run status, end time, or description.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.runs.update(
-    id="id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `str` — System-generated unique identifier for the run.
+**deployment_id:** `typing.Optional[str]` — Unique identifier of the deployment.
     
 </dd>
 </dl>
@@ -7471,7 +7086,7 @@ client.runs.update(
 <dl>
 <dd>
 
-**status:** `typing.Optional[str]` — Updated status of the run (e.g. RUNNING, FINISHED, FAILED).
+**job_run_name:** `typing.Optional[str]` — Name of the job run whose logs to fetch.
     
 </dd>
 </dl>
@@ -7479,7 +7094,7 @@ client.runs.update(
 <dl>
 <dd>
 
-**end_time:** `typing.Optional[float]` — Unix timestamp in milliseconds when the run ended.
+**pod_name:** `typing.Optional[str]` — Name of a single pod whose logs to fetch. Cannot be used together with podNames or podNamesRegex.
     
 </dd>
 </dl>
@@ -7487,7 +7102,7 @@ client.runs.update(
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Updated description of the run.
+**container_name:** `typing.Optional[str]` — Name of the container whose logs to fetch.
     
 </dd>
 </dl>
@@ -7495,71 +7110,7 @@ client.runs.update(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.runs.<a href="src/truefoundry_sdk/runs/client.py">delete</a>(...) -> EmptyResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Permanently delete a run and its metadata.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.runs.delete(
-    id="id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `str` — System-generated unique identifier for the run.
+**pod_names:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — List of pod names whose logs to fetch. Cannot be used together with podName or podNamesRegex.
     
 </dd>
 </dl>
@@ -7567,69 +7118,7 @@ client.runs.delete(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.runs.<a href="src/truefoundry_sdk/runs/client.py">search</a>(...) -> SearchRunsResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Search runs across ML Repos with optional filters.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.runs.search()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**experiment_ids:** `typing.Optional[typing.List[str]]` — List of ML Repo experiment IDs to search over.
+**pod_names_regex:** `typing.Optional[str]` — Regex pattern matching pod names whose logs to fetch. Cannot be used together with podName or podNames.
     
 </dd>
 </dl>
@@ -7637,7 +7126,7 @@ client.runs.search()
 <dl>
 <dd>
 
-**filter:** `typing.Optional[str]` — Filter expression over params, metrics, and tags. Supports SQL-like comparisons (e.g. metrics.rmse < 1 and params.model_class = "LogisticRegression").
+**search_filters:** `typing.Optional[str]` — JSON-encoded array of search filters; each item is `{ string, type, operator }`. Takes precedence over `searchString` when provided.
     
 </dd>
 </dl>
@@ -7645,7 +7134,7 @@ client.runs.search()
 <dl>
 <dd>
 
-**run_view_type:** `typing.Optional[str]` — Whether to return active only, deleted only, or all runs.
+**search_string:** `typing.Optional[str]` — Substring or regex to match against log content. Used when `searchFilters` is not provided.
     
 </dd>
 </dl>
@@ -7653,7 +7142,7 @@ client.runs.search()
 <dl>
 <dd>
 
-**max_results:** `typing.Optional[float]` — Maximum number of runs to return.
+**search_type:** `typing.Optional[LogsSearchFilterType]` — How `searchString` should be matched against log content.
     
 </dd>
 </dl>
@@ -7661,832 +7150,7 @@ client.runs.search()
 <dl>
 <dd>
 
-**order_by:** `typing.Optional[typing.List[str]]` — Sort order for results (e.g. metrics.accuracy DESC, params.lr ASC).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page_token:** `typing.Optional[str]` — Token for fetching the next page of results.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**offset:** `typing.Optional[float]` — Zero-based offset for pagination.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**fqn:** `typing.Optional[str]` — Exact FQN lookup.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `typing.Optional[str]` — Run name lookup within experiment.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**experiment_id:** `typing.Optional[str]` — System-generated unique identifier for the ML Repo.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**ml_repo_name:** `typing.Optional[str]` — ML Repo name when resolving by run name.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.runs.<a href="src/truefoundry_sdk/runs/client.py">archive</a>(...) -> EmptyResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Soft-delete a run.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.runs.archive(
-    id="id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `str` — System-generated unique identifier for the run.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.runs.<a href="src/truefoundry_sdk/runs/client.py">restore</a>(...) -> EmptyResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Restore an archived run.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.runs.restore(
-    id="id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `str` — System-generated unique identifier for the run.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.runs.<a href="src/truefoundry_sdk/runs/client.py">get_metric_history</a>(...) -> GetMetricHistoryResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get full time-series history for a metric key on a run.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.runs.get_metric_history(
-    id="id",
-    metric_key="metric_key",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `str` — System-generated unique identifier for the run.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**metric_key:** `str` — Metric key (may contain slashes).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.runs.<a href="src/truefoundry_sdk/runs/client.py">list_metric_history</a>(...) -> ListMetricHistoryResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List metric histories for a run, optionally filtered by keys and step.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.runs.list_metric_history(
-    id="id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `str` — System-generated unique identifier for the run.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**metric_keys:** `typing.Optional[typing.List[str]]` — Metric keys to filter by. When omitted, returns all metric keys for the run.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**step:** `typing.Optional[float]` — Training step to filter metric history by.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.runs.<a href="src/truefoundry_sdk/runs/client.py">log_metric</a>(...) -> EmptyResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Log a metric for a run.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.runs.log_metric(
-    id="id",
-    key="key",
-    value=1.1,
-    timestamp=1.1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `str` — System-generated unique identifier for the run.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**key:** `str` — Name of the metric.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**value:** `float` — Numeric value of the metric.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**timestamp:** `float` — Unix timestamp in milliseconds when the metric was logged.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**step:** `typing.Optional[float]` — Training step at which to log the metric.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.runs.<a href="src/truefoundry_sdk/runs/client.py">log_parameter</a>(...) -> EmptyResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Log a parameter for a run.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.runs.log_parameter(
-    id="id",
-    key="key",
-    value="value",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `str` — System-generated unique identifier for the run.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**key:** `str` — Name of the parameter.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**value:** `str` — String value of the parameter.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.runs.<a href="src/truefoundry_sdk/runs/client.py">set_tag</a>(...) -> EmptyResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Set a tag on a run.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.runs.set_tag(
-    id="id",
-    key="key",
-    value="value",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `str` — System-generated unique identifier for the run.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**key:** `str` — Name of the tag.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**value:** `str` — String value of the tag.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.runs.<a href="src/truefoundry_sdk/runs/client.py">delete_tag</a>(...) -> EmptyResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete a tag from a run.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.runs.delete_tag(
-    id="id",
-    key="key",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `str` — System-generated unique identifier for the run.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**key:** `str` — Name of the tag to delete.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.runs.<a href="src/truefoundry_sdk/runs/client.py">log_batch</a>(...) -> EmptyResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Log a batch of metrics, params, and tags for a run.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.runs.log_batch(
-    id="id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `str` — System-generated unique identifier for the run.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**metrics:** `typing.Optional[typing.List[Metric]]` — Metrics to log for the run.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**params:** `typing.Optional[typing.List[RunParam]]` — Parameters to log for the run.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tags:** `typing.Optional[typing.List[RunTag]]` — Tags to set on the run.
+**search_operator:** `typing.Optional[LogsSearchOperatorType]` — Comparison operator applied to the `searchString` match.
     
 </dd>
 </dl>

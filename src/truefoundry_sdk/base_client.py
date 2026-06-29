@@ -38,7 +38,6 @@ if typing.TYPE_CHECKING:
     from .personal_access_tokens.client import AsyncPersonalAccessTokensClient, PersonalAccessTokensClient
     from .prompt_versions.client import AsyncPromptVersionsClient, PromptVersionsClient
     from .prompts.client import AsyncPromptsClient, PromptsClient
-    from .runs.client import AsyncRunsClient, RunsClient
     from .secret_groups.client import AsyncSecretGroupsClient, SecretGroupsClient
     from .secrets.client import AsyncSecretsClient, SecretsClient
     from .teams.client import AsyncTeamsClient, TeamsClient
@@ -130,9 +129,8 @@ class BaseTrueFoundry:
         self._secret_groups: typing.Optional[SecretGroupsClient] = None
         self._events: typing.Optional[EventsClient] = None
         self._alerts: typing.Optional[AlertsClient] = None
-        self._logs: typing.Optional[LogsClient] = None
         self._ml_repos: typing.Optional[MlReposClient] = None
-        self._runs: typing.Optional[RunsClient] = None
+        self._logs: typing.Optional[LogsClient] = None
         self._traces: typing.Optional[TracesClient] = None
         self._artifacts: typing.Optional[ArtifactsClient] = None
         self._prompts: typing.Optional[PromptsClient] = None
@@ -377,14 +375,6 @@ class BaseTrueFoundry:
         return self._alerts
 
     @property
-    def logs(self):
-        if self._logs is None:
-            from .logs.client import LogsClient  # noqa: E402
-
-            self._logs = LogsClient(client_wrapper=self._client_wrapper)
-        return self._logs
-
-    @property
     def ml_repos(self):
         if self._ml_repos is None:
             from .ml_repos.client import MlReposClient  # noqa: E402
@@ -393,12 +383,12 @@ class BaseTrueFoundry:
         return self._ml_repos
 
     @property
-    def runs(self):
-        if self._runs is None:
-            from .runs.client import RunsClient  # noqa: E402
+    def logs(self):
+        if self._logs is None:
+            from .logs.client import LogsClient  # noqa: E402
 
-            self._runs = RunsClient(client_wrapper=self._client_wrapper)
-        return self._runs
+            self._logs = LogsClient(client_wrapper=self._client_wrapper)
+        return self._logs
 
     @property
     def traces(self):
@@ -582,9 +572,8 @@ class AsyncBaseTrueFoundry:
         self._secret_groups: typing.Optional[AsyncSecretGroupsClient] = None
         self._events: typing.Optional[AsyncEventsClient] = None
         self._alerts: typing.Optional[AsyncAlertsClient] = None
-        self._logs: typing.Optional[AsyncLogsClient] = None
         self._ml_repos: typing.Optional[AsyncMlReposClient] = None
-        self._runs: typing.Optional[AsyncRunsClient] = None
+        self._logs: typing.Optional[AsyncLogsClient] = None
         self._traces: typing.Optional[AsyncTracesClient] = None
         self._artifacts: typing.Optional[AsyncArtifactsClient] = None
         self._prompts: typing.Optional[AsyncPromptsClient] = None
@@ -845,14 +834,6 @@ class AsyncBaseTrueFoundry:
         return self._alerts
 
     @property
-    def logs(self):
-        if self._logs is None:
-            from .logs.client import AsyncLogsClient  # noqa: E402
-
-            self._logs = AsyncLogsClient(client_wrapper=self._client_wrapper)
-        return self._logs
-
-    @property
     def ml_repos(self):
         if self._ml_repos is None:
             from .ml_repos.client import AsyncMlReposClient  # noqa: E402
@@ -861,12 +842,12 @@ class AsyncBaseTrueFoundry:
         return self._ml_repos
 
     @property
-    def runs(self):
-        if self._runs is None:
-            from .runs.client import AsyncRunsClient  # noqa: E402
+    def logs(self):
+        if self._logs is None:
+            from .logs.client import AsyncLogsClient  # noqa: E402
 
-            self._runs = AsyncRunsClient(client_wrapper=self._client_wrapper)
-        return self._runs
+            self._logs = AsyncLogsClient(client_wrapper=self._client_wrapper)
+        return self._logs
 
     @property
     def traces(self):

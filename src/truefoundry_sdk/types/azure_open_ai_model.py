@@ -39,7 +39,7 @@ class AzureOpenAiModel(UniversalBaseModel):
     The foundation model identifier (e.g., gpt-4o-2024-11-20)
     """
 
-    deployment_type: AzureOpenAiModelDeploymentType = pydantic.Field()
+    deployment_type: typing.Optional[AzureOpenAiModelDeploymentType] = pydantic.Field(default=None)
     """
     Global: worldwide processing; Data zone (US): US data zone processing; Data zone (EU): EU data zone processing; Standard: single-region processing
     """

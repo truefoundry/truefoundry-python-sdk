@@ -4,10 +4,11 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .budget_v2alert_send_to import BudgetV2AlertSendTo
 from .notification_target import NotificationTarget
 
 
-class BudgetAlert(UniversalBaseModel):
+class BudgetV2Alert(UniversalBaseModel):
     """
     Budget Alert
     """
@@ -15,6 +16,11 @@ class BudgetAlert(UniversalBaseModel):
     thresholds: typing.List[float] = pydantic.Field()
     """
     List of usage percentages (0-100) at which alerts should be triggered. Default thresholds are [75, 90, 95, 100].
+    """
+
+    send_to: BudgetV2AlertSendTo = pydantic.Field()
+    """
+    Whom to notify when an alert fires. `shared` sends to the configured notification targets only. `breaching-user` additionally notifies the user whose usage caused the breach.
     """
 
     notification_target: typing.List[NotificationTarget] = pydantic.Field()

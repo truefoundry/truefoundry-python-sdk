@@ -4,22 +4,21 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .notification_target import NotificationTarget
 
 
-class BudgetAlert(UniversalBaseModel):
+class AgentIdentityAutoRotate(UniversalBaseModel):
     """
-    Budget Alert
-    """
-
-    thresholds: typing.List[float] = pydantic.Field()
-    """
-    List of usage percentages (0-100) at which alerts should be triggered. Default thresholds are [75, 90, 95, 100].
+    Enable Auto Rotation to automatically rotate the token
     """
 
-    notification_target: typing.List[NotificationTarget] = pydantic.Field()
+    auto_rotate_interval: int = pydantic.Field(default=360)
     """
-    Select where to send budget alert notifications
+    Rotation Interval in days after which the token will be rotated. Minimum value is 30.
+    """
+
+    grace_period: int = pydantic.Field(default=30)
+    """
+    Grace Period in days for which the token will be valid after rotation interval. Minimum value is 1.
     """
 
     if IS_PYDANTIC_V2:

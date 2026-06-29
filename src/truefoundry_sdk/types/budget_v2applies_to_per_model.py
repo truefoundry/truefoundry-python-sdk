@@ -4,22 +4,22 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .notification_target import NotificationTarget
+from .budget_v2per_model_override import BudgetV2PerModelOverride
 
 
-class BudgetAlert(UniversalBaseModel):
+class BudgetV2AppliesToPerModel(UniversalBaseModel):
     """
-    Budget Alert
-    """
-
-    thresholds: typing.List[float] = pydantic.Field()
-    """
-    List of usage percentages (0-100) at which alerts should be triggered. Default thresholds are [75, 90, 95, 100].
+    Track a separate budget for each model.
     """
 
-    notification_target: typing.List[NotificationTarget] = pydantic.Field()
+    type: typing.Literal["per-model"] = pydantic.Field(default="per-model")
     """
-    Select where to send budget alert notifications
+    Applies To Type
+    """
+
+    overrides: typing.Optional[typing.List[BudgetV2PerModelOverride]] = pydantic.Field(default=None)
+    """
+    Optional per-model limit overrides
     """
 
     if IS_PYDANTIC_V2:

@@ -4,23 +4,16 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .notification_target import NotificationTarget
+from .budget_v2in_not_in_filter import BudgetV2InNotInFilter
 
 
-class BudgetAlert(UniversalBaseModel):
+class BudgetV2SubjectsTeamScoped(UniversalBaseModel):
     """
-    Budget Alert
-    """
-
-    thresholds: typing.List[float] = pydantic.Field()
-    """
-    List of usage percentages (0-100) at which alerts should be triggered. Default thresholds are [75, 90, 95, 100].
+    Team Budget Subjects
     """
 
-    notification_target: typing.List[NotificationTarget] = pydantic.Field()
-    """
-    Select where to send budget alert notifications
-    """
+    users: typing.Optional[BudgetV2InNotInFilter] = None
+    virtual_accounts: typing.Optional[BudgetV2InNotInFilter] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

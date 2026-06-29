@@ -18,6 +18,12 @@ if typing.TYPE_CHECKING:
     from .addon_component_name import AddonComponentName
     from .addon_component_status import AddonComponentStatus
     from .agent_framework import AgentFramework
+    from .agent_identity_auto_rotate import AgentIdentityAutoRotate
+    from .agent_identity_config import AgentIdentityConfig
+    from .agent_identity_manifest import AgentIdentityManifest
+    from .agent_identity_owned_by import AgentIdentityOwnedBy
+    from .agent_identity_provider_mapping import AgentIdentityProviderMapping
+    from .agent_identity_secret_store_config import AgentIdentitySecretStoreConfig
     from .agent_manifest import AgentManifest
     from .agent_skill import AgentSkill
     from .agent_skill_manifest import AgentSkillManifest
@@ -60,12 +66,6 @@ if typing.TYPE_CHECKING:
     from .application_set_components_item import ApplicationSetComponentsItem
     from .application_summary import ApplicationSummary
     from .application_type import ApplicationType
-    from .applies_to import AppliesTo
-    from .applies_to_aggregate import AppliesToAggregate
-    from .applies_to_metadata import AppliesToMetadata
-    from .applies_to_per_model import AppliesToPerModel
-    from .applies_to_per_user import AppliesToPerUser
-    from .applies_to_per_virtual_account import AppliesToPerVirtualAccount
     from .apply_ml_entity_response import ApplyMlEntityResponse
     from .apply_ml_entity_response_data import ApplyMlEntityResponseData
     from .artifact import Artifact
@@ -187,16 +187,29 @@ if typing.TYPE_CHECKING:
     from .blob_storage_reference import BlobStorageReference
     from .blue_green import BlueGreen
     from .budget_alert import BudgetAlert
-    from .budget_alert_send_to import BudgetAlertSendTo
     from .budget_config import BudgetConfig
     from .budget_limit_unit import BudgetLimitUnit
-    from .budget_limits import BudgetLimits
     from .budget_rule import BudgetRule
-    from .budget_subjects_team_scoped import BudgetSubjectsTeamScoped
-    from .budget_subjects_tenant_scoped import BudgetSubjectsTenantScoped
+    from .budget_v2alert import BudgetV2Alert
+    from .budget_v2alert_send_to import BudgetV2AlertSendTo
+    from .budget_v2applies_to import BudgetV2AppliesTo
+    from .budget_v2applies_to_aggregate import BudgetV2AppliesToAggregate
+    from .budget_v2applies_to_metadata import BudgetV2AppliesToMetadata
+    from .budget_v2applies_to_per_model import BudgetV2AppliesToPerModel
+    from .budget_v2applies_to_per_user import BudgetV2AppliesToPerUser
+    from .budget_v2applies_to_per_virtual_account import BudgetV2AppliesToPerVirtualAccount
+    from .budget_v2in_not_in_filter import BudgetV2InNotInFilter
+    from .budget_v2limits import BudgetV2Limits
+    from .budget_v2override_limits import BudgetV2OverrideLimits
+    from .budget_v2per_metadata_override import BudgetV2PerMetadataOverride
+    from .budget_v2per_model_override import BudgetV2PerModelOverride
+    from .budget_v2per_user_override import BudgetV2PerUserOverride
+    from .budget_v2per_virtual_account_override import BudgetV2PerVirtualAccountOverride
+    from .budget_v2subjects_team_scoped import BudgetV2SubjectsTeamScoped
+    from .budget_v2subjects_tenant_scoped import BudgetV2SubjectsTenantScoped
+    from .budget_v2when_team_scoped import BudgetV2WhenTeamScoped
+    from .budget_v2when_tenant_scoped import BudgetV2WhenTenantScoped
     from .budget_when import BudgetWhen
-    from .budget_when_team_scoped import BudgetWhenTeamScoped
-    from .budget_when_tenant_scoped import BudgetWhenTenantScoped
     from .build import Build
     from .build_build_source import BuildBuildSource
     from .build_build_spec import BuildBuildSpec
@@ -243,7 +256,6 @@ if typing.TYPE_CHECKING:
     from .cohere_model import CohereModel
     from .cohere_provider_account import CohereProviderAccount
     from .collaborator import Collaborator
-    from .columns import Columns
     from .common_tools_settings import CommonToolsSettings
     from .config import Config
     from .container_task_config import ContainerTaskConfig
@@ -254,7 +266,6 @@ if typing.TYPE_CHECKING:
     from .create_docker_repository_response import CreateDockerRepositoryResponse
     from .create_multi_part_upload_request import CreateMultiPartUploadRequest
     from .create_personal_access_token_response import CreatePersonalAccessTokenResponse
-    from .create_run_response import CreateRunResponse
     from .cron_metric import CronMetric
     from .crowd_strike_aidr_guardrail_config import CrowdStrikeAidrGuardrailConfig
     from .crowd_strike_aidr_guardrail_config_config import CrowdStrikeAidrGuardrailConfigConfig
@@ -443,15 +454,12 @@ if typing.TYPE_CHECKING:
     from .get_events_response import GetEventsResponse
     from .get_job_run_response import GetJobRunResponse
     from .get_logs_response import GetLogsResponse
-    from .get_metric_history_response import GetMetricHistoryResponse
     from .get_ml_repo_response import GetMlRepoResponse
     from .get_model_response import GetModelResponse
     from .get_model_version_response import GetModelVersionResponse
     from .get_or_create_personal_access_token_response import GetOrCreatePersonalAccessTokenResponse
     from .get_prompt_response import GetPromptResponse
     from .get_prompt_version_response import GetPromptVersionResponse
-    from .get_run_columns_response import GetRunColumnsResponse
-    from .get_run_response import GetRunResponse
     from .get_secret_group_response import GetSecretGroupResponse
     from .get_secret_response import GetSecretResponse
     from .get_signed_ur_ls_request import GetSignedUrLsRequest
@@ -525,13 +533,13 @@ if typing.TYPE_CHECKING:
     from .huggingface_artifact_source import HuggingfaceArtifactSource
     from .i_change import IChange
     from .i_change_operation import IChangeOperation
+    from .identity_provider_backed_identity import IdentityProviderBackedIdentity
     from .identity_provider_mapping import IdentityProviderMapping
     from .image import Image
     from .image_command import ImageCommand
     from .image_content_part import ImageContentPart
     from .image_content_part_image_url import ImageContentPartImageUrl
     from .image_content_part_image_url_url import ImageContentPartImageUrlUrl
-    from .in_not_in_filter import InNotInFilter
     from .in_not_in_operator import InNotInOperator
     from .in_not_in_operator_condition import InNotInOperatorCondition
     from .infer_method_name import InferMethodName
@@ -598,7 +606,6 @@ if typing.TYPE_CHECKING:
     from .list_files_request import ListFilesRequest
     from .list_files_response import ListFilesResponse
     from .list_job_run_response import ListJobRunResponse
-    from .list_metric_history_response import ListMetricHistoryResponse
     from .list_ml_repos_response import ListMlReposResponse
     from .list_model_versions_response import ListModelVersionsResponse
     from .list_models_response import ListModelsResponse
@@ -659,7 +666,6 @@ if typing.TYPE_CHECKING:
     from .mcp_tools_operator_condition import McpToolsOperatorCondition
     from .metadata import Metadata
     from .metric import Metric
-    from .metric_collection import MetricCollection
     from .mime_type import MimeType
     from .mirror_action import MirrorAction
     from .mistral_ai_integrations import MistralAiIntegrations
@@ -746,7 +752,6 @@ if typing.TYPE_CHECKING:
     from .otel_traces_exporter_grpc_config import OtelTracesExporterGrpcConfig
     from .otel_traces_exporter_http_config import OtelTracesExporterHttpConfig
     from .otel_traces_exporter_span_attribute_filter import OtelTracesExporterSpanAttributeFilter
-    from .override_limits import OverrideLimits
     from .own_data_access_rule import OwnDataAccessRule
     from .owned_by import OwnedBy
     from .paddle_framework import PaddleFramework
@@ -785,16 +790,12 @@ if typing.TYPE_CHECKING:
     from .patronus_pii_evaluator import PatronusPiiEvaluator
     from .patronus_toxicity_criteria import PatronusToxicityCriteria
     from .patronus_toxicity_evaluator import PatronusToxicityEvaluator
-    from .per_metadata_override import PerMetadataOverride
     from .per_million_characters_cost_metric import PerMillionCharactersCostMetric
     from .per_million_characters_cost_metric_value import PerMillionCharactersCostMetricValue
     from .per_minute_of_audio_cost_metric import PerMinuteOfAudioCostMetric
     from .per_minute_of_audio_cost_metric_value import PerMinuteOfAudioCostMetricValue
-    from .per_model_override import PerModelOverride
     from .per_thousand_embedding_tokens_cost_metric import PerThousandEmbeddingTokensCostMetric
     from .per_thousand_tokens_cost_metric import PerThousandTokensCostMetric
-    from .per_user_override import PerUserOverride
-    from .per_virtual_account_override import PerVirtualAccountOverride
     from .permissions import Permissions
     from .perplexity_ai_key_auth import PerplexityAiKeyAuth
     from .perplexity_ai_model import PerplexityAiModel
@@ -873,12 +874,6 @@ if typing.TYPE_CHECKING:
     from .role_with_resource_resource_type import RoleWithResourceResourceType
     from .rolling import Rolling
     from .rps_metric import RpsMetric
-    from .run import Run
-    from .run_data import RunData
-    from .run_info import RunInfo
-    from .run_param import RunParam
-    from .run_tag import RunTag
-    from .run_tag_input import RunTagInput
     from .sagemaker_assumed_role_based_auth import SagemakerAssumedRoleBasedAuth
     from .sagemaker_model import SagemakerModel
     from .samba_nova_integrations import SambaNovaIntegrations
@@ -888,7 +883,6 @@ if typing.TYPE_CHECKING:
     from .sample_agent_input import SampleAgentInput
     from .schedule import Schedule
     from .schedule_concurrency_policy import ScheduleConcurrencyPolicy
-    from .search_runs_response import SearchRunsResponse
     from .secret import Secret
     from .secret_detection_guardrail_config import SecretDetectionGuardrailConfig
     from .secret_detection_guardrail_config_config import SecretDetectionGuardrailConfigConfig
@@ -1071,11 +1065,11 @@ if typing.TYPE_CHECKING:
     from .true_foundry_interactive_login import TrueFoundryInteractiveLogin
     from .true_foundry_managed_source import TrueFoundryManagedSource
     from .true_foundry_provider_account import TrueFoundryProviderAccount
+    from .truefoundry_backed_identity import TruefoundryBackedIdentity
     from .truefoundry_flyte_task_template import TruefoundryFlyteTaskTemplate
     from .ttl_integrations import TtlIntegrations
     from .ttl_provider_account import TtlProviderAccount
     from .ttl_registry import TtlRegistry
-    from .update_run_response import UpdateRunResponse
     from .update_secret_input import UpdateSecretInput
     from .update_user_roles_response import UpdateUserRolesResponse
     from .upgrade_data import UpgradeData
@@ -1113,6 +1107,10 @@ if typing.TYPE_CHECKING:
     from .volume_browser import VolumeBrowser
     from .volume_config import VolumeConfig
     from .volume_mount import VolumeMount
+    from .wafer_api_key_auth import WaferApiKeyAuth
+    from .wafer_integrations import WaferIntegrations
+    from .wafer_model import WaferModel
+    from .wafer_provider_account import WaferProviderAccount
     from .webhook_basic_auth import WebhookBasicAuth
     from .webhook_bearer_auth import WebhookBearerAuth
     from .webhook_integration import WebhookIntegration
@@ -1148,6 +1146,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AddonComponentName": ".addon_component_name",
     "AddonComponentStatus": ".addon_component_status",
     "AgentFramework": ".agent_framework",
+    "AgentIdentityAutoRotate": ".agent_identity_auto_rotate",
+    "AgentIdentityConfig": ".agent_identity_config",
+    "AgentIdentityManifest": ".agent_identity_manifest",
+    "AgentIdentityOwnedBy": ".agent_identity_owned_by",
+    "AgentIdentityProviderMapping": ".agent_identity_provider_mapping",
+    "AgentIdentitySecretStoreConfig": ".agent_identity_secret_store_config",
     "AgentManifest": ".agent_manifest",
     "AgentSkill": ".agent_skill",
     "AgentSkillManifest": ".agent_skill_manifest",
@@ -1190,12 +1194,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ApplicationSetComponentsItem": ".application_set_components_item",
     "ApplicationSummary": ".application_summary",
     "ApplicationType": ".application_type",
-    "AppliesTo": ".applies_to",
-    "AppliesToAggregate": ".applies_to_aggregate",
-    "AppliesToMetadata": ".applies_to_metadata",
-    "AppliesToPerModel": ".applies_to_per_model",
-    "AppliesToPerUser": ".applies_to_per_user",
-    "AppliesToPerVirtualAccount": ".applies_to_per_virtual_account",
     "ApplyMlEntityResponse": ".apply_ml_entity_response",
     "ApplyMlEntityResponseData": ".apply_ml_entity_response_data",
     "Artifact": ".artifact",
@@ -1317,16 +1315,29 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BlobStorageReference": ".blob_storage_reference",
     "BlueGreen": ".blue_green",
     "BudgetAlert": ".budget_alert",
-    "BudgetAlertSendTo": ".budget_alert_send_to",
     "BudgetConfig": ".budget_config",
     "BudgetLimitUnit": ".budget_limit_unit",
-    "BudgetLimits": ".budget_limits",
     "BudgetRule": ".budget_rule",
-    "BudgetSubjectsTeamScoped": ".budget_subjects_team_scoped",
-    "BudgetSubjectsTenantScoped": ".budget_subjects_tenant_scoped",
+    "BudgetV2Alert": ".budget_v2alert",
+    "BudgetV2AlertSendTo": ".budget_v2alert_send_to",
+    "BudgetV2AppliesTo": ".budget_v2applies_to",
+    "BudgetV2AppliesToAggregate": ".budget_v2applies_to_aggregate",
+    "BudgetV2AppliesToMetadata": ".budget_v2applies_to_metadata",
+    "BudgetV2AppliesToPerModel": ".budget_v2applies_to_per_model",
+    "BudgetV2AppliesToPerUser": ".budget_v2applies_to_per_user",
+    "BudgetV2AppliesToPerVirtualAccount": ".budget_v2applies_to_per_virtual_account",
+    "BudgetV2InNotInFilter": ".budget_v2in_not_in_filter",
+    "BudgetV2Limits": ".budget_v2limits",
+    "BudgetV2OverrideLimits": ".budget_v2override_limits",
+    "BudgetV2PerMetadataOverride": ".budget_v2per_metadata_override",
+    "BudgetV2PerModelOverride": ".budget_v2per_model_override",
+    "BudgetV2PerUserOverride": ".budget_v2per_user_override",
+    "BudgetV2PerVirtualAccountOverride": ".budget_v2per_virtual_account_override",
+    "BudgetV2SubjectsTeamScoped": ".budget_v2subjects_team_scoped",
+    "BudgetV2SubjectsTenantScoped": ".budget_v2subjects_tenant_scoped",
+    "BudgetV2WhenTeamScoped": ".budget_v2when_team_scoped",
+    "BudgetV2WhenTenantScoped": ".budget_v2when_tenant_scoped",
     "BudgetWhen": ".budget_when",
-    "BudgetWhenTeamScoped": ".budget_when_team_scoped",
-    "BudgetWhenTenantScoped": ".budget_when_tenant_scoped",
     "Build": ".build",
     "BuildBuildSource": ".build_build_source",
     "BuildBuildSpec": ".build_build_spec",
@@ -1373,7 +1384,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CohereModel": ".cohere_model",
     "CohereProviderAccount": ".cohere_provider_account",
     "Collaborator": ".collaborator",
-    "Columns": ".columns",
     "CommonToolsSettings": ".common_tools_settings",
     "Config": ".config",
     "ContainerTaskConfig": ".container_task_config",
@@ -1384,7 +1394,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateDockerRepositoryResponse": ".create_docker_repository_response",
     "CreateMultiPartUploadRequest": ".create_multi_part_upload_request",
     "CreatePersonalAccessTokenResponse": ".create_personal_access_token_response",
-    "CreateRunResponse": ".create_run_response",
     "CronMetric": ".cron_metric",
     "CrowdStrikeAidrGuardrailConfig": ".crowd_strike_aidr_guardrail_config",
     "CrowdStrikeAidrGuardrailConfigConfig": ".crowd_strike_aidr_guardrail_config_config",
@@ -1561,15 +1570,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetEventsResponse": ".get_events_response",
     "GetJobRunResponse": ".get_job_run_response",
     "GetLogsResponse": ".get_logs_response",
-    "GetMetricHistoryResponse": ".get_metric_history_response",
     "GetMlRepoResponse": ".get_ml_repo_response",
     "GetModelResponse": ".get_model_response",
     "GetModelVersionResponse": ".get_model_version_response",
     "GetOrCreatePersonalAccessTokenResponse": ".get_or_create_personal_access_token_response",
     "GetPromptResponse": ".get_prompt_response",
     "GetPromptVersionResponse": ".get_prompt_version_response",
-    "GetRunColumnsResponse": ".get_run_columns_response",
-    "GetRunResponse": ".get_run_response",
     "GetSecretGroupResponse": ".get_secret_group_response",
     "GetSecretResponse": ".get_secret_response",
     "GetSignedUrLsRequest": ".get_signed_ur_ls_request",
@@ -1641,13 +1647,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "HuggingfaceArtifactSource": ".huggingface_artifact_source",
     "IChange": ".i_change",
     "IChangeOperation": ".i_change_operation",
+    "IdentityProviderBackedIdentity": ".identity_provider_backed_identity",
     "IdentityProviderMapping": ".identity_provider_mapping",
     "Image": ".image",
     "ImageCommand": ".image_command",
     "ImageContentPart": ".image_content_part",
     "ImageContentPartImageUrl": ".image_content_part_image_url",
     "ImageContentPartImageUrlUrl": ".image_content_part_image_url_url",
-    "InNotInFilter": ".in_not_in_filter",
     "InNotInOperator": ".in_not_in_operator",
     "InNotInOperatorCondition": ".in_not_in_operator_condition",
     "InferMethodName": ".infer_method_name",
@@ -1714,7 +1720,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListFilesRequest": ".list_files_request",
     "ListFilesResponse": ".list_files_response",
     "ListJobRunResponse": ".list_job_run_response",
-    "ListMetricHistoryResponse": ".list_metric_history_response",
     "ListMlReposResponse": ".list_ml_repos_response",
     "ListModelVersionsResponse": ".list_model_versions_response",
     "ListModelsResponse": ".list_models_response",
@@ -1775,7 +1780,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "McpToolsOperatorCondition": ".mcp_tools_operator_condition",
     "Metadata": ".metadata",
     "Metric": ".metric",
-    "MetricCollection": ".metric_collection",
     "MimeType": ".mime_type",
     "MirrorAction": ".mirror_action",
     "MistralAiIntegrations": ".mistral_ai_integrations",
@@ -1862,7 +1866,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OtelTracesExporterGrpcConfig": ".otel_traces_exporter_grpc_config",
     "OtelTracesExporterHttpConfig": ".otel_traces_exporter_http_config",
     "OtelTracesExporterSpanAttributeFilter": ".otel_traces_exporter_span_attribute_filter",
-    "OverrideLimits": ".override_limits",
     "OwnDataAccessRule": ".own_data_access_rule",
     "OwnedBy": ".owned_by",
     "PaddleFramework": ".paddle_framework",
@@ -1901,16 +1904,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PatronusPiiEvaluator": ".patronus_pii_evaluator",
     "PatronusToxicityCriteria": ".patronus_toxicity_criteria",
     "PatronusToxicityEvaluator": ".patronus_toxicity_evaluator",
-    "PerMetadataOverride": ".per_metadata_override",
     "PerMillionCharactersCostMetric": ".per_million_characters_cost_metric",
     "PerMillionCharactersCostMetricValue": ".per_million_characters_cost_metric_value",
     "PerMinuteOfAudioCostMetric": ".per_minute_of_audio_cost_metric",
     "PerMinuteOfAudioCostMetricValue": ".per_minute_of_audio_cost_metric_value",
-    "PerModelOverride": ".per_model_override",
     "PerThousandEmbeddingTokensCostMetric": ".per_thousand_embedding_tokens_cost_metric",
     "PerThousandTokensCostMetric": ".per_thousand_tokens_cost_metric",
-    "PerUserOverride": ".per_user_override",
-    "PerVirtualAccountOverride": ".per_virtual_account_override",
     "Permissions": ".permissions",
     "PerplexityAiKeyAuth": ".perplexity_ai_key_auth",
     "PerplexityAiModel": ".perplexity_ai_model",
@@ -1992,12 +1991,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RoleWithResourceResourceType": ".role_with_resource_resource_type",
     "Rolling": ".rolling",
     "RpsMetric": ".rps_metric",
-    "Run": ".run",
-    "RunData": ".run_data",
-    "RunInfo": ".run_info",
-    "RunParam": ".run_param",
-    "RunTag": ".run_tag",
-    "RunTagInput": ".run_tag_input",
     "SagemakerAssumedRoleBasedAuth": ".sagemaker_assumed_role_based_auth",
     "SagemakerModel": ".sagemaker_model",
     "SambaNovaIntegrations": ".samba_nova_integrations",
@@ -2007,7 +2000,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SampleAgentInput": ".sample_agent_input",
     "Schedule": ".schedule",
     "ScheduleConcurrencyPolicy": ".schedule_concurrency_policy",
-    "SearchRunsResponse": ".search_runs_response",
     "Secret": ".secret",
     "SecretDetectionGuardrailConfig": ".secret_detection_guardrail_config",
     "SecretDetectionGuardrailConfigConfig": ".secret_detection_guardrail_config_config",
@@ -2190,11 +2182,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TrueFoundryInteractiveLogin": ".true_foundry_interactive_login",
     "TrueFoundryManagedSource": ".true_foundry_managed_source",
     "TrueFoundryProviderAccount": ".true_foundry_provider_account",
+    "TruefoundryBackedIdentity": ".truefoundry_backed_identity",
     "TruefoundryFlyteTaskTemplate": ".truefoundry_flyte_task_template",
     "TtlIntegrations": ".ttl_integrations",
     "TtlProviderAccount": ".ttl_provider_account",
     "TtlRegistry": ".ttl_registry",
-    "UpdateRunResponse": ".update_run_response",
     "UpdateSecretInput": ".update_secret_input",
     "UpdateUserRolesResponse": ".update_user_roles_response",
     "UpgradeData": ".upgrade_data",
@@ -2232,6 +2224,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "VolumeBrowser": ".volume_browser",
     "VolumeConfig": ".volume_config",
     "VolumeMount": ".volume_mount",
+    "WaferApiKeyAuth": ".wafer_api_key_auth",
+    "WaferIntegrations": ".wafer_integrations",
+    "WaferModel": ".wafer_model",
+    "WaferProviderAccount": ".wafer_provider_account",
     "WebhookBasicAuth": ".webhook_basic_auth",
     "WebhookBearerAuth": ".webhook_bearer_auth",
     "WebhookIntegration": ".webhook_integration",
@@ -2291,6 +2287,12 @@ __all__ = [
     "AddonComponentName",
     "AddonComponentStatus",
     "AgentFramework",
+    "AgentIdentityAutoRotate",
+    "AgentIdentityConfig",
+    "AgentIdentityManifest",
+    "AgentIdentityOwnedBy",
+    "AgentIdentityProviderMapping",
+    "AgentIdentitySecretStoreConfig",
     "AgentManifest",
     "AgentSkill",
     "AgentSkillManifest",
@@ -2333,12 +2335,6 @@ __all__ = [
     "ApplicationSetComponentsItem",
     "ApplicationSummary",
     "ApplicationType",
-    "AppliesTo",
-    "AppliesToAggregate",
-    "AppliesToMetadata",
-    "AppliesToPerModel",
-    "AppliesToPerUser",
-    "AppliesToPerVirtualAccount",
     "ApplyMlEntityResponse",
     "ApplyMlEntityResponseData",
     "Artifact",
@@ -2460,16 +2456,29 @@ __all__ = [
     "BlobStorageReference",
     "BlueGreen",
     "BudgetAlert",
-    "BudgetAlertSendTo",
     "BudgetConfig",
     "BudgetLimitUnit",
-    "BudgetLimits",
     "BudgetRule",
-    "BudgetSubjectsTeamScoped",
-    "BudgetSubjectsTenantScoped",
+    "BudgetV2Alert",
+    "BudgetV2AlertSendTo",
+    "BudgetV2AppliesTo",
+    "BudgetV2AppliesToAggregate",
+    "BudgetV2AppliesToMetadata",
+    "BudgetV2AppliesToPerModel",
+    "BudgetV2AppliesToPerUser",
+    "BudgetV2AppliesToPerVirtualAccount",
+    "BudgetV2InNotInFilter",
+    "BudgetV2Limits",
+    "BudgetV2OverrideLimits",
+    "BudgetV2PerMetadataOverride",
+    "BudgetV2PerModelOverride",
+    "BudgetV2PerUserOverride",
+    "BudgetV2PerVirtualAccountOverride",
+    "BudgetV2SubjectsTeamScoped",
+    "BudgetV2SubjectsTenantScoped",
+    "BudgetV2WhenTeamScoped",
+    "BudgetV2WhenTenantScoped",
     "BudgetWhen",
-    "BudgetWhenTeamScoped",
-    "BudgetWhenTenantScoped",
     "Build",
     "BuildBuildSource",
     "BuildBuildSpec",
@@ -2516,7 +2525,6 @@ __all__ = [
     "CohereModel",
     "CohereProviderAccount",
     "Collaborator",
-    "Columns",
     "CommonToolsSettings",
     "Config",
     "ContainerTaskConfig",
@@ -2527,7 +2535,6 @@ __all__ = [
     "CreateDockerRepositoryResponse",
     "CreateMultiPartUploadRequest",
     "CreatePersonalAccessTokenResponse",
-    "CreateRunResponse",
     "CronMetric",
     "CrowdStrikeAidrGuardrailConfig",
     "CrowdStrikeAidrGuardrailConfigConfig",
@@ -2704,15 +2711,12 @@ __all__ = [
     "GetEventsResponse",
     "GetJobRunResponse",
     "GetLogsResponse",
-    "GetMetricHistoryResponse",
     "GetMlRepoResponse",
     "GetModelResponse",
     "GetModelVersionResponse",
     "GetOrCreatePersonalAccessTokenResponse",
     "GetPromptResponse",
     "GetPromptVersionResponse",
-    "GetRunColumnsResponse",
-    "GetRunResponse",
     "GetSecretGroupResponse",
     "GetSecretResponse",
     "GetSignedUrLsRequest",
@@ -2784,13 +2788,13 @@ __all__ = [
     "HuggingfaceArtifactSource",
     "IChange",
     "IChangeOperation",
+    "IdentityProviderBackedIdentity",
     "IdentityProviderMapping",
     "Image",
     "ImageCommand",
     "ImageContentPart",
     "ImageContentPartImageUrl",
     "ImageContentPartImageUrlUrl",
-    "InNotInFilter",
     "InNotInOperator",
     "InNotInOperatorCondition",
     "InferMethodName",
@@ -2857,7 +2861,6 @@ __all__ = [
     "ListFilesRequest",
     "ListFilesResponse",
     "ListJobRunResponse",
-    "ListMetricHistoryResponse",
     "ListMlReposResponse",
     "ListModelVersionsResponse",
     "ListModelsResponse",
@@ -2918,7 +2921,6 @@ __all__ = [
     "McpToolsOperatorCondition",
     "Metadata",
     "Metric",
-    "MetricCollection",
     "MimeType",
     "MirrorAction",
     "MistralAiIntegrations",
@@ -3005,7 +3007,6 @@ __all__ = [
     "OtelTracesExporterGrpcConfig",
     "OtelTracesExporterHttpConfig",
     "OtelTracesExporterSpanAttributeFilter",
-    "OverrideLimits",
     "OwnDataAccessRule",
     "OwnedBy",
     "PaddleFramework",
@@ -3044,16 +3045,12 @@ __all__ = [
     "PatronusPiiEvaluator",
     "PatronusToxicityCriteria",
     "PatronusToxicityEvaluator",
-    "PerMetadataOverride",
     "PerMillionCharactersCostMetric",
     "PerMillionCharactersCostMetricValue",
     "PerMinuteOfAudioCostMetric",
     "PerMinuteOfAudioCostMetricValue",
-    "PerModelOverride",
     "PerThousandEmbeddingTokensCostMetric",
     "PerThousandTokensCostMetric",
-    "PerUserOverride",
-    "PerVirtualAccountOverride",
     "Permissions",
     "PerplexityAiKeyAuth",
     "PerplexityAiModel",
@@ -3135,12 +3132,6 @@ __all__ = [
     "RoleWithResourceResourceType",
     "Rolling",
     "RpsMetric",
-    "Run",
-    "RunData",
-    "RunInfo",
-    "RunParam",
-    "RunTag",
-    "RunTagInput",
     "SagemakerAssumedRoleBasedAuth",
     "SagemakerModel",
     "SambaNovaIntegrations",
@@ -3150,7 +3141,6 @@ __all__ = [
     "SampleAgentInput",
     "Schedule",
     "ScheduleConcurrencyPolicy",
-    "SearchRunsResponse",
     "Secret",
     "SecretDetectionGuardrailConfig",
     "SecretDetectionGuardrailConfigConfig",
@@ -3333,11 +3323,11 @@ __all__ = [
     "TrueFoundryInteractiveLogin",
     "TrueFoundryManagedSource",
     "TrueFoundryProviderAccount",
+    "TruefoundryBackedIdentity",
     "TruefoundryFlyteTaskTemplate",
     "TtlIntegrations",
     "TtlProviderAccount",
     "TtlRegistry",
-    "UpdateRunResponse",
     "UpdateSecretInput",
     "UpdateUserRolesResponse",
     "UpgradeData",
@@ -3375,6 +3365,10 @@ __all__ = [
     "VolumeBrowser",
     "VolumeConfig",
     "VolumeMount",
+    "WaferApiKeyAuth",
+    "WaferIntegrations",
+    "WaferModel",
+    "WaferProviderAccount",
     "WebhookBasicAuth",
     "WebhookBearerAuth",
     "WebhookIntegration",

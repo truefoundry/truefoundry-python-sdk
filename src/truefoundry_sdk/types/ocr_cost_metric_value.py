@@ -9,7 +9,7 @@ from .non_negative_float import NonNegativeFloat
 
 class OcrCostMetricValue(UniversalBaseModel):
     pages: NonNegativeFloat
-    annotated_pages: NonNegativeFloat
+    annotated_pages: typing.Optional[NonNegativeFloat] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

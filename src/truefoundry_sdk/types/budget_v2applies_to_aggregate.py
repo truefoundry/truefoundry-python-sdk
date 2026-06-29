@@ -4,22 +4,16 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .notification_target import NotificationTarget
 
 
-class BudgetAlert(UniversalBaseModel):
+class BudgetV2AppliesToAggregate(UniversalBaseModel):
     """
-    Budget Alert
-    """
-
-    thresholds: typing.List[float] = pydantic.Field()
-    """
-    List of usage percentages (0-100) at which alerts should be triggered. Default thresholds are [75, 90, 95, 100].
+    A single shared budget across every matching request.
     """
 
-    notification_target: typing.List[NotificationTarget] = pydantic.Field()
+    type: typing.Literal["aggregate"] = pydantic.Field(default="aggregate")
     """
-    Select where to send budget alert notifications
+    Applies To Type
     """
 
     if IS_PYDANTIC_V2:

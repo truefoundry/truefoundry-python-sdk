@@ -36,6 +36,7 @@ from .smallest_ai_provider_account import SmallestAiProviderAccount
 from .snowflake_cortex_provider_account import SnowflakeCortexProviderAccount
 from .together_ai_provider_account import TogetherAiProviderAccount
 from .virtual_model_provider_account import VirtualModelProviderAccount
+from .wafer_provider_account import WaferProviderAccount
 from .xai_provider_account import XaiProviderAccount
 
 ModelProviderAccount = typing.Union[
@@ -65,6 +66,7 @@ ModelProviderAccount = typing.Union[
     BasetenProviderAccount,
     AwsSagemakerProviderAccount,
     CerebrasProviderAccount,
+    WaferProviderAccount,
     SnowflakeCortexProviderAccount,
     ElevenLabsProviderAccount,
     DeepgramProviderAccount,

@@ -43,6 +43,7 @@ class RawTeamsClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         type: typing.Optional[TeamsListRequestType] = None,
+        role: typing.Optional[typing.Literal["manager"]] = None,
         attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[TeamDto, ListTeamsResponse]:
@@ -59,6 +60,9 @@ class RawTeamsClient:
 
         type : typing.Optional[TeamsListRequestType]
             Filter teams by type.
+
+        role : typing.Optional[typing.Literal["manager"]]
+            Filter to teams where the caller holds this role. `manager` returns teams the caller can manage (team managers and admins).
 
         attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Comma-separated list of attributes to return (e.g. `id,teamName`). When provided, only the specified fields are fetched. `id` is always included.
@@ -80,6 +84,7 @@ class RawTeamsClient:
                 "limit": limit,
                 "offset": offset,
                 "type": type,
+                "role": role,
                 "attributes": attributes,
             },
             request_options=request_options,
@@ -99,6 +104,7 @@ class RawTeamsClient:
                     limit=limit,
                     offset=offset + len(_items or []),
                     type=type,
+                    role=role,
                     attributes=attributes,
                     request_options=request_options,
                 )
@@ -579,6 +585,7 @@ class AsyncRawTeamsClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         type: typing.Optional[TeamsListRequestType] = None,
+        role: typing.Optional[typing.Literal["manager"]] = None,
         attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[TeamDto, ListTeamsResponse]:
@@ -595,6 +602,9 @@ class AsyncRawTeamsClient:
 
         type : typing.Optional[TeamsListRequestType]
             Filter teams by type.
+
+        role : typing.Optional[typing.Literal["manager"]]
+            Filter to teams where the caller holds this role. `manager` returns teams the caller can manage (team managers and admins).
 
         attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Comma-separated list of attributes to return (e.g. `id,teamName`). When provided, only the specified fields are fetched. `id` is always included.
@@ -616,6 +626,7 @@ class AsyncRawTeamsClient:
                 "limit": limit,
                 "offset": offset,
                 "type": type,
+                "role": role,
                 "attributes": attributes,
             },
             request_options=request_options,
@@ -637,6 +648,7 @@ class AsyncRawTeamsClient:
                         limit=limit,
                         offset=offset + len(_items or []),
                         type=type,
+                        role=role,
                         attributes=attributes,
                         request_options=request_options,
                     )

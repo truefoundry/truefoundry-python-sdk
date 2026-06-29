@@ -4,10 +4,10 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .applies_to import AppliesTo
-from .budget_alert import BudgetAlert
-from .budget_limits import BudgetLimits
-from .budget_when_team_scoped import BudgetWhenTeamScoped
+from .budget_v2alert import BudgetV2Alert
+from .budget_v2applies_to import BudgetV2AppliesTo
+from .budget_v2limits import BudgetV2Limits
+from .budget_v2when_team_scoped import BudgetV2WhenTeamScoped
 from .team_budget_config_mode import TeamBudgetConfigMode
 
 
@@ -32,15 +32,15 @@ class TeamBudgetConfig(UniversalBaseModel):
     Unique name for this budget
     """
 
-    when: BudgetWhenTeamScoped
-    limits: BudgetLimits
-    applies_to: AppliesTo
+    when: BudgetV2WhenTeamScoped
+    limits: BudgetV2Limits
+    applies_to: BudgetV2AppliesTo
     mode: TeamBudgetConfigMode = pydantic.Field()
     """
     `enforce` blocks breaching requests, `audit` only tracks them.
     """
 
-    alerts: BudgetAlert
+    alerts: typing.Optional[BudgetV2Alert] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -4,23 +4,20 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .notification_target import NotificationTarget
+from .budget_v2override_limits import BudgetV2OverrideLimits
 
 
-class BudgetAlert(UniversalBaseModel):
+class BudgetV2PerVirtualAccountOverride(UniversalBaseModel):
     """
-    Budget Alert
-    """
-
-    thresholds: typing.List[float] = pydantic.Field()
-    """
-    List of usage percentages (0-100) at which alerts should be triggered. Default thresholds are [75, 90, 95, 100].
+    Per-Virtual-Account Override
     """
 
-    notification_target: typing.List[NotificationTarget] = pydantic.Field()
+    virtual_accounts: typing.List[str] = pydantic.Field()
     """
-    Select where to send budget alert notifications
+    Virtual accounts whose usage uses this override instead of the default limits
     """
+
+    limits: BudgetV2OverrideLimits
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

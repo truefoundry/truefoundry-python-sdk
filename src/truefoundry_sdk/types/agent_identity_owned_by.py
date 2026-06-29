@@ -4,22 +4,21 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .notification_target import NotificationTarget
 
 
-class BudgetAlert(UniversalBaseModel):
+class AgentIdentityOwnedBy(UniversalBaseModel):
     """
-    Budget Alert
-    """
-
-    thresholds: typing.List[float] = pydantic.Field()
-    """
-    List of usage percentages (0-100) at which alerts should be triggered. Default thresholds are [75, 90, 95, 100].
+    Names of the owners that own the agent identity
     """
 
-    notification_target: typing.List[NotificationTarget] = pydantic.Field()
+    account: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Select where to send budget alert notifications
+    The name of the account that owns this resource
+    """
+
+    team: str = pydantic.Field()
+    """
+    The name of the team that owns this resource
     """
 
     if IS_PYDANTIC_V2:

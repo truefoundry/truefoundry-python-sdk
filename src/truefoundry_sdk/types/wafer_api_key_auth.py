@@ -4,22 +4,21 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .notification_target import NotificationTarget
 
 
-class BudgetAlert(UniversalBaseModel):
+class WaferApiKeyAuth(UniversalBaseModel):
     """
-    Budget Alert
-    """
-
-    thresholds: typing.List[float] = pydantic.Field()
-    """
-    List of usage percentages (0-100) at which alerts should be triggered. Default thresholds are [75, 90, 95, 100].
+    Wafer API Key Auth
     """
 
-    notification_target: typing.List[NotificationTarget] = pydantic.Field()
+    type: typing.Literal["api-key"] = pydantic.Field(default="api-key")
     """
-    Select where to send budget alert notifications
+    +value=api-key
+    """
+
+    api_key: str = pydantic.Field()
+    """
+    The API key for Wafer Serverless authentication
     """
 
     if IS_PYDANTIC_V2:

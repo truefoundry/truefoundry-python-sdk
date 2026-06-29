@@ -4,22 +4,21 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .notification_target import NotificationTarget
 
 
-class BudgetAlert(UniversalBaseModel):
+class AgentIdentitySecretStoreConfig(UniversalBaseModel):
     """
-    Budget Alert
-    """
-
-    thresholds: typing.List[float] = pydantic.Field()
-    """
-    List of usage percentages (0-100) at which alerts should be triggered. Default thresholds are [75, 90, 95, 100].
+    Enable to store the agent identity token in a secret store
     """
 
-    notification_target: typing.List[NotificationTarget] = pydantic.Field()
+    integration_fqn: str = pydantic.Field()
     """
-    Select where to send budget alert notifications
+    The secret store to store the agent identity token in
+    """
+
+    secret_path: str = pydantic.Field()
+    """
+    The path where the agent identity token will be stored in the secret store (example: secret/path/to/agent-identity-token)
     """
 
     if IS_PYDANTIC_V2:
