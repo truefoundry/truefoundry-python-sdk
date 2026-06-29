@@ -4,11 +4,15 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .infer_method_name import InferMethodName
+from .sklearn_model_schema_infer_method_name import SklearnModelSchemaInferMethodName
 
 
 class SklearnModelSchema(UniversalBaseModel):
-    infer_method_name: InferMethodName = pydantic.Field()
+    """
+    Scikit Learn Model Schema
+    """
+
+    infer_method_name: SklearnModelSchemaInferMethodName = pydantic.Field()
     """
     Name of the method used for inference
     """

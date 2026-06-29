@@ -26,9 +26,7 @@ class OpaGuardrailConfig(UniversalBaseModel):
     Optional description for this Guardrail Config.
     """
 
-    type: typing.Literal["integration/guardrail-config/opa"] = pydantic.Field(
-        default="integration/guardrail-config/opa"
-    )
+    type: typing.Optional[typing.Literal["integration/guardrail-config/opa"]] = pydantic.Field(default=None)
     """
     +uiType=Hidden
     +value=integration/guardrail-config/opa

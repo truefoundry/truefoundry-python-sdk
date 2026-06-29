@@ -11,7 +11,11 @@ class AgentSkillSourceLocal(UniversalBaseModel):
     Load the skill from a local directory. The directory must include SKILL.md with valid YAML front matter.
     """
 
-    type: typing.Literal["local"] = "local"
+    type: typing.Optional[typing.Literal["local"]] = pydantic.Field(default=None)
+    """
+    Type
+    """
+
     skill_dir: str = pydantic.Field()
     """
     Path to the skill root directory, including SKILL.md and related assets.

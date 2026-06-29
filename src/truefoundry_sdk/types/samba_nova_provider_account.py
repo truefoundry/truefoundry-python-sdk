@@ -17,7 +17,7 @@ class SambaNovaProviderAccount(UniversalBaseModel):
     SambaNova Provider Account
     """
 
-    type: typing.Literal["provider-account/sambanova"] = pydantic.Field(default="provider-account/sambanova")
+    type: typing.Optional[typing.Literal["provider-account/sambanova"]] = pydantic.Field(default=None)
     """
     +value=provider-account/sambanova
     """

@@ -14,16 +14,12 @@ if typing.TYPE_CHECKING:
         deployments,
         docker_registries,
         metrics,
-        ml,
         vcs,
         workflows,
     )
     from .metrics import MetricsGetChartsRequestFilterEntity
-    from .ml import ApplyMlEntityRequestManifest, DeleteMlEntityRequestManifest
     from .workflows import WorkflowsExecuteWorkflowResponse
 _dynamic_imports: typing.Dict[str, str] = {
-    "ApplyMlEntityRequestManifest": ".ml",
-    "DeleteMlEntityRequestManifest": ".ml",
     "MetricsGetChartsRequestFilterEntity": ".metrics",
     "WorkflowsExecuteWorkflowResponse": ".workflows",
     "applications": ".applications",
@@ -33,7 +29,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "deployments": ".deployments",
     "docker_registries": ".docker_registries",
     "metrics": ".metrics",
-    "ml": ".ml",
     "vcs": ".vcs",
     "workflows": ".workflows",
 }
@@ -61,8 +56,6 @@ def __dir__():
 
 
 __all__ = [
-    "ApplyMlEntityRequestManifest",
-    "DeleteMlEntityRequestManifest",
     "MetricsGetChartsRequestFilterEntity",
     "WorkflowsExecuteWorkflowResponse",
     "applications",
@@ -72,7 +65,6 @@ __all__ = [
     "deployments",
     "docker_registries",
     "metrics",
-    "ml",
     "vcs",
     "workflows",
 ]

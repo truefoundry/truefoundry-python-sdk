@@ -12,9 +12,7 @@ class GcpGcs(UniversalBaseModel):
     GCP GCS
     """
 
-    type: typing.Literal["integration/blob-storage/gcp/gcs"] = pydantic.Field(
-        default="integration/blob-storage/gcp/gcs"
-    )
+    type: typing.Optional[typing.Literal["integration/blob-storage/gcp/gcs"]] = pydantic.Field(default=None)
     """
     +value=integration/blob-storage/gcp/gcs
     """

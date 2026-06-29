@@ -8,10 +8,7 @@ from .agent_skill_version import AgentSkillVersion
 
 
 class GetAgentSkillVersionResponse(UniversalBaseModel):
-    data: AgentSkillVersion = pydantic.Field()
-    """
-    The agent skill version data
-    """
+    data: AgentSkillVersion
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -12,7 +12,7 @@ class ToolSchema(UniversalBaseModel):
     Schema defining a tool for the chat prompt
     """
 
-    type: typing.Literal["function"] = pydantic.Field(default="function")
+    type: typing.Optional[typing.Literal["function"]] = pydantic.Field(default=None)
     """
     Type of the tool
     """

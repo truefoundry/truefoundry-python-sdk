@@ -27,9 +27,7 @@ class AzurePiiGuardrailConfig(UniversalBaseModel):
     Optional description for this Guardrail Config.
     """
 
-    type: typing.Literal["integration/guardrail-config/azure-pii"] = pydantic.Field(
-        default="integration/guardrail-config/azure-pii"
-    )
+    type: typing.Optional[typing.Literal["integration/guardrail-config/azure-pii"]] = pydantic.Field(default=None)
     """
     +uiType=Hidden
     +value=integration/guardrail-config/azure-pii

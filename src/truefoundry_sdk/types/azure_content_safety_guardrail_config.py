@@ -26,8 +26,8 @@ class AzureContentSafetyGuardrailConfig(UniversalBaseModel):
     Optional description for this Guardrail Config.
     """
 
-    type: typing.Literal["integration/guardrail-config/azure-content-safety"] = pydantic.Field(
-        default="integration/guardrail-config/azure-content-safety"
+    type: typing.Optional[typing.Literal["integration/guardrail-config/azure-content-safety"]] = pydantic.Field(
+        default=None
     )
     """
     +uiType=Hidden

@@ -13,7 +13,7 @@ class SparkImageBuild(UniversalBaseModel):
     Describes that we are building a new image based on the spec
     """
 
-    type: typing.Literal["spark-image-build"] = pydantic.Field(default="spark-image-build")
+    type: typing.Optional[typing.Literal["spark-image-build"]] = pydantic.Field(default=None)
     """
     +value=spark-image-build
     """

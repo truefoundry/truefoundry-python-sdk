@@ -6,4 +6,4 @@ from ...types.agent_skill_manifest import AgentSkillManifest
 from ...types.artifact_manifest import ArtifactManifest
 from ...types.model_manifest import ModelManifest
 
-StageArtifactRequestManifest = typing.Union[ModelManifest, ArtifactManifest, AgentSkillManifest]
+StageArtifactRequestManifest = typing.Union[ArtifactManifest, ModelManifest, AgentSkillManifest]

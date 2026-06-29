@@ -16,7 +16,6 @@ if typing.TYPE_CHECKING:
     from .deployments.client import AsyncDeploymentsClient, DeploymentsClient
     from .docker_registries.client import AsyncDockerRegistriesClient, DockerRegistriesClient
     from .metrics.client import AsyncMetricsClient, MetricsClient
-    from .ml.client import AsyncMlClient, MlClient
     from .vcs.client import AsyncVcsClient, VcsClient
     from .workflows.client import AsyncWorkflowsClient, WorkflowsClient
 
@@ -30,11 +29,10 @@ class InternalClient:
         self._applications: typing.Optional[ApplicationsClient] = None
         self._metrics: typing.Optional[MetricsClient] = None
         self._vcs: typing.Optional[VcsClient] = None
+        self._artifact_versions: typing.Optional[ArtifactVersionsClient] = None
         self._docker_registries: typing.Optional[DockerRegistriesClient] = None
         self._workflows: typing.Optional[WorkflowsClient] = None
         self._build_logs: typing.Optional[BuildLogsClient] = None
-        self._artifact_versions: typing.Optional[ArtifactVersionsClient] = None
-        self._ml: typing.Optional[MlClient] = None
 
     @property
     def with_raw_response(self) -> RawInternalClient:
@@ -126,6 +124,14 @@ class InternalClient:
         return self._vcs
 
     @property
+    def artifact_versions(self):
+        if self._artifact_versions is None:
+            from .artifact_versions.client import ArtifactVersionsClient  # noqa: E402
+
+            self._artifact_versions = ArtifactVersionsClient(client_wrapper=self._client_wrapper)
+        return self._artifact_versions
+
+    @property
     def docker_registries(self):
         if self._docker_registries is None:
             from .docker_registries.client import DockerRegistriesClient  # noqa: E402
@@ -149,22 +155,6 @@ class InternalClient:
             self._build_logs = BuildLogsClient(client_wrapper=self._client_wrapper)
         return self._build_logs
 
-    @property
-    def artifact_versions(self):
-        if self._artifact_versions is None:
-            from .artifact_versions.client import ArtifactVersionsClient  # noqa: E402
-
-            self._artifact_versions = ArtifactVersionsClient(client_wrapper=self._client_wrapper)
-        return self._artifact_versions
-
-    @property
-    def ml(self):
-        if self._ml is None:
-            from .ml.client import MlClient  # noqa: E402
-
-            self._ml = MlClient(client_wrapper=self._client_wrapper)
-        return self._ml
-
 
 class AsyncInternalClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -175,11 +165,10 @@ class AsyncInternalClient:
         self._applications: typing.Optional[AsyncApplicationsClient] = None
         self._metrics: typing.Optional[AsyncMetricsClient] = None
         self._vcs: typing.Optional[AsyncVcsClient] = None
+        self._artifact_versions: typing.Optional[AsyncArtifactVersionsClient] = None
         self._docker_registries: typing.Optional[AsyncDockerRegistriesClient] = None
         self._workflows: typing.Optional[AsyncWorkflowsClient] = None
         self._build_logs: typing.Optional[AsyncBuildLogsClient] = None
-        self._artifact_versions: typing.Optional[AsyncArtifactVersionsClient] = None
-        self._ml: typing.Optional[AsyncMlClient] = None
 
     @property
     def with_raw_response(self) -> AsyncRawInternalClient:
@@ -279,6 +268,14 @@ class AsyncInternalClient:
         return self._vcs
 
     @property
+    def artifact_versions(self):
+        if self._artifact_versions is None:
+            from .artifact_versions.client import AsyncArtifactVersionsClient  # noqa: E402
+
+            self._artifact_versions = AsyncArtifactVersionsClient(client_wrapper=self._client_wrapper)
+        return self._artifact_versions
+
+    @property
     def docker_registries(self):
         if self._docker_registries is None:
             from .docker_registries.client import AsyncDockerRegistriesClient  # noqa: E402
@@ -301,19 +298,3 @@ class AsyncInternalClient:
 
             self._build_logs = AsyncBuildLogsClient(client_wrapper=self._client_wrapper)
         return self._build_logs
-
-    @property
-    def artifact_versions(self):
-        if self._artifact_versions is None:
-            from .artifact_versions.client import AsyncArtifactVersionsClient  # noqa: E402
-
-            self._artifact_versions = AsyncArtifactVersionsClient(client_wrapper=self._client_wrapper)
-        return self._artifact_versions
-
-    @property
-    def ml(self):
-        if self._ml is None:
-            from .ml.client import AsyncMlClient  # noqa: E402
-
-            self._ml = AsyncMlClient(client_wrapper=self._client_wrapper)
-        return self._ml

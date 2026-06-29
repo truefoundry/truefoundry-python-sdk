@@ -12,9 +12,7 @@ class AzureVault(UniversalBaseModel):
     Azure Vault
     """
 
-    type: typing.Literal["integration/secret-store/azure/vault"] = pydantic.Field(
-        default="integration/secret-store/azure/vault"
-    )
+    type: typing.Optional[typing.Literal["integration/secret-store/azure/vault"]] = pydantic.Field(default=None)
     """
     +value=integration/secret-store/azure/vault
     """

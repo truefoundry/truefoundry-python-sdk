@@ -13,7 +13,7 @@ class GroqModel(UniversalBaseModel):
     Groq Model
     """
 
-    type: typing.Literal["integration/model/groq"] = pydantic.Field(default="integration/model/groq")
+    type: typing.Optional[typing.Literal["integration/model/groq"]] = pydantic.Field(default=None)
     """
     +value=integration/model/groq
     """

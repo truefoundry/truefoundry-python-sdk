@@ -8,10 +8,7 @@ from .signed_url import SignedUrl
 
 
 class GetSignedUrLsResponse(UniversalBaseModel):
-    data: typing.List[SignedUrl] = pydantic.Field()
-    """
-    List of signed URLs for the requested file paths
-    """
+    data: typing.List[SignedUrl]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

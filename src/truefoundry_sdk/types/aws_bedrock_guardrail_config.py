@@ -27,9 +27,7 @@ class AwsBedrockGuardrailConfig(UniversalBaseModel):
     Optional description for this Guardrail Config.
     """
 
-    type: typing.Literal["integration/guardrail-config/aws-bedrock"] = pydantic.Field(
-        default="integration/guardrail-config/aws-bedrock"
-    )
+    type: typing.Optional[typing.Literal["integration/guardrail-config/aws-bedrock"]] = pydantic.Field(default=None)
     """
     +uiType=Hidden
     +value=integration/guardrail-config/aws-bedrock

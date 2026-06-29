@@ -15,7 +15,7 @@ class WebhookProviderAccount(UniversalBaseModel):
     Webhook Provider Account
     """
 
-    type: typing.Literal["provider-account/webhook"] = pydantic.Field(default="provider-account/webhook")
+    type: typing.Optional[typing.Literal["provider-account/webhook"]] = pydantic.Field(default=None)
     """
     +value=provider-account/webhook
     """

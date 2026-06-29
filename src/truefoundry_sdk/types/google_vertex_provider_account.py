@@ -18,7 +18,7 @@ class GoogleVertexProviderAccount(UniversalBaseModel):
     Google Vertex Provider Account
     """
 
-    type: typing.Literal["provider-account/google-vertex"] = pydantic.Field(default="provider-account/google-vertex")
+    type: typing.Optional[typing.Literal["provider-account/google-vertex"]] = pydantic.Field(default=None)
     """
     +value=provider-account/google-vertex
     """

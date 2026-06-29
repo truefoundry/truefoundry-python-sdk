@@ -11,7 +11,7 @@ class AmqpOutputConfig(UniversalBaseModel):
     Describes the configuration for the output AMQP worker
     """
 
-    type: typing.Literal["amqp"] = pydantic.Field(default="amqp")
+    type: typing.Optional[typing.Literal["amqp"]] = pydantic.Field(default=None)
     """
     +value=amqp
     """

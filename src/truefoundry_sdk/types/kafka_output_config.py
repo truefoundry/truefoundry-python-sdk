@@ -12,7 +12,7 @@ class KafkaOutputConfig(UniversalBaseModel):
     Describes the configuration for the output Kafka worker
     """
 
-    type: typing.Literal["kafka"] = pydantic.Field(default="kafka")
+    type: typing.Optional[typing.Literal["kafka"]] = pydantic.Field(default=None)
     """
     +value=kafka
     """

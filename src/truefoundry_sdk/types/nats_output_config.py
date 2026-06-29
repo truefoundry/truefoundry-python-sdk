@@ -12,7 +12,7 @@ class NatsOutputConfig(UniversalBaseModel):
     Describes the configuration for the output NATS worker
     """
 
-    type: typing.Literal["nats"] = pydantic.Field(default="nats")
+    type: typing.Optional[typing.Literal["nats"]] = pydantic.Field(default=None)
     """
     +value=nats
     """

@@ -11,54 +11,15 @@ from .usage_code_snippet import UsageCodeSnippet
 
 
 class AgentSkillVersion(UniversalBaseModel):
-    """
-    Shared artifact-version fields (identity, manifest union, ML repo).
-    """
-
-    id: str = pydantic.Field()
-    """
-    Unique identifier for the artifact version
-    """
-
-    fqn: str = pydantic.Field()
-    """
-    Fully qualified name of the artifact version in the format '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}:{version}'
-    """
-
-    created_by_subject: Subject = pydantic.Field()
-    """
-    Subject (user, team, or service account) that created this artifact version
-    """
-
-    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
-    """
-    Timestamp when the artifact version was created
-    """
-
-    updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
-    """
-    Timestamp when the artifact version was last updated
-    """
-
-    manifest: AgentSkillManifest = pydantic.Field()
-    """
-    Manifest containing metadata specific to this agent skill version
-    """
-
-    ml_repo_id: str = pydantic.Field()
-    """
-    ID of the ML Repo that this artifact version belongs to
-    """
-
-    agent_skill_id: str = pydantic.Field()
-    """
-    ID of the parent agent skill artifact that this version belongs to
-    """
-
-    usage_code_snippets: typing.Optional[typing.List[UsageCodeSnippet]] = pydantic.Field(default=None)
-    """
-    Code snippets demonstrating how to download or use this agent skill version
-    """
+    created_at: typing.Optional[dt.datetime] = None
+    updated_at: typing.Optional[dt.datetime] = None
+    manifest: AgentSkillManifest
+    id: str
+    fqn: str
+    created_by_subject: Subject
+    ml_repo_id: str
+    agent_skill_id: str
+    usage_code_snippets: typing.Optional[typing.List[UsageCodeSnippet]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

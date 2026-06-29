@@ -8,7 +8,11 @@ from .artifact_path import ArtifactPath
 
 
 class LocalArtifactSource(UniversalBaseModel):
-    type: typing.Literal["local"] = "local"
+    type: typing.Optional[typing.Literal["local"]] = pydantic.Field(default=None)
+    """
+    Type of the source
+    """
+
     paths: typing.List[ArtifactPath] = pydantic.Field()
     """
     Array of ArtifactPath objects representing the source and destination paths

@@ -12,7 +12,7 @@ class BitbucketIntegration(UniversalBaseModel):
     Bitbucket
     """
 
-    type: typing.Literal["integration/vcs/bitbucket"] = pydantic.Field(default="integration/vcs/bitbucket")
+    type: typing.Optional[typing.Literal["integration/vcs/bitbucket"]] = pydantic.Field(default=None)
     """
     +value=integration/vcs/bitbucket
     """

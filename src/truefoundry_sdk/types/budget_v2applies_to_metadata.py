@@ -12,7 +12,7 @@ class BudgetV2AppliesToMetadata(UniversalBaseModel):
     Track a separate budget for each unique value of a metadata key.
     """
 
-    type: typing.Literal["metadata"] = pydantic.Field(default="metadata")
+    type: typing.Optional[typing.Literal["metadata"]] = pydantic.Field(default=None)
     """
     Applies To Type
     """

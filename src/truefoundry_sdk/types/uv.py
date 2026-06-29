@@ -12,7 +12,7 @@ class Uv(UniversalBaseModel):
     Your build context root must contain `pyproject.toml` and `uv.lock`
     """
 
-    type: typing.Literal["uv"] = pydantic.Field(default="uv")
+    type: typing.Optional[typing.Literal["uv"]] = pydantic.Field(default=None)
     """
     +value=uv
     """

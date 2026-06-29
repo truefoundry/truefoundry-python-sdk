@@ -23,9 +23,7 @@ class TfyMetadataGuardrailConfig(UniversalBaseModel):
     What does this guardrail enforce?
     """
 
-    type: typing.Literal["integration/guardrail-config/tfy-metadata"] = pydantic.Field(
-        default="integration/guardrail-config/tfy-metadata"
-    )
+    type: typing.Optional[typing.Literal["integration/guardrail-config/tfy-metadata"]] = pydantic.Field(default=None)
     """
     +uiType=Hidden
     +value=integration/guardrail-config/tfy-metadata

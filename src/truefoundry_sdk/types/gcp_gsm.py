@@ -12,9 +12,7 @@ class GcpGsm(UniversalBaseModel):
     GCP GSM
     """
 
-    type: typing.Literal["integration/secret-store/gcp/gsm"] = pydantic.Field(
-        default="integration/secret-store/gcp/gsm"
-    )
+    type: typing.Optional[typing.Literal["integration/secret-store/gcp/gsm"]] = pydantic.Field(default=None)
     """
     +value=integration/secret-store/gcp/gsm
     """

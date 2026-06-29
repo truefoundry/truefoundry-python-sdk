@@ -23,8 +23,8 @@ class TfyContentModerationGuardrailConfig(UniversalBaseModel):
     Optional description for this Guardrail Config.
     """
 
-    type: typing.Literal["integration/guardrail-config/tfy-content-moderation"] = pydantic.Field(
-        default="integration/guardrail-config/tfy-content-moderation"
+    type: typing.Optional[typing.Literal["integration/guardrail-config/tfy-content-moderation"]] = pydantic.Field(
+        default=None
     )
     """
     +uiType=Hidden

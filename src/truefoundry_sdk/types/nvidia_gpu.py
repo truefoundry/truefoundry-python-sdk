@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class NvidiaGpu(UniversalBaseModel):
-    type: typing.Literal["nvidia_gpu"] = pydantic.Field(default="nvidia_gpu")
+    type: typing.Optional[typing.Literal["nvidia_gpu"]] = pydantic.Field(default=None)
     """
     +value=nvidia_gpu
     """

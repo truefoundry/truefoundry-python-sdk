@@ -11,7 +11,7 @@ class GroqKeyAuth(UniversalBaseModel):
     Groq API Key Auth
     """
 
-    type: typing.Literal["api-key"] = pydantic.Field(default="api-key")
+    type: typing.Optional[typing.Literal["api-key"]] = pydantic.Field(default=None)
     """
     +value=api-key
     """

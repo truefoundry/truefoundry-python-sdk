@@ -16,7 +16,7 @@ class TenantBudgetConfig(UniversalBaseModel):
     Tenant Budget Configuration
     """
 
-    type: typing.Literal["tenant-budget-config"] = pydantic.Field(default="tenant-budget-config")
+    type: typing.Optional[typing.Literal["tenant-budget-config"]] = pydantic.Field(default=None)
     """
     +value=tenant-budget-config
     +sort=1

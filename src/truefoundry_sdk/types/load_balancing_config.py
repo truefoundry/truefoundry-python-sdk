@@ -12,7 +12,7 @@ class LoadBalancingConfig(UniversalBaseModel):
     Load Balancing Configuration
     """
 
-    type: typing.Literal["gateway-load-balancing-config"] = pydantic.Field(default="gateway-load-balancing-config")
+    type: typing.Optional[typing.Literal["gateway-load-balancing-config"]] = pydantic.Field(default=None)
     """
     +value=gateway-load-balancing-config
     +sort=2

@@ -11,7 +11,7 @@ class AwsAccessKeyBasedAuth(UniversalBaseModel):
     Access Key Based
     """
 
-    type: typing.Literal["access-key-based"] = pydantic.Field(default="access-key-based")
+    type: typing.Optional[typing.Literal["access-key-based"]] = pydantic.Field(default=None)
     """
     +value=access-key-based
     """

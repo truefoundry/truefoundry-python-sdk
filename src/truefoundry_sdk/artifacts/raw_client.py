@@ -12,13 +12,13 @@ from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
-from ..errors.unprocessable_entity_error import UnprocessableEntityError
+from ..errors.not_found_error import NotFoundError
 from ..types.artifact import Artifact
-from ..types.artifact_manifest import ArtifactManifest
 from ..types.empty_response import EmptyResponse
 from ..types.get_artifact_response import GetArtifactResponse
 from ..types.get_artifact_version_response import GetArtifactVersionResponse
 from ..types.list_artifacts_response import ListArtifactsResponse
+from .types.apply_artifact_request_manifest import ApplyArtifactRequestManifest
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -38,6 +38,7 @@ class RawArtifactsClient:
         Parameters
         ----------
         id : str
+            System-generated artifact ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -48,7 +49,7 @@ class RawArtifactsClient:
             The artifact data
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/artifacts/{encode_path_param(id)}",
+            f"api/svc/v1/artifacts/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -62,8 +63,8 @@ class RawArtifactsClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -91,6 +92,7 @@ class RawArtifactsClient:
         Parameters
         ----------
         id : str
+            System-generated artifact ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -101,7 +103,7 @@ class RawArtifactsClient:
             Empty response indicating successful deletion
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/artifacts/{encode_path_param(id)}",
+            f"api/svc/v1/artifacts/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -115,8 +117,8 @@ class RawArtifactsClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -138,11 +140,11 @@ class RawArtifactsClient:
     def list(
         self,
         *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         fqn: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
         run_id: typing.Optional[str] = None,
         include_empty_artifacts: typing.Optional[bool] = True,
         request_options: typing.Optional[RequestOptions] = None,
@@ -152,26 +154,22 @@ class RawArtifactsClient:
 
         Parameters
         ----------
-        fqn : typing.Optional[str]
-            Fully qualified name to filter artifacts by (format: '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}')
-
-        ml_repo_id : typing.Optional[str]
-            ID of the ML Repo to filter artifacts by
-
-        name : typing.Optional[str]
-            Name of the artifact to filter by
+        limit : typing.Optional[int]
+            Number of items per page
 
         offset : typing.Optional[int]
-            Number of artifacts to skip for pagination
+            Number of items to skip
 
-        limit : typing.Optional[int]
-            Maximum number of artifacts to return
+        fqn : typing.Optional[str]
+            Human-readable Fully Qualified Name of the artifact.
+
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
 
         run_id : typing.Optional[str]
-            ID of the run to filter artifacts by
 
         include_empty_artifacts : typing.Optional[bool]
-            Whether to include artifacts that have no versions
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -184,14 +182,14 @@ class RawArtifactsClient:
         offset = offset if offset is not None else 0
 
         _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/artifacts",
+            "api/svc/v1/artifacts",
             method="GET",
             params={
+                "limit": limit,
+                "offset": offset,
                 "fqn": fqn,
                 "ml_repo_id": ml_repo_id,
                 "name": name,
-                "offset": offset,
-                "limit": limit,
                 "run_id": run_id,
                 "include_empty_artifacts": include_empty_artifacts,
             },
@@ -209,27 +207,16 @@ class RawArtifactsClient:
                 _items = _parsed_response.data
                 _has_next = True
                 _get_next = lambda: self.list(
+                    limit=limit,
+                    offset=offset + len(_items or []),
                     fqn=fqn,
                     ml_repo_id=ml_repo_id,
                     name=name,
-                    offset=offset + len(_items or []),
-                    limit=limit,
                     run_id=run_id,
                     include_empty_artifacts=include_empty_artifacts,
                     request_options=request_options,
                 )
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -240,15 +227,15 @@ class RawArtifactsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create_or_update(
-        self, *, manifest: ArtifactManifest, request_options: typing.Optional[RequestOptions] = None
+        self, *, manifest: ApplyArtifactRequestManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetArtifactVersionResponse]:
         """
-        Create or update an artifact version.
+        Create or update an artifact version from a manifest.
 
         Parameters
         ----------
-        manifest : ArtifactManifest
-            Manifest containing metadata for the artifact to apply
+        manifest : ApplyArtifactRequestManifest
+            Manifest containing metadata for the artifact version to create or update
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -259,11 +246,11 @@ class RawArtifactsClient:
             The created or updated artifact version
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/artifact-versions",
+            "api/svc/v1/artifact-versions",
             method="PUT",
             json={
                 "manifest": convert_and_respect_annotation_metadata(
-                    object_=manifest, annotation=ArtifactManifest, direction="write"
+                    object_=manifest, annotation=ApplyArtifactRequestManifest, direction="write"
                 ),
             },
             headers={
@@ -282,17 +269,6 @@ class RawArtifactsClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -316,6 +292,7 @@ class AsyncRawArtifactsClient:
         Parameters
         ----------
         id : str
+            System-generated artifact ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -326,7 +303,7 @@ class AsyncRawArtifactsClient:
             The artifact data
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/artifacts/{encode_path_param(id)}",
+            f"api/svc/v1/artifacts/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -340,8 +317,8 @@ class AsyncRawArtifactsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -369,6 +346,7 @@ class AsyncRawArtifactsClient:
         Parameters
         ----------
         id : str
+            System-generated artifact ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -379,7 +357,7 @@ class AsyncRawArtifactsClient:
             Empty response indicating successful deletion
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/artifacts/{encode_path_param(id)}",
+            f"api/svc/v1/artifacts/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -393,8 +371,8 @@ class AsyncRawArtifactsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -416,11 +394,11 @@ class AsyncRawArtifactsClient:
     async def list(
         self,
         *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         fqn: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
         run_id: typing.Optional[str] = None,
         include_empty_artifacts: typing.Optional[bool] = True,
         request_options: typing.Optional[RequestOptions] = None,
@@ -430,26 +408,22 @@ class AsyncRawArtifactsClient:
 
         Parameters
         ----------
-        fqn : typing.Optional[str]
-            Fully qualified name to filter artifacts by (format: '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}')
-
-        ml_repo_id : typing.Optional[str]
-            ID of the ML Repo to filter artifacts by
-
-        name : typing.Optional[str]
-            Name of the artifact to filter by
+        limit : typing.Optional[int]
+            Number of items per page
 
         offset : typing.Optional[int]
-            Number of artifacts to skip for pagination
+            Number of items to skip
 
-        limit : typing.Optional[int]
-            Maximum number of artifacts to return
+        fqn : typing.Optional[str]
+            Human-readable Fully Qualified Name of the artifact.
+
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
 
         run_id : typing.Optional[str]
-            ID of the run to filter artifacts by
 
         include_empty_artifacts : typing.Optional[bool]
-            Whether to include artifacts that have no versions
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -462,14 +436,14 @@ class AsyncRawArtifactsClient:
         offset = offset if offset is not None else 0
 
         _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/artifacts",
+            "api/svc/v1/artifacts",
             method="GET",
             params={
+                "limit": limit,
+                "offset": offset,
                 "fqn": fqn,
                 "ml_repo_id": ml_repo_id,
                 "name": name,
-                "offset": offset,
-                "limit": limit,
                 "run_id": run_id,
                 "include_empty_artifacts": include_empty_artifacts,
             },
@@ -489,28 +463,17 @@ class AsyncRawArtifactsClient:
 
                 async def _get_next():
                     return await self.list(
+                        limit=limit,
+                        offset=offset + len(_items or []),
                         fqn=fqn,
                         ml_repo_id=ml_repo_id,
                         name=name,
-                        offset=offset + len(_items or []),
-                        limit=limit,
                         run_id=run_id,
                         include_empty_artifacts=include_empty_artifacts,
                         request_options=request_options,
                     )
 
                 return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -521,15 +484,15 @@ class AsyncRawArtifactsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create_or_update(
-        self, *, manifest: ArtifactManifest, request_options: typing.Optional[RequestOptions] = None
+        self, *, manifest: ApplyArtifactRequestManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetArtifactVersionResponse]:
         """
-        Create or update an artifact version.
+        Create or update an artifact version from a manifest.
 
         Parameters
         ----------
-        manifest : ArtifactManifest
-            Manifest containing metadata for the artifact to apply
+        manifest : ApplyArtifactRequestManifest
+            Manifest containing metadata for the artifact version to create or update
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -540,11 +503,11 @@ class AsyncRawArtifactsClient:
             The created or updated artifact version
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/artifact-versions",
+            "api/svc/v1/artifact-versions",
             method="PUT",
             json={
                 "manifest": convert_and_respect_annotation_metadata(
-                    object_=manifest, annotation=ArtifactManifest, direction="write"
+                    object_=manifest, annotation=ApplyArtifactRequestManifest, direction="write"
                 ),
             },
             headers={
@@ -563,17 +526,6 @@ class AsyncRawArtifactsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

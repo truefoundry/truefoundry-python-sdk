@@ -13,7 +13,7 @@ class DatabricksModel(UniversalBaseModel):
     Databricks Model
     """
 
-    type: typing.Literal["integration/model/databricks"] = pydantic.Field(default="integration/model/databricks")
+    type: typing.Optional[typing.Literal["integration/model/databricks"]] = pydantic.Field(default=None)
     """
     +value=integration/model/databricks
     """

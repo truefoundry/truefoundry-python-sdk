@@ -11,7 +11,7 @@ class SparkImage(UniversalBaseModel):
     Describes that we are using a pre-built image stored in a Docker Image registry
     """
 
-    type: typing.Literal["spark-image"] = pydantic.Field(default="spark-image")
+    type: typing.Optional[typing.Literal["spark-image"]] = pydantic.Field(default=None)
     """
     +value=spark-image
     """

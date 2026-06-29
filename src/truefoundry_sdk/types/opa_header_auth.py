@@ -11,7 +11,7 @@ class OpaHeaderAuth(UniversalBaseModel):
     Authentication via custom HTTP headers for OPA server
     """
 
-    type: typing.Literal["header"] = pydantic.Field(default="header")
+    type: typing.Optional[typing.Literal["header"]] = pydantic.Field(default=None)
     """
     +value=header
     """

@@ -11,7 +11,7 @@ class TaskDockerFileBuild(UniversalBaseModel):
     Describes the configuration for the docker build for a task
     """
 
-    type: typing.Literal["task-dockerfile-build"] = pydantic.Field(default="task-dockerfile-build")
+    type: typing.Optional[typing.Literal["task-dockerfile-build"]] = pydantic.Field(default=None)
     """
     +uiType=Hidden
     +value=dockerfile

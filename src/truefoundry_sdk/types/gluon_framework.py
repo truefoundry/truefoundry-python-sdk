@@ -7,7 +7,14 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class GluonFramework(UniversalBaseModel):
-    type: typing.Literal["gluon"] = "gluon"
+    """
+    Gluon
+    """
+
+    type: typing.Optional[typing.Literal["gluon"]] = pydantic.Field(default=None)
+    """
+    Type of the framework
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

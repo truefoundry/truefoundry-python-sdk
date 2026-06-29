@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class ForwardAction(UniversalBaseModel):
-    type: typing.Literal["forward"] = pydantic.Field(default="forward")
+    type: typing.Optional[typing.Literal["forward"]] = pydantic.Field(default=None)
     """
     +value=forward
     """

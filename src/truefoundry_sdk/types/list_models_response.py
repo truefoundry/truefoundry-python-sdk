@@ -9,15 +9,8 @@ from .pagination import Pagination
 
 
 class ListModelsResponse(UniversalBaseModel):
-    data: typing.List[Model] = pydantic.Field()
-    """
-    List of models matching the query
-    """
-
-    pagination: Pagination = pydantic.Field()
-    """
-    Pagination information including total count, offset, and limit
-    """
+    data: typing.List[Model]
+    pagination: Pagination
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

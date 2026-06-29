@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class KafkaMetricConfig(UniversalBaseModel):
-    type: typing.Literal["kafka"] = pydantic.Field(default="kafka")
+    type: typing.Optional[typing.Literal["kafka"]] = pydantic.Field(default=None)
     """
     +value=kafka
     """

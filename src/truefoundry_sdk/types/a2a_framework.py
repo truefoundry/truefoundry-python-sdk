@@ -11,7 +11,7 @@ class A2AFramework(UniversalBaseModel):
     A2A
     """
 
-    type: typing.Literal["a2a"] = pydantic.Field(default="a2a")
+    type: typing.Optional[typing.Literal["a2a"]] = pydantic.Field(default=None)
     """
     Type
     """

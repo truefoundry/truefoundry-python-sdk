@@ -27,8 +27,8 @@ class GoogleModelArmorGuardrailConfig(UniversalBaseModel):
     Optional description for this Guardrail Config.
     """
 
-    type: typing.Literal["integration/guardrail-config/google-model-armor"] = pydantic.Field(
-        default="integration/guardrail-config/google-model-armor"
+    type: typing.Optional[typing.Literal["integration/guardrail-config/google-model-armor"]] = pydantic.Field(
+        default=None
     )
     """
     +uiType=Hidden

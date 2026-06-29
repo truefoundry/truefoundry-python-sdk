@@ -11,7 +11,7 @@ class BudgetV2AppliesToAggregate(UniversalBaseModel):
     A single shared budget across every matching request.
     """
 
-    type: typing.Literal["aggregate"] = pydantic.Field(default="aggregate")
+    type: typing.Optional[typing.Literal["aggregate"]] = pydantic.Field(default=None)
     """
     Applies To Type
     """

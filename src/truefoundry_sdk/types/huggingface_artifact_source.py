@@ -11,7 +11,7 @@ class HuggingfaceArtifactSource(UniversalBaseModel):
     Input for Artifact from Huggingface Model Hub
     """
 
-    type: typing.Literal["huggingface-hub"] = pydantic.Field(default="huggingface-hub")
+    type: typing.Optional[typing.Literal["huggingface-hub"]] = pydantic.Field(default=None)
     """
     +value=huggingface-hub
     """

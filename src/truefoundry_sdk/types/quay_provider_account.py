@@ -16,7 +16,7 @@ class QuayProviderAccount(UniversalBaseModel):
     Quay
     """
 
-    type: typing.Literal["provider-account/quay"] = pydantic.Field(default="provider-account/quay")
+    type: typing.Optional[typing.Literal["provider-account/quay"]] = pydantic.Field(default=None)
     """
     +value=provider-account/quay
     """

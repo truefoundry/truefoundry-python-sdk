@@ -12,9 +12,7 @@ class WebhookIntegration(UniversalBaseModel):
     Webhook Integration
     """
 
-    type: typing.Literal["integration/gateway-request-logger/webhook"] = pydantic.Field(
-        default="integration/gateway-request-logger/webhook"
-    )
+    type: typing.Optional[typing.Literal["integration/gateway-request-logger/webhook"]] = pydantic.Field(default=None)
     """
     +value=integration/gateway-request-logger/webhook
     """

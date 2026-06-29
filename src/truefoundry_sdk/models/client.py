@@ -97,11 +97,11 @@ class ModelsClient:
     def list(
         self,
         *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         fqn: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
         run_id: typing.Optional[str] = None,
         include_empty_models: typing.Optional[bool] = True,
         request_options: typing.Optional[RequestOptions] = None,
@@ -111,26 +111,21 @@ class ModelsClient:
 
         Parameters
         ----------
-        fqn : typing.Optional[str]
-            Fully qualified name to filter models by (format: 'model:{tenant_name}/{ml_repo_name}/{model_name}')
-
-        ml_repo_id : typing.Optional[str]
-            ID of the ML Repo to filter models by
-
-        name : typing.Optional[str]
-            Name of the model to filter by
+        limit : typing.Optional[int]
+            Number of items per page
 
         offset : typing.Optional[int]
-            Number of models to skip for pagination
+            Number of items to skip
 
-        limit : typing.Optional[int]
-            Maximum number of models to return
+        fqn : typing.Optional[str]
+
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
 
         run_id : typing.Optional[str]
-            ID of the run to filter models by
 
         include_empty_models : typing.Optional[bool]
-            Whether to include models that have no versions
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -149,11 +144,11 @@ class ModelsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         response = client.models.list(
+            limit=10,
+            offset=0,
             fqn="fqn",
             ml_repo_id="ml_repo_id",
             name="name",
-            offset=1,
-            limit=1,
             run_id="run_id",
             include_empty_models=True,
         )
@@ -164,11 +159,11 @@ class ModelsClient:
             yield page
         """
         return self._raw_client.list(
+            limit=limit,
+            offset=offset,
             fqn=fqn,
             ml_repo_id=ml_repo_id,
             name=name,
-            offset=offset,
-            limit=limit,
             run_id=run_id,
             include_empty_models=include_empty_models,
             request_options=request_options,
@@ -203,10 +198,9 @@ class ModelsClient:
         )
         client.models.create_or_update(
             manifest=ModelManifest(
-                name="name",
                 metadata={"key": "value"},
-                ml_repo="ml_repo",
                 source=TrueFoundryManagedSource(),
+                step=1,
             ),
         )
         """
@@ -310,11 +304,11 @@ class AsyncModelsClient:
     async def list(
         self,
         *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         fqn: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
         run_id: typing.Optional[str] = None,
         include_empty_models: typing.Optional[bool] = True,
         request_options: typing.Optional[RequestOptions] = None,
@@ -324,26 +318,21 @@ class AsyncModelsClient:
 
         Parameters
         ----------
-        fqn : typing.Optional[str]
-            Fully qualified name to filter models by (format: 'model:{tenant_name}/{ml_repo_name}/{model_name}')
-
-        ml_repo_id : typing.Optional[str]
-            ID of the ML Repo to filter models by
-
-        name : typing.Optional[str]
-            Name of the model to filter by
+        limit : typing.Optional[int]
+            Number of items per page
 
         offset : typing.Optional[int]
-            Number of models to skip for pagination
+            Number of items to skip
 
-        limit : typing.Optional[int]
-            Maximum number of models to return
+        fqn : typing.Optional[str]
+
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
 
         run_id : typing.Optional[str]
-            ID of the run to filter models by
 
         include_empty_models : typing.Optional[bool]
-            Whether to include models that have no versions
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -367,11 +356,11 @@ class AsyncModelsClient:
 
         async def main() -> None:
             response = await client.models.list(
+                limit=10,
+                offset=0,
                 fqn="fqn",
                 ml_repo_id="ml_repo_id",
                 name="name",
-                offset=1,
-                limit=1,
                 run_id="run_id",
                 include_empty_models=True,
             )
@@ -386,11 +375,11 @@ class AsyncModelsClient:
         asyncio.run(main())
         """
         return await self._raw_client.list(
+            limit=limit,
+            offset=offset,
             fqn=fqn,
             ml_repo_id=ml_repo_id,
             name=name,
-            offset=offset,
-            limit=limit,
             run_id=run_id,
             include_empty_models=include_empty_models,
             request_options=request_options,
@@ -434,10 +423,9 @@ class AsyncModelsClient:
         async def main() -> None:
             await client.models.create_or_update(
                 manifest=ModelManifest(
-                    name="name",
                     metadata={"key": "value"},
-                    ml_repo="ml_repo",
                     source=TrueFoundryManagedSource(),
+                    step=1,
                 ),
             )
 

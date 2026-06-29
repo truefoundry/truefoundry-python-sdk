@@ -13,7 +13,7 @@ class Build(UniversalBaseModel):
     Describes how we build our code into a Docker image.
     """
 
-    type: typing.Literal["build"] = pydantic.Field(default="build")
+    type: typing.Optional[typing.Literal["build"]] = pydantic.Field(default=None)
     """
     +value=build
     """

@@ -11,7 +11,7 @@ class TracingProjectCustomerManagedStorage(UniversalBaseModel):
     Bring your own storage. Please note that this cannot be changed once set.
     """
 
-    type: typing.Literal["customer-managed"] = pydantic.Field(default="customer-managed")
+    type: typing.Optional[typing.Literal["customer-managed"]] = pydantic.Field(default=None)
     """
     Type of storage configuration
     """

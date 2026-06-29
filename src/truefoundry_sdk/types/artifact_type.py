@@ -8,10 +8,6 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class ArtifactType(enum.StrEnum):
-    """
-    An enumeration.
-    """
-
     ARTIFACT = "artifact"
     MODEL = "model"
     PLOT = "plot"

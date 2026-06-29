@@ -16,7 +16,7 @@ class AsyncService(BaseService):
     Describes the configuration for the async-service
     """
 
-    type: typing.Literal["async-service"] = pydantic.Field(default="async-service")
+    type: typing.Optional[typing.Literal["async-service"]] = pydantic.Field(default=None)
     """
     +value=async-service
     """

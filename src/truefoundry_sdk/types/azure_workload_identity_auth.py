@@ -11,7 +11,7 @@ class AzureWorkloadIdentityAuth(UniversalBaseModel):
     Workload Identity Federation
     """
 
-    type: typing.Literal["workload-identity"] = pydantic.Field(default="workload-identity")
+    type: typing.Optional[typing.Literal["workload-identity"]] = pydantic.Field(default=None)
     """
     +value=workload-identity
     """

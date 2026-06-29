@@ -8,10 +8,7 @@ from .agent_skill import AgentSkill
 
 
 class GetAgentSkillResponse(UniversalBaseModel):
-    data: AgentSkill = pydantic.Field()
-    """
-    The agent skill data
-    """
+    data: AgentSkill
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

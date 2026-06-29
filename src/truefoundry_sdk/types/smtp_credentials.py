@@ -11,7 +11,7 @@ class SmtpCredentials(UniversalBaseModel):
     SMTP Credentials
     """
 
-    type: typing.Literal["smtp-credentials"] = pydantic.Field(default="smtp-credentials")
+    type: typing.Optional[typing.Literal["smtp-credentials"]] = pydantic.Field(default=None)
     """
     +value=smtp-credentials
     +sort=250

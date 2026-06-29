@@ -11,7 +11,7 @@ class AiFeaturesSettings(UniversalBaseModel):
     Describes the configuration for TrueFoundry AI features
     """
 
-    type: typing.Literal["settings/ai-features"] = pydantic.Field(default="settings/ai-features")
+    type: typing.Optional[typing.Literal["settings/ai-features"]] = pydantic.Field(default=None)
     """
     +value=settings/ai-features
     """

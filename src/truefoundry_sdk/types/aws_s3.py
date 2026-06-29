@@ -13,7 +13,7 @@ class AwsS3(UniversalBaseModel):
     AWS S3
     """
 
-    type: typing.Literal["integration/blob-storage/aws/s3"] = pydantic.Field(default="integration/blob-storage/aws/s3")
+    type: typing.Optional[typing.Literal["integration/blob-storage/aws/s3"]] = pydantic.Field(default=None)
     """
     +value=integration/blob-storage/aws/s3
     """

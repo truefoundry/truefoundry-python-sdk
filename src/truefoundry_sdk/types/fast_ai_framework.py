@@ -7,7 +7,14 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class FastAiFramework(UniversalBaseModel):
-    type: typing.Literal["fastai"] = "fastai"
+    """
+    FastAI
+    """
+
+    type: typing.Optional[typing.Literal["fastai"]] = pydantic.Field(default=None)
+    """
+    Type of the framework
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

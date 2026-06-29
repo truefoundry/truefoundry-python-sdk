@@ -13,7 +13,7 @@ class PalmModel(UniversalBaseModel):
     PaLM Model
     """
 
-    type: typing.Literal["integration/model/palm"] = pydantic.Field(default="integration/model/palm")
+    type: typing.Optional[typing.Literal["integration/model/palm"]] = pydantic.Field(default=None)
     """
     +value=integration/model/palm
     """

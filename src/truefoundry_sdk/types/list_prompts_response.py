@@ -9,15 +9,8 @@ from .prompt import Prompt
 
 
 class ListPromptsResponse(UniversalBaseModel):
-    data: typing.List[Prompt] = pydantic.Field()
-    """
-    List of prompts matching the query
-    """
-
-    pagination: Pagination = pydantic.Field()
-    """
-    Pagination information including total count, offset, and limit
-    """
+    data: typing.List[Prompt]
+    pagination: Pagination
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

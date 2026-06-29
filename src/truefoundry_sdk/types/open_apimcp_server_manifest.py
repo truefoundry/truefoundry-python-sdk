@@ -19,7 +19,7 @@ class OpenApimcpServerManifest(UniversalBaseModel):
     Connect to an external OpenAPI Server endpoint.
     """
 
-    type: typing.Literal["mcp-server/openapi"] = pydantic.Field(default="mcp-server/openapi")
+    type: typing.Optional[typing.Literal["mcp-server/openapi"]] = pydantic.Field(default=None)
     """
     +value=mcp-server/openapi
     """

@@ -18,7 +18,7 @@ class VirtualModel(UniversalBaseModel):
     The name of the Virtual Model
     """
 
-    type: typing.Literal["integration/model/virtual"] = pydantic.Field(default="integration/model/virtual")
+    type: typing.Optional[typing.Literal["integration/model/virtual"]] = pydantic.Field(default=None)
     """
     +value=integration/model/virtual
     """

@@ -15,7 +15,7 @@ class GlobalSettings(UniversalBaseModel):
     Configure global gateway settings that apply to all requests processed by the gateway. These settings establish default behaviors for retry logic, guardrail enforcement, and request logging that can be overridden by route-specific configurations or request headers. Use these settings to define baseline policies for reliability, security, and observability across your entire gateway deployment.
     """
 
-    type: typing.Literal["gateway-global-settings"] = pydantic.Field(default="gateway-global-settings")
+    type: typing.Optional[typing.Literal["gateway-global-settings"]] = pydantic.Field(default=None)
     """
     +value=gateway-global-settings
     +sort=2

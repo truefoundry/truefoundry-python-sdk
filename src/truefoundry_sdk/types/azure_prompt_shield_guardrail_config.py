@@ -26,8 +26,8 @@ class AzurePromptShieldGuardrailConfig(UniversalBaseModel):
     Optional description for this Guardrail Config.
     """
 
-    type: typing.Literal["integration/guardrail-config/azure-prompt-shield"] = pydantic.Field(
-        default="integration/guardrail-config/azure-prompt-shield"
+    type: typing.Optional[typing.Literal["integration/guardrail-config/azure-prompt-shield"]] = pydantic.Field(
+        default=None
     )
     """
     +uiType=Hidden

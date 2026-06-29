@@ -13,7 +13,7 @@ class SambaNovaModel(UniversalBaseModel):
     SambaNova Model
     """
 
-    type: typing.Literal["integration/model/sambanova"] = pydantic.Field(default="integration/model/sambanova")
+    type: typing.Optional[typing.Literal["integration/model/sambanova"]] = pydantic.Field(default=None)
     """
     +value=integration/model/sambanova
     """

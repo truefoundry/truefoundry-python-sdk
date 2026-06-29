@@ -8,10 +8,7 @@ from .model_version import ModelVersion
 
 
 class GetModelVersionResponse(UniversalBaseModel):
-    data: ModelVersion = pydantic.Field()
-    """
-    The model version data
-    """
+    data: ModelVersion
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

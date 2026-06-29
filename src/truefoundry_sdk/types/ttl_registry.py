@@ -11,7 +11,7 @@ class TtlRegistry(UniversalBaseModel):
     TTL
     """
 
-    type: typing.Literal["integration/docker-registry/ttl"] = pydantic.Field(default="integration/docker-registry/ttl")
+    type: typing.Optional[typing.Literal["integration/docker-registry/ttl"]] = pydantic.Field(default=None)
     """
     +value=integration/docker-registry/ttl
     """

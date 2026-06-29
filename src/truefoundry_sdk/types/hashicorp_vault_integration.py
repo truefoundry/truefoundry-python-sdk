@@ -12,9 +12,7 @@ class HashicorpVaultIntegration(UniversalBaseModel):
     HashiCorp Vault Integration
     """
 
-    type: typing.Literal["integration/secret-store/hashicorp/vault"] = pydantic.Field(
-        default="integration/secret-store/hashicorp/vault"
-    )
+    type: typing.Optional[typing.Literal["integration/secret-store/hashicorp/vault"]] = pydantic.Field(default=None)
     """
     +value=integration/secret-store/hashicorp/vault
     """

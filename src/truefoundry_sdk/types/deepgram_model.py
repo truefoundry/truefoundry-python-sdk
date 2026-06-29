@@ -13,7 +13,7 @@ class DeepgramModel(UniversalBaseModel):
     Deepgram Model
     """
 
-    type: typing.Literal["integration/model/deepgram"] = pydantic.Field(default="integration/model/deepgram")
+    type: typing.Optional[typing.Literal["integration/model/deepgram"]] = pydantic.Field(default=None)
     """
     +value=integration/model/deepgram
     """

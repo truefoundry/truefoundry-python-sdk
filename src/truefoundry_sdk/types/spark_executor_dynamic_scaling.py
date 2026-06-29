@@ -11,7 +11,7 @@ class SparkExecutorDynamicScaling(UniversalBaseModel):
     Dynamic Scaling
     """
 
-    type: typing.Literal["dynamic"] = pydantic.Field(default="dynamic")
+    type: typing.Optional[typing.Literal["dynamic"]] = pydantic.Field(default=None)
     """
     +value=dynamic
     """

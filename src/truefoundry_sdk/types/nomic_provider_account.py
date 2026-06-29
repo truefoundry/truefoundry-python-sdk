@@ -17,7 +17,7 @@ class NomicProviderAccount(UniversalBaseModel):
     Nomic Provider Account
     """
 
-    type: typing.Literal["provider-account/nomic"] = pydantic.Field(default="provider-account/nomic")
+    type: typing.Optional[typing.Literal["provider-account/nomic"]] = pydantic.Field(default=None)
     """
     +value=provider-account/nomic
     """

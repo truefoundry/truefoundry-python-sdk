@@ -12,7 +12,7 @@ class AzureAksIntegration(UniversalBaseModel):
     Azure AKS
     """
 
-    type: typing.Literal["integration/cluster/azure/aks"] = pydantic.Field(default="integration/cluster/azure/aks")
+    type: typing.Optional[typing.Literal["integration/cluster/azure/aks"]] = pydantic.Field(default=None)
     """
     +value=integration/cluster/azure/aks
     """

@@ -7,8 +7,19 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class TrueFoundryManagedSource(UniversalBaseModel):
-    type: typing.Literal["truefoundry"] = "truefoundry"
-    uri: typing.Optional[str] = None
+    """
+    TrueFoundry Managed Source
+    """
+
+    type: typing.Optional[typing.Literal["truefoundry"]] = pydantic.Field(default=None)
+    """
+    Type of the source
+    """
+
+    uri: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    URI
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

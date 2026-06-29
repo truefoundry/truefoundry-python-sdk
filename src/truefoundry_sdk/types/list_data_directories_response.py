@@ -9,15 +9,8 @@ from .pagination import Pagination
 
 
 class ListDataDirectoriesResponse(UniversalBaseModel):
-    data: typing.List[DataDirectory] = pydantic.Field()
-    """
-    List of data directories matching the query
-    """
-
-    pagination: Pagination = pydantic.Field()
-    """
-    Pagination information including total count, offset, and limit
-    """
+    data: typing.List[DataDirectory]
+    pagination: Pagination
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

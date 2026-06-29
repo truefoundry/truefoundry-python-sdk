@@ -18,9 +18,7 @@ class AwsClaudePlatformProviderAccount(UniversalBaseModel):
     AWS Claude Platform
     """
 
-    type: typing.Literal["provider-account/aws-claude-platform"] = pydantic.Field(
-        default="provider-account/aws-claude-platform"
-    )
+    type: typing.Optional[typing.Literal["provider-account/aws-claude-platform"]] = pydantic.Field(default=None)
     """
     +value=provider-account/aws-claude-platform
     """

@@ -9,21 +9,9 @@ from ..core.serialization import FieldMetadata
 
 
 class ListFilesRequest(UniversalBaseModel):
-    id: str = pydantic.Field()
-    """
-    ID of the artifact version to list files from
-    """
-
-    path: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Relative path within the artifact version to list files from (defaults to root)
-    """
-
-    limit: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Maximum number of files/directories to return
-    """
-
+    id: str
+    path: typing.Optional[str] = None
+    limit: typing.Optional[float] = None
     page_token: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="pageToken"),

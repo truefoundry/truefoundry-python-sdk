@@ -4,24 +4,13 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .operation import Operation
+from .get_signed_ur_ls_request_operation import GetSignedUrLsRequestOperation
 
 
 class GetSignedUrLsRequest(UniversalBaseModel):
-    id: str = pydantic.Field()
-    """
-    ID of the artifact version to get signed URLs for
-    """
-
-    paths: typing.List[str] = pydantic.Field()
-    """
-    List of relative file paths within the artifact version to get signed URLs for
-    """
-
-    operation: Operation = pydantic.Field()
-    """
-    Operation type for the signed URL (e.g., 'READ' or 'WRITE')
-    """
+    id: str
+    paths: typing.List[str]
+    operation: GetSignedUrLsRequestOperation
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -9,7 +9,7 @@ from .role_binding_subject import RoleBindingSubject
 
 
 class RoleBindingManifest(UniversalBaseModel):
-    type: typing.Literal["role-binding"] = pydantic.Field(default="role-binding")
+    type: typing.Optional[typing.Literal["role-binding"]] = pydantic.Field(default=None)
     """
     +value=role-binding
     """

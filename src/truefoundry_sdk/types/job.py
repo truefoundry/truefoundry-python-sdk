@@ -18,7 +18,7 @@ class Job(UniversalBaseModel):
     Describes the configuration for the job
     """
 
-    type: typing.Literal["job"] = pydantic.Field(default="job")
+    type: typing.Optional[typing.Literal["job"]] = pydantic.Field(default=None)
     """
     +value=job
     """

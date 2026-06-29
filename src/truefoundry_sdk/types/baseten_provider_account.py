@@ -17,7 +17,7 @@ class BasetenProviderAccount(UniversalBaseModel):
     Baseten
     """
 
-    type: typing.Literal["provider-account/baseten"] = pydantic.Field(default="provider-account/baseten")
+    type: typing.Optional[typing.Literal["provider-account/baseten"]] = pydantic.Field(default=None)
     """
     +value=provider-account/baseten
     """

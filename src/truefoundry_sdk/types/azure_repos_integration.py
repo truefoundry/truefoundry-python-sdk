@@ -12,7 +12,7 @@ class AzureReposIntegration(UniversalBaseModel):
     Azure Repo
     """
 
-    type: typing.Literal["integration/vcs/azure"] = pydantic.Field(default="integration/vcs/azure")
+    type: typing.Optional[typing.Literal["integration/vcs/azure"]] = pydantic.Field(default=None)
     """
     +value=integration/vcs/azure
     """

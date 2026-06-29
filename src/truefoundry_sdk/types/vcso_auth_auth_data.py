@@ -11,7 +11,7 @@ class VcsoAuthAuthData(UniversalBaseModel):
     OAuth
     """
 
-    type: typing.Literal["oauth"] = pydantic.Field(default="oauth")
+    type: typing.Optional[typing.Literal["oauth"]] = pydantic.Field(default=None)
     """
     +value=oauth
     """

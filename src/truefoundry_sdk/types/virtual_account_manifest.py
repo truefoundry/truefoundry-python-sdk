@@ -21,7 +21,7 @@ class VirtualAccountManifest(UniversalBaseModel):
     Virtual Account Name
     """
 
-    type: typing.Literal["virtual-account"] = pydantic.Field(default="virtual-account")
+    type: typing.Optional[typing.Literal["virtual-account"]] = pydantic.Field(default=None)
     """
     +value=virtual-account
     """

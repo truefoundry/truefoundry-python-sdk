@@ -8,7 +8,7 @@ from .base_o_auth2login import BaseOAuth2Login
 
 
 class OAuth2LoginProvider(BaseOAuth2Login):
-    type: typing.Literal["oauth2"] = pydantic.Field(default="oauth2")
+    type: typing.Optional[typing.Literal["oauth2"]] = pydantic.Field(default=None)
     """
     +value=oauth2
     """

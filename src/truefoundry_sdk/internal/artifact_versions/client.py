@@ -8,6 +8,7 @@ from ...core.request_options import RequestOptions
 from ...types.artifact_type import ArtifactType
 from ...types.internal_list_artifact_versions_response import InternalListArtifactVersionsResponse
 from ...types.internal_list_artifact_versions_response_data_item import InternalListArtifactVersionsResponseDataItem
+from ...types.object import Object
 from .raw_client import AsyncRawArtifactVersionsClient, RawArtifactVersionsClient
 
 
@@ -29,16 +30,16 @@ class ArtifactVersionsClient:
     def list(
         self,
         *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         tag: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         artifact_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[int] = None,
+        version: typing.Optional[Object] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
+        run_steps: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
         include_internal_metadata: typing.Optional[bool] = False,
         include_model_versions: typing.Optional[bool] = False,
         artifact_types: typing.Optional[typing.Union[ArtifactType, typing.Sequence[ArtifactType]]] = None,
@@ -49,41 +50,31 @@ class ArtifactVersionsClient:
 
         Parameters
         ----------
-        tag : typing.Optional[str]
-            Tag to filter artifact versions by
-
-        fqn : typing.Optional[str]
-            Fully qualified name to filter artifact versions by (format: '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}' or '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}:{version}')
-
-        artifact_id : typing.Optional[str]
-            ID of the artifact to filter versions by
-
-        ml_repo_id : typing.Optional[str]
-            ID of the ML Repo to filter artifact versions by
-
-        name : typing.Optional[str]
-            Name of the artifact to filter versions by
-
-        version : typing.Optional[int]
-            Version number (positive integer) or 'latest' to filter by specific version
-
-        run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            List of run IDs to filter artifact versions by
-
-        run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
-            List of run step numbers to filter artifact versions by
+        limit : typing.Optional[int]
+            Number of items per page
 
         offset : typing.Optional[int]
-            Number of artifact versions to skip for pagination
+            Number of items to skip
 
-        limit : typing.Optional[int]
-            Maximum number of artifact versions to return
+        tag : typing.Optional[str]
+
+        fqn : typing.Optional[str]
+
+        artifact_id : typing.Optional[str]
+
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
+
+        version : typing.Optional[Object]
+
+        run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+
+        run_steps : typing.Optional[typing.Union[float, typing.Sequence[float]]]
 
         include_internal_metadata : typing.Optional[bool]
-            Whether to include internal metadata in the response
 
         include_model_versions : typing.Optional[bool]
-            Whether to include model versions in the results (internal use only)
 
         artifact_types : typing.Optional[typing.Union[ArtifactType, typing.Sequence[ArtifactType]]]
 
@@ -104,16 +95,15 @@ class ArtifactVersionsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         response = client.internal.artifact_versions.list(
+            limit=10,
+            offset=0,
             tag="tag",
             fqn="fqn",
             artifact_id="artifact_id",
             ml_repo_id="ml_repo_id",
             name="name",
-            version=1,
             run_ids=["run_ids"],
-            run_steps=[1],
-            offset=1,
-            limit=1,
+            run_steps=[1.1],
             include_internal_metadata=True,
             include_model_versions=True,
             artifact_types=[ArtifactType.ARTIFACT],
@@ -125,6 +115,8 @@ class ArtifactVersionsClient:
             yield page
         """
         return self._raw_client.list(
+            limit=limit,
+            offset=offset,
             tag=tag,
             fqn=fqn,
             artifact_id=artifact_id,
@@ -133,8 +125,6 @@ class ArtifactVersionsClient:
             version=version,
             run_ids=run_ids,
             run_steps=run_steps,
-            offset=offset,
-            limit=limit,
             include_internal_metadata=include_internal_metadata,
             include_model_versions=include_model_versions,
             artifact_types=artifact_types,
@@ -160,16 +150,16 @@ class AsyncArtifactVersionsClient:
     async def list(
         self,
         *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         tag: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         artifact_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[int] = None,
+        version: typing.Optional[Object] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
+        run_steps: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
         include_internal_metadata: typing.Optional[bool] = False,
         include_model_versions: typing.Optional[bool] = False,
         artifact_types: typing.Optional[typing.Union[ArtifactType, typing.Sequence[ArtifactType]]] = None,
@@ -180,41 +170,31 @@ class AsyncArtifactVersionsClient:
 
         Parameters
         ----------
-        tag : typing.Optional[str]
-            Tag to filter artifact versions by
-
-        fqn : typing.Optional[str]
-            Fully qualified name to filter artifact versions by (format: '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}' or '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}:{version}')
-
-        artifact_id : typing.Optional[str]
-            ID of the artifact to filter versions by
-
-        ml_repo_id : typing.Optional[str]
-            ID of the ML Repo to filter artifact versions by
-
-        name : typing.Optional[str]
-            Name of the artifact to filter versions by
-
-        version : typing.Optional[int]
-            Version number (positive integer) or 'latest' to filter by specific version
-
-        run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            List of run IDs to filter artifact versions by
-
-        run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
-            List of run step numbers to filter artifact versions by
+        limit : typing.Optional[int]
+            Number of items per page
 
         offset : typing.Optional[int]
-            Number of artifact versions to skip for pagination
+            Number of items to skip
 
-        limit : typing.Optional[int]
-            Maximum number of artifact versions to return
+        tag : typing.Optional[str]
+
+        fqn : typing.Optional[str]
+
+        artifact_id : typing.Optional[str]
+
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
+
+        version : typing.Optional[Object]
+
+        run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+
+        run_steps : typing.Optional[typing.Union[float, typing.Sequence[float]]]
 
         include_internal_metadata : typing.Optional[bool]
-            Whether to include internal metadata in the response
 
         include_model_versions : typing.Optional[bool]
-            Whether to include model versions in the results (internal use only)
 
         artifact_types : typing.Optional[typing.Union[ArtifactType, typing.Sequence[ArtifactType]]]
 
@@ -240,16 +220,15 @@ class AsyncArtifactVersionsClient:
 
         async def main() -> None:
             response = await client.internal.artifact_versions.list(
+                limit=10,
+                offset=0,
                 tag="tag",
                 fqn="fqn",
                 artifact_id="artifact_id",
                 ml_repo_id="ml_repo_id",
                 name="name",
-                version=1,
                 run_ids=["run_ids"],
-                run_steps=[1],
-                offset=1,
-                limit=1,
+                run_steps=[1.1],
                 include_internal_metadata=True,
                 include_model_versions=True,
                 artifact_types=[ArtifactType.ARTIFACT],
@@ -265,6 +244,8 @@ class AsyncArtifactVersionsClient:
         asyncio.run(main())
         """
         return await self._raw_client.list(
+            limit=limit,
+            offset=offset,
             tag=tag,
             fqn=fqn,
             artifact_id=artifact_id,
@@ -273,8 +254,6 @@ class AsyncArtifactVersionsClient:
             version=version,
             run_ids=run_ids,
             run_steps=run_steps,
-            offset=offset,
-            limit=limit,
             include_internal_metadata=include_internal_metadata,
             include_model_versions=include_model_versions,
             artifact_types=artifact_types,

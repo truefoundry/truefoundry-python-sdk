@@ -14,7 +14,7 @@ class PythonTaskConfig(UniversalBaseModel):
     Describes the configuration for the python function task
     """
 
-    type: typing.Literal["python-task-config"] = pydantic.Field(default="python-task-config")
+    type: typing.Optional[typing.Literal["python-task-config"]] = pydantic.Field(default=None)
     """
     +value=python-task-config
     """

@@ -7,7 +7,7 @@ from ..core import enum
 T_Result = typing.TypeVar("T_Result")
 
 
-class MimeType(enum.StrEnum):
+class BlobStorageReferenceMimeType(enum.StrEnum):
     """
     MIME type of the content
     """
@@ -17,13 +17,13 @@ class MimeType(enum.StrEnum):
     IMAGE_PNG = "image/png"
     IMAGE_JPEG = "image/jpeg"
     APPLICATION_X_DIRECTORY = "application/x-directory"
-    _UNKNOWN = "__MIMETYPE_UNKNOWN__"
+    _UNKNOWN = "__BLOBSTORAGEREFERENCEMIMETYPE_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
     """
 
     @classmethod
-    def _missing_(cls, value: typing.Any) -> "MimeType":
+    def _missing_(cls, value: typing.Any) -> "BlobStorageReferenceMimeType":
         unknown = cls._UNKNOWN
         unknown._value_ = value
         return unknown
@@ -37,14 +37,14 @@ class MimeType(enum.StrEnum):
         application_x_directory: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
-        if self is MimeType.TEXT_PLAIN:
+        if self is BlobStorageReferenceMimeType.TEXT_PLAIN:
             return text_plain()
-        if self is MimeType.APPLICATION_JSON:
+        if self is BlobStorageReferenceMimeType.APPLICATION_JSON:
             return application_json()
-        if self is MimeType.IMAGE_PNG:
+        if self is BlobStorageReferenceMimeType.IMAGE_PNG:
             return image_png()
-        if self is MimeType.IMAGE_JPEG:
+        if self is BlobStorageReferenceMimeType.IMAGE_JPEG:
             return image_jpeg()
-        if self is MimeType.APPLICATION_X_DIRECTORY:
+        if self is BlobStorageReferenceMimeType.APPLICATION_X_DIRECTORY:
             return application_x_directory()
         return _unknown_member(self._value_)

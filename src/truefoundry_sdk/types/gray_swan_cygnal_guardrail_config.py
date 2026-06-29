@@ -26,9 +26,7 @@ class GraySwanCygnalGuardrailConfig(UniversalBaseModel):
     Optional description for this Guardrail Config.
     """
 
-    type: typing.Literal["integration/guardrail-config/grayswan-cygnal"] = pydantic.Field(
-        default="integration/guardrail-config/grayswan-cygnal"
-    )
+    type: typing.Optional[typing.Literal["integration/guardrail-config/grayswan-cygnal"]] = pydantic.Field(default=None)
     """
     +uiType=Hidden
     +value=integration/guardrail-config/grayswan-cygnal

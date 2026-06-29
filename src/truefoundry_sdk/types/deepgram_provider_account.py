@@ -17,7 +17,7 @@ class DeepgramProviderAccount(UniversalBaseModel):
     Deepgram Provider Account
     """
 
-    type: typing.Literal["provider-account/deepgram"] = pydantic.Field(default="provider-account/deepgram")
+    type: typing.Optional[typing.Literal["provider-account/deepgram"]] = pydantic.Field(default=None)
     """
     +value=provider-account/deepgram
     """

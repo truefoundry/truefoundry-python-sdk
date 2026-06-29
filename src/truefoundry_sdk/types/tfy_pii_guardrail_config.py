@@ -26,9 +26,7 @@ class TfyPiiGuardrailConfig(UniversalBaseModel):
     Optional description for this Guardrail Config.
     """
 
-    type: typing.Literal["integration/guardrail-config/tfy-pii"] = pydantic.Field(
-        default="integration/guardrail-config/tfy-pii"
-    )
+    type: typing.Optional[typing.Literal["integration/guardrail-config/tfy-pii"]] = pydantic.Field(default=None)
     """
     +uiType=Hidden
     +value=integration/guardrail-config/tfy-pii

@@ -7,25 +7,10 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class Metric(UniversalBaseModel):
-    key: str = pydantic.Field()
-    """
-    Name of the metric
-    """
-
-    value: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    Value of the metric
-    """
-
-    timestamp: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Timestamp when the metric was recorded (epoch milliseconds)
-    """
-
-    step: typing.Optional[int] = pydantic.Field(default=0)
-    """
-    Training step number when the metric was recorded
-    """
+    key: str
+    value: typing.Optional[float] = None
+    timestamp: typing.Optional[float] = None
+    step: typing.Optional[float] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

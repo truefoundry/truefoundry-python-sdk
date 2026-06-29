@@ -16,7 +16,7 @@ class AwsProviderAccount(UniversalBaseModel):
     AWS
     """
 
-    type: typing.Literal["provider-account/aws"] = pydantic.Field(default="provider-account/aws")
+    type: typing.Optional[typing.Literal["provider-account/aws"]] = pydantic.Field(default=None)
     """
     +value=provider-account/aws
     """

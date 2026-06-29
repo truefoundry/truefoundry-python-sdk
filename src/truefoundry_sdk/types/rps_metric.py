@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class RpsMetric(UniversalBaseModel):
-    type: typing.Literal["rps"] = pydantic.Field(default="rps")
+    type: typing.Optional[typing.Literal["rps"]] = pydantic.Field(default=None)
     """
     +value=rps
     """

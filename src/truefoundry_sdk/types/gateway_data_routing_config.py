@@ -13,7 +13,7 @@ class GatewayDataRoutingConfig(UniversalBaseModel):
     Configuration for gateway data routing with destinations and default settings.
     """
 
-    type: typing.Literal["gateway-data-routing-config"] = pydantic.Field(default="gateway-data-routing-config")
+    type: typing.Optional[typing.Literal["gateway-data-routing-config"]] = pydantic.Field(default=None)
     """
     Type of configuration
     """

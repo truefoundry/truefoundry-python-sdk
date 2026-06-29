@@ -12,7 +12,7 @@ class GoogleModelArmorKeyFileAuth(UniversalBaseModel):
     Authentication method using a Google Cloud service account key file
     """
 
-    type: typing.Literal["key-file"] = pydantic.Field(default="key-file")
+    type: typing.Optional[typing.Literal["key-file"]] = pydantic.Field(default=None)
     """
     +value=key-file
     """

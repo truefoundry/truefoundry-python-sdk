@@ -15,7 +15,7 @@ class PagerDutyProviderAccount(UniversalBaseModel):
     PagerDuty Provider Account
     """
 
-    type: typing.Literal["provider-account/pagerduty"] = pydantic.Field(default="provider-account/pagerduty")
+    type: typing.Optional[typing.Literal["provider-account/pagerduty"]] = pydantic.Field(default=None)
     """
     +value=provider-account/pagerduty
     """

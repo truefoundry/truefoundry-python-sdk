@@ -12,7 +12,7 @@ class VirtualMcpServerIntegration(UniversalBaseModel):
     Virtual MCP Server
     """
 
-    type: typing.Literal["integration/mcp-server/virtual"] = pydantic.Field(default="integration/mcp-server/virtual")
+    type: typing.Optional[typing.Literal["integration/mcp-server/virtual"]] = pydantic.Field(default=None)
     """
     +value=integration/mcp-server/virtual
     """

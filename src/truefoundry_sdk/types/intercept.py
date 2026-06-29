@@ -8,7 +8,7 @@ from .intercept_rules_item import InterceptRulesItem
 
 
 class Intercept(UniversalBaseModel):
-    type: typing.Literal["intercept"] = pydantic.Field(default="intercept")
+    type: typing.Optional[typing.Literal["intercept"]] = pydantic.Field(default=None)
     """
     +value=intercept
     """

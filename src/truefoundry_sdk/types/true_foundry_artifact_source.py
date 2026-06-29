@@ -11,7 +11,7 @@ class TrueFoundryArtifactSource(UniversalBaseModel):
     Input for Artifact from TrueFoundry Artifact Registry
     """
 
-    type: typing.Literal["truefoundry-artifact"] = pydantic.Field(default="truefoundry-artifact")
+    type: typing.Optional[typing.Literal["truefoundry-artifact"]] = pydantic.Field(default=None)
     """
     +value=truefoundry-artifact
     """

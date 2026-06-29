@@ -15,7 +15,7 @@ class GitlabProviderAccount(UniversalBaseModel):
     Gitlab
     """
 
-    type: typing.Literal["provider-account/gitlab"] = pydantic.Field(default="provider-account/gitlab")
+    type: typing.Optional[typing.Literal["provider-account/gitlab"]] = pydantic.Field(default=None)
     """
     +value=provider-account/gitlab
     """

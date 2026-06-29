@@ -17,7 +17,7 @@ class GatewayLoggingConfig(UniversalBaseModel):
     Name of the logging configuration
     """
 
-    type: typing.Literal["gateway-logging-config"] = pydantic.Field(default="gateway-logging-config")
+    type: typing.Optional[typing.Literal["gateway-logging-config"]] = pydantic.Field(default=None)
     """
     +value=gateway-logging-config
     +sort=2

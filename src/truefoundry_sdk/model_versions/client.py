@@ -9,6 +9,7 @@ from ..types.empty_response import EmptyResponse
 from ..types.get_model_version_response import GetModelVersionResponse
 from ..types.list_model_versions_response import ListModelVersionsResponse
 from ..types.model_version import ModelVersion
+from ..types.object import Object
 from .raw_client import AsyncRawModelVersionsClient, RawModelVersionsClient
 
 # this is used as the default value for optional parameters
@@ -30,6 +31,101 @@ class ModelVersionsClient:
         """
         return self._raw_client
 
+    def list(
+        self,
+        *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
+        tag: typing.Optional[str] = None,
+        fqn: typing.Optional[str] = None,
+        model_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
+        version: typing.Optional[Object] = None,
+        run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        run_steps: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
+        include_internal_metadata: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncPager[ModelVersion, ListModelVersionsResponse]:
+        """
+        List model versions with optional filtering by tag, FQN, model ID, ML Repo, name, version, run IDs, or run steps.
+
+        Parameters
+        ----------
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
+        tag : typing.Optional[str]
+
+        fqn : typing.Optional[str]
+
+        model_id : typing.Optional[str]
+
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
+
+        version : typing.Optional[Object]
+            Version number (positive integer) or `latest`
+
+        run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+
+        run_steps : typing.Optional[typing.Union[float, typing.Sequence[float]]]
+
+        include_internal_metadata : typing.Optional[bool]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[ModelVersion, ListModelVersionsResponse]
+            List of model versions matching the query with pagination information
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.model_versions.list(
+            limit=10,
+            offset=0,
+            tag="tag",
+            fqn="fqn",
+            model_id="model_id",
+            ml_repo_id="ml_repo_id",
+            name="name",
+            run_ids=["run_ids"],
+            run_steps=[1.1],
+            include_internal_metadata=True,
+        )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
+        """
+        return self._raw_client.list(
+            limit=limit,
+            offset=offset,
+            tag=tag,
+            fqn=fqn,
+            model_id=model_id,
+            ml_repo_id=ml_repo_id,
+            name=name,
+            version=version,
+            run_ids=run_ids,
+            run_steps=run_steps,
+            include_internal_metadata=include_internal_metadata,
+            request_options=request_options,
+        )
+
     def apply_tags(
         self,
         *,
@@ -44,13 +140,10 @@ class ModelVersionsClient:
         Parameters
         ----------
         model_version_id : str
-            ID of the model version to apply tags to
 
         tags : typing.Sequence[str]
-            List of tags to apply to the model version
 
         force : typing.Optional[bool]
-            Whether to overwrite existing tags if they conflict
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -85,6 +178,7 @@ class ModelVersionsClient:
         Parameters
         ----------
         id : str
+            Model version ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -116,6 +210,7 @@ class ModelVersionsClient:
         Parameters
         ----------
         id : str
+            Model version ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -140,110 +235,6 @@ class ModelVersionsClient:
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
 
-    def list(
-        self,
-        *,
-        tag: typing.Optional[str] = None,
-        fqn: typing.Optional[str] = None,
-        model_id: typing.Optional[str] = None,
-        ml_repo_id: typing.Optional[str] = None,
-        name: typing.Optional[str] = None,
-        version: typing.Optional[int] = None,
-        run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
-        include_internal_metadata: typing.Optional[bool] = False,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[ModelVersion, ListModelVersionsResponse]:
-        """
-        List model versions with optional filtering by tag, FQN, model ID, ML Repo, name, version, run IDs, or run steps.
-
-        Parameters
-        ----------
-        tag : typing.Optional[str]
-            Tag to filter model versions by
-
-        fqn : typing.Optional[str]
-            Fully qualified name to filter model versions by (format: 'model:{tenant_name}/{ml_repo_name}/{model_name}' or 'model:{tenant_name}/{ml_repo_name}/{model_name}:{version}')
-
-        model_id : typing.Optional[str]
-            ID of the model to filter versions by
-
-        ml_repo_id : typing.Optional[str]
-            ID of the ML Repo to filter model versions by
-
-        name : typing.Optional[str]
-            Name of the model to filter versions by
-
-        version : typing.Optional[int]
-            Version number (positive integer) or 'latest' to filter by specific version
-
-        run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            List of run IDs to filter model versions by
-
-        run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
-            List of run step numbers to filter model versions by
-
-        offset : typing.Optional[int]
-            Number of model versions to skip for pagination
-
-        limit : typing.Optional[int]
-            Maximum number of model versions to return
-
-        include_internal_metadata : typing.Optional[bool]
-            Whether to include internal metadata in the response
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SyncPager[ModelVersion, ListModelVersionsResponse]
-            List of model versions matching the query with pagination information
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        response = client.model_versions.list(
-            tag="tag",
-            fqn="fqn",
-            model_id="model_id",
-            ml_repo_id="ml_repo_id",
-            name="name",
-            version=1,
-            run_ids=["run_ids"],
-            run_steps=[1],
-            offset=1,
-            limit=1,
-            include_internal_metadata=True,
-        )
-        for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        for page in response.iter_pages():
-            yield page
-        """
-        return self._raw_client.list(
-            tag=tag,
-            fqn=fqn,
-            model_id=model_id,
-            ml_repo_id=ml_repo_id,
-            name=name,
-            version=version,
-            run_ids=run_ids,
-            run_steps=run_steps,
-            offset=offset,
-            limit=limit,
-            include_internal_metadata=include_internal_metadata,
-            request_options=request_options,
-        )
-
 
 class AsyncModelVersionsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -260,6 +251,110 @@ class AsyncModelVersionsClient:
         """
         return self._raw_client
 
+    async def list(
+        self,
+        *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
+        tag: typing.Optional[str] = None,
+        fqn: typing.Optional[str] = None,
+        model_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
+        version: typing.Optional[Object] = None,
+        run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        run_steps: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
+        include_internal_metadata: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncPager[ModelVersion, ListModelVersionsResponse]:
+        """
+        List model versions with optional filtering by tag, FQN, model ID, ML Repo, name, version, run IDs, or run steps.
+
+        Parameters
+        ----------
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
+        tag : typing.Optional[str]
+
+        fqn : typing.Optional[str]
+
+        model_id : typing.Optional[str]
+
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
+
+        version : typing.Optional[Object]
+            Version number (positive integer) or `latest`
+
+        run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+
+        run_steps : typing.Optional[typing.Union[float, typing.Sequence[float]]]
+
+        include_internal_metadata : typing.Optional[bool]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[ModelVersion, ListModelVersionsResponse]
+            List of model versions matching the query with pagination information
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.model_versions.list(
+                limit=10,
+                offset=0,
+                tag="tag",
+                fqn="fqn",
+                model_id="model_id",
+                ml_repo_id="ml_repo_id",
+                name="name",
+                run_ids=["run_ids"],
+                run_steps=[1.1],
+                include_internal_metadata=True,
+            )
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
+        """
+        return await self._raw_client.list(
+            limit=limit,
+            offset=offset,
+            tag=tag,
+            fqn=fqn,
+            model_id=model_id,
+            ml_repo_id=ml_repo_id,
+            name=name,
+            version=version,
+            run_ids=run_ids,
+            run_steps=run_steps,
+            include_internal_metadata=include_internal_metadata,
+            request_options=request_options,
+        )
+
     async def apply_tags(
         self,
         *,
@@ -274,13 +369,10 @@ class AsyncModelVersionsClient:
         Parameters
         ----------
         model_version_id : str
-            ID of the model version to apply tags to
 
         tags : typing.Sequence[str]
-            List of tags to apply to the model version
 
         force : typing.Optional[bool]
-            Whether to overwrite existing tags if they conflict
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -323,6 +415,7 @@ class AsyncModelVersionsClient:
         Parameters
         ----------
         id : str
+            Model version ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -362,6 +455,7 @@ class AsyncModelVersionsClient:
         Parameters
         ----------
         id : str
+            Model version ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -393,116 +487,3 @@ class AsyncModelVersionsClient:
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
         return _response.data
-
-    async def list(
-        self,
-        *,
-        tag: typing.Optional[str] = None,
-        fqn: typing.Optional[str] = None,
-        model_id: typing.Optional[str] = None,
-        ml_repo_id: typing.Optional[str] = None,
-        name: typing.Optional[str] = None,
-        version: typing.Optional[int] = None,
-        run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
-        include_internal_metadata: typing.Optional[bool] = False,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[ModelVersion, ListModelVersionsResponse]:
-        """
-        List model versions with optional filtering by tag, FQN, model ID, ML Repo, name, version, run IDs, or run steps.
-
-        Parameters
-        ----------
-        tag : typing.Optional[str]
-            Tag to filter model versions by
-
-        fqn : typing.Optional[str]
-            Fully qualified name to filter model versions by (format: 'model:{tenant_name}/{ml_repo_name}/{model_name}' or 'model:{tenant_name}/{ml_repo_name}/{model_name}:{version}')
-
-        model_id : typing.Optional[str]
-            ID of the model to filter versions by
-
-        ml_repo_id : typing.Optional[str]
-            ID of the ML Repo to filter model versions by
-
-        name : typing.Optional[str]
-            Name of the model to filter versions by
-
-        version : typing.Optional[int]
-            Version number (positive integer) or 'latest' to filter by specific version
-
-        run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            List of run IDs to filter model versions by
-
-        run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
-            List of run step numbers to filter model versions by
-
-        offset : typing.Optional[int]
-            Number of model versions to skip for pagination
-
-        limit : typing.Optional[int]
-            Maximum number of model versions to return
-
-        include_internal_metadata : typing.Optional[bool]
-            Whether to include internal metadata in the response
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncPager[ModelVersion, ListModelVersionsResponse]
-            List of model versions matching the query with pagination information
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            response = await client.model_versions.list(
-                tag="tag",
-                fqn="fqn",
-                model_id="model_id",
-                ml_repo_id="ml_repo_id",
-                name="name",
-                version=1,
-                run_ids=["run_ids"],
-                run_steps=[1],
-                offset=1,
-                limit=1,
-                include_internal_metadata=True,
-            )
-            async for item in response:
-                yield item
-
-            # alternatively, you can paginate page-by-page
-            async for page in response.iter_pages():
-                yield page
-
-
-        asyncio.run(main())
-        """
-        return await self._raw_client.list(
-            tag=tag,
-            fqn=fqn,
-            model_id=model_id,
-            ml_repo_id=ml_repo_id,
-            name=name,
-            version=version,
-            run_ids=run_ids,
-            run_steps=run_steps,
-            offset=offset,
-            limit=limit,
-            include_internal_metadata=include_internal_metadata,
-            request_options=request_options,
-        )

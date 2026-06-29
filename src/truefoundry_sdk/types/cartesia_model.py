@@ -13,7 +13,7 @@ class CartesiaModel(UniversalBaseModel):
     Cartesia Model
     """
 
-    type: typing.Literal["integration/model/cartesia"] = pydantic.Field(default="integration/model/cartesia")
+    type: typing.Optional[typing.Literal["integration/model/cartesia"]] = pydantic.Field(default=None)
     """
     +value=integration/model/cartesia
     """

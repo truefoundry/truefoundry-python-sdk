@@ -8,10 +8,7 @@ from .model import Model
 
 
 class GetModelResponse(UniversalBaseModel):
-    data: Model = pydantic.Field()
-    """
-    The model data
-    """
+    data: Model
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

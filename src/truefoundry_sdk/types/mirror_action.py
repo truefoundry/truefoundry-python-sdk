@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class MirrorAction(UniversalBaseModel):
-    type: typing.Literal["mirror"] = pydantic.Field(default="mirror")
+    type: typing.Optional[typing.Literal["mirror"]] = pydantic.Field(default=None)
     """
     +value=mirror
     """

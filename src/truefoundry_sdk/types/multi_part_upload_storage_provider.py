@@ -8,10 +8,6 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class MultiPartUploadStorageProvider(enum.StrEnum):
-    """
-    An enumeration.
-    """
-
     S3COMPATIBLE = "S3_COMPATIBLE"
     AZURE_BLOB = "AZURE_BLOB"
     _UNKNOWN = "__MULTIPARTUPLOADSTORAGEPROVIDER_UNKNOWN__"

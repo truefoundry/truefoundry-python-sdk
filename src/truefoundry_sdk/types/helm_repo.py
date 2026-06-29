@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class HelmRepo(UniversalBaseModel):
-    type: typing.Literal["helm-repo"] = pydantic.Field(default="helm-repo")
+    type: typing.Optional[typing.Literal["helm-repo"]] = pydantic.Field(default=None)
     """
     +value=helm-repo
     """

@@ -11,7 +11,7 @@ class NodepoolSelector(UniversalBaseModel):
     Specify one or more nodepools to run your application on.
     """
 
-    type: typing.Literal["nodepool_selector"] = pydantic.Field(default="nodepool_selector")
+    type: typing.Optional[typing.Literal["nodepool_selector"]] = pydantic.Field(default=None)
     """
     +value=nodepool_selector
     """

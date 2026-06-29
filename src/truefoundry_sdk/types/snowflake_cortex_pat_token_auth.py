@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class SnowflakeCortexPatTokenAuth(UniversalBaseModel):
-    type: typing.Literal["pat-token"] = pydantic.Field(default="pat-token")
+    type: typing.Optional[typing.Literal["pat-token"]] = pydantic.Field(default=None)
     """
     +value=pat-token
     """

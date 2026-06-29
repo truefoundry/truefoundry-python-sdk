@@ -12,17 +12,17 @@ from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
-from ..errors.unprocessable_entity_error import UnprocessableEntityError
+from ..errors.not_found_error import NotFoundError
 from ..types.data_directory import DataDirectory
 from ..types.data_directory_manifest import DataDirectoryManifest
 from ..types.empty_response import EmptyResponse
 from ..types.file_info import FileInfo
 from ..types.get_data_directory_response import GetDataDirectoryResponse
+from ..types.get_signed_ur_ls_request_operation import GetSignedUrLsRequestOperation
 from ..types.get_signed_ur_ls_response import GetSignedUrLsResponse
 from ..types.list_data_directories_response import ListDataDirectoriesResponse
 from ..types.list_files_response import ListFilesResponse
 from ..types.multi_part_upload_response import MultiPartUploadResponse
-from ..types.operation import Operation
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -33,129 +33,14 @@ class RawDataDirectoriesClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[GetDataDirectoryResponse]:
-        """
-        Get a data directory by its ID.
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[GetDataDirectoryResponse]
-            The data directory data
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/data-directories/{encode_path_param(id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    GetDataDirectoryResponse,
-                    parse_obj_as(
-                        type_=GetDataDirectoryResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def delete(
-        self,
-        id: str,
-        *,
-        delete_contents: typing.Optional[bool] = False,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[EmptyResponse]:
-        """
-        Delete a data directory, optionally including its contents.
-
-        Parameters
-        ----------
-        id : str
-
-        delete_contents : typing.Optional[bool]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[EmptyResponse]
-            Empty response indicating successful deletion
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/data-directories/{encode_path_param(id)}",
-            method="DELETE",
-            params={
-                "delete_contents": delete_contents,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    EmptyResponse,
-                    parse_obj_as(
-                        type_=EmptyResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
     def list(
         self,
         *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         fqn: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        limit: typing.Optional[int] = 100,
-        offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[DataDirectory, ListDataDirectoriesResponse]:
         """
@@ -163,20 +48,20 @@ class RawDataDirectoriesClient:
 
         Parameters
         ----------
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
         fqn : typing.Optional[str]
-            Fully qualified name to filter data directories by
+            Fully qualified name to filter by
 
         ml_repo_id : typing.Optional[str]
-            ID of the ML Repo to filter data directories by
+            ID of the ML Repo to filter by
 
         name : typing.Optional[str]
             Name of the data directory to filter by
-
-        limit : typing.Optional[int]
-            Maximum number of data directories to return
-
-        offset : typing.Optional[int]
-            Number of data directories to skip for pagination
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -189,14 +74,14 @@ class RawDataDirectoriesClient:
         offset = offset if offset is not None else 0
 
         _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/data-directories",
+            "api/svc/v1/data-directories",
             method="GET",
             params={
+                "limit": limit,
+                "offset": offset,
                 "fqn": fqn,
                 "ml_repo_id": ml_repo_id,
                 "name": name,
-                "limit": limit,
-                "offset": offset,
             },
             request_options=request_options,
         )
@@ -212,25 +97,14 @@ class RawDataDirectoriesClient:
                 _items = _parsed_response.data
                 _has_next = True
                 _get_next = lambda: self.list(
+                    limit=limit,
+                    offset=offset + len(_items or []),
                     fqn=fqn,
                     ml_repo_id=ml_repo_id,
                     name=name,
-                    limit=limit,
-                    offset=offset + len(_items or []),
                     request_options=request_options,
                 )
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -260,7 +134,7 @@ class RawDataDirectoriesClient:
             The created or updated data directory
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/data-directories",
+            "api/svc/v1/data-directories",
             method="PUT",
             json={
                 "manifest": convert_and_respect_annotation_metadata(
@@ -283,17 +157,6 @@ class RawDataDirectoriesClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -308,7 +171,7 @@ class RawDataDirectoriesClient:
         *,
         id: str,
         path: typing.Optional[str] = OMIT,
-        limit: typing.Optional[int] = OMIT,
+        limit: typing.Optional[float] = OMIT,
         page_token: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[FileInfo, ListFilesResponse]:
@@ -318,13 +181,10 @@ class RawDataDirectoriesClient:
         Parameters
         ----------
         id : str
-            ID of the artifact version to list files from
 
         path : typing.Optional[str]
-            Relative path within the artifact version to list files from (defaults to root)
 
-        limit : typing.Optional[int]
-            Maximum number of files/directories to return
+        limit : typing.Optional[float]
 
         page_token : typing.Optional[str]
             Token to retrieve the next page of results
@@ -338,7 +198,7 @@ class RawDataDirectoriesClient:
             List of files and directories with pagination information
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/data-directories/files",
+            "api/svc/v1/data-directories/files",
             method="POST",
             json={
                 "id": id,
@@ -375,17 +235,6 @@ class RawDataDirectoriesClient:
                         request_options=request_options,
                     )
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -404,10 +253,10 @@ class RawDataDirectoriesClient:
         Parameters
         ----------
         id : str
-            ID of the artifact version to delete files from
+            ID of the data directory
 
         paths : typing.Sequence[str]
-            List of relative file paths within the artifact version to delete
+            Paths of files to delete
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -418,7 +267,7 @@ class RawDataDirectoriesClient:
             Empty response indicating successful deletion
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/data-directories/files",
+            "api/svc/v1/data-directories/files",
             method="DELETE",
             json={
                 "id": id,
@@ -440,91 +289,6 @@ class RawDataDirectoriesClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def get_signed_urls(
-        self,
-        *,
-        id: str,
-        paths: typing.Sequence[str],
-        operation: Operation,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[GetSignedUrLsResponse]:
-        """
-        Get pre-signed URLs for reading or writing files in a data directory.
-
-        Parameters
-        ----------
-        id : str
-            ID of the artifact version to get signed URLs for
-
-        paths : typing.Sequence[str]
-            List of relative file paths within the artifact version to get signed URLs for
-
-        operation : Operation
-            Operation type for the signed URL (e.g., 'READ' or 'WRITE')
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[GetSignedUrLsResponse]
-            List of signed URLs for the requested file paths
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/data-directories/signed-urls",
-            method="POST",
-            json={
-                "id": id,
-                "paths": paths,
-                "operation": operation,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    GetSignedUrLsResponse,
-                    parse_obj_as(
-                        type_=GetSignedUrLsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -535,7 +299,7 @@ class RawDataDirectoriesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create_multipart_upload(
-        self, *, id: str, path: str, num_parts: int, request_options: typing.Optional[RequestOptions] = None
+        self, *, id: str, path: str, num_parts: float, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[MultiPartUploadResponse]:
         """
         Create a multipart upload for large files in a data directory.
@@ -543,13 +307,10 @@ class RawDataDirectoriesClient:
         Parameters
         ----------
         id : str
-            ID of the artifact version to upload files to
 
         path : str
-            Relative path within the artifact version where the file should be uploaded
 
-        num_parts : int
-            Number of parts to split the upload into for multipart upload
+        num_parts : float
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -560,7 +321,7 @@ class RawDataDirectoriesClient:
             Multipart upload information including signed URLs for each part
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/data-directories/signed-urls/multipart",
+            "api/svc/v1/data-directories/signed-urls/multipart",
             method="POST",
             json={
                 "id": id,
@@ -583,8 +344,165 @@ class RawDataDirectoriesClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def get_signed_urls(
+        self,
+        *,
+        id: str,
+        paths: typing.Sequence[str],
+        operation: GetSignedUrLsRequestOperation,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[GetSignedUrLsResponse]:
+        """
+        Get pre-signed URLs for reading or writing files in a data directory.
+
+        Parameters
+        ----------
+        id : str
+
+        paths : typing.Sequence[str]
+
+        operation : GetSignedUrLsRequestOperation
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetSignedUrLsResponse]
+            List of signed URLs for the requested file paths
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/svc/v1/data-directories/signed-urls",
+            method="POST",
+            json={
+                "id": id,
+                "paths": paths,
+                "operation": operation,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetSignedUrLsResponse,
+                    parse_obj_as(
+                        type_=GetSignedUrLsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def get(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[GetDataDirectoryResponse]:
+        """
+        Get a data directory by its ID.
+
+        Parameters
+        ----------
+        id : str
+            Data directory ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetDataDirectoryResponse]
+            The data directory data
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/data-directories/{encode_path_param(id)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetDataDirectoryResponse,
+                    parse_obj_as(
+                        type_=GetDataDirectoryResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def delete(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[EmptyResponse]:
+        """
+        Delete a data directory, optionally including its contents.
+
+        Parameters
+        ----------
+        id : str
+            Data directory ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[EmptyResponse]
+            Empty response indicating successful deletion
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/data-directories/{encode_path_param(id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    EmptyResponse,
+                    parse_obj_as(
+                        type_=EmptyResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -608,129 +526,14 @@ class AsyncRawDataDirectoriesClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[GetDataDirectoryResponse]:
-        """
-        Get a data directory by its ID.
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[GetDataDirectoryResponse]
-            The data directory data
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/data-directories/{encode_path_param(id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    GetDataDirectoryResponse,
-                    parse_obj_as(
-                        type_=GetDataDirectoryResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def delete(
-        self,
-        id: str,
-        *,
-        delete_contents: typing.Optional[bool] = False,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[EmptyResponse]:
-        """
-        Delete a data directory, optionally including its contents.
-
-        Parameters
-        ----------
-        id : str
-
-        delete_contents : typing.Optional[bool]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[EmptyResponse]
-            Empty response indicating successful deletion
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/data-directories/{encode_path_param(id)}",
-            method="DELETE",
-            params={
-                "delete_contents": delete_contents,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    EmptyResponse,
-                    parse_obj_as(
-                        type_=EmptyResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
     async def list(
         self,
         *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         fqn: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        limit: typing.Optional[int] = 100,
-        offset: typing.Optional[int] = 0,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[DataDirectory, ListDataDirectoriesResponse]:
         """
@@ -738,20 +541,20 @@ class AsyncRawDataDirectoriesClient:
 
         Parameters
         ----------
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
         fqn : typing.Optional[str]
-            Fully qualified name to filter data directories by
+            Fully qualified name to filter by
 
         ml_repo_id : typing.Optional[str]
-            ID of the ML Repo to filter data directories by
+            ID of the ML Repo to filter by
 
         name : typing.Optional[str]
             Name of the data directory to filter by
-
-        limit : typing.Optional[int]
-            Maximum number of data directories to return
-
-        offset : typing.Optional[int]
-            Number of data directories to skip for pagination
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -764,14 +567,14 @@ class AsyncRawDataDirectoriesClient:
         offset = offset if offset is not None else 0
 
         _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/data-directories",
+            "api/svc/v1/data-directories",
             method="GET",
             params={
+                "limit": limit,
+                "offset": offset,
                 "fqn": fqn,
                 "ml_repo_id": ml_repo_id,
                 "name": name,
-                "limit": limit,
-                "offset": offset,
             },
             request_options=request_options,
         )
@@ -789,26 +592,15 @@ class AsyncRawDataDirectoriesClient:
 
                 async def _get_next():
                     return await self.list(
+                        limit=limit,
+                        offset=offset + len(_items or []),
                         fqn=fqn,
                         ml_repo_id=ml_repo_id,
                         name=name,
-                        limit=limit,
-                        offset=offset + len(_items or []),
                         request_options=request_options,
                     )
 
                 return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -838,7 +630,7 @@ class AsyncRawDataDirectoriesClient:
             The created or updated data directory
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/data-directories",
+            "api/svc/v1/data-directories",
             method="PUT",
             json={
                 "manifest": convert_and_respect_annotation_metadata(
@@ -861,17 +653,6 @@ class AsyncRawDataDirectoriesClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -886,7 +667,7 @@ class AsyncRawDataDirectoriesClient:
         *,
         id: str,
         path: typing.Optional[str] = OMIT,
-        limit: typing.Optional[int] = OMIT,
+        limit: typing.Optional[float] = OMIT,
         page_token: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[FileInfo, ListFilesResponse]:
@@ -896,13 +677,10 @@ class AsyncRawDataDirectoriesClient:
         Parameters
         ----------
         id : str
-            ID of the artifact version to list files from
 
         path : typing.Optional[str]
-            Relative path within the artifact version to list files from (defaults to root)
 
-        limit : typing.Optional[int]
-            Maximum number of files/directories to return
+        limit : typing.Optional[float]
 
         page_token : typing.Optional[str]
             Token to retrieve the next page of results
@@ -916,7 +694,7 @@ class AsyncRawDataDirectoriesClient:
             List of files and directories with pagination information
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/data-directories/files",
+            "api/svc/v1/data-directories/files",
             method="POST",
             json={
                 "id": id,
@@ -956,17 +734,6 @@ class AsyncRawDataDirectoriesClient:
                         )
 
                 return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -985,10 +752,10 @@ class AsyncRawDataDirectoriesClient:
         Parameters
         ----------
         id : str
-            ID of the artifact version to delete files from
+            ID of the data directory
 
         paths : typing.Sequence[str]
-            List of relative file paths within the artifact version to delete
+            Paths of files to delete
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -999,7 +766,7 @@ class AsyncRawDataDirectoriesClient:
             Empty response indicating successful deletion
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/data-directories/files",
+            "api/svc/v1/data-directories/files",
             method="DELETE",
             json={
                 "id": id,
@@ -1021,91 +788,6 @@ class AsyncRawDataDirectoriesClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def get_signed_urls(
-        self,
-        *,
-        id: str,
-        paths: typing.Sequence[str],
-        operation: Operation,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[GetSignedUrLsResponse]:
-        """
-        Get pre-signed URLs for reading or writing files in a data directory.
-
-        Parameters
-        ----------
-        id : str
-            ID of the artifact version to get signed URLs for
-
-        paths : typing.Sequence[str]
-            List of relative file paths within the artifact version to get signed URLs for
-
-        operation : Operation
-            Operation type for the signed URL (e.g., 'READ' or 'WRITE')
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[GetSignedUrLsResponse]
-            List of signed URLs for the requested file paths
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/data-directories/signed-urls",
-            method="POST",
-            json={
-                "id": id,
-                "paths": paths,
-                "operation": operation,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    GetSignedUrLsResponse,
-                    parse_obj_as(
-                        type_=GetSignedUrLsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -1116,7 +798,7 @@ class AsyncRawDataDirectoriesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create_multipart_upload(
-        self, *, id: str, path: str, num_parts: int, request_options: typing.Optional[RequestOptions] = None
+        self, *, id: str, path: str, num_parts: float, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[MultiPartUploadResponse]:
         """
         Create a multipart upload for large files in a data directory.
@@ -1124,13 +806,10 @@ class AsyncRawDataDirectoriesClient:
         Parameters
         ----------
         id : str
-            ID of the artifact version to upload files to
 
         path : str
-            Relative path within the artifact version where the file should be uploaded
 
-        num_parts : int
-            Number of parts to split the upload into for multipart upload
+        num_parts : float
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1141,7 +820,7 @@ class AsyncRawDataDirectoriesClient:
             Multipart upload information including signed URLs for each part
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/data-directories/signed-urls/multipart",
+            "api/svc/v1/data-directories/signed-urls/multipart",
             method="POST",
             json={
                 "id": id,
@@ -1164,8 +843,165 @@ class AsyncRawDataDirectoriesClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_signed_urls(
+        self,
+        *,
+        id: str,
+        paths: typing.Sequence[str],
+        operation: GetSignedUrLsRequestOperation,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[GetSignedUrLsResponse]:
+        """
+        Get pre-signed URLs for reading or writing files in a data directory.
+
+        Parameters
+        ----------
+        id : str
+
+        paths : typing.Sequence[str]
+
+        operation : GetSignedUrLsRequestOperation
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetSignedUrLsResponse]
+            List of signed URLs for the requested file paths
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/svc/v1/data-directories/signed-urls",
+            method="POST",
+            json={
+                "id": id,
+                "paths": paths,
+                "operation": operation,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetSignedUrLsResponse,
+                    parse_obj_as(
+                        type_=GetSignedUrLsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[GetDataDirectoryResponse]:
+        """
+        Get a data directory by its ID.
+
+        Parameters
+        ----------
+        id : str
+            Data directory ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetDataDirectoryResponse]
+            The data directory data
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/data-directories/{encode_path_param(id)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetDataDirectoryResponse,
+                    parse_obj_as(
+                        type_=GetDataDirectoryResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def delete(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[EmptyResponse]:
+        """
+        Delete a data directory, optionally including its contents.
+
+        Parameters
+        ----------
+        id : str
+            Data directory ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[EmptyResponse]
+            Empty response indicating successful deletion
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/data-directories/{encode_path_param(id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    EmptyResponse,
+                    parse_obj_as(
+                        type_=EmptyResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,

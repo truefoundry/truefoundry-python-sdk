@@ -13,7 +13,7 @@ class PerplexityAiModel(UniversalBaseModel):
     Perplexity AI Model
     """
 
-    type: typing.Literal["integration/model/perplexity-ai"] = pydantic.Field(default="integration/model/perplexity-ai")
+    type: typing.Optional[typing.Literal["integration/model/perplexity-ai"]] = pydantic.Field(default=None)
     """
     +value=integration/model/perplexity-ai
     """

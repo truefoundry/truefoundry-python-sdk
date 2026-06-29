@@ -14,7 +14,7 @@ class PrometheusAlertRule(UniversalBaseModel):
     Prometheus Alert Rule
     """
 
-    type: typing.Literal["prometheus-alert-rule"] = pydantic.Field(default="prometheus-alert-rule")
+    type: typing.Optional[typing.Literal["prometheus-alert-rule"]] = pydantic.Field(default=None)
     """
     Type
     """

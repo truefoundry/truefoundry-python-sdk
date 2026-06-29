@@ -17,7 +17,7 @@ class TfyManagedMcpServerManifest(UniversalBaseModel):
     Connect to an external MCP Server endpoint.
     """
 
-    type: typing.Literal["mcp-server/tfy-managed"] = pydantic.Field(default="mcp-server/tfy-managed")
+    type: typing.Optional[typing.Literal["mcp-server/tfy-managed"]] = pydantic.Field(default=None)
     """
     +value=mcp-server/tfy-managed
     """

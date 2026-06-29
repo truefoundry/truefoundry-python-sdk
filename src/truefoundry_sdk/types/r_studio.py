@@ -13,7 +13,7 @@ class RStudio(BaseWorkbenchInput):
     Describes the configuration for the Rstudio server
     """
 
-    type: typing.Literal["rstudio"] = pydantic.Field(default="rstudio")
+    type: typing.Optional[typing.Literal["rstudio"]] = pydantic.Field(default=None)
     """
     +value=rstudio
     """

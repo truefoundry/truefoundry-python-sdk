@@ -6,12 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .apply_ml_entity_request_manifest import ApplyMlEntityRequestManifest
-    from .delete_ml_entity_request_manifest import DeleteMlEntityRequestManifest
-_dynamic_imports: typing.Dict[str, str] = {
-    "ApplyMlEntityRequestManifest": ".apply_ml_entity_request_manifest",
-    "DeleteMlEntityRequestManifest": ".delete_ml_entity_request_manifest",
-}
+    from .apply_artifact_request_manifest import ApplyArtifactRequestManifest
+_dynamic_imports: typing.Dict[str, str] = {"ApplyArtifactRequestManifest": ".apply_artifact_request_manifest"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -35,4 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ApplyMlEntityRequestManifest", "DeleteMlEntityRequestManifest"]
+__all__ = ["ApplyArtifactRequestManifest"]

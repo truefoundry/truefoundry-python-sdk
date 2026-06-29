@@ -7,20 +7,20 @@ from ..core import enum
 T_Result = typing.TypeVar("T_Result")
 
 
-class InferMethodName(enum.StrEnum):
+class SklearnModelSchemaInferMethodName(enum.StrEnum):
     """
     Name of the method used for inference
     """
 
     PREDICT = "predict"
     PREDICT_PROBA = "predict_proba"
-    _UNKNOWN = "__INFERMETHODNAME_UNKNOWN__"
+    _UNKNOWN = "__SKLEARNMODELSCHEMAINFERMETHODNAME_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
     """
 
     @classmethod
-    def _missing_(cls, value: typing.Any) -> "InferMethodName":
+    def _missing_(cls, value: typing.Any) -> "SklearnModelSchemaInferMethodName":
         unknown = cls._UNKNOWN
         unknown._value_ = value
         return unknown
@@ -31,8 +31,8 @@ class InferMethodName(enum.StrEnum):
         predict_proba: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
-        if self is InferMethodName.PREDICT:
+        if self is SklearnModelSchemaInferMethodName.PREDICT:
             return predict()
-        if self is InferMethodName.PREDICT_PROBA:
+        if self is SklearnModelSchemaInferMethodName.PREDICT_PROBA:
             return predict_proba()
         return _unknown_member(self._value_)

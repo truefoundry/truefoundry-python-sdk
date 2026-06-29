@@ -9,10 +9,14 @@ from .data_directory_manifest_source import DataDirectoryManifestSource
 
 class DataDirectoryManifest(UniversalBaseModel):
     """
-    Data Directory manifest.
+    Data Directory
     """
 
-    type: typing.Literal["data-dir"] = "data-dir"
+    type: typing.Optional[typing.Literal["data-dir"]] = pydantic.Field(default=None)
+    """
+    Type
+    """
+
     name: str = pydantic.Field()
     """
     Name of the data directory
@@ -33,7 +37,10 @@ class DataDirectoryManifest(UniversalBaseModel):
     Key Value metadata. Should be valid JSON. For e.g. `{"business-unit": "sales", "quality": "good", "rating": 4.5}`
     """
 
-    source: DataDirectoryManifestSource
+    source: DataDirectoryManifestSource = pydantic.Field()
+    """
+    Data Directory Source
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

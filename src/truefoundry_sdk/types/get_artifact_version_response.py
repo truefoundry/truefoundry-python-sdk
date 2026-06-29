@@ -8,10 +8,7 @@ from .artifact_version import ArtifactVersion
 
 
 class GetArtifactVersionResponse(UniversalBaseModel):
-    data: ArtifactVersion = pydantic.Field()
-    """
-    The artifact version data
-    """
+    data: ArtifactVersion
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

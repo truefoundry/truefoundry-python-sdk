@@ -12,9 +12,7 @@ class VertexWifFileAuth(UniversalBaseModel):
     Workload Identity Federation file
     """
 
-    type: typing.Literal["workload-identity-federation-file"] = pydantic.Field(
-        default="workload-identity-federation-file"
-    )
+    type: typing.Optional[typing.Literal["workload-identity-federation-file"]] = pydantic.Field(default=None)
     """
     +value=workload-identity-federation-file
     """

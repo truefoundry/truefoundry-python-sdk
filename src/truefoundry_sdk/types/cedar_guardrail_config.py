@@ -25,9 +25,7 @@ class CedarGuardrailConfig(UniversalBaseModel):
     Optional description for this Guardrail Config.
     """
 
-    type: typing.Literal["integration/guardrail-config/cedar"] = pydantic.Field(
-        default="integration/guardrail-config/cedar"
-    )
+    type: typing.Optional[typing.Literal["integration/guardrail-config/cedar"]] = pydantic.Field(default=None)
     """
     +uiType=Hidden
     +value=integration/guardrail-config/cedar

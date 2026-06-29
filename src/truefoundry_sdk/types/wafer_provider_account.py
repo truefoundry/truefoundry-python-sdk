@@ -17,7 +17,7 @@ class WaferProviderAccount(UniversalBaseModel):
     Wafer Provider Account
     """
 
-    type: typing.Literal["provider-account/wafer"] = pydantic.Field(default="provider-account/wafer")
+    type: typing.Optional[typing.Literal["provider-account/wafer"]] = pydantic.Field(default=None)
     """
     +value=provider-account/wafer
     """

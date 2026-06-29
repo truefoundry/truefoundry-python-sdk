@@ -18,7 +18,7 @@ class RemoteMcpServerManifest(UniversalBaseModel):
     Connect to an external MCP Server endpoint.
     """
 
-    type: typing.Literal["mcp-server/remote"] = pydantic.Field(default="mcp-server/remote")
+    type: typing.Optional[typing.Literal["mcp-server/remote"]] = pydantic.Field(default=None)
     """
     +value=mcp-server/remote
     """

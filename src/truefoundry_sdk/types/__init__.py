@@ -66,8 +66,6 @@ if typing.TYPE_CHECKING:
     from .application_set_components_item import ApplicationSetComponentsItem
     from .application_summary import ApplicationSummary
     from .application_type import ApplicationType
-    from .apply_ml_entity_response import ApplyMlEntityResponse
-    from .apply_ml_entity_response_data import ApplyMlEntityResponseData
     from .artifact import Artifact
     from .artifact_manifest import ArtifactManifest
     from .artifact_manifest_source import ArtifactManifestSource
@@ -162,7 +160,6 @@ if typing.TYPE_CHECKING:
     from .azure_vault import AzureVault
     from .azure_workload_identity_auth import AzureWorkloadIdentityAuth
     from .base_artifact_version import BaseArtifactVersion
-    from .base_artifact_version_manifest import BaseArtifactVersionManifest
     from .base_autoscaling import BaseAutoscaling
     from .base_o_auth2login import BaseOAuth2Login
     from .base_o_auth2login_jwt_source import BaseOAuth2LoginJwtSource
@@ -185,6 +182,7 @@ if typing.TYPE_CHECKING:
     from .bitbucket_integrations import BitbucketIntegrations
     from .bitbucket_provider_account import BitbucketProviderAccount
     from .blob_storage_reference import BlobStorageReference
+    from .blob_storage_reference_mime_type import BlobStorageReferenceMimeType
     from .blue_green import BlueGreen
     from .budget_alert import BudgetAlert
     from .budget_config import BudgetConfig
@@ -229,10 +227,10 @@ if typing.TYPE_CHECKING:
     from .cerebras_model import CerebrasModel
     from .cerebras_provider_account import CerebrasProviderAccount
     from .change_password_response import ChangePasswordResponse
+    from .chat_message_turn import ChatMessageTurn
     from .chat_prompt_manifest import ChatPromptManifest
     from .chat_prompt_manifest_cache_config import ChatPromptManifestCacheConfig
     from .chat_prompt_manifest_mcp_servers_item import ChatPromptManifestMcpServersItem
-    from .chat_prompt_manifest_messages_item import ChatPromptManifestMessagesItem
     from .chat_prompt_manifest_response_format import ChatPromptManifestResponseFormat
     from .chat_prompt_manifest_routing_config import ChatPromptManifestRoutingConfig
     from .cloudera_integrations import ClouderaIntegrations
@@ -256,6 +254,7 @@ if typing.TYPE_CHECKING:
     from .cohere_model import CohereModel
     from .cohere_provider_account import CohereProviderAccount
     from .collaborator import Collaborator
+    from .columns import Columns
     from .common_tools_settings import CommonToolsSettings
     from .config import Config
     from .container_task_config import ContainerTaskConfig
@@ -266,6 +265,7 @@ if typing.TYPE_CHECKING:
     from .create_docker_repository_response import CreateDockerRepositoryResponse
     from .create_multi_part_upload_request import CreateMultiPartUploadRequest
     from .create_personal_access_token_response import CreatePersonalAccessTokenResponse
+    from .create_run_response import CreateRunResponse
     from .cron_metric import CronMetric
     from .crowd_strike_aidr_guardrail_config import CrowdStrikeAidrGuardrailConfig
     from .crowd_strike_aidr_guardrail_config_config import CrowdStrikeAidrGuardrailConfigConfig
@@ -454,15 +454,19 @@ if typing.TYPE_CHECKING:
     from .get_events_response import GetEventsResponse
     from .get_job_run_response import GetJobRunResponse
     from .get_logs_response import GetLogsResponse
+    from .get_metric_history_response import GetMetricHistoryResponse
     from .get_ml_repo_response import GetMlRepoResponse
     from .get_model_response import GetModelResponse
     from .get_model_version_response import GetModelVersionResponse
     from .get_or_create_personal_access_token_response import GetOrCreatePersonalAccessTokenResponse
     from .get_prompt_response import GetPromptResponse
     from .get_prompt_version_response import GetPromptVersionResponse
+    from .get_run_columns_response import GetRunColumnsResponse
+    from .get_run_response import GetRunResponse
     from .get_secret_group_response import GetSecretGroupResponse
     from .get_secret_response import GetSecretResponse
     from .get_signed_ur_ls_request import GetSignedUrLsRequest
+    from .get_signed_ur_ls_request_operation import GetSignedUrLsRequestOperation
     from .get_signed_ur_ls_response import GetSignedUrLsResponse
     from .get_suggested_deployment_endpoint_response import GetSuggestedDeploymentEndpointResponse
     from .get_team_permissions_response import GetTeamPermissionsResponse
@@ -529,7 +533,6 @@ if typing.TYPE_CHECKING:
     from .http_error import HttpError
     from .http_error_code import HttpErrorCode
     from .http_probe import HttpProbe
-    from .http_validation_error import HttpValidationError
     from .huggingface_artifact_source import HuggingfaceArtifactSource
     from .i_change import IChange
     from .i_change_operation import IChangeOperation
@@ -542,7 +545,6 @@ if typing.TYPE_CHECKING:
     from .image_content_part_image_url_url import ImageContentPartImageUrlUrl
     from .in_not_in_operator import InNotInOperator
     from .in_not_in_operator_condition import InNotInOperatorCondition
-    from .infer_method_name import InferMethodName
     from .infra_provider_account import InfraProviderAccount
     from .ingress_controller_config import IngressControllerConfig
     from .inline_spec_source import InlineSpecSource
@@ -591,7 +593,6 @@ if typing.TYPE_CHECKING:
     from .latency_based_load_balancing import LatencyBasedLoadBalancing
     from .latency_based_load_balancing_rule import LatencyBasedLoadBalancingRule
     from .legacy_agent_manifest import LegacyAgentManifest
-    from .library_name import LibraryName
     from .light_gbm_framework import LightGbmFramework
     from .list_agent_skill_versions_response import ListAgentSkillVersionsResponse
     from .list_agent_skills_response import ListAgentSkillsResponse
@@ -606,6 +607,7 @@ if typing.TYPE_CHECKING:
     from .list_files_request import ListFilesRequest
     from .list_files_response import ListFilesResponse
     from .list_job_run_response import ListJobRunResponse
+    from .list_metric_history_response import ListMetricHistoryResponse
     from .list_ml_repos_response import ListMlReposResponse
     from .list_model_versions_response import ListModelVersionsResponse
     from .list_models_response import ListModelsResponse
@@ -666,7 +668,7 @@ if typing.TYPE_CHECKING:
     from .mcp_tools_operator_condition import McpToolsOperatorCondition
     from .metadata import Metadata
     from .metric import Metric
-    from .mime_type import MimeType
+    from .metric_collection import MetricCollection
     from .mirror_action import MirrorAction
     from .mistral_ai_integrations import MistralAiIntegrations
     from .mistral_ai_key_auth import MistralAiKeyAuth
@@ -676,6 +678,8 @@ if typing.TYPE_CHECKING:
     from .ml_repo_manifest import MlRepoManifest
     from .model import Model
     from .model_configuration import ModelConfiguration
+    from .model_configuration_parameters import ModelConfigurationParameters
+    from .model_configuration_parameters_stop import ModelConfigurationParametersStop
     from .model_cost_metric import ModelCostMetric
     from .model_manifest import ModelManifest
     from .model_manifest_framework import ModelManifestFramework
@@ -715,6 +719,7 @@ if typing.TYPE_CHECKING:
     from .nvidia_miggpu_profile import NvidiaMiggpuProfile
     from .nvidia_timeslicing_gpu import NvidiaTimeslicingGpu
     from .o_auth2login_provider import OAuth2LoginProvider
+    from .object import Object
     from .oci_repo import OciRepo
     from .ocr_cost_metric import OcrCostMetric
     from .ocr_cost_metric_value import OcrCostMetricValue
@@ -742,7 +747,6 @@ if typing.TYPE_CHECKING:
     from .open_router_provider_account import OpenRouterProviderAccount
     from .openai_api_key_auth import OpenaiApiKeyAuth
     from .openai_provider_account import OpenaiProviderAccount
-    from .operation import Operation
     from .otel_exporter_grpc_config_base import OtelExporterGrpcConfigBase
     from .otel_exporter_http_config_base import OtelExporterHttpConfigBase
     from .otel_exporter_http_config_base_encoding import OtelExporterHttpConfigBaseEncoding
@@ -771,8 +775,6 @@ if typing.TYPE_CHECKING:
     from .palo_alto_prisma_airs_key_auth import PaloAltoPrismaAirsKeyAuth
     from .param import Param
     from .param_param_type import ParamParamType
-    from .parameters import Parameters
-    from .parameters_stop import ParametersStop
     from .patronus_answer_relevance_criteria import PatronusAnswerRelevanceCriteria
     from .patronus_answer_relevance_evaluator import PatronusAnswerRelevanceEvaluator
     from .patronus_evaluator import PatronusEvaluator
@@ -874,6 +876,12 @@ if typing.TYPE_CHECKING:
     from .role_with_resource_resource_type import RoleWithResourceResourceType
     from .rolling import Rolling
     from .rps_metric import RpsMetric
+    from .run import Run
+    from .run_data import RunData
+    from .run_info import RunInfo
+    from .run_param import RunParam
+    from .run_tag import RunTag
+    from .run_tag_input import RunTagInput
     from .sagemaker_assumed_role_based_auth import SagemakerAssumedRoleBasedAuth
     from .sagemaker_model import SagemakerModel
     from .samba_nova_integrations import SambaNovaIntegrations
@@ -883,6 +891,7 @@ if typing.TYPE_CHECKING:
     from .sample_agent_input import SampleAgentInput
     from .schedule import Schedule
     from .schedule_concurrency_policy import ScheduleConcurrencyPolicy
+    from .search_runs_response import SearchRunsResponse
     from .secret import Secret
     from .secret_detection_guardrail_config import SecretDetectionGuardrailConfig
     from .secret_detection_guardrail_config_config import SecretDetectionGuardrailConfigConfig
@@ -909,6 +918,7 @@ if typing.TYPE_CHECKING:
     from .signed_url import SignedUrl
     from .sklearn_framework import SklearnFramework
     from .sklearn_model_schema import SklearnModelSchema
+    from .sklearn_model_schema_infer_method_name import SklearnModelSchemaInferMethodName
     from .sklearn_serialization_format import SklearnSerializationFormat
     from .sla_cutoff import SlaCutoff
     from .slack_bot import SlackBot
@@ -1031,6 +1041,7 @@ if typing.TYPE_CHECKING:
     from .tracing_project_manifest import TracingProjectManifest
     from .tracing_project_storage_config import TracingProjectStorageConfig
     from .transformers_framework import TransformersFramework
+    from .transformers_framework_library_name import TransformersFrameworkLibraryName
     from .trigger_job_run_response import TriggerJobRunResponse
     from .troj_ai_client_id_auth import TrojAiClientIdAuth
     from .troj_ai_guardrail_config import TrojAiGuardrailConfig
@@ -1070,6 +1081,7 @@ if typing.TYPE_CHECKING:
     from .ttl_integrations import TtlIntegrations
     from .ttl_provider_account import TtlProviderAccount
     from .ttl_registry import TtlRegistry
+    from .update_run_response import UpdateRunResponse
     from .update_secret_input import UpdateSecretInput
     from .update_user_roles_response import UpdateUserRolesResponse
     from .upgrade_data import UpgradeData
@@ -1082,8 +1094,6 @@ if typing.TYPE_CHECKING:
     from .user_metadata import UserMetadata
     from .user_metadata_tenant_role_managed_by import UserMetadataTenantRoleManagedBy
     from .uv import Uv
-    from .validation_error import ValidationError
-    from .validation_error_loc_item import ValidationErrorLocItem
     from .value_constraint import ValueConstraint
     from .vcs_token_auth_data import VcsTokenAuthData
     from .vcso_auth_auth_data import VcsoAuthAuthData
@@ -1194,8 +1204,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ApplicationSetComponentsItem": ".application_set_components_item",
     "ApplicationSummary": ".application_summary",
     "ApplicationType": ".application_type",
-    "ApplyMlEntityResponse": ".apply_ml_entity_response",
-    "ApplyMlEntityResponseData": ".apply_ml_entity_response_data",
     "Artifact": ".artifact",
     "ArtifactManifest": ".artifact_manifest",
     "ArtifactManifestSource": ".artifact_manifest_source",
@@ -1290,7 +1298,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AzureVault": ".azure_vault",
     "AzureWorkloadIdentityAuth": ".azure_workload_identity_auth",
     "BaseArtifactVersion": ".base_artifact_version",
-    "BaseArtifactVersionManifest": ".base_artifact_version_manifest",
     "BaseAutoscaling": ".base_autoscaling",
     "BaseOAuth2Login": ".base_o_auth2login",
     "BaseOAuth2LoginJwtSource": ".base_o_auth2login_jwt_source",
@@ -1313,6 +1320,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BitbucketIntegrations": ".bitbucket_integrations",
     "BitbucketProviderAccount": ".bitbucket_provider_account",
     "BlobStorageReference": ".blob_storage_reference",
+    "BlobStorageReferenceMimeType": ".blob_storage_reference_mime_type",
     "BlueGreen": ".blue_green",
     "BudgetAlert": ".budget_alert",
     "BudgetConfig": ".budget_config",
@@ -1357,10 +1365,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CerebrasModel": ".cerebras_model",
     "CerebrasProviderAccount": ".cerebras_provider_account",
     "ChangePasswordResponse": ".change_password_response",
+    "ChatMessageTurn": ".chat_message_turn",
     "ChatPromptManifest": ".chat_prompt_manifest",
     "ChatPromptManifestCacheConfig": ".chat_prompt_manifest_cache_config",
     "ChatPromptManifestMcpServersItem": ".chat_prompt_manifest_mcp_servers_item",
-    "ChatPromptManifestMessagesItem": ".chat_prompt_manifest_messages_item",
     "ChatPromptManifestResponseFormat": ".chat_prompt_manifest_response_format",
     "ChatPromptManifestRoutingConfig": ".chat_prompt_manifest_routing_config",
     "ClouderaIntegrations": ".cloudera_integrations",
@@ -1384,6 +1392,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CohereModel": ".cohere_model",
     "CohereProviderAccount": ".cohere_provider_account",
     "Collaborator": ".collaborator",
+    "Columns": ".columns",
     "CommonToolsSettings": ".common_tools_settings",
     "Config": ".config",
     "ContainerTaskConfig": ".container_task_config",
@@ -1394,6 +1403,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateDockerRepositoryResponse": ".create_docker_repository_response",
     "CreateMultiPartUploadRequest": ".create_multi_part_upload_request",
     "CreatePersonalAccessTokenResponse": ".create_personal_access_token_response",
+    "CreateRunResponse": ".create_run_response",
     "CronMetric": ".cron_metric",
     "CrowdStrikeAidrGuardrailConfig": ".crowd_strike_aidr_guardrail_config",
     "CrowdStrikeAidrGuardrailConfigConfig": ".crowd_strike_aidr_guardrail_config_config",
@@ -1570,15 +1580,19 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetEventsResponse": ".get_events_response",
     "GetJobRunResponse": ".get_job_run_response",
     "GetLogsResponse": ".get_logs_response",
+    "GetMetricHistoryResponse": ".get_metric_history_response",
     "GetMlRepoResponse": ".get_ml_repo_response",
     "GetModelResponse": ".get_model_response",
     "GetModelVersionResponse": ".get_model_version_response",
     "GetOrCreatePersonalAccessTokenResponse": ".get_or_create_personal_access_token_response",
     "GetPromptResponse": ".get_prompt_response",
     "GetPromptVersionResponse": ".get_prompt_version_response",
+    "GetRunColumnsResponse": ".get_run_columns_response",
+    "GetRunResponse": ".get_run_response",
     "GetSecretGroupResponse": ".get_secret_group_response",
     "GetSecretResponse": ".get_secret_response",
     "GetSignedUrLsRequest": ".get_signed_ur_ls_request",
+    "GetSignedUrLsRequestOperation": ".get_signed_ur_ls_request_operation",
     "GetSignedUrLsResponse": ".get_signed_ur_ls_response",
     "GetSuggestedDeploymentEndpointResponse": ".get_suggested_deployment_endpoint_response",
     "GetTeamPermissionsResponse": ".get_team_permissions_response",
@@ -1643,7 +1657,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "HttpError": ".http_error",
     "HttpErrorCode": ".http_error_code",
     "HttpProbe": ".http_probe",
-    "HttpValidationError": ".http_validation_error",
     "HuggingfaceArtifactSource": ".huggingface_artifact_source",
     "IChange": ".i_change",
     "IChangeOperation": ".i_change_operation",
@@ -1656,7 +1669,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ImageContentPartImageUrlUrl": ".image_content_part_image_url_url",
     "InNotInOperator": ".in_not_in_operator",
     "InNotInOperatorCondition": ".in_not_in_operator_condition",
-    "InferMethodName": ".infer_method_name",
     "InfraProviderAccount": ".infra_provider_account",
     "IngressControllerConfig": ".ingress_controller_config",
     "InlineSpecSource": ".inline_spec_source",
@@ -1705,7 +1717,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LatencyBasedLoadBalancing": ".latency_based_load_balancing",
     "LatencyBasedLoadBalancingRule": ".latency_based_load_balancing_rule",
     "LegacyAgentManifest": ".legacy_agent_manifest",
-    "LibraryName": ".library_name",
     "LightGbmFramework": ".light_gbm_framework",
     "ListAgentSkillVersionsResponse": ".list_agent_skill_versions_response",
     "ListAgentSkillsResponse": ".list_agent_skills_response",
@@ -1720,6 +1731,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListFilesRequest": ".list_files_request",
     "ListFilesResponse": ".list_files_response",
     "ListJobRunResponse": ".list_job_run_response",
+    "ListMetricHistoryResponse": ".list_metric_history_response",
     "ListMlReposResponse": ".list_ml_repos_response",
     "ListModelVersionsResponse": ".list_model_versions_response",
     "ListModelsResponse": ".list_models_response",
@@ -1780,7 +1792,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "McpToolsOperatorCondition": ".mcp_tools_operator_condition",
     "Metadata": ".metadata",
     "Metric": ".metric",
-    "MimeType": ".mime_type",
+    "MetricCollection": ".metric_collection",
     "MirrorAction": ".mirror_action",
     "MistralAiIntegrations": ".mistral_ai_integrations",
     "MistralAiKeyAuth": ".mistral_ai_key_auth",
@@ -1790,6 +1802,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MlRepoManifest": ".ml_repo_manifest",
     "Model": ".model",
     "ModelConfiguration": ".model_configuration",
+    "ModelConfigurationParameters": ".model_configuration_parameters",
+    "ModelConfigurationParametersStop": ".model_configuration_parameters_stop",
     "ModelCostMetric": ".model_cost_metric",
     "ModelManifest": ".model_manifest",
     "ModelManifestFramework": ".model_manifest_framework",
@@ -1829,6 +1843,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "NvidiaMiggpuProfile": ".nvidia_miggpu_profile",
     "NvidiaTimeslicingGpu": ".nvidia_timeslicing_gpu",
     "OAuth2LoginProvider": ".o_auth2login_provider",
+    "Object": ".object",
     "OciRepo": ".oci_repo",
     "OcrCostMetric": ".ocr_cost_metric",
     "OcrCostMetricValue": ".ocr_cost_metric_value",
@@ -1856,7 +1871,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OpenRouterProviderAccount": ".open_router_provider_account",
     "OpenaiApiKeyAuth": ".openai_api_key_auth",
     "OpenaiProviderAccount": ".openai_provider_account",
-    "Operation": ".operation",
     "OtelExporterGrpcConfigBase": ".otel_exporter_grpc_config_base",
     "OtelExporterHttpConfigBase": ".otel_exporter_http_config_base",
     "OtelExporterHttpConfigBaseEncoding": ".otel_exporter_http_config_base_encoding",
@@ -1885,8 +1899,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PaloAltoPrismaAirsKeyAuth": ".palo_alto_prisma_airs_key_auth",
     "Param": ".param",
     "ParamParamType": ".param_param_type",
-    "Parameters": ".parameters",
-    "ParametersStop": ".parameters_stop",
     "PatronusAnswerRelevanceCriteria": ".patronus_answer_relevance_criteria",
     "PatronusAnswerRelevanceEvaluator": ".patronus_answer_relevance_evaluator",
     "PatronusEvaluator": ".patronus_evaluator",
@@ -1991,6 +2003,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RoleWithResourceResourceType": ".role_with_resource_resource_type",
     "Rolling": ".rolling",
     "RpsMetric": ".rps_metric",
+    "Run": ".run",
+    "RunData": ".run_data",
+    "RunInfo": ".run_info",
+    "RunParam": ".run_param",
+    "RunTag": ".run_tag",
+    "RunTagInput": ".run_tag_input",
     "SagemakerAssumedRoleBasedAuth": ".sagemaker_assumed_role_based_auth",
     "SagemakerModel": ".sagemaker_model",
     "SambaNovaIntegrations": ".samba_nova_integrations",
@@ -2000,6 +2018,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SampleAgentInput": ".sample_agent_input",
     "Schedule": ".schedule",
     "ScheduleConcurrencyPolicy": ".schedule_concurrency_policy",
+    "SearchRunsResponse": ".search_runs_response",
     "Secret": ".secret",
     "SecretDetectionGuardrailConfig": ".secret_detection_guardrail_config",
     "SecretDetectionGuardrailConfigConfig": ".secret_detection_guardrail_config_config",
@@ -2026,6 +2045,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SignedUrl": ".signed_url",
     "SklearnFramework": ".sklearn_framework",
     "SklearnModelSchema": ".sklearn_model_schema",
+    "SklearnModelSchemaInferMethodName": ".sklearn_model_schema_infer_method_name",
     "SklearnSerializationFormat": ".sklearn_serialization_format",
     "SlaCutoff": ".sla_cutoff",
     "SlackBot": ".slack_bot",
@@ -2148,6 +2168,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TracingProjectManifest": ".tracing_project_manifest",
     "TracingProjectStorageConfig": ".tracing_project_storage_config",
     "TransformersFramework": ".transformers_framework",
+    "TransformersFrameworkLibraryName": ".transformers_framework_library_name",
     "TriggerJobRunResponse": ".trigger_job_run_response",
     "TrojAiClientIdAuth": ".troj_ai_client_id_auth",
     "TrojAiGuardrailConfig": ".troj_ai_guardrail_config",
@@ -2187,6 +2208,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TtlIntegrations": ".ttl_integrations",
     "TtlProviderAccount": ".ttl_provider_account",
     "TtlRegistry": ".ttl_registry",
+    "UpdateRunResponse": ".update_run_response",
     "UpdateSecretInput": ".update_secret_input",
     "UpdateUserRolesResponse": ".update_user_roles_response",
     "UpgradeData": ".upgrade_data",
@@ -2199,8 +2221,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UserMetadata": ".user_metadata",
     "UserMetadataTenantRoleManagedBy": ".user_metadata_tenant_role_managed_by",
     "Uv": ".uv",
-    "ValidationError": ".validation_error",
-    "ValidationErrorLocItem": ".validation_error_loc_item",
     "ValueConstraint": ".value_constraint",
     "VcsTokenAuthData": ".vcs_token_auth_data",
     "VcsoAuthAuthData": ".vcso_auth_auth_data",
@@ -2335,8 +2355,6 @@ __all__ = [
     "ApplicationSetComponentsItem",
     "ApplicationSummary",
     "ApplicationType",
-    "ApplyMlEntityResponse",
-    "ApplyMlEntityResponseData",
     "Artifact",
     "ArtifactManifest",
     "ArtifactManifestSource",
@@ -2431,7 +2449,6 @@ __all__ = [
     "AzureVault",
     "AzureWorkloadIdentityAuth",
     "BaseArtifactVersion",
-    "BaseArtifactVersionManifest",
     "BaseAutoscaling",
     "BaseOAuth2Login",
     "BaseOAuth2LoginJwtSource",
@@ -2454,6 +2471,7 @@ __all__ = [
     "BitbucketIntegrations",
     "BitbucketProviderAccount",
     "BlobStorageReference",
+    "BlobStorageReferenceMimeType",
     "BlueGreen",
     "BudgetAlert",
     "BudgetConfig",
@@ -2498,10 +2516,10 @@ __all__ = [
     "CerebrasModel",
     "CerebrasProviderAccount",
     "ChangePasswordResponse",
+    "ChatMessageTurn",
     "ChatPromptManifest",
     "ChatPromptManifestCacheConfig",
     "ChatPromptManifestMcpServersItem",
-    "ChatPromptManifestMessagesItem",
     "ChatPromptManifestResponseFormat",
     "ChatPromptManifestRoutingConfig",
     "ClouderaIntegrations",
@@ -2525,6 +2543,7 @@ __all__ = [
     "CohereModel",
     "CohereProviderAccount",
     "Collaborator",
+    "Columns",
     "CommonToolsSettings",
     "Config",
     "ContainerTaskConfig",
@@ -2535,6 +2554,7 @@ __all__ = [
     "CreateDockerRepositoryResponse",
     "CreateMultiPartUploadRequest",
     "CreatePersonalAccessTokenResponse",
+    "CreateRunResponse",
     "CronMetric",
     "CrowdStrikeAidrGuardrailConfig",
     "CrowdStrikeAidrGuardrailConfigConfig",
@@ -2711,15 +2731,19 @@ __all__ = [
     "GetEventsResponse",
     "GetJobRunResponse",
     "GetLogsResponse",
+    "GetMetricHistoryResponse",
     "GetMlRepoResponse",
     "GetModelResponse",
     "GetModelVersionResponse",
     "GetOrCreatePersonalAccessTokenResponse",
     "GetPromptResponse",
     "GetPromptVersionResponse",
+    "GetRunColumnsResponse",
+    "GetRunResponse",
     "GetSecretGroupResponse",
     "GetSecretResponse",
     "GetSignedUrLsRequest",
+    "GetSignedUrLsRequestOperation",
     "GetSignedUrLsResponse",
     "GetSuggestedDeploymentEndpointResponse",
     "GetTeamPermissionsResponse",
@@ -2784,7 +2808,6 @@ __all__ = [
     "HttpError",
     "HttpErrorCode",
     "HttpProbe",
-    "HttpValidationError",
     "HuggingfaceArtifactSource",
     "IChange",
     "IChangeOperation",
@@ -2797,7 +2820,6 @@ __all__ = [
     "ImageContentPartImageUrlUrl",
     "InNotInOperator",
     "InNotInOperatorCondition",
-    "InferMethodName",
     "InfraProviderAccount",
     "IngressControllerConfig",
     "InlineSpecSource",
@@ -2846,7 +2868,6 @@ __all__ = [
     "LatencyBasedLoadBalancing",
     "LatencyBasedLoadBalancingRule",
     "LegacyAgentManifest",
-    "LibraryName",
     "LightGbmFramework",
     "ListAgentSkillVersionsResponse",
     "ListAgentSkillsResponse",
@@ -2861,6 +2882,7 @@ __all__ = [
     "ListFilesRequest",
     "ListFilesResponse",
     "ListJobRunResponse",
+    "ListMetricHistoryResponse",
     "ListMlReposResponse",
     "ListModelVersionsResponse",
     "ListModelsResponse",
@@ -2921,7 +2943,7 @@ __all__ = [
     "McpToolsOperatorCondition",
     "Metadata",
     "Metric",
-    "MimeType",
+    "MetricCollection",
     "MirrorAction",
     "MistralAiIntegrations",
     "MistralAiKeyAuth",
@@ -2931,6 +2953,8 @@ __all__ = [
     "MlRepoManifest",
     "Model",
     "ModelConfiguration",
+    "ModelConfigurationParameters",
+    "ModelConfigurationParametersStop",
     "ModelCostMetric",
     "ModelManifest",
     "ModelManifestFramework",
@@ -2970,6 +2994,7 @@ __all__ = [
     "NvidiaMiggpuProfile",
     "NvidiaTimeslicingGpu",
     "OAuth2LoginProvider",
+    "Object",
     "OciRepo",
     "OcrCostMetric",
     "OcrCostMetricValue",
@@ -2997,7 +3022,6 @@ __all__ = [
     "OpenRouterProviderAccount",
     "OpenaiApiKeyAuth",
     "OpenaiProviderAccount",
-    "Operation",
     "OtelExporterGrpcConfigBase",
     "OtelExporterHttpConfigBase",
     "OtelExporterHttpConfigBaseEncoding",
@@ -3026,8 +3050,6 @@ __all__ = [
     "PaloAltoPrismaAirsKeyAuth",
     "Param",
     "ParamParamType",
-    "Parameters",
-    "ParametersStop",
     "PatronusAnswerRelevanceCriteria",
     "PatronusAnswerRelevanceEvaluator",
     "PatronusEvaluator",
@@ -3132,6 +3154,12 @@ __all__ = [
     "RoleWithResourceResourceType",
     "Rolling",
     "RpsMetric",
+    "Run",
+    "RunData",
+    "RunInfo",
+    "RunParam",
+    "RunTag",
+    "RunTagInput",
     "SagemakerAssumedRoleBasedAuth",
     "SagemakerModel",
     "SambaNovaIntegrations",
@@ -3141,6 +3169,7 @@ __all__ = [
     "SampleAgentInput",
     "Schedule",
     "ScheduleConcurrencyPolicy",
+    "SearchRunsResponse",
     "Secret",
     "SecretDetectionGuardrailConfig",
     "SecretDetectionGuardrailConfigConfig",
@@ -3167,6 +3196,7 @@ __all__ = [
     "SignedUrl",
     "SklearnFramework",
     "SklearnModelSchema",
+    "SklearnModelSchemaInferMethodName",
     "SklearnSerializationFormat",
     "SlaCutoff",
     "SlackBot",
@@ -3289,6 +3319,7 @@ __all__ = [
     "TracingProjectManifest",
     "TracingProjectStorageConfig",
     "TransformersFramework",
+    "TransformersFrameworkLibraryName",
     "TriggerJobRunResponse",
     "TrojAiClientIdAuth",
     "TrojAiGuardrailConfig",
@@ -3328,6 +3359,7 @@ __all__ = [
     "TtlIntegrations",
     "TtlProviderAccount",
     "TtlRegistry",
+    "UpdateRunResponse",
     "UpdateSecretInput",
     "UpdateUserRolesResponse",
     "UpgradeData",
@@ -3340,8 +3372,6 @@ __all__ = [
     "UserMetadata",
     "UserMetadataTenantRoleManagedBy",
     "Uv",
-    "ValidationError",
-    "ValidationErrorLocItem",
     "ValueConstraint",
     "VcsTokenAuthData",
     "VcsoAuthAuthData",

@@ -13,7 +13,7 @@ class OllamaModel(UniversalBaseModel):
     Ollama Model
     """
 
-    type: typing.Literal["integration/model/ollama"] = pydantic.Field(default="integration/model/ollama")
+    type: typing.Optional[typing.Literal["integration/model/ollama"]] = pydantic.Field(default=None)
     """
     +value=integration/model/ollama
     """

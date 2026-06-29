@@ -12,7 +12,7 @@ class GcpKeyFileAuth(UniversalBaseModel):
     GCP Key File Auth
     """
 
-    type: typing.Literal["key-file"] = pydantic.Field(default="key-file")
+    type: typing.Optional[typing.Literal["key-file"]] = pydantic.Field(default=None)
     """
     +value=key-file
     """

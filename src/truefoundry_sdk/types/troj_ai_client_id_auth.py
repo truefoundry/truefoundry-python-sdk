@@ -11,7 +11,7 @@ class TrojAiClientIdAuth(UniversalBaseModel):
     Authentication using a TrojAI firewall client ID (x-eag-clientid)
     """
 
-    type: typing.Literal["client-id"] = pydantic.Field(default="client-id")
+    type: typing.Optional[typing.Literal["client-id"]] = pydantic.Field(default=None)
     """
     +value=client-id
     """

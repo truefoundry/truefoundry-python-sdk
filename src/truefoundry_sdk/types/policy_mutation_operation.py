@@ -11,7 +11,7 @@ class PolicyMutationOperation(UniversalBaseModel):
     Mutate
     """
 
-    type: typing.Literal["mutate"] = pydantic.Field(default="mutate")
+    type: typing.Optional[typing.Literal["mutate"]] = pydantic.Field(default=None)
     """
     Mutates or Validates Resources
     """

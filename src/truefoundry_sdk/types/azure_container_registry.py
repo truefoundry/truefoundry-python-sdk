@@ -12,9 +12,7 @@ class AzureContainerRegistry(UniversalBaseModel):
     Azure ACR
     """
 
-    type: typing.Literal["integration/docker-registry/azure/acr"] = pydantic.Field(
-        default="integration/docker-registry/azure/acr"
-    )
+    type: typing.Optional[typing.Literal["integration/docker-registry/azure/acr"]] = pydantic.Field(default=None)
     """
     +value=integration/docker-registry/azure/acr
     """

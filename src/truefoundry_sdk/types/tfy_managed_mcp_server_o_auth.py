@@ -11,7 +11,7 @@ class TfyManagedMcpServerOAuth(UniversalBaseModel):
     TfyManaged OAuth2
     """
 
-    type: typing.Literal["oauth2"] = pydantic.Field(default="oauth2")
+    type: typing.Optional[typing.Literal["oauth2"]] = pydantic.Field(default=None)
     """
     OAuth2 authentication
     """

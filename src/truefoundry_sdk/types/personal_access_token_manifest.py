@@ -16,7 +16,7 @@ class PersonalAccessTokenManifest(UniversalBaseModel):
     Personal Access Token Name
     """
 
-    type: typing.Literal["pat"] = pydantic.Field(default="pat")
+    type: typing.Optional[typing.Literal["pat"]] = pydantic.Field(default=None)
     """
     +value=pat
     """

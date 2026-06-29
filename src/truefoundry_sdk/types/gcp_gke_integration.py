@@ -13,9 +13,7 @@ class GcpGkeIntegration(UniversalBaseModel):
     GCP GKE
     """
 
-    type: typing.Literal["integration/cluster/gcp/gke-standard"] = pydantic.Field(
-        default="integration/cluster/gcp/gke-standard"
-    )
+    type: typing.Optional[typing.Literal["integration/cluster/gcp/gke-standard"]] = pydantic.Field(default=None)
     """
     +value=integration/cluster/gcp/gke-standard
     """

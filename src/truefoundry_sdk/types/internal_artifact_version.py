@@ -10,84 +10,32 @@ from .subject import Subject
 
 
 class InternalArtifactVersion(UniversalBaseModel):
-    """
-    Tags, optional version alias, and SDK usage snippet (models, prompts, generic artifacts).
-    """
-
+    created_at: typing.Optional[dt.datetime] = None
+    updated_at: typing.Optional[dt.datetime] = None
+    manifest: typing.Optional[ArtifactManifest] = None
     id: str = pydantic.Field()
     """
-    Unique identifier for the artifact version
+    System-generated artifact version ID.
     """
 
     fqn: str = pydantic.Field()
     """
-    Fully qualified name of the artifact version in the format '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}:{version}'
+    Human-readable Fully Qualified Name of the artifact version.
     """
 
-    created_by_subject: Subject = pydantic.Field()
-    """
-    Subject (user, team, or service account) that created this artifact version
-    """
-
-    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
-    """
-    Timestamp when the artifact version was created
-    """
-
-    updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
-    """
-    Timestamp when the artifact version was last updated
-    """
-
-    manifest: typing.Optional[ArtifactManifest] = pydantic.Field(default=None)
-    """
-    Manifest containing metadata for a generic artifact version
-    """
-
-    ml_repo_id: str = pydantic.Field()
-    """
-    ID of the ML Repo that this artifact version belongs to
-    """
-
-    tags: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
-    """
-    List of tags associated with this artifact version for filtering and organization
-    """
-
-    version_alias: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Optional human-readable version alias (e.g. v1.0.0)
-    """
-
-    usage_code_snippet: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Code snippet demonstrating how to use this artifact version
-    """
-
-    artifact_id: str = pydantic.Field()
-    """
-    ID of the parent artifact that this version belongs to
-    """
-
+    created_by_subject: Subject
+    ml_repo_id: str
+    usage_code_snippet: typing.Optional[str] = None
+    tags: typing.Optional[typing.List[str]] = None
+    artifact_id: str
+    artifact_size: typing.Optional[float] = None
     artifact_fqn: str = pydantic.Field()
     """
-    Fully qualified name of the parent artifact (internal use only)
+    Fully qualified name of the parent artifact
     """
 
-    artifact_size: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Total size of the artifact version in bytes (internal use only)
-    """
-
-    artifact_metadata: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
-    """
-    Metadata of the artifact version
-    """
-
-    internal_metadata: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
-    """
-    Internal metadata of the artifact version
-    """
+    artifact_metadata: typing.Optional[typing.Dict[str, typing.Any]] = None
+    internal_metadata: typing.Optional[typing.Dict[str, typing.Any]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

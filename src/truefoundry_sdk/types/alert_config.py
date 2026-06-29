@@ -10,7 +10,7 @@ from .prometheus_alert_rule import PrometheusAlertRule
 
 
 class AlertConfig(UniversalBaseModel):
-    type: typing.Literal["alert-config"] = pydantic.Field(default="alert-config")
+    type: typing.Optional[typing.Literal["alert-config"]] = pydantic.Field(default=None)
     """
     Type
     """

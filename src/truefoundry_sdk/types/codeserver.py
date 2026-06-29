@@ -13,7 +13,7 @@ class Codeserver(BaseWorkbenchInput):
     Describes the configuration for the code server
     """
 
-    type: typing.Literal["codeserver"] = pydantic.Field(default="codeserver")
+    type: typing.Optional[typing.Literal["codeserver"]] = pydantic.Field(default=None)
     """
     +value=codeserver
     """

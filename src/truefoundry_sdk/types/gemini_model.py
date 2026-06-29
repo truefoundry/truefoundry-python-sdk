@@ -13,7 +13,7 @@ class GeminiModel(UniversalBaseModel):
     Gemini Model
     """
 
-    type: typing.Literal["integration/model/gemini"] = pydantic.Field(default="integration/model/gemini")
+    type: typing.Optional[typing.Literal["integration/model/gemini"]] = pydantic.Field(default=None)
     """
     +value=integration/model/gemini
     """

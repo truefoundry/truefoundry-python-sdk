@@ -8,7 +8,7 @@ from .patronus_toxicity_criteria import PatronusToxicityCriteria
 
 
 class PatronusToxicityEvaluator(UniversalBaseModel):
-    type: typing.Literal["toxicity"] = pydantic.Field(default="toxicity")
+    type: typing.Optional[typing.Literal["toxicity"]] = pydantic.Field(default=None)
     """
     The type of the evaluator to use for the Patronus Guardrail.
     """

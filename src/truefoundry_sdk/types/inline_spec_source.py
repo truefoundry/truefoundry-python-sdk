@@ -12,7 +12,7 @@ class InlineSpecSource(UniversalBaseModel):
     Inline your OpenAPI specification directly. The spec will be stored securely.
     """
 
-    type: typing.Literal["inline"] = pydantic.Field(default="inline")
+    type: typing.Optional[typing.Literal["inline"]] = pydantic.Field(default=None)
     """
     +value=inline
     """

@@ -19,9 +19,7 @@ class CustomEndpointProviderAccount(UniversalBaseModel):
     Custom Endpoint
     """
 
-    type: typing.Literal["provider-account/custom-endpoint"] = pydantic.Field(
-        default="provider-account/custom-endpoint"
-    )
+    type: typing.Optional[typing.Literal["provider-account/custom-endpoint"]] = pydantic.Field(default=None)
     """
     +value=provider-account/custom-endpoint
     """

@@ -15,7 +15,7 @@ class SlackProviderAccount(UniversalBaseModel):
     Slack Provider Account
     """
 
-    type: typing.Literal["provider-account/slack"] = pydantic.Field(default="provider-account/slack")
+    type: typing.Optional[typing.Literal["provider-account/slack"]] = pydantic.Field(default=None)
     """
     +value=provider-account/slack
     """

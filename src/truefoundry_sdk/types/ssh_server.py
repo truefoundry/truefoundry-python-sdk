@@ -13,7 +13,7 @@ class SshServer(BaseWorkbenchInput):
     Describes the configuration for the ssh server
     """
 
-    type: typing.Literal["ssh-server"] = pydantic.Field(default="ssh-server")
+    type: typing.Optional[typing.Literal["ssh-server"]] = pydantic.Field(default=None)
     """
     +value=ssh-server
     """

@@ -17,7 +17,7 @@ class DatabricksProviderAccount(UniversalBaseModel):
     Databricks Provider Account
     """
 
-    type: typing.Literal["provider-account/databricks"] = pydantic.Field(default="provider-account/databricks")
+    type: typing.Optional[typing.Literal["provider-account/databricks"]] = pydantic.Field(default=None)
     """
     +value=provider-account/databricks
     """

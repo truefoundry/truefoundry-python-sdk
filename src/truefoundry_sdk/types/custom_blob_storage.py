@@ -12,7 +12,7 @@ class CustomBlobStorage(UniversalBaseModel):
     Custom Blob Storage
     """
 
-    type: typing.Literal["integration/blob-storage/custom"] = pydantic.Field(default="integration/blob-storage/custom")
+    type: typing.Optional[typing.Literal["integration/blob-storage/custom"]] = pydantic.Field(default=None)
     """
     +value=integration/blob-storage/custom
     """

@@ -12,7 +12,7 @@ class GithubIntegration(UniversalBaseModel):
     Github
     """
 
-    type: typing.Literal["integration/vcs/github"] = pydantic.Field(default="integration/vcs/github")
+    type: typing.Optional[typing.Literal["integration/vcs/github"]] = pydantic.Field(default=None)
     """
     +value=integration/vcs/github
     """

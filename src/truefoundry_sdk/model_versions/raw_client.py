@@ -11,11 +11,13 @@ from ..core.pagination import AsyncPager, SyncPager
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..errors.unprocessable_entity_error import UnprocessableEntityError
+from ..core.serialization import convert_and_respect_annotation_metadata
+from ..errors.not_found_error import NotFoundError
 from ..types.empty_response import EmptyResponse
 from ..types.get_model_version_response import GetModelVersionResponse
 from ..types.list_model_versions_response import ListModelVersionsResponse
 from ..types.model_version import ModelVersion
+from ..types.object import Object
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -25,6 +27,117 @@ OMIT = typing.cast(typing.Any, ...)
 class RawModelVersionsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    def list(
+        self,
+        *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
+        tag: typing.Optional[str] = None,
+        fqn: typing.Optional[str] = None,
+        model_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
+        version: typing.Optional[Object] = None,
+        run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        run_steps: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
+        include_internal_metadata: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncPager[ModelVersion, ListModelVersionsResponse]:
+        """
+        List model versions with optional filtering by tag, FQN, model ID, ML Repo, name, version, run IDs, or run steps.
+
+        Parameters
+        ----------
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
+        tag : typing.Optional[str]
+
+        fqn : typing.Optional[str]
+
+        model_id : typing.Optional[str]
+
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
+
+        version : typing.Optional[Object]
+            Version number (positive integer) or `latest`
+
+        run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+
+        run_steps : typing.Optional[typing.Union[float, typing.Sequence[float]]]
+
+        include_internal_metadata : typing.Optional[bool]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[ModelVersion, ListModelVersionsResponse]
+            List of model versions matching the query with pagination information
+        """
+        offset = offset if offset is not None else 0
+
+        _response = self._client_wrapper.httpx_client.request(
+            "api/svc/v1/model-versions",
+            method="GET",
+            params={
+                "limit": limit,
+                "offset": offset,
+                "tag": tag,
+                "fqn": fqn,
+                "model_id": model_id,
+                "ml_repo_id": ml_repo_id,
+                "name": name,
+                "version": convert_and_respect_annotation_metadata(
+                    object_=version, annotation=Object, direction="write"
+                ),
+                "run_ids": run_ids,
+                "run_steps": run_steps,
+                "include_internal_metadata": include_internal_metadata,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    ListModelVersionsResponse,
+                    parse_obj_as(
+                        type_=ListModelVersionsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                _items = _parsed_response.data
+                _has_next = True
+                _get_next = lambda: self.list(
+                    limit=limit,
+                    offset=offset + len(_items or []),
+                    tag=tag,
+                    fqn=fqn,
+                    model_id=model_id,
+                    ml_repo_id=ml_repo_id,
+                    name=name,
+                    version=version,
+                    run_ids=run_ids,
+                    run_steps=run_steps,
+                    include_internal_metadata=include_internal_metadata,
+                    request_options=request_options,
+                )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def apply_tags(
         self,
@@ -40,13 +153,10 @@ class RawModelVersionsClient:
         Parameters
         ----------
         model_version_id : str
-            ID of the model version to apply tags to
 
         tags : typing.Sequence[str]
-            List of tags to apply to the model version
 
         force : typing.Optional[bool]
-            Whether to overwrite existing tags if they conflict
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -57,7 +167,7 @@ class RawModelVersionsClient:
             Empty response indicating successful tag application
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/model-versions/tags",
+            "api/svc/v1/model-versions/tags",
             method="PUT",
             json={
                 "model_version_id": model_version_id,
@@ -80,17 +190,6 @@ class RawModelVersionsClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -109,6 +208,7 @@ class RawModelVersionsClient:
         Parameters
         ----------
         id : str
+            Model version ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -119,7 +219,7 @@ class RawModelVersionsClient:
             The model version data
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/model-versions/{encode_path_param(id)}",
+            f"api/svc/v1/model-versions/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -133,8 +233,8 @@ class RawModelVersionsClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -162,6 +262,7 @@ class RawModelVersionsClient:
         Parameters
         ----------
         id : str
+            Model version ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -172,7 +273,7 @@ class RawModelVersionsClient:
             Empty response indicating successful deletion
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/model-versions/{encode_path_param(id)}",
+            f"api/svc/v1/model-versions/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -186,136 +287,8 @@ class RawModelVersionsClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def list(
-        self,
-        *,
-        tag: typing.Optional[str] = None,
-        fqn: typing.Optional[str] = None,
-        model_id: typing.Optional[str] = None,
-        ml_repo_id: typing.Optional[str] = None,
-        name: typing.Optional[str] = None,
-        version: typing.Optional[int] = None,
-        run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
-        include_internal_metadata: typing.Optional[bool] = False,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[ModelVersion, ListModelVersionsResponse]:
-        """
-        List model versions with optional filtering by tag, FQN, model ID, ML Repo, name, version, run IDs, or run steps.
-
-        Parameters
-        ----------
-        tag : typing.Optional[str]
-            Tag to filter model versions by
-
-        fqn : typing.Optional[str]
-            Fully qualified name to filter model versions by (format: 'model:{tenant_name}/{ml_repo_name}/{model_name}' or 'model:{tenant_name}/{ml_repo_name}/{model_name}:{version}')
-
-        model_id : typing.Optional[str]
-            ID of the model to filter versions by
-
-        ml_repo_id : typing.Optional[str]
-            ID of the ML Repo to filter model versions by
-
-        name : typing.Optional[str]
-            Name of the model to filter versions by
-
-        version : typing.Optional[int]
-            Version number (positive integer) or 'latest' to filter by specific version
-
-        run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            List of run IDs to filter model versions by
-
-        run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
-            List of run step numbers to filter model versions by
-
-        offset : typing.Optional[int]
-            Number of model versions to skip for pagination
-
-        limit : typing.Optional[int]
-            Maximum number of model versions to return
-
-        include_internal_metadata : typing.Optional[bool]
-            Whether to include internal metadata in the response
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SyncPager[ModelVersion, ListModelVersionsResponse]
-            List of model versions matching the query with pagination information
-        """
-        offset = offset if offset is not None else 0
-
-        _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/model-versions",
-            method="GET",
-            params={
-                "tag": tag,
-                "fqn": fqn,
-                "model_id": model_id,
-                "ml_repo_id": ml_repo_id,
-                "name": name,
-                "version": version,
-                "run_ids": run_ids,
-                "run_steps": run_steps,
-                "offset": offset,
-                "limit": limit,
-                "include_internal_metadata": include_internal_metadata,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _parsed_response = typing.cast(
-                    ListModelVersionsResponse,
-                    parse_obj_as(
-                        type_=ListModelVersionsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                _items = _parsed_response.data
-                _has_next = True
-                _get_next = lambda: self.list(
-                    tag=tag,
-                    fqn=fqn,
-                    model_id=model_id,
-                    ml_repo_id=ml_repo_id,
-                    name=name,
-                    version=version,
-                    run_ids=run_ids,
-                    run_steps=run_steps,
-                    offset=offset + len(_items or []),
-                    limit=limit,
-                    include_internal_metadata=include_internal_metadata,
-                    request_options=request_options,
-                )
-                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -339,6 +312,120 @@ class AsyncRawModelVersionsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
+    async def list(
+        self,
+        *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
+        tag: typing.Optional[str] = None,
+        fqn: typing.Optional[str] = None,
+        model_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
+        version: typing.Optional[Object] = None,
+        run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        run_steps: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
+        include_internal_metadata: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncPager[ModelVersion, ListModelVersionsResponse]:
+        """
+        List model versions with optional filtering by tag, FQN, model ID, ML Repo, name, version, run IDs, or run steps.
+
+        Parameters
+        ----------
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
+        tag : typing.Optional[str]
+
+        fqn : typing.Optional[str]
+
+        model_id : typing.Optional[str]
+
+        ml_repo_id : typing.Optional[str]
+
+        name : typing.Optional[str]
+
+        version : typing.Optional[Object]
+            Version number (positive integer) or `latest`
+
+        run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+
+        run_steps : typing.Optional[typing.Union[float, typing.Sequence[float]]]
+
+        include_internal_metadata : typing.Optional[bool]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[ModelVersion, ListModelVersionsResponse]
+            List of model versions matching the query with pagination information
+        """
+        offset = offset if offset is not None else 0
+
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/svc/v1/model-versions",
+            method="GET",
+            params={
+                "limit": limit,
+                "offset": offset,
+                "tag": tag,
+                "fqn": fqn,
+                "model_id": model_id,
+                "ml_repo_id": ml_repo_id,
+                "name": name,
+                "version": convert_and_respect_annotation_metadata(
+                    object_=version, annotation=Object, direction="write"
+                ),
+                "run_ids": run_ids,
+                "run_steps": run_steps,
+                "include_internal_metadata": include_internal_metadata,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    ListModelVersionsResponse,
+                    parse_obj_as(
+                        type_=ListModelVersionsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                _items = _parsed_response.data
+                _has_next = True
+
+                async def _get_next():
+                    return await self.list(
+                        limit=limit,
+                        offset=offset + len(_items or []),
+                        tag=tag,
+                        fqn=fqn,
+                        model_id=model_id,
+                        ml_repo_id=ml_repo_id,
+                        name=name,
+                        version=version,
+                        run_ids=run_ids,
+                        run_steps=run_steps,
+                        include_internal_metadata=include_internal_metadata,
+                        request_options=request_options,
+                    )
+
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     async def apply_tags(
         self,
         *,
@@ -353,13 +440,10 @@ class AsyncRawModelVersionsClient:
         Parameters
         ----------
         model_version_id : str
-            ID of the model version to apply tags to
 
         tags : typing.Sequence[str]
-            List of tags to apply to the model version
 
         force : typing.Optional[bool]
-            Whether to overwrite existing tags if they conflict
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -370,7 +454,7 @@ class AsyncRawModelVersionsClient:
             Empty response indicating successful tag application
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/model-versions/tags",
+            "api/svc/v1/model-versions/tags",
             method="PUT",
             json={
                 "model_version_id": model_version_id,
@@ -393,17 +477,6 @@ class AsyncRawModelVersionsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -422,6 +495,7 @@ class AsyncRawModelVersionsClient:
         Parameters
         ----------
         id : str
+            Model version ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -432,7 +506,7 @@ class AsyncRawModelVersionsClient:
             The model version data
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/model-versions/{encode_path_param(id)}",
+            f"api/svc/v1/model-versions/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -446,8 +520,8 @@ class AsyncRawModelVersionsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -475,6 +549,7 @@ class AsyncRawModelVersionsClient:
         Parameters
         ----------
         id : str
+            Model version ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -485,7 +560,7 @@ class AsyncRawModelVersionsClient:
             Empty response indicating successful deletion
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/model-versions/{encode_path_param(id)}",
+            f"api/svc/v1/model-versions/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -499,139 +574,8 @@ class AsyncRawModelVersionsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def list(
-        self,
-        *,
-        tag: typing.Optional[str] = None,
-        fqn: typing.Optional[str] = None,
-        model_id: typing.Optional[str] = None,
-        ml_repo_id: typing.Optional[str] = None,
-        name: typing.Optional[str] = None,
-        version: typing.Optional[int] = None,
-        run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
-        include_internal_metadata: typing.Optional[bool] = False,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[ModelVersion, ListModelVersionsResponse]:
-        """
-        List model versions with optional filtering by tag, FQN, model ID, ML Repo, name, version, run IDs, or run steps.
-
-        Parameters
-        ----------
-        tag : typing.Optional[str]
-            Tag to filter model versions by
-
-        fqn : typing.Optional[str]
-            Fully qualified name to filter model versions by (format: 'model:{tenant_name}/{ml_repo_name}/{model_name}' or 'model:{tenant_name}/{ml_repo_name}/{model_name}:{version}')
-
-        model_id : typing.Optional[str]
-            ID of the model to filter versions by
-
-        ml_repo_id : typing.Optional[str]
-            ID of the ML Repo to filter model versions by
-
-        name : typing.Optional[str]
-            Name of the model to filter versions by
-
-        version : typing.Optional[int]
-            Version number (positive integer) or 'latest' to filter by specific version
-
-        run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            List of run IDs to filter model versions by
-
-        run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
-            List of run step numbers to filter model versions by
-
-        offset : typing.Optional[int]
-            Number of model versions to skip for pagination
-
-        limit : typing.Optional[int]
-            Maximum number of model versions to return
-
-        include_internal_metadata : typing.Optional[bool]
-            Whether to include internal metadata in the response
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncPager[ModelVersion, ListModelVersionsResponse]
-            List of model versions matching the query with pagination information
-        """
-        offset = offset if offset is not None else 0
-
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/model-versions",
-            method="GET",
-            params={
-                "tag": tag,
-                "fqn": fqn,
-                "model_id": model_id,
-                "ml_repo_id": ml_repo_id,
-                "name": name,
-                "version": version,
-                "run_ids": run_ids,
-                "run_steps": run_steps,
-                "offset": offset,
-                "limit": limit,
-                "include_internal_metadata": include_internal_metadata,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _parsed_response = typing.cast(
-                    ListModelVersionsResponse,
-                    parse_obj_as(
-                        type_=ListModelVersionsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                _items = _parsed_response.data
-                _has_next = True
-
-                async def _get_next():
-                    return await self.list(
-                        tag=tag,
-                        fqn=fqn,
-                        model_id=model_id,
-                        ml_repo_id=ml_repo_id,
-                        name=name,
-                        version=version,
-                        run_ids=run_ids,
-                        run_steps=run_steps,
-                        offset=offset + len(_items or []),
-                        limit=limit,
-                        include_internal_metadata=include_internal_metadata,
-                        request_options=request_options,
-                    )
-
-                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,

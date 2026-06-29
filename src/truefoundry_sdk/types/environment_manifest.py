@@ -11,7 +11,7 @@ from .environment_optimize_for import EnvironmentOptimizeFor
 
 
 class EnvironmentManifest(UniversalBaseModel):
-    type: typing.Literal["environment"] = pydantic.Field(default="environment")
+    type: typing.Optional[typing.Literal["environment"]] = pydantic.Field(default=None)
     """
     +value=environment
     """

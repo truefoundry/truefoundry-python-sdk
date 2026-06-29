@@ -11,7 +11,7 @@ class CustomBearerAuth(UniversalBaseModel):
     Custom Bearer Auth
     """
 
-    type: typing.Literal["bearer-auth"] = pydantic.Field(default="bearer-auth")
+    type: typing.Optional[typing.Literal["bearer-auth"]] = pydantic.Field(default=None)
     """
     +value=bearer-auth
     """

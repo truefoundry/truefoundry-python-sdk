@@ -13,7 +13,7 @@ class BasetenModel(UniversalBaseModel):
     Baseten Model
     """
 
-    type: typing.Literal["integration/model/baseten"] = pydantic.Field(default="integration/model/baseten")
+    type: typing.Optional[typing.Literal["integration/model/baseten"]] = pydantic.Field(default=None)
     """
     +value=integration/model/baseten
     """

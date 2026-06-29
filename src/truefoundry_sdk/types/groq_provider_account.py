@@ -17,7 +17,7 @@ class GroqProviderAccount(UniversalBaseModel):
     Groq Provider Account
     """
 
-    type: typing.Literal["provider-account/groq"] = pydantic.Field(default="provider-account/groq")
+    type: typing.Optional[typing.Literal["provider-account/groq"]] = pydantic.Field(default=None)
     """
     +value=provider-account/groq
     """

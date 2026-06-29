@@ -12,9 +12,7 @@ class GcpGcr(UniversalBaseModel):
     GCP GCR
     """
 
-    type: typing.Literal["integration/docker-registry/gcp/gcr"] = pydantic.Field(
-        default="integration/docker-registry/gcp/gcr"
-    )
+    type: typing.Optional[typing.Literal["integration/docker-registry/gcp/gcr"]] = pydantic.Field(default=None)
     """
     +value=integration/docker-registry/gcp/gcr
     """

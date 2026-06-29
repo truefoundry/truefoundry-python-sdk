@@ -9,15 +9,8 @@ from .pagination import Pagination
 
 
 class ListAgentSkillsResponse(UniversalBaseModel):
-    data: typing.List[AgentSkill] = pydantic.Field()
-    """
-    List of agent skills matching the query
-    """
-
-    pagination: Pagination = pydantic.Field()
-    """
-    Pagination information
-    """
+    data: typing.List[AgentSkill]
+    pagination: Pagination
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

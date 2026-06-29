@@ -14,7 +14,7 @@ class Workflow(UniversalBaseModel):
     Describes the configuration for the worflow
     """
 
-    type: typing.Literal["workflow"] = pydantic.Field(default="workflow")
+    type: typing.Optional[typing.Literal["workflow"]] = pydantic.Field(default=None)
     """
     +value=workflow
     """

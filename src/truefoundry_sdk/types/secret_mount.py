@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class SecretMount(UniversalBaseModel):
-    type: typing.Literal["secret"] = pydantic.Field(default="secret")
+    type: typing.Optional[typing.Literal["secret"]] = pydantic.Field(default=None)
     """
     +value=secret
     """

@@ -17,7 +17,7 @@ class DeepinfraProviderAccount(UniversalBaseModel):
     DeepInfra Provider Account
     """
 
-    type: typing.Literal["provider-account/deepinfra"] = pydantic.Field(default="provider-account/deepinfra")
+    type: typing.Optional[typing.Literal["provider-account/deepinfra"]] = pydantic.Field(default=None)
     """
     +value=provider-account/deepinfra
     """

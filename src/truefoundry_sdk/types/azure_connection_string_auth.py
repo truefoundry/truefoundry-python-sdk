@@ -11,7 +11,7 @@ class AzureConnectionStringAuth(UniversalBaseModel):
     Azure Connection String
     """
 
-    type: typing.Literal["connection-string"] = pydantic.Field(default="connection-string")
+    type: typing.Optional[typing.Literal["connection-string"]] = pydantic.Field(default=None)
     """
     +value=connection-string
     """

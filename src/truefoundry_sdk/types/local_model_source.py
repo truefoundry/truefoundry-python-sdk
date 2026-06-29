@@ -7,7 +7,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class LocalModelSource(UniversalBaseModel):
-    type: typing.Literal["local"] = "local"
+    type: typing.Optional[typing.Literal["local"]] = pydantic.Field(default=None)
+    """
+    Type of the source
+    """
+
     file_or_folder: str = pydantic.Field()
     """
     Path to the model file or folder

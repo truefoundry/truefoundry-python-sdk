@@ -9,7 +9,7 @@ from .model_type import ModelType
 
 
 class CerebrasModel(UniversalBaseModel):
-    type: typing.Literal["integration/model/cerebras"] = pydantic.Field(default="integration/model/cerebras")
+    type: typing.Optional[typing.Literal["integration/model/cerebras"]] = pydantic.Field(default=None)
     """
     +value=integration/model/cerebras
     """

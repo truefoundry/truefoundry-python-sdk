@@ -14,9 +14,7 @@ class CustomEndpoint(UniversalBaseModel):
     Custom Endpoint
     """
 
-    type: typing.Literal["integration/model/custom-endpoint"] = pydantic.Field(
-        default="integration/model/custom-endpoint"
-    )
+    type: typing.Optional[typing.Literal["integration/model/custom-endpoint"]] = pydantic.Field(default=None)
     """
     +value=integration/model/custom-endpoint
     """

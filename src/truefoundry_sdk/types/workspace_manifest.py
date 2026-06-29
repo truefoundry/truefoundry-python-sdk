@@ -12,7 +12,7 @@ from .permissions import Permissions
 
 
 class WorkspaceManifest(UniversalBaseModel):
-    type: typing.Literal["workspace"] = pydantic.Field(default="workspace")
+    type: typing.Optional[typing.Literal["workspace"]] = pydantic.Field(default=None)
     """
     +value=workspace
     """

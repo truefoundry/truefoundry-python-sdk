@@ -11,7 +11,11 @@ class ExactMatchCacheConfig(UniversalBaseModel):
     Exact Match Cache Configuration
     """
 
-    type: typing.Literal["exact-match"] = "exact-match"
+    type: typing.Optional[typing.Literal["exact-match"]] = pydantic.Field(default=None)
+    """
+    Cache type
+    """
+
     namespace: typing.Optional[str] = pydantic.Field(default=None)
     """
     Cache namespace (defaults to 'default' if not provided)

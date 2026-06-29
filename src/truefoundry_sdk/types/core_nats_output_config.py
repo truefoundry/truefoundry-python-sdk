@@ -12,7 +12,7 @@ class CoreNatsOutputConfig(UniversalBaseModel):
     Describes the configuration for the output Core NATS worker
     """
 
-    type: typing.Literal["core-nats"] = pydantic.Field(default="core-nats")
+    type: typing.Optional[typing.Literal["core-nats"]] = pydantic.Field(default=None)
     """
     +value=core-nats
     """

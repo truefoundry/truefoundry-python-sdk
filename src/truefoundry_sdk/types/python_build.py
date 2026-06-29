@@ -13,7 +13,7 @@ class PythonBuild(UniversalBaseModel):
     Describes that we are using python to build a container image with a specific python version and pip packages installed.
     """
 
-    type: typing.Literal["tfy-python-buildpack"] = pydantic.Field(default="tfy-python-buildpack")
+    type: typing.Optional[typing.Literal["tfy-python-buildpack"]] = pydantic.Field(default=None)
     """
     +value=tfy-python-buildpack
     """

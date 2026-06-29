@@ -15,7 +15,7 @@ class HashicorpProviderAccount(UniversalBaseModel):
     HashiCorp Vault
     """
 
-    type: typing.Literal["provider-account/hashicorp"] = pydantic.Field(default="provider-account/hashicorp")
+    type: typing.Optional[typing.Literal["provider-account/hashicorp"]] = pydantic.Field(default=None)
     """
     +value=provider-account/hashicorp
     """

@@ -15,7 +15,7 @@ class MsTeamsProviderAccount(UniversalBaseModel):
     MS Teams Provider Account
     """
 
-    type: typing.Literal["provider-account/ms-teams"] = pydantic.Field(default="provider-account/ms-teams")
+    type: typing.Optional[typing.Literal["provider-account/ms-teams"]] = pydantic.Field(default=None)
     """
     +value=provider-account/ms-teams
     """

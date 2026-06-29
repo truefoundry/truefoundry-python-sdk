@@ -9,7 +9,7 @@ from .gateway_otel_config_otel_traces_exporter_config import GatewayOtelConfigOt
 
 
 class GatewayOtelConfig(UniversalBaseModel):
-    type: typing.Literal["gateway-otel-config"] = pydantic.Field(default="gateway-otel-config")
+    type: typing.Optional[typing.Literal["gateway-otel-config"]] = pydantic.Field(default=None)
     """
     +value=gateway-otel-config
     +sort=1

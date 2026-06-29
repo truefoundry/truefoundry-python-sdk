@@ -26,8 +26,8 @@ class PaloAltoPrismaAirsGuardrailConfig(UniversalBaseModel):
     Optional description for this Guardrail Config.
     """
 
-    type: typing.Literal["integration/guardrail-config/palo-alto-prisma-airs"] = pydantic.Field(
-        default="integration/guardrail-config/palo-alto-prisma-airs"
+    type: typing.Optional[typing.Literal["integration/guardrail-config/palo-alto-prisma-airs"]] = pydantic.Field(
+        default=None
     )
     """
     +uiType=Hidden

@@ -12,7 +12,7 @@ class HttpProbe(UniversalBaseModel):
     To learn more you can go [here](https://docs.truefoundry.com/docs/liveness-readiness-probe)
     """
 
-    type: typing.Literal["http"] = pydantic.Field(default="http")
+    type: typing.Optional[typing.Literal["http"]] = pydantic.Field(default=None)
     """
     Request Type
     """

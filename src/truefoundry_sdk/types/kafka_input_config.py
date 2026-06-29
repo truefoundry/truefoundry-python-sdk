@@ -12,7 +12,7 @@ class KafkaInputConfig(UniversalBaseModel):
     Describes the configuration for the input Kafka worker
     """
 
-    type: typing.Literal["kafka"] = pydantic.Field(default="kafka")
+    type: typing.Optional[typing.Literal["kafka"]] = pydantic.Field(default=None)
     """
     +value=kafka
     """

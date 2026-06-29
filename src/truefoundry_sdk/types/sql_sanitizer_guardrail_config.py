@@ -26,9 +26,7 @@ class SqlSanitizerGuardrailConfig(UniversalBaseModel):
     Optional description for this Guardrail Config.
     """
 
-    type: typing.Literal["integration/guardrail-config/sql-sanitizer"] = pydantic.Field(
-        default="integration/guardrail-config/sql-sanitizer"
-    )
+    type: typing.Optional[typing.Literal["integration/guardrail-config/sql-sanitizer"]] = pydantic.Field(default=None)
     """
     +uiType=Hidden
     +value=integration/guardrail-config/sql-sanitizer

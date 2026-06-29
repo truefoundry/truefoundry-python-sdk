@@ -16,7 +16,7 @@ class AgentIdentityManifest(UniversalBaseModel):
     Agent Identity Name
     """
 
-    type: typing.Literal["agent-identity"] = pydantic.Field(default="agent-identity")
+    type: typing.Optional[typing.Literal["agent-identity"]] = pydantic.Field(default=None)
     """
     +value=agent-identity
     """

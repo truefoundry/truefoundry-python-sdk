@@ -10,7 +10,7 @@ from .resources import Resources
 
 
 class ContainerTaskConfig(UniversalBaseModel):
-    type: typing.Literal["container-task-config"] = pydantic.Field(default="container-task-config")
+    type: typing.Optional[typing.Literal["container-task-config"]] = pydantic.Field(default=None)
     """
     +value=container-task-config
     """

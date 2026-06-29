@@ -11,7 +11,7 @@ class CustomFramework(UniversalBaseModel):
     Custom
     """
 
-    type: typing.Literal["custom"] = pydantic.Field(default="custom")
+    type: typing.Optional[typing.Literal["custom"]] = pydantic.Field(default=None)
     """
     Type
     """

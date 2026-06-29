@@ -24,7 +24,7 @@ class SagemakerModel(UniversalBaseModel):
     The SageMaker endpoint name you created for your model deployment. This is the name of the inference endpoint in AWS SageMaker, not the model name.
     """
 
-    type: typing.Literal["integration/model/sagemaker"] = pydantic.Field(default="integration/model/sagemaker")
+    type: typing.Optional[typing.Literal["integration/model/sagemaker"]] = pydantic.Field(default=None)
     """
     +value=integration/model/sagemaker
     """

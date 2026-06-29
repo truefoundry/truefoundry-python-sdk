@@ -11,7 +11,7 @@ class CustomBasicAuth(UniversalBaseModel):
     Custom Basic Auth
     """
 
-    type: typing.Literal["basic-auth"] = pydantic.Field(default="basic-auth")
+    type: typing.Optional[typing.Literal["basic-auth"]] = pydantic.Field(default=None)
     """
     +value=basic-auth
     """

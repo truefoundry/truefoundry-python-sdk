@@ -27,9 +27,7 @@ class EnkryptAiGuardrailConfig(UniversalBaseModel):
     Optional description for this Guardrail Config.
     """
 
-    type: typing.Literal["integration/guardrail-config/enkrypt-ai"] = pydantic.Field(
-        default="integration/guardrail-config/enkrypt-ai"
-    )
+    type: typing.Optional[typing.Literal["integration/guardrail-config/enkrypt-ai"]] = pydantic.Field(default=None)
     """
     +uiType=Hidden
     +value=integration/guardrail-config/enkrypt-ai

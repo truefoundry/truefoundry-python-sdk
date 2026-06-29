@@ -16,7 +16,7 @@ class TracingProjectManifest(UniversalBaseModel):
     Tracing Project is an entity that allows you to manage and monitor telemetry data.
     """
 
-    type: typing.Literal["tracing-project"] = pydantic.Field(default="tracing-project")
+    type: typing.Optional[typing.Literal["tracing-project"]] = pydantic.Field(default=None)
     """
     +value=tracing-project
     """

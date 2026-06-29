@@ -17,7 +17,7 @@ class CerebrasProviderAccount(UniversalBaseModel):
     Cerebras Provider Account
     """
 
-    type: typing.Literal["provider-account/cerebras"] = pydantic.Field(default="provider-account/cerebras")
+    type: typing.Optional[typing.Literal["provider-account/cerebras"]] = pydantic.Field(default=None)
     """
     +value=provider-account/cerebras
     """

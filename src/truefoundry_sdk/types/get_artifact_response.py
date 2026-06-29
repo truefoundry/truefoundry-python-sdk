@@ -8,10 +8,7 @@ from .artifact import Artifact
 
 
 class GetArtifactResponse(UniversalBaseModel):
-    data: Artifact = pydantic.Field()
-    """
-    The artifact data
-    """
+    data: Artifact
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

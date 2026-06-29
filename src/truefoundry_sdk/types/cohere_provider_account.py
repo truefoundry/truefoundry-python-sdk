@@ -17,7 +17,7 @@ class CohereProviderAccount(UniversalBaseModel):
     Cohere Provider Account
     """
 
-    type: typing.Literal["provider-account/cohere"] = pydantic.Field(default="provider-account/cohere")
+    type: typing.Optional[typing.Literal["provider-account/cohere"]] = pydantic.Field(default=None)
     """
     +value=provider-account/cohere
     """

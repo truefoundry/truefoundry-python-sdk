@@ -24,9 +24,7 @@ class BedrockMantleModel(UniversalBaseModel):
     The Bedrock Mantle model identifier (e.g., openai.gpt-oss-20b-1:0). Use the OpenAI-compatible model name exposed by the Bedrock Mantle endpoint.
     """
 
-    type: typing.Literal["integration/model/bedrock-mantle"] = pydantic.Field(
-        default="integration/model/bedrock-mantle"
-    )
+    type: typing.Optional[typing.Literal["integration/model/bedrock-mantle"]] = pydantic.Field(default=None)
     """
     +value=integration/model/bedrock-mantle
     """

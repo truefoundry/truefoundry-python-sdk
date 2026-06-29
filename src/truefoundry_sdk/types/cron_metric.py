@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class CronMetric(UniversalBaseModel):
-    type: typing.Literal["cron"] = pydantic.Field(default="cron")
+    type: typing.Optional[typing.Literal["cron"]] = pydantic.Field(default=None)
     """
     +value=cron
     """

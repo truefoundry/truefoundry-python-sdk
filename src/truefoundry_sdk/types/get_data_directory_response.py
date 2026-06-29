@@ -8,10 +8,7 @@ from .data_directory import DataDirectory
 
 
 class GetDataDirectoryResponse(UniversalBaseModel):
-    data: DataDirectory = pydantic.Field()
-    """
-    The data directory data
-    """
+    data: DataDirectory
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

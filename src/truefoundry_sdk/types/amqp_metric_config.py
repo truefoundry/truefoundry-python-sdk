@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class AmqpMetricConfig(UniversalBaseModel):
-    type: typing.Literal["amqp"] = pydantic.Field(default="amqp")
+    type: typing.Optional[typing.Literal["amqp"]] = pydantic.Field(default=None)
     """
     +value=amqp
     """

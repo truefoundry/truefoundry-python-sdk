@@ -13,7 +13,7 @@ class DeepinfraModel(UniversalBaseModel):
     DeepInfra Model
     """
 
-    type: typing.Literal["integration/model/deepinfra"] = pydantic.Field(default="integration/model/deepinfra")
+    type: typing.Optional[typing.Literal["integration/model/deepinfra"]] = pydantic.Field(default=None)
     """
     +value=integration/model/deepinfra
     """

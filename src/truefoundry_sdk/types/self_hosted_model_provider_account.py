@@ -16,9 +16,7 @@ class SelfHostedModelProviderAccount(UniversalBaseModel):
     Self Hosted
     """
 
-    type: typing.Literal["provider-account/self-hosted-model"] = pydantic.Field(
-        default="provider-account/self-hosted-model"
-    )
+    type: typing.Optional[typing.Literal["provider-account/self-hosted-model"]] = pydantic.Field(default=None)
     """
     +value=provider-account/self-hosted-model
     """

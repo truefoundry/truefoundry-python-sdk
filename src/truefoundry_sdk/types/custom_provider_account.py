@@ -16,7 +16,7 @@ class CustomProviderAccount(UniversalBaseModel):
     Custom
     """
 
-    type: typing.Literal["provider-account/custom"] = pydantic.Field(default="provider-account/custom")
+    type: typing.Optional[typing.Literal["provider-account/custom"]] = pydantic.Field(default=None)
     """
     +value=provider-account/custom
     """

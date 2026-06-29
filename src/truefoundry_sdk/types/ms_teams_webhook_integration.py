@@ -12,8 +12,8 @@ class MsTeamsWebhookIntegration(UniversalBaseModel):
     MS Teams Webhook Integration
     """
 
-    type: typing.Literal["integration/notification-channel/ms-teams-webhook"] = pydantic.Field(
-        default="integration/notification-channel/ms-teams-webhook"
+    type: typing.Optional[typing.Literal["integration/notification-channel/ms-teams-webhook"]] = pydantic.Field(
+        default=None
     )
     """
     +value=integration/notification-channel/ms-teams-webhook

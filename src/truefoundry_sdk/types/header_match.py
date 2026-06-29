@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class HeaderMatch(UniversalBaseModel):
-    type: typing.Literal["header"] = pydantic.Field(default="header")
+    type: typing.Optional[typing.Literal["header"]] = pydantic.Field(default=None)
     """
     +value=header
     """

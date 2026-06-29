@@ -24,7 +24,7 @@ class BedrockModel(UniversalBaseModel):
     The AWS Bedrock model identifier or inference profile. Can be a foundation model ID (e.g., anthropic.claude-3-5-sonnet-20240620-v1:0, amazon.titan-text-express-v1), an inference profile ID (e.g., us.anthropic.claude-3-5-sonnet-20240620-v1:0), or an inference profile ARN (e.g., arn:aws:bedrock:us-east-1:123456789012:inference-profile/my-profile).
     """
 
-    type: typing.Literal["integration/model/bedrock"] = pydantic.Field(default="integration/model/bedrock")
+    type: typing.Optional[typing.Literal["integration/model/bedrock"]] = pydantic.Field(default=None)
     """
     +value=integration/model/bedrock
     """

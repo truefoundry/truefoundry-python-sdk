@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class WebhookBasicAuth(UniversalBaseModel):
-    type: typing.Literal["webhook-basic"] = pydantic.Field(default="webhook-basic")
+    type: typing.Optional[typing.Literal["webhook-basic"]] = pydantic.Field(default=None)
     """
     +value=auth/webhook-basic
     """

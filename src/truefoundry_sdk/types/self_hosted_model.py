@@ -16,9 +16,7 @@ class SelfHostedModel(UniversalBaseModel):
     Self Hosted Model Integration
     """
 
-    type: typing.Literal["integration/model/self-hosted-model"] = pydantic.Field(
-        default="integration/model/self-hosted-model"
-    )
+    type: typing.Optional[typing.Literal["integration/model/self-hosted-model"]] = pydantic.Field(default=None)
     """
     +value=integration/model/self-hosted-model
     """

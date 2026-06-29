@@ -11,7 +11,7 @@ class TrueFoundryInteractiveLogin(UniversalBaseModel):
     Login with truefoundry
     """
 
-    type: typing.Literal["truefoundry_oauth"] = pydantic.Field(default="truefoundry_oauth")
+    type: typing.Optional[typing.Literal["truefoundry_oauth"]] = pydantic.Field(default=None)
     """
     +value=truefoundry_oauth
     """

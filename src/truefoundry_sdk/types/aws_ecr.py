@@ -12,9 +12,7 @@ class AwsEcr(UniversalBaseModel):
     AWS ECR
     """
 
-    type: typing.Literal["integration/docker-registry/aws/ecr"] = pydantic.Field(
-        default="integration/docker-registry/aws/ecr"
-    )
+    type: typing.Optional[typing.Literal["integration/docker-registry/aws/ecr"]] = pydantic.Field(default=None)
     """
     +value=integration/docker-registry/aws/ecr
     """

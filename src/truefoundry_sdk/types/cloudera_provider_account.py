@@ -17,7 +17,7 @@ class ClouderaProviderAccount(UniversalBaseModel):
     Cloudera Provider Account
     """
 
-    type: typing.Literal["provider-account/cloudera"] = pydantic.Field(default="provider-account/cloudera")
+    type: typing.Optional[typing.Literal["provider-account/cloudera"]] = pydantic.Field(default=None)
     """
     +value=provider-account/cloudera
     """

@@ -8,10 +8,7 @@ from .prompt_version import PromptVersion
 
 
 class GetPromptVersionResponse(UniversalBaseModel):
-    data: PromptVersion = pydantic.Field()
-    """
-    The prompt version data
-    """
+    data: PromptVersion
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

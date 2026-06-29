@@ -6,58 +6,20 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .agent_skill_version import AgentSkillVersion
+from .artifact_type import ArtifactType
 from .subject import Subject
 
 
 class AgentSkill(UniversalBaseModel):
-    """
-    Core artifact fields (identity, type, latest version)
-    """
-
-    id: str = pydantic.Field()
-    """
-    Unique identifier for the artifact
-    """
-
-    ml_repo_id: str = pydantic.Field()
-    """
-    ID of the ML Repo that this artifact belongs to
-    """
-
-    type: typing.Optional[typing.Literal["agent-skill"]] = pydantic.Field(default=None)
-    """
-    Artifact type; always 'agent-skill' for agent skill entities
-    """
-
-    name: str = pydantic.Field()
-    """
-    Name of the artifact (alphanumeric characters, hyphens, and underscores only, max 256 characters)
-    """
-
-    fqn: str = pydantic.Field()
-    """
-    Fully qualified name of the artifact in the format '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}'
-    """
-
-    created_by_subject: Subject = pydantic.Field()
-    """
-    Subject (user, team, or service account) that created this artifact
-    """
-
-    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
-    """
-    Timestamp when the artifact was created
-    """
-
-    updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
-    """
-    Timestamp when the artifact was last updated
-    """
-
-    latest_version: typing.Optional[AgentSkillVersion] = pydantic.Field(default=None)
-    """
-    The most recent version of this agent skill
-    """
+    id: str
+    ml_repo_id: str
+    type: ArtifactType
+    name: str
+    fqn: str
+    created_by_subject: Subject
+    created_at: typing.Optional[dt.datetime] = None
+    updated_at: typing.Optional[dt.datetime] = None
+    latest_version: typing.Optional[AgentSkillVersion] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

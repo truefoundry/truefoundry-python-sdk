@@ -11,30 +11,15 @@ from .signed_url import SignedUrl
 
 
 class MultiPartUpload(UniversalBaseModel):
-    storage_provider: MultiPartUploadStorageProvider = pydantic.Field()
-    """
-    Storage provider being used for the multipart upload (e.g., 'S3_COMPATIBLE' or 'AZURE_BLOB')
-    """
-
-    part_signed_urls: typing.List[SignedUrl] = pydantic.Field()
-    """
-    List of signed URLs for each part of the multipart upload
-    """
-
+    storage_provider: MultiPartUploadStorageProvider
+    part_signed_urls: typing.List[SignedUrl]
+    finalize_signed_url: SignedUrl
     s3compatible_upload_id: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="s3_compatible_upload_id"),
-        pydantic.Field(alias="s3_compatible_upload_id", description="Upload ID for S3-compatible storage providers"),
+        pydantic.Field(alias="s3_compatible_upload_id"),
     ] = None
-    azure_blob_block_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
-    """
-    List of block IDs for Azure Blob Storage multipart upload
-    """
-
-    finalize_signed_url: SignedUrl = pydantic.Field()
-    """
-    Signed URL to call after all parts are uploaded to finalize the multipart upload
-    """
+    azure_blob_block_ids: typing.Optional[typing.List[str]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

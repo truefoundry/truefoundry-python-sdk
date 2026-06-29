@@ -12,9 +12,7 @@ class CustomUsernamePasswordArtifactsRegistry(UniversalBaseModel):
     Custom Docker Registry
     """
 
-    type: typing.Literal["integration/docker-registry/custom"] = pydantic.Field(
-        default="integration/docker-registry/custom"
-    )
+    type: typing.Optional[typing.Literal["integration/docker-registry/custom"]] = pydantic.Field(default=None)
     """
     +value=integration/docker-registry/custom
     """

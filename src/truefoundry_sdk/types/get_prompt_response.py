@@ -8,10 +8,7 @@ from .prompt import Prompt
 
 
 class GetPromptResponse(UniversalBaseModel):
-    data: Prompt = pydantic.Field()
-    """
-    The prompt data
-    """
+    data: Prompt
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -3,37 +3,25 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from .agent_skill_manifest_source import AgentSkillManifestSource
+from .base_artifact_version import BaseArtifactVersion
 
 
-class AgentSkillManifest(UniversalBaseModel):
+class AgentSkillManifest(BaseArtifactVersion):
     """
-    Apply/API agent-skill manifest; ``source`` is inline (apply) or blob-storage (stored).
-    """
-
-    name: str = pydantic.Field()
-    """
-    Name of the skill.
+    Agent skill version.
     """
 
-    metadata: typing.Dict[str, typing.Any] = pydantic.Field()
+    type: typing.Optional[typing.Literal["agent-skill"]] = pydantic.Field(default=None)
     """
-    Key value metadata. Should be valid JSON. For e.g. `{"business-unit": "sales", "quality": "good", "rating": 4.5}`
-    """
-
-    ml_repo: str = pydantic.Field()
-    """
-    Name of the ML Repo
+    Type
     """
 
-    version: typing.Optional[int] = pydantic.Field(default=None)
+    source: AgentSkillManifestSource = pydantic.Field()
     """
-    Version of the entity
+    Source
     """
-
-    type: typing.Literal["agent-skill"] = "agent-skill"
-    source: AgentSkillManifestSource
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

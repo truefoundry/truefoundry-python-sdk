@@ -11,7 +11,7 @@ class AzureClientSecretAuth(UniversalBaseModel):
     Entra client secret based auth
     """
 
-    type: typing.Literal["client-secret"] = pydantic.Field(default="client-secret")
+    type: typing.Optional[typing.Literal["client-secret"]] = pydantic.Field(default=None)
     """
     +value=client-secret
     """

@@ -13,7 +13,7 @@ class XaiModel(UniversalBaseModel):
     xAI Model
     """
 
-    type: typing.Literal["integration/model/xai"] = pydantic.Field(default="integration/model/xai")
+    type: typing.Optional[typing.Literal["integration/model/xai"]] = pydantic.Field(default=None)
     """
     +value=integration/model/xai
     """

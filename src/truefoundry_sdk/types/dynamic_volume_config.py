@@ -11,7 +11,7 @@ class DynamicVolumeConfig(UniversalBaseModel):
     Create new volume
     """
 
-    type: typing.Literal["dynamic"] = pydantic.Field(default="dynamic")
+    type: typing.Optional[typing.Literal["dynamic"]] = pydantic.Field(default=None)
     """
     Volume Type for the volume.
     """

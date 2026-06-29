@@ -11,7 +11,7 @@ class UploadSpecSource(UniversalBaseModel):
     Fetch the stored/uploaded OpenAPI specification.
     """
 
-    type: typing.Literal["upload"] = pydantic.Field(default="upload")
+    type: typing.Optional[typing.Literal["upload"]] = pydantic.Field(default=None)
     """
     +value=upload
     """

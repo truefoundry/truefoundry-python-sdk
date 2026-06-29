@@ -14,7 +14,7 @@ class AzureFoundryModel(UniversalBaseModel):
     Azure AI Foundry Model
     """
 
-    type: typing.Literal["integration/model/azure-foundry"] = pydantic.Field(default="integration/model/azure-foundry")
+    type: typing.Optional[typing.Literal["integration/model/azure-foundry"]] = pydantic.Field(default=None)
     """
     +value=integration/model/azure-foundry
     """

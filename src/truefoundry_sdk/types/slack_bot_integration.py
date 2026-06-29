@@ -12,9 +12,7 @@ class SlackBotIntegration(UniversalBaseModel):
     Slack Bot Integration
     """
 
-    type: typing.Literal["integration/notification-channel/slack-bot"] = pydantic.Field(
-        default="integration/notification-channel/slack-bot"
-    )
+    type: typing.Optional[typing.Literal["integration/notification-channel/slack-bot"]] = pydantic.Field(default=None)
     """
     +value=integration/notification-channel/slack-bot
     """

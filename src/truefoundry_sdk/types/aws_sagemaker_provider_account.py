@@ -18,7 +18,7 @@ class AwsSagemakerProviderAccount(UniversalBaseModel):
     Sagemaker
     """
 
-    type: typing.Literal["provider-account/aws-sagemaker"] = pydantic.Field(default="provider-account/aws-sagemaker")
+    type: typing.Optional[typing.Literal["provider-account/aws-sagemaker"]] = pydantic.Field(default=None)
     """
     +value=provider-account/aws-sagemaker
     """

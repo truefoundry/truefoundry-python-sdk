@@ -17,7 +17,7 @@ class GoogleGeminiProviderAccount(UniversalBaseModel):
     Google Gemini Provider Account
     """
 
-    type: typing.Literal["provider-account/google-gemini"] = pydantic.Field(default="provider-account/google-gemini")
+    type: typing.Optional[typing.Literal["provider-account/google-gemini"]] = pydantic.Field(default=None)
     """
     +value=provider-account/google-gemini
     """

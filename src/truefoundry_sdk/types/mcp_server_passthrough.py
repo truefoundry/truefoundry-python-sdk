@@ -11,7 +11,7 @@ class McpServerPassthrough(UniversalBaseModel):
     Authenticate using your existing TrueFoundry account (PAT or Virtual Accounts). Your credentials are automatically passed to the MCP server.
     """
 
-    type: typing.Literal["passthrough"] = pydantic.Field(default="passthrough")
+    type: typing.Optional[typing.Literal["passthrough"]] = pydantic.Field(default=None)
     """
     +value=passthrough
     """

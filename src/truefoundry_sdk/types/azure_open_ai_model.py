@@ -14,7 +14,7 @@ class AzureOpenAiModel(UniversalBaseModel):
     Azure OpenAI Model
     """
 
-    type: typing.Literal["integration/model/azure-openai"] = pydantic.Field(default="integration/model/azure-openai")
+    type: typing.Optional[typing.Literal["integration/model/azure-openai"]] = pydantic.Field(default=None)
     """
     +value=integration/model/azure-openai
     """
