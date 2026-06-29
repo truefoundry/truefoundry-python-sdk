@@ -41,6 +41,10 @@ class TogetherAiProviderAccount(UniversalBaseModel):
     owned_by: typing_extensions.Annotated[
         typing.Optional[OwnedBy], FieldMetadata(alias="ownedBy"), pydantic.Field(alias="ownedBy")
     ] = None
+    discount_percent: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Discount % applied to upstream list price for this provider account.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

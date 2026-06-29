@@ -12,6 +12,9 @@ class TeamMetadata(UniversalBaseModel):
     created_by_scim: typing_extensions.Annotated[
         typing.Optional[bool], FieldMetadata(alias="createdByScim"), pydantic.Field(alias="createdByScim")
     ] = None
+    scim_external_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="scimExternalId"), pydantic.Field(alias="scimExternalId")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

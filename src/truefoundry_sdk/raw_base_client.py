@@ -13,6 +13,7 @@ from .core.serialization import convert_and_respect_annotation_metadata
 from .types.true_foundry_apply_request_manifest import TrueFoundryApplyRequestManifest
 from .types.true_foundry_apply_response import TrueFoundryApplyResponse
 from .types.true_foundry_delete_request_manifest import TrueFoundryDeleteRequestManifest
+from .types.true_foundry_delete_response import TrueFoundryDeleteResponse
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -31,12 +32,12 @@ class RawBaseTrueFoundry:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[TrueFoundryApplyResponse]:
         """
-        Applies a given manifest to create or update resources of specific types, such as provider-account, cluster, workspace, or ml-repo.
+        Apply a manifest to create or update a resource.
 
         Parameters
         ----------
         manifest : TrueFoundryApplyRequestManifest
-            manifest of the resource to be created or updated
+            Manifest of the resource to be created or updated
 
         dry_run : typing.Optional[bool]
             Dry run the apply operation without actually applying
@@ -47,7 +48,7 @@ class RawBaseTrueFoundry:
         Returns
         -------
         HttpResponse[TrueFoundryApplyResponse]
-            The resource has been successfully created or updated.
+            The created or updated resource, and the action that was performed.
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/svc/v1/apply",
@@ -85,21 +86,22 @@ class RawBaseTrueFoundry:
 
     def delete(
         self, *, manifest: TrueFoundryDeleteRequestManifest, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[None]:
+    ) -> HttpResponse[TrueFoundryDeleteResponse]:
         """
-        Deletes resources of specific types, such as provider-account, cluster, workspace, or application.
+        Delete a resource identified by the provided manifest.
 
         Parameters
         ----------
         manifest : TrueFoundryDeleteRequestManifest
-            manifest of the resource to be deleted
+            Manifest of the resource to be deleted
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[None]
+        HttpResponse[TrueFoundryDeleteResponse]
+            Empty response confirming the resource has been deleted.
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/svc/v1/delete",
@@ -117,7 +119,14 @@ class RawBaseTrueFoundry:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return HttpResponse(response=_response, data=None)
+                _data = typing.cast(
+                    TrueFoundryDeleteResponse,
+                    parse_obj_as(
+                        type_=TrueFoundryDeleteResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -140,12 +149,12 @@ class AsyncRawBaseTrueFoundry:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[TrueFoundryApplyResponse]:
         """
-        Applies a given manifest to create or update resources of specific types, such as provider-account, cluster, workspace, or ml-repo.
+        Apply a manifest to create or update a resource.
 
         Parameters
         ----------
         manifest : TrueFoundryApplyRequestManifest
-            manifest of the resource to be created or updated
+            Manifest of the resource to be created or updated
 
         dry_run : typing.Optional[bool]
             Dry run the apply operation without actually applying
@@ -156,7 +165,7 @@ class AsyncRawBaseTrueFoundry:
         Returns
         -------
         AsyncHttpResponse[TrueFoundryApplyResponse]
-            The resource has been successfully created or updated.
+            The created or updated resource, and the action that was performed.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/svc/v1/apply",
@@ -194,21 +203,22 @@ class AsyncRawBaseTrueFoundry:
 
     async def delete(
         self, *, manifest: TrueFoundryDeleteRequestManifest, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[None]:
+    ) -> AsyncHttpResponse[TrueFoundryDeleteResponse]:
         """
-        Deletes resources of specific types, such as provider-account, cluster, workspace, or application.
+        Delete a resource identified by the provided manifest.
 
         Parameters
         ----------
         manifest : TrueFoundryDeleteRequestManifest
-            manifest of the resource to be deleted
+            Manifest of the resource to be deleted
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[None]
+        AsyncHttpResponse[TrueFoundryDeleteResponse]
+            Empty response confirming the resource has been deleted.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/svc/v1/delete",
@@ -226,7 +236,14 @@ class AsyncRawBaseTrueFoundry:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return AsyncHttpResponse(response=_response, data=None)
+                _data = typing.cast(
+                    TrueFoundryDeleteResponse,
+                    parse_obj_as(
+                        type_=TrueFoundryDeleteResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

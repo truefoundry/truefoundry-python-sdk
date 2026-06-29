@@ -11,7 +11,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update
 class GetApplicationResponse(UniversalBaseModel):
     data: "Application" = pydantic.Field()
     """
-    Application
+    Application details
     """
 
     if IS_PYDANTIC_V2:
@@ -25,8 +25,5 @@ class GetApplicationResponse(UniversalBaseModel):
 
 from .application import Application  # noqa: E402, I001
 from .application_debug_info import ApplicationDebugInfo  # noqa: E402, I001
-from .deployment import Deployment  # noqa: E402, I001
 
-update_forward_refs(
-    GetApplicationResponse, Application=Application, ApplicationDebugInfo=ApplicationDebugInfo, Deployment=Deployment
-)
+update_forward_refs(GetApplicationResponse, Application=Application, ApplicationDebugInfo=ApplicationDebugInfo)

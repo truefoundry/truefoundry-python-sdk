@@ -8,6 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
 from .collaborator import Collaborator
 from .mcp_server_env_auth import McpServerEnvAuth
+from .mcp_tool_setting import McpToolSetting
 from .owned_by import OwnedBy
 
 
@@ -45,6 +46,11 @@ class StdioMcpServerManifest(UniversalBaseModel):
     args: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     Arguments passed to the stdio MCP server command.
+    """
+
+    tool_settings: typing.Optional[typing.List[McpToolSetting]] = pydantic.Field(default=None)
+    """
+    Customize tool descriptions or enable/disable specific tools from the MCP Server.
     """
 
     auth_data: typing.Optional[McpServerEnvAuth] = None

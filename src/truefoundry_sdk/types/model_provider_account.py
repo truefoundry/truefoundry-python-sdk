@@ -4,7 +4,9 @@ import typing
 
 from .ai21provider_account import Ai21ProviderAccount
 from .anthropic_provider_account import AnthropicProviderAccount
+from .aws_bedrock_mantle_provider_account import AwsBedrockMantleProviderAccount
 from .aws_bedrock_provider_account import AwsBedrockProviderAccount
+from .aws_claude_platform_provider_account import AwsClaudePlatformProviderAccount
 from .aws_sagemaker_provider_account import AwsSagemakerProviderAccount
 from .azure_foundry_provider_account import AzureFoundryProviderAccount
 from .azure_open_ai_provider_account import AzureOpenAiProviderAccount
@@ -30,9 +32,11 @@ from .palm_provider_account import PalmProviderAccount
 from .perplexity_ai_provider_account import PerplexityAiProviderAccount
 from .samba_nova_provider_account import SambaNovaProviderAccount
 from .self_hosted_model_provider_account import SelfHostedModelProviderAccount
+from .smallest_ai_provider_account import SmallestAiProviderAccount
 from .snowflake_cortex_provider_account import SnowflakeCortexProviderAccount
 from .together_ai_provider_account import TogetherAiProviderAccount
 from .virtual_model_provider_account import VirtualModelProviderAccount
+from .wafer_provider_account import WaferProviderAccount
 from .xai_provider_account import XaiProviderAccount
 
 ModelProviderAccount = typing.Union[
@@ -62,10 +66,14 @@ ModelProviderAccount = typing.Union[
     BasetenProviderAccount,
     AwsSagemakerProviderAccount,
     CerebrasProviderAccount,
+    WaferProviderAccount,
     SnowflakeCortexProviderAccount,
     ElevenLabsProviderAccount,
     DeepgramProviderAccount,
     CartesiaProviderAccount,
+    SmallestAiProviderAccount,
+    AwsClaudePlatformProviderAccount,
+    AwsBedrockMantleProviderAccount,
     VirtualModelProviderAccount,
     CustomEndpointProviderAccount,
 ]

@@ -11,12 +11,12 @@ from .pagination import Pagination
 class ListEnvironmentsResponse(UniversalBaseModel):
     data: typing.List[Environment] = pydantic.Field()
     """
-    Array of Environments
+    List of environments for the tenant.
     """
 
     pagination: Pagination = pydantic.Field()
     """
-    Pagination information
+    Pagination metadata — `total`, `limit`, `offset`.
     """
 
     if IS_PYDANTIC_V2:

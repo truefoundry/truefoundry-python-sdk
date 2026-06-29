@@ -10,6 +10,7 @@ from ...core.parse_error import ParsingError
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
+from ...types.artifact_type import ArtifactType
 from ...types.internal_list_artifact_versions_response import InternalListArtifactVersionsResponse
 from ...types.internal_list_artifact_versions_response_data_item import InternalListArtifactVersionsResponseDataItem
 from pydantic import ValidationError
@@ -34,6 +35,7 @@ class RawArtifactVersionsClient:
         limit: typing.Optional[int] = 100,
         include_internal_metadata: typing.Optional[bool] = False,
         include_model_versions: typing.Optional[bool] = False,
+        artifact_types: typing.Optional[typing.Union[ArtifactType, typing.Sequence[ArtifactType]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[InternalListArtifactVersionsResponseDataItem, InternalListArtifactVersionsResponse]:
         """
@@ -77,6 +79,8 @@ class RawArtifactVersionsClient:
         include_model_versions : typing.Optional[bool]
             Whether to include model versions in the results (internal use only)
 
+        artifact_types : typing.Optional[typing.Union[ArtifactType, typing.Sequence[ArtifactType]]]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -103,6 +107,7 @@ class RawArtifactVersionsClient:
                 "limit": limit,
                 "include_internal_metadata": include_internal_metadata,
                 "include_model_versions": include_model_versions,
+                "artifact_types": artifact_types,
             },
             request_options=request_options,
         )
@@ -130,6 +135,7 @@ class RawArtifactVersionsClient:
                     limit=limit,
                     include_internal_metadata=include_internal_metadata,
                     include_model_versions=include_model_versions,
+                    artifact_types=artifact_types,
                     request_options=request_options,
                 )
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
@@ -173,6 +179,7 @@ class AsyncRawArtifactVersionsClient:
         limit: typing.Optional[int] = 100,
         include_internal_metadata: typing.Optional[bool] = False,
         include_model_versions: typing.Optional[bool] = False,
+        artifact_types: typing.Optional[typing.Union[ArtifactType, typing.Sequence[ArtifactType]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[InternalListArtifactVersionsResponseDataItem, InternalListArtifactVersionsResponse]:
         """
@@ -216,6 +223,8 @@ class AsyncRawArtifactVersionsClient:
         include_model_versions : typing.Optional[bool]
             Whether to include model versions in the results (internal use only)
 
+        artifact_types : typing.Optional[typing.Union[ArtifactType, typing.Sequence[ArtifactType]]]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -242,6 +251,7 @@ class AsyncRawArtifactVersionsClient:
                 "limit": limit,
                 "include_internal_metadata": include_internal_metadata,
                 "include_model_versions": include_model_versions,
+                "artifact_types": artifact_types,
             },
             request_options=request_options,
         )
@@ -271,6 +281,7 @@ class AsyncRawArtifactVersionsClient:
                         limit=limit,
                         include_internal_metadata=include_internal_metadata,
                         include_model_versions=include_model_versions,
+                        artifact_types=artifact_types,
                         request_options=request_options,
                     )
 

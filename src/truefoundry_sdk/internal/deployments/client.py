@@ -34,15 +34,15 @@ class DeploymentsClient:
         self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[DeploymentStatus]:
         """
-        This endpoint returns all statuses for a specific deployment in a given application.
+        Get all statuses for a specific deployment of an application.
 
         Parameters
         ----------
         id : str
-            Application id of the application
+            Unique identifier of the application
 
         deployment_id : str
-            Deployment id of the deployment
+            Unique identifier of the deployment
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -50,7 +50,7 @@ class DeploymentsClient:
         Returns
         -------
         typing.List[DeploymentStatus]
-            Deployment statuses returned successfully.
+            List of deployment statuses.
 
         Examples
         --------
@@ -72,15 +72,15 @@ class DeploymentsClient:
         self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[DeploymentBuild]:
         """
-        This endpoint returns all build details associated with a specific deployment in a given application.
+        Get all builds associated with a specific deployment of an application.
 
         Parameters
         ----------
         id : str
-            Application id of the application
+            Unique identifier of the application
 
         deployment_id : str
-            Deployment id of the deployment
+            Unique identifier of the deployment
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -88,7 +88,7 @@ class DeploymentsClient:
         Returns
         -------
         typing.List[DeploymentBuild]
-            Deployment builds returned successfully.
+            List of deployment builds.
 
         Examples
         --------
@@ -236,15 +236,15 @@ class AsyncDeploymentsClient:
         self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[DeploymentStatus]:
         """
-        This endpoint returns all statuses for a specific deployment in a given application.
+        Get all statuses for a specific deployment of an application.
 
         Parameters
         ----------
         id : str
-            Application id of the application
+            Unique identifier of the application
 
         deployment_id : str
-            Deployment id of the deployment
+            Unique identifier of the deployment
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -252,7 +252,7 @@ class AsyncDeploymentsClient:
         Returns
         -------
         typing.List[DeploymentStatus]
-            Deployment statuses returned successfully.
+            List of deployment statuses.
 
         Examples
         --------
@@ -282,15 +282,15 @@ class AsyncDeploymentsClient:
         self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[DeploymentBuild]:
         """
-        This endpoint returns all build details associated with a specific deployment in a given application.
+        Get all builds associated with a specific deployment of an application.
 
         Parameters
         ----------
         id : str
-            Application id of the application
+            Unique identifier of the application
 
         deployment_id : str
-            Deployment id of the deployment
+            Unique identifier of the deployment
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -298,7 +298,7 @@ class AsyncDeploymentsClient:
         Returns
         -------
         typing.List[DeploymentBuild]
-            Deployment builds returned successfully.
+            List of deployment builds.
 
         Examples
         --------

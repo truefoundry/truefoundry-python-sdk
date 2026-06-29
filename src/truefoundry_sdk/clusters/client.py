@@ -7,12 +7,12 @@ from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.cluster import Cluster
 from ..types.cluster_manifest import ClusterManifest
+from ..types.delete_cluster_response import DeleteClusterResponse
 from ..types.get_cluster_response import GetClusterResponse
 from ..types.is_cluster_connected_response import IsClusterConnectedResponse
 from ..types.list_cluster_addons_response import ListClusterAddonsResponse
 from ..types.list_clusters_response import ListClustersResponse
 from .raw_client import AsyncRawClustersClient, RawClustersClient
-from .types.clusters_delete_response import ClustersDeleteResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -38,10 +38,11 @@ class ClustersClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
+        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Cluster, ListClustersResponse]:
         """
-        Retrieves a list of all latest Clusters. Pagination is available based on query parameters.
+        List clusters the caller can read.
 
         Parameters
         ----------
@@ -51,13 +52,16 @@ class ClustersClient:
         offset : typing.Optional[int]
             Number of items to skip
 
+        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
         SyncPager[Cluster, ListClustersResponse]
-            Retrieve latest Clusters. If pagination parameters are provided, the response includes paginated data.
+            Paginated list of clusters.
 
         Examples
         --------
@@ -70,6 +74,7 @@ class ClustersClient:
         response = client.clusters.list(
             limit=10,
             offset=0,
+            attributes=["attributes"],
         )
         for item in response:
             yield item
@@ -77,7 +82,7 @@ class ClustersClient:
         for page in response.iter_pages():
             yield page
         """
-        return self._raw_client.list(limit=limit, offset=offset, request_options=request_options)
+        return self._raw_client.list(limit=limit, offset=offset, attributes=attributes, request_options=request_options)
 
     def create_or_update(
         self,
@@ -87,15 +92,15 @@ class ClustersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetClusterResponse:
         """
-        Create or Update cluster with provided manifest
+        Create a new cluster or update an existing one using the provided `ClusterManifest`. Matching is by `name` — if a cluster with the same name exists it is updated, otherwise a new one is created.
 
         Parameters
         ----------
         manifest : ClusterManifest
-            Cluster manifest
+            Full cluster manifest.
 
         dry_run : typing.Optional[bool]
-            Dry run the cluster creation/update
+            When true, validates the request without persisting changes.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -103,7 +108,7 @@ class ClustersClient:
         Returns
         -------
         GetClusterResponse
-            Returns newly created/updated cluster on success
+            The created or updated cluster.
 
         Examples
         --------
@@ -139,12 +144,12 @@ class ClustersClient:
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetClusterResponse:
         """
-        Get cluster associated with provided id
+        Get a single cluster by its ID.
 
         Parameters
         ----------
         id : str
-            Cluster id of the cluster
+            Unique identifier of the cluster.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -152,7 +157,7 @@ class ClustersClient:
         Returns
         -------
         GetClusterResponse
-            Return the cluster associated with provided id
+            The cluster with the given ID.
 
         Examples
         --------
@@ -169,22 +174,22 @@ class ClustersClient:
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
 
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> ClustersDeleteResponse:
+    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> DeleteClusterResponse:
         """
-        Delete cluster associated with provided cluster id
+        Permanently delete the cluster with the given ID. This action is irreversible.
 
         Parameters
         ----------
         id : str
-            Cluster id of the cluster
+            Unique identifier of the cluster.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        ClustersDeleteResponse
-            Returns success message on successful deletion
+        DeleteClusterResponse
+            The cluster was deleted successfully.
 
         Examples
         --------
@@ -207,15 +212,16 @@ class ClustersClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
+        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListClusterAddonsResponse:
         """
-        List addons for the provided cluster. Pagination is available based on query parameters.
+        List addons installed on the cluster.
 
         Parameters
         ----------
         id : str
-            Cluster id of the cluster
+            Unique identifier of the cluster.
 
         limit : typing.Optional[int]
             Number of items per page
@@ -223,13 +229,16 @@ class ClustersClient:
         offset : typing.Optional[int]
             Number of items to skip
 
+        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
         ListClusterAddonsResponse
-            Returns a paginated list of addons for the cluster
+            Paginated list of addons for the cluster.
 
         Examples
         --------
@@ -243,21 +252,24 @@ class ClustersClient:
             id="id",
             limit=10,
             offset=0,
+            attributes=["attributes"],
         )
         """
-        _response = self._raw_client.get_addons(id, limit=limit, offset=offset, request_options=request_options)
+        _response = self._raw_client.get_addons(
+            id, limit=limit, offset=offset, attributes=attributes, request_options=request_options
+        )
         return _response.data
 
     def is_connected(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> IsClusterConnectedResponse:
         """
-        Get the status of provided cluster
+        Get the connection status of the cluster agent to the control plane.
 
         Parameters
         ----------
         id : str
-            Cluster id of the cluster
+            Unique identifier of the cluster.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -265,7 +277,7 @@ class ClustersClient:
         Returns
         -------
         IsClusterConnectedResponse
-            Returns the status of provided cluster
+            Connection status of the cluster.
 
         Examples
         --------
@@ -303,10 +315,11 @@ class AsyncClustersClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
+        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Cluster, ListClustersResponse]:
         """
-        Retrieves a list of all latest Clusters. Pagination is available based on query parameters.
+        List clusters the caller can read.
 
         Parameters
         ----------
@@ -316,13 +329,16 @@ class AsyncClustersClient:
         offset : typing.Optional[int]
             Number of items to skip
 
+        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
         AsyncPager[Cluster, ListClustersResponse]
-            Retrieve latest Clusters. If pagination parameters are provided, the response includes paginated data.
+            Paginated list of clusters.
 
         Examples
         --------
@@ -340,6 +356,7 @@ class AsyncClustersClient:
             response = await client.clusters.list(
                 limit=10,
                 offset=0,
+                attributes=["attributes"],
             )
             async for item in response:
                 yield item
@@ -351,7 +368,9 @@ class AsyncClustersClient:
 
         asyncio.run(main())
         """
-        return await self._raw_client.list(limit=limit, offset=offset, request_options=request_options)
+        return await self._raw_client.list(
+            limit=limit, offset=offset, attributes=attributes, request_options=request_options
+        )
 
     async def create_or_update(
         self,
@@ -361,15 +380,15 @@ class AsyncClustersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetClusterResponse:
         """
-        Create or Update cluster with provided manifest
+        Create a new cluster or update an existing one using the provided `ClusterManifest`. Matching is by `name` — if a cluster with the same name exists it is updated, otherwise a new one is created.
 
         Parameters
         ----------
         manifest : ClusterManifest
-            Cluster manifest
+            Full cluster manifest.
 
         dry_run : typing.Optional[bool]
-            Dry run the cluster creation/update
+            When true, validates the request without persisting changes.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -377,7 +396,7 @@ class AsyncClustersClient:
         Returns
         -------
         GetClusterResponse
-            Returns newly created/updated cluster on success
+            The created or updated cluster.
 
         Examples
         --------
@@ -421,12 +440,12 @@ class AsyncClustersClient:
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetClusterResponse:
         """
-        Get cluster associated with provided id
+        Get a single cluster by its ID.
 
         Parameters
         ----------
         id : str
-            Cluster id of the cluster
+            Unique identifier of the cluster.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -434,7 +453,7 @@ class AsyncClustersClient:
         Returns
         -------
         GetClusterResponse
-            Return the cluster associated with provided id
+            The cluster with the given ID.
 
         Examples
         --------
@@ -461,22 +480,22 @@ class AsyncClustersClient:
 
     async def delete(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ClustersDeleteResponse:
+    ) -> DeleteClusterResponse:
         """
-        Delete cluster associated with provided cluster id
+        Permanently delete the cluster with the given ID. This action is irreversible.
 
         Parameters
         ----------
         id : str
-            Cluster id of the cluster
+            Unique identifier of the cluster.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        ClustersDeleteResponse
-            Returns success message on successful deletion
+        DeleteClusterResponse
+            The cluster was deleted successfully.
 
         Examples
         --------
@@ -507,15 +526,16 @@ class AsyncClustersClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
+        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListClusterAddonsResponse:
         """
-        List addons for the provided cluster. Pagination is available based on query parameters.
+        List addons installed on the cluster.
 
         Parameters
         ----------
         id : str
-            Cluster id of the cluster
+            Unique identifier of the cluster.
 
         limit : typing.Optional[int]
             Number of items per page
@@ -523,13 +543,16 @@ class AsyncClustersClient:
         offset : typing.Optional[int]
             Number of items to skip
 
+        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
         ListClusterAddonsResponse
-            Returns a paginated list of addons for the cluster
+            Paginated list of addons for the cluster.
 
         Examples
         --------
@@ -548,24 +571,27 @@ class AsyncClustersClient:
                 id="id",
                 limit=10,
                 offset=0,
+                attributes=["attributes"],
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_addons(id, limit=limit, offset=offset, request_options=request_options)
+        _response = await self._raw_client.get_addons(
+            id, limit=limit, offset=offset, attributes=attributes, request_options=request_options
+        )
         return _response.data
 
     async def is_connected(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> IsClusterConnectedResponse:
         """
-        Get the status of provided cluster
+        Get the connection status of the cluster agent to the control plane.
 
         Parameters
         ----------
         id : str
-            Cluster id of the cluster
+            Unique identifier of the cluster.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -573,7 +599,7 @@ class AsyncClustersClient:
         Returns
         -------
         IsClusterConnectedResponse
-            Returns the status of provided cluster
+            Connection status of the cluster.
 
         Examples
         --------

@@ -27,12 +27,12 @@ class ClustersClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetAutoProvisioningStateResponse:
         """
-        Get the auto provisioning status for the provided cluster
+        Get the auto-provisioning status for the specified cluster.
 
         Parameters
         ----------
         id : str
-            Cluster id of the cluster
+            Unique identifier of the cluster.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -77,12 +77,12 @@ class AsyncClustersClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetAutoProvisioningStateResponse:
         """
-        Get the auto provisioning status for the provided cluster
+        Get the auto-provisioning status for the specified cluster.
 
         Parameters
         ----------
         id : str
-            Cluster id of the cluster
+            Unique identifier of the cluster.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

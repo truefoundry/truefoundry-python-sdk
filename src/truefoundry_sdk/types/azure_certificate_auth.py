@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class AzureCertificateAuth(UniversalBaseModel):
     """
-    Azure Entra certificate based auth
+    Entra certificate based auth
     """
 
     type: typing.Literal["certificate"] = pydantic.Field(default="certificate")

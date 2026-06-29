@@ -3,6 +3,10 @@
 import typing
 
 from .azure_certificate_auth import AzureCertificateAuth
+from .azure_client_secret_auth import AzureClientSecretAuth
 from .azure_key_auth import AzureKeyAuth
+from .azure_workload_identity_auth import AzureWorkloadIdentityAuth
 
-AzurePiiGuardrailConfigAuthData = typing.Union[AzureKeyAuth, AzureCertificateAuth]
+AzurePiiGuardrailConfigAuthData = typing.Union[
+    AzureKeyAuth, AzureCertificateAuth, AzureClientSecretAuth, AzureWorkloadIdentityAuth
+]

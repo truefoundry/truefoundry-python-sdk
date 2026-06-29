@@ -2,6 +2,7 @@
 
 import typing
 
+from .agent_identity_manifest import AgentIdentityManifest
 from .agent_manifest import AgentManifest
 from .ai_features_settings import AiFeaturesSettings
 from .alert_config import AlertConfig
@@ -70,4 +71,5 @@ TrueFoundryApplyResponseExistingManifest = typing.Union[
     TracingProjectManifest,
     McpServerManifest,
     RoleBindingManifest,
+    AgentIdentityManifest,
 ]

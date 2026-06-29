@@ -43,10 +43,11 @@ class RawSecretGroupsClient:
         offset: typing.Optional[int] = 0,
         fqn: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
+        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[SecretGroup, ListSecretGroupResponse]:
         """
-        List the secret groups associated with a user along with the associated secrets for each group. Filtered with the options passed in the query fields. Note: This method does not return the secret values of the <em>associatedSecrets</em> in the response. A separate API call to `/v1/secrets/{id}` should be made to fetch the associated secret value.
+        List secret groups the caller has access to, along with associated secrets for each group. Secret values are not included in the response.
 
         Parameters
         ----------
@@ -62,13 +63,16 @@ class RawSecretGroupsClient:
         search : typing.Optional[str]
             Search query - filters by secret group names that contain the search string
 
+        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
         SyncPager[SecretGroup, ListSecretGroupResponse]
-            Returns all the secret groups associated with a user along with the associated secrets for each group.
+            Paginated list of secret groups with associated secrets.
         """
         offset = offset if offset is not None else 0
 
@@ -80,6 +84,7 @@ class RawSecretGroupsClient:
                 "offset": offset,
                 "fqn": fqn,
                 "search": search,
+                "attributes": attributes,
             },
             request_options=request_options,
         )
@@ -99,6 +104,7 @@ class RawSecretGroupsClient:
                     offset=offset + len(_items or []),
                     fqn=fqn,
                     search=search,
+                    attributes=attributes,
                     request_options=request_options,
                 )
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
@@ -120,7 +126,7 @@ class RawSecretGroupsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetSecretGroupResponse]:
         """
-        Creates a secret group with secrets in it. A secret version for each of the created secret is created with version number as 1. The returned secret group does not have any secret values in the <em>associatedSecrets</em> field. A separate API call to `/v1/secrets/{id}` should be made to fetch the associated secret value.
+        Create a secret group with initial secrets.
 
         Parameters
         ----------
@@ -139,7 +145,7 @@ class RawSecretGroupsClient:
         Returns
         -------
         HttpResponse[GetSecretGroupResponse]
-            Returns the created secret group without the associated secrets.
+            The created secret group.
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/svc/v1/secret-groups",
@@ -206,7 +212,7 @@ class RawSecretGroupsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetSecretGroupResponse]:
         """
-        Creates a new secret group or updates an existing one based on the provided manifest.
+        Create a new secret group or update an existing one using the provided manifest. Matching is by name.
 
         Parameters
         ----------
@@ -222,7 +228,7 @@ class RawSecretGroupsClient:
         Returns
         -------
         HttpResponse[GetSecretGroupResponse]
-            Secret group created or updated successfully.
+            The created or updated secret group.
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/svc/v1/secret-groups",
@@ -317,12 +323,12 @@ class RawSecretGroupsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetSecretGroupResponse]:
         """
-        Get Secret Group by id. This method does not return the secret values of the <em>associatedSecrets</em> in the response. A separate API call to `/v1/secrets/{id}` should be made to fetch the associated secret value.
+        Get a secret group by ID.
 
         Parameters
         ----------
         id : str
-            Secret Id of the secret group.
+            Unique identifier of the secret group.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -330,7 +336,7 @@ class RawSecretGroupsClient:
         Returns
         -------
         HttpResponse[GetSecretGroupResponse]
-            Returns the Secret Group associated with provided id
+            The requested secret group.
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/secret-groups/{encode_path_param(id)}",
@@ -386,12 +392,12 @@ class RawSecretGroupsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetSecretGroupResponse]:
         """
-        Updates the secrets in a secret group with new values. A new secret version is created for every secret that has a modified value and any omitted secrets are deleted. The returned updated secret group does not have any secret values in the <em>associatedSecrets</em> field. A separate API call to `/v1/secrets/{id}` should be made to fetch the associated secret value.
+        Update secrets in a secret group. A new version is created for each secret with a modified value. Omitted secrets are deleted. Secret values are not returned in the response.
 
         Parameters
         ----------
         id : str
-            Secret Id of the secret group.
+            Unique identifier of the secret group.
 
         secrets : typing.Sequence[UpdateSecretInput]
 
@@ -401,7 +407,7 @@ class RawSecretGroupsClient:
         Returns
         -------
         HttpResponse[GetSecretGroupResponse]
-            Returns the updated secret group without associated secrets.
+            The updated secret group.
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/secret-groups/{encode_path_param(id)}",
@@ -481,15 +487,22 @@ class RawSecretGroupsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: str,
+        *,
+        force_delete: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DeleteSecretGroupResponse]:
         """
-        Deletes the secret group, its associated secrets and secret versions of those secrets.
+        Delete the secret group and all its associated secrets and secret versions permanently.
 
         Parameters
         ----------
         id : str
-            Secret Id of the secret group.
+            Unique identifier of the secret group.
+
+        force_delete : typing.Optional[bool]
+            Whether to force delete the secret group even when the associated secret integration is faulty or unavailable.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -497,11 +510,14 @@ class RawSecretGroupsClient:
         Returns
         -------
         HttpResponse[DeleteSecretGroupResponse]
-            Deletes Secret Group.
+            Secret group deleted successfully.
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/secret-groups/{encode_path_param(id)}",
             method="DELETE",
+            params={
+                "forceDelete": force_delete,
+            },
             request_options=request_options,
         )
         try:
@@ -536,6 +552,17 @@ class RawSecretGroupsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 424:
+                raise FailedDependencyError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -557,10 +584,11 @@ class AsyncRawSecretGroupsClient:
         offset: typing.Optional[int] = 0,
         fqn: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
+        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[SecretGroup, ListSecretGroupResponse]:
         """
-        List the secret groups associated with a user along with the associated secrets for each group. Filtered with the options passed in the query fields. Note: This method does not return the secret values of the <em>associatedSecrets</em> in the response. A separate API call to `/v1/secrets/{id}` should be made to fetch the associated secret value.
+        List secret groups the caller has access to, along with associated secrets for each group. Secret values are not included in the response.
 
         Parameters
         ----------
@@ -576,13 +604,16 @@ class AsyncRawSecretGroupsClient:
         search : typing.Optional[str]
             Search query - filters by secret group names that contain the search string
 
+        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
         AsyncPager[SecretGroup, ListSecretGroupResponse]
-            Returns all the secret groups associated with a user along with the associated secrets for each group.
+            Paginated list of secret groups with associated secrets.
         """
         offset = offset if offset is not None else 0
 
@@ -594,6 +625,7 @@ class AsyncRawSecretGroupsClient:
                 "offset": offset,
                 "fqn": fqn,
                 "search": search,
+                "attributes": attributes,
             },
             request_options=request_options,
         )
@@ -615,6 +647,7 @@ class AsyncRawSecretGroupsClient:
                         offset=offset + len(_items or []),
                         fqn=fqn,
                         search=search,
+                        attributes=attributes,
                         request_options=request_options,
                     )
 
@@ -637,7 +670,7 @@ class AsyncRawSecretGroupsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetSecretGroupResponse]:
         """
-        Creates a secret group with secrets in it. A secret version for each of the created secret is created with version number as 1. The returned secret group does not have any secret values in the <em>associatedSecrets</em> field. A separate API call to `/v1/secrets/{id}` should be made to fetch the associated secret value.
+        Create a secret group with initial secrets.
 
         Parameters
         ----------
@@ -656,7 +689,7 @@ class AsyncRawSecretGroupsClient:
         Returns
         -------
         AsyncHttpResponse[GetSecretGroupResponse]
-            Returns the created secret group without the associated secrets.
+            The created secret group.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/svc/v1/secret-groups",
@@ -723,7 +756,7 @@ class AsyncRawSecretGroupsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetSecretGroupResponse]:
         """
-        Creates a new secret group or updates an existing one based on the provided manifest.
+        Create a new secret group or update an existing one using the provided manifest. Matching is by name.
 
         Parameters
         ----------
@@ -739,7 +772,7 @@ class AsyncRawSecretGroupsClient:
         Returns
         -------
         AsyncHttpResponse[GetSecretGroupResponse]
-            Secret group created or updated successfully.
+            The created or updated secret group.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/svc/v1/secret-groups",
@@ -834,12 +867,12 @@ class AsyncRawSecretGroupsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetSecretGroupResponse]:
         """
-        Get Secret Group by id. This method does not return the secret values of the <em>associatedSecrets</em> in the response. A separate API call to `/v1/secrets/{id}` should be made to fetch the associated secret value.
+        Get a secret group by ID.
 
         Parameters
         ----------
         id : str
-            Secret Id of the secret group.
+            Unique identifier of the secret group.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -847,7 +880,7 @@ class AsyncRawSecretGroupsClient:
         Returns
         -------
         AsyncHttpResponse[GetSecretGroupResponse]
-            Returns the Secret Group associated with provided id
+            The requested secret group.
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/secret-groups/{encode_path_param(id)}",
@@ -903,12 +936,12 @@ class AsyncRawSecretGroupsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetSecretGroupResponse]:
         """
-        Updates the secrets in a secret group with new values. A new secret version is created for every secret that has a modified value and any omitted secrets are deleted. The returned updated secret group does not have any secret values in the <em>associatedSecrets</em> field. A separate API call to `/v1/secrets/{id}` should be made to fetch the associated secret value.
+        Update secrets in a secret group. A new version is created for each secret with a modified value. Omitted secrets are deleted. Secret values are not returned in the response.
 
         Parameters
         ----------
         id : str
-            Secret Id of the secret group.
+            Unique identifier of the secret group.
 
         secrets : typing.Sequence[UpdateSecretInput]
 
@@ -918,7 +951,7 @@ class AsyncRawSecretGroupsClient:
         Returns
         -------
         AsyncHttpResponse[GetSecretGroupResponse]
-            Returns the updated secret group without associated secrets.
+            The updated secret group.
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/secret-groups/{encode_path_param(id)}",
@@ -998,15 +1031,22 @@ class AsyncRawSecretGroupsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: str,
+        *,
+        force_delete: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DeleteSecretGroupResponse]:
         """
-        Deletes the secret group, its associated secrets and secret versions of those secrets.
+        Delete the secret group and all its associated secrets and secret versions permanently.
 
         Parameters
         ----------
         id : str
-            Secret Id of the secret group.
+            Unique identifier of the secret group.
+
+        force_delete : typing.Optional[bool]
+            Whether to force delete the secret group even when the associated secret integration is faulty or unavailable.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1014,11 +1054,14 @@ class AsyncRawSecretGroupsClient:
         Returns
         -------
         AsyncHttpResponse[DeleteSecretGroupResponse]
-            Deletes Secret Group.
+            Secret group deleted successfully.
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/secret-groups/{encode_path_param(id)}",
             method="DELETE",
+            params={
+                "forceDelete": force_delete,
+            },
             request_options=request_options,
         )
         try:
@@ -1049,6 +1092,17 @@ class AsyncRawSecretGroupsClient:
                         typing.Any,
                         parse_obj_as(
                             type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 424:
+                raise FailedDependencyError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

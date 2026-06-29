@@ -9,7 +9,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 class CreatePersonalAccessTokenResponse(UniversalBaseModel):
     token: str = pydantic.Field()
     """
-    Personal Access Token
+    The generated authentication token. Store this securely — it cannot be retrieved later.
     """
 
     if IS_PYDANTIC_V2:

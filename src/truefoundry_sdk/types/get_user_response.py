@@ -10,7 +10,7 @@ from .user import User
 class GetUserResponse(UniversalBaseModel):
     data: User = pydantic.Field()
     """
-    User
+    The requested user.
     """
 
     if IS_PYDANTIC_V2:

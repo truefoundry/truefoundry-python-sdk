@@ -37,12 +37,12 @@ class ApplicationVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Deployment, ListApplicationDeploymentsResponse]:
         """
-        Fetch all deployments for a given application ID with optional filters such as deployment ID or version. Supports pagination.
+        List deployments for a given application. Each deployment is a new version of the application.
 
         Parameters
         ----------
         id : str
-            Id of the application
+            Unique identifier of the application
 
         limit : typing.Optional[int]
             Number of items per page
@@ -51,10 +51,10 @@ class ApplicationVersionsClient:
             Number of items to skip
 
         version : typing.Optional[str]
-            Deployment version. Filter deployments by version.
+            Deployment version to filter by
 
         deployment_id : typing.Optional[str]
-            Deployment ID. Filter deployments by a specific ID.
+            Deployment ID to filter by
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -62,7 +62,7 @@ class ApplicationVersionsClient:
         Returns
         -------
         SyncPager[Deployment, ListApplicationDeploymentsResponse]
-            List of deployments matching the provided filters.
+            Paginated list of deployments.
 
         Examples
         --------
@@ -98,15 +98,15 @@ class ApplicationVersionsClient:
         self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetApplicationDeploymentResponse:
         """
-        Get Deployment associated with the provided application ID and deployment ID.
+        Get a single deployment by application ID and deployment ID.
 
         Parameters
         ----------
         id : str
-            Application id of the application
+            Unique identifier of the application
 
         deployment_id : str
-            Deployment id of the deployment
+            Unique identifier of the deployment
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -114,7 +114,7 @@ class ApplicationVersionsClient:
         Returns
         -------
         GetApplicationDeploymentResponse
-            Deployment details returned successfully.
+            Deployment details.
 
         Examples
         --------
@@ -159,12 +159,12 @@ class AsyncApplicationVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Deployment, ListApplicationDeploymentsResponse]:
         """
-        Fetch all deployments for a given application ID with optional filters such as deployment ID or version. Supports pagination.
+        List deployments for a given application. Each deployment is a new version of the application.
 
         Parameters
         ----------
         id : str
-            Id of the application
+            Unique identifier of the application
 
         limit : typing.Optional[int]
             Number of items per page
@@ -173,10 +173,10 @@ class AsyncApplicationVersionsClient:
             Number of items to skip
 
         version : typing.Optional[str]
-            Deployment version. Filter deployments by version.
+            Deployment version to filter by
 
         deployment_id : typing.Optional[str]
-            Deployment ID. Filter deployments by a specific ID.
+            Deployment ID to filter by
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -184,7 +184,7 @@ class AsyncApplicationVersionsClient:
         Returns
         -------
         AsyncPager[Deployment, ListApplicationDeploymentsResponse]
-            List of deployments matching the provided filters.
+            Paginated list of deployments.
 
         Examples
         --------
@@ -229,15 +229,15 @@ class AsyncApplicationVersionsClient:
         self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetApplicationDeploymentResponse:
         """
-        Get Deployment associated with the provided application ID and deployment ID.
+        Get a single deployment by application ID and deployment ID.
 
         Parameters
         ----------
         id : str
-            Application id of the application
+            Unique identifier of the application
 
         deployment_id : str
-            Deployment id of the deployment
+            Unique identifier of the deployment
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -245,7 +245,7 @@ class AsyncApplicationVersionsClient:
         Returns
         -------
         GetApplicationDeploymentResponse
-            Deployment details returned successfully.
+            Deployment details.
 
         Examples
         --------

@@ -12,6 +12,7 @@ from .github_provider_account import GithubProviderAccount
 from .gitlab_provider_account import GitlabProviderAccount
 from .hashicorp_provider_account import HashicorpProviderAccount
 from .jfrog_provider_account import JfrogProviderAccount
+from .ms_teams_provider_account import MsTeamsProviderAccount
 from .pager_duty_provider_account import PagerDutyProviderAccount
 from .quay_provider_account import QuayProviderAccount
 from .slack_provider_account import SlackProviderAccount
@@ -35,5 +36,6 @@ InfraProviderAccount = typing.Union[
     SlackProviderAccount,
     WebhookProviderAccount,
     PagerDutyProviderAccount,
+    MsTeamsProviderAccount,
     HashicorpProviderAccount,
 ]

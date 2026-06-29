@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class AzureKeyAuth(UniversalBaseModel):
     """
-    Azure API Key Auth
+    API Key Auth
     """
 
     type: typing.Literal["api-key"] = pydantic.Field(default="api-key")

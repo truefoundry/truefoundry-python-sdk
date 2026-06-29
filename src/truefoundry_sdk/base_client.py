@@ -14,6 +14,7 @@ from .raw_base_client import AsyncRawBaseTrueFoundry, RawBaseTrueFoundry
 from .types.true_foundry_apply_request_manifest import TrueFoundryApplyRequestManifest
 from .types.true_foundry_apply_response import TrueFoundryApplyResponse
 from .types.true_foundry_delete_request_manifest import TrueFoundryDeleteRequestManifest
+from .types.true_foundry_delete_response import TrueFoundryDeleteResponse
 
 if typing.TYPE_CHECKING:
     from .agent_skill_versions.client import AgentSkillVersionsClient, AsyncAgentSkillVersionsClient
@@ -27,6 +28,7 @@ if typing.TYPE_CHECKING:
     from .data_directories.client import AsyncDataDirectoriesClient, DataDirectoriesClient
     from .environments.client import AsyncEnvironmentsClient, EnvironmentsClient
     from .events.client import AsyncEventsClient, EventsClient
+    from .gateway_configs.client import AsyncGatewayConfigsClient, GatewayConfigsClient
     from .internal.client import AsyncInternalClient, InternalClient
     from .jobs.client import AsyncJobsClient, JobsClient
     from .logs.client import AsyncLogsClient, LogsClient
@@ -114,20 +116,21 @@ class BaseTrueFoundry:
         self._internal: typing.Optional[InternalClient] = None
         self._users: typing.Optional[UsersClient] = None
         self._teams: typing.Optional[TeamsClient] = None
+        self._gateway_configs: typing.Optional[GatewayConfigsClient] = None
         self._personal_access_tokens: typing.Optional[PersonalAccessTokensClient] = None
         self._virtual_accounts: typing.Optional[VirtualAccountsClient] = None
         self._clusters: typing.Optional[ClustersClient] = None
         self._applications: typing.Optional[ApplicationsClient] = None
         self._application_versions: typing.Optional[ApplicationVersionsClient] = None
         self._jobs: typing.Optional[JobsClient] = None
-        self._environments: typing.Optional[EnvironmentsClient] = None
         self._workspaces: typing.Optional[WorkspacesClient] = None
+        self._environments: typing.Optional[EnvironmentsClient] = None
         self._secrets: typing.Optional[SecretsClient] = None
         self._secret_groups: typing.Optional[SecretGroupsClient] = None
         self._events: typing.Optional[EventsClient] = None
         self._alerts: typing.Optional[AlertsClient] = None
-        self._logs: typing.Optional[LogsClient] = None
         self._ml_repos: typing.Optional[MlReposClient] = None
+        self._logs: typing.Optional[LogsClient] = None
         self._traces: typing.Optional[TracesClient] = None
         self._artifacts: typing.Optional[ArtifactsClient] = None
         self._prompts: typing.Optional[PromptsClient] = None
@@ -158,12 +161,12 @@ class BaseTrueFoundry:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TrueFoundryApplyResponse:
         """
-        Applies a given manifest to create or update resources of specific types, such as provider-account, cluster, workspace, or ml-repo.
+        Apply a manifest to create or update a resource.
 
         Parameters
         ----------
         manifest : TrueFoundryApplyRequestManifest
-            manifest of the resource to be created or updated
+            Manifest of the resource to be created or updated
 
         dry_run : typing.Optional[bool]
             Dry run the apply operation without actually applying
@@ -174,7 +177,7 @@ class BaseTrueFoundry:
         Returns
         -------
         TrueFoundryApplyResponse
-            The resource has been successfully created or updated.
+            The created or updated resource, and the action that was performed.
 
         Examples
         --------
@@ -202,21 +205,22 @@ class BaseTrueFoundry:
 
     def delete(
         self, *, manifest: TrueFoundryDeleteRequestManifest, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    ) -> TrueFoundryDeleteResponse:
         """
-        Deletes resources of specific types, such as provider-account, cluster, workspace, or application.
+        Delete a resource identified by the provided manifest.
 
         Parameters
         ----------
         manifest : TrueFoundryDeleteRequestManifest
-            manifest of the resource to be deleted
+            Manifest of the resource to be deleted
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        None
+        TrueFoundryDeleteResponse
+            Empty response confirming the resource has been deleted.
 
         Examples
         --------
@@ -267,6 +271,14 @@ class BaseTrueFoundry:
         return self._teams
 
     @property
+    def gateway_configs(self):
+        if self._gateway_configs is None:
+            from .gateway_configs.client import GatewayConfigsClient  # noqa: E402
+
+            self._gateway_configs = GatewayConfigsClient(client_wrapper=self._client_wrapper)
+        return self._gateway_configs
+
+    @property
     def personal_access_tokens(self):
         if self._personal_access_tokens is None:
             from .personal_access_tokens.client import PersonalAccessTokensClient  # noqa: E402
@@ -315,20 +327,20 @@ class BaseTrueFoundry:
         return self._jobs
 
     @property
-    def environments(self):
-        if self._environments is None:
-            from .environments.client import EnvironmentsClient  # noqa: E402
-
-            self._environments = EnvironmentsClient(client_wrapper=self._client_wrapper)
-        return self._environments
-
-    @property
     def workspaces(self):
         if self._workspaces is None:
             from .workspaces.client import WorkspacesClient  # noqa: E402
 
             self._workspaces = WorkspacesClient(client_wrapper=self._client_wrapper)
         return self._workspaces
+
+    @property
+    def environments(self):
+        if self._environments is None:
+            from .environments.client import EnvironmentsClient  # noqa: E402
+
+            self._environments = EnvironmentsClient(client_wrapper=self._client_wrapper)
+        return self._environments
 
     @property
     def secrets(self):
@@ -363,20 +375,20 @@ class BaseTrueFoundry:
         return self._alerts
 
     @property
-    def logs(self):
-        if self._logs is None:
-            from .logs.client import LogsClient  # noqa: E402
-
-            self._logs = LogsClient(client_wrapper=self._client_wrapper)
-        return self._logs
-
-    @property
     def ml_repos(self):
         if self._ml_repos is None:
             from .ml_repos.client import MlReposClient  # noqa: E402
 
             self._ml_repos = MlReposClient(client_wrapper=self._client_wrapper)
         return self._ml_repos
+
+    @property
+    def logs(self):
+        if self._logs is None:
+            from .logs.client import LogsClient  # noqa: E402
+
+            self._logs = LogsClient(client_wrapper=self._client_wrapper)
+        return self._logs
 
     @property
     def traces(self):
@@ -547,20 +559,21 @@ class AsyncBaseTrueFoundry:
         self._internal: typing.Optional[AsyncInternalClient] = None
         self._users: typing.Optional[AsyncUsersClient] = None
         self._teams: typing.Optional[AsyncTeamsClient] = None
+        self._gateway_configs: typing.Optional[AsyncGatewayConfigsClient] = None
         self._personal_access_tokens: typing.Optional[AsyncPersonalAccessTokensClient] = None
         self._virtual_accounts: typing.Optional[AsyncVirtualAccountsClient] = None
         self._clusters: typing.Optional[AsyncClustersClient] = None
         self._applications: typing.Optional[AsyncApplicationsClient] = None
         self._application_versions: typing.Optional[AsyncApplicationVersionsClient] = None
         self._jobs: typing.Optional[AsyncJobsClient] = None
-        self._environments: typing.Optional[AsyncEnvironmentsClient] = None
         self._workspaces: typing.Optional[AsyncWorkspacesClient] = None
+        self._environments: typing.Optional[AsyncEnvironmentsClient] = None
         self._secrets: typing.Optional[AsyncSecretsClient] = None
         self._secret_groups: typing.Optional[AsyncSecretGroupsClient] = None
         self._events: typing.Optional[AsyncEventsClient] = None
         self._alerts: typing.Optional[AsyncAlertsClient] = None
-        self._logs: typing.Optional[AsyncLogsClient] = None
         self._ml_repos: typing.Optional[AsyncMlReposClient] = None
+        self._logs: typing.Optional[AsyncLogsClient] = None
         self._traces: typing.Optional[AsyncTracesClient] = None
         self._artifacts: typing.Optional[AsyncArtifactsClient] = None
         self._prompts: typing.Optional[AsyncPromptsClient] = None
@@ -591,12 +604,12 @@ class AsyncBaseTrueFoundry:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TrueFoundryApplyResponse:
         """
-        Applies a given manifest to create or update resources of specific types, such as provider-account, cluster, workspace, or ml-repo.
+        Apply a manifest to create or update a resource.
 
         Parameters
         ----------
         manifest : TrueFoundryApplyRequestManifest
-            manifest of the resource to be created or updated
+            Manifest of the resource to be created or updated
 
         dry_run : typing.Optional[bool]
             Dry run the apply operation without actually applying
@@ -607,7 +620,7 @@ class AsyncBaseTrueFoundry:
         Returns
         -------
         TrueFoundryApplyResponse
-            The resource has been successfully created or updated.
+            The created or updated resource, and the action that was performed.
 
         Examples
         --------
@@ -643,21 +656,22 @@ class AsyncBaseTrueFoundry:
 
     async def delete(
         self, *, manifest: TrueFoundryDeleteRequestManifest, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    ) -> TrueFoundryDeleteResponse:
         """
-        Deletes resources of specific types, such as provider-account, cluster, workspace, or application.
+        Delete a resource identified by the provided manifest.
 
         Parameters
         ----------
         manifest : TrueFoundryDeleteRequestManifest
-            manifest of the resource to be deleted
+            Manifest of the resource to be deleted
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        None
+        TrueFoundryDeleteResponse
+            Empty response confirming the resource has been deleted.
 
         Examples
         --------
@@ -716,6 +730,14 @@ class AsyncBaseTrueFoundry:
         return self._teams
 
     @property
+    def gateway_configs(self):
+        if self._gateway_configs is None:
+            from .gateway_configs.client import AsyncGatewayConfigsClient  # noqa: E402
+
+            self._gateway_configs = AsyncGatewayConfigsClient(client_wrapper=self._client_wrapper)
+        return self._gateway_configs
+
+    @property
     def personal_access_tokens(self):
         if self._personal_access_tokens is None:
             from .personal_access_tokens.client import AsyncPersonalAccessTokensClient  # noqa: E402
@@ -764,20 +786,20 @@ class AsyncBaseTrueFoundry:
         return self._jobs
 
     @property
-    def environments(self):
-        if self._environments is None:
-            from .environments.client import AsyncEnvironmentsClient  # noqa: E402
-
-            self._environments = AsyncEnvironmentsClient(client_wrapper=self._client_wrapper)
-        return self._environments
-
-    @property
     def workspaces(self):
         if self._workspaces is None:
             from .workspaces.client import AsyncWorkspacesClient  # noqa: E402
 
             self._workspaces = AsyncWorkspacesClient(client_wrapper=self._client_wrapper)
         return self._workspaces
+
+    @property
+    def environments(self):
+        if self._environments is None:
+            from .environments.client import AsyncEnvironmentsClient  # noqa: E402
+
+            self._environments = AsyncEnvironmentsClient(client_wrapper=self._client_wrapper)
+        return self._environments
 
     @property
     def secrets(self):
@@ -812,20 +834,20 @@ class AsyncBaseTrueFoundry:
         return self._alerts
 
     @property
-    def logs(self):
-        if self._logs is None:
-            from .logs.client import AsyncLogsClient  # noqa: E402
-
-            self._logs = AsyncLogsClient(client_wrapper=self._client_wrapper)
-        return self._logs
-
-    @property
     def ml_repos(self):
         if self._ml_repos is None:
             from .ml_repos.client import AsyncMlReposClient  # noqa: E402
 
             self._ml_repos = AsyncMlReposClient(client_wrapper=self._client_wrapper)
         return self._ml_repos
+
+    @property
+    def logs(self):
+        if self._logs is None:
+            from .logs.client import AsyncLogsClient  # noqa: E402
+
+            self._logs = AsyncLogsClient(client_wrapper=self._client_wrapper)
+        return self._logs
 
     @property
     def traces(self):

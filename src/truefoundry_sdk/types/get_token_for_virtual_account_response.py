@@ -9,7 +9,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 class GetTokenForVirtualAccountResponse(UniversalBaseModel):
     token: str = pydantic.Field()
     """
-    Token for the virtual account
+    Authentication token for the virtual account.
     """
 
     if IS_PYDANTIC_V2:

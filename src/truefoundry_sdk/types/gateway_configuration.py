@@ -12,18 +12,43 @@ from .subject import Subject
 
 
 class GatewayConfiguration(UniversalBaseModel):
-    id: typing.Optional[str] = None
-    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName"), pydantic.Field(alias="tenantName")]
-    type: str
-    manifest: types_config_Config
+    id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    System-generated Configuration ID.
+    """
+
+    tenant_name: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="tenantName"),
+        pydantic.Field(alias="tenantName", description="Tenant the gateway configuration belongs to."),
+    ]
+    type: str = pydantic.Field()
+    """
+    Configuration type.
+    """
+
+    manifest: types_config_Config = pydantic.Field()
+    """
+    The configuration manifest containing rules and settings.
+    """
+
     created_by_subject: typing_extensions.Annotated[
-        Subject, FieldMetadata(alias="createdBySubject"), pydantic.Field(alias="createdBySubject")
+        Subject,
+        FieldMetadata(alias="createdBySubject"),
+        pydantic.Field(
+            alias="createdBySubject",
+            description="Principal (user or service account) that created or last updated this configuration.",
+        ),
     ]
     created_at: typing_extensions.Annotated[
-        typing.Optional[dt.datetime], FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="createdAt"),
+        pydantic.Field(alias="createdAt", description="Creation timestamp."),
     ] = None
     updated_at: typing_extensions.Annotated[
-        typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt"), pydantic.Field(alias="updatedAt")
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="updatedAt"),
+        pydantic.Field(alias="updatedAt", description="Last-update timestamp."),
     ] = None
 
     if IS_PYDANTIC_V2:

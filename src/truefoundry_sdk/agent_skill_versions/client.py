@@ -31,6 +31,8 @@ class AgentSkillVersionsClient:
         self, agent_skill_version_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetAgentSkillVersionResponse:
         """
+        Get an agent skill version by its ID.
+
         Parameters
         ----------
         agent_skill_version_id : str
@@ -41,7 +43,7 @@ class AgentSkillVersionsClient:
         Returns
         -------
         GetAgentSkillVersionResponse
-            Successful Response
+            The agent skill version data
 
         Examples
         --------
@@ -62,6 +64,8 @@ class AgentSkillVersionsClient:
         self, agent_skill_version_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> EmptyResponse:
         """
+        Delete an agent skill version by its ID.
+
         Parameters
         ----------
         agent_skill_version_id : str
@@ -72,7 +76,7 @@ class AgentSkillVersionsClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful deletion
 
         Examples
         --------
@@ -102,7 +106,7 @@ class AgentSkillVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]:
         """
-        List agent skill versions. Each manifest has `source.type` `blob-storage` and `description` only; use GET for full SKILL.md content.
+        List agent skill versions with optional filtering by FQN, agent skill ID, ML Repo, name, or version.
 
         Parameters
         ----------
@@ -133,7 +137,7 @@ class AgentSkillVersionsClient:
         Returns
         -------
         SyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]
-            Successful Response
+            List of agent skill versions matching the query with pagination information
 
         Examples
         --------
@@ -189,6 +193,8 @@ class AsyncAgentSkillVersionsClient:
         self, agent_skill_version_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetAgentSkillVersionResponse:
         """
+        Get an agent skill version by its ID.
+
         Parameters
         ----------
         agent_skill_version_id : str
@@ -199,7 +205,7 @@ class AsyncAgentSkillVersionsClient:
         Returns
         -------
         GetAgentSkillVersionResponse
-            Successful Response
+            The agent skill version data
 
         Examples
         --------
@@ -228,6 +234,8 @@ class AsyncAgentSkillVersionsClient:
         self, agent_skill_version_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> EmptyResponse:
         """
+        Delete an agent skill version by its ID.
+
         Parameters
         ----------
         agent_skill_version_id : str
@@ -238,7 +246,7 @@ class AsyncAgentSkillVersionsClient:
         Returns
         -------
         EmptyResponse
-            Successful Response
+            Empty response indicating successful deletion
 
         Examples
         --------
@@ -276,7 +284,7 @@ class AsyncAgentSkillVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]:
         """
-        List agent skill versions. Each manifest has `source.type` `blob-storage` and `description` only; use GET for full SKILL.md content.
+        List agent skill versions with optional filtering by FQN, agent skill ID, ML Repo, name, or version.
 
         Parameters
         ----------
@@ -307,7 +315,7 @@ class AsyncAgentSkillVersionsClient:
         Returns
         -------
         AsyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]
-            Successful Response
+            List of agent skill versions matching the query with pagination information
 
         Examples
         --------

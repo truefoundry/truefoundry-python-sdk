@@ -4,6 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .mcp_tool_annotations import McpToolAnnotations
 
 
 class McpToolSetting(UniversalBaseModel):
@@ -25,6 +26,8 @@ class McpToolSetting(UniversalBaseModel):
     """
     Allows to disable the tool.
     """
+
+    annotations: typing.Optional[McpToolAnnotations] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

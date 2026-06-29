@@ -4,7 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .agent_skill import AgentSkill
+from .a2a_agent_skill import A2AAgentSkill
 
 
 class PromptSource(UniversalBaseModel):
@@ -22,7 +22,7 @@ class PromptSource(UniversalBaseModel):
     Fully qualified name of the prompt version to use as the agent source
     """
 
-    skills: typing.Optional[typing.List[AgentSkill]] = pydantic.Field(default=None)
+    skills: typing.Optional[typing.List[A2AAgentSkill]] = pydantic.Field(default=None)
     """
     List of skills associated with the agent
     """

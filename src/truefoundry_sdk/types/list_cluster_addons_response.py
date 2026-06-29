@@ -13,12 +13,12 @@ from .pagination import Pagination
 class ListClusterAddonsResponse(UniversalBaseModel):
     data: typing.List[AddonComponent] = pydantic.Field()
     """
-    Array of Cluster Addons
+    List of addons installed on the cluster.
     """
 
     pagination: Pagination = pydantic.Field()
     """
-    Pagination information
+    Pagination metadata.
     """
 
     if IS_PYDANTIC_V2:

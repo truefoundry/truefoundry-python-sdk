@@ -10,12 +10,12 @@ from .virtual_account import VirtualAccount
 class GetVirtualAccountResponse(UniversalBaseModel):
     data: VirtualAccount = pydantic.Field()
     """
-    Virtual Account
+    The requested virtual account.
     """
 
     token: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Virtual Account token (present only when creating a virtual account)
+    Authentication token for the virtual account. Present only on creation.
     """
 
     if IS_PYDANTIC_V2:

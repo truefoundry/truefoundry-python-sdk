@@ -11,12 +11,12 @@ from .pagination import Pagination
 class ListClustersResponse(UniversalBaseModel):
     data: typing.List[Cluster] = pydantic.Field()
     """
-    Array of cluster
+    List of clusters the caller has access to.
     """
 
     pagination: Pagination = pydantic.Field()
     """
-    Pagination information
+    Pagination metadata.
     """
 
     if IS_PYDANTIC_V2:

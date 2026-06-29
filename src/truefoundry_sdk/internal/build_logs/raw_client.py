@@ -10,9 +10,7 @@ from ...core.jsonable_encoder import encode_path_param
 from ...core.parse_error import ParsingError
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
-from ...core.serialization import convert_and_respect_annotation_metadata
 from ...errors.bad_request_error import BadRequestError
-from ...types.logs_filter_query import LogsFilterQuery
 from ...types.logs_response import LogsResponse
 from pydantic import ValidationError
 
@@ -29,12 +27,12 @@ class RawBuildLogsClient:
         end_ts: typing.Optional[str] = None,
         limit: typing.Optional[str] = None,
         direction: typing.Optional[str] = None,
-        filter_query: typing.Optional[LogsFilterQuery] = None,
+        filter_query: typing.Optional[str] = None,
         num_logs_to_ignore: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[LogsResponse]:
         """
-        Get logs for a given pipeline run by its name, with optional filters and time range.
+        Get logs emitted by the image build and deploy pipeline for a specific build of an application.
 
         Parameters
         ----------
@@ -53,8 +51,8 @@ class RawBuildLogsClient:
         direction : typing.Optional[str]
             Direction of sorting logs. Can be `asc` or `desc`
 
-        filter_query : typing.Optional[LogsFilterQuery]
-            Query to filter logs
+        filter_query : typing.Optional[str]
+            JSON-encoded filter object with shape `{ matchString, type, operator }`. `type` is `regex` or `substring`; `operator` is `equal` or `not_equal`.
 
         num_logs_to_ignore : typing.Optional[float]
             Number of logs corresponding to the starting timestamp to be ignored.
@@ -65,19 +63,17 @@ class RawBuildLogsClient:
         Returns
         -------
         HttpResponse[LogsResponse]
-            Successfully retrieved build logs for the pipeline run
+            Logs emitted by the build pipeline for the given pipeline run.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/build-logs/{encode_path_param(pipeline_run_name)}",
+            f"api/svc/v1/x/build-logs/{encode_path_param(pipeline_run_name)}",
             method="GET",
             params={
                 "startTs": start_ts,
                 "endTs": end_ts,
                 "limit": limit,
                 "direction": direction,
-                "filterQuery": convert_and_respect_annotation_metadata(
-                    object_=filter_query, annotation=LogsFilterQuery, direction="write"
-                ),
+                "filterQuery": filter_query,
                 "numLogsToIgnore": num_logs_to_ignore,
             },
             request_options=request_options,
@@ -125,12 +121,12 @@ class AsyncRawBuildLogsClient:
         end_ts: typing.Optional[str] = None,
         limit: typing.Optional[str] = None,
         direction: typing.Optional[str] = None,
-        filter_query: typing.Optional[LogsFilterQuery] = None,
+        filter_query: typing.Optional[str] = None,
         num_logs_to_ignore: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[LogsResponse]:
         """
-        Get logs for a given pipeline run by its name, with optional filters and time range.
+        Get logs emitted by the image build and deploy pipeline for a specific build of an application.
 
         Parameters
         ----------
@@ -149,8 +145,8 @@ class AsyncRawBuildLogsClient:
         direction : typing.Optional[str]
             Direction of sorting logs. Can be `asc` or `desc`
 
-        filter_query : typing.Optional[LogsFilterQuery]
-            Query to filter logs
+        filter_query : typing.Optional[str]
+            JSON-encoded filter object with shape `{ matchString, type, operator }`. `type` is `regex` or `substring`; `operator` is `equal` or `not_equal`.
 
         num_logs_to_ignore : typing.Optional[float]
             Number of logs corresponding to the starting timestamp to be ignored.
@@ -161,19 +157,17 @@ class AsyncRawBuildLogsClient:
         Returns
         -------
         AsyncHttpResponse[LogsResponse]
-            Successfully retrieved build logs for the pipeline run
+            Logs emitted by the build pipeline for the given pipeline run.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/build-logs/{encode_path_param(pipeline_run_name)}",
+            f"api/svc/v1/x/build-logs/{encode_path_param(pipeline_run_name)}",
             method="GET",
             params={
                 "startTs": start_ts,
                 "endTs": end_ts,
                 "limit": limit,
                 "direction": direction,
-                "filterQuery": convert_and_respect_annotation_metadata(
-                    object_=filter_query, annotation=LogsFilterQuery, direction="write"
-                ),
+                "filterQuery": filter_query,
                 "numLogsToIgnore": num_logs_to_ignore,
             },
             request_options=request_options,

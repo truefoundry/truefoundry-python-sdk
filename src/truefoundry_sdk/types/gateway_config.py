@@ -12,12 +12,16 @@ from .global_settings import GlobalSettings
 from .guardrails_config import GuardrailsConfig
 from .load_balancing_config import LoadBalancingConfig
 from .rate_limit_config import RateLimitConfig
+from .team_budget_config import TeamBudgetConfig
+from .tenant_budget_config import TenantBudgetConfig
 
 GatewayConfig = typing.Union[
     RateLimitConfig,
     LoadBalancingConfig,
     GuardrailsConfig,
     BudgetConfig,
+    TenantBudgetConfig,
+    TeamBudgetConfig,
     GatewayOtelConfig,
     GatewayMetadataConfig,
     GatewayLoggingConfig,

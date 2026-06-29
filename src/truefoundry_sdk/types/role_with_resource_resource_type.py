@@ -35,6 +35,7 @@ class RoleWithResourceResourceType(enum.StrEnum):
     ALERT_RULE = "alert-rule"
     GATEWAY_CONFIG = "gateway-config"
     GATEWAY_CONTROLS = "gateway-controls"
+    GATEWAY_BUDGET = "gateway-budget"
     TRACING_PROJECT = "tracing-project"
     TRACING_APPLICATION = "tracing-application"
     AGENT = "agent"
@@ -45,6 +46,7 @@ class RoleWithResourceResourceType(enum.StrEnum):
     EXTERNAL_IDENTITY = "external-identity"
     MCP_SERVER = "mcp-server"
     EXTERNAL_IDENTITY_PROVIDER = "external-identity-provider"
+    AGENT_IDENTITY = "agent-identity"
     _UNKNOWN = "__ROLEWITHRESOURCERESOURCETYPE_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
@@ -85,6 +87,7 @@ class RoleWithResourceResourceType(enum.StrEnum):
         alert_rule: typing.Callable[[], T_Result],
         gateway_config: typing.Callable[[], T_Result],
         gateway_controls: typing.Callable[[], T_Result],
+        gateway_budget: typing.Callable[[], T_Result],
         tracing_project: typing.Callable[[], T_Result],
         tracing_application: typing.Callable[[], T_Result],
         agent: typing.Callable[[], T_Result],
@@ -95,6 +98,7 @@ class RoleWithResourceResourceType(enum.StrEnum):
         external_identity: typing.Callable[[], T_Result],
         mcp_server: typing.Callable[[], T_Result],
         external_identity_provider: typing.Callable[[], T_Result],
+        agent_identity: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is RoleWithResourceResourceType.ROLE:
@@ -151,6 +155,8 @@ class RoleWithResourceResourceType(enum.StrEnum):
             return gateway_config()
         if self is RoleWithResourceResourceType.GATEWAY_CONTROLS:
             return gateway_controls()
+        if self is RoleWithResourceResourceType.GATEWAY_BUDGET:
+            return gateway_budget()
         if self is RoleWithResourceResourceType.TRACING_PROJECT:
             return tracing_project()
         if self is RoleWithResourceResourceType.TRACING_APPLICATION:
@@ -171,4 +177,6 @@ class RoleWithResourceResourceType(enum.StrEnum):
             return mcp_server()
         if self is RoleWithResourceResourceType.EXTERNAL_IDENTITY_PROVIDER:
             return external_identity_provider()
+        if self is RoleWithResourceResourceType.AGENT_IDENTITY:
+            return agent_identity()
         return _unknown_member(self._value_)

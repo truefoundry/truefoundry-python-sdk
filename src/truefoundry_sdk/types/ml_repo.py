@@ -33,7 +33,7 @@ class MlRepo(UniversalBaseModel):
     Number of runs
     """
 
-    artifact_type_counts: typing.Optional[typing.Dict[str, int]] = None
+    artifact_type_counts: typing.Optional[typing.Dict[str, typing.Optional[int]]] = None
     datasets_count: typing.Optional[int] = pydantic.Field(default=None)
     """
     Number of datasets

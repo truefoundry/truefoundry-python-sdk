@@ -5,8 +5,13 @@ import typing
 from .open_apimcp_server_manifest import OpenApimcpServerManifest
 from .remote_mcp_server_manifest import RemoteMcpServerManifest
 from .stdio_mcp_server_manifest import StdioMcpServerManifest
+from .tfy_managed_mcp_server_manifest import TfyManagedMcpServerManifest
 from .virtual_mcp_server_manifest import VirtualMcpServerManifest
 
 McpServerManifest = typing.Union[
-    RemoteMcpServerManifest, VirtualMcpServerManifest, OpenApimcpServerManifest, StdioMcpServerManifest
+    RemoteMcpServerManifest,
+    VirtualMcpServerManifest,
+    OpenApimcpServerManifest,
+    StdioMcpServerManifest,
+    TfyManagedMcpServerManifest,
 ]

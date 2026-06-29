@@ -11,7 +11,7 @@
 <dl>
 <dd>
 
-Applies a given manifest to create or update resources of specific types, such as provider-account, cluster, workspace, or ml-repo.
+Apply a manifest to create or update a resource.
 </dd>
 </dl>
 </dd>
@@ -61,7 +61,7 @@ client.apply(
 <dl>
 <dd>
 
-**manifest:** `TrueFoundryApplyRequestManifest` — manifest of the resource to be created or updated
+**manifest:** `TrueFoundryApplyRequestManifest` — Manifest of the resource to be created or updated
     
 </dd>
 </dl>
@@ -89,7 +89,7 @@ client.apply(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/truefoundry_sdk/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.<a href="src/truefoundry_sdk/client.py">delete</a>(...) -> TrueFoundryDeleteResponse</code></summary>
 <dl>
 <dd>
 
@@ -101,7 +101,7 @@ client.apply(
 <dl>
 <dd>
 
-Deletes resources of specific types, such as provider-account, cluster, workspace, or application.
+Delete a resource identified by the provided manifest.
 </dd>
 </dl>
 </dd>
@@ -151,7 +151,7 @@ client.delete(
 <dl>
 <dd>
 
-**manifest:** `TrueFoundryDeleteRequestManifest` — manifest of the resource to be deleted
+**manifest:** `TrueFoundryDeleteRequestManifest` — Manifest of the resource to be deleted
     
 </dd>
 </dl>
@@ -266,7 +266,7 @@ client.internal.get_id_from_fqn(
 <dl>
 <dd>
 
-List all users of tenant filtered by query and showInvalidUsers. Pagination is available based on query parameters.
+List users in the current tenant.
 </dd>
 </dl>
 </dd>
@@ -291,7 +291,7 @@ client = TrueFoundry(
 client.users.list(
     limit=10,
     offset=0,
-    query="query",
+    query="john@example.com",
     show_invalid_users=True,
 )
 
@@ -325,7 +325,7 @@ client.users.list(
 <dl>
 <dd>
 
-**query:** `typing.Optional[str]` 
+**query:** `typing.Optional[str]` — Filter users by email substring match.
     
 </dd>
 </dl>
@@ -333,7 +333,7 @@ client.users.list(
 <dl>
 <dd>
 
-**show_invalid_users:** `typing.Optional[bool]` — Show Deactivated users
+**show_invalid_users:** `typing.Optional[bool]` — When true, includes deactivated users in the response.
     
 </dd>
 </dl>
@@ -365,7 +365,7 @@ client.users.list(
 <dl>
 <dd>
 
-This endpoint allows tenant administrators to register users within their tenant.
+Pre-register a user in the current tenant. Optionally sends an invite email if the auth provider is managed by TrueFoundry.
 </dd>
 </dl>
 </dd>
@@ -388,7 +388,7 @@ client = TrueFoundry(
 )
 
 client.users.pre_register_users(
-    email="email",
+    email="user@example.com",
 )
 
 ```
@@ -405,7 +405,7 @@ client.users.pre_register_users(
 <dl>
 <dd>
 
-**email:** `str` — Email of the user
+**email:** `str` — Email address of the user to register.
     
 </dd>
 </dl>
@@ -413,7 +413,7 @@ client.users.pre_register_users(
 <dl>
 <dd>
 
-**send_invite_email:** `typing.Optional[bool]` — Send invite email if user does not exist
+**send_invite_email:** `typing.Optional[bool]` — When true, sends an invite email to the user after registration.
     
 </dd>
 </dl>
@@ -421,7 +421,7 @@ client.users.pre_register_users(
 <dl>
 <dd>
 
-**skip_if_user_exists:** `typing.Optional[bool]` — Fail if user exists
+**skip_if_user_exists:** `typing.Optional[bool]` — When true, silently skips registration if the user already exists instead of returning an error.
     
 </dd>
 </dl>
@@ -429,7 +429,7 @@ client.users.pre_register_users(
 <dl>
 <dd>
 
-**dry_run:** `typing.Optional[bool]` — Dry run
+**dry_run:** `typing.Optional[bool]` — When true, validates the request without persisting changes.
     
 </dd>
 </dl>
@@ -437,7 +437,7 @@ client.users.pre_register_users(
 <dl>
 <dd>
 
-**accept_invite_client_url:** `typing.Optional[str]` — Url to redirect when invite is accepted
+**accept_invite_client_url:** `typing.Optional[str]` — URL the user is redirected to when they accept the invite. Required when sendInviteEmail is true.
     
 </dd>
 </dl>
@@ -469,7 +469,7 @@ client.users.pre_register_users(
 <dl>
 <dd>
 
-This endpoint allows tenant administrators to update the roles of a user within their tenant.
+Update the role assigned to a user in the current tenant.
 </dd>
 </dl>
 </dd>
@@ -492,9 +492,9 @@ client = TrueFoundry(
 )
 
 client.users.update_roles(
-    email="email",
+    email="user@example.com",
     roles=[
-        "roles"
+        "tenant-admin"
     ],
 )
 
@@ -512,7 +512,7 @@ client.users.update_roles(
 <dl>
 <dd>
 
-**email:** `str` — Email of the user
+**email:** `str` — Email of the user whose roles are being updated.
     
 </dd>
 </dl>
@@ -520,7 +520,7 @@ client.users.update_roles(
 <dl>
 <dd>
 
-**roles:** `typing.List[str]` — Role names for the user
+**roles:** `typing.List[str]` — Role names to assign to the user.
     
 </dd>
 </dl>
@@ -528,7 +528,7 @@ client.users.update_roles(
 <dl>
 <dd>
 
-**resource_type:** `typing.Optional[str]` — Resource Type
+**resource_type:** `typing.Optional[UpdateUserRolesRequestResourceType]` — Resource type scope for the role assignment.
     
 </dd>
 </dl>
@@ -560,7 +560,7 @@ client.users.update_roles(
 <dl>
 <dd>
 
-Get User associated with provided User id
+Get a single user by their ID.
 </dd>
 </dl>
 </dd>
@@ -583,7 +583,7 @@ client = TrueFoundry(
 )
 
 client.users.get(
-    id="id",
+    id="jqfwg345gi25n5ju2yz5iz6m",
 )
 
 ```
@@ -600,7 +600,7 @@ client.users.get(
 <dl>
 <dd>
 
-**id:** `str` — User Id
+**id:** `str` — System-generated user ID.
     
 </dd>
 </dl>
@@ -632,7 +632,7 @@ client.users.get(
 <dl>
 <dd>
 
-Delete user if they are not a collaborator in any resource and not part of any team other than everyone.
+Permanently delete a user by ID. The user must not be a collaborator on any resource and must not belong to any team other than "everyone".
 </dd>
 </dl>
 </dd>
@@ -655,7 +655,7 @@ client = TrueFoundry(
 )
 
 client.users.delete(
-    id="id",
+    id="jqfwg345gi25n5ju2yz5iz6m",
     tenant_name="tenantName",
 )
 
@@ -673,7 +673,7 @@ client.users.delete(
 <dl>
 <dd>
 
-**id:** `str` — User Id
+**id:** `str` — System-generated user ID.
     
 </dd>
 </dl>
@@ -681,7 +681,7 @@ client.users.delete(
 <dl>
 <dd>
 
-**tenant_name:** `typing.Optional[str]` — Tenant name
+**tenant_name:** `typing.Optional[str]` — Tenant name override. Defaults to the caller's tenant when omitted.
     
 </dd>
 </dl>
@@ -713,7 +713,7 @@ client.users.delete(
 <dl>
 <dd>
 
-Invite a user to the tenant
+Invite a new user to the current tenant by email. Only available when the auth provider is managed by TrueFoundry.
 </dd>
 </dl>
 </dd>
@@ -736,8 +736,8 @@ client = TrueFoundry(
 )
 
 client.users.invite_user(
-    accept_invite_client_url="<control plane url>/invite-accept",
-    email="email",
+    accept_invite_client_url="https://app.example.com/invite-accept",
+    email="user@example.com",
 )
 
 ```
@@ -754,7 +754,7 @@ client.users.invite_user(
 <dl>
 <dd>
 
-**accept_invite_client_url:** `str` — Url to redirect when invite is accepted
+**accept_invite_client_url:** `str` — URL the user is redirected to when they accept the invite.
     
 </dd>
 </dl>
@@ -762,7 +762,7 @@ client.users.invite_user(
 <dl>
 <dd>
 
-**email:** `str` — Email of user
+**email:** `str` — Email address of the user to invite.
     
 </dd>
 </dl>
@@ -794,7 +794,7 @@ client.users.invite_user(
 <dl>
 <dd>
 
-Deactivate user associated with the provided email within the tenant.
+Deactivate a user by email in the current tenant. The user will no longer be able to log in.
 </dd>
 </dl>
 </dd>
@@ -817,7 +817,7 @@ client = TrueFoundry(
 )
 
 client.users.deactivate(
-    email="email",
+    email="user@example.com",
 )
 
 ```
@@ -834,7 +834,7 @@ client.users.deactivate(
 <dl>
 <dd>
 
-**email:** `str` — Email of the user
+**email:** `str` — Email of the user to deactivate.
     
 </dd>
 </dl>
@@ -842,7 +842,7 @@ client.users.deactivate(
 <dl>
 <dd>
 
-**tenant_name:** `typing.Optional[str]` — Tenant name
+**tenant_name:** `typing.Optional[str]` — Tenant name override. Defaults to the caller's tenant when omitted.
     
 </dd>
 </dl>
@@ -874,7 +874,7 @@ client.users.deactivate(
 <dl>
 <dd>
 
-Activate user associated with the provided email within the tenant.
+Re-activate a previously deactivated user by email in the current tenant.
 </dd>
 </dl>
 </dd>
@@ -897,7 +897,7 @@ client = TrueFoundry(
 )
 
 client.users.activate(
-    email="email",
+    email="user@example.com",
 )
 
 ```
@@ -914,7 +914,7 @@ client.users.activate(
 <dl>
 <dd>
 
-**email:** `str` — Email of the user
+**email:** `str` — Email of the user to activate.
     
 </dd>
 </dl>
@@ -922,7 +922,7 @@ client.users.activate(
 <dl>
 <dd>
 
-**tenant_name:** `typing.Optional[str]` — Tenant name
+**tenant_name:** `typing.Optional[str]` — Tenant name override. Defaults to the caller's tenant when omitted.
     
 </dd>
 </dl>
@@ -954,7 +954,7 @@ client.users.activate(
 <dl>
 <dd>
 
-Change password for the authenticated user. Requires clientId and loginId in the request body.
+Change the password for the authenticated user.
 </dd>
 </dl>
 </dd>
@@ -977,7 +977,7 @@ client = TrueFoundry(
 )
 
 client.users.change_password(
-    login_id="loginId",
+    login_id="user@example.com",
     new_password="newPassword",
     old_password="oldPassword",
 )
@@ -996,7 +996,7 @@ client.users.change_password(
 <dl>
 <dd>
 
-**login_id:** `str` — login id of the user(email)
+**login_id:** `str` — Email address of the user changing their password.
     
 </dd>
 </dl>
@@ -1004,7 +1004,7 @@ client.users.change_password(
 <dl>
 <dd>
 
-**new_password:** `str` — New password
+**new_password:** `str` — New password (minimum 8 characters).
     
 </dd>
 </dl>
@@ -1012,223 +1012,7 @@ client.users.change_password(
 <dl>
 <dd>
 
-**old_password:** `str` — Old password
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">get_resources</a>(...) -> GetUserResourcesResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get all resources associated with a user.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.users.get_resources(
-    id="id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `str` — User Id
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">get_permissions</a>(...) -> GetUserPermissionsResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get all role bindings associated with a user, including team-inherited bindings.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.users.get_permissions(
-    id="id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `str` — User Id
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">get_teams</a>(...) -> GetUserTeamsResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get all teams associated with a user, including their role in each team.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.users.get_teams(
-    id="id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `str` — User Id
+**old_password:** `str` — Current password of the user for verification.
     
 </dd>
 </dl>
@@ -1261,7 +1045,7 @@ client.users.get_teams(
 <dl>
 <dd>
 
-Retrieve all teams associated with the authenticated user. If the user is a tenant admin, returns all teams for the tenant. Pagination is available based on query parameters
+List teams accessible to the current user.
 </dd>
 </dl>
 </dd>
@@ -1288,6 +1072,10 @@ client.teams.list(
     limit=10,
     offset=0,
     type=TeamsListRequestType.TEAM,
+    role="manager",
+    attributes=[
+        "attributes"
+    ],
 )
 
 ```
@@ -1320,7 +1108,23 @@ client.teams.list(
 <dl>
 <dd>
 
-**type:** `typing.Optional[TeamsListRequestType]` — Filter teams by type
+**type:** `typing.Optional[TeamsListRequestType]` — Filter teams by type.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**role:** `typing.Optional[typing.Literal]` — Filter to teams where the caller holds this role. `manager` returns teams the caller can manage (team managers and admins).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**attributes:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Comma-separated list of attributes to return (e.g. `id,teamName`). When provided, only the specified fields are fetched. `id` is always included.
     
 </dd>
 </dl>
@@ -1352,7 +1156,7 @@ client.teams.list(
 <dl>
 <dd>
 
-Creates a new team or updates an existing team. It ensures that the team name is unique, valid, and that the team has at least one member. The members of the team are added or updated based on the provided emails.
+Create a new team or update an existing one using the provided TeamManifest. Matching is by name — if the name matches an existing team it is updated, otherwise a new one is created.
 </dd>
 </dl>
 </dd>
@@ -1398,7 +1202,7 @@ client.teams.create_or_update(
 <dl>
 <dd>
 
-**manifest:** `TeamManifest` — Team manifest
+**manifest:** `TeamManifest` — The team manifest describing the team to create or update.
     
 </dd>
 </dl>
@@ -1406,7 +1210,205 @@ client.teams.create_or_update(
 <dl>
 <dd>
 
-**dry_run:** `typing.Optional[bool]` — Dry run
+**dry_run:** `typing.Optional[bool]` — When true, validate the request without persisting any changes.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.teams.<a href="src/truefoundry_sdk/teams/client.py">list_members</a>(...) -> ListTeamMembersResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List users who are members of a team.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.teams.list_members(
+    id="jqfwg345gi25n5ju2yz5iz6m",
+    limit=10,
+    offset=0,
+    filter="{\"type\":\"AND\",\"children\":[{\"column\":\"email\",\"op\":\"STRING_CONTAINS\",\"value\":\"@example.com\"}]}",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — System-generated team ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[int]` — Number of items per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**offset:** `typing.Optional[int]` — Number of items to skip
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filter:** `typing.Optional[str]` — JSON string: structured filter tree (AND/OR groups, column leaves on `email` and `userId`).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.teams.<a href="src/truefoundry_sdk/teams/client.py">list_managers</a>(...) -> ListTeamManagersResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List users who hold the team-manager role on a team.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.teams.list_managers(
+    id="jqfwg345gi25n5ju2yz5iz6m",
+    limit=10,
+    offset=0,
+    filter="{\"type\":\"AND\",\"children\":[{\"column\":\"email\",\"op\":\"STRING_CONTAINS\",\"value\":\"@example.com\"}]}",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — System-generated team ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[int]` — Number of items per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**offset:** `typing.Optional[int]` — Number of items to skip
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filter:** `typing.Optional[str]` — JSON string: structured filter tree (AND/OR groups, column leaves on `email` and `userId`).
     
 </dd>
 </dl>
@@ -1438,7 +1440,7 @@ client.teams.create_or_update(
 <dl>
 <dd>
 
-Get Team associated with provided team id
+Get a single team by its ID.
 </dd>
 </dl>
 </dd>
@@ -1461,7 +1463,7 @@ client = TrueFoundry(
 )
 
 client.teams.get(
-    id="id",
+    id="jqfwg345gi25n5ju2yz5iz6m",
 )
 
 ```
@@ -1478,7 +1480,7 @@ client.teams.get(
 <dl>
 <dd>
 
-**id:** `str` — Team Id
+**id:** `str` — System-generated team ID.
     
 </dd>
 </dl>
@@ -1510,7 +1512,7 @@ client.teams.get(
 <dl>
 <dd>
 
-Deletes the Team associated with the provided Id.
+Permanently delete the team with the given ID. This action is irreversible.
 </dd>
 </dl>
 </dd>
@@ -1533,7 +1535,7 @@ client = TrueFoundry(
 )
 
 client.teams.delete(
-    id="id",
+    id="jqfwg345gi25n5ju2yz5iz6m",
 )
 
 ```
@@ -1550,7 +1552,7 @@ client.teams.delete(
 <dl>
 <dd>
 
-**id:** `str` — Team Id
+**id:** `str` — System-generated team ID.
     
 </dd>
 </dl>
@@ -1605,7 +1607,7 @@ client = TrueFoundry(
 )
 
 client.teams.get_permissions(
-    id="id",
+    id="jqfwg345gi25n5ju2yz5iz6m",
 )
 
 ```
@@ -1622,10 +1624,146 @@ client.teams.get_permissions(
 <dl>
 <dd>
 
-**id:** `str` — Team Id
+**id:** `str` — System-generated team ID.
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## GatewayConfigs
+<details><summary><code>client.gateway_configs.<a href="src/truefoundry_sdk/gateway_configs/client.py">get</a>(...) -> GatewayConfiguration</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the AI Gateway configuration for the given type.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+from truefoundry_sdk.gateway_configs import GatewayConfigsGetRequestType
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.gateway_configs.get(
+    type=GatewayConfigsGetRequestType.GATEWAY_RATE_LIMITING_CONFIG,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**type:** `GatewayConfigsGetRequestType` — The type of gateway configuration to retrieve or delete.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.gateway_configs.<a href="src/truefoundry_sdk/gateway_configs/client.py">get_budget_usage</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the current budget usage for every budget rule configured in the tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.gateway_configs.get_budget_usage()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
 
 <dl>
 <dd>
@@ -1655,7 +1793,7 @@ client.teams.get_permissions(
 <dl>
 <dd>
 
-List Personal Access Tokens created by the user in the current tenant.
+List personal access tokens created by the current user.
 </dd>
 </dl>
 </dd>
@@ -1680,7 +1818,7 @@ client = TrueFoundry(
 client.personal_access_tokens.list(
     limit=10,
     offset=0,
-    name_search_query="nameSearchQuery",
+    name_search_query="ci-token",
 )
 
 ```
@@ -1713,7 +1851,7 @@ client.personal_access_tokens.list(
 <dl>
 <dd>
 
-**name_search_query:** `typing.Optional[str]` — Return personal access tokens with names that contain this string
+**name_search_query:** `typing.Optional[str]` — Return personal access tokens whose name contains this substring.
     
 </dd>
 </dl>
@@ -1745,7 +1883,7 @@ client.personal_access_tokens.list(
 <dl>
 <dd>
 
-Create Personal Access Token
+Create a new personal access token for the current user.
 </dd>
 </dl>
 </dd>
@@ -1768,7 +1906,7 @@ client = TrueFoundry(
 )
 
 client.personal_access_tokens.create(
-    name="name",
+    name="my-ci-token",
 )
 
 ```
@@ -1785,7 +1923,7 @@ client.personal_access_tokens.create(
 <dl>
 <dd>
 
-**name:** `str` — serviceaccount name
+**name:** `str` — Name for the personal access token. Must be 3-36 characters, start with a lowercase letter, end with a lowercase alphanumeric character, and contain only lowercase letters, numbers, and hyphens.
     
 </dd>
 </dl>
@@ -1793,7 +1931,7 @@ client.personal_access_tokens.create(
 <dl>
 <dd>
 
-**expiration_date:** `typing.Optional[str]` — Expiration date in ISO format (e.g. 2025-08-01T12:00)
+**expiration_date:** `typing.Optional[str]` — Expiration date in ISO format. The token becomes invalid after this date.
     
 </dd>
 </dl>
@@ -1801,7 +1939,23 @@ client.personal_access_tokens.create(
 <dl>
 <dd>
 
-**account_name:** `typing.Optional[str]` — Account name that owns this PAT
+**account_name:** `typing.Optional[str]` — Account name that owns this personal access token.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**team_name:** `typing.Optional[str]` — Team name that owns this personal access token.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**token_type:** `typing.Optional[CreatePersonalAccessTokenRequestTokenType]` — Format of the issued token. Leave empty to use the tenant override or platform default.
     
 </dd>
 </dl>
@@ -1833,7 +1987,7 @@ client.personal_access_tokens.create(
 <dl>
 <dd>
 
-Revoke All Personal Access Tokens for the user with the given email
+Revoke all personal access tokens belonging to the user with the given email. Requires tenant admin.
 </dd>
 </dl>
 </dd>
@@ -1856,7 +2010,7 @@ client = TrueFoundry(
 )
 
 client.personal_access_tokens.revoke_all(
-    email="email",
+    email="alice@example.com",
 )
 
 ```
@@ -1873,7 +2027,7 @@ client.personal_access_tokens.revoke_all(
 <dl>
 <dd>
 
-**email:** `str` — Email of the user to revoke all Personal Access Tokens for
+**email:** `str` — Email of the user whose personal access tokens should be revoked.
     
 </dd>
 </dl>
@@ -1905,7 +2059,7 @@ client.personal_access_tokens.revoke_all(
 <dl>
 <dd>
 
-Delete Personal Access Token associated with the provided serviceAccountId
+Permanently delete the personal access token with the given ID. This action is irreversible.
 </dd>
 </dl>
 </dd>
@@ -1928,7 +2082,7 @@ client = TrueFoundry(
 )
 
 client.personal_access_tokens.delete(
-    id="id",
+    id="jqfwg345gi25n5ju2yz5iz6m",
 )
 
 ```
@@ -1945,7 +2099,7 @@ client.personal_access_tokens.delete(
 <dl>
 <dd>
 
-**id:** `str` — serviceaccount id
+**id:** `str` — System-generated service account ID.
     
 </dd>
 </dl>
@@ -1977,7 +2131,7 @@ client.personal_access_tokens.delete(
 <dl>
 <dd>
 
-Get an existing Personal Access Token by name, if it doesn't exist, it will create a new one and return the PAT data along with a fresh token.
+Get an existing personal access token by name. If none exists, a new one is created and returned with a fresh token.
 </dd>
 </dl>
 </dd>
@@ -2001,6 +2155,7 @@ client = TrueFoundry(
 
 client.personal_access_tokens.get(
     name="name",
+    team_name="teamName",
 )
 
 ```
@@ -2018,6 +2173,14 @@ client.personal_access_tokens.get(
 <dd>
 
 **name:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**team_name:** `typing.Optional[str]` — Team name that owns this PAT when a new PAT is created
     
 </dd>
 </dl>
@@ -2050,7 +2213,7 @@ client.personal_access_tokens.get(
 <dl>
 <dd>
 
-List virtual accounts for the tenant.
+List virtual accounts accessible to the current user.
 </dd>
 </dl>
 </dd>
@@ -2075,12 +2238,12 @@ client = TrueFoundry(
 client.virtual_accounts.list(
     limit=10,
     offset=0,
-    name_search_query="nameSearchQuery",
+    name_search_query="staging-bot",
     owned_by_teams=[
         "ownedByTeams"
     ],
     is_expired=True,
-    filter="filter",
+    filter="{\"type\":\"AND\",\"children\":[{\"column\":\"name\",\"op\":\"STRING_CONTAINS\",\"value\":\"bot\"}]}",
 )
 
 ```
@@ -2113,7 +2276,7 @@ client.virtual_accounts.list(
 <dl>
 <dd>
 
-**name_search_query:** `typing.Optional[str]` — Return virtual accounts with names that contain this string
+**name_search_query:** `typing.Optional[str]` — Return virtual accounts with names that contain this string.
     
 </dd>
 </dl>
@@ -2121,7 +2284,7 @@ client.virtual_accounts.list(
 <dl>
 <dd>
 
-**owned_by_teams:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Return virtual accounts owned by these teams
+**owned_by_teams:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Comma-separated team names. Return virtual accounts owned by these teams.
     
 </dd>
 </dl>
@@ -2129,7 +2292,7 @@ client.virtual_accounts.list(
 <dl>
 <dd>
 
-**is_expired:** `typing.Optional[bool]` — Filter virtual accounts by expiration status. true = expired, false = not expired
+**is_expired:** `typing.Optional[bool]` — Filter by expiration status. `true` = expired only, `false` = not expired only.
     
 </dd>
 </dl>
@@ -2137,7 +2300,7 @@ client.virtual_accounts.list(
 <dl>
 <dd>
 
-**filter:** `typing.Optional[str]` — JSON string: structured filter tree (AND/OR groups, column leaves on `name`, json_map leaves on manifest.tags).
+**filter:** `typing.Optional[str]` — JSON string: structured filter tree (AND/OR groups, column leaves on `name`, json_map leaves on `manifest.tags`).
     
 </dd>
 </dl>
@@ -2169,7 +2332,7 @@ client.virtual_accounts.list(
 <dl>
 <dd>
 
-Creates a new virtual account or updates an existing one based on the provided manifest.
+Create a new virtual account or update an existing one using the provided VirtualAccountManifest. Matching is by name — if the name matches an existing virtual account it is updated, otherwise a new one is created.
 </dd>
 </dl>
 </dd>
@@ -2219,7 +2382,7 @@ client.virtual_accounts.create_or_update(
 <dl>
 <dd>
 
-**manifest:** `VirtualAccountManifest` — Virtual account manifest
+**manifest:** `VirtualAccountManifest` — The virtual account manifest describing the virtual account to create or update.
     
 </dd>
 </dl>
@@ -2227,7 +2390,7 @@ client.virtual_accounts.create_or_update(
 <dl>
 <dd>
 
-**dry_run:** `typing.Optional[bool]` — Dry run
+**dry_run:** `typing.Optional[bool]` — When true, validate the request without persisting any changes.
     
 </dd>
 </dl>
@@ -2259,7 +2422,7 @@ client.virtual_accounts.create_or_update(
 <dl>
 <dd>
 
-Get virtual account by id
+Get a single virtual account by its ID.
 </dd>
 </dl>
 </dd>
@@ -2282,7 +2445,7 @@ client = TrueFoundry(
 )
 
 client.virtual_accounts.get(
-    id="id",
+    id="jqfwg345gi25n5ju2yz5iz6m",
 )
 
 ```
@@ -2299,7 +2462,7 @@ client.virtual_accounts.get(
 <dl>
 <dd>
 
-**id:** `str` — serviceaccount id
+**id:** `str` — System-generated service account ID.
     
 </dd>
 </dl>
@@ -2331,7 +2494,7 @@ client.virtual_accounts.get(
 <dl>
 <dd>
 
-Delete a virtual account associated with the provided virtual account id.
+Permanently delete the virtual account with the given ID. This action is irreversible.
 </dd>
 </dl>
 </dd>
@@ -2354,7 +2517,7 @@ client = TrueFoundry(
 )
 
 client.virtual_accounts.delete(
-    id="id",
+    id="jqfwg345gi25n5ju2yz5iz6m",
 )
 
 ```
@@ -2371,7 +2534,7 @@ client.virtual_accounts.delete(
 <dl>
 <dd>
 
-**id:** `str` — serviceaccount id
+**id:** `str` — System-generated service account ID.
     
 </dd>
 </dl>
@@ -2403,7 +2566,7 @@ client.virtual_accounts.delete(
 <dl>
 <dd>
 
-Get token for a virtual account by id
+Retrieve the current authentication token for a virtual account by its ID.
 </dd>
 </dl>
 </dd>
@@ -2426,7 +2589,7 @@ client = TrueFoundry(
 )
 
 client.virtual_accounts.get_token(
-    id="id",
+    id="jqfwg345gi25n5ju2yz5iz6m",
 )
 
 ```
@@ -2443,7 +2606,7 @@ client.virtual_accounts.get_token(
 <dl>
 <dd>
 
-**id:** `str` — serviceaccount id
+**id:** `str` — System-generated service account ID.
     
 </dd>
 </dl>
@@ -2475,7 +2638,7 @@ client.virtual_accounts.get_token(
 <dl>
 <dd>
 
-Syncs the virtual account token to the configured secret store. Returns the updated JWT with sync metadata including timestamp and error (if any).
+Sync the virtual account token to the configured secret store. Returns the sync metadata including timestamp and error (if any).
 </dd>
 </dl>
 </dd>
@@ -2498,7 +2661,7 @@ client = TrueFoundry(
 )
 
 client.virtual_accounts.sync_to_secret_store(
-    id="id",
+    id="jqfwg345gi25n5ju2yz5iz6m",
 )
 
 ```
@@ -2515,7 +2678,7 @@ client.virtual_accounts.sync_to_secret_store(
 <dl>
 <dd>
 
-**id:** `str` — serviceaccount id
+**id:** `str` — System-generated service account ID.
     
 </dd>
 </dl>
@@ -2547,7 +2710,7 @@ client.virtual_accounts.sync_to_secret_store(
 <dl>
 <dd>
 
-Regenerate token for a virtual account by id. The old token will remain valid for the specified grace period.
+Regenerate the authentication token for a virtual account. The old token remains valid for the specified grace period.
 </dd>
 </dl>
 </dd>
@@ -2570,7 +2733,7 @@ client = TrueFoundry(
 )
 
 client.virtual_accounts.regenerate_token(
-    id="id",
+    id="jqfwg345gi25n5ju2yz5iz6m",
     grace_period_in_days=30,
 )
 
@@ -2588,7 +2751,7 @@ client.virtual_accounts.regenerate_token(
 <dl>
 <dd>
 
-**id:** `str` — serviceaccount id
+**id:** `str` — System-generated service account ID.
     
 </dd>
 </dl>
@@ -2628,7 +2791,7 @@ client.virtual_accounts.regenerate_token(
 <dl>
 <dd>
 
-Delete a JWT for a virtual account by id
+Delete a specific JWT token belonging to a virtual account. The virtual account itself is not affected.
 </dd>
 </dl>
 </dd>
@@ -2651,8 +2814,8 @@ client = TrueFoundry(
 )
 
 client.virtual_accounts.delete_jwt(
-    id="id",
-    jwt_id="jwtId",
+    id="jqfwg345gi25n5ju2yz5iz6m",
+    jwt_id="jwt_abc123def456",
 )
 
 ```
@@ -2669,7 +2832,7 @@ client.virtual_accounts.delete_jwt(
 <dl>
 <dd>
 
-**id:** `str` — virtual account id
+**id:** `str` — System-generated virtual account ID that owns the JWT.
     
 </dd>
 </dl>
@@ -2677,7 +2840,7 @@ client.virtual_accounts.delete_jwt(
 <dl>
 <dd>
 
-**jwt_id:** `str` — JWT id
+**jwt_id:** `str` — System-generated JWT ID to delete.
     
 </dd>
 </dl>
@@ -2710,7 +2873,7 @@ client.virtual_accounts.delete_jwt(
 <dl>
 <dd>
 
-Retrieves a list of all latest Clusters. Pagination is available based on query parameters.
+List clusters the caller can read.
 </dd>
 </dl>
 </dd>
@@ -2735,6 +2898,9 @@ client = TrueFoundry(
 client.clusters.list(
     limit=10,
     offset=0,
+    attributes=[
+        "attributes"
+    ],
 )
 
 ```
@@ -2767,6 +2933,14 @@ client.clusters.list(
 <dl>
 <dd>
 
+**attributes:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -2791,7 +2965,7 @@ client.clusters.list(
 <dl>
 <dd>
 
-Create or Update cluster with provided manifest
+Create a new cluster or update an existing one using the provided `ClusterManifest`. Matching is by `name` — if a cluster with the same name exists it is updated, otherwise a new one is created.
 </dd>
 </dl>
 </dd>
@@ -2844,7 +3018,7 @@ client.clusters.create_or_update(
 <dl>
 <dd>
 
-**manifest:** `ClusterManifest` — Cluster manifest
+**manifest:** `ClusterManifest` — Full cluster manifest.
     
 </dd>
 </dl>
@@ -2852,7 +3026,7 @@ client.clusters.create_or_update(
 <dl>
 <dd>
 
-**dry_run:** `typing.Optional[bool]` — Dry run the cluster creation/update
+**dry_run:** `typing.Optional[bool]` — When true, validates the request without persisting changes.
     
 </dd>
 </dl>
@@ -2884,7 +3058,7 @@ client.clusters.create_or_update(
 <dl>
 <dd>
 
-Get cluster associated with provided id
+Get a single cluster by its ID.
 </dd>
 </dl>
 </dd>
@@ -2924,7 +3098,7 @@ client.clusters.get(
 <dl>
 <dd>
 
-**id:** `str` — Cluster id of the cluster
+**id:** `str` — Unique identifier of the cluster.
     
 </dd>
 </dl>
@@ -2944,7 +3118,7 @@ client.clusters.get(
 </dl>
 </details>
 
-<details><summary><code>client.clusters.<a href="src/truefoundry_sdk/clusters/client.py">delete</a>(...) -> ClustersDeleteResponse</code></summary>
+<details><summary><code>client.clusters.<a href="src/truefoundry_sdk/clusters/client.py">delete</a>(...) -> DeleteClusterResponse</code></summary>
 <dl>
 <dd>
 
@@ -2956,7 +3130,7 @@ client.clusters.get(
 <dl>
 <dd>
 
-Delete cluster associated with provided cluster id
+Permanently delete the cluster with the given ID. This action is irreversible.
 </dd>
 </dl>
 </dd>
@@ -2996,7 +3170,7 @@ client.clusters.delete(
 <dl>
 <dd>
 
-**id:** `str` — Cluster id of the cluster
+**id:** `str` — Unique identifier of the cluster.
     
 </dd>
 </dl>
@@ -3028,7 +3202,7 @@ client.clusters.delete(
 <dl>
 <dd>
 
-List addons for the provided cluster. Pagination is available based on query parameters.
+List addons installed on the cluster.
 </dd>
 </dl>
 </dd>
@@ -3054,6 +3228,9 @@ client.clusters.get_addons(
     id="id",
     limit=10,
     offset=0,
+    attributes=[
+        "attributes"
+    ],
 )
 
 ```
@@ -3070,7 +3247,7 @@ client.clusters.get_addons(
 <dl>
 <dd>
 
-**id:** `str` — Cluster id of the cluster
+**id:** `str` — Unique identifier of the cluster.
     
 </dd>
 </dl>
@@ -3087,6 +3264,14 @@ client.clusters.get_addons(
 <dd>
 
 **offset:** `typing.Optional[int]` — Number of items to skip
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**attributes:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
     
 </dd>
 </dl>
@@ -3118,7 +3303,7 @@ client.clusters.get_addons(
 <dl>
 <dd>
 
-Get the status of provided cluster
+Get the connection status of the cluster agent to the control plane.
 </dd>
 </dl>
 </dd>
@@ -3158,7 +3343,7 @@ client.clusters.is_connected(
 <dl>
 <dd>
 
-**id:** `str` — Cluster id of the cluster
+**id:** `str` — Unique identifier of the cluster.
     
 </dd>
 </dl>
@@ -3191,7 +3376,7 @@ client.clusters.is_connected(
 <dl>
 <dd>
 
-Retrieves a list of all latest applications. Supports filtering by application ID, name, type, and other parameters. Pagination is available based on query parameters.
+List applications the caller can read.
 </dd>
 </dl>
 </dd>
@@ -3207,7 +3392,7 @@ Retrieves a list of all latest applications. Supports filtering by application I
 
 ```python
 from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk.applications import ApplicationsListRequestDeviceTypeFilter, ApplicationsListRequestLifecycleStage
+from truefoundry_sdk.applications import ApplicationsListRequestApplicationType, ApplicationsListRequestDeviceTypeFilter, ApplicationsListRequestLifecycleStage
 
 client = TrueFoundry(
     api_key="<token>",
@@ -3222,7 +3407,7 @@ client.applications.list(
     application_name="applicationName",
     fqn="fqn",
     workspace_fqn="workspaceFqn",
-    application_type="applicationType",
+    application_type=ApplicationsListRequestApplicationType.ASYNC_SERVICE,
     name_search_query="nameSearchQuery",
     environment_id="environmentId",
     cluster_id="clusterId",
@@ -3264,7 +3449,7 @@ client.applications.list(
 <dl>
 <dd>
 
-**application_id:** `typing.Optional[str]` — Application id of the application
+**application_id:** `typing.Optional[str]` — Unique identifier of the application to filter by
     
 </dd>
 </dl>
@@ -3272,7 +3457,7 @@ client.applications.list(
 <dl>
 <dd>
 
-**workspace_id:** `typing.Optional[str]` — Workspace id of the application (comma separated for multiple)
+**workspace_id:** `typing.Optional[str]` — Workspace IDs to filter by (comma-separated)
     
 </dd>
 </dl>
@@ -3280,7 +3465,7 @@ client.applications.list(
 <dl>
 <dd>
 
-**application_name:** `typing.Optional[str]` — Name of application
+**application_name:** `typing.Optional[str]` — Exact application name to filter by. Takes precedence over nameSearchQuery if both are provided.
     
 </dd>
 </dl>
@@ -3288,7 +3473,7 @@ client.applications.list(
 <dl>
 <dd>
 
-**fqn:** `typing.Optional[str]` — Fully qualified name (FQN) of the application
+**fqn:** `typing.Optional[str]` — FQN of the application to filter by.
     
 </dd>
 </dl>
@@ -3296,7 +3481,7 @@ client.applications.list(
 <dl>
 <dd>
 
-**workspace_fqn:** `typing.Optional[str]` — Fully qualified name (FQN) of the workspace
+**workspace_fqn:** `typing.Optional[str]` — FQN of the workspace to filter by.
     
 </dd>
 </dl>
@@ -3304,7 +3489,7 @@ client.applications.list(
 <dl>
 <dd>
 
-**application_type:** `typing.Optional[str]` — Type of application (comma separated for multiple). Allowed Values: async-service, service, job, spark-job, helm, notebook, spark-notebook, codeserver, rstudio, ssh-server, volume, application, application-set, intercept, workflow
+**application_type:** `typing.Optional[ApplicationsListRequestApplicationType]` — Application type to filter by (comma-separated).
     
 </dd>
 </dl>
@@ -3312,7 +3497,7 @@ client.applications.list(
 <dl>
 <dd>
 
-**name_search_query:** `typing.Optional[str]` — Search query for application name
+**name_search_query:** `typing.Optional[str]` — Substring search query for application name. Ignored if applicationName is also provided.
     
 </dd>
 </dl>
@@ -3320,7 +3505,7 @@ client.applications.list(
 <dl>
 <dd>
 
-**environment_id:** `typing.Optional[str]` — Filter by Environment ids of the application (comma separated for multiple)
+**environment_id:** `typing.Optional[str]` — Environment IDs to filter by (comma-separated)
     
 </dd>
 </dl>
@@ -3328,7 +3513,7 @@ client.applications.list(
 <dl>
 <dd>
 
-**cluster_id:** `typing.Optional[str]` — Filter by Cluster ids of the application (comma separated for multiple)
+**cluster_id:** `typing.Optional[str]` — Cluster IDs to filter by (comma-separated)
     
 </dd>
 </dl>
@@ -3336,7 +3521,7 @@ client.applications.list(
 <dl>
 <dd>
 
-**application_set_id:** `typing.Optional[str]` — Filter by Application Set id of the application
+**application_set_id:** `typing.Optional[str]` — Application set ID to filter by
     
 </dd>
 </dl>
@@ -3344,7 +3529,7 @@ client.applications.list(
 <dl>
 <dd>
 
-**paused:** `typing.Optional[bool]` — Filter by Application Paused status
+**paused:** `typing.Optional[bool]` — Filter by explicit pause state (true = paused, false = not paused). Does not account for autoshutdown.
     
 </dd>
 </dl>
@@ -3352,7 +3537,7 @@ client.applications.list(
 <dl>
 <dd>
 
-**device_type_filter:** `typing.Optional[ApplicationsListRequestDeviceTypeFilter]` — Filter by device type of the application. Allowed values: cpu, nvidia_gpu, aws_inferentia, nvidia_mig_gpu, nvidia_timeslicing_gpu, gcp_tpu
+**device_type_filter:** `typing.Optional[ApplicationsListRequestDeviceTypeFilter]` — Device type to filter by (comma-separated).
     
 </dd>
 </dl>
@@ -3360,7 +3545,7 @@ client.applications.list(
 <dl>
 <dd>
 
-**last_deployed_by_subjects:** `typing.Optional[str]` — Filter by last deployed by specific users
+**last_deployed_by_subjects:** `typing.Optional[str]` — Subject slugs of last deployers to filter by (comma-separated). Email for users (e.g. user@example.com), name for virtual accounts.
     
 </dd>
 </dl>
@@ -3368,7 +3553,7 @@ client.applications.list(
 <dl>
 <dd>
 
-**lifecycle_stage:** `typing.Optional[ApplicationsListRequestLifecycleStage]` — Filter by application lifecycle state
+**lifecycle_stage:** `typing.Optional[ApplicationsListRequestLifecycleStage]` — Application lifecycle stage to filter by
     
 </dd>
 </dl>
@@ -3376,7 +3561,7 @@ client.applications.list(
 <dl>
 <dd>
 
-**is_recommendation_present_and_visible:** `typing.Optional[bool]` — Filter out applications with recommendations that are allowed to be shown
+**is_recommendation_present_and_visible:** `typing.Optional[bool]` — Whether the application has visible recommendations
     
 </dd>
 </dl>
@@ -3408,7 +3593,7 @@ client.applications.list(
 <dl>
 <dd>
 
-Create a new Application Deployment based on the provided manifest.
+Deploy an application from a manifest. Create the application if it does not exist, otherwise create a new deployment version. Return the resulting deployment.
 </dd>
 </dl>
 </dd>
@@ -3538,7 +3723,7 @@ client.applications.create_or_update(
 <dl>
 <dd>
 
-Get Application associated with the provided application ID.
+Get a single application by its ID.
 </dd>
 </dl>
 </dd>
@@ -3578,7 +3763,7 @@ client.applications.get(
 <dl>
 <dd>
 
-**id:** `str` — Id of the application
+**id:** `str` — Unique identifier of the application
     
 </dd>
 </dl>
@@ -3610,7 +3795,7 @@ client.applications.get(
 <dl>
 <dd>
 
-Delete Application associated with the provided application ID.
+Permanently delete an application. This action cannot be undone.
 </dd>
 </dl>
 </dd>
@@ -3650,7 +3835,7 @@ client.applications.delete(
 <dl>
 <dd>
 
-**id:** `str` — Id of the application
+**id:** `str` — Unique identifier of the application
     
 </dd>
 </dl>
@@ -3682,7 +3867,7 @@ client.applications.delete(
 <dl>
 <dd>
 
-Creates a new deployment with the same manifest as the given deployment.
+Redeploy an application by creating a new deployment version using the same manifest as the specified deployment.
 </dd>
 </dl>
 </dd>
@@ -3723,7 +3908,7 @@ client.applications.redeploy(
 <dl>
 <dd>
 
-**id:** `str` — Application id of the application
+**id:** `str` — Unique identifier of the application
     
 </dd>
 </dl>
@@ -3731,7 +3916,7 @@ client.applications.redeploy(
 <dl>
 <dd>
 
-**deployment_id:** `str` — Deployment id of the deployment
+**deployment_id:** `str` — Unique identifier of the deployment
     
 </dd>
 </dl>
@@ -3763,7 +3948,7 @@ client.applications.redeploy(
 <dl>
 <dd>
 
-Pause a running application by scaling to 0 replicas
+Pause a running application.
 </dd>
 </dl>
 </dd>
@@ -3803,7 +3988,7 @@ client.applications.scale_to_zero(
 <dl>
 <dd>
 
-**id:** `str` — Id of the application
+**id:** `str` — Unique identifier of the application
     
 </dd>
 </dl>
@@ -3835,7 +4020,7 @@ client.applications.scale_to_zero(
 <dl>
 <dd>
 
-Resume a paused application by scaling back to the original number of replicas
+Resume a paused application.
 </dd>
 </dl>
 </dd>
@@ -3875,7 +4060,7 @@ client.applications.scale_to_original(
 <dl>
 <dd>
 
-**id:** `str` — Id of the application
+**id:** `str` — Unique identifier of the application
     
 </dd>
 </dl>
@@ -3907,7 +4092,7 @@ client.applications.scale_to_original(
 <dl>
 <dd>
 
-Cancel an ongoing deployment associated with the provided application ID and deployment ID.
+Cancel an in-progress deployment.
 </dd>
 </dl>
 </dd>
@@ -3948,7 +4133,7 @@ client.applications.cancel_deployment(
 <dl>
 <dd>
 
-**id:** `str` — Application id of the application
+**id:** `str` — Unique identifier of the application
     
 </dd>
 </dl>
@@ -3956,7 +4141,7 @@ client.applications.cancel_deployment(
 <dl>
 <dd>
 
-**deployment_id:** `str` — Deployment id of the deployment
+**deployment_id:** `str` — Unique identifier of the deployment
     
 </dd>
 </dl>
@@ -3989,7 +4174,7 @@ client.applications.cancel_deployment(
 <dl>
 <dd>
 
-Fetch all deployments for a given application ID with optional filters such as deployment ID or version. Supports pagination.
+List deployments for a given application. Each deployment is a new version of the application.
 </dd>
 </dl>
 </dd>
@@ -4033,7 +4218,7 @@ client.application_versions.list(
 <dl>
 <dd>
 
-**id:** `str` — Id of the application
+**id:** `str` — Unique identifier of the application
     
 </dd>
 </dl>
@@ -4057,7 +4242,7 @@ client.application_versions.list(
 <dl>
 <dd>
 
-**version:** `typing.Optional[str]` — Deployment version. Filter deployments by version.
+**version:** `typing.Optional[str]` — Deployment version to filter by
     
 </dd>
 </dl>
@@ -4065,7 +4250,7 @@ client.application_versions.list(
 <dl>
 <dd>
 
-**deployment_id:** `typing.Optional[str]` — Deployment ID. Filter deployments by a specific ID.
+**deployment_id:** `typing.Optional[str]` — Deployment ID to filter by
     
 </dd>
 </dl>
@@ -4097,7 +4282,7 @@ client.application_versions.list(
 <dl>
 <dd>
 
-Get Deployment associated with the provided application ID and deployment ID.
+Get a single deployment by application ID and deployment ID.
 </dd>
 </dl>
 </dd>
@@ -4138,7 +4323,7 @@ client.application_versions.get(
 <dl>
 <dd>
 
-**id:** `str` — Application id of the application
+**id:** `str` — Unique identifier of the application
     
 </dd>
 </dl>
@@ -4146,7 +4331,7 @@ client.application_versions.get(
 <dl>
 <dd>
 
-**deployment_id:** `str` — Deployment id of the deployment
+**deployment_id:** `str` — Unique identifier of the deployment
     
 </dd>
 </dl>
@@ -4654,6 +4839,462 @@ client.jobs.terminate(
 </dl>
 </details>
 
+## Workspaces
+<details><summary><code>client.workspaces.<a href="src/truefoundry_sdk/workspaces/client.py">list</a>(...) -> ListWorkspacesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List workspaces the caller can read.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.workspaces.list(
+    limit=10,
+    offset=0,
+    cluster_id="jqfwg345gi25n5ju2yz5iz6m",
+    name="name",
+    fqn="fqn",
+    include_cluster=True,
+    attributes=[
+        "attributes"
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[int]` — Number of items per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**offset:** `typing.Optional[int]` — Number of items to skip
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cluster_id:** `typing.Optional[str]` — System-generated cluster ID to filter by.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — Filter workspaces by exact name match.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fqn:** `typing.Optional[str]` — Human-readable Fully Qualified Name to filter by.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_cluster:** `typing.Optional[bool]` — When true, each workspace in the response includes summary information about its cluster.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**attributes:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspaces.<a href="src/truefoundry_sdk/workspaces/client.py">create_or_update</a>(...) -> GetWorkspaceResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new workspace or update an existing one using the provided WorkspaceManifest. Matching is by name and cluster — if both match an existing workspace it is updated, otherwise a new one is created.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry, WorkspaceManifest
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.workspaces.create_or_update(
+    manifest=WorkspaceManifest(
+        type="workspace",
+        cluster_fqn="cluster_fqn",
+        name="name",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**manifest:** `WorkspaceManifest` — Workspace manifest
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dry_run:** `typing.Optional[bool]` — When true, validates the request without persisting changes.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspaces.<a href="src/truefoundry_sdk/workspaces/client.py">search</a>(...) -> ListWorkspacesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Search workspaces using a structured filter expression. Return a paginated list of workspaces matching the filter criteria.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.workspaces.search(
+    limit=10,
+    offset=0,
+    filter="[{\"type\":\"name\",\"operator\":\"STRING_CONTAINS\",\"value\":\"prod\"}]",
+    include_cluster=True,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[int]` — Number of items per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**offset:** `typing.Optional[int]` — Number of items to skip
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filter:** `typing.Optional[str]` — JSON-encoded filter string for structured search. Supported fields: name, id, environmentId, cluster_fqn. Supported operators: STRING_CONTAINS, STRING_STARTS_WITH, STRING_ENDS_WITH, EQUAL, IN, NOT_IN, IS_NULL.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_cluster:** `typing.Optional[bool]` — When true, each workspace in the response includes summary information about its cluster.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspaces.<a href="src/truefoundry_sdk/workspaces/client.py">get</a>(...) -> GetWorkspaceResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a single workspace by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.workspaces.get(
+    id="jqfwg345gi25n5ju2yz5iz6m",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — System-generated workspace ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspaces.<a href="src/truefoundry_sdk/workspaces/client.py">delete</a>(...) -> DeleteWorkspaceResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Permanently delete the workspace with the given ID. This action is irreversible.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.workspaces.delete(
+    id="jqfwg345gi25n5ju2yz5iz6m",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — System-generated workspace ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Environments
 <details><summary><code>client.environments.<a href="src/truefoundry_sdk/environments/client.py">list</a>(...) -> ListEnvironmentsResponse</code></summary>
 <dl>
@@ -4667,7 +5308,7 @@ client.jobs.terminate(
 <dl>
 <dd>
 
-List environments, if no environments are found, default environments are created and returned. Pagination is available based on query parameters
+List environments the caller can read within the tenant.
 </dd>
 </dl>
 </dd>
@@ -4748,7 +5389,7 @@ client.environments.list(
 <dl>
 <dd>
 
-Creates a new Environment or updates an existing Environment.
+Create a new environment or update an existing one using the provided `EnvironmentManifest`. Matching is by `name` — if an environment with the same name exists it is updated, otherwise a new one is created.
 </dd>
 </dl>
 </dd>
@@ -4794,7 +5435,7 @@ client.environments.create_or_update(
 <dl>
 <dd>
 
-**manifest:** `EnvironmentManifest` — Environment Manifest
+**manifest:** `EnvironmentManifest` — Environment manifest. The environment is matched by `name` for upsert.
     
 </dd>
 </dl>
@@ -4802,7 +5443,7 @@ client.environments.create_or_update(
 <dl>
 <dd>
 
-**dry_run:** `typing.Optional[bool]` — Dry run
+**dry_run:** `typing.Optional[bool]` — When true, validates the manifest without persisting changes.
     
 </dd>
 </dl>
@@ -4834,7 +5475,7 @@ client.environments.create_or_update(
 <dl>
 <dd>
 
-Get Environment associated with the provided id.
+Get a single environment by its ID.
 </dd>
 </dl>
 </dd>
@@ -4857,7 +5498,7 @@ client = TrueFoundry(
 )
 
 client.environments.get(
-    id="id",
+    id="jqfwg345gi25n5ju2yz5iz6m",
 )
 
 ```
@@ -4874,7 +5515,7 @@ client.environments.get(
 <dl>
 <dd>
 
-**id:** `str` — Environment id
+**id:** `str` — System-generated environment ID.
     
 </dd>
 </dl>
@@ -4906,7 +5547,7 @@ client.environments.get(
 <dl>
 <dd>
 
-Delete Environment associated with the provided id.
+Permanently delete the environment with the given ID.
 </dd>
 </dl>
 </dd>
@@ -4929,7 +5570,7 @@ client = TrueFoundry(
 )
 
 client.environments.delete(
-    id="id",
+    id="jqfwg345gi25n5ju2yz5iz6m",
 )
 
 ```
@@ -4946,454 +5587,7 @@ client.environments.delete(
 <dl>
 <dd>
 
-**id:** `str` — Environment id
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Workspaces
-<details><summary><code>client.workspaces.<a href="src/truefoundry_sdk/workspaces/client.py">list</a>(...) -> ListWorkspacesResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List workspaces associated with the user. Optional filters include clusterId, fqn, and workspace name.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.workspaces.list(
-    limit=10,
-    offset=0,
-    cluster_id="clusterId",
-    name="name",
-    fqn="fqn",
-    include_cluster=True,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**limit:** `typing.Optional[int]` — Number of items per page
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**offset:** `typing.Optional[int]` — Number of items to skip
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**cluster_id:** `typing.Optional[str]` — ClusterId of the Cluster
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `typing.Optional[str]` — Workspace Name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**fqn:** `typing.Optional[str]` — Workspace FQN
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**include_cluster:** `typing.Optional[bool]` — When true, each workspace includes cluster information
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workspaces.<a href="src/truefoundry_sdk/workspaces/client.py">create_or_update</a>(...) -> GetWorkspaceResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Creates a new workspace or updates an existing one based on the provided manifest.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry, WorkspaceManifest
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.workspaces.create_or_update(
-    manifest=WorkspaceManifest(
-        type="workspace",
-        cluster_fqn="cluster_fqn",
-        name="name",
-    ),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**manifest:** `WorkspaceManifest` — Workspace manifest
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**dry_run:** `typing.Optional[bool]` — Dry run the request
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workspaces.<a href="src/truefoundry_sdk/workspaces/client.py">search</a>(...) -> ListWorkspacesResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List workspaces the user can read with optional structured `filter` (name, id, environmentId, cluster_fqn) and pagination.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.workspaces.search(
-    limit=10,
-    offset=0,
-    filter="filter",
-    include_cluster=True,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**limit:** `typing.Optional[int]` — Number of items per page
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**offset:** `typing.Optional[int]` — Number of items to skip
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**filter:** `typing.Optional[str]` — JSON string containing array of search filters with string, type and operator
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**include_cluster:** `typing.Optional[bool]` — When true, each workspace includes cluster information
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workspaces.<a href="src/truefoundry_sdk/workspaces/client.py">get</a>(...) -> GetWorkspaceResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get workspace associated with provided workspace id
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.workspaces.get(
-    id="id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `str` — Workspace id of the space
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workspaces.<a href="src/truefoundry_sdk/workspaces/client.py">delete</a>(...) -> WorkspacesDeleteResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Deletes the workspace with the given workspace ID.
-    - Removes the associated namespace from the cluster.
-    - Deletes the corresponding authorization entry.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.workspaces.delete(
-    id="id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `str` — Workspace id of the space
+**id:** `str` — System-generated environment ID.
     
 </dd>
 </dl>
@@ -5426,7 +5620,7 @@ client.workspaces.delete(
 <dl>
 <dd>
 
-List secrets associated with a user filtered with optional parameters passed in the body.
+List secrets the caller has access to.
 </dd>
 </dl>
 </dd>
@@ -5480,7 +5674,7 @@ client.secrets.list()
 <dl>
 <dd>
 
-**secret_fqns:** `typing.Optional[typing.List[str]]` — Array of FQNs
+**secret_fqns:** `typing.Optional[typing.List[str]]` — Filter by secret FQNs.
     
 </dd>
 </dl>
@@ -5488,7 +5682,7 @@ client.secrets.list()
 <dl>
 <dd>
 
-**secret_group_id:** `typing.Optional[str]` — Secret Group Id of the secret gourp.
+**secret_group_id:** `typing.Optional[str]` — Filter by secret group ID.
     
 </dd>
 </dl>
@@ -5528,7 +5722,7 @@ client.secrets.list()
 <dl>
 <dd>
 
-Get Secret associated with provided id. The secret value is not returned if the control plane has `DISABLE_SECRET_VALUE_VIEW` set
+Get the secret with the specified ID. The secret value is omitted if value viewing is disabled on the control plane.
 </dd>
 </dl>
 </dd>
@@ -5568,7 +5762,7 @@ client.secrets.get(
 <dl>
 <dd>
 
-**id:** `str` — Secret Id of the secret.
+**id:** `str` — Unique identifier of the secret.
     
 </dd>
 </dl>
@@ -5600,7 +5794,7 @@ client.secrets.get(
 <dl>
 <dd>
 
-Deletes a secret and its versions along with its values.
+Delete the secret and all its versions permanently.
 </dd>
 </dl>
 </dd>
@@ -5641,7 +5835,7 @@ client.secrets.delete(
 <dl>
 <dd>
 
-**id:** `str` — Secret Id of the secret.
+**id:** `str` — Unique identifier of the secret.
     
 </dd>
 </dl>
@@ -5682,7 +5876,7 @@ client.secrets.delete(
 <dl>
 <dd>
 
-List the secret groups associated with a user along with the associated secrets for each group. Filtered with the options passed in the query fields. Note: This method does not return the secret values of the <em>associatedSecrets</em> in the response. A separate API call to `/v1/secrets/{id}` should be made to fetch the associated secret value.
+List secret groups the caller has access to, along with associated secrets for each group. Secret values are not included in the response.
 </dd>
 </dl>
 </dd>
@@ -5709,6 +5903,9 @@ client.secret_groups.list(
     offset=0,
     fqn="fqn",
     search="search",
+    attributes=[
+        "attributes"
+    ],
 )
 
 ```
@@ -5757,6 +5954,14 @@ client.secret_groups.list(
 <dl>
 <dd>
 
+**attributes:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -5781,7 +5986,7 @@ client.secret_groups.list(
 <dl>
 <dd>
 
-Creates a secret group with secrets in it. A secret version for each of the created secret is created with version number as 1. The returned secret group does not have any secret values in the <em>associatedSecrets</em> field. A separate API call to `/v1/secrets/{id}` should be made to fetch the associated secret value.
+Create a secret group with initial secrets.
 </dd>
 </dl>
 </dd>
@@ -5876,7 +6081,7 @@ client.secret_groups.create(
 <dl>
 <dd>
 
-Creates a new secret group or updates an existing one based on the provided manifest.
+Create a new secret group or update an existing one using the provided manifest. Matching is by name.
 </dd>
 </dl>
 </dd>
@@ -5966,7 +6171,7 @@ client.secret_groups.create_or_update(
 <dl>
 <dd>
 
-Get Secret Group by id. This method does not return the secret values of the <em>associatedSecrets</em> in the response. A separate API call to `/v1/secrets/{id}` should be made to fetch the associated secret value.
+Get a secret group by ID.
 </dd>
 </dl>
 </dd>
@@ -6006,7 +6211,7 @@ client.secret_groups.get(
 <dl>
 <dd>
 
-**id:** `str` — Secret Id of the secret group.
+**id:** `str` — Unique identifier of the secret group.
     
 </dd>
 </dl>
@@ -6038,7 +6243,7 @@ client.secret_groups.get(
 <dl>
 <dd>
 
-Updates the secrets in a secret group with new values. A new secret version is created for every secret that has a modified value and any omitted secrets are deleted. The returned updated secret group does not have any secret values in the <em>associatedSecrets</em> field. A separate API call to `/v1/secrets/{id}` should be made to fetch the associated secret value.
+Update secrets in a secret group. A new version is created for each secret with a modified value. Omitted secrets are deleted. Secret values are not returned in the response.
 </dd>
 </dl>
 </dd>
@@ -6083,7 +6288,7 @@ client.secret_groups.update(
 <dl>
 <dd>
 
-**id:** `str` — Secret Id of the secret group.
+**id:** `str` — Unique identifier of the secret group.
     
 </dd>
 </dl>
@@ -6123,7 +6328,7 @@ client.secret_groups.update(
 <dl>
 <dd>
 
-Deletes the secret group, its associated secrets and secret versions of those secrets.
+Delete the secret group and all its associated secrets and secret versions permanently.
 </dd>
 </dl>
 </dd>
@@ -6147,6 +6352,7 @@ client = TrueFoundry(
 
 client.secret_groups.delete(
     id="id",
+    force_delete=True,
 )
 
 ```
@@ -6163,7 +6369,15 @@ client.secret_groups.delete(
 <dl>
 <dd>
 
-**id:** `str` — Secret Id of the secret group.
+**id:** `str` — Unique identifier of the secret group.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force_delete:** `typing.Optional[bool]` — Whether to force delete the secret group even when the associated secret integration is faulty or unavailable.
     
 </dd>
 </dl>
@@ -6196,7 +6410,7 @@ client.secret_groups.delete(
 <dl>
 <dd>
 
-Get Events for Pod, Job Run, Application. The events are sourced from Kubernetes as well as events captured by truefoundry. Optional query parameters include startTs, endTs for filtering.
+Get events for an application, filtered by pod names, job run, or time range.
 </dd>
 </dl>
 </dd>
@@ -6243,7 +6457,7 @@ client.events.get(
 <dl>
 <dd>
 
-**start_ts:** `typing.Optional[str]` — Start timestamp (ISO format) for querying events
+**start_ts:** `typing.Optional[str]` — Start timestamp for filtering events (ISO 8601 format, UTC). Defaults to 24 hours before endTs. Must be less than or equal to endTs.
     
 </dd>
 </dl>
@@ -6251,7 +6465,7 @@ client.events.get(
 <dl>
 <dd>
 
-**end_ts:** `typing.Optional[str]` — End timestamp (ISO format) for querying events
+**end_ts:** `typing.Optional[str]` — End timestamp for filtering events (ISO 8601 format, UTC). Defaults to current time. Must be greater than or equal to startTs.
     
 </dd>
 </dl>
@@ -6259,7 +6473,7 @@ client.events.get(
 <dl>
 <dd>
 
-**application_id:** `typing.Optional[str]` — Application ID
+**application_id:** `typing.Optional[str]` — Unique identifier of the application. Either applicationId or applicationFqn must be provided.
     
 </dd>
 </dl>
@@ -6267,7 +6481,7 @@ client.events.get(
 <dl>
 <dd>
 
-**application_fqn:** `typing.Optional[str]` — Application FQN
+**application_fqn:** `typing.Optional[str]` — Fully qualified name of the application. Either applicationId or applicationFqn must be provided.
     
 </dd>
 </dl>
@@ -6275,7 +6489,7 @@ client.events.get(
 <dl>
 <dd>
 
-**pod_names:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Name of the pods
+**pod_names:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — List of Kubernetes pod names to filter events. Cannot be provided together with jobRunName.
     
 </dd>
 </dl>
@@ -6283,7 +6497,7 @@ client.events.get(
 <dl>
 <dd>
 
-**job_run_name:** `typing.Optional[str]` — Job run name
+**job_run_name:** `typing.Optional[str]` — Name of the TrueFoundry job run. Cannot be provided together with podNames.
     
 </dd>
 </dl>
@@ -6360,7 +6574,7 @@ client.alerts.list(
 <dl>
 <dd>
 
-**start_ts:** `typing.Optional[str]` — Start timestamp (ISO format) for querying events
+**start_ts:** `typing.Optional[str]` — Start timestamp for filtering alerts (ISO 8601 format, UTC). Must be before endTs.
     
 </dd>
 </dl>
@@ -6368,7 +6582,7 @@ client.alerts.list(
 <dl>
 <dd>
 
-**end_ts:** `typing.Optional[str]` — End timestamp (ISO format) for querying events
+**end_ts:** `typing.Optional[str]` — End timestamp for filtering alerts (ISO 8601 format, UTC). Must be after startTs.
     
 </dd>
 </dl>
@@ -6376,7 +6590,7 @@ client.alerts.list(
 <dl>
 <dd>
 
-**cluster_id:** `typing.Optional[str]` — Cluster id
+**cluster_id:** `typing.Optional[str]` — Unique identifier of the cluster.
     
 </dd>
 </dl>
@@ -6384,7 +6598,7 @@ client.alerts.list(
 <dl>
 <dd>
 
-**application_id:** `typing.Optional[str]` — Application id
+**application_id:** `typing.Optional[str]` — Unique identifier of the application.
     
 </dd>
 </dl>
@@ -6392,226 +6606,7 @@ client.alerts.list(
 <dl>
 <dd>
 
-**alert_status:** `typing.Optional[AlertStatus]` — Alert status
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Logs
-<details><summary><code>client.logs.<a href="src/truefoundry_sdk/logs/client.py">get</a>(...) -> GetLogsResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Fetch logs for various workload components, including Services, Jobs, Workflows, Job Runs, and Pods. Logs are filtered based on the provided query parameters.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry, LogsSortingDirection, LogsSearchFilterType, LogsSearchOperatorType
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.logs.get(
-    start_ts=1000000,
-    end_ts=1000000,
-    limit=1,
-    direction=LogsSortingDirection.ASC,
-    num_logs_to_ignore=1,
-    application_id="applicationId",
-    application_fqn="applicationFqn",
-    deployment_id="deploymentId",
-    job_run_name="jobRunName",
-    pod_name="podName",
-    container_name="containerName",
-    pod_names=[
-        "podNames"
-    ],
-    pod_names_regex="podNamesRegex",
-    search_filters="searchFilters",
-    search_string="searchString",
-    search_type=LogsSearchFilterType.REGEX,
-    search_operator=LogsSearchOperatorType.EQUAL,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**start_ts:** `typing.Optional[int]` — Start timestamp for querying logs, in nanoseconds from the Unix epoch.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**end_ts:** `typing.Optional[int]` — End timestamp for querying logs, in nanoseconds from the Unix epoch.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**limit:** `typing.Optional[int]` — Max number of log lines to fetch
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**direction:** `typing.Optional[LogsSortingDirection]` — Direction of sorting logs. Can be `asc` or `desc`
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**num_logs_to_ignore:** `typing.Optional[int]` — Number of logs corresponding to the starting timestamp to be ignored.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**application_id:** `typing.Optional[str]` — Application ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**application_fqn:** `typing.Optional[str]` — Application FQN
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**deployment_id:** `typing.Optional[str]` — Deployment ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**job_run_name:** `typing.Optional[str]` — Name of the Job Run for which to fetch logs.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**pod_name:** `typing.Optional[str]` — Name of Pod for which to fetch logs.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**container_name:** `typing.Optional[str]` — Name of the Container for which to fetch logs.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**pod_names:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — List of pod names for which to fetch logs.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**pod_names_regex:** `typing.Optional[str]` — Regex pattern for pod names to fetch logs.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**search_filters:** `typing.Optional[str]` — JSON string containing array of search filters with string, type and operator
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**search_string:** `typing.Optional[str]` — String that needs to be matched
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**search_type:** `typing.Optional[LogsSearchFilterType]` — Query filter type, `regex` `substring` `ignore_case_substring`
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**search_operator:** `typing.Optional[LogsSearchOperatorType]` — Comparison operator for filter. `equal` or `not_equal`
+**alert_status:** `typing.Optional[AlertStatus]` — Filter by alert status.
     
 </dd>
 </dl>
@@ -6937,6 +6932,225 @@ client.ml_repos.list(
 <dd>
 
 **offset:** `typing.Optional[int]` — Number of ML Repos to skip for pagination
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Logs
+<details><summary><code>client.logs.<a href="src/truefoundry_sdk/logs/client.py">get</a>(...) -> GetLogsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get runtime logs (stdout/stderr) emitted by the pods of a deployed application.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry, LogsSortingDirection, LogsSearchFilterType, LogsSearchOperatorType
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.logs.get(
+    start_ts="1779262323000000000",
+    end_ts="1779348723000000000",
+    limit=1,
+    direction=LogsSortingDirection.ASC,
+    num_logs_to_ignore=1,
+    application_id="applicationId",
+    application_fqn="applicationFqn",
+    deployment_id="deploymentId",
+    job_run_name="jobRunName",
+    pod_name="podName",
+    container_name="containerName",
+    pod_names=[
+        "podNames"
+    ],
+    pod_names_regex="podNamesRegex",
+    search_filters="[{\"string\":\"error\",\"type\":\"substring\",\"operator\":\"equal\"}]",
+    search_string="searchString",
+    search_type=LogsSearchFilterType.REGEX,
+    search_operator=LogsSearchOperatorType.EQUAL,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**start_ts:** `typing.Optional[str]` — Start timestamp for querying logs, in nanoseconds from the Unix epoch.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end_ts:** `typing.Optional[str]` — End timestamp for querying logs, in nanoseconds from the Unix epoch.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[int]` — Maximum number of log lines to fetch.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**direction:** `typing.Optional[LogsSortingDirection]` — Direction of sorting logs by timestamp.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_logs_to_ignore:** `typing.Optional[int]` — Number of log lines at the start timestamp to skip.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**application_id:** `typing.Optional[str]` — Unique identifier of the application. Either applicationId or applicationFqn must be provided.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**application_fqn:** `typing.Optional[str]` — FQN of the application. Either applicationId or applicationFqn must be provided.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**deployment_id:** `typing.Optional[str]` — Unique identifier of the deployment.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**job_run_name:** `typing.Optional[str]` — Name of the job run whose logs to fetch.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pod_name:** `typing.Optional[str]` — Name of a single pod whose logs to fetch. Cannot be used together with podNames or podNamesRegex.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**container_name:** `typing.Optional[str]` — Name of the container whose logs to fetch.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pod_names:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — List of pod names whose logs to fetch. Cannot be used together with podName or podNamesRegex.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pod_names_regex:** `typing.Optional[str]` — Regex pattern matching pod names whose logs to fetch. Cannot be used together with podName or podNames.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search_filters:** `typing.Optional[str]` — JSON-encoded array of search filters; each item is `{ string, type, operator }`. Takes precedence over `searchString` when provided.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search_string:** `typing.Optional[str]` — Substring or regex to match against log content. Used when `searchFilters` is not provided.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search_type:** `typing.Optional[LogsSearchFilterType]` — How `searchString` should be matched against log content.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search_operator:** `typing.Optional[LogsSearchOperatorType]` — Comparison operator applied to the `searchString` match.
     
 </dd>
 </dl>
@@ -9744,7 +9958,7 @@ client.prompt_versions.list(
 <dl>
 <dd>
 
-Get an agent skill artifact by its ID.
+Get an agent skill by its ID.
 </dd>
 </dl>
 </dd>
@@ -9816,7 +10030,7 @@ client.agent_skills.get(
 <dl>
 <dd>
 
-Delete an agent skill artifact by its ID.
+Delete an agent skill by its ID.
 </dd>
 </dl>
 </dd>
@@ -9888,7 +10102,7 @@ client.agent_skills.delete(
 <dl>
 <dd>
 
-List agent skills with optional filtering by FQN, ML Repo, or name. When present, `latest_version.manifest.source` is `blob-storage` with `description` only; use GET agent skill version for full SKILL.md (inline `source` with `skill_md`).
+List agent skills with optional filtering by FQN, ML Repo, or name.
 </dd>
 </dl>
 </dd>
@@ -10005,7 +10219,7 @@ client.agent_skills.list(
 <dl>
 <dd>
 
-Create or update an agent skill version from a manifest.
+Create or update an agent skill version.
 </dd>
 </dl>
 </dd>
@@ -10081,6 +10295,20 @@ client.agent_skills.create_or_update(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get an agent skill version by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -10138,6 +10366,20 @@ client.agent_skill_versions.get(
 <details><summary><code>client.agent_skill_versions.<a href="src/truefoundry_sdk/agent_skill_versions/client.py">delete</a>(...) -> EmptyResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete an agent skill version by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -10205,7 +10447,7 @@ client.agent_skill_versions.delete(
 <dl>
 <dd>
 
-List agent skill versions. Each manifest has `source.type` `blob-storage` and `description` only; use GET for full SKILL.md content.
+List agent skill versions with optional filtering by FQN, agent skill ID, ML Repo, name, or version.
 </dd>
 </dl>
 </dd>
@@ -10968,143 +11210,6 @@ client.data_directories.create_multipart_upload(
 </dl>
 </details>
 
-## Internal Users
-<details><summary><code>client.internal.users.<a href="src/truefoundry_sdk/internal/users/client.py">get_info</a>() -> Session</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get the user session details for the currently authenticated user
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.internal.users.get_info()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Internal AiGateway
-<details><summary><code>client.internal.ai_gateway.<a href="src/truefoundry_sdk/internal/ai_gateway/client.py">get_gateway_config</a>(...) -> GatewayConfiguration</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get Gateway configuration based on type for the tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk.internal.ai_gateway import AiGatewayGetGatewayConfigRequestType
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.internal.ai_gateway.get_gateway_config(
-    type=AiGatewayGetGatewayConfigRequestType.GATEWAY_RATE_LIMITING_CONFIG,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**type:** `AiGatewayGetGatewayConfigRequestType` — Type of Config
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## Internal Clusters
 <details><summary><code>client.internal.clusters.<a href="src/truefoundry_sdk/internal/clusters/client.py">get_autoprovisioning_state</a>(...) -> GetAutoProvisioningStateResponse</code></summary>
 <dl>
@@ -11118,7 +11223,7 @@ client.internal.ai_gateway.get_gateway_config(
 <dl>
 <dd>
 
-Get the auto provisioning status for the provided cluster
+Get the auto-provisioning status for the specified cluster.
 </dd>
 </dl>
 </dd>
@@ -11158,7 +11263,7 @@ client.internal.clusters.get_autoprovisioning_state(
 <dl>
 <dd>
 
-**id:** `str` — Cluster id of the cluster
+**id:** `str` — Unique identifier of the cluster.
     
 </dd>
 </dl>
@@ -11191,7 +11296,7 @@ client.internal.clusters.get_autoprovisioning_state(
 <dl>
 <dd>
 
-This endpoint returns all statuses for a specific deployment in a given application.
+Get all statuses for a specific deployment of an application.
 </dd>
 </dl>
 </dd>
@@ -11232,7 +11337,7 @@ client.internal.deployments.get_deployment_statuses(
 <dl>
 <dd>
 
-**id:** `str` — Application id of the application
+**id:** `str` — Unique identifier of the application
     
 </dd>
 </dl>
@@ -11240,7 +11345,7 @@ client.internal.deployments.get_deployment_statuses(
 <dl>
 <dd>
 
-**deployment_id:** `str` — Deployment id of the deployment
+**deployment_id:** `str` — Unique identifier of the deployment
     
 </dd>
 </dl>
@@ -11272,7 +11377,7 @@ client.internal.deployments.get_deployment_statuses(
 <dl>
 <dd>
 
-This endpoint returns all build details associated with a specific deployment in a given application.
+Get all builds associated with a specific deployment of an application.
 </dd>
 </dl>
 </dd>
@@ -11313,7 +11418,7 @@ client.internal.deployments.get_builds(
 <dl>
 <dd>
 
-**id:** `str` — Application id of the application
+**id:** `str` — Unique identifier of the application
     
 </dd>
 </dl>
@@ -11321,7 +11426,7 @@ client.internal.deployments.get_builds(
 <dl>
 <dd>
 
-**deployment_id:** `str` — Deployment id of the deployment
+**deployment_id:** `str` — Unique identifier of the deployment
     
 </dd>
 </dl>
@@ -11593,7 +11698,7 @@ client.internal.applications.promote_rollout(
 <dl>
 <dd>
 
-**id:** `str` — Id of the application
+**id:** `str` — Unique identifier of the application
     
 </dd>
 </dl>
@@ -11601,7 +11706,7 @@ client.internal.applications.promote_rollout(
 <dl>
 <dd>
 
-**full:** `typing.Optional[bool]` — Whether to promote a rollout to full
+**full:** `typing.Optional[bool]` — Whether to promote the rollout to full traffic
     
 </dd>
 </dl>
@@ -11633,7 +11738,7 @@ client.internal.applications.promote_rollout(
 <dl>
 <dd>
 
-This endpoint fetches the pod template hash to deployment version map for a specific application.
+Get the pod template hash to deployment version map for a specific application.
 </dd>
 </dl>
 </dd>
@@ -11674,7 +11779,7 @@ client.internal.applications.get_pod_template_hash_to_deployment_version(
 <dl>
 <dd>
 
-**id:** `str` — Id of the application
+**id:** `str` — Unique identifier of the application
     
 </dd>
 </dl>
@@ -11682,7 +11787,7 @@ client.internal.applications.get_pod_template_hash_to_deployment_version(
 <dl>
 <dd>
 
-**pod_template_hashes:** `typing.Optional[str]` — Pod Template Hashes (comma separated for multiple)
+**pod_template_hashes:** `typing.Optional[str]` — Pod template hashes to filter by (comma-separated)
     
 </dd>
 </dl>
@@ -11715,7 +11820,7 @@ client.internal.applications.get_pod_template_hash_to_deployment_version(
 <dl>
 <dd>
 
-List charts for a given Application based on parameters passed in the query.
+List metric charts available for an application.
 </dd>
 </dl>
 </dd>
@@ -11744,7 +11849,7 @@ client.internal.metrics.get_charts(
     start_ts="startTs",
     end_ts="endTs",
     filter_entity=MetricsGetChartsRequestFilterEntity.APPLICATION,
-    filter_query="filterQuery",
+    filter_query="{\"pod\":\"my-app-abc123-xyz\"}",
 )
 
 ```
@@ -11769,7 +11874,7 @@ client.internal.metrics.get_charts(
 <dl>
 <dd>
 
-**application_id:** `str` 
+**application_id:** `str` — Unique identifier of the application.
     
 </dd>
 </dl>
@@ -11777,7 +11882,7 @@ client.internal.metrics.get_charts(
 <dl>
 <dd>
 
-**filter_entity:** `MetricsGetChartsRequestFilterEntity` 
+**filter_entity:** `MetricsGetChartsRequestFilterEntity` — Scope of the chart bundle to return.
     
 </dd>
 </dl>
@@ -11785,7 +11890,7 @@ client.internal.metrics.get_charts(
 <dl>
 <dd>
 
-**start_ts:** `typing.Optional[str]` — Start Timestamp
+**start_ts:** `typing.Optional[str]` — Start timestamp in milliseconds since epoch. Defaults to the application's last deployment creation time.
     
 </dd>
 </dl>
@@ -11793,7 +11898,7 @@ client.internal.metrics.get_charts(
 <dl>
 <dd>
 
-**end_ts:** `typing.Optional[str]` — End Timestamp
+**end_ts:** `typing.Optional[str]` — End timestamp in milliseconds since epoch. Defaults to the current time.
     
 </dd>
 </dl>
@@ -11801,7 +11906,7 @@ client.internal.metrics.get_charts(
 <dl>
 <dd>
 
-**filter_query:** `typing.Optional[str]` — Query params to filter metrics
+**filter_query:** `typing.Optional[str]` — JSON-encoded filter required by certain scopes.
     
 </dd>
 </dl>
@@ -12220,7 +12325,7 @@ client.internal.workflows.execute_workflow(
 <dl>
 <dd>
 
-Get logs for a given pipeline run by its name, with optional filters and time range.
+Get logs emitted by the image build and deploy pipeline for a specific build of an application.
 </dd>
 </dl>
 </dd>
@@ -12248,6 +12353,7 @@ client.internal.build_logs.get(
     end_ts="1635467891123456789",
     limit="limit",
     direction="direction",
+    filter_query="{\"matchString\":\"error\",\"type\":\"substring\",\"operator\":\"equal\"}",
     num_logs_to_ignore=1.1,
 )
 
@@ -12305,7 +12411,7 @@ client.internal.build_logs.get(
 <dl>
 <dd>
 
-**filter_query:** `typing.Optional[LogsFilterQuery]` — Query to filter logs
+**filter_query:** `typing.Optional[str]` — JSON-encoded filter object with shape `{ matchString, type, operator }`. `type` is `regex` or `substring`; `operator` is `equal` or `not_equal`.
     
 </dd>
 </dl>
@@ -12361,7 +12467,7 @@ List artifact versions with internal metadata, optionally including model versio
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
+from truefoundry_sdk import TrueFoundry, ArtifactType
 
 client = TrueFoundry(
     api_key="<token>",
@@ -12385,6 +12491,9 @@ client.internal.artifact_versions.list(
     limit=1,
     include_internal_metadata=True,
     include_model_versions=True,
+    artifact_types=[
+        ArtifactType.ARTIFACT
+    ],
 )
 
 ```
@@ -12497,6 +12606,14 @@ client.internal.artifact_versions.list(
 <dl>
 <dd>
 
+**artifact_types:** `typing.Optional[typing.Union[ArtifactType, typing.Sequence[ArtifactType]]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -12522,7 +12639,7 @@ client.internal.artifact_versions.list(
 <dl>
 <dd>
 
-Create or update an ML entity (model, prompt, artifact, or data directory).
+Create or update an ML entity (model, prompt, artifact, agent skill, or data directory).
 </dd>
 </dl>
 </dd>

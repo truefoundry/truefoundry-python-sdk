@@ -27,6 +27,8 @@ class RawAgentSkillVersionsClient:
         self, agent_skill_version_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetAgentSkillVersionResponse]:
         """
+        Get an agent skill version by its ID.
+
         Parameters
         ----------
         agent_skill_version_id : str
@@ -37,7 +39,7 @@ class RawAgentSkillVersionsClient:
         Returns
         -------
         HttpResponse[GetAgentSkillVersionResponse]
-            Successful Response
+            The agent skill version data
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/ml/v1/agent-skill-versions/{encode_path_param(agent_skill_version_id)}",
@@ -78,6 +80,8 @@ class RawAgentSkillVersionsClient:
         self, agent_skill_version_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[EmptyResponse]:
         """
+        Delete an agent skill version by its ID.
+
         Parameters
         ----------
         agent_skill_version_id : str
@@ -88,7 +92,7 @@ class RawAgentSkillVersionsClient:
         Returns
         -------
         HttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/ml/v1/agent-skill-versions/{encode_path_param(agent_skill_version_id)}",
@@ -138,7 +142,7 @@ class RawAgentSkillVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]:
         """
-        List agent skill versions. Each manifest has `source.type` `blob-storage` and `description` only; use GET for full SKILL.md content.
+        List agent skill versions with optional filtering by FQN, agent skill ID, ML Repo, name, or version.
 
         Parameters
         ----------
@@ -169,7 +173,7 @@ class RawAgentSkillVersionsClient:
         Returns
         -------
         SyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]
-            Successful Response
+            List of agent skill versions matching the query with pagination information
         """
         offset = offset if offset is not None else 0
 
@@ -238,6 +242,8 @@ class AsyncRawAgentSkillVersionsClient:
         self, agent_skill_version_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetAgentSkillVersionResponse]:
         """
+        Get an agent skill version by its ID.
+
         Parameters
         ----------
         agent_skill_version_id : str
@@ -248,7 +254,7 @@ class AsyncRawAgentSkillVersionsClient:
         Returns
         -------
         AsyncHttpResponse[GetAgentSkillVersionResponse]
-            Successful Response
+            The agent skill version data
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/ml/v1/agent-skill-versions/{encode_path_param(agent_skill_version_id)}",
@@ -289,6 +295,8 @@ class AsyncRawAgentSkillVersionsClient:
         self, agent_skill_version_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[EmptyResponse]:
         """
+        Delete an agent skill version by its ID.
+
         Parameters
         ----------
         agent_skill_version_id : str
@@ -299,7 +307,7 @@ class AsyncRawAgentSkillVersionsClient:
         Returns
         -------
         AsyncHttpResponse[EmptyResponse]
-            Successful Response
+            Empty response indicating successful deletion
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/ml/v1/agent-skill-versions/{encode_path_param(agent_skill_version_id)}",
@@ -349,7 +357,7 @@ class AsyncRawAgentSkillVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]:
         """
-        List agent skill versions. Each manifest has `source.type` `blob-storage` and `description` only; use GET for full SKILL.md content.
+        List agent skill versions with optional filtering by FQN, agent skill ID, ML Repo, name, or version.
 
         Parameters
         ----------
@@ -380,7 +388,7 @@ class AsyncRawAgentSkillVersionsClient:
         Returns
         -------
         AsyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]
-            Successful Response
+            List of agent skill versions matching the query with pagination information
         """
         offset = offset if offset is not None else 0
 

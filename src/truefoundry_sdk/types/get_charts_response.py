@@ -10,10 +10,13 @@ from .graph import Graph
 class GetChartsResponse(UniversalBaseModel):
     step: str = pydantic.Field()
     """
-    Step size
+    Prometheus duration string for the query step size applied to the returned charts.
     """
 
-    graphs: typing.List[Graph]
+    graphs: typing.List[Graph] = pydantic.Field()
+    """
+    List of available charts.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -7,7 +7,10 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class ApplicationMetadata(UniversalBaseModel):
-    paused: typing.Optional[bool] = None
+    paused: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Explicit pause state. true = user has paused the app (all pods removed). false = user has explicitly resumed the app. null/undefined = user has never toggled pause; the app is managed normally, but autoshutdown may have scaled it to zero pods due to inactivity.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

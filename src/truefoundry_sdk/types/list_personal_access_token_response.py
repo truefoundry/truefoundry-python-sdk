@@ -11,12 +11,12 @@ from .virtual_account import VirtualAccount
 class ListPersonalAccessTokenResponse(UniversalBaseModel):
     data: typing.List[VirtualAccount] = pydantic.Field()
     """
-    Array of Personal Access Tokens
+    Array of personal access tokens matching the query.
     """
 
     pagination: Pagination = pydantic.Field()
     """
-    Pagination Information
+    Pagination metadata.
     """
 
     if IS_PYDANTIC_V2:

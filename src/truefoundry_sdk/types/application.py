@@ -14,33 +14,78 @@ from .application_lifecycle_stage import ApplicationLifecycleStage
 from .application_metadata import ApplicationMetadata
 from .application_problem import ApplicationProblem
 from .application_type import ApplicationType
+from .deployment import Deployment
 from .recommendation import Recommendation
 from .subject import Subject
 
 
 class Application(UniversalBaseModel):
-    id: typing.Optional[str] = None
-    fqn: typing.Optional[str] = None
-    name: typing.Optional[str] = None
-    type: typing.Optional[ApplicationType] = None
+    id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Unique identifier of the application
+    """
+
+    fqn: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    FQN of the application
+    """
+
+    name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Human-readable application name
+    """
+
+    type: typing.Optional[ApplicationType] = pydantic.Field(default=None)
+    """
+    Type of the application
+    """
+
     created_by_subject: typing_extensions.Annotated[
-        Subject, FieldMetadata(alias="createdBySubject"), pydantic.Field(alias="createdBySubject")
+        Subject,
+        FieldMetadata(alias="createdBySubject"),
+        pydantic.Field(
+            alias="createdBySubject", description="Subject (user or service account) that created this application"
+        ),
     ]
     tenant_name: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="tenantName"), pydantic.Field(alias="tenantName")
+        typing.Optional[str],
+        FieldMetadata(alias="tenantName"),
+        pydantic.Field(alias="tenantName", description="Tenant this application belongs to"),
     ] = None
-    metadata: typing.Optional[ApplicationMetadata] = None
+    metadata: typing.Optional[ApplicationMetadata] = pydantic.Field(default=None)
+    """
+    Application metadata including pause state and sync info
+    """
+
     lifecycle_stage: typing_extensions.Annotated[
-        ApplicationLifecycleStage, FieldMetadata(alias="lifecycleStage"), pydantic.Field(alias="lifecycleStage")
+        ApplicationLifecycleStage,
+        FieldMetadata(alias="lifecycleStage"),
+        pydantic.Field(alias="lifecycleStage", description="Current lifecycle stage of the application"),
     ]
     workspace_id: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="workspaceId"), pydantic.Field(alias="workspaceId")
+        typing.Optional[str],
+        FieldMetadata(alias="workspaceId"),
+        pydantic.Field(
+            alias="workspaceId", description="Unique identifier of the workspace this application belongs to"
+        ),
     ] = None
     last_version: typing_extensions.Annotated[
-        typing.Optional[int], FieldMetadata(alias="lastVersion"), pydantic.Field(alias="lastVersion")
+        typing.Optional[int],
+        FieldMetadata(alias="lastVersion"),
+        pydantic.Field(alias="lastVersion", description="Version number of the latest deployment"),
     ] = None
     active_version: typing_extensions.Annotated[
-        typing.Optional[int], FieldMetadata(alias="activeVersion"), pydantic.Field(alias="activeVersion")
+        typing.Optional[int],
+        FieldMetadata(alias="activeVersion"),
+        pydantic.Field(alias="activeVersion", description="Version number of the currently active deployment"),
+    ] = None
+    application_set_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="applicationSetId"),
+        pydantic.Field(
+            alias="applicationSetId",
+            description="Unique identifier of the application set this application belongs to, if any",
+        ),
     ] = None
     created_at: typing_extensions.Annotated[
         typing.Optional[dt.datetime], FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
@@ -80,7 +125,7 @@ class Application(UniversalBaseModel):
     created_by: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="createdBy"), pydantic.Field(alias="createdBy")
     ] = None
-    deployment: typing.Optional["Deployment"] = None
+    deployment: typing.Optional[Deployment] = None
     active_deployment_id: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="activeDeploymentId"), pydantic.Field(alias="activeDeploymentId")
     ] = None
@@ -98,6 +143,5 @@ class Application(UniversalBaseModel):
 
 
 from .application_debug_info import ApplicationDebugInfo  # noqa: E402, I001
-from .deployment import Deployment  # noqa: E402, I001
 
-update_forward_refs(Application, ApplicationDebugInfo=ApplicationDebugInfo, Deployment=Deployment)
+update_forward_refs(Application, ApplicationDebugInfo=ApplicationDebugInfo)

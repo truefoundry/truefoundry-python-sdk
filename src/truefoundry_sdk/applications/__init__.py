@@ -8,11 +8,13 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .types import (
         ApplicationsCancelDeploymentResponse,
+        ApplicationsListRequestApplicationType,
         ApplicationsListRequestDeviceTypeFilter,
         ApplicationsListRequestLifecycleStage,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "ApplicationsCancelDeploymentResponse": ".types",
+    "ApplicationsListRequestApplicationType": ".types",
     "ApplicationsListRequestDeviceTypeFilter": ".types",
     "ApplicationsListRequestLifecycleStage": ".types",
 }
@@ -41,6 +43,7 @@ def __dir__():
 
 __all__ = [
     "ApplicationsCancelDeploymentResponse",
+    "ApplicationsListRequestApplicationType",
     "ApplicationsListRequestDeviceTypeFilter",
     "ApplicationsListRequestLifecycleStage",
 ]

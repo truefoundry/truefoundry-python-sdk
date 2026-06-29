@@ -9,16 +9,14 @@ from ..types.activate_user_response import ActivateUserResponse
 from ..types.change_password_response import ChangePasswordResponse
 from ..types.deactivate_user_response import DeactivateUserResponse
 from ..types.delete_user_response import DeleteUserResponse
-from ..types.get_user_permissions_response import GetUserPermissionsResponse
-from ..types.get_user_resources_response import GetUserResourcesResponse
 from ..types.get_user_response import GetUserResponse
-from ..types.get_user_teams_response import GetUserTeamsResponse
 from ..types.invite_user_response import InviteUserResponse
 from ..types.list_users_response import ListUsersResponse
 from ..types.register_users_response import RegisterUsersResponse
 from ..types.update_user_roles_response import UpdateUserRolesResponse
 from ..types.user import User
 from .raw_client import AsyncRawUsersClient, RawUsersClient
+from .types.update_user_roles_request_resource_type import UpdateUserRolesRequestResourceType
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -45,11 +43,11 @@ class UsersClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         query: typing.Optional[str] = None,
-        show_invalid_users: typing.Optional[bool] = None,
+        show_invalid_users: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[User, ListUsersResponse]:
         """
-        List all users of tenant filtered by query and showInvalidUsers. Pagination is available based on query parameters.
+        List users in the current tenant.
 
         Parameters
         ----------
@@ -60,9 +58,10 @@ class UsersClient:
             Number of items to skip
 
         query : typing.Optional[str]
+            Filter users by email substring match.
 
         show_invalid_users : typing.Optional[bool]
-            Show Deactivated users
+            When true, includes deactivated users in the response.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -70,7 +69,7 @@ class UsersClient:
         Returns
         -------
         SyncPager[User, ListUsersResponse]
-            Returns all users of tenant and also the response includes paginated data.
+            Paginated list of users the caller has access to.
 
         Examples
         --------
@@ -83,7 +82,7 @@ class UsersClient:
         response = client.users.list(
             limit=10,
             offset=0,
-            query="query",
+            query="john@example.com",
             show_invalid_users=True,
         )
         for item in response:
@@ -111,24 +110,24 @@ class UsersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RegisterUsersResponse:
         """
-        This endpoint allows tenant administrators to register users within their tenant.
+        Pre-register a user in the current tenant. Optionally sends an invite email if the auth provider is managed by TrueFoundry.
 
         Parameters
         ----------
         email : str
-            Email of the user
+            Email address of the user to register.
 
         send_invite_email : typing.Optional[bool]
-            Send invite email if user does not exist
+            When true, sends an invite email to the user after registration.
 
         skip_if_user_exists : typing.Optional[bool]
-            Fail if user exists
+            When true, silently skips registration if the user already exists instead of returning an error.
 
         dry_run : typing.Optional[bool]
-            Dry run
+            When true, validates the request without persisting changes.
 
         accept_invite_client_url : typing.Optional[str]
-            Url to redirect when invite is accepted
+            URL the user is redirected to when they accept the invite. Required when sendInviteEmail is true.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -136,7 +135,7 @@ class UsersClient:
         Returns
         -------
         RegisterUsersResponse
-            The users have been successfully registered.
+            The user has been successfully registered.
 
         Examples
         --------
@@ -147,7 +146,7 @@ class UsersClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.users.pre_register_users(
-            email="email",
+            email="user@example.com",
         )
         """
         _response = self._raw_client.pre_register_users(
@@ -165,22 +164,22 @@ class UsersClient:
         *,
         email: str,
         roles: typing.Sequence[str],
-        resource_type: typing.Optional[str] = OMIT,
+        resource_type: typing.Optional[UpdateUserRolesRequestResourceType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> UpdateUserRolesResponse:
         """
-        This endpoint allows tenant administrators to update the roles of a user within their tenant.
+        Update the role assigned to a user in the current tenant.
 
         Parameters
         ----------
         email : str
-            Email of the user
+            Email of the user whose roles are being updated.
 
         roles : typing.Sequence[str]
-            Role names for the user
+            Role names to assign to the user.
 
-        resource_type : typing.Optional[str]
-            Resource Type
+        resource_type : typing.Optional[UpdateUserRolesRequestResourceType]
+            Resource type scope for the role assignment.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -199,8 +198,8 @@ class UsersClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.users.update_roles(
-            email="email",
-            roles=["roles"],
+            email="user@example.com",
+            roles=["tenant-admin"],
         )
         """
         _response = self._raw_client.update_roles(
@@ -210,12 +209,12 @@ class UsersClient:
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetUserResponse:
         """
-        Get User associated with provided User id
+        Get a single user by their ID.
 
         Parameters
         ----------
         id : str
-            User Id
+            System-generated user ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -223,7 +222,7 @@ class UsersClient:
         Returns
         -------
         GetUserResponse
-            Returns the User associated with provided User id
+            The user with the given ID.
 
         Examples
         --------
@@ -234,7 +233,7 @@ class UsersClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.users.get(
-            id="id",
+            id="jqfwg345gi25n5ju2yz5iz6m",
         )
         """
         _response = self._raw_client.get(id, request_options=request_options)
@@ -248,15 +247,15 @@ class UsersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DeleteUserResponse:
         """
-        Delete user if they are not a collaborator in any resource and not part of any team other than everyone.
+        Permanently delete a user by ID. The user must not be a collaborator on any resource and must not belong to any team other than "everyone".
 
         Parameters
         ----------
         id : str
-            User Id
+            System-generated user ID.
 
         tenant_name : typing.Optional[str]
-            Tenant name
+            Tenant name override. Defaults to the caller's tenant when omitted.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -264,7 +263,7 @@ class UsersClient:
         Returns
         -------
         DeleteUserResponse
-            User has been successfully deleted.
+            The user has been deleted.
 
         Examples
         --------
@@ -275,7 +274,7 @@ class UsersClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.users.delete(
-            id="id",
+            id="jqfwg345gi25n5ju2yz5iz6m",
             tenant_name="tenantName",
         )
         """
@@ -286,15 +285,15 @@ class UsersClient:
         self, *, accept_invite_client_url: str, email: str, request_options: typing.Optional[RequestOptions] = None
     ) -> InviteUserResponse:
         """
-        Invite a user to the tenant
+        Invite a new user to the current tenant by email. Only available when the auth provider is managed by TrueFoundry.
 
         Parameters
         ----------
         accept_invite_client_url : str
-            Url to redirect when invite is accepted
+            URL the user is redirected to when they accept the invite.
 
         email : str
-            Email of user
+            Email address of the user to invite.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -302,7 +301,7 @@ class UsersClient:
         Returns
         -------
         InviteUserResponse
-            User has been successfully invited.
+            The invite has been sent successfully.
 
         Examples
         --------
@@ -313,8 +312,8 @@ class UsersClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.users.invite_user(
-            accept_invite_client_url="<control plane url>/invite-accept",
-            email="email",
+            accept_invite_client_url="https://app.example.com/invite-accept",
+            email="user@example.com",
         )
         """
         _response = self._raw_client.invite_user(
@@ -330,15 +329,15 @@ class UsersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DeactivateUserResponse:
         """
-        Deactivate user associated with the provided email within the tenant.
+        Deactivate a user by email in the current tenant. The user will no longer be able to log in.
 
         Parameters
         ----------
         email : str
-            Email of the user
+            Email of the user to deactivate.
 
         tenant_name : typing.Optional[str]
-            Tenant name
+            Tenant name override. Defaults to the caller's tenant when omitted.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -346,7 +345,7 @@ class UsersClient:
         Returns
         -------
         DeactivateUserResponse
-            User has been successfully deactivated.
+            The user has been deactivated.
 
         Examples
         --------
@@ -357,7 +356,7 @@ class UsersClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.users.deactivate(
-            email="email",
+            email="user@example.com",
         )
         """
         _response = self._raw_client.deactivate(email=email, tenant_name=tenant_name, request_options=request_options)
@@ -371,15 +370,15 @@ class UsersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ActivateUserResponse:
         """
-        Activate user associated with the provided email within the tenant.
+        Re-activate a previously deactivated user by email in the current tenant.
 
         Parameters
         ----------
         email : str
-            Email of the user
+            Email of the user to activate.
 
         tenant_name : typing.Optional[str]
-            Tenant name
+            Tenant name override. Defaults to the caller's tenant when omitted.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -387,7 +386,7 @@ class UsersClient:
         Returns
         -------
         ActivateUserResponse
-            User has been successfully activated.
+            The user has been activated.
 
         Examples
         --------
@@ -398,7 +397,7 @@ class UsersClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.users.activate(
-            email="email",
+            email="user@example.com",
         )
         """
         _response = self._raw_client.activate(email=email, tenant_name=tenant_name, request_options=request_options)
@@ -413,18 +412,18 @@ class UsersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ChangePasswordResponse:
         """
-        Change password for the authenticated user. Requires clientId and loginId in the request body.
+        Change the password for the authenticated user.
 
         Parameters
         ----------
         login_id : str
-            login id of the user(email)
+            Email address of the user changing their password.
 
         new_password : str
-            New password
+            New password (minimum 8 characters).
 
         old_password : str
-            Old password
+            Current password of the user for verification.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -432,7 +431,7 @@ class UsersClient:
         Returns
         -------
         ChangePasswordResponse
-            Password has been changed successfully.
+            The password has been changed successfully.
 
         Examples
         --------
@@ -443,7 +442,7 @@ class UsersClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.users.change_password(
-            login_id="loginId",
+            login_id="user@example.com",
             new_password="newPassword",
             old_password="oldPassword",
         )
@@ -451,106 +450,6 @@ class UsersClient:
         _response = self._raw_client.change_password(
             login_id=login_id, new_password=new_password, old_password=old_password, request_options=request_options
         )
-        return _response.data
-
-    def get_resources(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetUserResourcesResponse:
-        """
-        Get all resources associated with a user.
-
-        Parameters
-        ----------
-        id : str
-            User Id
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetUserResourcesResponse
-            Returns all resources for the user.
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.users.get_resources(
-            id="id",
-        )
-        """
-        _response = self._raw_client.get_resources(id, request_options=request_options)
-        return _response.data
-
-    def get_permissions(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetUserPermissionsResponse:
-        """
-        Get all role bindings associated with a user, including team-inherited bindings.
-
-        Parameters
-        ----------
-        id : str
-            User Id
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetUserPermissionsResponse
-            Returns role bindings for the user (including team-inherited).
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.users.get_permissions(
-            id="id",
-        )
-        """
-        _response = self._raw_client.get_permissions(id, request_options=request_options)
-        return _response.data
-
-    def get_teams(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetUserTeamsResponse:
-        """
-        Get all teams associated with a user, including their role in each team.
-
-        Parameters
-        ----------
-        id : str
-            User Id
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetUserTeamsResponse
-            Returns all teams for the user with their roles.
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.users.get_teams(
-            id="id",
-        )
-        """
-        _response = self._raw_client.get_teams(id, request_options=request_options)
         return _response.data
 
 
@@ -575,11 +474,11 @@ class AsyncUsersClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         query: typing.Optional[str] = None,
-        show_invalid_users: typing.Optional[bool] = None,
+        show_invalid_users: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[User, ListUsersResponse]:
         """
-        List all users of tenant filtered by query and showInvalidUsers. Pagination is available based on query parameters.
+        List users in the current tenant.
 
         Parameters
         ----------
@@ -590,9 +489,10 @@ class AsyncUsersClient:
             Number of items to skip
 
         query : typing.Optional[str]
+            Filter users by email substring match.
 
         show_invalid_users : typing.Optional[bool]
-            Show Deactivated users
+            When true, includes deactivated users in the response.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -600,7 +500,7 @@ class AsyncUsersClient:
         Returns
         -------
         AsyncPager[User, ListUsersResponse]
-            Returns all users of tenant and also the response includes paginated data.
+            Paginated list of users the caller has access to.
 
         Examples
         --------
@@ -618,7 +518,7 @@ class AsyncUsersClient:
             response = await client.users.list(
                 limit=10,
                 offset=0,
-                query="query",
+                query="john@example.com",
                 show_invalid_users=True,
             )
             async for item in response:
@@ -650,24 +550,24 @@ class AsyncUsersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RegisterUsersResponse:
         """
-        This endpoint allows tenant administrators to register users within their tenant.
+        Pre-register a user in the current tenant. Optionally sends an invite email if the auth provider is managed by TrueFoundry.
 
         Parameters
         ----------
         email : str
-            Email of the user
+            Email address of the user to register.
 
         send_invite_email : typing.Optional[bool]
-            Send invite email if user does not exist
+            When true, sends an invite email to the user after registration.
 
         skip_if_user_exists : typing.Optional[bool]
-            Fail if user exists
+            When true, silently skips registration if the user already exists instead of returning an error.
 
         dry_run : typing.Optional[bool]
-            Dry run
+            When true, validates the request without persisting changes.
 
         accept_invite_client_url : typing.Optional[str]
-            Url to redirect when invite is accepted
+            URL the user is redirected to when they accept the invite. Required when sendInviteEmail is true.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -675,7 +575,7 @@ class AsyncUsersClient:
         Returns
         -------
         RegisterUsersResponse
-            The users have been successfully registered.
+            The user has been successfully registered.
 
         Examples
         --------
@@ -691,7 +591,7 @@ class AsyncUsersClient:
 
         async def main() -> None:
             await client.users.pre_register_users(
-                email="email",
+                email="user@example.com",
             )
 
 
@@ -712,22 +612,22 @@ class AsyncUsersClient:
         *,
         email: str,
         roles: typing.Sequence[str],
-        resource_type: typing.Optional[str] = OMIT,
+        resource_type: typing.Optional[UpdateUserRolesRequestResourceType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> UpdateUserRolesResponse:
         """
-        This endpoint allows tenant administrators to update the roles of a user within their tenant.
+        Update the role assigned to a user in the current tenant.
 
         Parameters
         ----------
         email : str
-            Email of the user
+            Email of the user whose roles are being updated.
 
         roles : typing.Sequence[str]
-            Role names for the user
+            Role names to assign to the user.
 
-        resource_type : typing.Optional[str]
-            Resource Type
+        resource_type : typing.Optional[UpdateUserRolesRequestResourceType]
+            Resource type scope for the role assignment.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -751,8 +651,8 @@ class AsyncUsersClient:
 
         async def main() -> None:
             await client.users.update_roles(
-                email="email",
-                roles=["roles"],
+                email="user@example.com",
+                roles=["tenant-admin"],
             )
 
 
@@ -765,12 +665,12 @@ class AsyncUsersClient:
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetUserResponse:
         """
-        Get User associated with provided User id
+        Get a single user by their ID.
 
         Parameters
         ----------
         id : str
-            User Id
+            System-generated user ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -778,7 +678,7 @@ class AsyncUsersClient:
         Returns
         -------
         GetUserResponse
-            Returns the User associated with provided User id
+            The user with the given ID.
 
         Examples
         --------
@@ -794,7 +694,7 @@ class AsyncUsersClient:
 
         async def main() -> None:
             await client.users.get(
-                id="id",
+                id="jqfwg345gi25n5ju2yz5iz6m",
             )
 
 
@@ -811,15 +711,15 @@ class AsyncUsersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DeleteUserResponse:
         """
-        Delete user if they are not a collaborator in any resource and not part of any team other than everyone.
+        Permanently delete a user by ID. The user must not be a collaborator on any resource and must not belong to any team other than "everyone".
 
         Parameters
         ----------
         id : str
-            User Id
+            System-generated user ID.
 
         tenant_name : typing.Optional[str]
-            Tenant name
+            Tenant name override. Defaults to the caller's tenant when omitted.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -827,7 +727,7 @@ class AsyncUsersClient:
         Returns
         -------
         DeleteUserResponse
-            User has been successfully deleted.
+            The user has been deleted.
 
         Examples
         --------
@@ -843,7 +743,7 @@ class AsyncUsersClient:
 
         async def main() -> None:
             await client.users.delete(
-                id="id",
+                id="jqfwg345gi25n5ju2yz5iz6m",
                 tenant_name="tenantName",
             )
 
@@ -857,15 +757,15 @@ class AsyncUsersClient:
         self, *, accept_invite_client_url: str, email: str, request_options: typing.Optional[RequestOptions] = None
     ) -> InviteUserResponse:
         """
-        Invite a user to the tenant
+        Invite a new user to the current tenant by email. Only available when the auth provider is managed by TrueFoundry.
 
         Parameters
         ----------
         accept_invite_client_url : str
-            Url to redirect when invite is accepted
+            URL the user is redirected to when they accept the invite.
 
         email : str
-            Email of user
+            Email address of the user to invite.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -873,7 +773,7 @@ class AsyncUsersClient:
         Returns
         -------
         InviteUserResponse
-            User has been successfully invited.
+            The invite has been sent successfully.
 
         Examples
         --------
@@ -889,8 +789,8 @@ class AsyncUsersClient:
 
         async def main() -> None:
             await client.users.invite_user(
-                accept_invite_client_url="<control plane url>/invite-accept",
-                email="email",
+                accept_invite_client_url="https://app.example.com/invite-accept",
+                email="user@example.com",
             )
 
 
@@ -909,15 +809,15 @@ class AsyncUsersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DeactivateUserResponse:
         """
-        Deactivate user associated with the provided email within the tenant.
+        Deactivate a user by email in the current tenant. The user will no longer be able to log in.
 
         Parameters
         ----------
         email : str
-            Email of the user
+            Email of the user to deactivate.
 
         tenant_name : typing.Optional[str]
-            Tenant name
+            Tenant name override. Defaults to the caller's tenant when omitted.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -925,7 +825,7 @@ class AsyncUsersClient:
         Returns
         -------
         DeactivateUserResponse
-            User has been successfully deactivated.
+            The user has been deactivated.
 
         Examples
         --------
@@ -941,7 +841,7 @@ class AsyncUsersClient:
 
         async def main() -> None:
             await client.users.deactivate(
-                email="email",
+                email="user@example.com",
             )
 
 
@@ -960,15 +860,15 @@ class AsyncUsersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ActivateUserResponse:
         """
-        Activate user associated with the provided email within the tenant.
+        Re-activate a previously deactivated user by email in the current tenant.
 
         Parameters
         ----------
         email : str
-            Email of the user
+            Email of the user to activate.
 
         tenant_name : typing.Optional[str]
-            Tenant name
+            Tenant name override. Defaults to the caller's tenant when omitted.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -976,7 +876,7 @@ class AsyncUsersClient:
         Returns
         -------
         ActivateUserResponse
-            User has been successfully activated.
+            The user has been activated.
 
         Examples
         --------
@@ -992,7 +892,7 @@ class AsyncUsersClient:
 
         async def main() -> None:
             await client.users.activate(
-                email="email",
+                email="user@example.com",
             )
 
 
@@ -1012,18 +912,18 @@ class AsyncUsersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ChangePasswordResponse:
         """
-        Change password for the authenticated user. Requires clientId and loginId in the request body.
+        Change the password for the authenticated user.
 
         Parameters
         ----------
         login_id : str
-            login id of the user(email)
+            Email address of the user changing their password.
 
         new_password : str
-            New password
+            New password (minimum 8 characters).
 
         old_password : str
-            Old password
+            Current password of the user for verification.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1031,7 +931,7 @@ class AsyncUsersClient:
         Returns
         -------
         ChangePasswordResponse
-            Password has been changed successfully.
+            The password has been changed successfully.
 
         Examples
         --------
@@ -1047,7 +947,7 @@ class AsyncUsersClient:
 
         async def main() -> None:
             await client.users.change_password(
-                login_id="loginId",
+                login_id="user@example.com",
                 new_password="newPassword",
                 old_password="oldPassword",
             )
@@ -1058,130 +958,4 @@ class AsyncUsersClient:
         _response = await self._raw_client.change_password(
             login_id=login_id, new_password=new_password, old_password=old_password, request_options=request_options
         )
-        return _response.data
-
-    async def get_resources(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetUserResourcesResponse:
-        """
-        Get all resources associated with a user.
-
-        Parameters
-        ----------
-        id : str
-            User Id
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetUserResourcesResponse
-            Returns all resources for the user.
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.users.get_resources(
-                id="id",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.get_resources(id, request_options=request_options)
-        return _response.data
-
-    async def get_permissions(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetUserPermissionsResponse:
-        """
-        Get all role bindings associated with a user, including team-inherited bindings.
-
-        Parameters
-        ----------
-        id : str
-            User Id
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetUserPermissionsResponse
-            Returns role bindings for the user (including team-inherited).
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.users.get_permissions(
-                id="id",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.get_permissions(id, request_options=request_options)
-        return _response.data
-
-    async def get_teams(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetUserTeamsResponse:
-        """
-        Get all teams associated with a user, including their role in each team.
-
-        Parameters
-        ----------
-        id : str
-            User Id
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetUserTeamsResponse
-            Returns all teams for the user with their roles.
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.users.get_teams(
-                id="id",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.get_teams(id, request_options=request_options)
         return _response.data

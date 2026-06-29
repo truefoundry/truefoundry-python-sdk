@@ -31,10 +31,10 @@ class ApplicationsClient:
         Parameters
         ----------
         id : str
-            Id of the application
+            Unique identifier of the application
 
         full : typing.Optional[bool]
-            Whether to promote a rollout to full
+            Whether to promote the rollout to full traffic
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -67,15 +67,15 @@ class ApplicationsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Dict[str, float]:
         """
-        This endpoint fetches the pod template hash to deployment version map for a specific application.
+        Get the pod template hash to deployment version map for a specific application.
 
         Parameters
         ----------
         id : str
-            Id of the application
+            Unique identifier of the application
 
         pod_template_hashes : typing.Optional[str]
-            Pod Template Hashes (comma separated for multiple)
+            Pod template hashes to filter by (comma-separated)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -83,7 +83,7 @@ class ApplicationsClient:
         Returns
         -------
         typing.Dict[str, float]
-            Successfully retrieved the pod template hash to deployment version map.
+            The pod template hash to deployment version map.
 
         Examples
         --------
@@ -128,10 +128,10 @@ class AsyncApplicationsClient:
         Parameters
         ----------
         id : str
-            Id of the application
+            Unique identifier of the application
 
         full : typing.Optional[bool]
-            Whether to promote a rollout to full
+            Whether to promote the rollout to full traffic
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -172,15 +172,15 @@ class AsyncApplicationsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Dict[str, float]:
         """
-        This endpoint fetches the pod template hash to deployment version map for a specific application.
+        Get the pod template hash to deployment version map for a specific application.
 
         Parameters
         ----------
         id : str
-            Id of the application
+            Unique identifier of the application
 
         pod_template_hashes : typing.Optional[str]
-            Pod Template Hashes (comma separated for multiple)
+            Pod template hashes to filter by (comma-separated)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -188,7 +188,7 @@ class AsyncApplicationsClient:
         Returns
         -------
         typing.Dict[str, float]
-            Successfully retrieved the pod template hash to deployment version map.
+            The pod template hash to deployment version map.
 
         Examples
         --------

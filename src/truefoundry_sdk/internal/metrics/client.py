@@ -36,24 +36,26 @@ class MetricsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetChartsResponse:
         """
-        List charts for a given Application based on parameters passed in the query.
+        List metric charts available for an application.
 
         Parameters
         ----------
         workspace_id : str
 
         application_id : str
+            Unique identifier of the application.
 
         filter_entity : MetricsGetChartsRequestFilterEntity
+            Scope of the chart bundle to return.
 
         start_ts : typing.Optional[str]
-            Start Timestamp
+            Start timestamp in milliseconds since epoch. Defaults to the application's last deployment creation time.
 
         end_ts : typing.Optional[str]
-            End Timestamp
+            End timestamp in milliseconds since epoch. Defaults to the current time.
 
         filter_query : typing.Optional[str]
-            Query params to filter metrics
+            JSON-encoded filter required by certain scopes.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -61,7 +63,7 @@ class MetricsClient:
         Returns
         -------
         GetChartsResponse
-            Charts have been successfully retrieved.
+            Returns the list of metric charts available for the application.
 
         Examples
         --------
@@ -78,7 +80,7 @@ class MetricsClient:
             start_ts="startTs",
             end_ts="endTs",
             filter_entity=MetricsGetChartsRequestFilterEntity.APPLICATION,
-            filter_query="filterQuery",
+            filter_query='{"pod":"my-app-abc123-xyz"}',
         )
         """
         _response = self._raw_client.get_charts(
@@ -120,24 +122,26 @@ class AsyncMetricsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetChartsResponse:
         """
-        List charts for a given Application based on parameters passed in the query.
+        List metric charts available for an application.
 
         Parameters
         ----------
         workspace_id : str
 
         application_id : str
+            Unique identifier of the application.
 
         filter_entity : MetricsGetChartsRequestFilterEntity
+            Scope of the chart bundle to return.
 
         start_ts : typing.Optional[str]
-            Start Timestamp
+            Start timestamp in milliseconds since epoch. Defaults to the application's last deployment creation time.
 
         end_ts : typing.Optional[str]
-            End Timestamp
+            End timestamp in milliseconds since epoch. Defaults to the current time.
 
         filter_query : typing.Optional[str]
-            Query params to filter metrics
+            JSON-encoded filter required by certain scopes.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -145,7 +149,7 @@ class AsyncMetricsClient:
         Returns
         -------
         GetChartsResponse
-            Charts have been successfully retrieved.
+            Returns the list of metric charts available for the application.
 
         Examples
         --------
@@ -167,7 +171,7 @@ class AsyncMetricsClient:
                 start_ts="startTs",
                 end_ts="endTs",
                 filter_entity=MetricsGetChartsRequestFilterEntity.APPLICATION,
-                filter_query="filterQuery",
+                filter_query='{"pod":"my-app-abc123-xyz"}',
             )
 
 

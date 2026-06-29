@@ -9,7 +9,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 class DeleteApplicationResponse(UniversalBaseModel):
     message: str = pydantic.Field()
     """
-    Application deletion message
+    Confirmation message for the deletion
     """
 
     if IS_PYDANTIC_V2:

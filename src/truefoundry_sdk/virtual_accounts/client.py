@@ -45,7 +45,7 @@ class VirtualAccountsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[VirtualAccount, ListVirtualAccountResponse]:
         """
-        List virtual accounts for the tenant.
+        List virtual accounts accessible to the current user.
 
         Parameters
         ----------
@@ -56,16 +56,16 @@ class VirtualAccountsClient:
             Number of items to skip
 
         name_search_query : typing.Optional[str]
-            Return virtual accounts with names that contain this string
+            Return virtual accounts with names that contain this string.
 
         owned_by_teams : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            Return virtual accounts owned by these teams
+            Comma-separated team names. Return virtual accounts owned by these teams.
 
         is_expired : typing.Optional[bool]
-            Filter virtual accounts by expiration status. true = expired, false = not expired
+            Filter by expiration status. `true` = expired only, `false` = not expired only.
 
         filter : typing.Optional[str]
-            JSON string: structured filter tree (AND/OR groups, column leaves on `name`, json_map leaves on manifest.tags).
+            JSON string: structured filter tree (AND/OR groups, column leaves on `name`, json_map leaves on `manifest.tags`).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -73,7 +73,7 @@ class VirtualAccountsClient:
         Returns
         -------
         SyncPager[VirtualAccount, ListVirtualAccountResponse]
-            Return all virtual accounts for the tenant
+            Paginated list of virtual accounts the caller has access to.
 
         Examples
         --------
@@ -86,10 +86,10 @@ class VirtualAccountsClient:
         response = client.virtual_accounts.list(
             limit=10,
             offset=0,
-            name_search_query="nameSearchQuery",
+            name_search_query="staging-bot",
             owned_by_teams=["ownedByTeams"],
             is_expired=True,
-            filter="filter",
+            filter='{"type":"AND","children":[{"column":"name","op":"STRING_CONTAINS","value":"bot"}]}',
         )
         for item in response:
             yield item
@@ -115,15 +115,15 @@ class VirtualAccountsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetVirtualAccountResponse:
         """
-        Creates a new virtual account or updates an existing one based on the provided manifest.
+        Create a new virtual account or update an existing one using the provided VirtualAccountManifest. Matching is by name — if the name matches an existing virtual account it is updated, otherwise a new one is created.
 
         Parameters
         ----------
         manifest : VirtualAccountManifest
-            Virtual account manifest
+            The virtual account manifest describing the virtual account to create or update.
 
         dry_run : typing.Optional[bool]
-            Dry run
+            When true, validate the request without persisting any changes.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -131,7 +131,7 @@ class VirtualAccountsClient:
         Returns
         -------
         GetVirtualAccountResponse
-            Virtual account created/updated successfully
+            The created or updated virtual account.
 
         Examples
         --------
@@ -161,12 +161,12 @@ class VirtualAccountsClient:
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetVirtualAccountResponse:
         """
-        Get virtual account by id
+        Get a single virtual account by its ID.
 
         Parameters
         ----------
         id : str
-            serviceaccount id
+            System-generated service account ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -174,7 +174,7 @@ class VirtualAccountsClient:
         Returns
         -------
         GetVirtualAccountResponse
-            Returns the virtual account associated with the provided virtual account id
+            The virtual account with the given ID.
 
         Examples
         --------
@@ -185,7 +185,7 @@ class VirtualAccountsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.virtual_accounts.get(
-            id="id",
+            id="jqfwg345gi25n5ju2yz5iz6m",
         )
         """
         _response = self._raw_client.get(id, request_options=request_options)
@@ -195,12 +195,12 @@ class VirtualAccountsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> DeleteVirtualAccountResponse:
         """
-        Delete a virtual account associated with the provided virtual account id.
+        Permanently delete the virtual account with the given ID. This action is irreversible.
 
         Parameters
         ----------
         id : str
-            serviceaccount id
+            System-generated service account ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -208,7 +208,7 @@ class VirtualAccountsClient:
         Returns
         -------
         DeleteVirtualAccountResponse
-            Virtual account deleted successfully
+            Successfully deleted the virtual account.
 
         Examples
         --------
@@ -219,7 +219,7 @@ class VirtualAccountsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.virtual_accounts.delete(
-            id="id",
+            id="jqfwg345gi25n5ju2yz5iz6m",
         )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
@@ -229,12 +229,12 @@ class VirtualAccountsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetTokenForVirtualAccountResponse:
         """
-        Get token for a virtual account by id
+        Retrieve the current authentication token for a virtual account by its ID.
 
         Parameters
         ----------
         id : str
-            serviceaccount id
+            System-generated service account ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -242,7 +242,7 @@ class VirtualAccountsClient:
         Returns
         -------
         GetTokenForVirtualAccountResponse
-            Token for the virtual account
+            The authentication token for the virtual account.
 
         Examples
         --------
@@ -253,7 +253,7 @@ class VirtualAccountsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.virtual_accounts.get_token(
-            id="id",
+            id="jqfwg345gi25n5ju2yz5iz6m",
         )
         """
         _response = self._raw_client.get_token(id, request_options=request_options)
@@ -263,12 +263,12 @@ class VirtualAccountsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> SyncVirtualAccountTokenResponse:
         """
-        Syncs the virtual account token to the configured secret store. Returns the updated JWT with sync metadata including timestamp and error (if any).
+        Sync the virtual account token to the configured secret store. Returns the sync metadata including timestamp and error (if any).
 
         Parameters
         ----------
         id : str
-            serviceaccount id
+            System-generated service account ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -276,7 +276,7 @@ class VirtualAccountsClient:
         Returns
         -------
         SyncVirtualAccountTokenResponse
-            Token synced successfully to secret store
+            Token synced successfully to the secret store.
 
         Examples
         --------
@@ -287,7 +287,7 @@ class VirtualAccountsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.virtual_accounts.sync_to_secret_store(
-            id="id",
+            id="jqfwg345gi25n5ju2yz5iz6m",
         )
         """
         _response = self._raw_client.sync_to_secret_store(id, request_options=request_options)
@@ -297,12 +297,12 @@ class VirtualAccountsClient:
         self, id: str, *, grace_period_in_days: float, request_options: typing.Optional[RequestOptions] = None
     ) -> GetTokenForVirtualAccountResponse:
         """
-        Regenerate token for a virtual account by id. The old token will remain valid for the specified grace period.
+        Regenerate the authentication token for a virtual account. The old token remains valid for the specified grace period.
 
         Parameters
         ----------
         id : str
-            serviceaccount id
+            System-generated service account ID.
 
         grace_period_in_days : float
             Grace period in days for which the old token will remain valid after regeneration
@@ -313,7 +313,7 @@ class VirtualAccountsClient:
         Returns
         -------
         GetTokenForVirtualAccountResponse
-            Token for the virtual account
+            The newly generated token for the virtual account.
 
         Examples
         --------
@@ -324,7 +324,7 @@ class VirtualAccountsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.virtual_accounts.regenerate_token(
-            id="id",
+            id="jqfwg345gi25n5ju2yz5iz6m",
             grace_period_in_days=30.0,
         )
         """
@@ -335,15 +335,15 @@ class VirtualAccountsClient:
 
     def delete_jwt(self, id: str, jwt_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a JWT for a virtual account by id
+        Delete a specific JWT token belonging to a virtual account. The virtual account itself is not affected.
 
         Parameters
         ----------
         id : str
-            virtual account id
+            System-generated virtual account ID that owns the JWT.
 
         jwt_id : str
-            JWT id
+            System-generated JWT ID to delete.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -361,8 +361,8 @@ class VirtualAccountsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.virtual_accounts.delete_jwt(
-            id="id",
-            jwt_id="jwtId",
+            id="jqfwg345gi25n5ju2yz5iz6m",
+            jwt_id="jwt_abc123def456",
         )
         """
         _response = self._raw_client.delete_jwt(id, jwt_id, request_options=request_options)
@@ -396,7 +396,7 @@ class AsyncVirtualAccountsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[VirtualAccount, ListVirtualAccountResponse]:
         """
-        List virtual accounts for the tenant.
+        List virtual accounts accessible to the current user.
 
         Parameters
         ----------
@@ -407,16 +407,16 @@ class AsyncVirtualAccountsClient:
             Number of items to skip
 
         name_search_query : typing.Optional[str]
-            Return virtual accounts with names that contain this string
+            Return virtual accounts with names that contain this string.
 
         owned_by_teams : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            Return virtual accounts owned by these teams
+            Comma-separated team names. Return virtual accounts owned by these teams.
 
         is_expired : typing.Optional[bool]
-            Filter virtual accounts by expiration status. true = expired, false = not expired
+            Filter by expiration status. `true` = expired only, `false` = not expired only.
 
         filter : typing.Optional[str]
-            JSON string: structured filter tree (AND/OR groups, column leaves on `name`, json_map leaves on manifest.tags).
+            JSON string: structured filter tree (AND/OR groups, column leaves on `name`, json_map leaves on `manifest.tags`).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -424,7 +424,7 @@ class AsyncVirtualAccountsClient:
         Returns
         -------
         AsyncPager[VirtualAccount, ListVirtualAccountResponse]
-            Return all virtual accounts for the tenant
+            Paginated list of virtual accounts the caller has access to.
 
         Examples
         --------
@@ -442,10 +442,10 @@ class AsyncVirtualAccountsClient:
             response = await client.virtual_accounts.list(
                 limit=10,
                 offset=0,
-                name_search_query="nameSearchQuery",
+                name_search_query="staging-bot",
                 owned_by_teams=["ownedByTeams"],
                 is_expired=True,
-                filter="filter",
+                filter='{"type":"AND","children":[{"column":"name","op":"STRING_CONTAINS","value":"bot"}]}',
             )
             async for item in response:
                 yield item
@@ -475,15 +475,15 @@ class AsyncVirtualAccountsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetVirtualAccountResponse:
         """
-        Creates a new virtual account or updates an existing one based on the provided manifest.
+        Create a new virtual account or update an existing one using the provided VirtualAccountManifest. Matching is by name — if the name matches an existing virtual account it is updated, otherwise a new one is created.
 
         Parameters
         ----------
         manifest : VirtualAccountManifest
-            Virtual account manifest
+            The virtual account manifest describing the virtual account to create or update.
 
         dry_run : typing.Optional[bool]
-            Dry run
+            When true, validate the request without persisting any changes.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -491,7 +491,7 @@ class AsyncVirtualAccountsClient:
         Returns
         -------
         GetVirtualAccountResponse
-            Virtual account created/updated successfully
+            The created or updated virtual account.
 
         Examples
         --------
@@ -535,12 +535,12 @@ class AsyncVirtualAccountsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetVirtualAccountResponse:
         """
-        Get virtual account by id
+        Get a single virtual account by its ID.
 
         Parameters
         ----------
         id : str
-            serviceaccount id
+            System-generated service account ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -548,7 +548,7 @@ class AsyncVirtualAccountsClient:
         Returns
         -------
         GetVirtualAccountResponse
-            Returns the virtual account associated with the provided virtual account id
+            The virtual account with the given ID.
 
         Examples
         --------
@@ -564,7 +564,7 @@ class AsyncVirtualAccountsClient:
 
         async def main() -> None:
             await client.virtual_accounts.get(
-                id="id",
+                id="jqfwg345gi25n5ju2yz5iz6m",
             )
 
 
@@ -577,12 +577,12 @@ class AsyncVirtualAccountsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> DeleteVirtualAccountResponse:
         """
-        Delete a virtual account associated with the provided virtual account id.
+        Permanently delete the virtual account with the given ID. This action is irreversible.
 
         Parameters
         ----------
         id : str
-            serviceaccount id
+            System-generated service account ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -590,7 +590,7 @@ class AsyncVirtualAccountsClient:
         Returns
         -------
         DeleteVirtualAccountResponse
-            Virtual account deleted successfully
+            Successfully deleted the virtual account.
 
         Examples
         --------
@@ -606,7 +606,7 @@ class AsyncVirtualAccountsClient:
 
         async def main() -> None:
             await client.virtual_accounts.delete(
-                id="id",
+                id="jqfwg345gi25n5ju2yz5iz6m",
             )
 
 
@@ -619,12 +619,12 @@ class AsyncVirtualAccountsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetTokenForVirtualAccountResponse:
         """
-        Get token for a virtual account by id
+        Retrieve the current authentication token for a virtual account by its ID.
 
         Parameters
         ----------
         id : str
-            serviceaccount id
+            System-generated service account ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -632,7 +632,7 @@ class AsyncVirtualAccountsClient:
         Returns
         -------
         GetTokenForVirtualAccountResponse
-            Token for the virtual account
+            The authentication token for the virtual account.
 
         Examples
         --------
@@ -648,7 +648,7 @@ class AsyncVirtualAccountsClient:
 
         async def main() -> None:
             await client.virtual_accounts.get_token(
-                id="id",
+                id="jqfwg345gi25n5ju2yz5iz6m",
             )
 
 
@@ -661,12 +661,12 @@ class AsyncVirtualAccountsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> SyncVirtualAccountTokenResponse:
         """
-        Syncs the virtual account token to the configured secret store. Returns the updated JWT with sync metadata including timestamp and error (if any).
+        Sync the virtual account token to the configured secret store. Returns the sync metadata including timestamp and error (if any).
 
         Parameters
         ----------
         id : str
-            serviceaccount id
+            System-generated service account ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -674,7 +674,7 @@ class AsyncVirtualAccountsClient:
         Returns
         -------
         SyncVirtualAccountTokenResponse
-            Token synced successfully to secret store
+            Token synced successfully to the secret store.
 
         Examples
         --------
@@ -690,7 +690,7 @@ class AsyncVirtualAccountsClient:
 
         async def main() -> None:
             await client.virtual_accounts.sync_to_secret_store(
-                id="id",
+                id="jqfwg345gi25n5ju2yz5iz6m",
             )
 
 
@@ -703,12 +703,12 @@ class AsyncVirtualAccountsClient:
         self, id: str, *, grace_period_in_days: float, request_options: typing.Optional[RequestOptions] = None
     ) -> GetTokenForVirtualAccountResponse:
         """
-        Regenerate token for a virtual account by id. The old token will remain valid for the specified grace period.
+        Regenerate the authentication token for a virtual account. The old token remains valid for the specified grace period.
 
         Parameters
         ----------
         id : str
-            serviceaccount id
+            System-generated service account ID.
 
         grace_period_in_days : float
             Grace period in days for which the old token will remain valid after regeneration
@@ -719,7 +719,7 @@ class AsyncVirtualAccountsClient:
         Returns
         -------
         GetTokenForVirtualAccountResponse
-            Token for the virtual account
+            The newly generated token for the virtual account.
 
         Examples
         --------
@@ -735,7 +735,7 @@ class AsyncVirtualAccountsClient:
 
         async def main() -> None:
             await client.virtual_accounts.regenerate_token(
-                id="id",
+                id="jqfwg345gi25n5ju2yz5iz6m",
                 grace_period_in_days=30.0,
             )
 
@@ -751,15 +751,15 @@ class AsyncVirtualAccountsClient:
         self, id: str, jwt_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
-        Delete a JWT for a virtual account by id
+        Delete a specific JWT token belonging to a virtual account. The virtual account itself is not affected.
 
         Parameters
         ----------
         id : str
-            virtual account id
+            System-generated virtual account ID that owns the JWT.
 
         jwt_id : str
-            JWT id
+            System-generated JWT ID to delete.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -782,8 +782,8 @@ class AsyncVirtualAccountsClient:
 
         async def main() -> None:
             await client.virtual_accounts.delete_jwt(
-                id="id",
-                jwt_id="jwtId",
+                id="jqfwg345gi25n5ju2yz5iz6m",
+                jwt_id="jwt_abc123def456",
             )
 
 

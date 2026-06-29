@@ -4,6 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .gitlab_integration_auth_data import GitlabIntegrationAuthData
 
 
 class GitlabIntegration(UniversalBaseModel):
@@ -24,6 +25,11 @@ class GitlabIntegration(UniversalBaseModel):
     account_name: str = pydantic.Field()
     """
     Account Name
+    """
+
+    auth_data: typing.Optional[GitlabIntegrationAuthData] = pydantic.Field(default=None)
+    """
+    Auth
     """
 
     authorized_subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)

@@ -9,7 +9,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class GraphChartType(enum.StrEnum):
     """
-    Chart type
+    Chart visualisation type.
     """
 
     LINE = "line"

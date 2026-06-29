@@ -15,7 +15,7 @@ class TfyContentModerationGuardrailConfigConfig(UniversalBaseModel):
 
     severity_threshold: float = pydantic.Field(default=2.0)
     """
-    Minimum severity level (0-6) to flag content. 0=Safe, 2=Low risk, 4=Medium risk, 6=High risk
+    Minimum severity level (0-6) to flag content. Lower values are more restrictive (more content is blocked). 0=Safe, 2=Low risk, 4=Medium risk, 6=High risk
     """
 
     categories: typing.List[AzureContentSafetyCategory] = pydantic.Field()

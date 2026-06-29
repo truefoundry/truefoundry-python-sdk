@@ -7,10 +7,12 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .applications_cancel_deployment_response import ApplicationsCancelDeploymentResponse
+    from .applications_list_request_application_type import ApplicationsListRequestApplicationType
     from .applications_list_request_device_type_filter import ApplicationsListRequestDeviceTypeFilter
     from .applications_list_request_lifecycle_stage import ApplicationsListRequestLifecycleStage
 _dynamic_imports: typing.Dict[str, str] = {
     "ApplicationsCancelDeploymentResponse": ".applications_cancel_deployment_response",
+    "ApplicationsListRequestApplicationType": ".applications_list_request_application_type",
     "ApplicationsListRequestDeviceTypeFilter": ".applications_list_request_device_type_filter",
     "ApplicationsListRequestLifecycleStage": ".applications_list_request_lifecycle_stage",
 }
@@ -39,6 +41,7 @@ def __dir__():
 
 __all__ = [
     "ApplicationsCancelDeploymentResponse",
+    "ApplicationsListRequestApplicationType",
     "ApplicationsListRequestDeviceTypeFilter",
     "ApplicationsListRequestLifecycleStage",
 ]

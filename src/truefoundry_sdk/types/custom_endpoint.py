@@ -4,6 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .custom_endpoint_target_config import CustomEndpointTargetConfig
 from .custom_header_auth import CustomHeaderAuth
 from .custom_tls_settings import CustomTlsSettings
 
@@ -37,6 +38,7 @@ class CustomEndpoint(UniversalBaseModel):
     """
 
     tls_settings: typing.Optional[CustomTlsSettings] = None
+    loadbalancing_config: typing.Optional[CustomEndpointTargetConfig] = None
     authorized_subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     List of subjects that are authorized to access this endpoint. List of user fqn in format <user_type>:<username>.

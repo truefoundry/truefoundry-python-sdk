@@ -9,6 +9,7 @@ from ..core.serialization import FieldMetadata
 from .collaborator import Collaborator
 from .custom_endpoint_integrations import CustomEndpointIntegrations
 from .custom_endpoint_provider_account_endpoint_type import CustomEndpointProviderAccountEndpointType
+from .custom_endpoint_provider_account_routing_type import CustomEndpointProviderAccountRoutingType
 from .custom_header_auth import CustomHeaderAuth
 from .owned_by import OwnedBy
 
@@ -33,6 +34,16 @@ class CustomEndpointProviderAccount(UniversalBaseModel):
     endpoint_type: typing.Optional[CustomEndpointProviderAccountEndpointType] = pydantic.Field(default=None)
     """
     The type of service behind this endpoint (used for tracking purposes)
+    """
+
+    routing_type: typing.Optional[CustomEndpointProviderAccountRoutingType] = pydantic.Field(default=None)
+    """
+    How requests are routed across the endpoints in this account. When unset, each endpoint is reachable individually at /proxy-api/<account-name>/<endpoint-name>. Set to "weight" or "priority" to load balance across the endpoints, reachable at /proxy-api/<account-name>/<slug>/<upstream-path>.
+    """
+
+    slug: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    A unique identifier used to address the load-balanced endpoints of this account. When routing_type is "weight" or "priority", the load balancer is reachable at /proxy-api/<account-name>/<slug>/<upstream-path>, alongside the per-endpoint URLs.
     """
 
     auth_data: typing.Optional[CustomHeaderAuth] = None

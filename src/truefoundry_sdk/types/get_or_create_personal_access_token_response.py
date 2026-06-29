@@ -10,17 +10,17 @@ from .virtual_account import VirtualAccount
 class GetOrCreatePersonalAccessTokenResponse(UniversalBaseModel):
     data: VirtualAccount = pydantic.Field()
     """
-    Personal Access Token data
+    The personal access token data.
     """
 
     token: str = pydantic.Field()
     """
-    Personal Access Token
+    The authentication token. Store this securely — it cannot be retrieved later.
     """
 
     created: bool = pydantic.Field()
     """
-    Whether the PAT was created (true) or already existed (false)
+    Whether a new token was created (`true`) or an existing one was returned (`false`).
     """
 
     if IS_PYDANTIC_V2:

@@ -11,12 +11,12 @@ from .workspace import Workspace
 class ListWorkspacesResponse(UniversalBaseModel):
     data: typing.List[Workspace] = pydantic.Field()
     """
-    Array of Workspace
+    List of workspaces matching the query criteria.
     """
 
     pagination: Pagination = pydantic.Field()
     """
-    Pagination information
+    Pagination metadata.
     """
 
     if IS_PYDANTIC_V2:

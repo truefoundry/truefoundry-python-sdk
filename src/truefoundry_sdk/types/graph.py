@@ -12,25 +12,27 @@ from .graph_chart_type import GraphChartType
 class Graph(UniversalBaseModel):
     name: str = pydantic.Field()
     """
-    Name
+    Chart display name.
     """
 
     description: str = pydantic.Field()
     """
-    Description
+    Chart description.
     """
 
     chart: str = pydantic.Field()
     """
-    Chart name
+    Chart identifier.
     """
 
     chart_type: typing_extensions.Annotated[
-        GraphChartType, FieldMetadata(alias="chartType"), pydantic.Field(alias="chartType", description="Chart type")
+        GraphChartType,
+        FieldMetadata(alias="chartType"),
+        pydantic.Field(alias="chartType", description="Chart visualisation type."),
     ]
     params: str = pydantic.Field()
     """
-    Chart params
+    Opaque params string describing chart configuration to pass back to the corresponding chart data endpoint.
     """
 
     if IS_PYDANTIC_V2:

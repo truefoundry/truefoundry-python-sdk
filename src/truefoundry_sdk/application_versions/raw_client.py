@@ -35,12 +35,12 @@ class RawApplicationVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Deployment, ListApplicationDeploymentsResponse]:
         """
-        Fetch all deployments for a given application ID with optional filters such as deployment ID or version. Supports pagination.
+        List deployments for a given application. Each deployment is a new version of the application.
 
         Parameters
         ----------
         id : str
-            Id of the application
+            Unique identifier of the application
 
         limit : typing.Optional[int]
             Number of items per page
@@ -49,10 +49,10 @@ class RawApplicationVersionsClient:
             Number of items to skip
 
         version : typing.Optional[str]
-            Deployment version. Filter deployments by version.
+            Deployment version to filter by
 
         deployment_id : typing.Optional[str]
-            Deployment ID. Filter deployments by a specific ID.
+            Deployment ID to filter by
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -60,7 +60,7 @@ class RawApplicationVersionsClient:
         Returns
         -------
         SyncPager[Deployment, ListApplicationDeploymentsResponse]
-            List of deployments matching the provided filters.
+            Paginated list of deployments.
         """
         offset = offset if offset is not None else 0
 
@@ -130,15 +130,15 @@ class RawApplicationVersionsClient:
         self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetApplicationDeploymentResponse]:
         """
-        Get Deployment associated with the provided application ID and deployment ID.
+        Get a single deployment by application ID and deployment ID.
 
         Parameters
         ----------
         id : str
-            Application id of the application
+            Unique identifier of the application
 
         deployment_id : str
-            Deployment id of the deployment
+            Unique identifier of the deployment
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -146,7 +146,7 @@ class RawApplicationVersionsClient:
         Returns
         -------
         HttpResponse[GetApplicationDeploymentResponse]
-            Deployment details returned successfully.
+            Deployment details.
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/apps/{encode_path_param(id)}/deployments/{encode_path_param(deployment_id)}",
@@ -210,12 +210,12 @@ class AsyncRawApplicationVersionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Deployment, ListApplicationDeploymentsResponse]:
         """
-        Fetch all deployments for a given application ID with optional filters such as deployment ID or version. Supports pagination.
+        List deployments for a given application. Each deployment is a new version of the application.
 
         Parameters
         ----------
         id : str
-            Id of the application
+            Unique identifier of the application
 
         limit : typing.Optional[int]
             Number of items per page
@@ -224,10 +224,10 @@ class AsyncRawApplicationVersionsClient:
             Number of items to skip
 
         version : typing.Optional[str]
-            Deployment version. Filter deployments by version.
+            Deployment version to filter by
 
         deployment_id : typing.Optional[str]
-            Deployment ID. Filter deployments by a specific ID.
+            Deployment ID to filter by
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -235,7 +235,7 @@ class AsyncRawApplicationVersionsClient:
         Returns
         -------
         AsyncPager[Deployment, ListApplicationDeploymentsResponse]
-            List of deployments matching the provided filters.
+            Paginated list of deployments.
         """
         offset = offset if offset is not None else 0
 
@@ -308,15 +308,15 @@ class AsyncRawApplicationVersionsClient:
         self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetApplicationDeploymentResponse]:
         """
-        Get Deployment associated with the provided application ID and deployment ID.
+        Get a single deployment by application ID and deployment ID.
 
         Parameters
         ----------
         id : str
-            Application id of the application
+            Unique identifier of the application
 
         deployment_id : str
-            Deployment id of the deployment
+            Unique identifier of the deployment
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -324,7 +324,7 @@ class AsyncRawApplicationVersionsClient:
         Returns
         -------
         AsyncHttpResponse[GetApplicationDeploymentResponse]
-            Deployment details returned successfully.
+            Deployment details.
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/apps/{encode_path_param(id)}/deployments/{encode_path_param(deployment_id)}",

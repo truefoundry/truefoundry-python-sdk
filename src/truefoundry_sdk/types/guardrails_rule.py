@@ -38,6 +38,11 @@ class GuardrailsRule(UniversalBaseModel):
     Guardrail selectors of the guardrails to apply to the MCP tool post invoke (format: groupName/guardrailName)
     """
 
+    custom_error_message: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Optional message returned to the client when a guardrail in this rule blocks a request. Use {{guardrail_message}} to include the default guardrail failure message.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:

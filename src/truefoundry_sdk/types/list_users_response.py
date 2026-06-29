@@ -11,12 +11,12 @@ from .user import User
 class ListUsersResponse(UniversalBaseModel):
     data: typing.List[User] = pydantic.Field()
     """
-    Array of Users
+    Array of users matching the query.
     """
 
     pagination: Pagination = pydantic.Field()
     """
-    Pagination information
+    Pagination metadata.
     """
 
     if IS_PYDANTIC_V2:

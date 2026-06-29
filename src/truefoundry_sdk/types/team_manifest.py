@@ -6,6 +6,7 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
+from .identity_provider_mapping import IdentityProviderMapping
 from .team_owned_by import TeamOwnedBy
 
 
@@ -20,6 +21,19 @@ class TeamManifest(UniversalBaseModel):
     Name of the Team
     """
 
+    display_name: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="displayName"),
+        pydantic.Field(
+            alias="displayName",
+            description="A human-readable label for the team in the UI. If omitted, the team name is shown.",
+        ),
+    ] = None
+    description: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    A short description of the team and its purpose.
+    """
+
     managers: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     Emails of each of the user who can manage the members of the team. Any tenant admin is by default a team manager.
@@ -27,7 +41,7 @@ class TeamManifest(UniversalBaseModel):
 
     members: typing.List[str] = pydantic.Field()
     """
-    Enter email of each of the user you want to add in the team.
+    Enter email of each user to add to the team. Use an empty list for a team with no members yet.
     """
 
     owned_by: typing_extensions.Annotated[
@@ -36,6 +50,11 @@ class TeamManifest(UniversalBaseModel):
     tags: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     Key-value pairs to categorize this Team (e.g., by owner or environment).
+    """
+
+    identity_provider_mapping: typing.Optional[typing.List[IdentityProviderMapping]] = pydantic.Field(default=None)
+    """
+    Mappings from external identity provider claim value to this team
     """
 
     if IS_PYDANTIC_V2:

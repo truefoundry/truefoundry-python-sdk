@@ -38,7 +38,7 @@ class EnvironmentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Environment, ListEnvironmentsResponse]:
         """
-        List environments, if no environments are found, default environments are created and returned. Pagination is available based on query parameters
+        List environments the caller can read within the tenant.
 
         Parameters
         ----------
@@ -54,7 +54,7 @@ class EnvironmentsClient:
         Returns
         -------
         SyncPager[Environment, ListEnvironmentsResponse]
-            Returns a list of environment. If pagination parameters are provided, the response includes paginated data
+            Paginated list of environments for the tenant.
 
         Examples
         --------
@@ -84,15 +84,15 @@ class EnvironmentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetEnvironmentResponse:
         """
-        Creates a new Environment or updates an existing Environment.
+        Create a new environment or update an existing one using the provided `EnvironmentManifest`. Matching is by `name` — if an environment with the same name exists it is updated, otherwise a new one is created.
 
         Parameters
         ----------
         manifest : EnvironmentManifest
-            Environment Manifest
+            Environment manifest. The environment is matched by `name` for upsert.
 
         dry_run : typing.Optional[bool]
-            Dry run
+            When true, validates the manifest without persisting changes.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -100,7 +100,7 @@ class EnvironmentsClient:
         Returns
         -------
         GetEnvironmentResponse
-            Returns the created or updated Environment
+            The created or updated environment.
 
         Examples
         --------
@@ -131,12 +131,12 @@ class EnvironmentsClient:
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetEnvironmentResponse:
         """
-        Get Environment associated with the provided id.
+        Get a single environment by its ID.
 
         Parameters
         ----------
         id : str
-            Environment id
+            System-generated environment ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -144,7 +144,7 @@ class EnvironmentsClient:
         Returns
         -------
         GetEnvironmentResponse
-            Returns the Environment associated with the provided id
+            The environment with the given ID.
 
         Examples
         --------
@@ -155,7 +155,7 @@ class EnvironmentsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.environments.get(
-            id="id",
+            id="jqfwg345gi25n5ju2yz5iz6m",
         )
         """
         _response = self._raw_client.get(id, request_options=request_options)
@@ -163,12 +163,12 @@ class EnvironmentsClient:
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
-        Delete Environment associated with the provided id.
+        Permanently delete the environment with the given ID.
 
         Parameters
         ----------
         id : str
-            Environment id
+            System-generated environment ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -176,7 +176,7 @@ class EnvironmentsClient:
         Returns
         -------
         bool
-            Returns true if the Environment is deleted successfully
+            Returns true if the environment was deleted successfully.
 
         Examples
         --------
@@ -187,7 +187,7 @@ class EnvironmentsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.environments.delete(
-            id="id",
+            id="jqfwg345gi25n5ju2yz5iz6m",
         )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
@@ -217,7 +217,7 @@ class AsyncEnvironmentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Environment, ListEnvironmentsResponse]:
         """
-        List environments, if no environments are found, default environments are created and returned. Pagination is available based on query parameters
+        List environments the caller can read within the tenant.
 
         Parameters
         ----------
@@ -233,7 +233,7 @@ class AsyncEnvironmentsClient:
         Returns
         -------
         AsyncPager[Environment, ListEnvironmentsResponse]
-            Returns a list of environment. If pagination parameters are provided, the response includes paginated data
+            Paginated list of environments for the tenant.
 
         Examples
         --------
@@ -272,15 +272,15 @@ class AsyncEnvironmentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetEnvironmentResponse:
         """
-        Creates a new Environment or updates an existing Environment.
+        Create a new environment or update an existing one using the provided `EnvironmentManifest`. Matching is by `name` — if an environment with the same name exists it is updated, otherwise a new one is created.
 
         Parameters
         ----------
         manifest : EnvironmentManifest
-            Environment Manifest
+            Environment manifest. The environment is matched by `name` for upsert.
 
         dry_run : typing.Optional[bool]
-            Dry run
+            When true, validates the manifest without persisting changes.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -288,7 +288,7 @@ class AsyncEnvironmentsClient:
         Returns
         -------
         GetEnvironmentResponse
-            Returns the created or updated Environment
+            The created or updated environment.
 
         Examples
         --------
@@ -327,12 +327,12 @@ class AsyncEnvironmentsClient:
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetEnvironmentResponse:
         """
-        Get Environment associated with the provided id.
+        Get a single environment by its ID.
 
         Parameters
         ----------
         id : str
-            Environment id
+            System-generated environment ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -340,7 +340,7 @@ class AsyncEnvironmentsClient:
         Returns
         -------
         GetEnvironmentResponse
-            Returns the Environment associated with the provided id
+            The environment with the given ID.
 
         Examples
         --------
@@ -356,7 +356,7 @@ class AsyncEnvironmentsClient:
 
         async def main() -> None:
             await client.environments.get(
-                id="id",
+                id="jqfwg345gi25n5ju2yz5iz6m",
             )
 
 
@@ -367,12 +367,12 @@ class AsyncEnvironmentsClient:
 
     async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
-        Delete Environment associated with the provided id.
+        Permanently delete the environment with the given ID.
 
         Parameters
         ----------
         id : str
-            Environment id
+            System-generated environment ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -380,7 +380,7 @@ class AsyncEnvironmentsClient:
         Returns
         -------
         bool
-            Returns true if the Environment is deleted successfully
+            Returns true if the environment was deleted successfully.
 
         Examples
         --------
@@ -396,7 +396,7 @@ class AsyncEnvironmentsClient:
 
         async def main() -> None:
             await client.environments.delete(
-                id="id",
+                id="jqfwg345gi25n5ju2yz5iz6m",
             )
 
 

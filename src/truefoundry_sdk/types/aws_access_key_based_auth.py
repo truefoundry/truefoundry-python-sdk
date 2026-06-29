@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class AwsAccessKeyBasedAuth(UniversalBaseModel):
     """
-    AWS Access Key Based Auth
+    Access Key Based
     """
 
     type: typing.Literal["access-key-based"] = pydantic.Field(default="access-key-based")
