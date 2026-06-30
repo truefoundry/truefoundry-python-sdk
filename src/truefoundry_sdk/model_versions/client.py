@@ -73,7 +73,7 @@ class ModelVersionsClient:
             Filter model versions by name.
 
         version : typing.Optional[int]
-            Version number (positive integer) or `latest`
+            Version number (positive integer) to filter by.
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter model versions by associated run identifiers.
@@ -305,7 +305,7 @@ class AsyncModelVersionsClient:
             Filter model versions by name.
 
         version : typing.Optional[int]
-            Version number (positive integer) or `latest`
+            Version number (positive integer) to filter by.
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter model versions by associated run identifiers.

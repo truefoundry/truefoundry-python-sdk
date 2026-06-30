@@ -7536,7 +7536,7 @@ client.prompt_versions.list(
 <dl>
 <dd>
 
-**version:** `typing.Optional[int]` — Version number (positive integer) or `latest`
+**version:** `typing.Optional[int]` — Version number (positive integer) to filter by.
     
 </dd>
 </dl>
@@ -8266,7 +8266,7 @@ client.artifact_versions.list(
 <dl>
 <dd>
 
-**version:** `typing.Optional[int]` — Version number of the artifact version, or "latest" to fetch the most recent one.
+**version:** `typing.Optional[int]` — Version number (positive integer) to filter by.
     
 </dd>
 </dl>
@@ -11716,7 +11716,7 @@ client.model_versions.list(
 <dl>
 <dd>
 
-**version:** `typing.Optional[int]` — Version number (positive integer) or `latest`
+**version:** `typing.Optional[int]` — Version number (positive integer) to filter by.
     
 </dd>
 </dl>
@@ -13970,7 +13970,7 @@ client.internal.artifact_versions.list(
 <dl>
 <dd>
 
-**version:** `typing.Optional[int]` — Version number of the artifact version, or "latest" to fetch the most recent one.
+**version:** `typing.Optional[int]` — Version number (positive integer) to filter by.
     
 </dd>
 </dl>

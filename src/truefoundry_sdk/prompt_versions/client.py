@@ -70,7 +70,7 @@ class PromptVersionsClient:
             Filter prompt versions by name.
 
         version : typing.Optional[int]
-            Version number (positive integer) or `latest`
+            Version number (positive integer) to filter by.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -284,7 +284,7 @@ class AsyncPromptVersionsClient:
             Filter prompt versions by name.
 
         version : typing.Optional[int]
-            Version number (positive integer) or `latest`
+            Version number (positive integer) to filter by.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

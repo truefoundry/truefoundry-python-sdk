@@ -80,7 +80,7 @@ class ArtifactVersionsClient:
             Name of the artifact version.
 
         version : typing.Optional[int]
-            Version number of the artifact version, or "latest" to fetch the most recent one.
+            Version number (positive integer) to filter by.
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Run IDs to filter artifact versions by.
@@ -534,7 +534,7 @@ class AsyncArtifactVersionsClient:
             Name of the artifact version.
 
         version : typing.Optional[int]
-            Version number of the artifact version, or "latest" to fetch the most recent one.
+            Version number (positive integer) to filter by.
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Run IDs to filter artifact versions by.
