@@ -19,6 +19,8 @@ from .types.true_foundry_delete_response import TrueFoundryDeleteResponse
 if typing.TYPE_CHECKING:
     from .agent_skill_versions.client import AgentSkillVersionsClient, AsyncAgentSkillVersionsClient
     from .agent_skills.client import AgentSkillsClient, AsyncAgentSkillsClient
+    from .agent_versions.client import AgentVersionsClient, AsyncAgentVersionsClient
+    from .agents.client import AgentsClient, AsyncAgentsClient
     from .alerts.client import AlertsClient, AsyncAlertsClient
     from .application_versions.client import ApplicationVersionsClient, AsyncApplicationVersionsClient
     from .applications.client import ApplicationsClient, AsyncApplicationsClient
@@ -141,6 +143,8 @@ class BaseTrueFoundry:
         self._agent_skills: typing.Optional[AgentSkillsClient] = None
         self._agent_skill_versions: typing.Optional[AgentSkillVersionsClient] = None
         self._data_directories: typing.Optional[DataDirectoriesClient] = None
+        self._agents: typing.Optional[AgentsClient] = None
+        self._agent_versions: typing.Optional[AgentVersionsClient] = None
 
     @property
     def with_raw_response(self) -> RawBaseTrueFoundry:
@@ -470,6 +474,22 @@ class BaseTrueFoundry:
             self._data_directories = DataDirectoriesClient(client_wrapper=self._client_wrapper)
         return self._data_directories
 
+    @property
+    def agents(self):
+        if self._agents is None:
+            from .agents.client import AgentsClient  # noqa: E402
+
+            self._agents = AgentsClient(client_wrapper=self._client_wrapper)
+        return self._agents
+
+    @property
+    def agent_versions(self):
+        if self._agent_versions is None:
+            from .agent_versions.client import AgentVersionsClient  # noqa: E402
+
+            self._agent_versions = AgentVersionsClient(client_wrapper=self._client_wrapper)
+        return self._agent_versions
+
 
 def _make_default_async_client(
     timeout: typing.Optional[float],
@@ -584,6 +604,8 @@ class AsyncBaseTrueFoundry:
         self._agent_skills: typing.Optional[AsyncAgentSkillsClient] = None
         self._agent_skill_versions: typing.Optional[AsyncAgentSkillVersionsClient] = None
         self._data_directories: typing.Optional[AsyncDataDirectoriesClient] = None
+        self._agents: typing.Optional[AsyncAgentsClient] = None
+        self._agent_versions: typing.Optional[AsyncAgentVersionsClient] = None
 
     @property
     def with_raw_response(self) -> AsyncRawBaseTrueFoundry:
@@ -928,3 +950,19 @@ class AsyncBaseTrueFoundry:
 
             self._data_directories = AsyncDataDirectoriesClient(client_wrapper=self._client_wrapper)
         return self._data_directories
+
+    @property
+    def agents(self):
+        if self._agents is None:
+            from .agents.client import AsyncAgentsClient  # noqa: E402
+
+            self._agents = AsyncAgentsClient(client_wrapper=self._client_wrapper)
+        return self._agents
+
+    @property
+    def agent_versions(self):
+        if self._agent_versions is None:
+            from .agent_versions.client import AsyncAgentVersionsClient  # noqa: E402
+
+            self._agent_versions = AsyncAgentVersionsClient(client_wrapper=self._client_wrapper)
+        return self._agent_versions
