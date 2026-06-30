@@ -11,16 +11,55 @@ from .subject import Subject
 
 
 class Prompt(UniversalBaseModel):
-    id: str
-    ml_repo_id: str
-    type: ArtifactType
-    name: str
-    fqn: str
-    created_by_subject: Subject
-    created_at: typing.Optional[dt.datetime] = None
-    updated_at: typing.Optional[dt.datetime] = None
-    latest_version: typing.Optional[PromptVersion] = None
-    run_steps: typing.Optional[typing.List[float]] = None
+    id: str = pydantic.Field()
+    """
+    Unique identifier of the prompt.
+    """
+
+    ml_repo_id: str = pydantic.Field()
+    """
+    Identifier of the ML Repo the prompt belongs to.
+    """
+
+    type: ArtifactType = pydantic.Field()
+    """
+    Discriminator for the artifact type; always `chat_prompt` for a prompt.
+    """
+
+    name: str = pydantic.Field()
+    """
+    Name of the prompt.
+    """
+
+    fqn: str = pydantic.Field()
+    """
+    Fully Qualified Name uniquely identifying the prompt.
+    """
+
+    created_by_subject: Subject = pydantic.Field()
+    """
+    Subject (user, team, or service account) that created the prompt.
+    """
+
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Timestamp when the prompt was created.
+    """
+
+    updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Timestamp when the prompt was last updated.
+    """
+
+    latest_version: typing.Optional[PromptVersion] = pydantic.Field(default=None)
+    """
+    Most recently created version of the prompt, if any exist.
+    """
+
+    run_steps: typing.Optional[typing.List[float]] = pydantic.Field(default=None)
+    """
+    Run steps associated with the prompt.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

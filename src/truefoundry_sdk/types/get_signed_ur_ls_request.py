@@ -4,7 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .get_signed_ur_ls_request_operation import GetSignedUrLsRequestOperation
+from .operation import Operation
 
 
 class GetSignedUrLsRequest(UniversalBaseModel):
@@ -18,7 +18,7 @@ class GetSignedUrLsRequest(UniversalBaseModel):
     Paths of the files to generate signed URLs for.
     """
 
-    operation: GetSignedUrLsRequestOperation = pydantic.Field()
+    operation: Operation = pydantic.Field()
     """
     Operation the signed URLs should permit (READ or WRITE).
     """

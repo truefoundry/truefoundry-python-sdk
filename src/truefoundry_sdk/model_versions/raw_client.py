@@ -16,7 +16,6 @@ from ..types.empty_response import EmptyResponse
 from ..types.get_model_version_response import GetModelVersionResponse
 from ..types.list_model_versions_response import ListModelVersionsResponse
 from ..types.model_version import ModelVersion
-from .types.model_versions_list_request_version import ModelVersionsListRequestVersion
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -37,7 +36,7 @@ class RawModelVersionsClient:
         model_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[ModelVersionsListRequestVersion] = None,
+        version: typing.Optional[int] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
         include_internal_metadata: typing.Optional[bool] = False,
@@ -69,8 +68,8 @@ class RawModelVersionsClient:
         name : typing.Optional[str]
             Filter model versions by name.
 
-        version : typing.Optional[ModelVersionsListRequestVersion]
-            Version number (positive integer) or `latest`
+        version : typing.Optional[int]
+            Version number (positive integer) to filter by.
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter model versions by associated run identifiers.
@@ -330,7 +329,7 @@ class AsyncRawModelVersionsClient:
         model_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[ModelVersionsListRequestVersion] = None,
+        version: typing.Optional[int] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
         include_internal_metadata: typing.Optional[bool] = False,
@@ -362,8 +361,8 @@ class AsyncRawModelVersionsClient:
         name : typing.Optional[str]
             Filter model versions by name.
 
-        version : typing.Optional[ModelVersionsListRequestVersion]
-            Version number (positive integer) or `latest`
+        version : typing.Optional[int]
+            Version number (positive integer) to filter by.
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter model versions by associated run identifiers.
