@@ -12,7 +12,6 @@ from ...core.request_options import RequestOptions
 from ...types.artifact_type import ArtifactType
 from ...types.internal_list_artifact_versions_response import InternalListArtifactVersionsResponse
 from ...types.internal_list_artifact_versions_response_data_item import InternalListArtifactVersionsResponseDataItem
-from .types.artifact_versions_list_request_version import ArtifactVersionsListRequestVersion
 from pydantic import ValidationError
 
 
@@ -30,7 +29,7 @@ class RawArtifactVersionsClient:
         artifact_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[ArtifactVersionsListRequestVersion] = None,
+        version: typing.Optional[int] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
         include_internal_metadata: typing.Optional[bool] = False,
@@ -64,8 +63,8 @@ class RawArtifactVersionsClient:
         name : typing.Optional[str]
             Name of the artifact version.
 
-        version : typing.Optional[ArtifactVersionsListRequestVersion]
-            Version number of the artifact version, or "latest" to fetch the most recent one.
+        version : typing.Optional[int]
+            Version number (positive integer) to filter by.
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Run IDs to filter artifact versions by.
@@ -164,7 +163,7 @@ class AsyncRawArtifactVersionsClient:
         artifact_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[ArtifactVersionsListRequestVersion] = None,
+        version: typing.Optional[int] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
         include_internal_metadata: typing.Optional[bool] = False,
@@ -198,8 +197,8 @@ class AsyncRawArtifactVersionsClient:
         name : typing.Optional[str]
             Name of the artifact version.
 
-        version : typing.Optional[ArtifactVersionsListRequestVersion]
-            Version number of the artifact version, or "latest" to fetch the most recent one.
+        version : typing.Optional[int]
+            Version number (positive integer) to filter by.
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Run IDs to filter artifact versions by.

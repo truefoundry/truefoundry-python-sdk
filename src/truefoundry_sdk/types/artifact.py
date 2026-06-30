@@ -16,19 +16,50 @@ class Artifact(UniversalBaseModel):
     System-generated artifact ID.
     """
 
-    ml_repo_id: str
-    type: ArtifactType
-    name: str
+    ml_repo_id: str = pydantic.Field()
+    """
+    Identifier of the ML Repo the artifact belongs to.
+    """
+
+    type: ArtifactType = pydantic.Field()
+    """
+    Discriminator for the artifact type; always `artifact` for a generic artifact.
+    """
+
+    name: str = pydantic.Field()
+    """
+    Name of the artifact.
+    """
+
     fqn: str = pydantic.Field()
     """
     Human-readable Fully Qualified Name of the artifact.
     """
 
-    created_by_subject: Subject
-    created_at: typing.Optional[dt.datetime] = None
-    updated_at: typing.Optional[dt.datetime] = None
-    latest_version: typing.Optional[ArtifactVersion] = None
-    run_steps: typing.Optional[typing.List[float]] = None
+    created_by_subject: Subject = pydantic.Field()
+    """
+    Subject (user, team, or service account) that created the artifact.
+    """
+
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Timestamp when the artifact was created.
+    """
+
+    updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Timestamp when the artifact was last updated.
+    """
+
+    latest_version: typing.Optional[ArtifactVersion] = pydantic.Field(default=None)
+    """
+    Most recently created version of the artifact, if any exist.
+    """
+
+    run_steps: typing.Optional[typing.List[float]] = pydantic.Field(default=None)
+    """
+    Run steps associated with the artifact.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

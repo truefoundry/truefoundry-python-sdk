@@ -4,10 +4,10 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .model_configuration_parameters_stop import ModelConfigurationParametersStop
+from .parameters_stop import ParametersStop
 
 
-class ModelConfigurationParameters(UniversalBaseModel):
+class Parameters(UniversalBaseModel):
     """
     Parameters to pass to the model when generating
     """
@@ -16,7 +16,7 @@ class ModelConfigurationParameters(UniversalBaseModel):
     temperature: typing.Optional[float] = None
     top_k: typing.Optional[float] = None
     top_p: typing.Optional[float] = None
-    stop: typing.Optional[ModelConfigurationParametersStop] = None
+    stop: typing.Optional[ParametersStop] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

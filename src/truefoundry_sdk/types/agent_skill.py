@@ -11,15 +11,50 @@ from .subject import Subject
 
 
 class AgentSkill(UniversalBaseModel):
-    id: str
-    ml_repo_id: str
-    type: ArtifactType
-    name: str
-    fqn: str
-    created_by_subject: Subject
-    created_at: typing.Optional[dt.datetime] = None
-    updated_at: typing.Optional[dt.datetime] = None
-    latest_version: typing.Optional[AgentSkillVersion] = None
+    id: str = pydantic.Field()
+    """
+    Unique identifier of the agent skill.
+    """
+
+    ml_repo_id: str = pydantic.Field()
+    """
+    Identifier of the ML Repo the agent skill belongs to.
+    """
+
+    type: ArtifactType = pydantic.Field()
+    """
+    Discriminator for the artifact type; always `agent-skill` for an agent skill.
+    """
+
+    name: str = pydantic.Field()
+    """
+    Name of the agent skill.
+    """
+
+    fqn: str = pydantic.Field()
+    """
+    Fully Qualified Name uniquely identifying the agent skill.
+    """
+
+    created_by_subject: Subject = pydantic.Field()
+    """
+    Subject (user, team, or service account) that created the agent skill.
+    """
+
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Timestamp when the agent skill was created.
+    """
+
+    updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Timestamp when the agent skill was last updated.
+    """
+
+    latest_version: typing.Optional[AgentSkillVersion] = pydantic.Field(default=None)
+    """
+    Most recently created version of the agent skill, if any exist.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

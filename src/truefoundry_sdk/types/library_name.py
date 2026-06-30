@@ -7,7 +7,7 @@ from ..core import enum
 T_Result = typing.TypeVar("T_Result")
 
 
-class TransformersFrameworkLibraryName(enum.StrEnum):
+class LibraryName(enum.StrEnum):
     """
     Name of the library for the framework
     """
@@ -15,13 +15,13 @@ class TransformersFrameworkLibraryName(enum.StrEnum):
     TRANSFORMERS = "transformers"
     SENTENCE_TRANSFORMERS = "sentence-transformers"
     DIFFUSERS = "diffusers"
-    _UNKNOWN = "__TRANSFORMERSFRAMEWORKLIBRARYNAME_UNKNOWN__"
+    _UNKNOWN = "__LIBRARYNAME_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
     """
 
     @classmethod
-    def _missing_(cls, value: typing.Any) -> "TransformersFrameworkLibraryName":
+    def _missing_(cls, value: typing.Any) -> "LibraryName":
         unknown = cls._UNKNOWN
         unknown._value_ = value
         return unknown
@@ -33,10 +33,10 @@ class TransformersFrameworkLibraryName(enum.StrEnum):
         diffusers: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
-        if self is TransformersFrameworkLibraryName.TRANSFORMERS:
+        if self is LibraryName.TRANSFORMERS:
             return transformers()
-        if self is TransformersFrameworkLibraryName.SENTENCE_TRANSFORMERS:
+        if self is LibraryName.SENTENCE_TRANSFORMERS:
             return sentence_transformers()
-        if self is TransformersFrameworkLibraryName.DIFFUSERS:
+        if self is LibraryName.DIFFUSERS:
             return diffusers()
         return _unknown_member(self._value_)
