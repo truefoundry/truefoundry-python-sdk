@@ -5,6 +5,7 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
+from ..types.empty_response import EmptyResponse
 from ..types.get_ml_repo_response import GetMlRepoResponse
 from ..types.list_ml_repos_response import ListMlReposResponse
 from ..types.ml_repo import MlRepo
@@ -62,7 +63,7 @@ class MlReposClient:
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
 
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
         """
         Delete an ML Repo by its ID.
 
@@ -76,7 +77,8 @@ class MlReposClient:
 
         Returns
         -------
-        None
+        EmptyResponse
+            Empty response indicating successful deletion
 
         Examples
         --------
@@ -259,7 +261,7 @@ class AsyncMlReposClient:
         _response = await self._raw_client.get(id, request_options=request_options)
         return _response.data
 
-    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
         """
         Delete an ML Repo by its ID.
 
@@ -273,7 +275,8 @@ class AsyncMlReposClient:
 
         Returns
         -------
-        None
+        EmptyResponse
+            Empty response indicating successful deletion
 
         Examples
         --------

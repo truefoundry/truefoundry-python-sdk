@@ -16,6 +16,7 @@ from ..errors.bad_request_error import BadRequestError
 from ..errors.conflict_error import ConflictError
 from ..errors.not_found_error import NotFoundError
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
+from ..types.empty_response import EmptyResponse
 from ..types.get_ml_repo_response import GetMlRepoResponse
 from ..types.http_error import HttpError
 from ..types.list_ml_repos_response import ListMlReposResponse
@@ -85,7 +86,9 @@ class RawMlReposClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
+    def delete(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[EmptyResponse]:
         """
         Delete an ML Repo by its ID.
 
@@ -99,7 +102,8 @@ class RawMlReposClient:
 
         Returns
         -------
-        HttpResponse[None]
+        HttpResponse[EmptyResponse]
+            Empty response indicating successful deletion
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/ml-repos/{encode_path_param(id)}",
@@ -108,7 +112,14 @@ class RawMlReposClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return HttpResponse(response=_response, data=None)
+                _data = typing.cast(
+                    EmptyResponse,
+                    parse_obj_as(
+                        type_=EmptyResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
             if _response.status_code == 404:
                 raise NotFoundError(
                     headers=dict(_response.headers),
@@ -369,7 +380,7 @@ class AsyncRawMlReposClient:
 
     async def delete(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[None]:
+    ) -> AsyncHttpResponse[EmptyResponse]:
         """
         Delete an ML Repo by its ID.
 
@@ -383,7 +394,8 @@ class AsyncRawMlReposClient:
 
         Returns
         -------
-        AsyncHttpResponse[None]
+        AsyncHttpResponse[EmptyResponse]
+            Empty response indicating successful deletion
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/ml-repos/{encode_path_param(id)}",
@@ -392,7 +404,14 @@ class AsyncRawMlReposClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return AsyncHttpResponse(response=_response, data=None)
+                _data = typing.cast(
+                    EmptyResponse,
+                    parse_obj_as(
+                        type_=EmptyResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
             if _response.status_code == 404:
                 raise NotFoundError(
                     headers=dict(_response.headers),

@@ -10,11 +10,11 @@ from ..types.data_directory_manifest import DataDirectoryManifest
 from ..types.empty_response import EmptyResponse
 from ..types.file_info import FileInfo
 from ..types.get_data_directory_response import GetDataDirectoryResponse
-from ..types.get_signed_ur_ls_request_operation import GetSignedUrLsRequestOperation
 from ..types.get_signed_ur_ls_response import GetSignedUrLsResponse
 from ..types.list_data_directories_response import ListDataDirectoriesResponse
 from ..types.list_files_response import ListFilesResponse
 from ..types.multi_part_upload_response import MultiPartUploadResponse
+from ..types.operation import Operation
 from .raw_client import AsyncRawDataDirectoriesClient, RawDataDirectoriesClient
 
 # this is used as the default value for optional parameters
@@ -284,7 +284,7 @@ class DataDirectoriesClient:
         *,
         id: str,
         paths: typing.Sequence[str],
-        operation: GetSignedUrLsRequestOperation,
+        operation: Operation,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSignedUrLsResponse:
         """
@@ -298,7 +298,7 @@ class DataDirectoriesClient:
         paths : typing.Sequence[str]
             Paths of the files to generate signed URLs for.
 
-        operation : GetSignedUrLsRequestOperation
+        operation : Operation
             Operation the signed URLs should permit (READ or WRITE).
 
         request_options : typing.Optional[RequestOptions]
@@ -311,7 +311,7 @@ class DataDirectoriesClient:
 
         Examples
         --------
-        from truefoundry_sdk import GetSignedUrLsRequestOperation, TrueFoundry
+        from truefoundry_sdk import Operation, TrueFoundry
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -320,7 +320,7 @@ class DataDirectoriesClient:
         client.data_directories.get_signed_urls(
             id="id",
             paths=["paths"],
-            operation=GetSignedUrLsRequestOperation.READ,
+            operation=Operation.READ,
         )
         """
         _response = self._raw_client.get_signed_urls(
@@ -698,7 +698,7 @@ class AsyncDataDirectoriesClient:
         *,
         id: str,
         paths: typing.Sequence[str],
-        operation: GetSignedUrLsRequestOperation,
+        operation: Operation,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSignedUrLsResponse:
         """
@@ -712,7 +712,7 @@ class AsyncDataDirectoriesClient:
         paths : typing.Sequence[str]
             Paths of the files to generate signed URLs for.
 
-        operation : GetSignedUrLsRequestOperation
+        operation : Operation
             Operation the signed URLs should permit (READ or WRITE).
 
         request_options : typing.Optional[RequestOptions]
@@ -727,7 +727,7 @@ class AsyncDataDirectoriesClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import AsyncTrueFoundry, GetSignedUrLsRequestOperation
+        from truefoundry_sdk import AsyncTrueFoundry, Operation
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -739,7 +739,7 @@ class AsyncDataDirectoriesClient:
             await client.data_directories.get_signed_urls(
                 id="id",
                 paths=["paths"],
-                operation=GetSignedUrLsRequestOperation.READ,
+                operation=Operation.READ,
             )
 
 

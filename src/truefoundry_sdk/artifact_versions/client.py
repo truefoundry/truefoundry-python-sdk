@@ -9,14 +9,13 @@ from ..types.artifact_version import ArtifactVersion
 from ..types.empty_response import EmptyResponse
 from ..types.file_info import FileInfo
 from ..types.get_artifact_version_response import GetArtifactVersionResponse
-from ..types.get_signed_ur_ls_request_operation import GetSignedUrLsRequestOperation
 from ..types.get_signed_ur_ls_response import GetSignedUrLsResponse
 from ..types.list_artifact_versions_response import ListArtifactVersionsResponse
 from ..types.list_files_response import ListFilesResponse
 from ..types.multi_part_upload_response import MultiPartUploadResponse
+from ..types.operation import Operation
 from ..types.stage_artifact_response import StageArtifactResponse
 from .raw_client import AsyncRawArtifactVersionsClient, RawArtifactVersionsClient
-from .types.artifact_versions_list_request_version import ArtifactVersionsListRequestVersion
 from .types.stage_artifact_request_manifest import StageArtifactRequestManifest
 
 # this is used as the default value for optional parameters
@@ -48,7 +47,7 @@ class ArtifactVersionsClient:
         artifact_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[ArtifactVersionsListRequestVersion] = None,
+        version: typing.Optional[int] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
         include_internal_metadata: typing.Optional[bool] = False,
@@ -80,8 +79,8 @@ class ArtifactVersionsClient:
         name : typing.Optional[str]
             Name of the artifact version.
 
-        version : typing.Optional[ArtifactVersionsListRequestVersion]
-            Version number of the artifact version, or "latest" to fetch the most recent one.
+        version : typing.Optional[int]
+            Version number (positive integer) to filter by.
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Run IDs to filter artifact versions by.
@@ -103,7 +102,6 @@ class ArtifactVersionsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        from truefoundry_sdk.artifact_versions import ArtifactVersionsListRequestVersion
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -117,7 +115,7 @@ class ArtifactVersionsClient:
             artifact_id="artifact_id",
             ml_repo_id="ml_repo_id",
             name="name",
-            version=ArtifactVersionsListRequestVersion.LATEST,
+            version=1,
             run_ids=["run_ids"],
             run_steps=[1.1],
             include_internal_metadata=True,
@@ -196,7 +194,7 @@ class ArtifactVersionsClient:
         *,
         id: str,
         paths: typing.Sequence[str],
-        operation: GetSignedUrLsRequestOperation,
+        operation: Operation,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSignedUrLsResponse:
         """
@@ -210,7 +208,7 @@ class ArtifactVersionsClient:
         paths : typing.Sequence[str]
             Paths of the files to generate signed URLs for.
 
-        operation : GetSignedUrLsRequestOperation
+        operation : Operation
             Operation the signed URLs should permit (READ or WRITE).
 
         request_options : typing.Optional[RequestOptions]
@@ -223,7 +221,7 @@ class ArtifactVersionsClient:
 
         Examples
         --------
-        from truefoundry_sdk import GetSignedUrLsRequestOperation, TrueFoundry
+        from truefoundry_sdk import Operation, TrueFoundry
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -232,7 +230,7 @@ class ArtifactVersionsClient:
         client.artifact_versions.get_signed_urls(
             id="id",
             paths=["paths"],
-            operation=GetSignedUrLsRequestOperation.READ,
+            operation=Operation.READ,
         )
         """
         _response = self._raw_client.get_signed_urls(
@@ -503,7 +501,7 @@ class AsyncArtifactVersionsClient:
         artifact_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[ArtifactVersionsListRequestVersion] = None,
+        version: typing.Optional[int] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
         include_internal_metadata: typing.Optional[bool] = False,
@@ -535,8 +533,8 @@ class AsyncArtifactVersionsClient:
         name : typing.Optional[str]
             Name of the artifact version.
 
-        version : typing.Optional[ArtifactVersionsListRequestVersion]
-            Version number of the artifact version, or "latest" to fetch the most recent one.
+        version : typing.Optional[int]
+            Version number (positive integer) to filter by.
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Run IDs to filter artifact versions by.
@@ -560,7 +558,6 @@ class AsyncArtifactVersionsClient:
         import asyncio
 
         from truefoundry_sdk import AsyncTrueFoundry
-        from truefoundry_sdk.artifact_versions import ArtifactVersionsListRequestVersion
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -577,7 +574,7 @@ class AsyncArtifactVersionsClient:
                 artifact_id="artifact_id",
                 ml_repo_id="ml_repo_id",
                 name="name",
-                version=ArtifactVersionsListRequestVersion.LATEST,
+                version=1,
                 run_ids=["run_ids"],
                 run_steps=[1.1],
                 include_internal_metadata=True,
@@ -668,7 +665,7 @@ class AsyncArtifactVersionsClient:
         *,
         id: str,
         paths: typing.Sequence[str],
-        operation: GetSignedUrLsRequestOperation,
+        operation: Operation,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSignedUrLsResponse:
         """
@@ -682,7 +679,7 @@ class AsyncArtifactVersionsClient:
         paths : typing.Sequence[str]
             Paths of the files to generate signed URLs for.
 
-        operation : GetSignedUrLsRequestOperation
+        operation : Operation
             Operation the signed URLs should permit (READ or WRITE).
 
         request_options : typing.Optional[RequestOptions]
@@ -697,7 +694,7 @@ class AsyncArtifactVersionsClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import AsyncTrueFoundry, GetSignedUrLsRequestOperation
+        from truefoundry_sdk import AsyncTrueFoundry, Operation
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -709,7 +706,7 @@ class AsyncArtifactVersionsClient:
             await client.artifact_versions.get_signed_urls(
                 id="id",
                 paths=["paths"],
-                operation=GetSignedUrLsRequestOperation.READ,
+                operation=Operation.READ,
             )
 
 
