@@ -1186,7 +1186,6 @@ if typing.TYPE_CHECKING:
         workspaces,
     )
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .agent_skill_versions import AgentSkillVersionsListRequestVersion
     from .agents import AgentsListRequestType
     from .applications import (
         ApplicationsCancelDeploymentResponse,
@@ -1229,7 +1228,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentSkillSourceInline": ".types",
     "AgentSkillSourceLocal": ".types",
     "AgentSkillVersion": ".types",
-    "AgentSkillVersionsListRequestVersion": ".agent_skill_versions",
     "AgentSource": ".types",
     "AgentVersion": ".types",
     "AgentVersionMetadata": ".types",
@@ -2446,7 +2444,6 @@ __all__ = [
     "AgentSkillSourceInline",
     "AgentSkillSourceLocal",
     "AgentSkillVersion",
-    "AgentSkillVersionsListRequestVersion",
     "AgentSource",
     "AgentVersion",
     "AgentVersionMetadata",

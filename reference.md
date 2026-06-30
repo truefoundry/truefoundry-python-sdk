@@ -12588,7 +12588,6 @@ List agent skill versions with optional filtering by FQN, agent skill ID, ML Rep
 
 ```python
 from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk.agent_skill_versions import AgentSkillVersionsListRequestVersion
 
 client = TrueFoundry(
     api_key="<token>",
@@ -12602,7 +12601,7 @@ client.agent_skill_versions.list(
     agent_skill_id="agent_skill_id",
     ml_repo_id="ml_repo_id",
     name="name",
-    version=AgentSkillVersionsListRequestVersion.LATEST,
+    version=1,
 )
 
 ```
@@ -12667,7 +12666,7 @@ client.agent_skill_versions.list(
 <dl>
 <dd>
 
-**version:** `typing.Optional[AgentSkillVersionsListRequestVersion]` — Version number (positive integer) or `latest`
+**version:** `typing.Optional[int]` — Version number (positive integer) to filter by.
     
 </dd>
 </dl>
