@@ -960,6 +960,7 @@ if typing.TYPE_CHECKING:
         SparkJobPythonNotebookEntrypoint,
         SparkJobScalaEntrypoint,
         SparkJobScalaNotebookEntrypoint,
+        SparkJobTriggerInput,
         SqlSanitizerGuardrailConfig,
         SqlSanitizerGuardrailConfigConfig,
         SqlSanitizerGuardrailConfigOperation,
@@ -1197,6 +1198,7 @@ if typing.TYPE_CHECKING:
     from .artifacts import ApplyArtifactRequestManifest
     from .client import AsyncTrueFoundry, TrueFoundry
     from .gateway_configs import GatewayConfigsGetRequestType
+    from .jobs import TriggerJobRequestInput
     from .model_versions import ModelVersionsListRequestVersion
     from .personal_access_tokens import CreatePersonalAccessTokenRequestTokenType
     from .prompt_versions import PromptVersionsListRequestVersion
@@ -2183,6 +2185,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SparkJobPythonNotebookEntrypoint": ".types",
     "SparkJobScalaEntrypoint": ".types",
     "SparkJobScalaNotebookEntrypoint": ".types",
+    "SparkJobTriggerInput": ".types",
     "SqlSanitizerGuardrailConfig": ".types",
     "SqlSanitizerGuardrailConfigConfig": ".types",
     "SqlSanitizerGuardrailConfigOperation": ".types",
@@ -2259,6 +2262,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TracingProjectStorageConfig": ".types",
     "TransformersFramework": ".types",
     "TransformersFrameworkLibraryName": ".types",
+    "TriggerJobRequestInput": ".jobs",
     "TriggerJobRunResponse": ".types",
     "TrojAiClientIdAuth": ".types",
     "TrojAiGuardrailConfig": ".types",
@@ -3401,6 +3405,7 @@ __all__ = [
     "SparkJobPythonNotebookEntrypoint",
     "SparkJobScalaEntrypoint",
     "SparkJobScalaNotebookEntrypoint",
+    "SparkJobTriggerInput",
     "SqlSanitizerGuardrailConfig",
     "SqlSanitizerGuardrailConfigConfig",
     "SqlSanitizerGuardrailConfigOperation",
@@ -3477,6 +3482,7 @@ __all__ = [
     "TracingProjectStorageConfig",
     "TransformersFramework",
     "TransformersFrameworkLibraryName",
+    "TriggerJobRequestInput",
     "TriggerJobRunResponse",
     "TrojAiClientIdAuth",
     "TrojAiGuardrailConfig",

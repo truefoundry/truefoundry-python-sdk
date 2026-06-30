@@ -4730,7 +4730,7 @@ client.jobs.trigger()
 <dl>
 <dd>
 
-**input:** `typing.Optional[JobTriggerInput]` — Job trigger input
+**input:** `typing.Optional[TriggerJobRequestInput]` — Job trigger input
     
 </dd>
 </dl>

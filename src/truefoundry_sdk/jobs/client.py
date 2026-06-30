@@ -10,13 +10,13 @@ from ..types.get_job_run_response import GetJobRunResponse
 from ..types.job_run import JobRun
 from ..types.job_run_status import JobRunStatus
 from ..types.job_runs_sort_by import JobRunsSortBy
-from ..types.job_trigger_input import JobTriggerInput
 from ..types.list_job_run_response import ListJobRunResponse
 from ..types.metadata import Metadata
 from ..types.sort_direction import SortDirection
 from ..types.terminate_job_response import TerminateJobResponse
 from ..types.trigger_job_run_response import TriggerJobRunResponse
 from .raw_client import AsyncRawJobsClient, RawJobsClient
+from .types.trigger_job_request_input import TriggerJobRequestInput
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -215,7 +215,7 @@ class JobsClient:
         *,
         deployment_id: typing.Optional[str] = OMIT,
         application_id: typing.Optional[str] = OMIT,
-        input: typing.Optional[JobTriggerInput] = OMIT,
+        input: typing.Optional[TriggerJobRequestInput] = OMIT,
         metadata: typing.Optional[Metadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TriggerJobRunResponse:
@@ -230,7 +230,7 @@ class JobsClient:
         application_id : typing.Optional[str]
             Application Id of the job
 
-        input : typing.Optional[JobTriggerInput]
+        input : typing.Optional[TriggerJobRequestInput]
             Job trigger input
 
         metadata : typing.Optional[Metadata]
@@ -522,7 +522,7 @@ class AsyncJobsClient:
         *,
         deployment_id: typing.Optional[str] = OMIT,
         application_id: typing.Optional[str] = OMIT,
-        input: typing.Optional[JobTriggerInput] = OMIT,
+        input: typing.Optional[TriggerJobRequestInput] = OMIT,
         metadata: typing.Optional[Metadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TriggerJobRunResponse:
@@ -537,7 +537,7 @@ class AsyncJobsClient:
         application_id : typing.Optional[str]
             Application Id of the job
 
-        input : typing.Optional[JobTriggerInput]
+        input : typing.Optional[TriggerJobRequestInput]
             Job trigger input
 
         metadata : typing.Optional[Metadata]

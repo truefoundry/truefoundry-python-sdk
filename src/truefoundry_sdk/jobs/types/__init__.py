@@ -6,8 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import TriggerJobRequestInput
-_dynamic_imports: typing.Dict[str, str] = {"TriggerJobRequestInput": ".types"}
+    from .trigger_job_request_input import TriggerJobRequestInput
+_dynamic_imports: typing.Dict[str, str] = {"TriggerJobRequestInput": ".trigger_job_request_input"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:

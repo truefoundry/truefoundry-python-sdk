@@ -973,6 +973,7 @@ if typing.TYPE_CHECKING:
     from .spark_job_python_notebook_entrypoint import SparkJobPythonNotebookEntrypoint
     from .spark_job_scala_entrypoint import SparkJobScalaEntrypoint
     from .spark_job_scala_notebook_entrypoint import SparkJobScalaNotebookEntrypoint
+    from .spark_job_trigger_input import SparkJobTriggerInput
     from .sql_sanitizer_guardrail_config import SqlSanitizerGuardrailConfig
     from .sql_sanitizer_guardrail_config_config import SqlSanitizerGuardrailConfigConfig
     from .sql_sanitizer_guardrail_config_operation import SqlSanitizerGuardrailConfigOperation
@@ -2104,6 +2105,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SparkJobPythonNotebookEntrypoint": ".spark_job_python_notebook_entrypoint",
     "SparkJobScalaEntrypoint": ".spark_job_scala_entrypoint",
     "SparkJobScalaNotebookEntrypoint": ".spark_job_scala_notebook_entrypoint",
+    "SparkJobTriggerInput": ".spark_job_trigger_input",
     "SqlSanitizerGuardrailConfig": ".sql_sanitizer_guardrail_config",
     "SqlSanitizerGuardrailConfigConfig": ".sql_sanitizer_guardrail_config_config",
     "SqlSanitizerGuardrailConfigOperation": ".sql_sanitizer_guardrail_config_operation",
@@ -3259,6 +3261,7 @@ __all__ = [
     "SparkJobPythonNotebookEntrypoint",
     "SparkJobScalaEntrypoint",
     "SparkJobScalaNotebookEntrypoint",
+    "SparkJobTriggerInput",
     "SqlSanitizerGuardrailConfig",
     "SqlSanitizerGuardrailConfigConfig",
     "SqlSanitizerGuardrailConfigOperation",
