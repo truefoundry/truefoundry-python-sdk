@@ -4,19 +4,26 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .parameters_stop import ParametersStop
+from .metric import Metric
+from .run_param import RunParam
+from .run_tag import RunTag
 
 
-class Parameters(UniversalBaseModel):
+class RunData(UniversalBaseModel):
+    metrics: typing.List[Metric] = pydantic.Field()
     """
-    Parameters to pass to the model when generating
+    Latest metrics logged for the run.
     """
 
-    max_tokens: typing.Optional[int] = None
-    temperature: typing.Optional[float] = None
-    top_k: typing.Optional[float] = None
-    top_p: typing.Optional[float] = None
-    stop: typing.Optional[ParametersStop] = None
+    params: typing.List[RunParam] = pydantic.Field()
+    """
+    Parameters logged for the run.
+    """
+
+    tags: typing.List[RunTag] = pydantic.Field()
+    """
+    Tags set on the run.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

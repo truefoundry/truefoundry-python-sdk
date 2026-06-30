@@ -23,7 +23,7 @@ class BudgetV2Alert(UniversalBaseModel):
     Whom to notify when an alert fires. `shared` sends to the configured notification targets only. `breaching-user` additionally notifies the user whose usage caused the breach.
     """
 
-    notification_target: typing.List[NotificationTarget] = pydantic.Field()
+    notification_target: typing.Optional[typing.List[NotificationTarget]] = pydantic.Field(default=None)
     """
     Select where to send budget alert notifications
     """

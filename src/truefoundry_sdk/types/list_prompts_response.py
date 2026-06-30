@@ -11,12 +11,12 @@ from .prompt import Prompt
 class ListPromptsResponse(UniversalBaseModel):
     data: typing.List[Prompt] = pydantic.Field()
     """
-    List of prompts matching the query
+    List of prompts matching the query.
     """
 
     pagination: Pagination = pydantic.Field()
     """
-    Pagination information including total count, offset, and limit
+    Pagination information for the response.
     """
 
     if IS_PYDANTIC_V2:

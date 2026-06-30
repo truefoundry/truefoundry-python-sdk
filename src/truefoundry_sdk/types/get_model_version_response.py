@@ -10,7 +10,7 @@ from .model_version import ModelVersion
 class GetModelVersionResponse(UniversalBaseModel):
     data: ModelVersion = pydantic.Field()
     """
-    The model version data
+    The requested model version.
     """
 
     if IS_PYDANTIC_V2:

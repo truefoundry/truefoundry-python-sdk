@@ -11,12 +11,12 @@ from .pagination import Pagination
 class ListAgentSkillVersionsResponse(UniversalBaseModel):
     data: typing.List[AgentSkillVersion] = pydantic.Field()
     """
-    List of agent skill versions
+    List of agent skill versions matching the query.
     """
 
     pagination: Pagination = pydantic.Field()
     """
-    Pagination information
+    Pagination information for the response.
     """
 
     if IS_PYDANTIC_V2:

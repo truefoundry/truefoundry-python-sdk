@@ -12,7 +12,7 @@ from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
-from ..errors.unprocessable_entity_error import UnprocessableEntityError
+from ..errors.not_found_error import NotFoundError
 from ..types.chat_prompt_manifest import ChatPromptManifest
 from ..types.empty_response import EmptyResponse
 from ..types.get_prompt_response import GetPromptResponse
@@ -38,6 +38,7 @@ class RawPromptsClient:
         Parameters
         ----------
         id : str
+            Unique identifier of the prompt.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -48,7 +49,7 @@ class RawPromptsClient:
             The prompt data
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/prompts/{encode_path_param(id)}",
+            f"api/svc/v1/prompts/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -62,8 +63,8 @@ class RawPromptsClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -91,6 +92,7 @@ class RawPromptsClient:
         Parameters
         ----------
         id : str
+            Unique identifier of the prompt.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -101,7 +103,7 @@ class RawPromptsClient:
             Empty response indicating successful deletion
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/prompts/{encode_path_param(id)}",
+            f"api/svc/v1/prompts/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -115,8 +117,8 @@ class RawPromptsClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -138,11 +140,11 @@ class RawPromptsClient:
     def list(
         self,
         *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         fqn: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
         include_empty_prompts: typing.Optional[bool] = True,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Prompt, ListPromptsResponse]:
@@ -151,23 +153,23 @@ class RawPromptsClient:
 
         Parameters
         ----------
-        fqn : typing.Optional[str]
-            Fully qualified name to filter prompts by (format: 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}')
-
-        ml_repo_id : typing.Optional[str]
-            ID of the ML Repo to filter prompts by
-
-        name : typing.Optional[str]
-            Name of the prompt to filter by
+        limit : typing.Optional[int]
+            Number of items per page
 
         offset : typing.Optional[int]
-            Number of prompts to skip for pagination
+            Number of items to skip
 
-        limit : typing.Optional[int]
-            Maximum number of prompts to return
+        fqn : typing.Optional[str]
+            Filter prompts by Fully Qualified Name.
+
+        ml_repo_id : typing.Optional[str]
+            Filter prompts by the identifier of the ML Repo they belong to.
+
+        name : typing.Optional[str]
+            Filter prompts by name.
 
         include_empty_prompts : typing.Optional[bool]
-            Whether to include prompts that have no versions
+            Whether to include prompts that have no versions in the results.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -180,14 +182,14 @@ class RawPromptsClient:
         offset = offset if offset is not None else 0
 
         _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/prompts",
+            "api/svc/v1/prompts",
             method="GET",
             params={
+                "limit": limit,
+                "offset": offset,
                 "fqn": fqn,
                 "ml_repo_id": ml_repo_id,
                 "name": name,
-                "offset": offset,
-                "limit": limit,
                 "include_empty_prompts": include_empty_prompts,
             },
             request_options=request_options,
@@ -204,26 +206,15 @@ class RawPromptsClient:
                 _items = _parsed_response.data
                 _has_next = True
                 _get_next = lambda: self.list(
+                    limit=limit,
+                    offset=offset + len(_items or []),
                     fqn=fqn,
                     ml_repo_id=ml_repo_id,
                     name=name,
-                    offset=offset + len(_items or []),
-                    limit=limit,
                     include_empty_prompts=include_empty_prompts,
                     request_options=request_options,
                 )
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -242,7 +233,7 @@ class RawPromptsClient:
         Parameters
         ----------
         manifest : ChatPromptManifest
-            Manifest containing metadata for the prompt to apply
+            Manifest containing metadata for the prompt version to apply
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -253,7 +244,7 @@ class RawPromptsClient:
             The created or updated prompt version
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/prompt-versions",
+            "api/svc/v1/prompt-versions",
             method="PUT",
             json={
                 "manifest": convert_and_respect_annotation_metadata(
@@ -276,17 +267,6 @@ class RawPromptsClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -310,6 +290,7 @@ class AsyncRawPromptsClient:
         Parameters
         ----------
         id : str
+            Unique identifier of the prompt.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -320,7 +301,7 @@ class AsyncRawPromptsClient:
             The prompt data
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/prompts/{encode_path_param(id)}",
+            f"api/svc/v1/prompts/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -334,8 +315,8 @@ class AsyncRawPromptsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -363,6 +344,7 @@ class AsyncRawPromptsClient:
         Parameters
         ----------
         id : str
+            Unique identifier of the prompt.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -373,7 +355,7 @@ class AsyncRawPromptsClient:
             Empty response indicating successful deletion
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/prompts/{encode_path_param(id)}",
+            f"api/svc/v1/prompts/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -387,8 +369,8 @@ class AsyncRawPromptsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -410,11 +392,11 @@ class AsyncRawPromptsClient:
     async def list(
         self,
         *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         fqn: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
         include_empty_prompts: typing.Optional[bool] = True,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Prompt, ListPromptsResponse]:
@@ -423,23 +405,23 @@ class AsyncRawPromptsClient:
 
         Parameters
         ----------
-        fqn : typing.Optional[str]
-            Fully qualified name to filter prompts by (format: 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}')
-
-        ml_repo_id : typing.Optional[str]
-            ID of the ML Repo to filter prompts by
-
-        name : typing.Optional[str]
-            Name of the prompt to filter by
+        limit : typing.Optional[int]
+            Number of items per page
 
         offset : typing.Optional[int]
-            Number of prompts to skip for pagination
+            Number of items to skip
 
-        limit : typing.Optional[int]
-            Maximum number of prompts to return
+        fqn : typing.Optional[str]
+            Filter prompts by Fully Qualified Name.
+
+        ml_repo_id : typing.Optional[str]
+            Filter prompts by the identifier of the ML Repo they belong to.
+
+        name : typing.Optional[str]
+            Filter prompts by name.
 
         include_empty_prompts : typing.Optional[bool]
-            Whether to include prompts that have no versions
+            Whether to include prompts that have no versions in the results.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -452,14 +434,14 @@ class AsyncRawPromptsClient:
         offset = offset if offset is not None else 0
 
         _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/prompts",
+            "api/svc/v1/prompts",
             method="GET",
             params={
+                "limit": limit,
+                "offset": offset,
                 "fqn": fqn,
                 "ml_repo_id": ml_repo_id,
                 "name": name,
-                "offset": offset,
-                "limit": limit,
                 "include_empty_prompts": include_empty_prompts,
             },
             request_options=request_options,
@@ -478,27 +460,16 @@ class AsyncRawPromptsClient:
 
                 async def _get_next():
                     return await self.list(
+                        limit=limit,
+                        offset=offset + len(_items or []),
                         fqn=fqn,
                         ml_repo_id=ml_repo_id,
                         name=name,
-                        offset=offset + len(_items or []),
-                        limit=limit,
                         include_empty_prompts=include_empty_prompts,
                         request_options=request_options,
                     )
 
                 return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -517,7 +488,7 @@ class AsyncRawPromptsClient:
         Parameters
         ----------
         manifest : ChatPromptManifest
-            Manifest containing metadata for the prompt to apply
+            Manifest containing metadata for the prompt version to apply
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -528,7 +499,7 @@ class AsyncRawPromptsClient:
             The created or updated prompt version
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/prompt-versions",
+            "api/svc/v1/prompt-versions",
             method="PUT",
             json={
                 "manifest": convert_and_respect_annotation_metadata(
@@ -551,17 +522,6 @@ class AsyncRawPromptsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

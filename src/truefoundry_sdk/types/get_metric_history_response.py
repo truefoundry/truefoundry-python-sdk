@@ -4,11 +4,14 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .validation_error import ValidationError
+from .metric import Metric
 
 
-class HttpValidationError(UniversalBaseModel):
-    detail: typing.Optional[typing.List[ValidationError]] = None
+class GetMetricHistoryResponse(UniversalBaseModel):
+    metrics: typing.List[Metric] = pydantic.Field()
+    """
+    Time-series history for the requested metric.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

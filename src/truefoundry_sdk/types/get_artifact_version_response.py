@@ -10,7 +10,7 @@ from .artifact_version import ArtifactVersion
 class GetArtifactVersionResponse(UniversalBaseModel):
     data: ArtifactVersion = pydantic.Field()
     """
-    The artifact version data
+    The requested artifact version.
     """
 
     if IS_PYDANTIC_V2:

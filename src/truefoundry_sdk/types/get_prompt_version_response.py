@@ -10,7 +10,7 @@ from .prompt_version import PromptVersion
 class GetPromptVersionResponse(UniversalBaseModel):
     data: PromptVersion = pydantic.Field()
     """
-    The prompt version data
+    The requested prompt version.
     """
 
     if IS_PYDANTIC_V2:

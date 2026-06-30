@@ -11,12 +11,12 @@ from .prompt_version import PromptVersion
 class ListPromptVersionsResponse(UniversalBaseModel):
     data: typing.List[PromptVersion] = pydantic.Field()
     """
-    List of prompt versions matching the query
+    List of prompt versions matching the query.
     """
 
     pagination: Pagination = pydantic.Field()
     """
-    Pagination information including total count, offset, and limit
+    Pagination information for the response.
     """
 
     if IS_PYDANTIC_V2:

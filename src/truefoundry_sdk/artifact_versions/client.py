@@ -9,13 +9,14 @@ from ..types.artifact_version import ArtifactVersion
 from ..types.empty_response import EmptyResponse
 from ..types.file_info import FileInfo
 from ..types.get_artifact_version_response import GetArtifactVersionResponse
+from ..types.get_signed_ur_ls_request_operation import GetSignedUrLsRequestOperation
 from ..types.get_signed_ur_ls_response import GetSignedUrLsResponse
 from ..types.list_artifact_versions_response import ListArtifactVersionsResponse
 from ..types.list_files_response import ListFilesResponse
 from ..types.multi_part_upload_response import MultiPartUploadResponse
-from ..types.operation import Operation
 from ..types.stage_artifact_response import StageArtifactResponse
 from .raw_client import AsyncRawArtifactVersionsClient, RawArtifactVersionsClient
+from .types.artifact_versions_list_request_version import ArtifactVersionsListRequestVersion
 from .types.stage_artifact_request_manifest import StageArtifactRequestManifest
 
 # this is used as the default value for optional parameters
@@ -36,6 +37,111 @@ class ArtifactVersionsClient:
         RawArtifactVersionsClient
         """
         return self._raw_client
+
+    def list(
+        self,
+        *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
+        tag: typing.Optional[str] = None,
+        fqn: typing.Optional[str] = None,
+        artifact_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
+        version: typing.Optional[ArtifactVersionsListRequestVersion] = None,
+        run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        run_steps: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
+        include_internal_metadata: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncPager[ArtifactVersion, ListArtifactVersionsResponse]:
+        """
+        List artifact versions with optional filtering by tag, FQN, artifact ID, ML Repo, name, version, run IDs, or run steps.
+
+        Parameters
+        ----------
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
+        tag : typing.Optional[str]
+            Tag to filter artifact versions by.
+
+        fqn : typing.Optional[str]
+            Fully Qualified Name uniquely identifying the artifact version.
+
+        artifact_id : typing.Optional[str]
+            Identifier of the artifact whose versions to list.
+
+        ml_repo_id : typing.Optional[str]
+            Identifier of the ML Repo the artifact versions belong to.
+
+        name : typing.Optional[str]
+            Name of the artifact version.
+
+        version : typing.Optional[ArtifactVersionsListRequestVersion]
+            Version number of the artifact version, or "latest" to fetch the most recent one.
+
+        run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Run IDs to filter artifact versions by.
+
+        run_steps : typing.Optional[typing.Union[float, typing.Sequence[float]]]
+            Run steps to filter artifact versions by.
+
+        include_internal_metadata : typing.Optional[bool]
+            Whether to include internal metadata in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[ArtifactVersion, ListArtifactVersionsResponse]
+            List of artifact versions matching the query with pagination information
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+        from truefoundry_sdk.artifact_versions import ArtifactVersionsListRequestVersion
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.artifact_versions.list(
+            limit=10,
+            offset=0,
+            tag="tag",
+            fqn="fqn",
+            artifact_id="artifact_id",
+            ml_repo_id="ml_repo_id",
+            name="name",
+            version=ArtifactVersionsListRequestVersion.LATEST,
+            run_ids=["run_ids"],
+            run_steps=[1.1],
+            include_internal_metadata=True,
+        )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
+        """
+        return self._raw_client.list(
+            limit=limit,
+            offset=offset,
+            tag=tag,
+            fqn=fqn,
+            artifact_id=artifact_id,
+            ml_repo_id=ml_repo_id,
+            name=name,
+            version=version,
+            run_ids=run_ids,
+            run_steps=run_steps,
+            include_internal_metadata=include_internal_metadata,
+            request_options=request_options,
+        )
 
     def apply_tags(
         self,
@@ -85,178 +191,12 @@ class ArtifactVersionsClient:
         )
         return _response.data
 
-    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetArtifactVersionResponse:
-        """
-        Get an artifact version by its ID.
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetArtifactVersionResponse
-            The artifact version data
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.artifact_versions.get(
-            id="id",
-        )
-        """
-        _response = self._raw_client.get(id, request_options=request_options)
-        return _response.data
-
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
-        """
-        Delete an artifact version by its ID.
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        EmptyResponse
-            Empty response indicating successful deletion
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.artifact_versions.delete(
-            id="id",
-        )
-        """
-        _response = self._raw_client.delete(id, request_options=request_options)
-        return _response.data
-
-    def list(
-        self,
-        *,
-        tag: typing.Optional[str] = None,
-        fqn: typing.Optional[str] = None,
-        artifact_id: typing.Optional[str] = None,
-        ml_repo_id: typing.Optional[str] = None,
-        name: typing.Optional[str] = None,
-        version: typing.Optional[int] = None,
-        run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
-        include_internal_metadata: typing.Optional[bool] = False,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[ArtifactVersion, ListArtifactVersionsResponse]:
-        """
-        List artifact versions with optional filtering by tag, FQN, artifact ID, ML Repo, name, version, run IDs, or run steps.
-
-        Parameters
-        ----------
-        tag : typing.Optional[str]
-            Tag to filter artifact versions by
-
-        fqn : typing.Optional[str]
-            Fully qualified name to filter artifact versions by (format: '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}' or '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}:{version}')
-
-        artifact_id : typing.Optional[str]
-            ID of the artifact to filter versions by
-
-        ml_repo_id : typing.Optional[str]
-            ID of the ML Repo to filter artifact versions by
-
-        name : typing.Optional[str]
-            Name of the artifact to filter versions by
-
-        version : typing.Optional[int]
-            Version number (positive integer) or 'latest' to filter by specific version
-
-        run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            List of run IDs to filter artifact versions by
-
-        run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
-            List of run step numbers to filter artifact versions by
-
-        offset : typing.Optional[int]
-            Number of artifact versions to skip for pagination
-
-        limit : typing.Optional[int]
-            Maximum number of artifact versions to return
-
-        include_internal_metadata : typing.Optional[bool]
-            Whether to include internal metadata in the response
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SyncPager[ArtifactVersion, ListArtifactVersionsResponse]
-            List of artifact versions matching the query with pagination information
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        response = client.artifact_versions.list(
-            tag="tag",
-            fqn="fqn",
-            artifact_id="artifact_id",
-            ml_repo_id="ml_repo_id",
-            name="name",
-            version=1,
-            run_ids=["run_ids"],
-            run_steps=[1],
-            offset=1,
-            limit=1,
-            include_internal_metadata=True,
-        )
-        for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        for page in response.iter_pages():
-            yield page
-        """
-        return self._raw_client.list(
-            tag=tag,
-            fqn=fqn,
-            artifact_id=artifact_id,
-            ml_repo_id=ml_repo_id,
-            name=name,
-            version=version,
-            run_ids=run_ids,
-            run_steps=run_steps,
-            offset=offset,
-            limit=limit,
-            include_internal_metadata=include_internal_metadata,
-            request_options=request_options,
-        )
-
     def get_signed_urls(
         self,
         *,
         id: str,
         paths: typing.Sequence[str],
-        operation: Operation,
+        operation: GetSignedUrLsRequestOperation,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSignedUrLsResponse:
         """
@@ -265,13 +205,13 @@ class ArtifactVersionsClient:
         Parameters
         ----------
         id : str
-            ID of the artifact version to get signed URLs for
+            Identifier of the artifact version to generate signed URLs for.
 
         paths : typing.Sequence[str]
-            List of relative file paths within the artifact version to get signed URLs for
+            Paths of the files to generate signed URLs for.
 
-        operation : Operation
-            Operation type for the signed URL (e.g., 'READ' or 'WRITE')
+        operation : GetSignedUrLsRequestOperation
+            Operation the signed URLs should permit (READ or WRITE).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -283,7 +223,7 @@ class ArtifactVersionsClient:
 
         Examples
         --------
-        from truefoundry_sdk import Operation, TrueFoundry
+        from truefoundry_sdk import GetSignedUrLsRequestOperation, TrueFoundry
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -292,7 +232,7 @@ class ArtifactVersionsClient:
         client.artifact_versions.get_signed_urls(
             id="id",
             paths=["paths"],
-            operation=Operation.READ,
+            operation=GetSignedUrLsRequestOperation.READ,
         )
         """
         _response = self._raw_client.get_signed_urls(
@@ -301,7 +241,7 @@ class ArtifactVersionsClient:
         return _response.data
 
     def create_multi_part_upload(
-        self, *, id: str, path: str, num_parts: int, request_options: typing.Optional[RequestOptions] = None
+        self, *, id: str, path: str, num_parts: float, request_options: typing.Optional[RequestOptions] = None
     ) -> MultiPartUploadResponse:
         """
         Create a multipart upload for large files in an artifact version.
@@ -309,13 +249,13 @@ class ArtifactVersionsClient:
         Parameters
         ----------
         id : str
-            ID of the artifact version to upload files to
+            Identifier of the artifact version to upload to.
 
         path : str
-            Relative path within the artifact version where the file should be uploaded
+            Path of the file relative to the artifact version storage root.
 
-        num_parts : int
-            Number of parts to split the upload into for multipart upload
+        num_parts : float
+            Number of parts the file will be split into for the multipart upload.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -336,7 +276,7 @@ class ArtifactVersionsClient:
         client.artifact_versions.create_multi_part_upload(
             id="id",
             path="path",
-            num_parts=1,
+            num_parts=1.1,
         )
         """
         _response = self._raw_client.create_multi_part_upload(
@@ -344,51 +284,12 @@ class ArtifactVersionsClient:
         )
         return _response.data
 
-    def stage(
-        self, *, manifest: StageArtifactRequestManifest, request_options: typing.Optional[RequestOptions] = None
-    ) -> StageArtifactResponse:
-        """
-        Stage an artifact version for upload, returning storage location and version ID.
-
-        Parameters
-        ----------
-        manifest : StageArtifactRequestManifest
-            Manifest containing metadata for the artifact to be staged (model or generic artifact)
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        StageArtifactResponse
-            Staging information including version ID, storage root, and artifact ID
-
-        Examples
-        --------
-        from truefoundry_sdk import ModelManifest, TrueFoundry, TrueFoundryManagedSource
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.artifact_versions.stage(
-            manifest=ModelManifest(
-                name="name",
-                metadata={"key": "value"},
-                ml_repo="ml_repo",
-                source=TrueFoundryManagedSource(),
-            ),
-        )
-        """
-        _response = self._raw_client.stage(manifest=manifest, request_options=request_options)
-        return _response.data
-
     def list_files(
         self,
         *,
         id: str,
         path: typing.Optional[str] = OMIT,
-        limit: typing.Optional[int] = OMIT,
+        limit: typing.Optional[float] = OMIT,
         page_token: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[FileInfo, ListFilesResponse]:
@@ -398,13 +299,13 @@ class ArtifactVersionsClient:
         Parameters
         ----------
         id : str
-            ID of the artifact version to list files from
+            Identifier of the artifact version to list files for.
 
         path : typing.Optional[str]
-            Relative path within the artifact version to list files from (defaults to root)
+            Path within the artifact version to list files under.
 
-        limit : typing.Optional[int]
-            Maximum number of files/directories to return
+        limit : typing.Optional[float]
+            Maximum number of files to return.
 
         page_token : typing.Optional[str]
             Token to retrieve the next page of results
@@ -438,6 +339,48 @@ class ArtifactVersionsClient:
             id=id, path=path, limit=limit, page_token=page_token, request_options=request_options
         )
 
+    def stage(
+        self, *, manifest: StageArtifactRequestManifest, request_options: typing.Optional[RequestOptions] = None
+    ) -> StageArtifactResponse:
+        """
+        Stage an artifact version for upload, returning storage location and version ID.
+
+        Parameters
+        ----------
+        manifest : StageArtifactRequestManifest
+            Manifest containing metadata for the artifact to be staged (model or generic artifact)
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        StageArtifactResponse
+            Staging information including version ID, storage root, and artifact ID
+
+        Examples
+        --------
+        from truefoundry_sdk import (
+            ArtifactManifest,
+            TrueFoundry,
+            TrueFoundryManagedSource,
+        )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.artifact_versions.stage(
+            manifest=ArtifactManifest(
+                metadata={"key": "value"},
+                source=TrueFoundryManagedSource(),
+                step=1,
+            ),
+        )
+        """
+        _response = self._raw_client.stage(manifest=manifest, request_options=request_options)
+        return _response.data
+
     def mark_stage_failure(self, *, id: str, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
         """
         Mark a staged artifact version as failed.
@@ -445,7 +388,7 @@ class ArtifactVersionsClient:
         Parameters
         ----------
         id : str
-            ID of the staged artifact version to mark as failed
+            Identifier of the staged artifact version to mark as failed.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -470,6 +413,70 @@ class ArtifactVersionsClient:
         _response = self._raw_client.mark_stage_failure(id=id, request_options=request_options)
         return _response.data
 
+    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetArtifactVersionResponse:
+        """
+        Get an artifact version by its ID.
+
+        Parameters
+        ----------
+        id : str
+            Artifact version ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetArtifactVersionResponse
+            The artifact version data
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.artifact_versions.get(
+            id="id",
+        )
+        """
+        _response = self._raw_client.get(id, request_options=request_options)
+        return _response.data
+
+    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
+        """
+        Delete an artifact version by its ID.
+
+        Parameters
+        ----------
+        id : str
+            Artifact version ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EmptyResponse
+            Empty response indicating successful deletion
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.artifact_versions.delete(
+            id="id",
+        )
+        """
+        _response = self._raw_client.delete(id, request_options=request_options)
+        return _response.data
+
 
 class AsyncArtifactVersionsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -485,6 +492,120 @@ class AsyncArtifactVersionsClient:
         AsyncRawArtifactVersionsClient
         """
         return self._raw_client
+
+    async def list(
+        self,
+        *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
+        tag: typing.Optional[str] = None,
+        fqn: typing.Optional[str] = None,
+        artifact_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
+        version: typing.Optional[ArtifactVersionsListRequestVersion] = None,
+        run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        run_steps: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
+        include_internal_metadata: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncPager[ArtifactVersion, ListArtifactVersionsResponse]:
+        """
+        List artifact versions with optional filtering by tag, FQN, artifact ID, ML Repo, name, version, run IDs, or run steps.
+
+        Parameters
+        ----------
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
+        tag : typing.Optional[str]
+            Tag to filter artifact versions by.
+
+        fqn : typing.Optional[str]
+            Fully Qualified Name uniquely identifying the artifact version.
+
+        artifact_id : typing.Optional[str]
+            Identifier of the artifact whose versions to list.
+
+        ml_repo_id : typing.Optional[str]
+            Identifier of the ML Repo the artifact versions belong to.
+
+        name : typing.Optional[str]
+            Name of the artifact version.
+
+        version : typing.Optional[ArtifactVersionsListRequestVersion]
+            Version number of the artifact version, or "latest" to fetch the most recent one.
+
+        run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Run IDs to filter artifact versions by.
+
+        run_steps : typing.Optional[typing.Union[float, typing.Sequence[float]]]
+            Run steps to filter artifact versions by.
+
+        include_internal_metadata : typing.Optional[bool]
+            Whether to include internal metadata in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[ArtifactVersion, ListArtifactVersionsResponse]
+            List of artifact versions matching the query with pagination information
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+        from truefoundry_sdk.artifact_versions import ArtifactVersionsListRequestVersion
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.artifact_versions.list(
+                limit=10,
+                offset=0,
+                tag="tag",
+                fqn="fqn",
+                artifact_id="artifact_id",
+                ml_repo_id="ml_repo_id",
+                name="name",
+                version=ArtifactVersionsListRequestVersion.LATEST,
+                run_ids=["run_ids"],
+                run_steps=[1.1],
+                include_internal_metadata=True,
+            )
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
+        """
+        return await self._raw_client.list(
+            limit=limit,
+            offset=offset,
+            tag=tag,
+            fqn=fqn,
+            artifact_id=artifact_id,
+            ml_repo_id=ml_repo_id,
+            name=name,
+            version=version,
+            run_ids=run_ids,
+            run_steps=run_steps,
+            include_internal_metadata=include_internal_metadata,
+            request_options=request_options,
+        )
 
     async def apply_tags(
         self,
@@ -542,205 +663,12 @@ class AsyncArtifactVersionsClient:
         )
         return _response.data
 
-    async def get(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetArtifactVersionResponse:
-        """
-        Get an artifact version by its ID.
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetArtifactVersionResponse
-            The artifact version data
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.artifact_versions.get(
-                id="id",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.get(id, request_options=request_options)
-        return _response.data
-
-    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
-        """
-        Delete an artifact version by its ID.
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        EmptyResponse
-            Empty response indicating successful deletion
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.artifact_versions.delete(
-                id="id",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.delete(id, request_options=request_options)
-        return _response.data
-
-    async def list(
-        self,
-        *,
-        tag: typing.Optional[str] = None,
-        fqn: typing.Optional[str] = None,
-        artifact_id: typing.Optional[str] = None,
-        ml_repo_id: typing.Optional[str] = None,
-        name: typing.Optional[str] = None,
-        version: typing.Optional[int] = None,
-        run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
-        include_internal_metadata: typing.Optional[bool] = False,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[ArtifactVersion, ListArtifactVersionsResponse]:
-        """
-        List artifact versions with optional filtering by tag, FQN, artifact ID, ML Repo, name, version, run IDs, or run steps.
-
-        Parameters
-        ----------
-        tag : typing.Optional[str]
-            Tag to filter artifact versions by
-
-        fqn : typing.Optional[str]
-            Fully qualified name to filter artifact versions by (format: '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}' or '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}:{version}')
-
-        artifact_id : typing.Optional[str]
-            ID of the artifact to filter versions by
-
-        ml_repo_id : typing.Optional[str]
-            ID of the ML Repo to filter artifact versions by
-
-        name : typing.Optional[str]
-            Name of the artifact to filter versions by
-
-        version : typing.Optional[int]
-            Version number (positive integer) or 'latest' to filter by specific version
-
-        run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            List of run IDs to filter artifact versions by
-
-        run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
-            List of run step numbers to filter artifact versions by
-
-        offset : typing.Optional[int]
-            Number of artifact versions to skip for pagination
-
-        limit : typing.Optional[int]
-            Maximum number of artifact versions to return
-
-        include_internal_metadata : typing.Optional[bool]
-            Whether to include internal metadata in the response
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncPager[ArtifactVersion, ListArtifactVersionsResponse]
-            List of artifact versions matching the query with pagination information
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            response = await client.artifact_versions.list(
-                tag="tag",
-                fqn="fqn",
-                artifact_id="artifact_id",
-                ml_repo_id="ml_repo_id",
-                name="name",
-                version=1,
-                run_ids=["run_ids"],
-                run_steps=[1],
-                offset=1,
-                limit=1,
-                include_internal_metadata=True,
-            )
-            async for item in response:
-                yield item
-
-            # alternatively, you can paginate page-by-page
-            async for page in response.iter_pages():
-                yield page
-
-
-        asyncio.run(main())
-        """
-        return await self._raw_client.list(
-            tag=tag,
-            fqn=fqn,
-            artifact_id=artifact_id,
-            ml_repo_id=ml_repo_id,
-            name=name,
-            version=version,
-            run_ids=run_ids,
-            run_steps=run_steps,
-            offset=offset,
-            limit=limit,
-            include_internal_metadata=include_internal_metadata,
-            request_options=request_options,
-        )
-
     async def get_signed_urls(
         self,
         *,
         id: str,
         paths: typing.Sequence[str],
-        operation: Operation,
+        operation: GetSignedUrLsRequestOperation,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSignedUrLsResponse:
         """
@@ -749,13 +677,13 @@ class AsyncArtifactVersionsClient:
         Parameters
         ----------
         id : str
-            ID of the artifact version to get signed URLs for
+            Identifier of the artifact version to generate signed URLs for.
 
         paths : typing.Sequence[str]
-            List of relative file paths within the artifact version to get signed URLs for
+            Paths of the files to generate signed URLs for.
 
-        operation : Operation
-            Operation type for the signed URL (e.g., 'READ' or 'WRITE')
+        operation : GetSignedUrLsRequestOperation
+            Operation the signed URLs should permit (READ or WRITE).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -769,7 +697,7 @@ class AsyncArtifactVersionsClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import AsyncTrueFoundry, Operation
+        from truefoundry_sdk import AsyncTrueFoundry, GetSignedUrLsRequestOperation
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -781,7 +709,7 @@ class AsyncArtifactVersionsClient:
             await client.artifact_versions.get_signed_urls(
                 id="id",
                 paths=["paths"],
-                operation=Operation.READ,
+                operation=GetSignedUrLsRequestOperation.READ,
             )
 
 
@@ -793,7 +721,7 @@ class AsyncArtifactVersionsClient:
         return _response.data
 
     async def create_multi_part_upload(
-        self, *, id: str, path: str, num_parts: int, request_options: typing.Optional[RequestOptions] = None
+        self, *, id: str, path: str, num_parts: float, request_options: typing.Optional[RequestOptions] = None
     ) -> MultiPartUploadResponse:
         """
         Create a multipart upload for large files in an artifact version.
@@ -801,13 +729,13 @@ class AsyncArtifactVersionsClient:
         Parameters
         ----------
         id : str
-            ID of the artifact version to upload files to
+            Identifier of the artifact version to upload to.
 
         path : str
-            Relative path within the artifact version where the file should be uploaded
+            Path of the file relative to the artifact version storage root.
 
-        num_parts : int
-            Number of parts to split the upload into for multipart upload
+        num_parts : float
+            Number of parts the file will be split into for the multipart upload.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -833,7 +761,7 @@ class AsyncArtifactVersionsClient:
             await client.artifact_versions.create_multi_part_upload(
                 id="id",
                 path="path",
-                num_parts=1,
+                num_parts=1.1,
             )
 
 
@@ -844,63 +772,12 @@ class AsyncArtifactVersionsClient:
         )
         return _response.data
 
-    async def stage(
-        self, *, manifest: StageArtifactRequestManifest, request_options: typing.Optional[RequestOptions] = None
-    ) -> StageArtifactResponse:
-        """
-        Stage an artifact version for upload, returning storage location and version ID.
-
-        Parameters
-        ----------
-        manifest : StageArtifactRequestManifest
-            Manifest containing metadata for the artifact to be staged (model or generic artifact)
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        StageArtifactResponse
-            Staging information including version ID, storage root, and artifact ID
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import (
-            AsyncTrueFoundry,
-            ModelManifest,
-            TrueFoundryManagedSource,
-        )
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.artifact_versions.stage(
-                manifest=ModelManifest(
-                    name="name",
-                    metadata={"key": "value"},
-                    ml_repo="ml_repo",
-                    source=TrueFoundryManagedSource(),
-                ),
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.stage(manifest=manifest, request_options=request_options)
-        return _response.data
-
     async def list_files(
         self,
         *,
         id: str,
         path: typing.Optional[str] = OMIT,
-        limit: typing.Optional[int] = OMIT,
+        limit: typing.Optional[float] = OMIT,
         page_token: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[FileInfo, ListFilesResponse]:
@@ -910,13 +787,13 @@ class AsyncArtifactVersionsClient:
         Parameters
         ----------
         id : str
-            ID of the artifact version to list files from
+            Identifier of the artifact version to list files for.
 
         path : typing.Optional[str]
-            Relative path within the artifact version to list files from (defaults to root)
+            Path within the artifact version to list files under.
 
-        limit : typing.Optional[int]
-            Maximum number of files/directories to return
+        limit : typing.Optional[float]
+            Maximum number of files to return.
 
         page_token : typing.Optional[str]
             Token to retrieve the next page of results
@@ -959,6 +836,56 @@ class AsyncArtifactVersionsClient:
             id=id, path=path, limit=limit, page_token=page_token, request_options=request_options
         )
 
+    async def stage(
+        self, *, manifest: StageArtifactRequestManifest, request_options: typing.Optional[RequestOptions] = None
+    ) -> StageArtifactResponse:
+        """
+        Stage an artifact version for upload, returning storage location and version ID.
+
+        Parameters
+        ----------
+        manifest : StageArtifactRequestManifest
+            Manifest containing metadata for the artifact to be staged (model or generic artifact)
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        StageArtifactResponse
+            Staging information including version ID, storage root, and artifact ID
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import (
+            ArtifactManifest,
+            AsyncTrueFoundry,
+            TrueFoundryManagedSource,
+        )
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.artifact_versions.stage(
+                manifest=ArtifactManifest(
+                    metadata={"key": "value"},
+                    source=TrueFoundryManagedSource(),
+                    step=1,
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.stage(manifest=manifest, request_options=request_options)
+        return _response.data
+
     async def mark_stage_failure(
         self, *, id: str, request_options: typing.Optional[RequestOptions] = None
     ) -> EmptyResponse:
@@ -968,7 +895,7 @@ class AsyncArtifactVersionsClient:
         Parameters
         ----------
         id : str
-            ID of the staged artifact version to mark as failed
+            Identifier of the staged artifact version to mark as failed.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -999,4 +926,86 @@ class AsyncArtifactVersionsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.mark_stage_failure(id=id, request_options=request_options)
+        return _response.data
+
+    async def get(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetArtifactVersionResponse:
+        """
+        Get an artifact version by its ID.
+
+        Parameters
+        ----------
+        id : str
+            Artifact version ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetArtifactVersionResponse
+            The artifact version data
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.artifact_versions.get(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get(id, request_options=request_options)
+        return _response.data
+
+    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
+        """
+        Delete an artifact version by its ID.
+
+        Parameters
+        ----------
+        id : str
+            Artifact version ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EmptyResponse
+            Empty response indicating successful deletion
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.artifact_versions.delete(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete(id, request_options=request_options)
         return _response.data

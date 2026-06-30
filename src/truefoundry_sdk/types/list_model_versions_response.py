@@ -11,12 +11,12 @@ from .pagination import Pagination
 class ListModelVersionsResponse(UniversalBaseModel):
     data: typing.List[ModelVersion] = pydantic.Field()
     """
-    List of model versions matching the query
+    List of model versions matching the query.
     """
 
     pagination: Pagination = pydantic.Field()
     """
-    Pagination information including total count, offset, and limit
+    Pagination information for the response.
     """
 
     if IS_PYDANTIC_V2:

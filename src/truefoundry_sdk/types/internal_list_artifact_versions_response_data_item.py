@@ -8,5 +8,5 @@ from .internal_model_version import InternalModelVersion
 from .prompt_version import PromptVersion
 
 InternalListArtifactVersionsResponseDataItem = typing.Union[
-    InternalArtifactVersion, InternalModelVersion, PromptVersion, AgentSkillVersion
+    InternalArtifactVersion, InternalModelVersion, AgentSkillVersion, PromptVersion
 ]

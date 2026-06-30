@@ -9,7 +9,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class MultiPartUploadStorageProvider(enum.StrEnum):
     """
-    An enumeration.
+    Storage provider backing the multipart upload.
     """
 
     S3COMPATIBLE = "S3_COMPATIBLE"

@@ -11,11 +11,12 @@ from ..core.pagination import AsyncPager, SyncPager
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..errors.unprocessable_entity_error import UnprocessableEntityError
+from ..errors.not_found_error import NotFoundError
 from ..types.empty_response import EmptyResponse
 from ..types.get_prompt_version_response import GetPromptVersionResponse
 from ..types.list_prompt_versions_response import ListPromptVersionsResponse
 from ..types.prompt_version import PromptVersion
+from .types.prompt_versions_list_request_version import PromptVersionsListRequestVersion
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -25,6 +26,105 @@ OMIT = typing.cast(typing.Any, ...)
 class RawPromptVersionsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    def list(
+        self,
+        *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
+        tag: typing.Optional[str] = None,
+        fqn: typing.Optional[str] = None,
+        prompt_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
+        version: typing.Optional[PromptVersionsListRequestVersion] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncPager[PromptVersion, ListPromptVersionsResponse]:
+        """
+        List prompt versions with optional filtering by tag, FQN, prompt ID, ML Repo, name, or version.
+
+        Parameters
+        ----------
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
+        tag : typing.Optional[str]
+            Filter prompt versions by tag.
+
+        fqn : typing.Optional[str]
+            Filter prompt versions by Fully Qualified Name.
+
+        prompt_id : typing.Optional[str]
+            Filter prompt versions by the identifier of the prompt they belong to.
+
+        ml_repo_id : typing.Optional[str]
+            Filter prompt versions by the identifier of the ML Repo they belong to.
+
+        name : typing.Optional[str]
+            Filter prompt versions by name.
+
+        version : typing.Optional[PromptVersionsListRequestVersion]
+            Version number (positive integer) or `latest`
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[PromptVersion, ListPromptVersionsResponse]
+            List of prompt versions matching the query with pagination information
+        """
+        offset = offset if offset is not None else 0
+
+        _response = self._client_wrapper.httpx_client.request(
+            "api/svc/v1/prompt-versions",
+            method="GET",
+            params={
+                "limit": limit,
+                "offset": offset,
+                "tag": tag,
+                "fqn": fqn,
+                "prompt_id": prompt_id,
+                "ml_repo_id": ml_repo_id,
+                "name": name,
+                "version": version,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    ListPromptVersionsResponse,
+                    parse_obj_as(
+                        type_=ListPromptVersionsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                _items = _parsed_response.data
+                _has_next = True
+                _get_next = lambda: self.list(
+                    limit=limit,
+                    offset=offset + len(_items or []),
+                    tag=tag,
+                    fqn=fqn,
+                    prompt_id=prompt_id,
+                    ml_repo_id=ml_repo_id,
+                    name=name,
+                    version=version,
+                    request_options=request_options,
+                )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def apply_tags(
         self,
@@ -40,13 +140,13 @@ class RawPromptVersionsClient:
         Parameters
         ----------
         prompt_version_id : str
-            ID of the prompt version to apply tags to
+            Identifier of the prompt version to apply tags to.
 
         tags : typing.Sequence[str]
-            List of tags to apply to the prompt version
+            Tags to apply to the prompt version.
 
         force : typing.Optional[bool]
-            Whether to overwrite existing tags if they conflict
+            Whether to forcibly reassign tags already in use by other prompt versions.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -57,7 +157,7 @@ class RawPromptVersionsClient:
             Empty response indicating successful tag application
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/prompt-versions/tags",
+            "api/svc/v1/prompt-versions/tags",
             method="PUT",
             json={
                 "prompt_version_id": prompt_version_id,
@@ -80,17 +180,6 @@ class RawPromptVersionsClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -109,6 +198,7 @@ class RawPromptVersionsClient:
         Parameters
         ----------
         id : str
+            Prompt version ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -119,7 +209,7 @@ class RawPromptVersionsClient:
             The prompt version data
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/prompt-versions/{encode_path_param(id)}",
+            f"api/svc/v1/prompt-versions/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -133,8 +223,8 @@ class RawPromptVersionsClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -162,6 +252,7 @@ class RawPromptVersionsClient:
         Parameters
         ----------
         id : str
+            Prompt version ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -172,7 +263,7 @@ class RawPromptVersionsClient:
             Empty response indicating successful deletion
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/prompt-versions/{encode_path_param(id)}",
+            f"api/svc/v1/prompt-versions/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -186,118 +277,8 @@ class RawPromptVersionsClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def list(
-        self,
-        *,
-        tag: typing.Optional[str] = None,
-        fqn: typing.Optional[str] = None,
-        prompt_id: typing.Optional[str] = None,
-        ml_repo_id: typing.Optional[str] = None,
-        name: typing.Optional[str] = None,
-        version: typing.Optional[int] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[PromptVersion, ListPromptVersionsResponse]:
-        """
-        List prompt versions with optional filtering by tag, FQN, prompt ID, ML Repo, name, or version.
-
-        Parameters
-        ----------
-        tag : typing.Optional[str]
-            Tag to filter prompt versions by
-
-        fqn : typing.Optional[str]
-            Fully qualified name to filter prompt versions by (format: 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}' or 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}:{version}')
-
-        prompt_id : typing.Optional[str]
-            ID of the prompt to filter versions by
-
-        ml_repo_id : typing.Optional[str]
-            ID of the ML Repo to filter prompt versions by
-
-        name : typing.Optional[str]
-            Name of the prompt to filter versions by
-
-        version : typing.Optional[int]
-            Version number (positive integer) or 'latest' to filter by specific version
-
-        offset : typing.Optional[int]
-            Number of prompt versions to skip for pagination
-
-        limit : typing.Optional[int]
-            Maximum number of prompt versions to return
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SyncPager[PromptVersion, ListPromptVersionsResponse]
-            List of prompt versions matching the query with pagination information
-        """
-        offset = offset if offset is not None else 0
-
-        _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/prompt-versions",
-            method="GET",
-            params={
-                "tag": tag,
-                "fqn": fqn,
-                "prompt_id": prompt_id,
-                "ml_repo_id": ml_repo_id,
-                "name": name,
-                "version": version,
-                "offset": offset,
-                "limit": limit,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _parsed_response = typing.cast(
-                    ListPromptVersionsResponse,
-                    parse_obj_as(
-                        type_=ListPromptVersionsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                _items = _parsed_response.data
-                _has_next = True
-                _get_next = lambda: self.list(
-                    tag=tag,
-                    fqn=fqn,
-                    prompt_id=prompt_id,
-                    ml_repo_id=ml_repo_id,
-                    name=name,
-                    version=version,
-                    offset=offset + len(_items or []),
-                    limit=limit,
-                    request_options=request_options,
-                )
-                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -321,6 +302,108 @@ class AsyncRawPromptVersionsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
+    async def list(
+        self,
+        *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
+        tag: typing.Optional[str] = None,
+        fqn: typing.Optional[str] = None,
+        prompt_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
+        version: typing.Optional[PromptVersionsListRequestVersion] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncPager[PromptVersion, ListPromptVersionsResponse]:
+        """
+        List prompt versions with optional filtering by tag, FQN, prompt ID, ML Repo, name, or version.
+
+        Parameters
+        ----------
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
+        tag : typing.Optional[str]
+            Filter prompt versions by tag.
+
+        fqn : typing.Optional[str]
+            Filter prompt versions by Fully Qualified Name.
+
+        prompt_id : typing.Optional[str]
+            Filter prompt versions by the identifier of the prompt they belong to.
+
+        ml_repo_id : typing.Optional[str]
+            Filter prompt versions by the identifier of the ML Repo they belong to.
+
+        name : typing.Optional[str]
+            Filter prompt versions by name.
+
+        version : typing.Optional[PromptVersionsListRequestVersion]
+            Version number (positive integer) or `latest`
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[PromptVersion, ListPromptVersionsResponse]
+            List of prompt versions matching the query with pagination information
+        """
+        offset = offset if offset is not None else 0
+
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/svc/v1/prompt-versions",
+            method="GET",
+            params={
+                "limit": limit,
+                "offset": offset,
+                "tag": tag,
+                "fqn": fqn,
+                "prompt_id": prompt_id,
+                "ml_repo_id": ml_repo_id,
+                "name": name,
+                "version": version,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    ListPromptVersionsResponse,
+                    parse_obj_as(
+                        type_=ListPromptVersionsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                _items = _parsed_response.data
+                _has_next = True
+
+                async def _get_next():
+                    return await self.list(
+                        limit=limit,
+                        offset=offset + len(_items or []),
+                        tag=tag,
+                        fqn=fqn,
+                        prompt_id=prompt_id,
+                        ml_repo_id=ml_repo_id,
+                        name=name,
+                        version=version,
+                        request_options=request_options,
+                    )
+
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     async def apply_tags(
         self,
         *,
@@ -335,13 +418,13 @@ class AsyncRawPromptVersionsClient:
         Parameters
         ----------
         prompt_version_id : str
-            ID of the prompt version to apply tags to
+            Identifier of the prompt version to apply tags to.
 
         tags : typing.Sequence[str]
-            List of tags to apply to the prompt version
+            Tags to apply to the prompt version.
 
         force : typing.Optional[bool]
-            Whether to overwrite existing tags if they conflict
+            Whether to forcibly reassign tags already in use by other prompt versions.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -352,7 +435,7 @@ class AsyncRawPromptVersionsClient:
             Empty response indicating successful tag application
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/prompt-versions/tags",
+            "api/svc/v1/prompt-versions/tags",
             method="PUT",
             json={
                 "prompt_version_id": prompt_version_id,
@@ -375,17 +458,6 @@ class AsyncRawPromptVersionsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -404,6 +476,7 @@ class AsyncRawPromptVersionsClient:
         Parameters
         ----------
         id : str
+            Prompt version ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -414,7 +487,7 @@ class AsyncRawPromptVersionsClient:
             The prompt version data
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/prompt-versions/{encode_path_param(id)}",
+            f"api/svc/v1/prompt-versions/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -428,8 +501,8 @@ class AsyncRawPromptVersionsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -457,6 +530,7 @@ class AsyncRawPromptVersionsClient:
         Parameters
         ----------
         id : str
+            Prompt version ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -467,7 +541,7 @@ class AsyncRawPromptVersionsClient:
             Empty response indicating successful deletion
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/prompt-versions/{encode_path_param(id)}",
+            f"api/svc/v1/prompt-versions/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -481,121 +555,8 @@ class AsyncRawPromptVersionsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def list(
-        self,
-        *,
-        tag: typing.Optional[str] = None,
-        fqn: typing.Optional[str] = None,
-        prompt_id: typing.Optional[str] = None,
-        ml_repo_id: typing.Optional[str] = None,
-        name: typing.Optional[str] = None,
-        version: typing.Optional[int] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[PromptVersion, ListPromptVersionsResponse]:
-        """
-        List prompt versions with optional filtering by tag, FQN, prompt ID, ML Repo, name, or version.
-
-        Parameters
-        ----------
-        tag : typing.Optional[str]
-            Tag to filter prompt versions by
-
-        fqn : typing.Optional[str]
-            Fully qualified name to filter prompt versions by (format: 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}' or 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}:{version}')
-
-        prompt_id : typing.Optional[str]
-            ID of the prompt to filter versions by
-
-        ml_repo_id : typing.Optional[str]
-            ID of the ML Repo to filter prompt versions by
-
-        name : typing.Optional[str]
-            Name of the prompt to filter versions by
-
-        version : typing.Optional[int]
-            Version number (positive integer) or 'latest' to filter by specific version
-
-        offset : typing.Optional[int]
-            Number of prompt versions to skip for pagination
-
-        limit : typing.Optional[int]
-            Maximum number of prompt versions to return
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncPager[PromptVersion, ListPromptVersionsResponse]
-            List of prompt versions matching the query with pagination information
-        """
-        offset = offset if offset is not None else 0
-
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/prompt-versions",
-            method="GET",
-            params={
-                "tag": tag,
-                "fqn": fqn,
-                "prompt_id": prompt_id,
-                "ml_repo_id": ml_repo_id,
-                "name": name,
-                "version": version,
-                "offset": offset,
-                "limit": limit,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _parsed_response = typing.cast(
-                    ListPromptVersionsResponse,
-                    parse_obj_as(
-                        type_=ListPromptVersionsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                _items = _parsed_response.data
-                _has_next = True
-
-                async def _get_next():
-                    return await self.list(
-                        tag=tag,
-                        fqn=fqn,
-                        prompt_id=prompt_id,
-                        ml_repo_id=ml_repo_id,
-                        name=name,
-                        version=version,
-                        offset=offset + len(_items or []),
-                        limit=limit,
-                        request_options=request_options,
-                    )
-
-                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,

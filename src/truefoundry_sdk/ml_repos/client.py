@@ -5,7 +5,6 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
-from ..types.empty_response import EmptyResponse
 from ..types.get_ml_repo_response import GetMlRepoResponse
 from ..types.list_ml_repos_response import ListMlReposResponse
 from ..types.ml_repo import MlRepo
@@ -30,6 +29,127 @@ class MlReposClient:
         RawMlReposClient
         """
         return self._raw_client
+
+    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetMlRepoResponse:
+        """
+        Get an ML Repo by its ID.
+
+        Parameters
+        ----------
+        id : str
+            ML Repo Id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetMlRepoResponse
+            The ML Repo data
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.ml_repos.get(
+            id="id",
+        )
+        """
+        _response = self._raw_client.get(id, request_options=request_options)
+        return _response.data
+
+    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete an ML Repo by its ID.
+
+        Parameters
+        ----------
+        id : str
+            ML Repo Id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.ml_repos.delete(
+            id="id",
+        )
+        """
+        _response = self._raw_client.delete(id, request_options=request_options)
+        return _response.data
+
+    def list(
+        self,
+        *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
+        name: typing.Optional[str] = None,
+        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncPager[MlRepo, ListMlReposResponse]:
+        """
+        List ML Repos with optional filtering by name.
+
+        Parameters
+        ----------
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
+        name : typing.Optional[str]
+            ML Repo Name
+
+        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[MlRepo, ListMlReposResponse]
+            List of ML Repos matching the query with pagination information
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.ml_repos.list(
+            limit=10,
+            offset=0,
+            name="name",
+            attributes=["attributes"],
+        )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
+        """
+        return self._raw_client.list(
+            limit=limit, offset=offset, name=name, attributes=attributes, request_options=request_options
+        )
 
     def create_or_update(
         self,
@@ -83,119 +203,6 @@ class MlReposClient:
         )
         return _response.data
 
-    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetMlRepoResponse:
-        """
-        Get an ML Repo by its ID.
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetMlRepoResponse
-            The ML Repo data
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.ml_repos.get(
-            id="id",
-        )
-        """
-        _response = self._raw_client.get(id, request_options=request_options)
-        return _response.data
-
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
-        """
-        Delete an ML Repo by its ID.
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        EmptyResponse
-            Empty response indicating successful deletion
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.ml_repos.delete(
-            id="id",
-        )
-        """
-        _response = self._raw_client.delete(id, request_options=request_options)
-        return _response.data
-
-    def list(
-        self,
-        *,
-        name: typing.Optional[str] = None,
-        limit: typing.Optional[int] = 100,
-        offset: typing.Optional[int] = 0,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[MlRepo, ListMlReposResponse]:
-        """
-        List ML Repos with optional filtering by name.
-
-        Parameters
-        ----------
-        name : typing.Optional[str]
-            Name of the ML Repo to filter by
-
-        limit : typing.Optional[int]
-            Maximum number of ML Repos to return
-
-        offset : typing.Optional[int]
-            Number of ML Repos to skip for pagination
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SyncPager[MlRepo, ListMlReposResponse]
-            List of ML Repos matching the query with pagination information
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        response = client.ml_repos.list(
-            name="name",
-            limit=1,
-            offset=1,
-        )
-        for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        for page in response.iter_pages():
-            yield page
-        """
-        return self._raw_client.list(name=name, limit=limit, offset=offset, request_options=request_options)
-
 
 class AsyncMlReposClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -211,6 +218,152 @@ class AsyncMlReposClient:
         AsyncRawMlReposClient
         """
         return self._raw_client
+
+    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetMlRepoResponse:
+        """
+        Get an ML Repo by its ID.
+
+        Parameters
+        ----------
+        id : str
+            ML Repo Id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetMlRepoResponse
+            The ML Repo data
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.ml_repos.get(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get(id, request_options=request_options)
+        return _response.data
+
+    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete an ML Repo by its ID.
+
+        Parameters
+        ----------
+        id : str
+            ML Repo Id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.ml_repos.delete(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete(id, request_options=request_options)
+        return _response.data
+
+    async def list(
+        self,
+        *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
+        name: typing.Optional[str] = None,
+        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncPager[MlRepo, ListMlReposResponse]:
+        """
+        List ML Repos with optional filtering by name.
+
+        Parameters
+        ----------
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
+        name : typing.Optional[str]
+            ML Repo Name
+
+        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[MlRepo, ListMlReposResponse]
+            List of ML Repos matching the query with pagination information
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.ml_repos.list(
+                limit=10,
+                offset=0,
+                name="name",
+                attributes=["attributes"],
+            )
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
+        """
+        return await self._raw_client.list(
+            limit=limit, offset=offset, name=name, attributes=attributes, request_options=request_options
+        )
 
     async def create_or_update(
         self,
@@ -271,141 +424,3 @@ class AsyncMlReposClient:
             manifest=manifest, dry_run=dry_run, request_options=request_options
         )
         return _response.data
-
-    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetMlRepoResponse:
-        """
-        Get an ML Repo by its ID.
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetMlRepoResponse
-            The ML Repo data
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.ml_repos.get(
-                id="id",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.get(id, request_options=request_options)
-        return _response.data
-
-    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
-        """
-        Delete an ML Repo by its ID.
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        EmptyResponse
-            Empty response indicating successful deletion
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.ml_repos.delete(
-                id="id",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.delete(id, request_options=request_options)
-        return _response.data
-
-    async def list(
-        self,
-        *,
-        name: typing.Optional[str] = None,
-        limit: typing.Optional[int] = 100,
-        offset: typing.Optional[int] = 0,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[MlRepo, ListMlReposResponse]:
-        """
-        List ML Repos with optional filtering by name.
-
-        Parameters
-        ----------
-        name : typing.Optional[str]
-            Name of the ML Repo to filter by
-
-        limit : typing.Optional[int]
-            Maximum number of ML Repos to return
-
-        offset : typing.Optional[int]
-            Number of ML Repos to skip for pagination
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncPager[MlRepo, ListMlReposResponse]
-            List of ML Repos matching the query with pagination information
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            response = await client.ml_repos.list(
-                name="name",
-                limit=1,
-                offset=1,
-            )
-            async for item in response:
-                yield item
-
-            # alternatively, you can paginate page-by-page
-            async for page in response.iter_pages():
-                yield page
-
-
-        asyncio.run(main())
-        """
-        return await self._raw_client.list(name=name, limit=limit, offset=offset, request_options=request_options)

@@ -11,17 +11,17 @@ from ..core.serialization import FieldMetadata
 class ListFilesRequest(UniversalBaseModel):
     id: str = pydantic.Field()
     """
-    ID of the artifact version to list files from
+    Identifier of the artifact version to list files for.
     """
 
     path: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Relative path within the artifact version to list files from (defaults to root)
+    Path within the artifact version to list files under.
     """
 
-    limit: typing.Optional[int] = pydantic.Field(default=None)
+    limit: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Maximum number of files/directories to return
+    Maximum number of files to return.
     """
 
     page_token: typing_extensions.Annotated[

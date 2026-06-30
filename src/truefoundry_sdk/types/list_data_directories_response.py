@@ -11,12 +11,12 @@ from .pagination import Pagination
 class ListDataDirectoriesResponse(UniversalBaseModel):
     data: typing.List[DataDirectory] = pydantic.Field()
     """
-    List of data directories matching the query
+    List of data directories matching the query.
     """
 
     pagination: Pagination = pydantic.Field()
     """
-    Pagination information including total count, offset, and limit
+    Pagination information for the response.
     """
 
     if IS_PYDANTIC_V2:

@@ -11,7 +11,11 @@ class SemanticCacheConfig(UniversalBaseModel):
     Semantic Cache Configuration
     """
 
-    type: typing.Literal["semantic"] = "semantic"
+    type: typing.Literal["semantic"] = pydantic.Field(default="semantic")
+    """
+    Cache type
+    """
+
     similarity_threshold: float = pydantic.Field()
     """
     Similarity threshold for semantic matching (between 0 and 1)

@@ -10,7 +10,7 @@ from .multi_part_upload import MultiPartUpload
 class MultiPartUploadResponse(UniversalBaseModel):
     data: MultiPartUpload = pydantic.Field()
     """
-    Multipart upload information including signed URLs for each part
+    Details of the created multipart upload.
     """
 
     if IS_PYDANTIC_V2:

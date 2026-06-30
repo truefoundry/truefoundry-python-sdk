@@ -6,11 +6,9 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .apply_ml_entity_request_manifest import ApplyMlEntityRequestManifest
-    from .delete_ml_entity_request_manifest import DeleteMlEntityRequestManifest
+    from .agent_skill_versions_list_request_version import AgentSkillVersionsListRequestVersion
 _dynamic_imports: typing.Dict[str, str] = {
-    "ApplyMlEntityRequestManifest": ".apply_ml_entity_request_manifest",
-    "DeleteMlEntityRequestManifest": ".delete_ml_entity_request_manifest",
+    "AgentSkillVersionsListRequestVersion": ".agent_skill_versions_list_request_version"
 }
 
 
@@ -35,4 +33,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ApplyMlEntityRequestManifest", "DeleteMlEntityRequestManifest"]
+__all__ = ["AgentSkillVersionsListRequestVersion"]

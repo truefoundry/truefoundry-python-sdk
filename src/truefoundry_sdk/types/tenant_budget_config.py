@@ -35,7 +35,7 @@ class TenantBudgetConfig(UniversalBaseModel):
     `enforce` blocks breaching requests, `audit` only tracks them.
     """
 
-    alerts: BudgetV2Alert
+    alerts: typing.Optional[BudgetV2Alert] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

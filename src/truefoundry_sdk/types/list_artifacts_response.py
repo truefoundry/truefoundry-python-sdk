@@ -11,12 +11,12 @@ from .pagination import Pagination
 class ListArtifactsResponse(UniversalBaseModel):
     data: typing.List[Artifact] = pydantic.Field()
     """
-    List of artifacts matching the query
+    List of artifacts matching the query.
     """
 
     pagination: Pagination = pydantic.Field()
     """
-    Pagination information including total count, offset, and limit
+    Pagination information for the response.
     """
 
     if IS_PYDANTIC_V2:

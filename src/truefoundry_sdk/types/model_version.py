@@ -11,73 +11,64 @@ from .subject import Subject
 
 
 class ModelVersion(UniversalBaseModel):
-    """
-    Tags, optional version alias, and SDK usage snippet (models, prompts, generic artifacts).
-    """
-
-    id: str = pydantic.Field()
-    """
-    Unique identifier for the artifact version
-    """
-
-    fqn: str = pydantic.Field()
-    """
-    Fully qualified name of the artifact version in the format '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}:{version}'
-    """
-
-    created_by_subject: Subject = pydantic.Field()
-    """
-    Subject (user, team, or service account) that created this artifact version
-    """
-
     created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
-    Timestamp when the artifact version was created
+    Timestamp when the model version was created.
     """
 
     updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
-    Timestamp when the artifact version was last updated
+    Timestamp when the model version was last updated.
     """
 
     manifest: ModelManifest = pydantic.Field()
     """
-    Manifest containing metadata specific to the model version
+    Manifest describing the model version.
+    """
+
+    id: str = pydantic.Field()
+    """
+    Unique identifier of the model version.
+    """
+
+    fqn: str = pydantic.Field()
+    """
+    Fully Qualified Name uniquely identifying the model version.
+    """
+
+    created_by_subject: Subject = pydantic.Field()
+    """
+    Subject (user, team, or service account) that created the model version.
     """
 
     ml_repo_id: str = pydantic.Field()
     """
-    ID of the ML Repo that this artifact version belongs to
-    """
-
-    tags: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
-    """
-    List of tags associated with this artifact version for filtering and organization
-    """
-
-    version_alias: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Optional human-readable version alias (e.g. v1.0.0)
+    Identifier of the ML Repo the model version belongs to.
     """
 
     usage_code_snippet: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Code snippet demonstrating how to use this artifact version
+    Code snippet showing how to use the model version.
+    """
+
+    tags: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Tags associated with the model version.
     """
 
     model_id: str = pydantic.Field()
     """
-    ID of the parent model that this version belongs to
+    Identifier of the model this version belongs to.
     """
 
     metrics: typing.Optional[typing.List[Metric]] = pydantic.Field(default=None)
     """
-    List of metrics associated with this model version
+    Metrics logged for the model version.
     """
 
-    deployable: typing.Optional[bool] = pydantic.Field(default=False)
+    deployable: bool = pydantic.Field(default=False)
     """
-    Whether this model version is ready for deployment
+    Whether the model version can be deployed.
     """
 
     if IS_PYDANTIC_V2:

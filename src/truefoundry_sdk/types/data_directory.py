@@ -32,7 +32,7 @@ class DataDirectory(UniversalBaseModel):
 
     created_by_subject: Subject = pydantic.Field()
     """
-    Subject (user, team, or service account) that created this data directory
+    Subject that created this data directory
     """
 
     created_at: dt.datetime = pydantic.Field()
@@ -47,7 +47,7 @@ class DataDirectory(UniversalBaseModel):
 
     manifest: DataDirectoryManifest = pydantic.Field()
     """
-    Manifest containing metadata for the data directory
+    Manifest describing the data directory.
     """
 
     usage_code_snippet: typing.Optional[str] = pydantic.Field(default=None)

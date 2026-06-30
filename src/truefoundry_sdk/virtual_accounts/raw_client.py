@@ -18,6 +18,7 @@ from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.delete_virtual_account_response import DeleteVirtualAccountResponse
 from ..types.get_token_for_virtual_account_response import GetTokenForVirtualAccountResponse
 from ..types.get_virtual_account_response import GetVirtualAccountResponse
+from ..types.http_error import HttpError
 from ..types.list_virtual_account_response import ListVirtualAccountResponse
 from ..types.sync_virtual_account_token_response import SyncVirtualAccountTokenResponse
 from ..types.virtual_account import VirtualAccount
@@ -185,9 +186,9 @@ class RawVirtualAccountsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Any,
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Any,  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -691,9 +692,9 @@ class AsyncRawVirtualAccountsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Any,
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Any,  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

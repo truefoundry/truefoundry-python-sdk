@@ -9,12 +9,12 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 class SignedUrl(UniversalBaseModel):
     path: str = pydantic.Field()
     """
-    Relative path of the file within the artifact storage
+    Path of the file relative to the artifact version storage root.
     """
 
     signed_url: str = pydantic.Field()
     """
-    Pre-signed URL that can be used to access the file directly
+    Signed URL used to access or upload the file.
     """
 
     if IS_PYDANTIC_V2:

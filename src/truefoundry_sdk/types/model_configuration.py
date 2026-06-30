@@ -4,7 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .parameters import Parameters
+from .model_configuration_parameters import ModelConfigurationParameters
 
 
 class ModelConfiguration(UniversalBaseModel):
@@ -22,7 +22,7 @@ class ModelConfiguration(UniversalBaseModel):
     Name of the model to be used for generations. This model should be available in the provider
     """
 
-    parameters: typing.Optional[Parameters] = pydantic.Field(default=None)
+    parameters: typing.Optional[ModelConfigurationParameters] = pydantic.Field(default=None)
     """
     Parameters to pass to the model when generating
     """

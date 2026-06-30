@@ -40,6 +40,7 @@ if typing.TYPE_CHECKING:
     from .personal_access_tokens.client import AsyncPersonalAccessTokensClient, PersonalAccessTokensClient
     from .prompt_versions.client import AsyncPromptVersionsClient, PromptVersionsClient
     from .prompts.client import AsyncPromptsClient, PromptsClient
+    from .runs.client import AsyncRunsClient, RunsClient
     from .secret_groups.client import AsyncSecretGroupsClient, SecretGroupsClient
     from .secrets.client import AsyncSecretsClient, SecretsClient
     from .teams.client import AsyncTeamsClient, TeamsClient
@@ -131,20 +132,21 @@ class BaseTrueFoundry:
         self._secret_groups: typing.Optional[SecretGroupsClient] = None
         self._events: typing.Optional[EventsClient] = None
         self._alerts: typing.Optional[AlertsClient] = None
-        self._ml_repos: typing.Optional[MlReposClient] = None
-        self._logs: typing.Optional[LogsClient] = None
-        self._traces: typing.Optional[TracesClient] = None
-        self._artifacts: typing.Optional[ArtifactsClient] = None
-        self._prompts: typing.Optional[PromptsClient] = None
-        self._models: typing.Optional[ModelsClient] = None
-        self._artifact_versions: typing.Optional[ArtifactVersionsClient] = None
-        self._model_versions: typing.Optional[ModelVersionsClient] = None
-        self._prompt_versions: typing.Optional[PromptVersionsClient] = None
-        self._agent_skills: typing.Optional[AgentSkillsClient] = None
-        self._agent_skill_versions: typing.Optional[AgentSkillVersionsClient] = None
-        self._data_directories: typing.Optional[DataDirectoriesClient] = None
         self._agents: typing.Optional[AgentsClient] = None
         self._agent_versions: typing.Optional[AgentVersionsClient] = None
+        self._prompts: typing.Optional[PromptsClient] = None
+        self._prompt_versions: typing.Optional[PromptVersionsClient] = None
+        self._artifacts: typing.Optional[ArtifactsClient] = None
+        self._artifact_versions: typing.Optional[ArtifactVersionsClient] = None
+        self._ml_repos: typing.Optional[MlReposClient] = None
+        self._data_directories: typing.Optional[DataDirectoriesClient] = None
+        self._runs: typing.Optional[RunsClient] = None
+        self._models: typing.Optional[ModelsClient] = None
+        self._model_versions: typing.Optional[ModelVersionsClient] = None
+        self._logs: typing.Optional[LogsClient] = None
+        self._agent_skills: typing.Optional[AgentSkillsClient] = None
+        self._agent_skill_versions: typing.Optional[AgentSkillVersionsClient] = None
+        self._traces: typing.Optional[TracesClient] = None
 
     @property
     def with_raw_response(self) -> RawBaseTrueFoundry:
@@ -379,36 +381,20 @@ class BaseTrueFoundry:
         return self._alerts
 
     @property
-    def ml_repos(self):
-        if self._ml_repos is None:
-            from .ml_repos.client import MlReposClient  # noqa: E402
+    def agents(self):
+        if self._agents is None:
+            from .agents.client import AgentsClient  # noqa: E402
 
-            self._ml_repos = MlReposClient(client_wrapper=self._client_wrapper)
-        return self._ml_repos
-
-    @property
-    def logs(self):
-        if self._logs is None:
-            from .logs.client import LogsClient  # noqa: E402
-
-            self._logs = LogsClient(client_wrapper=self._client_wrapper)
-        return self._logs
+            self._agents = AgentsClient(client_wrapper=self._client_wrapper)
+        return self._agents
 
     @property
-    def traces(self):
-        if self._traces is None:
-            from .traces.client import TracesClient  # noqa: E402
+    def agent_versions(self):
+        if self._agent_versions is None:
+            from .agent_versions.client import AgentVersionsClient  # noqa: E402
 
-            self._traces = TracesClient(client_wrapper=self._client_wrapper)
-        return self._traces
-
-    @property
-    def artifacts(self):
-        if self._artifacts is None:
-            from .artifacts.client import ArtifactsClient  # noqa: E402
-
-            self._artifacts = ArtifactsClient(client_wrapper=self._client_wrapper)
-        return self._artifacts
+            self._agent_versions = AgentVersionsClient(client_wrapper=self._client_wrapper)
+        return self._agent_versions
 
     @property
     def prompts(self):
@@ -419,12 +405,20 @@ class BaseTrueFoundry:
         return self._prompts
 
     @property
-    def models(self):
-        if self._models is None:
-            from .models.client import ModelsClient  # noqa: E402
+    def prompt_versions(self):
+        if self._prompt_versions is None:
+            from .prompt_versions.client import PromptVersionsClient  # noqa: E402
 
-            self._models = ModelsClient(client_wrapper=self._client_wrapper)
-        return self._models
+            self._prompt_versions = PromptVersionsClient(client_wrapper=self._client_wrapper)
+        return self._prompt_versions
+
+    @property
+    def artifacts(self):
+        if self._artifacts is None:
+            from .artifacts.client import ArtifactsClient  # noqa: E402
+
+            self._artifacts = ArtifactsClient(client_wrapper=self._client_wrapper)
+        return self._artifacts
 
     @property
     def artifact_versions(self):
@@ -435,6 +429,38 @@ class BaseTrueFoundry:
         return self._artifact_versions
 
     @property
+    def ml_repos(self):
+        if self._ml_repos is None:
+            from .ml_repos.client import MlReposClient  # noqa: E402
+
+            self._ml_repos = MlReposClient(client_wrapper=self._client_wrapper)
+        return self._ml_repos
+
+    @property
+    def data_directories(self):
+        if self._data_directories is None:
+            from .data_directories.client import DataDirectoriesClient  # noqa: E402
+
+            self._data_directories = DataDirectoriesClient(client_wrapper=self._client_wrapper)
+        return self._data_directories
+
+    @property
+    def runs(self):
+        if self._runs is None:
+            from .runs.client import RunsClient  # noqa: E402
+
+            self._runs = RunsClient(client_wrapper=self._client_wrapper)
+        return self._runs
+
+    @property
+    def models(self):
+        if self._models is None:
+            from .models.client import ModelsClient  # noqa: E402
+
+            self._models = ModelsClient(client_wrapper=self._client_wrapper)
+        return self._models
+
+    @property
     def model_versions(self):
         if self._model_versions is None:
             from .model_versions.client import ModelVersionsClient  # noqa: E402
@@ -443,12 +469,12 @@ class BaseTrueFoundry:
         return self._model_versions
 
     @property
-    def prompt_versions(self):
-        if self._prompt_versions is None:
-            from .prompt_versions.client import PromptVersionsClient  # noqa: E402
+    def logs(self):
+        if self._logs is None:
+            from .logs.client import LogsClient  # noqa: E402
 
-            self._prompt_versions = PromptVersionsClient(client_wrapper=self._client_wrapper)
-        return self._prompt_versions
+            self._logs = LogsClient(client_wrapper=self._client_wrapper)
+        return self._logs
 
     @property
     def agent_skills(self):
@@ -467,28 +493,12 @@ class BaseTrueFoundry:
         return self._agent_skill_versions
 
     @property
-    def data_directories(self):
-        if self._data_directories is None:
-            from .data_directories.client import DataDirectoriesClient  # noqa: E402
+    def traces(self):
+        if self._traces is None:
+            from .traces.client import TracesClient  # noqa: E402
 
-            self._data_directories = DataDirectoriesClient(client_wrapper=self._client_wrapper)
-        return self._data_directories
-
-    @property
-    def agents(self):
-        if self._agents is None:
-            from .agents.client import AgentsClient  # noqa: E402
-
-            self._agents = AgentsClient(client_wrapper=self._client_wrapper)
-        return self._agents
-
-    @property
-    def agent_versions(self):
-        if self._agent_versions is None:
-            from .agent_versions.client import AgentVersionsClient  # noqa: E402
-
-            self._agent_versions = AgentVersionsClient(client_wrapper=self._client_wrapper)
-        return self._agent_versions
+            self._traces = TracesClient(client_wrapper=self._client_wrapper)
+        return self._traces
 
 
 def _make_default_async_client(
@@ -592,20 +602,21 @@ class AsyncBaseTrueFoundry:
         self._secret_groups: typing.Optional[AsyncSecretGroupsClient] = None
         self._events: typing.Optional[AsyncEventsClient] = None
         self._alerts: typing.Optional[AsyncAlertsClient] = None
-        self._ml_repos: typing.Optional[AsyncMlReposClient] = None
-        self._logs: typing.Optional[AsyncLogsClient] = None
-        self._traces: typing.Optional[AsyncTracesClient] = None
-        self._artifacts: typing.Optional[AsyncArtifactsClient] = None
-        self._prompts: typing.Optional[AsyncPromptsClient] = None
-        self._models: typing.Optional[AsyncModelsClient] = None
-        self._artifact_versions: typing.Optional[AsyncArtifactVersionsClient] = None
-        self._model_versions: typing.Optional[AsyncModelVersionsClient] = None
-        self._prompt_versions: typing.Optional[AsyncPromptVersionsClient] = None
-        self._agent_skills: typing.Optional[AsyncAgentSkillsClient] = None
-        self._agent_skill_versions: typing.Optional[AsyncAgentSkillVersionsClient] = None
-        self._data_directories: typing.Optional[AsyncDataDirectoriesClient] = None
         self._agents: typing.Optional[AsyncAgentsClient] = None
         self._agent_versions: typing.Optional[AsyncAgentVersionsClient] = None
+        self._prompts: typing.Optional[AsyncPromptsClient] = None
+        self._prompt_versions: typing.Optional[AsyncPromptVersionsClient] = None
+        self._artifacts: typing.Optional[AsyncArtifactsClient] = None
+        self._artifact_versions: typing.Optional[AsyncArtifactVersionsClient] = None
+        self._ml_repos: typing.Optional[AsyncMlReposClient] = None
+        self._data_directories: typing.Optional[AsyncDataDirectoriesClient] = None
+        self._runs: typing.Optional[AsyncRunsClient] = None
+        self._models: typing.Optional[AsyncModelsClient] = None
+        self._model_versions: typing.Optional[AsyncModelVersionsClient] = None
+        self._logs: typing.Optional[AsyncLogsClient] = None
+        self._agent_skills: typing.Optional[AsyncAgentSkillsClient] = None
+        self._agent_skill_versions: typing.Optional[AsyncAgentSkillVersionsClient] = None
+        self._traces: typing.Optional[AsyncTracesClient] = None
 
     @property
     def with_raw_response(self) -> AsyncRawBaseTrueFoundry:
@@ -856,36 +867,20 @@ class AsyncBaseTrueFoundry:
         return self._alerts
 
     @property
-    def ml_repos(self):
-        if self._ml_repos is None:
-            from .ml_repos.client import AsyncMlReposClient  # noqa: E402
+    def agents(self):
+        if self._agents is None:
+            from .agents.client import AsyncAgentsClient  # noqa: E402
 
-            self._ml_repos = AsyncMlReposClient(client_wrapper=self._client_wrapper)
-        return self._ml_repos
-
-    @property
-    def logs(self):
-        if self._logs is None:
-            from .logs.client import AsyncLogsClient  # noqa: E402
-
-            self._logs = AsyncLogsClient(client_wrapper=self._client_wrapper)
-        return self._logs
+            self._agents = AsyncAgentsClient(client_wrapper=self._client_wrapper)
+        return self._agents
 
     @property
-    def traces(self):
-        if self._traces is None:
-            from .traces.client import AsyncTracesClient  # noqa: E402
+    def agent_versions(self):
+        if self._agent_versions is None:
+            from .agent_versions.client import AsyncAgentVersionsClient  # noqa: E402
 
-            self._traces = AsyncTracesClient(client_wrapper=self._client_wrapper)
-        return self._traces
-
-    @property
-    def artifacts(self):
-        if self._artifacts is None:
-            from .artifacts.client import AsyncArtifactsClient  # noqa: E402
-
-            self._artifacts = AsyncArtifactsClient(client_wrapper=self._client_wrapper)
-        return self._artifacts
+            self._agent_versions = AsyncAgentVersionsClient(client_wrapper=self._client_wrapper)
+        return self._agent_versions
 
     @property
     def prompts(self):
@@ -896,12 +891,20 @@ class AsyncBaseTrueFoundry:
         return self._prompts
 
     @property
-    def models(self):
-        if self._models is None:
-            from .models.client import AsyncModelsClient  # noqa: E402
+    def prompt_versions(self):
+        if self._prompt_versions is None:
+            from .prompt_versions.client import AsyncPromptVersionsClient  # noqa: E402
 
-            self._models = AsyncModelsClient(client_wrapper=self._client_wrapper)
-        return self._models
+            self._prompt_versions = AsyncPromptVersionsClient(client_wrapper=self._client_wrapper)
+        return self._prompt_versions
+
+    @property
+    def artifacts(self):
+        if self._artifacts is None:
+            from .artifacts.client import AsyncArtifactsClient  # noqa: E402
+
+            self._artifacts = AsyncArtifactsClient(client_wrapper=self._client_wrapper)
+        return self._artifacts
 
     @property
     def artifact_versions(self):
@@ -912,6 +915,38 @@ class AsyncBaseTrueFoundry:
         return self._artifact_versions
 
     @property
+    def ml_repos(self):
+        if self._ml_repos is None:
+            from .ml_repos.client import AsyncMlReposClient  # noqa: E402
+
+            self._ml_repos = AsyncMlReposClient(client_wrapper=self._client_wrapper)
+        return self._ml_repos
+
+    @property
+    def data_directories(self):
+        if self._data_directories is None:
+            from .data_directories.client import AsyncDataDirectoriesClient  # noqa: E402
+
+            self._data_directories = AsyncDataDirectoriesClient(client_wrapper=self._client_wrapper)
+        return self._data_directories
+
+    @property
+    def runs(self):
+        if self._runs is None:
+            from .runs.client import AsyncRunsClient  # noqa: E402
+
+            self._runs = AsyncRunsClient(client_wrapper=self._client_wrapper)
+        return self._runs
+
+    @property
+    def models(self):
+        if self._models is None:
+            from .models.client import AsyncModelsClient  # noqa: E402
+
+            self._models = AsyncModelsClient(client_wrapper=self._client_wrapper)
+        return self._models
+
+    @property
     def model_versions(self):
         if self._model_versions is None:
             from .model_versions.client import AsyncModelVersionsClient  # noqa: E402
@@ -920,12 +955,12 @@ class AsyncBaseTrueFoundry:
         return self._model_versions
 
     @property
-    def prompt_versions(self):
-        if self._prompt_versions is None:
-            from .prompt_versions.client import AsyncPromptVersionsClient  # noqa: E402
+    def logs(self):
+        if self._logs is None:
+            from .logs.client import AsyncLogsClient  # noqa: E402
 
-            self._prompt_versions = AsyncPromptVersionsClient(client_wrapper=self._client_wrapper)
-        return self._prompt_versions
+            self._logs = AsyncLogsClient(client_wrapper=self._client_wrapper)
+        return self._logs
 
     @property
     def agent_skills(self):
@@ -944,25 +979,9 @@ class AsyncBaseTrueFoundry:
         return self._agent_skill_versions
 
     @property
-    def data_directories(self):
-        if self._data_directories is None:
-            from .data_directories.client import AsyncDataDirectoriesClient  # noqa: E402
+    def traces(self):
+        if self._traces is None:
+            from .traces.client import AsyncTracesClient  # noqa: E402
 
-            self._data_directories = AsyncDataDirectoriesClient(client_wrapper=self._client_wrapper)
-        return self._data_directories
-
-    @property
-    def agents(self):
-        if self._agents is None:
-            from .agents.client import AsyncAgentsClient  # noqa: E402
-
-            self._agents = AsyncAgentsClient(client_wrapper=self._client_wrapper)
-        return self._agents
-
-    @property
-    def agent_versions(self):
-        if self._agent_versions is None:
-            from .agent_versions.client import AsyncAgentVersionsClient  # noqa: E402
-
-            self._agent_versions = AsyncAgentVersionsClient(client_wrapper=self._client_wrapper)
-        return self._agent_versions
+            self._traces = AsyncTracesClient(client_wrapper=self._client_wrapper)
+        return self._traces

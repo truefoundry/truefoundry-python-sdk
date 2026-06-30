@@ -7,7 +7,14 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class StatsModelsFramework(UniversalBaseModel):
-    type: typing.Literal["statsmodels"] = "statsmodels"
+    """
+    StatsModels
+    """
+
+    type: typing.Literal["statsmodels"] = pydantic.Field(default="statsmodels")
+    """
+    Type of the framework
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

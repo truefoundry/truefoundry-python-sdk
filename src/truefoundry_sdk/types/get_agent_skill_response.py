@@ -10,7 +10,7 @@ from .agent_skill import AgentSkill
 class GetAgentSkillResponse(UniversalBaseModel):
     data: AgentSkill = pydantic.Field()
     """
-    The agent skill data
+    The agent skill matching the query.
     """
 
     if IS_PYDANTIC_V2:

@@ -12,7 +12,7 @@ from .async_service import AsyncService
 from .chat_prompt_manifest import ChatPromptManifest
 from .cluster_manifest import ClusterManifest
 from .common_tools_settings import CommonToolsSettings
-from .data_directory import DataDirectory
+from .data_directory_manifest import DataDirectoryManifest
 from .environment_manifest import EnvironmentManifest
 from .gateway_config import GatewayConfig
 from .helm import Helm
@@ -42,7 +42,7 @@ TrueFoundryApplyResponseExistingManifest = typing.Union[
     ArtifactManifest,
     ModelManifest,
     ChatPromptManifest,
-    DataDirectory,
+    DataDirectoryManifest,
     Service,
     ApplicationSet,
     ProviderAccounts,

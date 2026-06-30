@@ -10,27 +10,27 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 class FileInfo(UniversalBaseModel):
     path: str = pydantic.Field()
     """
-    Relative path of the file or directory within the artifact version
+    Path of the file or directory relative to the artifact version storage root.
     """
 
     is_dir: bool = pydantic.Field()
     """
-    Whether this path represents a directory (true) or a file (false)
+    Whether the entry is a directory.
     """
 
-    file_size: typing.Optional[int] = pydantic.Field(default=None)
+    file_size: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Size of the file in bytes (only present for files, not directories)
+    Size of the file in bytes.
     """
 
     signed_url: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Pre-signed URL to download the file directly (only present for files)
+    Signed URL used to download the file.
     """
 
     last_modified: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
-    Timestamp when the file was last modified
+    Timestamp when the file was last modified.
     """
 
     if IS_PYDANTIC_V2:
