@@ -14,7 +14,7 @@ class AgentVersionMetadata(UniversalBaseModel):
         FieldMetadata(alias="promptVariables"),
         pydantic.Field(
             alias="promptVariables",
-            description="Prompt template variables (variable name to default value) saved from the linked prompt version. Only set for agents with a instruction.",
+            description="Prompt template variables (variable name to default value) saved from the linked prompt version. Only set for agents with an instruction.",
         ),
     ] = None
 
