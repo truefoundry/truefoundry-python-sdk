@@ -2,4 +2,4 @@
 
 import typing
 
-ParametersStop = typing.Union[typing.List[str], str]
+ModelConfigurationParametersStop = typing.Union[typing.List[str], str]

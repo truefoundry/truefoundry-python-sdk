@@ -10,7 +10,7 @@ from .prompt import Prompt
 class GetPromptResponse(UniversalBaseModel):
     data: Prompt = pydantic.Field()
     """
-    The prompt data
+    The requested prompt.
     """
 
     if IS_PYDANTIC_V2:

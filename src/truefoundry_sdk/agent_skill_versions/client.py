@@ -10,6 +10,7 @@ from ..types.empty_response import EmptyResponse
 from ..types.get_agent_skill_version_response import GetAgentSkillVersionResponse
 from ..types.list_agent_skill_versions_response import ListAgentSkillVersionsResponse
 from .raw_client import AsyncRawAgentSkillVersionsClient, RawAgentSkillVersionsClient
+from .types.agent_skill_versions_list_request_version import AgentSkillVersionsListRequestVersion
 
 
 class AgentSkillVersionsClient:
@@ -27,6 +28,89 @@ class AgentSkillVersionsClient:
         """
         return self._raw_client
 
+    def list(
+        self,
+        *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
+        fqn: typing.Optional[str] = None,
+        agent_skill_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
+        version: typing.Optional[AgentSkillVersionsListRequestVersion] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]:
+        """
+        List agent skill versions with optional filtering by FQN, agent skill ID, ML Repo, name, or version.
+
+        Parameters
+        ----------
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
+        fqn : typing.Optional[str]
+            Fully Qualified Name uniquely identifying the agent skill version.
+
+        agent_skill_id : typing.Optional[str]
+            Identifier of the agent skill whose versions are being listed.
+
+        ml_repo_id : typing.Optional[str]
+            Identifier of the ML Repo to filter agent skill versions by.
+
+        name : typing.Optional[str]
+            Name of the agent skill to filter versions by.
+
+        version : typing.Optional[AgentSkillVersionsListRequestVersion]
+            Version number (positive integer) or `latest`
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]
+            List of agent skill versions matching the query with pagination information
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+        from truefoundry_sdk.agent_skill_versions import (
+            AgentSkillVersionsListRequestVersion,
+        )
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.agent_skill_versions.list(
+            limit=10,
+            offset=0,
+            fqn="fqn",
+            agent_skill_id="agent_skill_id",
+            ml_repo_id="ml_repo_id",
+            name="name",
+            version=AgentSkillVersionsListRequestVersion.LATEST,
+        )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
+        """
+        return self._raw_client.list(
+            limit=limit,
+            offset=offset,
+            fqn=fqn,
+            agent_skill_id=agent_skill_id,
+            ml_repo_id=ml_repo_id,
+            name=name,
+            version=version,
+            request_options=request_options,
+        )
+
     def get(
         self, agent_skill_version_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetAgentSkillVersionResponse:
@@ -36,6 +120,7 @@ class AgentSkillVersionsClient:
         Parameters
         ----------
         agent_skill_version_id : str
+            Agent skill version ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -69,6 +154,7 @@ class AgentSkillVersionsClient:
         Parameters
         ----------
         agent_skill_version_id : str
+            Agent skill version ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -93,86 +179,6 @@ class AgentSkillVersionsClient:
         _response = self._raw_client.delete(agent_skill_version_id, request_options=request_options)
         return _response.data
 
-    def list(
-        self,
-        *,
-        fqn: typing.Optional[str] = None,
-        agent_skill_id: typing.Optional[str] = None,
-        ml_repo_id: typing.Optional[str] = None,
-        name: typing.Optional[str] = None,
-        version: typing.Optional[int] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]:
-        """
-        List agent skill versions with optional filtering by FQN, agent skill ID, ML Repo, name, or version.
-
-        Parameters
-        ----------
-        fqn : typing.Optional[str]
-            FQN filter for agent skill versions
-
-        agent_skill_id : typing.Optional[str]
-            Parent agent skill artifact ID
-
-        ml_repo_id : typing.Optional[str]
-            ML Repo ID filter
-
-        name : typing.Optional[str]
-            Agent skill name filter
-
-        version : typing.Optional[int]
-            Version number or 'latest'
-
-        offset : typing.Optional[int]
-            Pagination offset
-
-        limit : typing.Optional[int]
-            Page size
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]
-            List of agent skill versions matching the query with pagination information
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        response = client.agent_skill_versions.list(
-            fqn="fqn",
-            agent_skill_id="agent_skill_id",
-            ml_repo_id="ml_repo_id",
-            name="name",
-            version=1,
-            offset=1,
-            limit=1,
-        )
-        for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        for page in response.iter_pages():
-            yield page
-        """
-        return self._raw_client.list(
-            fqn=fqn,
-            agent_skill_id=agent_skill_id,
-            ml_repo_id=ml_repo_id,
-            name=name,
-            version=version,
-            offset=offset,
-            limit=limit,
-            request_options=request_options,
-        )
-
 
 class AsyncAgentSkillVersionsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -189,6 +195,98 @@ class AsyncAgentSkillVersionsClient:
         """
         return self._raw_client
 
+    async def list(
+        self,
+        *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
+        fqn: typing.Optional[str] = None,
+        agent_skill_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
+        version: typing.Optional[AgentSkillVersionsListRequestVersion] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]:
+        """
+        List agent skill versions with optional filtering by FQN, agent skill ID, ML Repo, name, or version.
+
+        Parameters
+        ----------
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
+        fqn : typing.Optional[str]
+            Fully Qualified Name uniquely identifying the agent skill version.
+
+        agent_skill_id : typing.Optional[str]
+            Identifier of the agent skill whose versions are being listed.
+
+        ml_repo_id : typing.Optional[str]
+            Identifier of the ML Repo to filter agent skill versions by.
+
+        name : typing.Optional[str]
+            Name of the agent skill to filter versions by.
+
+        version : typing.Optional[AgentSkillVersionsListRequestVersion]
+            Version number (positive integer) or `latest`
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]
+            List of agent skill versions matching the query with pagination information
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+        from truefoundry_sdk.agent_skill_versions import (
+            AgentSkillVersionsListRequestVersion,
+        )
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.agent_skill_versions.list(
+                limit=10,
+                offset=0,
+                fqn="fqn",
+                agent_skill_id="agent_skill_id",
+                ml_repo_id="ml_repo_id",
+                name="name",
+                version=AgentSkillVersionsListRequestVersion.LATEST,
+            )
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
+        """
+        return await self._raw_client.list(
+            limit=limit,
+            offset=offset,
+            fqn=fqn,
+            agent_skill_id=agent_skill_id,
+            ml_repo_id=ml_repo_id,
+            name=name,
+            version=version,
+            request_options=request_options,
+        )
+
     async def get(
         self, agent_skill_version_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetAgentSkillVersionResponse:
@@ -198,6 +296,7 @@ class AsyncAgentSkillVersionsClient:
         Parameters
         ----------
         agent_skill_version_id : str
+            Agent skill version ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -239,6 +338,7 @@ class AsyncAgentSkillVersionsClient:
         Parameters
         ----------
         agent_skill_version_id : str
+            Agent skill version ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -270,92 +370,3 @@ class AsyncAgentSkillVersionsClient:
         """
         _response = await self._raw_client.delete(agent_skill_version_id, request_options=request_options)
         return _response.data
-
-    async def list(
-        self,
-        *,
-        fqn: typing.Optional[str] = None,
-        agent_skill_id: typing.Optional[str] = None,
-        ml_repo_id: typing.Optional[str] = None,
-        name: typing.Optional[str] = None,
-        version: typing.Optional[int] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]:
-        """
-        List agent skill versions with optional filtering by FQN, agent skill ID, ML Repo, name, or version.
-
-        Parameters
-        ----------
-        fqn : typing.Optional[str]
-            FQN filter for agent skill versions
-
-        agent_skill_id : typing.Optional[str]
-            Parent agent skill artifact ID
-
-        ml_repo_id : typing.Optional[str]
-            ML Repo ID filter
-
-        name : typing.Optional[str]
-            Agent skill name filter
-
-        version : typing.Optional[int]
-            Version number or 'latest'
-
-        offset : typing.Optional[int]
-            Pagination offset
-
-        limit : typing.Optional[int]
-            Page size
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]
-            List of agent skill versions matching the query with pagination information
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            response = await client.agent_skill_versions.list(
-                fqn="fqn",
-                agent_skill_id="agent_skill_id",
-                ml_repo_id="ml_repo_id",
-                name="name",
-                version=1,
-                offset=1,
-                limit=1,
-            )
-            async for item in response:
-                yield item
-
-            # alternatively, you can paginate page-by-page
-            async for page in response.iter_pages():
-                yield page
-
-
-        asyncio.run(main())
-        """
-        return await self._raw_client.list(
-            fqn=fqn,
-            agent_skill_id=agent_skill_id,
-            ml_repo_id=ml_repo_id,
-            name=name,
-            version=version,
-            offset=offset,
-            limit=limit,
-            request_options=request_options,
-        )

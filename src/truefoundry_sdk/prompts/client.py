@@ -39,6 +39,7 @@ class PromptsClient:
         Parameters
         ----------
         id : str
+            Unique identifier of the prompt.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -70,6 +71,7 @@ class PromptsClient:
         Parameters
         ----------
         id : str
+            Unique identifier of the prompt.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -97,11 +99,11 @@ class PromptsClient:
     def list(
         self,
         *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         fqn: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
         include_empty_prompts: typing.Optional[bool] = True,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Prompt, ListPromptsResponse]:
@@ -110,23 +112,23 @@ class PromptsClient:
 
         Parameters
         ----------
-        fqn : typing.Optional[str]
-            Fully qualified name to filter prompts by (format: 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}')
-
-        ml_repo_id : typing.Optional[str]
-            ID of the ML Repo to filter prompts by
-
-        name : typing.Optional[str]
-            Name of the prompt to filter by
+        limit : typing.Optional[int]
+            Number of items per page
 
         offset : typing.Optional[int]
-            Number of prompts to skip for pagination
+            Number of items to skip
 
-        limit : typing.Optional[int]
-            Maximum number of prompts to return
+        fqn : typing.Optional[str]
+            Filter prompts by Fully Qualified Name.
+
+        ml_repo_id : typing.Optional[str]
+            Filter prompts by the identifier of the ML Repo they belong to.
+
+        name : typing.Optional[str]
+            Filter prompts by name.
 
         include_empty_prompts : typing.Optional[bool]
-            Whether to include prompts that have no versions
+            Whether to include prompts that have no versions in the results.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -145,11 +147,11 @@ class PromptsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         response = client.prompts.list(
+            limit=10,
+            offset=0,
             fqn="fqn",
             ml_repo_id="ml_repo_id",
             name="name",
-            offset=1,
-            limit=1,
             include_empty_prompts=True,
         )
         for item in response:
@@ -159,11 +161,11 @@ class PromptsClient:
             yield page
         """
         return self._raw_client.list(
+            limit=limit,
+            offset=offset,
             fqn=fqn,
             ml_repo_id=ml_repo_id,
             name=name,
-            offset=offset,
-            limit=limit,
             include_empty_prompts=include_empty_prompts,
             request_options=request_options,
         )
@@ -177,7 +179,7 @@ class PromptsClient:
         Parameters
         ----------
         manifest : ChatPromptManifest
-            Manifest containing metadata for the prompt to apply
+            Manifest containing metadata for the prompt version to apply
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -197,9 +199,7 @@ class PromptsClient:
         )
         client.prompts.create_or_update(
             manifest=ChatPromptManifest(
-                name="name",
                 metadata={"key": "value"},
-                ml_repo="ml_repo",
                 messages=[
                     SystemMessage(
                         content="content",
@@ -234,6 +234,7 @@ class AsyncPromptsClient:
         Parameters
         ----------
         id : str
+            Unique identifier of the prompt.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -273,6 +274,7 @@ class AsyncPromptsClient:
         Parameters
         ----------
         id : str
+            Unique identifier of the prompt.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -308,11 +310,11 @@ class AsyncPromptsClient:
     async def list(
         self,
         *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         fqn: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
         include_empty_prompts: typing.Optional[bool] = True,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Prompt, ListPromptsResponse]:
@@ -321,23 +323,23 @@ class AsyncPromptsClient:
 
         Parameters
         ----------
-        fqn : typing.Optional[str]
-            Fully qualified name to filter prompts by (format: 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}')
-
-        ml_repo_id : typing.Optional[str]
-            ID of the ML Repo to filter prompts by
-
-        name : typing.Optional[str]
-            Name of the prompt to filter by
+        limit : typing.Optional[int]
+            Number of items per page
 
         offset : typing.Optional[int]
-            Number of prompts to skip for pagination
+            Number of items to skip
 
-        limit : typing.Optional[int]
-            Maximum number of prompts to return
+        fqn : typing.Optional[str]
+            Filter prompts by Fully Qualified Name.
+
+        ml_repo_id : typing.Optional[str]
+            Filter prompts by the identifier of the ML Repo they belong to.
+
+        name : typing.Optional[str]
+            Filter prompts by name.
 
         include_empty_prompts : typing.Optional[bool]
-            Whether to include prompts that have no versions
+            Whether to include prompts that have no versions in the results.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -361,11 +363,11 @@ class AsyncPromptsClient:
 
         async def main() -> None:
             response = await client.prompts.list(
+                limit=10,
+                offset=0,
                 fqn="fqn",
                 ml_repo_id="ml_repo_id",
                 name="name",
-                offset=1,
-                limit=1,
                 include_empty_prompts=True,
             )
             async for item in response:
@@ -379,11 +381,11 @@ class AsyncPromptsClient:
         asyncio.run(main())
         """
         return await self._raw_client.list(
+            limit=limit,
+            offset=offset,
             fqn=fqn,
             ml_repo_id=ml_repo_id,
             name=name,
-            offset=offset,
-            limit=limit,
             include_empty_prompts=include_empty_prompts,
             request_options=request_options,
         )
@@ -397,7 +399,7 @@ class AsyncPromptsClient:
         Parameters
         ----------
         manifest : ChatPromptManifest
-            Manifest containing metadata for the prompt to apply
+            Manifest containing metadata for the prompt version to apply
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -422,9 +424,7 @@ class AsyncPromptsClient:
         async def main() -> None:
             await client.prompts.create_or_update(
                 manifest=ChatPromptManifest(
-                    name="name",
                     metadata={"key": "value"},
-                    ml_repo="ml_repo",
                     messages=[
                         SystemMessage(
                             content="content",

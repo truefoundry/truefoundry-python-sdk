@@ -7,33 +7,29 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class UsageCodeSnippet(UniversalBaseModel):
-    """
-    Example code or shell commands for using an ML entity (prompt, agent skill, etc.).
-    """
-
     display_name: str = pydantic.Field()
     """
-    Display label for the snippet (e.g. 'Python', 'Download via TFY CLI')
+    Display name of the usage code snippet.
     """
 
     language: str = pydantic.Field()
     """
-    Language identifier (e.g. 'python', 'bash', 'javascript')
+    Programming language of the usage code snippet.
     """
 
     libraries: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    Libraries, CLIs, or frameworks relevant to the snippet
+    Libraries required to run the usage code snippet.
     """
 
     code: str = pydantic.Field()
     """
-    The snippet body shown to users
+    Source code of the usage code snippet.
     """
 
     icon: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Use a URL or an icon name like 'download'.
+    Icon representing the usage code snippet.
     """
 
     if IS_PYDANTIC_V2:

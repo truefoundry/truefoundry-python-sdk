@@ -11,17 +11,111 @@ from ..core.pagination import AsyncPager, SyncPager
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..errors.unprocessable_entity_error import UnprocessableEntityError
+from ..errors.not_found_error import NotFoundError
 from ..types.agent_skill_version import AgentSkillVersion
 from ..types.empty_response import EmptyResponse
 from ..types.get_agent_skill_version_response import GetAgentSkillVersionResponse
 from ..types.list_agent_skill_versions_response import ListAgentSkillVersionsResponse
+from .types.agent_skill_versions_list_request_version import AgentSkillVersionsListRequestVersion
 from pydantic import ValidationError
 
 
 class RawAgentSkillVersionsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    def list(
+        self,
+        *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
+        fqn: typing.Optional[str] = None,
+        agent_skill_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
+        version: typing.Optional[AgentSkillVersionsListRequestVersion] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]:
+        """
+        List agent skill versions with optional filtering by FQN, agent skill ID, ML Repo, name, or version.
+
+        Parameters
+        ----------
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
+        fqn : typing.Optional[str]
+            Fully Qualified Name uniquely identifying the agent skill version.
+
+        agent_skill_id : typing.Optional[str]
+            Identifier of the agent skill whose versions are being listed.
+
+        ml_repo_id : typing.Optional[str]
+            Identifier of the ML Repo to filter agent skill versions by.
+
+        name : typing.Optional[str]
+            Name of the agent skill to filter versions by.
+
+        version : typing.Optional[AgentSkillVersionsListRequestVersion]
+            Version number (positive integer) or `latest`
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]
+            List of agent skill versions matching the query with pagination information
+        """
+        offset = offset if offset is not None else 0
+
+        _response = self._client_wrapper.httpx_client.request(
+            "api/svc/v1/agent-skill-versions",
+            method="GET",
+            params={
+                "limit": limit,
+                "offset": offset,
+                "fqn": fqn,
+                "agent_skill_id": agent_skill_id,
+                "ml_repo_id": ml_repo_id,
+                "name": name,
+                "version": version,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    ListAgentSkillVersionsResponse,
+                    parse_obj_as(
+                        type_=ListAgentSkillVersionsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                _items = _parsed_response.data
+                _has_next = True
+                _get_next = lambda: self.list(
+                    limit=limit,
+                    offset=offset + len(_items or []),
+                    fqn=fqn,
+                    agent_skill_id=agent_skill_id,
+                    ml_repo_id=ml_repo_id,
+                    name=name,
+                    version=version,
+                    request_options=request_options,
+                )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
         self, agent_skill_version_id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -32,6 +126,7 @@ class RawAgentSkillVersionsClient:
         Parameters
         ----------
         agent_skill_version_id : str
+            Agent skill version ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -42,7 +137,7 @@ class RawAgentSkillVersionsClient:
             The agent skill version data
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/agent-skill-versions/{encode_path_param(agent_skill_version_id)}",
+            f"api/svc/v1/agent-skill-versions/{encode_path_param(agent_skill_version_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -56,8 +151,8 @@ class RawAgentSkillVersionsClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -85,6 +180,7 @@ class RawAgentSkillVersionsClient:
         Parameters
         ----------
         agent_skill_version_id : str
+            Agent skill version ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -95,7 +191,7 @@ class RawAgentSkillVersionsClient:
             Empty response indicating successful deletion
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/agent-skill-versions/{encode_path_param(agent_skill_version_id)}",
+            f"api/svc/v1/agent-skill-versions/{encode_path_param(agent_skill_version_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -109,112 +205,8 @@ class RawAgentSkillVersionsClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def list(
-        self,
-        *,
-        fqn: typing.Optional[str] = None,
-        agent_skill_id: typing.Optional[str] = None,
-        ml_repo_id: typing.Optional[str] = None,
-        name: typing.Optional[str] = None,
-        version: typing.Optional[int] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]:
-        """
-        List agent skill versions with optional filtering by FQN, agent skill ID, ML Repo, name, or version.
-
-        Parameters
-        ----------
-        fqn : typing.Optional[str]
-            FQN filter for agent skill versions
-
-        agent_skill_id : typing.Optional[str]
-            Parent agent skill artifact ID
-
-        ml_repo_id : typing.Optional[str]
-            ML Repo ID filter
-
-        name : typing.Optional[str]
-            Agent skill name filter
-
-        version : typing.Optional[int]
-            Version number or 'latest'
-
-        offset : typing.Optional[int]
-            Pagination offset
-
-        limit : typing.Optional[int]
-            Page size
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]
-            List of agent skill versions matching the query with pagination information
-        """
-        offset = offset if offset is not None else 0
-
-        _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/agent-skill-versions",
-            method="GET",
-            params={
-                "fqn": fqn,
-                "agent_skill_id": agent_skill_id,
-                "ml_repo_id": ml_repo_id,
-                "name": name,
-                "version": version,
-                "offset": offset,
-                "limit": limit,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _parsed_response = typing.cast(
-                    ListAgentSkillVersionsResponse,
-                    parse_obj_as(
-                        type_=ListAgentSkillVersionsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                _items = _parsed_response.data
-                _has_next = True
-                _get_next = lambda: self.list(
-                    fqn=fqn,
-                    agent_skill_id=agent_skill_id,
-                    ml_repo_id=ml_repo_id,
-                    name=name,
-                    version=version,
-                    offset=offset + len(_items or []),
-                    limit=limit,
-                    request_options=request_options,
-                )
-                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -238,6 +230,102 @@ class AsyncRawAgentSkillVersionsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
+    async def list(
+        self,
+        *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
+        fqn: typing.Optional[str] = None,
+        agent_skill_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
+        version: typing.Optional[AgentSkillVersionsListRequestVersion] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]:
+        """
+        List agent skill versions with optional filtering by FQN, agent skill ID, ML Repo, name, or version.
+
+        Parameters
+        ----------
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
+        fqn : typing.Optional[str]
+            Fully Qualified Name uniquely identifying the agent skill version.
+
+        agent_skill_id : typing.Optional[str]
+            Identifier of the agent skill whose versions are being listed.
+
+        ml_repo_id : typing.Optional[str]
+            Identifier of the ML Repo to filter agent skill versions by.
+
+        name : typing.Optional[str]
+            Name of the agent skill to filter versions by.
+
+        version : typing.Optional[AgentSkillVersionsListRequestVersion]
+            Version number (positive integer) or `latest`
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]
+            List of agent skill versions matching the query with pagination information
+        """
+        offset = offset if offset is not None else 0
+
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/svc/v1/agent-skill-versions",
+            method="GET",
+            params={
+                "limit": limit,
+                "offset": offset,
+                "fqn": fqn,
+                "agent_skill_id": agent_skill_id,
+                "ml_repo_id": ml_repo_id,
+                "name": name,
+                "version": version,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    ListAgentSkillVersionsResponse,
+                    parse_obj_as(
+                        type_=ListAgentSkillVersionsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                _items = _parsed_response.data
+                _has_next = True
+
+                async def _get_next():
+                    return await self.list(
+                        limit=limit,
+                        offset=offset + len(_items or []),
+                        fqn=fqn,
+                        agent_skill_id=agent_skill_id,
+                        ml_repo_id=ml_repo_id,
+                        name=name,
+                        version=version,
+                        request_options=request_options,
+                    )
+
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     async def get(
         self, agent_skill_version_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetAgentSkillVersionResponse]:
@@ -247,6 +335,7 @@ class AsyncRawAgentSkillVersionsClient:
         Parameters
         ----------
         agent_skill_version_id : str
+            Agent skill version ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -257,7 +346,7 @@ class AsyncRawAgentSkillVersionsClient:
             The agent skill version data
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/agent-skill-versions/{encode_path_param(agent_skill_version_id)}",
+            f"api/svc/v1/agent-skill-versions/{encode_path_param(agent_skill_version_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -271,8 +360,8 @@ class AsyncRawAgentSkillVersionsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -300,6 +389,7 @@ class AsyncRawAgentSkillVersionsClient:
         Parameters
         ----------
         agent_skill_version_id : str
+            Agent skill version ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -310,7 +400,7 @@ class AsyncRawAgentSkillVersionsClient:
             Empty response indicating successful deletion
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/ml/v1/agent-skill-versions/{encode_path_param(agent_skill_version_id)}",
+            f"api/svc/v1/agent-skill-versions/{encode_path_param(agent_skill_version_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -324,115 +414,8 @@ class AsyncRawAgentSkillVersionsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def list(
-        self,
-        *,
-        fqn: typing.Optional[str] = None,
-        agent_skill_id: typing.Optional[str] = None,
-        ml_repo_id: typing.Optional[str] = None,
-        name: typing.Optional[str] = None,
-        version: typing.Optional[int] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]:
-        """
-        List agent skill versions with optional filtering by FQN, agent skill ID, ML Repo, name, or version.
-
-        Parameters
-        ----------
-        fqn : typing.Optional[str]
-            FQN filter for agent skill versions
-
-        agent_skill_id : typing.Optional[str]
-            Parent agent skill artifact ID
-
-        ml_repo_id : typing.Optional[str]
-            ML Repo ID filter
-
-        name : typing.Optional[str]
-            Agent skill name filter
-
-        version : typing.Optional[int]
-            Version number or 'latest'
-
-        offset : typing.Optional[int]
-            Pagination offset
-
-        limit : typing.Optional[int]
-            Page size
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]
-            List of agent skill versions matching the query with pagination information
-        """
-        offset = offset if offset is not None else 0
-
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/agent-skill-versions",
-            method="GET",
-            params={
-                "fqn": fqn,
-                "agent_skill_id": agent_skill_id,
-                "ml_repo_id": ml_repo_id,
-                "name": name,
-                "version": version,
-                "offset": offset,
-                "limit": limit,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _parsed_response = typing.cast(
-                    ListAgentSkillVersionsResponse,
-                    parse_obj_as(
-                        type_=ListAgentSkillVersionsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                _items = _parsed_response.data
-                _has_next = True
-
-                async def _get_next():
-                    return await self.list(
-                        fqn=fqn,
-                        agent_skill_id=agent_skill_id,
-                        ml_repo_id=ml_repo_id,
-                        name=name,
-                        version=version,
-                        offset=offset + len(_items or []),
-                        limit=limit,
-                        request_options=request_options,
-                    )
-
-                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,

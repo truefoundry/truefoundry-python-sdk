@@ -10,7 +10,7 @@ from .artifact import Artifact
 class GetArtifactResponse(UniversalBaseModel):
     data: Artifact = pydantic.Field()
     """
-    The artifact data
+    The requested artifact.
     """
 
     if IS_PYDANTIC_V2:

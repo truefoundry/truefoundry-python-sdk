@@ -9,10 +9,10 @@ from ...core.pagination import AsyncPager, SyncPager
 from ...core.parse_error import ParsingError
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
-from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.artifact_type import ArtifactType
 from ...types.internal_list_artifact_versions_response import InternalListArtifactVersionsResponse
 from ...types.internal_list_artifact_versions_response_data_item import InternalListArtifactVersionsResponseDataItem
+from .types.artifact_versions_list_request_version import ArtifactVersionsListRequestVersion
 from pydantic import ValidationError
 
 
@@ -23,16 +23,16 @@ class RawArtifactVersionsClient:
     def list(
         self,
         *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         tag: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         artifact_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[int] = None,
+        version: typing.Optional[ArtifactVersionsListRequestVersion] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
+        run_steps: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
         include_internal_metadata: typing.Optional[bool] = False,
         include_model_versions: typing.Optional[bool] = False,
         artifact_types: typing.Optional[typing.Union[ArtifactType, typing.Sequence[ArtifactType]]] = None,
@@ -43,43 +43,44 @@ class RawArtifactVersionsClient:
 
         Parameters
         ----------
-        tag : typing.Optional[str]
-            Tag to filter artifact versions by
-
-        fqn : typing.Optional[str]
-            Fully qualified name to filter artifact versions by (format: '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}' or '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}:{version}')
-
-        artifact_id : typing.Optional[str]
-            ID of the artifact to filter versions by
-
-        ml_repo_id : typing.Optional[str]
-            ID of the ML Repo to filter artifact versions by
-
-        name : typing.Optional[str]
-            Name of the artifact to filter versions by
-
-        version : typing.Optional[int]
-            Version number (positive integer) or 'latest' to filter by specific version
-
-        run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            List of run IDs to filter artifact versions by
-
-        run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
-            List of run step numbers to filter artifact versions by
+        limit : typing.Optional[int]
+            Number of items per page
 
         offset : typing.Optional[int]
-            Number of artifact versions to skip for pagination
+            Number of items to skip
 
-        limit : typing.Optional[int]
-            Maximum number of artifact versions to return
+        tag : typing.Optional[str]
+            Tag to filter artifact versions by.
+
+        fqn : typing.Optional[str]
+            Fully Qualified Name uniquely identifying the artifact version.
+
+        artifact_id : typing.Optional[str]
+            Identifier of the artifact whose versions to list.
+
+        ml_repo_id : typing.Optional[str]
+            Identifier of the ML Repo the artifact versions belong to.
+
+        name : typing.Optional[str]
+            Name of the artifact version.
+
+        version : typing.Optional[ArtifactVersionsListRequestVersion]
+            Version number of the artifact version, or "latest" to fetch the most recent one.
+
+        run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Run IDs to filter artifact versions by.
+
+        run_steps : typing.Optional[typing.Union[float, typing.Sequence[float]]]
+            Run steps to filter artifact versions by.
 
         include_internal_metadata : typing.Optional[bool]
-            Whether to include internal metadata in the response
+            Whether to include internal metadata in the response.
 
         include_model_versions : typing.Optional[bool]
-            Whether to include model versions in the results (internal use only)
+            Whether to include model versions in the response.
 
         artifact_types : typing.Optional[typing.Union[ArtifactType, typing.Sequence[ArtifactType]]]
+            Artifact types to filter artifact versions by.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -92,9 +93,11 @@ class RawArtifactVersionsClient:
         offset = offset if offset is not None else 0
 
         _response = self._client_wrapper.httpx_client.request(
-            "api/ml/v1/x/artifact-versions",
+            "api/svc/v1/x/artifact-versions",
             method="GET",
             params={
+                "limit": limit,
+                "offset": offset,
                 "tag": tag,
                 "fqn": fqn,
                 "artifact_id": artifact_id,
@@ -103,8 +106,6 @@ class RawArtifactVersionsClient:
                 "version": version,
                 "run_ids": run_ids,
                 "run_steps": run_steps,
-                "offset": offset,
-                "limit": limit,
                 "include_internal_metadata": include_internal_metadata,
                 "include_model_versions": include_model_versions,
                 "artifact_types": artifact_types,
@@ -123,6 +124,8 @@ class RawArtifactVersionsClient:
                 _items = _parsed_response.data
                 _has_next = True
                 _get_next = lambda: self.list(
+                    limit=limit,
+                    offset=offset + len(_items or []),
                     tag=tag,
                     fqn=fqn,
                     artifact_id=artifact_id,
@@ -131,25 +134,12 @@ class RawArtifactVersionsClient:
                     version=version,
                     run_ids=run_ids,
                     run_steps=run_steps,
-                    offset=offset + len(_items or []),
-                    limit=limit,
                     include_internal_metadata=include_internal_metadata,
                     include_model_versions=include_model_versions,
                     artifact_types=artifact_types,
                     request_options=request_options,
                 )
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -167,16 +157,16 @@ class AsyncRawArtifactVersionsClient:
     async def list(
         self,
         *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         tag: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         artifact_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[int] = None,
+        version: typing.Optional[ArtifactVersionsListRequestVersion] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        run_steps: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
+        run_steps: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
         include_internal_metadata: typing.Optional[bool] = False,
         include_model_versions: typing.Optional[bool] = False,
         artifact_types: typing.Optional[typing.Union[ArtifactType, typing.Sequence[ArtifactType]]] = None,
@@ -187,43 +177,44 @@ class AsyncRawArtifactVersionsClient:
 
         Parameters
         ----------
-        tag : typing.Optional[str]
-            Tag to filter artifact versions by
-
-        fqn : typing.Optional[str]
-            Fully qualified name to filter artifact versions by (format: '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}' or '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}:{version}')
-
-        artifact_id : typing.Optional[str]
-            ID of the artifact to filter versions by
-
-        ml_repo_id : typing.Optional[str]
-            ID of the ML Repo to filter artifact versions by
-
-        name : typing.Optional[str]
-            Name of the artifact to filter versions by
-
-        version : typing.Optional[int]
-            Version number (positive integer) or 'latest' to filter by specific version
-
-        run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            List of run IDs to filter artifact versions by
-
-        run_steps : typing.Optional[typing.Union[int, typing.Sequence[int]]]
-            List of run step numbers to filter artifact versions by
+        limit : typing.Optional[int]
+            Number of items per page
 
         offset : typing.Optional[int]
-            Number of artifact versions to skip for pagination
+            Number of items to skip
 
-        limit : typing.Optional[int]
-            Maximum number of artifact versions to return
+        tag : typing.Optional[str]
+            Tag to filter artifact versions by.
+
+        fqn : typing.Optional[str]
+            Fully Qualified Name uniquely identifying the artifact version.
+
+        artifact_id : typing.Optional[str]
+            Identifier of the artifact whose versions to list.
+
+        ml_repo_id : typing.Optional[str]
+            Identifier of the ML Repo the artifact versions belong to.
+
+        name : typing.Optional[str]
+            Name of the artifact version.
+
+        version : typing.Optional[ArtifactVersionsListRequestVersion]
+            Version number of the artifact version, or "latest" to fetch the most recent one.
+
+        run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Run IDs to filter artifact versions by.
+
+        run_steps : typing.Optional[typing.Union[float, typing.Sequence[float]]]
+            Run steps to filter artifact versions by.
 
         include_internal_metadata : typing.Optional[bool]
-            Whether to include internal metadata in the response
+            Whether to include internal metadata in the response.
 
         include_model_versions : typing.Optional[bool]
-            Whether to include model versions in the results (internal use only)
+            Whether to include model versions in the response.
 
         artifact_types : typing.Optional[typing.Union[ArtifactType, typing.Sequence[ArtifactType]]]
+            Artifact types to filter artifact versions by.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -236,9 +227,11 @@ class AsyncRawArtifactVersionsClient:
         offset = offset if offset is not None else 0
 
         _response = await self._client_wrapper.httpx_client.request(
-            "api/ml/v1/x/artifact-versions",
+            "api/svc/v1/x/artifact-versions",
             method="GET",
             params={
+                "limit": limit,
+                "offset": offset,
                 "tag": tag,
                 "fqn": fqn,
                 "artifact_id": artifact_id,
@@ -247,8 +240,6 @@ class AsyncRawArtifactVersionsClient:
                 "version": version,
                 "run_ids": run_ids,
                 "run_steps": run_steps,
-                "offset": offset,
-                "limit": limit,
                 "include_internal_metadata": include_internal_metadata,
                 "include_model_versions": include_model_versions,
                 "artifact_types": artifact_types,
@@ -269,6 +260,8 @@ class AsyncRawArtifactVersionsClient:
 
                 async def _get_next():
                     return await self.list(
+                        limit=limit,
+                        offset=offset + len(_items or []),
                         tag=tag,
                         fqn=fqn,
                         artifact_id=artifact_id,
@@ -277,8 +270,6 @@ class AsyncRawArtifactVersionsClient:
                         version=version,
                         run_ids=run_ids,
                         run_steps=run_steps,
-                        offset=offset + len(_items or []),
-                        limit=limit,
                         include_internal_metadata=include_internal_metadata,
                         include_model_versions=include_model_versions,
                         artifact_types=artifact_types,
@@ -286,17 +277,6 @@ class AsyncRawArtifactVersionsClient:
                     )
 
                 return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

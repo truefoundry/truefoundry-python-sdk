@@ -39,6 +39,11 @@ class MlRepo(UniversalBaseModel):
     Number of datasets
     """
 
+    tracing_projects_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Total number of tracing projects in this ML Repo
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:

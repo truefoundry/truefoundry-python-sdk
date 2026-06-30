@@ -10,7 +10,7 @@ from .signed_url import SignedUrl
 class GetSignedUrLsResponse(UniversalBaseModel):
     data: typing.List[SignedUrl] = pydantic.Field()
     """
-    List of signed URLs for the requested file paths
+    List of generated signed URLs.
     """
 
     if IS_PYDANTIC_V2:

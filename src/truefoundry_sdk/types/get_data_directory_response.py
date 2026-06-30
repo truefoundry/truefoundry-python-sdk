@@ -10,7 +10,7 @@ from .data_directory import DataDirectory
 class GetDataDirectoryResponse(UniversalBaseModel):
     data: DataDirectory = pydantic.Field()
     """
-    The data directory data
+    The data directory matching the query.
     """
 
     if IS_PYDANTIC_V2:

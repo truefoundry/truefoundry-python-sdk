@@ -7,7 +7,14 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class TensorFlowFramework(UniversalBaseModel):
-    type: typing.Literal["tensorflow"] = "tensorflow"
+    """
+    Tensorflow
+    """
+
+    type: typing.Literal["tensorflow"] = pydantic.Field(default="tensorflow")
+    """
+    Type of the framework
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

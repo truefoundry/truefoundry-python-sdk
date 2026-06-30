@@ -6,12 +6,12 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.artifact import Artifact
-from ..types.artifact_manifest import ArtifactManifest
 from ..types.empty_response import EmptyResponse
 from ..types.get_artifact_response import GetArtifactResponse
 from ..types.get_artifact_version_response import GetArtifactVersionResponse
 from ..types.list_artifacts_response import ListArtifactsResponse
 from .raw_client import AsyncRawArtifactsClient, RawArtifactsClient
+from .types.apply_artifact_request_manifest import ApplyArtifactRequestManifest
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -39,6 +39,7 @@ class ArtifactsClient:
         Parameters
         ----------
         id : str
+            System-generated artifact ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -57,7 +58,7 @@ class ArtifactsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.artifacts.get(
-            id="id",
+            id="jqfwg345gi25n5ju2yz5iz6m",
         )
         """
         _response = self._raw_client.get(id, request_options=request_options)
@@ -70,6 +71,7 @@ class ArtifactsClient:
         Parameters
         ----------
         id : str
+            System-generated artifact ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -88,7 +90,7 @@ class ArtifactsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.artifacts.delete(
-            id="id",
+            id="jqfwg345gi25n5ju2yz5iz6m",
         )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
@@ -97,11 +99,11 @@ class ArtifactsClient:
     def list(
         self,
         *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         fqn: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
         run_id: typing.Optional[str] = None,
         include_empty_artifacts: typing.Optional[bool] = True,
         request_options: typing.Optional[RequestOptions] = None,
@@ -111,26 +113,26 @@ class ArtifactsClient:
 
         Parameters
         ----------
-        fqn : typing.Optional[str]
-            Fully qualified name to filter artifacts by (format: '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}')
-
-        ml_repo_id : typing.Optional[str]
-            ID of the ML Repo to filter artifacts by
-
-        name : typing.Optional[str]
-            Name of the artifact to filter by
+        limit : typing.Optional[int]
+            Number of items per page
 
         offset : typing.Optional[int]
-            Number of artifacts to skip for pagination
+            Number of items to skip
 
-        limit : typing.Optional[int]
-            Maximum number of artifacts to return
+        fqn : typing.Optional[str]
+            Human-readable Fully Qualified Name of the artifact.
+
+        ml_repo_id : typing.Optional[str]
+            Identifier of the ML Repo to filter artifacts by.
+
+        name : typing.Optional[str]
+            Name of the artifact to filter by.
 
         run_id : typing.Optional[str]
-            ID of the run to filter artifacts by
+            Identifier of the run to filter artifacts by.
 
         include_empty_artifacts : typing.Optional[bool]
-            Whether to include artifacts that have no versions
+            Whether to include artifacts that have no versions.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -149,11 +151,11 @@ class ArtifactsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         response = client.artifacts.list(
+            limit=10,
+            offset=0,
             fqn="fqn",
             ml_repo_id="ml_repo_id",
             name="name",
-            offset=1,
-            limit=1,
             run_id="run_id",
             include_empty_artifacts=True,
         )
@@ -164,26 +166,26 @@ class ArtifactsClient:
             yield page
         """
         return self._raw_client.list(
+            limit=limit,
+            offset=offset,
             fqn=fqn,
             ml_repo_id=ml_repo_id,
             name=name,
-            offset=offset,
-            limit=limit,
             run_id=run_id,
             include_empty_artifacts=include_empty_artifacts,
             request_options=request_options,
         )
 
     def create_or_update(
-        self, *, manifest: ArtifactManifest, request_options: typing.Optional[RequestOptions] = None
+        self, *, manifest: ApplyArtifactRequestManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetArtifactVersionResponse:
         """
-        Create or update an artifact version.
+        Create or update an artifact version from a manifest.
 
         Parameters
         ----------
-        manifest : ArtifactManifest
-            Manifest containing metadata for the artifact to apply
+        manifest : ApplyArtifactRequestManifest
+            Manifest containing metadata for the artifact version to create or update
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -207,10 +209,9 @@ class ArtifactsClient:
         )
         client.artifacts.create_or_update(
             manifest=ArtifactManifest(
-                name="name",
                 metadata={"key": "value"},
-                ml_repo="ml_repo",
                 source=TrueFoundryManagedSource(),
+                step=1,
             ),
         )
         """
@@ -240,6 +241,7 @@ class AsyncArtifactsClient:
         Parameters
         ----------
         id : str
+            System-generated artifact ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -263,7 +265,7 @@ class AsyncArtifactsClient:
 
         async def main() -> None:
             await client.artifacts.get(
-                id="id",
+                id="jqfwg345gi25n5ju2yz5iz6m",
             )
 
 
@@ -279,6 +281,7 @@ class AsyncArtifactsClient:
         Parameters
         ----------
         id : str
+            System-generated artifact ID.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -302,7 +305,7 @@ class AsyncArtifactsClient:
 
         async def main() -> None:
             await client.artifacts.delete(
-                id="id",
+                id="jqfwg345gi25n5ju2yz5iz6m",
             )
 
 
@@ -314,11 +317,11 @@ class AsyncArtifactsClient:
     async def list(
         self,
         *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         fqn: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
         run_id: typing.Optional[str] = None,
         include_empty_artifacts: typing.Optional[bool] = True,
         request_options: typing.Optional[RequestOptions] = None,
@@ -328,26 +331,26 @@ class AsyncArtifactsClient:
 
         Parameters
         ----------
-        fqn : typing.Optional[str]
-            Fully qualified name to filter artifacts by (format: '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}')
-
-        ml_repo_id : typing.Optional[str]
-            ID of the ML Repo to filter artifacts by
-
-        name : typing.Optional[str]
-            Name of the artifact to filter by
+        limit : typing.Optional[int]
+            Number of items per page
 
         offset : typing.Optional[int]
-            Number of artifacts to skip for pagination
+            Number of items to skip
 
-        limit : typing.Optional[int]
-            Maximum number of artifacts to return
+        fqn : typing.Optional[str]
+            Human-readable Fully Qualified Name of the artifact.
+
+        ml_repo_id : typing.Optional[str]
+            Identifier of the ML Repo to filter artifacts by.
+
+        name : typing.Optional[str]
+            Name of the artifact to filter by.
 
         run_id : typing.Optional[str]
-            ID of the run to filter artifacts by
+            Identifier of the run to filter artifacts by.
 
         include_empty_artifacts : typing.Optional[bool]
-            Whether to include artifacts that have no versions
+            Whether to include artifacts that have no versions.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -371,11 +374,11 @@ class AsyncArtifactsClient:
 
         async def main() -> None:
             response = await client.artifacts.list(
+                limit=10,
+                offset=0,
                 fqn="fqn",
                 ml_repo_id="ml_repo_id",
                 name="name",
-                offset=1,
-                limit=1,
                 run_id="run_id",
                 include_empty_artifacts=True,
             )
@@ -390,26 +393,26 @@ class AsyncArtifactsClient:
         asyncio.run(main())
         """
         return await self._raw_client.list(
+            limit=limit,
+            offset=offset,
             fqn=fqn,
             ml_repo_id=ml_repo_id,
             name=name,
-            offset=offset,
-            limit=limit,
             run_id=run_id,
             include_empty_artifacts=include_empty_artifacts,
             request_options=request_options,
         )
 
     async def create_or_update(
-        self, *, manifest: ArtifactManifest, request_options: typing.Optional[RequestOptions] = None
+        self, *, manifest: ApplyArtifactRequestManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetArtifactVersionResponse:
         """
-        Create or update an artifact version.
+        Create or update an artifact version from a manifest.
 
         Parameters
         ----------
-        manifest : ArtifactManifest
-            Manifest containing metadata for the artifact to apply
+        manifest : ApplyArtifactRequestManifest
+            Manifest containing metadata for the artifact version to create or update
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -438,10 +441,9 @@ class AsyncArtifactsClient:
         async def main() -> None:
             await client.artifacts.create_or_update(
                 manifest=ArtifactManifest(
-                    name="name",
                     metadata={"key": "value"},
-                    ml_repo="ml_repo",
                     source=TrueFoundryManagedSource(),
+                    step=1,
                 ),
             )
 

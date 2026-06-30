@@ -10,6 +10,7 @@ from ..types.get_prompt_version_response import GetPromptVersionResponse
 from ..types.list_prompt_versions_response import ListPromptVersionsResponse
 from ..types.prompt_version import PromptVersion
 from .raw_client import AsyncRawPromptVersionsClient, RawPromptVersionsClient
+from .types.prompt_versions_list_request_version import PromptVersionsListRequestVersion
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -30,6 +31,93 @@ class PromptVersionsClient:
         """
         return self._raw_client
 
+    def list(
+        self,
+        *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
+        tag: typing.Optional[str] = None,
+        fqn: typing.Optional[str] = None,
+        prompt_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
+        version: typing.Optional[PromptVersionsListRequestVersion] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncPager[PromptVersion, ListPromptVersionsResponse]:
+        """
+        List prompt versions with optional filtering by tag, FQN, prompt ID, ML Repo, name, or version.
+
+        Parameters
+        ----------
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
+        tag : typing.Optional[str]
+            Filter prompt versions by tag.
+
+        fqn : typing.Optional[str]
+            Filter prompt versions by Fully Qualified Name.
+
+        prompt_id : typing.Optional[str]
+            Filter prompt versions by the identifier of the prompt they belong to.
+
+        ml_repo_id : typing.Optional[str]
+            Filter prompt versions by the identifier of the ML Repo they belong to.
+
+        name : typing.Optional[str]
+            Filter prompt versions by name.
+
+        version : typing.Optional[PromptVersionsListRequestVersion]
+            Version number (positive integer) or `latest`
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[PromptVersion, ListPromptVersionsResponse]
+            List of prompt versions matching the query with pagination information
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+        from truefoundry_sdk.prompt_versions import PromptVersionsListRequestVersion
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.prompt_versions.list(
+            limit=10,
+            offset=0,
+            tag="tag",
+            fqn="fqn",
+            prompt_id="prompt_id",
+            ml_repo_id="ml_repo_id",
+            name="name",
+            version=PromptVersionsListRequestVersion.LATEST,
+        )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
+        """
+        return self._raw_client.list(
+            limit=limit,
+            offset=offset,
+            tag=tag,
+            fqn=fqn,
+            prompt_id=prompt_id,
+            ml_repo_id=ml_repo_id,
+            name=name,
+            version=version,
+            request_options=request_options,
+        )
+
     def apply_tags(
         self,
         *,
@@ -44,13 +132,13 @@ class PromptVersionsClient:
         Parameters
         ----------
         prompt_version_id : str
-            ID of the prompt version to apply tags to
+            Identifier of the prompt version to apply tags to.
 
         tags : typing.Sequence[str]
-            List of tags to apply to the prompt version
+            Tags to apply to the prompt version.
 
         force : typing.Optional[bool]
-            Whether to overwrite existing tags if they conflict
+            Whether to forcibly reassign tags already in use by other prompt versions.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -85,6 +173,7 @@ class PromptVersionsClient:
         Parameters
         ----------
         id : str
+            Prompt version ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -116,6 +205,7 @@ class PromptVersionsClient:
         Parameters
         ----------
         id : str
+            Prompt version ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -140,92 +230,6 @@ class PromptVersionsClient:
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
 
-    def list(
-        self,
-        *,
-        tag: typing.Optional[str] = None,
-        fqn: typing.Optional[str] = None,
-        prompt_id: typing.Optional[str] = None,
-        ml_repo_id: typing.Optional[str] = None,
-        name: typing.Optional[str] = None,
-        version: typing.Optional[int] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[PromptVersion, ListPromptVersionsResponse]:
-        """
-        List prompt versions with optional filtering by tag, FQN, prompt ID, ML Repo, name, or version.
-
-        Parameters
-        ----------
-        tag : typing.Optional[str]
-            Tag to filter prompt versions by
-
-        fqn : typing.Optional[str]
-            Fully qualified name to filter prompt versions by (format: 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}' or 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}:{version}')
-
-        prompt_id : typing.Optional[str]
-            ID of the prompt to filter versions by
-
-        ml_repo_id : typing.Optional[str]
-            ID of the ML Repo to filter prompt versions by
-
-        name : typing.Optional[str]
-            Name of the prompt to filter versions by
-
-        version : typing.Optional[int]
-            Version number (positive integer) or 'latest' to filter by specific version
-
-        offset : typing.Optional[int]
-            Number of prompt versions to skip for pagination
-
-        limit : typing.Optional[int]
-            Maximum number of prompt versions to return
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SyncPager[PromptVersion, ListPromptVersionsResponse]
-            List of prompt versions matching the query with pagination information
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        response = client.prompt_versions.list(
-            tag="tag",
-            fqn="fqn",
-            prompt_id="prompt_id",
-            ml_repo_id="ml_repo_id",
-            name="name",
-            version=1,
-            offset=1,
-            limit=1,
-        )
-        for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        for page in response.iter_pages():
-            yield page
-        """
-        return self._raw_client.list(
-            tag=tag,
-            fqn=fqn,
-            prompt_id=prompt_id,
-            ml_repo_id=ml_repo_id,
-            name=name,
-            version=version,
-            offset=offset,
-            limit=limit,
-            request_options=request_options,
-        )
-
 
 class AsyncPromptVersionsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -242,6 +246,102 @@ class AsyncPromptVersionsClient:
         """
         return self._raw_client
 
+    async def list(
+        self,
+        *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
+        tag: typing.Optional[str] = None,
+        fqn: typing.Optional[str] = None,
+        prompt_id: typing.Optional[str] = None,
+        ml_repo_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
+        version: typing.Optional[PromptVersionsListRequestVersion] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncPager[PromptVersion, ListPromptVersionsResponse]:
+        """
+        List prompt versions with optional filtering by tag, FQN, prompt ID, ML Repo, name, or version.
+
+        Parameters
+        ----------
+        limit : typing.Optional[int]
+            Number of items per page
+
+        offset : typing.Optional[int]
+            Number of items to skip
+
+        tag : typing.Optional[str]
+            Filter prompt versions by tag.
+
+        fqn : typing.Optional[str]
+            Filter prompt versions by Fully Qualified Name.
+
+        prompt_id : typing.Optional[str]
+            Filter prompt versions by the identifier of the prompt they belong to.
+
+        ml_repo_id : typing.Optional[str]
+            Filter prompt versions by the identifier of the ML Repo they belong to.
+
+        name : typing.Optional[str]
+            Filter prompt versions by name.
+
+        version : typing.Optional[PromptVersionsListRequestVersion]
+            Version number (positive integer) or `latest`
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[PromptVersion, ListPromptVersionsResponse]
+            List of prompt versions matching the query with pagination information
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+        from truefoundry_sdk.prompt_versions import PromptVersionsListRequestVersion
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.prompt_versions.list(
+                limit=10,
+                offset=0,
+                tag="tag",
+                fqn="fqn",
+                prompt_id="prompt_id",
+                ml_repo_id="ml_repo_id",
+                name="name",
+                version=PromptVersionsListRequestVersion.LATEST,
+            )
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
+        """
+        return await self._raw_client.list(
+            limit=limit,
+            offset=offset,
+            tag=tag,
+            fqn=fqn,
+            prompt_id=prompt_id,
+            ml_repo_id=ml_repo_id,
+            name=name,
+            version=version,
+            request_options=request_options,
+        )
+
     async def apply_tags(
         self,
         *,
@@ -256,13 +356,13 @@ class AsyncPromptVersionsClient:
         Parameters
         ----------
         prompt_version_id : str
-            ID of the prompt version to apply tags to
+            Identifier of the prompt version to apply tags to.
 
         tags : typing.Sequence[str]
-            List of tags to apply to the prompt version
+            Tags to apply to the prompt version.
 
         force : typing.Optional[bool]
-            Whether to overwrite existing tags if they conflict
+            Whether to forcibly reassign tags already in use by other prompt versions.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -307,6 +407,7 @@ class AsyncPromptVersionsClient:
         Parameters
         ----------
         id : str
+            Prompt version ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -346,6 +447,7 @@ class AsyncPromptVersionsClient:
         Parameters
         ----------
         id : str
+            Prompt version ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -377,98 +479,3 @@ class AsyncPromptVersionsClient:
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
         return _response.data
-
-    async def list(
-        self,
-        *,
-        tag: typing.Optional[str] = None,
-        fqn: typing.Optional[str] = None,
-        prompt_id: typing.Optional[str] = None,
-        ml_repo_id: typing.Optional[str] = None,
-        name: typing.Optional[str] = None,
-        version: typing.Optional[int] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[PromptVersion, ListPromptVersionsResponse]:
-        """
-        List prompt versions with optional filtering by tag, FQN, prompt ID, ML Repo, name, or version.
-
-        Parameters
-        ----------
-        tag : typing.Optional[str]
-            Tag to filter prompt versions by
-
-        fqn : typing.Optional[str]
-            Fully qualified name to filter prompt versions by (format: 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}' or 'chat_prompt:{tenant_name}/{ml_repo_name}/{prompt_name}:{version}')
-
-        prompt_id : typing.Optional[str]
-            ID of the prompt to filter versions by
-
-        ml_repo_id : typing.Optional[str]
-            ID of the ML Repo to filter prompt versions by
-
-        name : typing.Optional[str]
-            Name of the prompt to filter versions by
-
-        version : typing.Optional[int]
-            Version number (positive integer) or 'latest' to filter by specific version
-
-        offset : typing.Optional[int]
-            Number of prompt versions to skip for pagination
-
-        limit : typing.Optional[int]
-            Maximum number of prompt versions to return
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncPager[PromptVersion, ListPromptVersionsResponse]
-            List of prompt versions matching the query with pagination information
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            response = await client.prompt_versions.list(
-                tag="tag",
-                fqn="fqn",
-                prompt_id="prompt_id",
-                ml_repo_id="ml_repo_id",
-                name="name",
-                version=1,
-                offset=1,
-                limit=1,
-            )
-            async for item in response:
-                yield item
-
-            # alternatively, you can paginate page-by-page
-            async for page in response.iter_pages():
-                yield page
-
-
-        asyncio.run(main())
-        """
-        return await self._raw_client.list(
-            tag=tag,
-            fqn=fqn,
-            prompt_id=prompt_id,
-            ml_repo_id=ml_repo_id,
-            name=name,
-            version=version,
-            offset=offset,
-            limit=limit,
-            request_options=request_options,
-        )

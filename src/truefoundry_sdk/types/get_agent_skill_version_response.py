@@ -10,7 +10,7 @@ from .agent_skill_version import AgentSkillVersion
 class GetAgentSkillVersionResponse(UniversalBaseModel):
     data: AgentSkillVersion = pydantic.Field()
     """
-    The agent skill version data
+    The agent skill version matching the query.
     """
 
     if IS_PYDANTIC_V2:

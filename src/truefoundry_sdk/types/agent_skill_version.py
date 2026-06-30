@@ -11,53 +11,49 @@ from .usage_code_snippet import UsageCodeSnippet
 
 
 class AgentSkillVersion(UniversalBaseModel):
-    """
-    Shared artifact-version fields (identity, manifest union, ML repo).
-    """
-
-    id: str = pydantic.Field()
-    """
-    Unique identifier for the artifact version
-    """
-
-    fqn: str = pydantic.Field()
-    """
-    Fully qualified name of the artifact version in the format '{artifact_type}:{tenant_name}/{ml_repo_name}/{artifact_name}:{version}'
-    """
-
-    created_by_subject: Subject = pydantic.Field()
-    """
-    Subject (user, team, or service account) that created this artifact version
-    """
-
     created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
-    Timestamp when the artifact version was created
+    Timestamp when the agent skill version was created.
     """
 
     updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
-    Timestamp when the artifact version was last updated
+    Timestamp when the agent skill version was last updated.
     """
 
     manifest: AgentSkillManifest = pydantic.Field()
     """
-    Manifest containing metadata specific to this agent skill version
+    Manifest describing the agent skill version.
+    """
+
+    id: str = pydantic.Field()
+    """
+    Unique identifier of the agent skill version.
+    """
+
+    fqn: str = pydantic.Field()
+    """
+    Fully Qualified Name uniquely identifying the agent skill version.
+    """
+
+    created_by_subject: Subject = pydantic.Field()
+    """
+    Subject (user, team, or service account) that created the agent skill version.
     """
 
     ml_repo_id: str = pydantic.Field()
     """
-    ID of the ML Repo that this artifact version belongs to
+    Identifier of the ML Repo the agent skill version belongs to.
     """
 
     agent_skill_id: str = pydantic.Field()
     """
-    ID of the parent agent skill artifact that this version belongs to
+    Identifier of the agent skill this version belongs to.
     """
 
     usage_code_snippets: typing.Optional[typing.List[UsageCodeSnippet]] = pydantic.Field(default=None)
     """
-    Code snippets demonstrating how to download or use this agent skill version
+    Code snippets showing how to use the agent skill version.
     """
 
     if IS_PYDANTIC_V2:

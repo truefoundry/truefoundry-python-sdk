@@ -7,20 +7,20 @@ from ..core import enum
 T_Result = typing.TypeVar("T_Result")
 
 
-class Operation(enum.StrEnum):
+class GetSignedUrLsRequestOperation(enum.StrEnum):
     """
-    An enumeration.
+    Operation the signed URLs should permit (READ or WRITE).
     """
 
     READ = "READ"
     WRITE = "WRITE"
-    _UNKNOWN = "__OPERATION_UNKNOWN__"
+    _UNKNOWN = "__GETSIGNEDURLSREQUESTOPERATION_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
     """
 
     @classmethod
-    def _missing_(cls, value: typing.Any) -> "Operation":
+    def _missing_(cls, value: typing.Any) -> "GetSignedUrLsRequestOperation":
         unknown = cls._UNKNOWN
         unknown._value_ = value
         return unknown
@@ -31,8 +31,8 @@ class Operation(enum.StrEnum):
         write: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
-        if self is Operation.READ:
+        if self is GetSignedUrLsRequestOperation.READ:
             return read()
-        if self is Operation.WRITE:
+        if self is GetSignedUrLsRequestOperation.WRITE:
             return write()
         return _unknown_member(self._value_)

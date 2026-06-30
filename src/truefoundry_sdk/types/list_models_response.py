@@ -11,12 +11,12 @@ from .pagination import Pagination
 class ListModelsResponse(UniversalBaseModel):
     data: typing.List[Model] = pydantic.Field()
     """
-    List of models matching the query
+    List of models matching the query.
     """
 
     pagination: Pagination = pydantic.Field()
     """
-    Pagination information including total count, offset, and limit
+    Pagination information for the response.
     """
 
     if IS_PYDANTIC_V2:

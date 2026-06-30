@@ -214,9 +214,9 @@ class RawWorkspacesClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Any,
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Any,  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -613,9 +613,9 @@ class AsyncRawWorkspacesClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Any,
+                        HttpError,
                         parse_obj_as(
-                            type_=typing.Any,  # type: ignore
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

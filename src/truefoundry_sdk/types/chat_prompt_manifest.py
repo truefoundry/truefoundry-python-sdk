@@ -3,10 +3,11 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from .base_artifact_version import BaseArtifactVersion
+from .chat_message_turn import ChatMessageTurn
 from .chat_prompt_manifest_cache_config import ChatPromptManifestCacheConfig
 from .chat_prompt_manifest_mcp_servers_item import ChatPromptManifestMcpServersItem
-from .chat_prompt_manifest_messages_item import ChatPromptManifestMessagesItem
 from .chat_prompt_manifest_response_format import ChatPromptManifestResponseFormat
 from .chat_prompt_manifest_routing_config import ChatPromptManifestRoutingConfig
 from .guardrails import Guardrails
@@ -17,44 +18,32 @@ from .sub_agent import SubAgent
 from .tool_schema import ToolSchema
 
 
-class ChatPromptManifest(UniversalBaseModel):
+class ChatPromptManifest(BaseArtifactVersion):
     """
-    Chat Prompt manifest.
-    """
-
-    name: str = pydantic.Field()
-    """
-    Name of the prompt (alphanumeric characters, hyphens, and underscores only, max 256 characters)
+    Fill in the information for opening a new chat prompt
     """
 
-    metadata: typing.Dict[str, typing.Any] = pydantic.Field()
+    type: typing.Literal["chat_prompt"] = pydantic.Field(default="chat_prompt")
     """
-    Key value metadata. Should be valid JSON. For e.g. `{"business-unit": "sales", "quality": "good", "rating": 4.5}`
-    """
-
-    ml_repo: str = pydantic.Field()
-    """
-    Name of the ML Repo that this prompt belongs to (must start and end with alphanumeric, 2-100 characters)
+    Type of the prompt
     """
 
-    version: typing.Optional[int] = pydantic.Field(default=None)
+    description: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Version of the entity
+    Description
     """
 
-    type: typing.Literal["chat_prompt"] = "chat_prompt"
-    description: typing.Optional[str] = None
     version_alias: typing.Optional[str] = pydantic.Field(default=None)
     """
     Version alias is alternate, ideally human readable, version string to reference an artifact version. It should start with `v` followed by alphanumeric and it can include `.` and `-` in between (e.g. `v1.0.0`, `v1-prod`, `v3-dev`, etc)
     """
 
-    messages: typing.List[ChatPromptManifestMessagesItem] = pydantic.Field()
+    messages: typing.List[ChatMessageTurn] = pydantic.Field()
     """
     List of messages in the chat conversation, must be non-empty
     """
 
-    variables: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
+    variables: typing.Optional[typing.Dict[str, typing.Optional[str]]] = pydantic.Field(default=None)
     """
     Variables referenced in messages and that can be replaced when running generation
     """

@@ -4,12 +4,20 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .library_name import LibraryName
+from .transformers_framework_library_name import TransformersFrameworkLibraryName
 
 
 class TransformersFramework(UniversalBaseModel):
-    type: typing.Literal["transformers"] = "transformers"
-    library_name: typing.Optional[LibraryName] = pydantic.Field(default=None)
+    """
+    Transformers
+    """
+
+    type: typing.Literal["transformers"] = pydantic.Field(default="transformers")
+    """
+    Type of the framework
+    """
+
+    library_name: typing.Optional[TransformersFrameworkLibraryName] = pydantic.Field(default=None)
     """
     Name of the library for the framework
     """

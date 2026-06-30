@@ -10,7 +10,7 @@ from .model import Model
 class GetModelResponse(UniversalBaseModel):
     data: Model = pydantic.Field()
     """
-    The model data
+    The requested model.
     """
 
     if IS_PYDANTIC_V2:

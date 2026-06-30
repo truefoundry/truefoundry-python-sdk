@@ -11,12 +11,12 @@ from .pagination import Pagination
 class ListMlReposResponse(UniversalBaseModel):
     data: typing.List[MlRepo] = pydantic.Field()
     """
-    List of ML Repos matching the query
+    Array of ML Repos
     """
 
     pagination: Pagination = pydantic.Field()
     """
-    Pagination information including total count, offset, and limit
+    Pagination Information
     """
 
     if IS_PYDANTIC_V2:

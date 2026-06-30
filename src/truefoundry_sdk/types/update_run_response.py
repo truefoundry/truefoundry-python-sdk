@@ -4,13 +4,13 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .apply_ml_entity_response_data import ApplyMlEntityResponseData
+from .run_info import RunInfo
 
 
-class ApplyMlEntityResponse(UniversalBaseModel):
-    data: ApplyMlEntityResponseData = pydantic.Field()
+class UpdateRunResponse(UniversalBaseModel):
+    run_info: RunInfo = pydantic.Field()
     """
-    The created or updated ML entity (model version, prompt version, agent skill version, artifact version, or data directory)
+    Updated run metadata.
     """
 
     if IS_PYDANTIC_V2:

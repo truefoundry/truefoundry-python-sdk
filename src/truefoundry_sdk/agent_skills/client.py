@@ -41,6 +41,7 @@ class AgentSkillsClient:
         Parameters
         ----------
         agent_skill_id : str
+            Identifier of the agent skill.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -72,6 +73,7 @@ class AgentSkillsClient:
         Parameters
         ----------
         agent_skill_id : str
+            Identifier of the agent skill.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -99,11 +101,11 @@ class AgentSkillsClient:
     def list(
         self,
         *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         fqn: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
         include_empty_agent_skills: typing.Optional[bool] = True,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[AgentSkill, ListAgentSkillsResponse]:
@@ -112,23 +114,23 @@ class AgentSkillsClient:
 
         Parameters
         ----------
-        fqn : typing.Optional[str]
-            Fully qualified name to filter agent skills by (format: 'agent-skill:{tenant}/{ml_repo}/{agent_skill_name}')
-
-        ml_repo_id : typing.Optional[str]
-            ML Repo ID filter
-
-        name : typing.Optional[str]
-            Agent skill name filter
+        limit : typing.Optional[int]
+            Number of items per page
 
         offset : typing.Optional[int]
-            Pagination offset
+            Number of items to skip
 
-        limit : typing.Optional[int]
-            Page size
+        fqn : typing.Optional[str]
+            Fully Qualified Name uniquely identifying the agent skill.
+
+        ml_repo_id : typing.Optional[str]
+            Identifier of the ML Repo to filter agent skills by.
+
+        name : typing.Optional[str]
+            Name of the agent skill to filter by.
 
         include_empty_agent_skills : typing.Optional[bool]
-            Whether to include agent skills that have no versions
+            Whether to include agent skills that have no versions.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -147,11 +149,11 @@ class AgentSkillsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         response = client.agent_skills.list(
+            limit=10,
+            offset=0,
             fqn="fqn",
             ml_repo_id="ml_repo_id",
             name="name",
-            offset=1,
-            limit=1,
             include_empty_agent_skills=True,
         )
         for item in response:
@@ -161,11 +163,11 @@ class AgentSkillsClient:
             yield page
         """
         return self._raw_client.list(
+            limit=limit,
+            offset=offset,
             fqn=fqn,
             ml_repo_id=ml_repo_id,
             name=name,
-            offset=offset,
-            limit=limit,
             include_empty_agent_skills=include_empty_agent_skills,
             request_options=request_options,
         )
@@ -240,6 +242,7 @@ class AsyncAgentSkillsClient:
         Parameters
         ----------
         agent_skill_id : str
+            Identifier of the agent skill.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -281,6 +284,7 @@ class AsyncAgentSkillsClient:
         Parameters
         ----------
         agent_skill_id : str
+            Identifier of the agent skill.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -316,11 +320,11 @@ class AsyncAgentSkillsClient:
     async def list(
         self,
         *,
+        limit: typing.Optional[int] = 100,
+        offset: typing.Optional[int] = 0,
         fqn: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        offset: typing.Optional[int] = 0,
-        limit: typing.Optional[int] = 100,
         include_empty_agent_skills: typing.Optional[bool] = True,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[AgentSkill, ListAgentSkillsResponse]:
@@ -329,23 +333,23 @@ class AsyncAgentSkillsClient:
 
         Parameters
         ----------
-        fqn : typing.Optional[str]
-            Fully qualified name to filter agent skills by (format: 'agent-skill:{tenant}/{ml_repo}/{agent_skill_name}')
-
-        ml_repo_id : typing.Optional[str]
-            ML Repo ID filter
-
-        name : typing.Optional[str]
-            Agent skill name filter
+        limit : typing.Optional[int]
+            Number of items per page
 
         offset : typing.Optional[int]
-            Pagination offset
+            Number of items to skip
 
-        limit : typing.Optional[int]
-            Page size
+        fqn : typing.Optional[str]
+            Fully Qualified Name uniquely identifying the agent skill.
+
+        ml_repo_id : typing.Optional[str]
+            Identifier of the ML Repo to filter agent skills by.
+
+        name : typing.Optional[str]
+            Name of the agent skill to filter by.
 
         include_empty_agent_skills : typing.Optional[bool]
-            Whether to include agent skills that have no versions
+            Whether to include agent skills that have no versions.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -369,11 +373,11 @@ class AsyncAgentSkillsClient:
 
         async def main() -> None:
             response = await client.agent_skills.list(
+                limit=10,
+                offset=0,
                 fqn="fqn",
                 ml_repo_id="ml_repo_id",
                 name="name",
-                offset=1,
-                limit=1,
                 include_empty_agent_skills=True,
             )
             async for item in response:
@@ -387,11 +391,11 @@ class AsyncAgentSkillsClient:
         asyncio.run(main())
         """
         return await self._raw_client.list(
+            limit=limit,
+            offset=offset,
             fqn=fqn,
             ml_repo_id=ml_repo_id,
             name=name,
-            offset=offset,
-            limit=limit,
             include_empty_agent_skills=include_empty_agent_skills,
             request_options=request_options,
         )

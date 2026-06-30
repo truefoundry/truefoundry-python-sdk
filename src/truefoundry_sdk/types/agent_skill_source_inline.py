@@ -11,7 +11,11 @@ class AgentSkillSourceInline(UniversalBaseModel):
     SKILL.md for this version when using inline source.
     """
 
-    type: typing.Literal["inline"] = "inline"
+    type: typing.Literal["inline"] = pydantic.Field(default="inline")
+    """
+    Type
+    """
+
     skill_md: str = pydantic.Field()
     """
     Main body of SKILL.md file.
