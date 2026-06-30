@@ -4,7 +4,6 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .true_foundry_agent_model_params_reasoning_effort import TrueFoundryAgentModelParamsReasoningEffort
 
 
 class TrueFoundryAgentModelParams(UniversalBaseModel):
@@ -13,7 +12,7 @@ class TrueFoundryAgentModelParams(UniversalBaseModel):
     Maximum number of tokens to generate.
     """
 
-    reasoning_effort: typing.Optional[TrueFoundryAgentModelParamsReasoningEffort] = pydantic.Field(default=None)
+    reasoning_effort: typing.Optional[str] = pydantic.Field(default=None)
     """
     Reasoning depth when the model and provider support this parameter.
     """

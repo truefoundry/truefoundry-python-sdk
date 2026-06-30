@@ -19,6 +19,8 @@ from .types.true_foundry_delete_response import TrueFoundryDeleteResponse
 if typing.TYPE_CHECKING:
     from .agent_skill_versions.client import AgentSkillVersionsClient, AsyncAgentSkillVersionsClient
     from .agent_skills.client import AgentSkillsClient, AsyncAgentSkillsClient
+    from .agent_versions.client import AgentVersionsClient, AsyncAgentVersionsClient
+    from .agents.client import AgentsClient, AsyncAgentsClient
     from .alerts.client import AlertsClient, AsyncAlertsClient
     from .application_versions.client import ApplicationVersionsClient, AsyncApplicationVersionsClient
     from .applications.client import ApplicationsClient, AsyncApplicationsClient
@@ -130,6 +132,8 @@ class BaseTrueFoundry:
         self._secret_groups: typing.Optional[SecretGroupsClient] = None
         self._events: typing.Optional[EventsClient] = None
         self._alerts: typing.Optional[AlertsClient] = None
+        self._agents: typing.Optional[AgentsClient] = None
+        self._agent_versions: typing.Optional[AgentVersionsClient] = None
         self._prompts: typing.Optional[PromptsClient] = None
         self._prompt_versions: typing.Optional[PromptVersionsClient] = None
         self._artifacts: typing.Optional[ArtifactsClient] = None
@@ -377,6 +381,22 @@ class BaseTrueFoundry:
         return self._alerts
 
     @property
+    def agents(self):
+        if self._agents is None:
+            from .agents.client import AgentsClient  # noqa: E402
+
+            self._agents = AgentsClient(client_wrapper=self._client_wrapper)
+        return self._agents
+
+    @property
+    def agent_versions(self):
+        if self._agent_versions is None:
+            from .agent_versions.client import AgentVersionsClient  # noqa: E402
+
+            self._agent_versions = AgentVersionsClient(client_wrapper=self._client_wrapper)
+        return self._agent_versions
+
+    @property
     def prompts(self):
         if self._prompts is None:
             from .prompts.client import PromptsClient  # noqa: E402
@@ -582,6 +602,8 @@ class AsyncBaseTrueFoundry:
         self._secret_groups: typing.Optional[AsyncSecretGroupsClient] = None
         self._events: typing.Optional[AsyncEventsClient] = None
         self._alerts: typing.Optional[AsyncAlertsClient] = None
+        self._agents: typing.Optional[AsyncAgentsClient] = None
+        self._agent_versions: typing.Optional[AsyncAgentVersionsClient] = None
         self._prompts: typing.Optional[AsyncPromptsClient] = None
         self._prompt_versions: typing.Optional[AsyncPromptVersionsClient] = None
         self._artifacts: typing.Optional[AsyncArtifactsClient] = None
@@ -843,6 +865,22 @@ class AsyncBaseTrueFoundry:
 
             self._alerts = AsyncAlertsClient(client_wrapper=self._client_wrapper)
         return self._alerts
+
+    @property
+    def agents(self):
+        if self._agents is None:
+            from .agents.client import AsyncAgentsClient  # noqa: E402
+
+            self._agents = AsyncAgentsClient(client_wrapper=self._client_wrapper)
+        return self._agents
+
+    @property
+    def agent_versions(self):
+        if self._agent_versions is None:
+            from .agent_versions.client import AsyncAgentVersionsClient  # noqa: E402
+
+            self._agent_versions = AsyncAgentVersionsClient(client_wrapper=self._client_wrapper)
+        return self._agent_versions
 
     @property
     def prompts(self):

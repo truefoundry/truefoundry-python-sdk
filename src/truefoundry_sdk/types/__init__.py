@@ -17,6 +17,7 @@ if typing.TYPE_CHECKING:
     from .addon_component import AddonComponent
     from .addon_component_name import AddonComponentName
     from .addon_component_status import AddonComponentStatus
+    from .agent import Agent
     from .agent_framework import AgentFramework
     from .agent_identity_auto_rotate import AgentIdentityAutoRotate
     from .agent_identity_config import AgentIdentityConfig
@@ -33,6 +34,7 @@ if typing.TYPE_CHECKING:
     from .agent_skill_source_local import AgentSkillSourceLocal
     from .agent_skill_version import AgentSkillVersion
     from .agent_source import AgentSource
+    from .agent_version import AgentVersion
     from .ai21integrations import Ai21Integrations
     from .ai21key_auth import Ai21KeyAuth
     from .ai21model import Ai21Model
@@ -437,8 +439,10 @@ if typing.TYPE_CHECKING:
     from .gcp_tpu import GcpTpu
     from .gemini_model import GeminiModel
     from .generic_secret_store_integration import GenericSecretStoreIntegration
+    from .get_agent_response_dto import GetAgentResponseDto
     from .get_agent_skill_response import GetAgentSkillResponse
     from .get_agent_skill_version_response import GetAgentSkillVersionResponse
+    from .get_agent_version_response_dto import GetAgentVersionResponseDto
     from .get_alerts_response import GetAlertsResponse
     from .get_application_deployment_response import GetApplicationDeploymentResponse
     from .get_application_response import GetApplicationResponse
@@ -594,8 +598,10 @@ if typing.TYPE_CHECKING:
     from .latency_based_load_balancing_rule import LatencyBasedLoadBalancingRule
     from .legacy_agent_manifest import LegacyAgentManifest
     from .light_gbm_framework import LightGbmFramework
+    from .list_agent_response import ListAgentResponse
     from .list_agent_skill_versions_response import ListAgentSkillVersionsResponse
     from .list_agent_skills_response import ListAgentSkillsResponse
+    from .list_agent_versions_response import ListAgentVersionsResponse
     from .list_application_deployments_response import ListApplicationDeploymentsResponse
     from .list_applications_response import ListApplicationsResponse
     from .list_artifact_versions_response import ListArtifactVersionsResponse
@@ -1057,7 +1063,6 @@ if typing.TYPE_CHECKING:
     from .true_foundry_agent_mcp_server import TrueFoundryAgentMcpServer
     from .true_foundry_agent_model import TrueFoundryAgentModel
     from .true_foundry_agent_model_params import TrueFoundryAgentModelParams
-    from .true_foundry_agent_model_params_reasoning_effort import TrueFoundryAgentModelParamsReasoningEffort
     from .true_foundry_agent_response_format import TrueFoundryAgentResponseFormat
     from .true_foundry_agent_sandbox_config import TrueFoundryAgentSandboxConfig
     from .true_foundry_agent_skill import TrueFoundryAgentSkill
@@ -1154,6 +1159,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AddonComponent": ".addon_component",
     "AddonComponentName": ".addon_component_name",
     "AddonComponentStatus": ".addon_component_status",
+    "Agent": ".agent",
     "AgentFramework": ".agent_framework",
     "AgentIdentityAutoRotate": ".agent_identity_auto_rotate",
     "AgentIdentityConfig": ".agent_identity_config",
@@ -1170,6 +1176,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentSkillSourceLocal": ".agent_skill_source_local",
     "AgentSkillVersion": ".agent_skill_version",
     "AgentSource": ".agent_source",
+    "AgentVersion": ".agent_version",
     "Ai21Integrations": ".ai21integrations",
     "Ai21KeyAuth": ".ai21key_auth",
     "Ai21Model": ".ai21model",
@@ -1562,8 +1569,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GcpTpu": ".gcp_tpu",
     "GeminiModel": ".gemini_model",
     "GenericSecretStoreIntegration": ".generic_secret_store_integration",
+    "GetAgentResponseDto": ".get_agent_response_dto",
     "GetAgentSkillResponse": ".get_agent_skill_response",
     "GetAgentSkillVersionResponse": ".get_agent_skill_version_response",
+    "GetAgentVersionResponseDto": ".get_agent_version_response_dto",
     "GetAlertsResponse": ".get_alerts_response",
     "GetApplicationDeploymentResponse": ".get_application_deployment_response",
     "GetApplicationResponse": ".get_application_response",
@@ -1717,8 +1726,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LatencyBasedLoadBalancingRule": ".latency_based_load_balancing_rule",
     "LegacyAgentManifest": ".legacy_agent_manifest",
     "LightGbmFramework": ".light_gbm_framework",
+    "ListAgentResponse": ".list_agent_response",
     "ListAgentSkillVersionsResponse": ".list_agent_skill_versions_response",
     "ListAgentSkillsResponse": ".list_agent_skills_response",
+    "ListAgentVersionsResponse": ".list_agent_versions_response",
     "ListApplicationDeploymentsResponse": ".list_application_deployments_response",
     "ListApplicationsResponse": ".list_applications_response",
     "ListArtifactVersionsResponse": ".list_artifact_versions_response",
@@ -2183,7 +2194,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TrueFoundryAgentMcpServer": ".true_foundry_agent_mcp_server",
     "TrueFoundryAgentModel": ".true_foundry_agent_model",
     "TrueFoundryAgentModelParams": ".true_foundry_agent_model_params",
-    "TrueFoundryAgentModelParamsReasoningEffort": ".true_foundry_agent_model_params_reasoning_effort",
     "TrueFoundryAgentResponseFormat": ".true_foundry_agent_response_format",
     "TrueFoundryAgentSandboxConfig": ".true_foundry_agent_sandbox_config",
     "TrueFoundryAgentSkill": ".true_foundry_agent_skill",
@@ -2304,6 +2314,7 @@ __all__ = [
     "AddonComponent",
     "AddonComponentName",
     "AddonComponentStatus",
+    "Agent",
     "AgentFramework",
     "AgentIdentityAutoRotate",
     "AgentIdentityConfig",
@@ -2320,6 +2331,7 @@ __all__ = [
     "AgentSkillSourceLocal",
     "AgentSkillVersion",
     "AgentSource",
+    "AgentVersion",
     "Ai21Integrations",
     "Ai21KeyAuth",
     "Ai21Model",
@@ -2712,8 +2724,10 @@ __all__ = [
     "GcpTpu",
     "GeminiModel",
     "GenericSecretStoreIntegration",
+    "GetAgentResponseDto",
     "GetAgentSkillResponse",
     "GetAgentSkillVersionResponse",
+    "GetAgentVersionResponseDto",
     "GetAlertsResponse",
     "GetApplicationDeploymentResponse",
     "GetApplicationResponse",
@@ -2867,8 +2881,10 @@ __all__ = [
     "LatencyBasedLoadBalancingRule",
     "LegacyAgentManifest",
     "LightGbmFramework",
+    "ListAgentResponse",
     "ListAgentSkillVersionsResponse",
     "ListAgentSkillsResponse",
+    "ListAgentVersionsResponse",
     "ListApplicationDeploymentsResponse",
     "ListApplicationsResponse",
     "ListArtifactVersionsResponse",
@@ -3333,7 +3349,6 @@ __all__ = [
     "TrueFoundryAgentMcpServer",
     "TrueFoundryAgentModel",
     "TrueFoundryAgentModelParams",
-    "TrueFoundryAgentModelParamsReasoningEffort",
     "TrueFoundryAgentResponseFormat",
     "TrueFoundryAgentSandboxConfig",
     "TrueFoundryAgentSkill",

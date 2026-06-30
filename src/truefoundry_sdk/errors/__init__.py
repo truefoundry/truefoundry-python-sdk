@@ -11,6 +11,7 @@ if typing.TYPE_CHECKING:
     from .expectation_failed_error import ExpectationFailedError
     from .failed_dependency_error import FailedDependencyError
     from .forbidden_error import ForbiddenError
+    from .internal_server_error import InternalServerError
     from .method_not_allowed_error import MethodNotAllowedError
     from .not_found_error import NotFoundError
     from .not_implemented_error import NotImplementedError
@@ -22,6 +23,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ExpectationFailedError": ".expectation_failed_error",
     "FailedDependencyError": ".failed_dependency_error",
     "ForbiddenError": ".forbidden_error",
+    "InternalServerError": ".internal_server_error",
     "MethodNotAllowedError": ".method_not_allowed_error",
     "NotFoundError": ".not_found_error",
     "NotImplementedError": ".not_implemented_error",
@@ -57,6 +59,7 @@ __all__ = [
     "ExpectationFailedError",
     "FailedDependencyError",
     "ForbiddenError",
+    "InternalServerError",
     "MethodNotAllowedError",
     "NotFoundError",
     "NotImplementedError",
