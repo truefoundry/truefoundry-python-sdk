@@ -19,10 +19,10 @@ from ..errors.not_found_error import NotFoundError
 from ..errors.unauthorized_error import UnauthorizedError
 from ..types.agent import Agent
 from ..types.agent_manifest import AgentManifest
-from ..types.get_agent_response_dto import GetAgentResponseDto
-from ..types.get_agent_version_response_dto import GetAgentVersionResponseDto
+from ..types.get_agent_response import GetAgentResponse
+from ..types.get_agent_version_response import GetAgentVersionResponse
 from ..types.http_error import HttpError
-from ..types.list_agent_response import ListAgentResponse
+from ..types.list_agents_response import ListAgentsResponse
 from .types.agents_list_request_type import AgentsListRequestType
 from pydantic import ValidationError
 
@@ -44,7 +44,7 @@ class RawAgentsClient:
         type: typing.Optional[AgentsListRequestType] = None,
         attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Agent, ListAgentResponse]:
+    ) -> SyncPager[Agent, ListAgentsResponse]:
         """
         List all Agents for a tenant.
 
@@ -73,7 +73,7 @@ class RawAgentsClient:
 
         Returns
         -------
-        SyncPager[Agent, ListAgentResponse]
+        SyncPager[Agent, ListAgentsResponse]
             Agents retrieved successfully
         """
         offset = offset if offset is not None else 0
@@ -94,9 +94,9 @@ class RawAgentsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
-                    ListAgentResponse,
+                    ListAgentsResponse,
                     parse_obj_as(
-                        type_=ListAgentResponse,  # type: ignore
+                        type_=ListAgentsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -138,7 +138,7 @@ class RawAgentsClient:
         manifest: AgentManifest,
         dry_run: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[GetAgentVersionResponseDto]:
+    ) -> HttpResponse[GetAgentVersionResponse]:
         """
         Create or Update an Agent.
 
@@ -155,7 +155,7 @@ class RawAgentsClient:
 
         Returns
         -------
-        HttpResponse[GetAgentVersionResponseDto]
+        HttpResponse[GetAgentVersionResponse]
             Agent created or updated successfully
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -176,9 +176,9 @@ class RawAgentsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    GetAgentVersionResponseDto,
+                    GetAgentVersionResponse,
                     parse_obj_as(
-                        type_=GetAgentVersionResponseDto,  # type: ignore
+                        type_=GetAgentVersionResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -249,7 +249,7 @@ class RawAgentsClient:
 
     def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[GetAgentResponseDto]:
+    ) -> HttpResponse[GetAgentResponse]:
         """
         Get a specific Agent by id.
 
@@ -263,7 +263,7 @@ class RawAgentsClient:
 
         Returns
         -------
-        HttpResponse[GetAgentResponseDto]
+        HttpResponse[GetAgentResponse]
             Agent retrieved successfully
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -274,9 +274,9 @@ class RawAgentsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    GetAgentResponseDto,
+                    GetAgentResponse,
                     parse_obj_as(
-                        type_=GetAgentResponseDto,  # type: ignore
+                        type_=GetAgentResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -404,7 +404,7 @@ class AsyncRawAgentsClient:
         type: typing.Optional[AgentsListRequestType] = None,
         attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Agent, ListAgentResponse]:
+    ) -> AsyncPager[Agent, ListAgentsResponse]:
         """
         List all Agents for a tenant.
 
@@ -433,7 +433,7 @@ class AsyncRawAgentsClient:
 
         Returns
         -------
-        AsyncPager[Agent, ListAgentResponse]
+        AsyncPager[Agent, ListAgentsResponse]
             Agents retrieved successfully
         """
         offset = offset if offset is not None else 0
@@ -454,9 +454,9 @@ class AsyncRawAgentsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
-                    ListAgentResponse,
+                    ListAgentsResponse,
                     parse_obj_as(
-                        type_=ListAgentResponse,  # type: ignore
+                        type_=ListAgentsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -501,7 +501,7 @@ class AsyncRawAgentsClient:
         manifest: AgentManifest,
         dry_run: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[GetAgentVersionResponseDto]:
+    ) -> AsyncHttpResponse[GetAgentVersionResponse]:
         """
         Create or Update an Agent.
 
@@ -518,7 +518,7 @@ class AsyncRawAgentsClient:
 
         Returns
         -------
-        AsyncHttpResponse[GetAgentVersionResponseDto]
+        AsyncHttpResponse[GetAgentVersionResponse]
             Agent created or updated successfully
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -539,9 +539,9 @@ class AsyncRawAgentsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    GetAgentVersionResponseDto,
+                    GetAgentVersionResponse,
                     parse_obj_as(
-                        type_=GetAgentVersionResponseDto,  # type: ignore
+                        type_=GetAgentVersionResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -612,7 +612,7 @@ class AsyncRawAgentsClient:
 
     async def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[GetAgentResponseDto]:
+    ) -> AsyncHttpResponse[GetAgentResponse]:
         """
         Get a specific Agent by id.
 
@@ -626,7 +626,7 @@ class AsyncRawAgentsClient:
 
         Returns
         -------
-        AsyncHttpResponse[GetAgentResponseDto]
+        AsyncHttpResponse[GetAgentResponse]
             Agent retrieved successfully
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -637,9 +637,9 @@ class AsyncRawAgentsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    GetAgentResponseDto,
+                    GetAgentResponse,
                     parse_obj_as(
-                        type_=GetAgentResponseDto,  # type: ignore
+                        type_=GetAgentResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

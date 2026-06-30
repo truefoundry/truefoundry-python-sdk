@@ -24,12 +24,12 @@ from ..types.http_error import HttpError
 from ..types.job_run import JobRun
 from ..types.job_run_status import JobRunStatus
 from ..types.job_runs_sort_by import JobRunsSortBy
+from ..types.job_trigger_input import JobTriggerInput
 from ..types.list_job_run_response import ListJobRunResponse
 from ..types.metadata import Metadata
 from ..types.sort_direction import SortDirection
 from ..types.terminate_job_response import TerminateJobResponse
 from ..types.trigger_job_run_response import TriggerJobRunResponse
-from .types.trigger_job_request_input import TriggerJobRequestInput
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -329,7 +329,7 @@ class RawJobsClient:
         *,
         deployment_id: typing.Optional[str] = OMIT,
         application_id: typing.Optional[str] = OMIT,
-        input: typing.Optional[TriggerJobRequestInput] = OMIT,
+        input: typing.Optional[JobTriggerInput] = OMIT,
         metadata: typing.Optional[Metadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[TriggerJobRunResponse]:
@@ -344,7 +344,7 @@ class RawJobsClient:
         application_id : typing.Optional[str]
             Application Id of the job
 
-        input : typing.Optional[TriggerJobRequestInput]
+        input : typing.Optional[JobTriggerInput]
             Job trigger input
 
         metadata : typing.Optional[Metadata]
@@ -365,7 +365,7 @@ class RawJobsClient:
                 "deploymentId": deployment_id,
                 "applicationId": application_id,
                 "input": convert_and_respect_annotation_metadata(
-                    object_=input, annotation=TriggerJobRequestInput, direction="write"
+                    object_=input, annotation=JobTriggerInput, direction="write"
                 ),
                 "metadata": convert_and_respect_annotation_metadata(
                     object_=metadata, annotation=Metadata, direction="write"
@@ -831,7 +831,7 @@ class AsyncRawJobsClient:
         *,
         deployment_id: typing.Optional[str] = OMIT,
         application_id: typing.Optional[str] = OMIT,
-        input: typing.Optional[TriggerJobRequestInput] = OMIT,
+        input: typing.Optional[JobTriggerInput] = OMIT,
         metadata: typing.Optional[Metadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[TriggerJobRunResponse]:
@@ -846,7 +846,7 @@ class AsyncRawJobsClient:
         application_id : typing.Optional[str]
             Application Id of the job
 
-        input : typing.Optional[TriggerJobRequestInput]
+        input : typing.Optional[JobTriggerInput]
             Job trigger input
 
         metadata : typing.Optional[Metadata]
@@ -867,7 +867,7 @@ class AsyncRawJobsClient:
                 "deploymentId": deployment_id,
                 "applicationId": application_id,
                 "input": convert_and_respect_annotation_metadata(
-                    object_=input, annotation=TriggerJobRequestInput, direction="write"
+                    object_=input, annotation=JobTriggerInput, direction="write"
                 ),
                 "metadata": convert_and_respect_annotation_metadata(
                     object_=metadata, annotation=Metadata, direction="write"

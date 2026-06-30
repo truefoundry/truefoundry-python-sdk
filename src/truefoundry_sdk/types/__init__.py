@@ -35,6 +35,7 @@ if typing.TYPE_CHECKING:
     from .agent_skill_version import AgentSkillVersion
     from .agent_source import AgentSource
     from .agent_version import AgentVersion
+    from .agent_version_metadata import AgentVersionMetadata
     from .ai21integrations import Ai21Integrations
     from .ai21key_auth import Ai21KeyAuth
     from .ai21model import Ai21Model
@@ -439,10 +440,10 @@ if typing.TYPE_CHECKING:
     from .gcp_tpu import GcpTpu
     from .gemini_model import GeminiModel
     from .generic_secret_store_integration import GenericSecretStoreIntegration
-    from .get_agent_response_dto import GetAgentResponseDto
+    from .get_agent_response import GetAgentResponse
     from .get_agent_skill_response import GetAgentSkillResponse
     from .get_agent_skill_version_response import GetAgentSkillVersionResponse
-    from .get_agent_version_response_dto import GetAgentVersionResponseDto
+    from .get_agent_version_response import GetAgentVersionResponse
     from .get_alerts_response import GetAlertsResponse
     from .get_application_deployment_response import GetApplicationDeploymentResponse
     from .get_application_response import GetApplicationResponse
@@ -598,10 +599,10 @@ if typing.TYPE_CHECKING:
     from .latency_based_load_balancing_rule import LatencyBasedLoadBalancingRule
     from .legacy_agent_manifest import LegacyAgentManifest
     from .light_gbm_framework import LightGbmFramework
-    from .list_agent_response import ListAgentResponse
     from .list_agent_skill_versions_response import ListAgentSkillVersionsResponse
     from .list_agent_skills_response import ListAgentSkillsResponse
     from .list_agent_versions_response import ListAgentVersionsResponse
+    from .list_agents_response import ListAgentsResponse
     from .list_application_deployments_response import ListApplicationDeploymentsResponse
     from .list_applications_response import ListApplicationsResponse
     from .list_artifact_versions_response import ListArtifactVersionsResponse
@@ -972,7 +973,6 @@ if typing.TYPE_CHECKING:
     from .spark_job_python_notebook_entrypoint import SparkJobPythonNotebookEntrypoint
     from .spark_job_scala_entrypoint import SparkJobScalaEntrypoint
     from .spark_job_scala_notebook_entrypoint import SparkJobScalaNotebookEntrypoint
-    from .spark_job_trigger_input import SparkJobTriggerInput
     from .sql_sanitizer_guardrail_config import SqlSanitizerGuardrailConfig
     from .sql_sanitizer_guardrail_config_config import SqlSanitizerGuardrailConfigConfig
     from .sql_sanitizer_guardrail_config_operation import SqlSanitizerGuardrailConfigOperation
@@ -1177,6 +1177,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentSkillVersion": ".agent_skill_version",
     "AgentSource": ".agent_source",
     "AgentVersion": ".agent_version",
+    "AgentVersionMetadata": ".agent_version_metadata",
     "Ai21Integrations": ".ai21integrations",
     "Ai21KeyAuth": ".ai21key_auth",
     "Ai21Model": ".ai21model",
@@ -1569,10 +1570,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GcpTpu": ".gcp_tpu",
     "GeminiModel": ".gemini_model",
     "GenericSecretStoreIntegration": ".generic_secret_store_integration",
-    "GetAgentResponseDto": ".get_agent_response_dto",
+    "GetAgentResponse": ".get_agent_response",
     "GetAgentSkillResponse": ".get_agent_skill_response",
     "GetAgentSkillVersionResponse": ".get_agent_skill_version_response",
-    "GetAgentVersionResponseDto": ".get_agent_version_response_dto",
+    "GetAgentVersionResponse": ".get_agent_version_response",
     "GetAlertsResponse": ".get_alerts_response",
     "GetApplicationDeploymentResponse": ".get_application_deployment_response",
     "GetApplicationResponse": ".get_application_response",
@@ -1726,10 +1727,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LatencyBasedLoadBalancingRule": ".latency_based_load_balancing_rule",
     "LegacyAgentManifest": ".legacy_agent_manifest",
     "LightGbmFramework": ".light_gbm_framework",
-    "ListAgentResponse": ".list_agent_response",
     "ListAgentSkillVersionsResponse": ".list_agent_skill_versions_response",
     "ListAgentSkillsResponse": ".list_agent_skills_response",
     "ListAgentVersionsResponse": ".list_agent_versions_response",
+    "ListAgentsResponse": ".list_agents_response",
     "ListApplicationDeploymentsResponse": ".list_application_deployments_response",
     "ListApplicationsResponse": ".list_applications_response",
     "ListArtifactVersionsResponse": ".list_artifact_versions_response",
@@ -2103,7 +2104,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SparkJobPythonNotebookEntrypoint": ".spark_job_python_notebook_entrypoint",
     "SparkJobScalaEntrypoint": ".spark_job_scala_entrypoint",
     "SparkJobScalaNotebookEntrypoint": ".spark_job_scala_notebook_entrypoint",
-    "SparkJobTriggerInput": ".spark_job_trigger_input",
     "SqlSanitizerGuardrailConfig": ".sql_sanitizer_guardrail_config",
     "SqlSanitizerGuardrailConfigConfig": ".sql_sanitizer_guardrail_config_config",
     "SqlSanitizerGuardrailConfigOperation": ".sql_sanitizer_guardrail_config_operation",
@@ -2332,6 +2332,7 @@ __all__ = [
     "AgentSkillVersion",
     "AgentSource",
     "AgentVersion",
+    "AgentVersionMetadata",
     "Ai21Integrations",
     "Ai21KeyAuth",
     "Ai21Model",
@@ -2724,10 +2725,10 @@ __all__ = [
     "GcpTpu",
     "GeminiModel",
     "GenericSecretStoreIntegration",
-    "GetAgentResponseDto",
+    "GetAgentResponse",
     "GetAgentSkillResponse",
     "GetAgentSkillVersionResponse",
-    "GetAgentVersionResponseDto",
+    "GetAgentVersionResponse",
     "GetAlertsResponse",
     "GetApplicationDeploymentResponse",
     "GetApplicationResponse",
@@ -2881,10 +2882,10 @@ __all__ = [
     "LatencyBasedLoadBalancingRule",
     "LegacyAgentManifest",
     "LightGbmFramework",
-    "ListAgentResponse",
     "ListAgentSkillVersionsResponse",
     "ListAgentSkillsResponse",
     "ListAgentVersionsResponse",
+    "ListAgentsResponse",
     "ListApplicationDeploymentsResponse",
     "ListApplicationsResponse",
     "ListArtifactVersionsResponse",
@@ -3258,7 +3259,6 @@ __all__ = [
     "SparkJobPythonNotebookEntrypoint",
     "SparkJobScalaEntrypoint",
     "SparkJobScalaNotebookEntrypoint",
-    "SparkJobTriggerInput",
     "SqlSanitizerGuardrailConfig",
     "SqlSanitizerGuardrailConfigConfig",
     "SqlSanitizerGuardrailConfigOperation",

@@ -4,13 +4,13 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .agent import Agent
+from .agent_version import AgentVersion
 
 
-class GetAgentResponseDto(UniversalBaseModel):
-    data: Agent = pydantic.Field()
+class GetAgentVersionResponse(UniversalBaseModel):
+    data: AgentVersion = pydantic.Field()
     """
-    Agent
+    Agent Version
     """
 
     if IS_PYDANTIC_V2:

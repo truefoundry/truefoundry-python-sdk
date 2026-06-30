@@ -4730,7 +4730,7 @@ client.jobs.trigger()
 <dl>
 <dd>
 
-**input:** `typing.Optional[TriggerJobRequestInput]` — Job trigger input
+**input:** `typing.Optional[JobTriggerInput]` — Job trigger input
     
 </dd>
 </dl>
@@ -6627,7 +6627,7 @@ client.alerts.list(
 </details>
 
 ## Agents
-<details><summary><code>client.agents.<a href="src/truefoundry_sdk/agents/client.py">list</a>(...) -> ListAgentResponse</code></summary>
+<details><summary><code>client.agents.<a href="src/truefoundry_sdk/agents/client.py">list</a>(...) -> ListAgentsResponse</code></summary>
 <dl>
 <dd>
 
@@ -6747,7 +6747,7 @@ client.agents.list(
 </dl>
 </details>
 
-<details><summary><code>client.agents.<a href="src/truefoundry_sdk/agents/client.py">create_or_update</a>(...) -> GetAgentVersionResponseDto</code></summary>
+<details><summary><code>client.agents.<a href="src/truefoundry_sdk/agents/client.py">create_or_update</a>(...) -> GetAgentVersionResponse</code></summary>
 <dl>
 <dd>
 
@@ -6840,7 +6840,7 @@ client.agents.create_or_update(
 </dl>
 </details>
 
-<details><summary><code>client.agents.<a href="src/truefoundry_sdk/agents/client.py">get</a>(...) -> GetAgentResponseDto</code></summary>
+<details><summary><code>client.agents.<a href="src/truefoundry_sdk/agents/client.py">get</a>(...) -> GetAgentResponse</code></summary>
 <dl>
 <dd>
 
