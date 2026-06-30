@@ -17,11 +17,9 @@ if typing.TYPE_CHECKING:
         vcs,
         workflows,
     )
-    from .artifact_versions import ArtifactVersionsListRequestVersion
     from .metrics import MetricsGetChartsRequestFilterEntity
     from .workflows import WorkflowsExecuteWorkflowResponse
 _dynamic_imports: typing.Dict[str, str] = {
-    "ArtifactVersionsListRequestVersion": ".artifact_versions",
     "MetricsGetChartsRequestFilterEntity": ".metrics",
     "WorkflowsExecuteWorkflowResponse": ".workflows",
     "applications": ".applications",
@@ -58,7 +56,6 @@ def __dir__():
 
 
 __all__ = [
-    "ArtifactVersionsListRequestVersion",
     "MetricsGetChartsRequestFilterEntity",
     "WorkflowsExecuteWorkflowResponse",
     "applications",

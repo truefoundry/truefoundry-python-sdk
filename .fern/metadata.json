@@ -22,7 +22,7 @@
       "numpydoc": ">=1.7.0,<2.0.0"
     }
   },
-  "originGitCommit": "7bbbcb3d6a859451151aaf306204832b6b855377",
+  "originGitCommit": "6c696b159b033bdf8e1c070e14c121e842f1af29",
   "originGitCommitIsDirty": false,
   "invokedBy": "ci",
   "requestedVersion": "0.0.0",

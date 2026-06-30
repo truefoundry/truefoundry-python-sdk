@@ -11,16 +11,55 @@ from .subject import Subject
 
 
 class Model(UniversalBaseModel):
-    id: str
-    ml_repo_id: str
-    type: ArtifactType
-    name: str
-    fqn: str
-    created_by_subject: Subject
-    created_at: typing.Optional[dt.datetime] = None
-    updated_at: typing.Optional[dt.datetime] = None
-    latest_version: typing.Optional[ModelVersion] = None
-    run_steps: typing.Optional[typing.List[float]] = None
+    id: str = pydantic.Field()
+    """
+    Unique identifier of the model.
+    """
+
+    ml_repo_id: str = pydantic.Field()
+    """
+    Identifier of the ML Repo the model belongs to.
+    """
+
+    type: ArtifactType = pydantic.Field()
+    """
+    Discriminator for the artifact type; always `model` for a model.
+    """
+
+    name: str = pydantic.Field()
+    """
+    Name of the model.
+    """
+
+    fqn: str = pydantic.Field()
+    """
+    Fully Qualified Name uniquely identifying the model.
+    """
+
+    created_by_subject: Subject = pydantic.Field()
+    """
+    Subject (user, team, or service account) that created the model.
+    """
+
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Timestamp when the model was created.
+    """
+
+    updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Timestamp when the model was last updated.
+    """
+
+    latest_version: typing.Optional[ModelVersion] = pydantic.Field(default=None)
+    """
+    Most recently created version of the model, if any exist.
+    """
+
+    run_steps: typing.Optional[typing.List[float]] = pydantic.Field(default=None)
+    """
+    Run steps associated with the model.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

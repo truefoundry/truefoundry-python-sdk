@@ -185,7 +185,6 @@ if typing.TYPE_CHECKING:
     from .bitbucket_integrations import BitbucketIntegrations
     from .bitbucket_provider_account import BitbucketProviderAccount
     from .blob_storage_reference import BlobStorageReference
-    from .blob_storage_reference_mime_type import BlobStorageReferenceMimeType
     from .blue_green import BlueGreen
     from .budget_alert import BudgetAlert
     from .budget_config import BudgetConfig
@@ -471,7 +470,6 @@ if typing.TYPE_CHECKING:
     from .get_secret_group_response import GetSecretGroupResponse
     from .get_secret_response import GetSecretResponse
     from .get_signed_ur_ls_request import GetSignedUrLsRequest
-    from .get_signed_ur_ls_request_operation import GetSignedUrLsRequestOperation
     from .get_signed_ur_ls_response import GetSignedUrLsResponse
     from .get_suggested_deployment_endpoint_response import GetSuggestedDeploymentEndpointResponse
     from .get_team_permissions_response import GetTeamPermissionsResponse
@@ -550,6 +548,7 @@ if typing.TYPE_CHECKING:
     from .image_content_part_image_url_url import ImageContentPartImageUrlUrl
     from .in_not_in_operator import InNotInOperator
     from .in_not_in_operator_condition import InNotInOperatorCondition
+    from .infer_method_name import InferMethodName
     from .infra_provider_account import InfraProviderAccount
     from .ingress_controller_config import IngressControllerConfig
     from .inline_spec_source import InlineSpecSource
@@ -598,6 +597,7 @@ if typing.TYPE_CHECKING:
     from .latency_based_load_balancing import LatencyBasedLoadBalancing
     from .latency_based_load_balancing_rule import LatencyBasedLoadBalancingRule
     from .legacy_agent_manifest import LegacyAgentManifest
+    from .library_name import LibraryName
     from .light_gbm_framework import LightGbmFramework
     from .list_agent_skill_versions_response import ListAgentSkillVersionsResponse
     from .list_agent_skills_response import ListAgentSkillsResponse
@@ -676,6 +676,7 @@ if typing.TYPE_CHECKING:
     from .metadata import Metadata
     from .metric import Metric
     from .metric_collection import MetricCollection
+    from .mime_type import MimeType
     from .mirror_action import MirrorAction
     from .mistral_ai_integrations import MistralAiIntegrations
     from .mistral_ai_key_auth import MistralAiKeyAuth
@@ -685,8 +686,6 @@ if typing.TYPE_CHECKING:
     from .ml_repo_manifest import MlRepoManifest
     from .model import Model
     from .model_configuration import ModelConfiguration
-    from .model_configuration_parameters import ModelConfigurationParameters
-    from .model_configuration_parameters_stop import ModelConfigurationParametersStop
     from .model_cost_metric import ModelCostMetric
     from .model_manifest import ModelManifest
     from .model_manifest_framework import ModelManifestFramework
@@ -753,6 +752,7 @@ if typing.TYPE_CHECKING:
     from .open_router_provider_account import OpenRouterProviderAccount
     from .openai_api_key_auth import OpenaiApiKeyAuth
     from .openai_provider_account import OpenaiProviderAccount
+    from .operation import Operation
     from .otel_exporter_grpc_config_base import OtelExporterGrpcConfigBase
     from .otel_exporter_http_config_base import OtelExporterHttpConfigBase
     from .otel_exporter_http_config_base_encoding import OtelExporterHttpConfigBaseEncoding
@@ -781,6 +781,8 @@ if typing.TYPE_CHECKING:
     from .palo_alto_prisma_airs_key_auth import PaloAltoPrismaAirsKeyAuth
     from .param import Param
     from .param_param_type import ParamParamType
+    from .parameters import Parameters
+    from .parameters_stop import ParametersStop
     from .patronus_answer_relevance_criteria import PatronusAnswerRelevanceCriteria
     from .patronus_answer_relevance_evaluator import PatronusAnswerRelevanceEvaluator
     from .patronus_evaluator import PatronusEvaluator
@@ -924,7 +926,6 @@ if typing.TYPE_CHECKING:
     from .signed_url import SignedUrl
     from .sklearn_framework import SklearnFramework
     from .sklearn_model_schema import SklearnModelSchema
-    from .sklearn_model_schema_infer_method_name import SklearnModelSchemaInferMethodName
     from .sklearn_serialization_format import SklearnSerializationFormat
     from .sla_cutoff import SlaCutoff
     from .slack_bot import SlackBot
@@ -1047,7 +1048,6 @@ if typing.TYPE_CHECKING:
     from .tracing_project_manifest import TracingProjectManifest
     from .tracing_project_storage_config import TracingProjectStorageConfig
     from .transformers_framework import TransformersFramework
-    from .transformers_framework_library_name import TransformersFrameworkLibraryName
     from .trigger_job_run_response import TriggerJobRunResponse
     from .troj_ai_client_id_auth import TrojAiClientIdAuth
     from .troj_ai_guardrail_config import TrojAiGuardrailConfig
@@ -1328,7 +1328,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BitbucketIntegrations": ".bitbucket_integrations",
     "BitbucketProviderAccount": ".bitbucket_provider_account",
     "BlobStorageReference": ".blob_storage_reference",
-    "BlobStorageReferenceMimeType": ".blob_storage_reference_mime_type",
     "BlueGreen": ".blue_green",
     "BudgetAlert": ".budget_alert",
     "BudgetConfig": ".budget_config",
@@ -1602,7 +1601,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetSecretGroupResponse": ".get_secret_group_response",
     "GetSecretResponse": ".get_secret_response",
     "GetSignedUrLsRequest": ".get_signed_ur_ls_request",
-    "GetSignedUrLsRequestOperation": ".get_signed_ur_ls_request_operation",
     "GetSignedUrLsResponse": ".get_signed_ur_ls_response",
     "GetSuggestedDeploymentEndpointResponse": ".get_suggested_deployment_endpoint_response",
     "GetTeamPermissionsResponse": ".get_team_permissions_response",
@@ -1679,6 +1677,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ImageContentPartImageUrlUrl": ".image_content_part_image_url_url",
     "InNotInOperator": ".in_not_in_operator",
     "InNotInOperatorCondition": ".in_not_in_operator_condition",
+    "InferMethodName": ".infer_method_name",
     "InfraProviderAccount": ".infra_provider_account",
     "IngressControllerConfig": ".ingress_controller_config",
     "InlineSpecSource": ".inline_spec_source",
@@ -1727,6 +1726,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LatencyBasedLoadBalancing": ".latency_based_load_balancing",
     "LatencyBasedLoadBalancingRule": ".latency_based_load_balancing_rule",
     "LegacyAgentManifest": ".legacy_agent_manifest",
+    "LibraryName": ".library_name",
     "LightGbmFramework": ".light_gbm_framework",
     "ListAgentSkillVersionsResponse": ".list_agent_skill_versions_response",
     "ListAgentSkillsResponse": ".list_agent_skills_response",
@@ -1805,6 +1805,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Metadata": ".metadata",
     "Metric": ".metric",
     "MetricCollection": ".metric_collection",
+    "MimeType": ".mime_type",
     "MirrorAction": ".mirror_action",
     "MistralAiIntegrations": ".mistral_ai_integrations",
     "MistralAiKeyAuth": ".mistral_ai_key_auth",
@@ -1814,8 +1815,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MlRepoManifest": ".ml_repo_manifest",
     "Model": ".model",
     "ModelConfiguration": ".model_configuration",
-    "ModelConfigurationParameters": ".model_configuration_parameters",
-    "ModelConfigurationParametersStop": ".model_configuration_parameters_stop",
     "ModelCostMetric": ".model_cost_metric",
     "ModelManifest": ".model_manifest",
     "ModelManifestFramework": ".model_manifest_framework",
@@ -1882,6 +1881,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OpenRouterProviderAccount": ".open_router_provider_account",
     "OpenaiApiKeyAuth": ".openai_api_key_auth",
     "OpenaiProviderAccount": ".openai_provider_account",
+    "Operation": ".operation",
     "OtelExporterGrpcConfigBase": ".otel_exporter_grpc_config_base",
     "OtelExporterHttpConfigBase": ".otel_exporter_http_config_base",
     "OtelExporterHttpConfigBaseEncoding": ".otel_exporter_http_config_base_encoding",
@@ -1910,6 +1910,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PaloAltoPrismaAirsKeyAuth": ".palo_alto_prisma_airs_key_auth",
     "Param": ".param",
     "ParamParamType": ".param_param_type",
+    "Parameters": ".parameters",
+    "ParametersStop": ".parameters_stop",
     "PatronusAnswerRelevanceCriteria": ".patronus_answer_relevance_criteria",
     "PatronusAnswerRelevanceEvaluator": ".patronus_answer_relevance_evaluator",
     "PatronusEvaluator": ".patronus_evaluator",
@@ -2056,7 +2058,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SignedUrl": ".signed_url",
     "SklearnFramework": ".sklearn_framework",
     "SklearnModelSchema": ".sklearn_model_schema",
-    "SklearnModelSchemaInferMethodName": ".sklearn_model_schema_infer_method_name",
     "SklearnSerializationFormat": ".sklearn_serialization_format",
     "SlaCutoff": ".sla_cutoff",
     "SlackBot": ".slack_bot",
@@ -2179,7 +2180,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TracingProjectManifest": ".tracing_project_manifest",
     "TracingProjectStorageConfig": ".tracing_project_storage_config",
     "TransformersFramework": ".transformers_framework",
-    "TransformersFrameworkLibraryName": ".transformers_framework_library_name",
     "TriggerJobRunResponse": ".trigger_job_run_response",
     "TrojAiClientIdAuth": ".troj_ai_client_id_auth",
     "TrojAiGuardrailConfig": ".troj_ai_guardrail_config",
@@ -2484,7 +2484,6 @@ __all__ = [
     "BitbucketIntegrations",
     "BitbucketProviderAccount",
     "BlobStorageReference",
-    "BlobStorageReferenceMimeType",
     "BlueGreen",
     "BudgetAlert",
     "BudgetConfig",
@@ -2758,7 +2757,6 @@ __all__ = [
     "GetSecretGroupResponse",
     "GetSecretResponse",
     "GetSignedUrLsRequest",
-    "GetSignedUrLsRequestOperation",
     "GetSignedUrLsResponse",
     "GetSuggestedDeploymentEndpointResponse",
     "GetTeamPermissionsResponse",
@@ -2835,6 +2833,7 @@ __all__ = [
     "ImageContentPartImageUrlUrl",
     "InNotInOperator",
     "InNotInOperatorCondition",
+    "InferMethodName",
     "InfraProviderAccount",
     "IngressControllerConfig",
     "InlineSpecSource",
@@ -2883,6 +2882,7 @@ __all__ = [
     "LatencyBasedLoadBalancing",
     "LatencyBasedLoadBalancingRule",
     "LegacyAgentManifest",
+    "LibraryName",
     "LightGbmFramework",
     "ListAgentSkillVersionsResponse",
     "ListAgentSkillsResponse",
@@ -2961,6 +2961,7 @@ __all__ = [
     "Metadata",
     "Metric",
     "MetricCollection",
+    "MimeType",
     "MirrorAction",
     "MistralAiIntegrations",
     "MistralAiKeyAuth",
@@ -2970,8 +2971,6 @@ __all__ = [
     "MlRepoManifest",
     "Model",
     "ModelConfiguration",
-    "ModelConfigurationParameters",
-    "ModelConfigurationParametersStop",
     "ModelCostMetric",
     "ModelManifest",
     "ModelManifestFramework",
@@ -3038,6 +3037,7 @@ __all__ = [
     "OpenRouterProviderAccount",
     "OpenaiApiKeyAuth",
     "OpenaiProviderAccount",
+    "Operation",
     "OtelExporterGrpcConfigBase",
     "OtelExporterHttpConfigBase",
     "OtelExporterHttpConfigBaseEncoding",
@@ -3066,6 +3066,8 @@ __all__ = [
     "PaloAltoPrismaAirsKeyAuth",
     "Param",
     "ParamParamType",
+    "Parameters",
+    "ParametersStop",
     "PatronusAnswerRelevanceCriteria",
     "PatronusAnswerRelevanceEvaluator",
     "PatronusEvaluator",
@@ -3212,7 +3214,6 @@ __all__ = [
     "SignedUrl",
     "SklearnFramework",
     "SklearnModelSchema",
-    "SklearnModelSchemaInferMethodName",
     "SklearnSerializationFormat",
     "SlaCutoff",
     "SlackBot",
@@ -3335,7 +3336,6 @@ __all__ = [
     "TracingProjectManifest",
     "TracingProjectStorageConfig",
     "TransformersFramework",
-    "TransformersFrameworkLibraryName",
     "TriggerJobRunResponse",
     "TrojAiClientIdAuth",
     "TrojAiGuardrailConfig",

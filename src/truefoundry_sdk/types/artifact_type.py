@@ -8,6 +8,10 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class ArtifactType(enum.StrEnum):
+    """
+    Discriminator for the artifact type; always `chat_prompt` for a prompt.
+    """
+
     ARTIFACT = "artifact"
     MODEL = "model"
     PLOT = "plot"
