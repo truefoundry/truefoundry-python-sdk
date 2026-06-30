@@ -7,9 +7,9 @@ from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.agent import Agent
 from ..types.agent_manifest import AgentManifest
-from ..types.get_agent_response_dto import GetAgentResponseDto
-from ..types.get_agent_version_response_dto import GetAgentVersionResponseDto
-from ..types.list_agent_response import ListAgentResponse
+from ..types.get_agent_response import GetAgentResponse
+from ..types.get_agent_version_response import GetAgentVersionResponse
+from ..types.list_agents_response import ListAgentsResponse
 from .raw_client import AsyncRawAgentsClient, RawAgentsClient
 from .types.agents_list_request_type import AgentsListRequestType
 
@@ -42,7 +42,7 @@ class AgentsClient:
         type: typing.Optional[AgentsListRequestType] = None,
         attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Agent, ListAgentResponse]:
+    ) -> SyncPager[Agent, ListAgentsResponse]:
         """
         List all Agents for a tenant.
 
@@ -71,7 +71,7 @@ class AgentsClient:
 
         Returns
         -------
-        SyncPager[Agent, ListAgentResponse]
+        SyncPager[Agent, ListAgentsResponse]
             Agents retrieved successfully
 
         Examples
@@ -113,7 +113,7 @@ class AgentsClient:
         manifest: AgentManifest,
         dry_run: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetAgentVersionResponseDto:
+    ) -> GetAgentVersionResponse:
         """
         Create or Update an Agent.
 
@@ -130,7 +130,7 @@ class AgentsClient:
 
         Returns
         -------
-        GetAgentVersionResponseDto
+        GetAgentVersionResponse
             Agent created or updated successfully
 
         Examples
@@ -167,7 +167,7 @@ class AgentsClient:
         )
         return _response.data
 
-    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetAgentResponseDto:
+    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetAgentResponse:
         """
         Get a specific Agent by id.
 
@@ -181,7 +181,7 @@ class AgentsClient:
 
         Returns
         -------
-        GetAgentResponseDto
+        GetAgentResponse
             Agent retrieved successfully
 
         Examples
@@ -256,7 +256,7 @@ class AsyncAgentsClient:
         type: typing.Optional[AgentsListRequestType] = None,
         attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Agent, ListAgentResponse]:
+    ) -> AsyncPager[Agent, ListAgentsResponse]:
         """
         List all Agents for a tenant.
 
@@ -285,7 +285,7 @@ class AsyncAgentsClient:
 
         Returns
         -------
-        AsyncPager[Agent, ListAgentResponse]
+        AsyncPager[Agent, ListAgentsResponse]
             Agents retrieved successfully
 
         Examples
@@ -336,7 +336,7 @@ class AsyncAgentsClient:
         manifest: AgentManifest,
         dry_run: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetAgentVersionResponseDto:
+    ) -> GetAgentVersionResponse:
         """
         Create or Update an Agent.
 
@@ -353,7 +353,7 @@ class AsyncAgentsClient:
 
         Returns
         -------
-        GetAgentVersionResponseDto
+        GetAgentVersionResponse
             Agent created or updated successfully
 
         Examples
@@ -398,7 +398,7 @@ class AsyncAgentsClient:
         )
         return _response.data
 
-    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetAgentResponseDto:
+    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetAgentResponse:
         """
         Get a specific Agent by id.
 
@@ -412,7 +412,7 @@ class AsyncAgentsClient:
 
         Returns
         -------
-        GetAgentResponseDto
+        GetAgentResponse
             Agent retrieved successfully
 
         Examples

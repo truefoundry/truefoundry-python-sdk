@@ -7,6 +7,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
 from .agent_manifest import AgentManifest
+from .agent_version_metadata import AgentVersionMetadata
 from .subject import Subject
 
 
@@ -28,7 +29,11 @@ class AgentVersion(UniversalBaseModel):
     """
 
     version: float
-    metadata: typing.Optional[typing.Dict[str, typing.Any]] = None
+    metadata: typing.Optional[AgentVersionMetadata] = pydantic.Field(default=None)
+    """
+    Optional metadata attached to the agent version.
+    """
+
     created_by_subject: typing_extensions.Annotated[
         typing.Optional[Subject], FieldMetadata(alias="createdBySubject"), pydantic.Field(alias="createdBySubject")
     ] = None

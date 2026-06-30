@@ -4,13 +4,19 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .agent_version import AgentVersion
+from .agent import Agent
+from .pagination import Pagination
 
 
-class GetAgentVersionResponseDto(UniversalBaseModel):
-    data: AgentVersion = pydantic.Field()
+class ListAgentsResponse(UniversalBaseModel):
+    data: typing.List[Agent] = pydantic.Field()
     """
-    Agent Version
+    Array of Agents
+    """
+
+    pagination: Pagination = pydantic.Field()
+    """
+    Pagination Information
     """
 
     if IS_PYDANTIC_V2:
