@@ -14,7 +14,7 @@ class VertexModel(UniversalBaseModel):
     Vertex Model
     """
 
-    type: typing.Optional[typing.Literal["integration/model/vertex"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/model/vertex"] = pydantic.Field(default="integration/model/vertex")
     """
     +value=integration/model/vertex
     """

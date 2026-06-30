@@ -11,7 +11,7 @@ class GatewayDataRoutingConfigDestinationCustomerManagedStorage(UniversalBaseMod
     Bring your own storage.
     """
 
-    type: typing.Optional[typing.Literal["customer-managed"]] = pydantic.Field(default=None)
+    type: typing.Literal["customer-managed"] = pydantic.Field(default="customer-managed")
     """
     Type of storage configuration
     """

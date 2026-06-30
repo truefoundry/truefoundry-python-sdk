@@ -13,7 +13,7 @@ class CohereModel(UniversalBaseModel):
     Cohere Model
     """
 
-    type: typing.Optional[typing.Literal["integration/model/cohere"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/model/cohere"] = pydantic.Field(default="integration/model/cohere")
     """
     +value=integration/model/cohere
     """

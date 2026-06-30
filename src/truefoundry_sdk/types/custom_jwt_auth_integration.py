@@ -12,7 +12,7 @@ class CustomJwtAuthIntegration(UniversalBaseModel):
     Custom JWT Auth Integration
     """
 
-    type: typing.Optional[typing.Literal["integration/jwt-auth/custom"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/jwt-auth/custom"] = pydantic.Field(default="integration/jwt-auth/custom")
     """
     +value=integration/jwt-auth/custom
     """

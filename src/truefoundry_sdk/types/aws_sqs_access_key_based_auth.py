@@ -11,7 +11,7 @@ class AwsSqsAccessKeyBasedAuth(UniversalBaseModel):
     AWS Access Key Based Auth
     """
 
-    type: typing.Optional[typing.Literal["access-key-based"]] = pydantic.Field(default=None)
+    type: typing.Literal["access-key-based"] = pydantic.Field(default="access-key-based")
     """
     +value=access-key-based
     """

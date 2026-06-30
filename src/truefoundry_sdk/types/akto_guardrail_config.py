@@ -26,7 +26,9 @@ class AktoGuardrailConfig(UniversalBaseModel):
     Optional description for this Guardrail Config.
     """
 
-    type: typing.Optional[typing.Literal["integration/guardrail-config/akto"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/guardrail-config/akto"] = pydantic.Field(
+        default="integration/guardrail-config/akto"
+    )
     """
     +uiType=Hidden
     +value=integration/guardrail-config/akto

@@ -11,7 +11,7 @@ class AgentSkillSourceBlobStorage(UniversalBaseModel):
     SKILL.md content stored on blob
     """
 
-    type: typing.Optional[typing.Literal["blob-storage"]] = pydantic.Field(default=None)
+    type: typing.Literal["blob-storage"] = pydantic.Field(default="blob-storage")
     """
     Type
     """

@@ -11,19 +11,71 @@ from .subject import Subject
 
 
 class InternalModelVersion(UniversalBaseModel):
-    created_at: typing.Optional[dt.datetime] = None
-    updated_at: typing.Optional[dt.datetime] = None
-    manifest: ModelManifest
-    id: str
-    fqn: str
-    created_by_subject: Subject
-    ml_repo_id: str
-    usage_code_snippet: typing.Optional[str] = None
-    tags: typing.Optional[typing.List[str]] = None
-    model_id: str
-    metrics: typing.Optional[typing.List[Metric]] = None
-    deployable: bool = False
-    artifact_size: typing.Optional[float] = None
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Timestamp when the model version was created.
+    """
+
+    updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Timestamp when the model version was last updated.
+    """
+
+    manifest: ModelManifest = pydantic.Field()
+    """
+    Manifest describing the model version.
+    """
+
+    id: str = pydantic.Field()
+    """
+    Unique identifier of the model version.
+    """
+
+    fqn: str = pydantic.Field()
+    """
+    Fully Qualified Name uniquely identifying the model version.
+    """
+
+    created_by_subject: Subject = pydantic.Field()
+    """
+    Subject (user, team, or service account) that created the model version.
+    """
+
+    ml_repo_id: str = pydantic.Field()
+    """
+    Identifier of the ML Repo the model version belongs to.
+    """
+
+    usage_code_snippet: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Code snippet showing how to use the model version.
+    """
+
+    tags: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Tags associated with the model version.
+    """
+
+    model_id: str = pydantic.Field()
+    """
+    Identifier of the model this version belongs to.
+    """
+
+    metrics: typing.Optional[typing.List[Metric]] = pydantic.Field(default=None)
+    """
+    Metrics logged for the model version.
+    """
+
+    deployable: bool = pydantic.Field(default=False)
+    """
+    Whether the model version can be deployed.
+    """
+
+    artifact_size: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Size of the model version artifact in bytes.
+    """
+
     artifact_fqn: str = pydantic.Field()
     """
     Fully qualified name of the parent model

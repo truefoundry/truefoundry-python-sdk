@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class WebhookBearerAuth(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["webhook-bearer"]] = pydantic.Field(default=None)
+    type: typing.Literal["webhook-bearer"] = pydantic.Field(default="webhook-bearer")
     """
     +value=auth/webhook-bearer
     """

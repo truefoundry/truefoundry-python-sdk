@@ -11,7 +11,7 @@ class McpServerHeaderOverrideAuth(UniversalBaseModel):
     Override authentication for this source server
     """
 
-    type: typing.Optional[typing.Literal["header"]] = pydantic.Field(default=None)
+    type: typing.Literal["header"] = pydantic.Field(default="header")
     """
     +value=header
     """

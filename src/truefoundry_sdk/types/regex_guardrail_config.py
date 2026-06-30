@@ -26,7 +26,9 @@ class RegexGuardrailConfig(UniversalBaseModel):
     Optional description for this Guardrail Config.
     """
 
-    type: typing.Optional[typing.Literal["integration/guardrail-config/regex"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/guardrail-config/regex"] = pydantic.Field(
+        default="integration/guardrail-config/regex"
+    )
     """
     +uiType=Hidden
     +value=integration/guardrail-config/regex

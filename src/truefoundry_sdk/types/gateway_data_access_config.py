@@ -12,7 +12,7 @@ class GatewayDataAccessConfig(UniversalBaseModel):
     Gateway Data Access Configuration
     """
 
-    type: typing.Optional[typing.Literal["gateway-data-access-config"]] = pydantic.Field(default=None)
+    type: typing.Literal["gateway-data-access-config"] = pydantic.Field(default="gateway-data-access-config")
     """
     +value=gateway-data-access-config
     +sort=1

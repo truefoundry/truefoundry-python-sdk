@@ -11,7 +11,7 @@ class SparkJobScalaEntrypoint(UniversalBaseModel):
     scala
     """
 
-    type: typing.Optional[typing.Literal["scala"]] = pydantic.Field(default=None)
+    type: typing.Literal["scala"] = pydantic.Field(default="scala")
     """
     +value=scala
     """

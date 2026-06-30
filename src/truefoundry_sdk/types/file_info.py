@@ -8,11 +8,30 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class FileInfo(UniversalBaseModel):
-    path: str
-    is_dir: bool
-    file_size: typing.Optional[float] = None
-    signed_url: typing.Optional[str] = None
-    last_modified: typing.Optional[dt.datetime] = None
+    path: str = pydantic.Field()
+    """
+    Path of the file or directory relative to the artifact version storage root.
+    """
+
+    is_dir: bool = pydantic.Field()
+    """
+    Whether the entry is a directory.
+    """
+
+    file_size: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Size of the file in bytes.
+    """
+
+    signed_url: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Signed URL used to download the file.
+    """
+
+    last_modified: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Timestamp when the file was last modified.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

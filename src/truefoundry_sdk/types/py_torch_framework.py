@@ -11,7 +11,7 @@ class PyTorchFramework(UniversalBaseModel):
     PyTorch
     """
 
-    type: typing.Optional[typing.Literal["pytorch"]] = pydantic.Field(default=None)
+    type: typing.Literal["pytorch"] = pydantic.Field(default="pytorch")
     """
     Type of the framework
     """

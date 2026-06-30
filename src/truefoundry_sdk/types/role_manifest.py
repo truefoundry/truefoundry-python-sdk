@@ -9,7 +9,7 @@ from ..core.serialization import FieldMetadata
 
 
 class RoleManifest(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["role"]] = pydantic.Field(default=None)
+    type: typing.Literal["role"] = pydantic.Field(default="role")
     """
     +value=role
     """

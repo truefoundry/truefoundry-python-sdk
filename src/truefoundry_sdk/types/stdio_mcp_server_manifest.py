@@ -32,7 +32,7 @@ class StdioMcpServerManifest(UniversalBaseModel):
     Users and Teams that have access to this MCP Server
     """
 
-    type: typing.Optional[typing.Literal["mcp-server/stdio"]] = pydantic.Field(default=None)
+    type: typing.Literal["mcp-server/stdio"] = pydantic.Field(default="mcp-server/stdio")
     """
     +value=mcp-server/stdio
     +sort=400

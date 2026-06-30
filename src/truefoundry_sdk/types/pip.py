@@ -11,7 +11,7 @@ class Pip(UniversalBaseModel):
     Use pip to install requirements files and packages
     """
 
-    type: typing.Optional[typing.Literal["pip"]] = pydantic.Field(default=None)
+    type: typing.Literal["pip"] = pydantic.Field(default="pip")
     """
     +value=pip
     """

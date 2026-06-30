@@ -12,7 +12,7 @@ class BlobStorageReference(UniversalBaseModel):
     A reference to content offloaded to blob storage
     """
 
-    type: typing.Optional[typing.Literal["blob-storage"]] = pydantic.Field(default=None)
+    type: typing.Literal["blob-storage"] = pydantic.Field(default="blob-storage")
     """
     +value=blob-storage
     """

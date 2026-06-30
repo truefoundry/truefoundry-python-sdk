@@ -12,7 +12,7 @@ class Poetry(UniversalBaseModel):
     Your build context root must contain `pyproject.toml` and `poetry.lock`
     """
 
-    type: typing.Optional[typing.Literal["poetry"]] = pydantic.Field(default=None)
+    type: typing.Literal["poetry"] = pydantic.Field(default="poetry")
     """
     +value=poetry
     """

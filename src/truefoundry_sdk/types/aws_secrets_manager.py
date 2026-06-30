@@ -13,7 +13,9 @@ class AwsSecretsManager(UniversalBaseModel):
     AWS Secrets Manager
     """
 
-    type: typing.Optional[typing.Literal["integration/secret-store/aws/secrets-manager"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/secret-store/aws/secrets-manager"] = pydantic.Field(
+        default="integration/secret-store/aws/secrets-manager"
+    )
     """
     +value=integration/secret-store/aws/secrets-manager
     """

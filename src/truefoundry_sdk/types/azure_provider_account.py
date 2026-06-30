@@ -15,7 +15,7 @@ class AzureProviderAccount(UniversalBaseModel):
     Azure
     """
 
-    type: typing.Optional[typing.Literal["provider-account/azure"]] = pydantic.Field(default=None)
+    type: typing.Literal["provider-account/azure"] = pydantic.Field(default="provider-account/azure")
     """
     +value=provider-account/azure
     """

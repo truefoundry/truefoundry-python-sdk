@@ -11,7 +11,7 @@ class VcsTokenAuthData(UniversalBaseModel):
     Personal access token
     """
 
-    type: typing.Optional[typing.Literal["token"]] = pydantic.Field(default=None)
+    type: typing.Literal["token"] = pydantic.Field(default="token")
     """
     +value=token
     """

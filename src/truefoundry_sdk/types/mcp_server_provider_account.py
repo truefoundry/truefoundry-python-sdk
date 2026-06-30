@@ -16,7 +16,9 @@ class McpServerProviderAccount(UniversalBaseModel):
     MCP Server Group
     """
 
-    type: typing.Optional[typing.Literal["provider-account/mcp-server-group"]] = pydantic.Field(default=None)
+    type: typing.Literal["provider-account/mcp-server-group"] = pydantic.Field(
+        default="provider-account/mcp-server-group"
+    )
     """
     +value=provider-account/mcp-server-group
     """

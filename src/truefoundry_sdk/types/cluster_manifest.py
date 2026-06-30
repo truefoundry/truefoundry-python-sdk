@@ -18,7 +18,7 @@ from .spark_config import SparkConfig
 
 
 class ClusterManifest(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["cluster"]] = pydantic.Field(default=None)
+    type: typing.Literal["cluster"] = pydantic.Field(default="cluster")
     """
     +value=cluster
     """

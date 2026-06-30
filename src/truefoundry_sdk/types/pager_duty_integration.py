@@ -12,7 +12,9 @@ class PagerDutyIntegration(UniversalBaseModel):
     PagerDuty Integration
     """
 
-    type: typing.Optional[typing.Literal["integration/notification-channel/pagerduty"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/notification-channel/pagerduty"] = pydantic.Field(
+        default="integration/notification-channel/pagerduty"
+    )
     """
     +value=integration/notification-channel/pagerduty
     """

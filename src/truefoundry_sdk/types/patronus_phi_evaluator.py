@@ -8,7 +8,7 @@ from .patronus_phi_criteria import PatronusPhiCriteria
 
 
 class PatronusPhiEvaluator(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["phi"]] = pydantic.Field(default=None)
+    type: typing.Literal["phi"] = pydantic.Field(default="phi")
     """
     The type of the evaluator to use for the Patronus Guardrail.
     """

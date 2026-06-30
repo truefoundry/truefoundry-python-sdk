@@ -11,7 +11,7 @@ class CustomHeaderAuth(UniversalBaseModel):
     Static API key or token authentication via request headers. All users share the same credentials.
     """
 
-    type: typing.Optional[typing.Literal["header"]] = pydantic.Field(default=None)
+    type: typing.Literal["header"] = pydantic.Field(default="header")
     """
     +value=header
     """

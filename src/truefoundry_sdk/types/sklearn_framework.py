@@ -13,7 +13,7 @@ class SklearnFramework(UniversalBaseModel):
     Sklearn
     """
 
-    type: typing.Optional[typing.Literal["sklearn"]] = pydantic.Field(default=None)
+    type: typing.Literal["sklearn"] = pydantic.Field(default="sklearn")
     """
     Type of the framework
     """

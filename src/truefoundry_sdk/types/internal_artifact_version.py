@@ -10,9 +10,21 @@ from .subject import Subject
 
 
 class InternalArtifactVersion(UniversalBaseModel):
-    created_at: typing.Optional[dt.datetime] = None
-    updated_at: typing.Optional[dt.datetime] = None
-    manifest: typing.Optional[ArtifactManifest] = None
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Timestamp when the artifact version was created.
+    """
+
+    updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Timestamp when the artifact version was last updated.
+    """
+
+    manifest: typing.Optional[ArtifactManifest] = pydantic.Field(default=None)
+    """
+    Manifest describing the artifact version.
+    """
+
     id: str = pydantic.Field()
     """
     System-generated artifact version ID.
@@ -23,19 +35,50 @@ class InternalArtifactVersion(UniversalBaseModel):
     Human-readable Fully Qualified Name of the artifact version.
     """
 
-    created_by_subject: Subject
-    ml_repo_id: str
-    usage_code_snippet: typing.Optional[str] = None
-    tags: typing.Optional[typing.List[str]] = None
-    artifact_id: str
-    artifact_size: typing.Optional[float] = None
+    created_by_subject: Subject = pydantic.Field()
+    """
+    Subject (user, team, or service account) that created the artifact version.
+    """
+
+    ml_repo_id: str = pydantic.Field()
+    """
+    Identifier of the ML Repo the artifact version belongs to.
+    """
+
+    usage_code_snippet: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Code snippet demonstrating how to use the artifact version.
+    """
+
+    tags: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Tags associated with the artifact version.
+    """
+
+    artifact_id: str = pydantic.Field()
+    """
+    Identifier of the artifact this version belongs to.
+    """
+
+    artifact_size: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Total size of the artifact version files in bytes.
+    """
+
     artifact_fqn: str = pydantic.Field()
     """
     Fully qualified name of the parent artifact
     """
 
-    artifact_metadata: typing.Optional[typing.Dict[str, typing.Any]] = None
-    internal_metadata: typing.Optional[typing.Dict[str, typing.Any]] = None
+    artifact_metadata: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    """
+    User-defined metadata associated with the artifact version.
+    """
+
+    internal_metadata: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    """
+    Internal metadata associated with the artifact version.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

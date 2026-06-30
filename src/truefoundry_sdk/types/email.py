@@ -11,7 +11,7 @@ class Email(UniversalBaseModel):
     Email
     """
 
-    type: typing.Optional[typing.Literal["email"]] = pydantic.Field(default=None)
+    type: typing.Literal["email"] = pydantic.Field(default="email")
     """
     +value=email
     """

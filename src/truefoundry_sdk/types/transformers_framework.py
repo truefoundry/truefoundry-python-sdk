@@ -12,7 +12,7 @@ class TransformersFramework(UniversalBaseModel):
     Transformers
     """
 
-    type: typing.Optional[typing.Literal["transformers"]] = pydantic.Field(default=None)
+    type: typing.Literal["transformers"] = pydantic.Field(default="transformers")
     """
     Type of the framework
     """

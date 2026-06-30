@@ -12,7 +12,9 @@ class EmailNotificationChannel(UniversalBaseModel):
     Email Notification Channel
     """
 
-    type: typing.Optional[typing.Literal["integration/notification-channel/email"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/notification-channel/email"] = pydantic.Field(
+        default="integration/notification-channel/email"
+    )
     """
     +value=integration/notification-channel/email
     """

@@ -13,7 +13,7 @@ class OpenRouterModel(UniversalBaseModel):
     OpenRouter Model
     """
 
-    type: typing.Optional[typing.Literal["integration/model/openrouter"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/model/openrouter"] = pydantic.Field(default="integration/model/openrouter")
     """
     +value=integration/model/openrouter
     """

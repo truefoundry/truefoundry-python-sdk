@@ -12,7 +12,7 @@ class McpServerHeaderAuth(UniversalBaseModel):
     Authenticate using a static key or token sent as a request header. Choose shared vs individual credentials below.
     """
 
-    type: typing.Optional[typing.Literal["header"]] = pydantic.Field(default=None)
+    type: typing.Literal["header"] = pydantic.Field(default="header")
     """
     +value=header
     """

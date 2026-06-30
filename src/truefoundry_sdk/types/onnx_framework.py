@@ -11,7 +11,7 @@ class OnnxFramework(UniversalBaseModel):
     ONNX
     """
 
-    type: typing.Optional[typing.Literal["onnx"]] = pydantic.Field(default=None)
+    type: typing.Literal["onnx"] = pydantic.Field(default="onnx")
     """
     Type of the framework
     """

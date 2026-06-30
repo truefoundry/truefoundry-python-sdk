@@ -12,7 +12,7 @@ class TextContentPart(UniversalBaseModel):
     Text content for the message
     """
 
-    type: typing.Optional[typing.Literal["text"]] = pydantic.Field(default=None)
+    type: typing.Literal["text"] = pydantic.Field(default="text")
     """
     Type of the content part
     """

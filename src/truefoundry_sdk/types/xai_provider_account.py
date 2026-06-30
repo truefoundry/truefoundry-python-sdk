@@ -17,7 +17,7 @@ class XaiProviderAccount(UniversalBaseModel):
     xAI
     """
 
-    type: typing.Optional[typing.Literal["provider-account/xai"]] = pydantic.Field(default=None)
+    type: typing.Literal["provider-account/xai"] = pydantic.Field(default="provider-account/xai")
     """
     +value=provider-account/xai
     """

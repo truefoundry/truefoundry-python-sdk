@@ -13,7 +13,7 @@ class Notebook(BaseWorkbenchInput):
     Describes the configuration for the service
     """
 
-    type: typing.Optional[typing.Literal["notebook"]] = pydantic.Field(default=None)
+    type: typing.Literal["notebook"] = pydantic.Field(default="notebook")
     """
     +value=notebook
     """

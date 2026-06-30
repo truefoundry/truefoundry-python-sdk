@@ -13,7 +13,9 @@ class AwsParameterStore(UniversalBaseModel):
     AWS Parameter Store
     """
 
-    type: typing.Optional[typing.Literal["integration/secret-store/aws/parameter-store"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/secret-store/aws/parameter-store"] = pydantic.Field(
+        default="integration/secret-store/aws/parameter-store"
+    )
     """
     +value=integration/secret-store/aws/parameter-store
     """

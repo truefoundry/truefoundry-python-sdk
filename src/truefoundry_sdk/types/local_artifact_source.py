@@ -8,7 +8,7 @@ from .artifact_path import ArtifactPath
 
 
 class LocalArtifactSource(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["local"]] = pydantic.Field(default=None)
+    type: typing.Literal["local"] = pydantic.Field(default="local")
     """
     Type of the source
     """

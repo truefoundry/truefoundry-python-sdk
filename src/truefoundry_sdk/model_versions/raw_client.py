@@ -56,23 +56,31 @@ class RawModelVersionsClient:
             Number of items to skip
 
         tag : typing.Optional[str]
+            Filter model versions by tag.
 
         fqn : typing.Optional[str]
+            Filter model versions by Fully Qualified Name.
 
         model_id : typing.Optional[str]
+            Filter model versions by model identifier.
 
         ml_repo_id : typing.Optional[str]
+            Filter model versions by ML Repo identifier.
 
         name : typing.Optional[str]
+            Filter model versions by name.
 
         version : typing.Optional[Object]
             Version number (positive integer) or `latest`
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter model versions by associated run identifiers.
 
         run_steps : typing.Optional[typing.Union[float, typing.Sequence[float]]]
+            Filter model versions by associated run steps.
 
         include_internal_metadata : typing.Optional[bool]
+            Whether to include internal metadata in the response.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -153,10 +161,13 @@ class RawModelVersionsClient:
         Parameters
         ----------
         model_version_id : str
+            Identifier of the model version to apply tags to.
 
         tags : typing.Sequence[str]
+            Tags to apply to the model version.
 
         force : typing.Optional[bool]
+            Whether to overwrite existing tags that are already in use.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -340,23 +351,31 @@ class AsyncRawModelVersionsClient:
             Number of items to skip
 
         tag : typing.Optional[str]
+            Filter model versions by tag.
 
         fqn : typing.Optional[str]
+            Filter model versions by Fully Qualified Name.
 
         model_id : typing.Optional[str]
+            Filter model versions by model identifier.
 
         ml_repo_id : typing.Optional[str]
+            Filter model versions by ML Repo identifier.
 
         name : typing.Optional[str]
+            Filter model versions by name.
 
         version : typing.Optional[Object]
             Version number (positive integer) or `latest`
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter model versions by associated run identifiers.
 
         run_steps : typing.Optional[typing.Union[float, typing.Sequence[float]]]
+            Filter model versions by associated run steps.
 
         include_internal_metadata : typing.Optional[bool]
+            Whether to include internal metadata in the response.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -440,10 +459,13 @@ class AsyncRawModelVersionsClient:
         Parameters
         ----------
         model_version_id : str
+            Identifier of the model version to apply tags to.
 
         tags : typing.Sequence[str]
+            Tags to apply to the model version.
 
         force : typing.Optional[bool]
+            Whether to overwrite existing tags that are already in use.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

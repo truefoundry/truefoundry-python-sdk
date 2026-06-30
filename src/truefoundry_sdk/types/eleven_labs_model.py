@@ -13,7 +13,7 @@ class ElevenLabsModel(UniversalBaseModel):
     ElevenLabs Model
     """
 
-    type: typing.Optional[typing.Literal["integration/model/elevenlabs"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/model/elevenlabs"] = pydantic.Field(default="integration/model/elevenlabs")
     """
     +value=integration/model/elevenlabs
     """

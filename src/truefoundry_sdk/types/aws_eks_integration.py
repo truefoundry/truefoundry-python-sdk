@@ -13,7 +13,7 @@ class AwsEksIntegration(UniversalBaseModel):
     AWS EKS
     """
 
-    type: typing.Optional[typing.Literal["integration/cluster/aws/eks"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/cluster/aws/eks"] = pydantic.Field(default="integration/cluster/aws/eks")
     """
     +value=integration/cluster/aws/eks
     """

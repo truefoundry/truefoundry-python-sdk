@@ -8,7 +8,7 @@ from .patronus_answer_relevance_criteria import PatronusAnswerRelevanceCriteria
 
 
 class PatronusAnswerRelevanceEvaluator(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["answer-relevance"]] = pydantic.Field(default=None)
+    type: typing.Literal["answer-relevance"] = pydantic.Field(default="answer-relevance")
     """
     The type of the evaluator to use for the Patronus Guardrail.
     """

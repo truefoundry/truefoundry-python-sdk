@@ -11,7 +11,7 @@ class RemoteSource(UniversalBaseModel):
     Describes that we are using code stored in a remote repository to build our image
     """
 
-    type: typing.Optional[typing.Literal["remote"]] = pydantic.Field(default=None)
+    type: typing.Literal["remote"] = pydantic.Field(default="remote")
     """
     +value=remote
     """

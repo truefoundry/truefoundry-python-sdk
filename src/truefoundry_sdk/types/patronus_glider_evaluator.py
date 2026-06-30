@@ -8,7 +8,7 @@ from .patronus_glider_criteria import PatronusGliderCriteria
 
 
 class PatronusGliderEvaluator(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["glider"]] = pydantic.Field(default=None)
+    type: typing.Literal["glider"] = pydantic.Field(default="glider")
     """
     The type of the evaluator to use for the Patronus Guardrail.
     """

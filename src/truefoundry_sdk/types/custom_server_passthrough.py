@@ -11,7 +11,7 @@ class CustomServerPassthrough(UniversalBaseModel):
     Authenticate using your existing TrueFoundry account (PAT or Virtual Accounts). Your credentials are automatically passed to the server.
     """
 
-    type: typing.Optional[typing.Literal["passthrough"]] = pydantic.Field(default=None)
+    type: typing.Literal["passthrough"] = pydantic.Field(default="passthrough")
     """
     +value=passthrough
     """

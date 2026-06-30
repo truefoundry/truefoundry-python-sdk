@@ -12,7 +12,7 @@ class GuardrailsConfig(UniversalBaseModel):
     Guardrails Configuration
     """
 
-    type: typing.Optional[typing.Literal["gateway-guardrails-config"]] = pydantic.Field(default=None)
+    type: typing.Literal["gateway-guardrails-config"] = pydantic.Field(default="gateway-guardrails-config")
     """
     +value=gateway-guardrails-config
     +sort=2

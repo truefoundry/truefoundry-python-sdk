@@ -16,7 +16,7 @@ class VirtualMcpServerManifest(UniversalBaseModel):
     TrueFoundry-hosted MCP Server composed of other MCP servers.
     """
 
-    type: typing.Optional[typing.Literal["mcp-server/virtual"]] = pydantic.Field(default=None)
+    type: typing.Literal["mcp-server/virtual"] = pydantic.Field(default="mcp-server/virtual")
     """
     +value=mcp-server/virtual
     """

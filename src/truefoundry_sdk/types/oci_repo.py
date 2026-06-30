@@ -11,7 +11,7 @@ class OciRepo(UniversalBaseModel):
     OCIRepo
     """
 
-    type: typing.Optional[typing.Literal["oci-repo"]] = pydantic.Field(default=None)
+    type: typing.Literal["oci-repo"] = pydantic.Field(default="oci-repo")
     """
     +value=oci-repo
     """

@@ -11,7 +11,7 @@ class LocalSource(UniversalBaseModel):
     Describes that we are using code stored in a local developement environment to build our image
     """
 
-    type: typing.Optional[typing.Literal["local"]] = pydantic.Field(default=None)
+    type: typing.Literal["local"] = pydantic.Field(default="local")
     """
     +value=local
     """

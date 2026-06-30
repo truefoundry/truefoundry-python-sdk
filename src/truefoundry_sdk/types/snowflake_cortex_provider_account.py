@@ -17,7 +17,9 @@ class SnowflakeCortexProviderAccount(UniversalBaseModel):
     Snowflake Cortex Provider Account
     """
 
-    type: typing.Optional[typing.Literal["provider-account/snowflake-cortex"]] = pydantic.Field(default=None)
+    type: typing.Literal["provider-account/snowflake-cortex"] = pydantic.Field(
+        default="provider-account/snowflake-cortex"
+    )
     """
     +value=provider-account/snowflake-cortex
     """

@@ -12,7 +12,9 @@ class DockerhubRegistry(UniversalBaseModel):
     Dockerhub Registry
     """
 
-    type: typing.Optional[typing.Literal["integration/docker-registry/dockerhub"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/docker-registry/dockerhub"] = pydantic.Field(
+        default="integration/docker-registry/dockerhub"
+    )
     """
     +value=integration/docker-registry/dockerhub
     """

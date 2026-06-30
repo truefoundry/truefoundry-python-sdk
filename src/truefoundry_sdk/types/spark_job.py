@@ -12,7 +12,7 @@ from .volume_mount import VolumeMount
 
 
 class SparkJob(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["spark-job"]] = pydantic.Field(default=None)
+    type: typing.Literal["spark-job"] = pydantic.Field(default="spark-job")
     """
     +value=spark-job
     +sort=1

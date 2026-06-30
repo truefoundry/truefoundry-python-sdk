@@ -11,7 +11,7 @@ class SlackWebhook(UniversalBaseModel):
     Slack Webhook
     """
 
-    type: typing.Optional[typing.Literal["slack-webhook"]] = pydantic.Field(default=None)
+    type: typing.Literal["slack-webhook"] = pydantic.Field(default="slack-webhook")
     """
     +value=slack-webhook
     """

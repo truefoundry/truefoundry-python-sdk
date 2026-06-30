@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class LocalModelSource(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["local"]] = pydantic.Field(default=None)
+    type: typing.Literal["local"] = pydantic.Field(default="local")
     """
     Type of the source
     """

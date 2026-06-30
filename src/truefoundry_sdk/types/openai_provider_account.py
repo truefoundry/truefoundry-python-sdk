@@ -17,7 +17,7 @@ class OpenaiProviderAccount(UniversalBaseModel):
     OpenAI Provider Account
     """
 
-    type: typing.Optional[typing.Literal["provider-account/openai"]] = pydantic.Field(default=None)
+    type: typing.Literal["provider-account/openai"] = pydantic.Field(default="provider-account/openai")
     """
     +value=provider-account/openai
     """

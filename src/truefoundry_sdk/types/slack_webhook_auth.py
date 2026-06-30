@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class SlackWebhookAuth(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["slack-webhook"]] = pydantic.Field(default=None)
+    type: typing.Literal["slack-webhook"] = pydantic.Field(default="slack-webhook")
     """
     +value=auth/slack-webhook
     """

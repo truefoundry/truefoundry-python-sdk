@@ -8,7 +8,7 @@ from .function import Function
 
 
 class ToolCall(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["function"]] = pydantic.Field(default=None)
+    type: typing.Literal["function"] = pydantic.Field(default="function")
     """
     Type of the tool call
     """

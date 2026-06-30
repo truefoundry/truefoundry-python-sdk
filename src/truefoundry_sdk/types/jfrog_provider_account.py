@@ -16,7 +16,7 @@ class JfrogProviderAccount(UniversalBaseModel):
     Jfrog
     """
 
-    type: typing.Optional[typing.Literal["provider-account/jfrog"]] = pydantic.Field(default=None)
+    type: typing.Literal["provider-account/jfrog"] = pydantic.Field(default="provider-account/jfrog")
     """
     +value=provider-account/jfrog
     """

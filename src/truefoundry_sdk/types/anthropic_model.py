@@ -23,7 +23,7 @@ class AnthropicModel(UniversalBaseModel):
     The Anthropic model identifier (e.g., claude-3-5-sonnet-20241022, claude-3-opus-20240229, claude-3-haiku-20240307). This is the standard model name from Anthropic's API documentation.
     """
 
-    type: typing.Optional[typing.Literal["integration/model/anthropic"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/model/anthropic"] = pydantic.Field(default="integration/model/anthropic")
     """
     +value=integration/model/anthropic
     """

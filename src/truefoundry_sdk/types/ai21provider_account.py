@@ -17,7 +17,7 @@ class Ai21ProviderAccount(UniversalBaseModel):
     AI21
     """
 
-    type: typing.Optional[typing.Literal["provider-account/ai21"]] = pydantic.Field(default=None)
+    type: typing.Literal["provider-account/ai21"] = pydantic.Field(default="provider-account/ai21")
     """
     +value=provider-account/ai21
     """

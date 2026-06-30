@@ -15,7 +15,7 @@ class GithubProviderAccount(UniversalBaseModel):
     Github
     """
 
-    type: typing.Optional[typing.Literal["provider-account/github"]] = pydantic.Field(default=None)
+    type: typing.Literal["provider-account/github"] = pydantic.Field(default="provider-account/github")
     """
     +value=provider-account/github
     """

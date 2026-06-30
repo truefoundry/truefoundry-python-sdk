@@ -16,7 +16,7 @@ class TeamBudgetConfig(UniversalBaseModel):
     Team Budget Configuration
     """
 
-    type: typing.Optional[typing.Literal["team-budget-config"]] = pydantic.Field(default=None)
+    type: typing.Literal["team-budget-config"] = pydantic.Field(default="team-budget-config")
     """
     +value=team-budget-config
     +sort=1

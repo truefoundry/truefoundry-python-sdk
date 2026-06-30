@@ -11,7 +11,7 @@ class AwsAssumedRoleBasedAuth(UniversalBaseModel):
     AWS Assumed Role Based Auth
     """
 
-    type: typing.Optional[typing.Literal["assumed-role-based"]] = pydantic.Field(default=None)
+    type: typing.Literal["assumed-role-based"] = pydantic.Field(default="assumed-role-based")
     """
     +value=assumed-role-based
     """

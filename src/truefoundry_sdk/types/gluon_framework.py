@@ -11,7 +11,7 @@ class GluonFramework(UniversalBaseModel):
     Gluon
     """
 
-    type: typing.Optional[typing.Literal["gluon"]] = pydantic.Field(default=None)
+    type: typing.Literal["gluon"] = pydantic.Field(default="gluon")
     """
     Type of the framework
     """

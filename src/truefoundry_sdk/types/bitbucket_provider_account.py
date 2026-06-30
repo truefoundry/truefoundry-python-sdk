@@ -15,7 +15,7 @@ class BitbucketProviderAccount(UniversalBaseModel):
     Bitbucket
     """
 
-    type: typing.Optional[typing.Literal["provider-account/bitbucket"]] = pydantic.Field(default=None)
+    type: typing.Literal["provider-account/bitbucket"] = pydantic.Field(default="provider-account/bitbucket")
     """
     +value=provider-account/bitbucket
     """

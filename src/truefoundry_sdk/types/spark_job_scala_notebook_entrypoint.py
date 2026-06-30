@@ -11,7 +11,7 @@ class SparkJobScalaNotebookEntrypoint(UniversalBaseModel):
     scala notebook
     """
 
-    type: typing.Optional[typing.Literal["scala-notebook"]] = pydantic.Field(default=None)
+    type: typing.Literal["scala-notebook"] = pydantic.Field(default="scala-notebook")
     """
     +value=scala-notebook
     """

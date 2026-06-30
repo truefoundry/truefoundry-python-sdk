@@ -12,7 +12,7 @@ class RateLimitConfig(UniversalBaseModel):
     Rate Limit Configuration
     """
 
-    type: typing.Optional[typing.Literal["gateway-rate-limiting-config"]] = pydantic.Field(default=None)
+    type: typing.Literal["gateway-rate-limiting-config"] = pydantic.Field(default="gateway-rate-limiting-config")
     """
     +value=gateway-rate-limiting-config
     +sort=2

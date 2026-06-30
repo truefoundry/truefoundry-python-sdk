@@ -11,7 +11,7 @@ class StatsModelsFramework(UniversalBaseModel):
     StatsModels
     """
 
-    type: typing.Optional[typing.Literal["statsmodels"]] = pydantic.Field(default=None)
+    type: typing.Literal["statsmodels"] = pydantic.Field(default="statsmodels")
     """
     Type of the framework
     """

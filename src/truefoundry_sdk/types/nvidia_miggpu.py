@@ -8,7 +8,7 @@ from .nvidia_miggpu_profile import NvidiaMiggpuProfile
 
 
 class NvidiaMiggpu(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["nvidia_mig_gpu"]] = pydantic.Field(default=None)
+    type: typing.Literal["nvidia_mig_gpu"] = pydantic.Field(default="nvidia_mig_gpu")
     """
     +value=nvidia_mig_gpu
     """

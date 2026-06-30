@@ -12,7 +12,7 @@ class OtelMetricsExporterGrpcConfig(OtelExporterGrpcConfigBase):
     gRPC Configuration
     """
 
-    type: typing.Optional[typing.Literal["grpc"]] = pydantic.Field(default=None)
+    type: typing.Literal["grpc"] = pydantic.Field(default="grpc")
     """
     Configuration type
     """

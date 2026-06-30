@@ -11,7 +11,7 @@ class PaddleFramework(UniversalBaseModel):
     Paddle
     """
 
-    type: typing.Optional[typing.Literal["paddle"]] = pydantic.Field(default=None)
+    type: typing.Literal["paddle"] = pydantic.Field(default="paddle")
     """
     Type of the framework
     """

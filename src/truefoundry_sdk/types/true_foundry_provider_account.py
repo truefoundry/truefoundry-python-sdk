@@ -15,7 +15,7 @@ class TrueFoundryProviderAccount(UniversalBaseModel):
     TrueFoundry
     """
 
-    type: typing.Optional[typing.Literal["provider-account/truefoundry"]] = pydantic.Field(default=None)
+    type: typing.Literal["provider-account/truefoundry"] = pydantic.Field(default="provider-account/truefoundry")
     """
     +value=provider-account/truefoundry
     """

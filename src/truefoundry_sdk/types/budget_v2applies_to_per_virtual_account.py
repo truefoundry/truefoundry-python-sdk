@@ -12,7 +12,7 @@ class BudgetV2AppliesToPerVirtualAccount(UniversalBaseModel):
     Track a separate budget for each virtual account.
     """
 
-    type: typing.Optional[typing.Literal["per-virtual-account"]] = pydantic.Field(default=None)
+    type: typing.Literal["per-virtual-account"] = pydantic.Field(default="per-virtual-account")
     """
     Applies To Type
     """

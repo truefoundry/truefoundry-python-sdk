@@ -12,7 +12,7 @@ class Image(UniversalBaseModel):
     Describes that we are using a pre-built image stored in a Docker Image registry
     """
 
-    type: typing.Optional[typing.Literal["image"]] = pydantic.Field(default=None)
+    type: typing.Literal["image"] = pydantic.Field(default="image")
     """
     +value=image
     """

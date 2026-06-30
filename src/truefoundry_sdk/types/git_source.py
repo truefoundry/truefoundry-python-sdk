@@ -11,7 +11,7 @@ class GitSource(UniversalBaseModel):
     Describes that we are using code stored in a git repository to build our image
     """
 
-    type: typing.Optional[typing.Literal["git"]] = pydantic.Field(default=None)
+    type: typing.Literal["git"] = pydantic.Field(default="git")
     """
     +value=git
     """

@@ -11,7 +11,7 @@ class SparkJobPythonEntrypoint(UniversalBaseModel):
     python
     """
 
-    type: typing.Optional[typing.Literal["python"]] = pydantic.Field(default=None)
+    type: typing.Literal["python"] = pydantic.Field(default="python")
     """
     +value=python
     """

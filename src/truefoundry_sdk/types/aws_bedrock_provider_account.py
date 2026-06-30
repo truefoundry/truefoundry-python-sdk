@@ -18,7 +18,7 @@ class AwsBedrockProviderAccount(UniversalBaseModel):
     AWS Bedrock
     """
 
-    type: typing.Optional[typing.Literal["provider-account/aws-bedrock"]] = pydantic.Field(default=None)
+    type: typing.Literal["provider-account/aws-bedrock"] = pydantic.Field(default="provider-account/aws-bedrock")
     """
     +value=provider-account/aws-bedrock
     """

@@ -18,7 +18,9 @@ class AwsBedrockMantleProviderAccount(UniversalBaseModel):
     AWS Bedrock Mantle
     """
 
-    type: typing.Optional[typing.Literal["provider-account/aws-bedrock-mantle"]] = pydantic.Field(default=None)
+    type: typing.Literal["provider-account/aws-bedrock-mantle"] = pydantic.Field(
+        default="provider-account/aws-bedrock-mantle"
+    )
     """
     +value=provider-account/aws-bedrock-mantle
     """

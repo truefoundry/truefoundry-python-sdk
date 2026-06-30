@@ -15,7 +15,7 @@ class TtlProviderAccount(UniversalBaseModel):
     TTL
     """
 
-    type: typing.Optional[typing.Literal["provider-account/ttl"]] = pydantic.Field(default=None)
+    type: typing.Literal["provider-account/ttl"] = pydantic.Field(default="provider-account/ttl")
     """
     +value=provider-account/ttl
     """

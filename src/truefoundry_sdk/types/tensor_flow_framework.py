@@ -11,7 +11,7 @@ class TensorFlowFramework(UniversalBaseModel):
     Tensorflow
     """
 
-    type: typing.Optional[typing.Literal["tensorflow"]] = pydantic.Field(default=None)
+    type: typing.Literal["tensorflow"] = pydantic.Field(default="tensorflow")
     """
     Type of the framework
     """

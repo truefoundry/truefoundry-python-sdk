@@ -17,7 +17,7 @@ class PalmProviderAccount(UniversalBaseModel):
     PaLM Provider Account
     """
 
-    type: typing.Optional[typing.Literal["provider-account/palm"]] = pydantic.Field(default=None)
+    type: typing.Literal["provider-account/palm"] = pydantic.Field(default="provider-account/palm")
     """
     +value=provider-account/palm
     """

@@ -13,7 +13,7 @@ class TogetherAiModel(UniversalBaseModel):
     Together AI Model
     """
 
-    type: typing.Optional[typing.Literal["integration/model/together-ai"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/model/together-ai"] = pydantic.Field(default="integration/model/together-ai")
     """
     +value=integration/model/together-ai
     """

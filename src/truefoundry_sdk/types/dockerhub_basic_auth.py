@@ -11,7 +11,7 @@ class DockerhubBasicAuth(UniversalBaseModel):
     Dockerhub Basic Auth
     """
 
-    type: typing.Optional[typing.Literal["basic-auth"]] = pydantic.Field(default=None)
+    type: typing.Literal["basic-auth"] = pydantic.Field(default="basic-auth")
     """
     +value=basic-auth
     """

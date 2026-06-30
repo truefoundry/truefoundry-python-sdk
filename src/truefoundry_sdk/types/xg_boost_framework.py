@@ -13,7 +13,7 @@ class XgBoostFramework(UniversalBaseModel):
     XGBoost
     """
 
-    type: typing.Optional[typing.Literal["xgboost"]] = pydantic.Field(default=None)
+    type: typing.Literal["xgboost"] = pydantic.Field(default="xgboost")
     """
     Type of the framework
     """

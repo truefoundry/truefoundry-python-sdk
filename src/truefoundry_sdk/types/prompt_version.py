@@ -11,17 +11,60 @@ from .usage_code_snippet import UsageCodeSnippet
 
 
 class PromptVersion(UniversalBaseModel):
-    created_at: typing.Optional[dt.datetime] = None
-    updated_at: typing.Optional[dt.datetime] = None
-    manifest: ChatPromptManifest
-    id: str
-    fqn: str
-    created_by_subject: Subject
-    ml_repo_id: str
-    usage_code_snippet: typing.Optional[str] = None
-    usage_code_snippets: typing.Optional[typing.List[UsageCodeSnippet]] = None
-    tags: typing.Optional[typing.List[str]] = None
-    prompt_id: str
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Timestamp when the prompt version was created.
+    """
+
+    updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Timestamp when the prompt version was last updated.
+    """
+
+    manifest: ChatPromptManifest = pydantic.Field()
+    """
+    Manifest describing the prompt version.
+    """
+
+    id: str = pydantic.Field()
+    """
+    Unique identifier of the prompt version.
+    """
+
+    fqn: str = pydantic.Field()
+    """
+    Fully Qualified Name uniquely identifying the prompt version.
+    """
+
+    created_by_subject: Subject = pydantic.Field()
+    """
+    Subject (user, team, or service account) that created the prompt version.
+    """
+
+    ml_repo_id: str = pydantic.Field()
+    """
+    Identifier of the ML Repo the prompt version belongs to.
+    """
+
+    usage_code_snippet: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Code snippet showing how to use the prompt version.
+    """
+
+    usage_code_snippets: typing.Optional[typing.List[UsageCodeSnippet]] = pydantic.Field(default=None)
+    """
+    Code snippets showing how to use the prompt version.
+    """
+
+    tags: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Tags associated with the prompt version.
+    """
+
+    prompt_id: str = pydantic.Field()
+    """
+    Identifier of the prompt this version belongs to.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

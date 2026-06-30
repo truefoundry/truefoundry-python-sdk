@@ -11,7 +11,7 @@ class KerasFramework(UniversalBaseModel):
     Keras
     """
 
-    type: typing.Optional[typing.Literal["keras"]] = pydantic.Field(default=None)
+    type: typing.Literal["keras"] = pydantic.Field(default="keras")
     """
     Type of the framework
     """

@@ -11,7 +11,9 @@ class TrueFoundryDbssm(UniversalBaseModel):
     TrueFoundry DBSSM
     """
 
-    type: typing.Optional[typing.Literal["integration/secret-store/truefoundry/db"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/secret-store/truefoundry/db"] = pydantic.Field(
+        default="integration/secret-store/truefoundry/db"
+    )
     """
     +value=integration/secret-store/truefoundry/db
     """

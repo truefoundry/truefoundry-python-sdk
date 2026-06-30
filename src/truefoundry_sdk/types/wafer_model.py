@@ -13,7 +13,7 @@ class WaferModel(UniversalBaseModel):
     Wafer Model
     """
 
-    type: typing.Optional[typing.Literal["integration/model/wafer"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/model/wafer"] = pydantic.Field(default="integration/model/wafer")
     """
     +value=integration/model/wafer
     """

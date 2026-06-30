@@ -13,7 +13,7 @@ class Ai21Model(UniversalBaseModel):
     AI21 Model
     """
 
-    type: typing.Optional[typing.Literal["integration/model/ai21"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/model/ai21"] = pydantic.Field(default="integration/model/ai21")
     """
     +value=integration/model/ai21
     """

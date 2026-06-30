@@ -12,7 +12,7 @@ class DataDirectoryManifest(UniversalBaseModel):
     Data Directory
     """
 
-    type: typing.Optional[typing.Literal["data-dir"]] = pydantic.Field(default=None)
+    type: typing.Literal["data-dir"] = pydantic.Field(default="data-dir")
     """
     Type
     """

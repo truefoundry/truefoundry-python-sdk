@@ -12,7 +12,9 @@ class BitbucketDataCenterIntegration(UniversalBaseModel):
     Bitbucket Data Center
     """
 
-    type: typing.Optional[typing.Literal["integration/vcs/bitbucket/data-center"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/vcs/bitbucket/data-center"] = pydantic.Field(
+        default="integration/vcs/bitbucket/data-center"
+    )
     """
     +value=integration/vcs/bitbucket/data-center
     """

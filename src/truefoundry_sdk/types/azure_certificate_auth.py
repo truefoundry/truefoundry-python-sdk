@@ -11,7 +11,7 @@ class AzureCertificateAuth(UniversalBaseModel):
     Entra certificate based auth
     """
 
-    type: typing.Optional[typing.Literal["certificate"]] = pydantic.Field(default=None)
+    type: typing.Literal["certificate"] = pydantic.Field(default="certificate")
     """
     +value=certificate
     """

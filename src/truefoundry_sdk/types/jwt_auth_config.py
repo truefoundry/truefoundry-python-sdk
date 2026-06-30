@@ -12,7 +12,7 @@ class JwtAuthConfig(UniversalBaseModel):
     Configure JWT-based authentication using JWKS
     """
 
-    type: typing.Optional[typing.Literal["jwt_auth"]] = pydantic.Field(default=None)
+    type: typing.Literal["jwt_auth"] = pydantic.Field(default="jwt_auth")
     """
     +value=jwt_auth
     """

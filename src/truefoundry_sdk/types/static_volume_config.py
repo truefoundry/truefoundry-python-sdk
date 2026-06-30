@@ -11,7 +11,7 @@ class StaticVolumeConfig(UniversalBaseModel):
     Use existing volume
     """
 
-    type: typing.Optional[typing.Literal["static"]] = pydantic.Field(default=None)
+    type: typing.Literal["static"] = pydantic.Field(default="static")
     """
     Volume Type for the volume.
     """

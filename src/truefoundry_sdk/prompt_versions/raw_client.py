@@ -53,14 +53,19 @@ class RawPromptVersionsClient:
             Number of items to skip
 
         tag : typing.Optional[str]
+            Filter prompt versions by tag.
 
         fqn : typing.Optional[str]
+            Filter prompt versions by Fully Qualified Name.
 
         prompt_id : typing.Optional[str]
+            Filter prompt versions by the identifier of the prompt they belong to.
 
         ml_repo_id : typing.Optional[str]
+            Filter prompt versions by the identifier of the ML Repo they belong to.
 
         name : typing.Optional[str]
+            Filter prompt versions by name.
 
         version : typing.Optional[Object]
             Version number (positive integer) or `latest`
@@ -138,10 +143,13 @@ class RawPromptVersionsClient:
         Parameters
         ----------
         prompt_version_id : str
+            Identifier of the prompt version to apply tags to.
 
         tags : typing.Sequence[str]
+            Tags to apply to the prompt version.
 
         force : typing.Optional[bool]
+            Whether to forcibly reassign tags already in use by other prompt versions.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -322,14 +330,19 @@ class AsyncRawPromptVersionsClient:
             Number of items to skip
 
         tag : typing.Optional[str]
+            Filter prompt versions by tag.
 
         fqn : typing.Optional[str]
+            Filter prompt versions by Fully Qualified Name.
 
         prompt_id : typing.Optional[str]
+            Filter prompt versions by the identifier of the prompt they belong to.
 
         ml_repo_id : typing.Optional[str]
+            Filter prompt versions by the identifier of the ML Repo they belong to.
 
         name : typing.Optional[str]
+            Filter prompt versions by name.
 
         version : typing.Optional[Object]
             Version number (positive integer) or `latest`
@@ -410,10 +423,13 @@ class AsyncRawPromptVersionsClient:
         Parameters
         ----------
         prompt_version_id : str
+            Identifier of the prompt version to apply tags to.
 
         tags : typing.Sequence[str]
+            Tags to apply to the prompt version.
 
         force : typing.Optional[bool]
+            Whether to forcibly reassign tags already in use by other prompt versions.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

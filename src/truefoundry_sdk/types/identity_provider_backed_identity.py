@@ -12,7 +12,7 @@ class IdentityProviderBackedIdentity(UniversalBaseModel):
     Identity resolved from tokens issued by an external identity provider
     """
 
-    type: typing.Optional[typing.Literal["idp-backed"]] = pydantic.Field(default=None)
+    type: typing.Literal["idp-backed"] = pydantic.Field(default="idp-backed")
     """
     +value=idp-backed
     """

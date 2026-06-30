@@ -11,7 +11,7 @@ from .volume_mount import VolumeMount
 
 
 class PySparkTaskConfig(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["pyspark-task-config"]] = pydantic.Field(default=None)
+    type: typing.Literal["pyspark-task-config"] = pydantic.Field(default="pyspark-task-config")
     """
     +value=pyspark-task-config
     """

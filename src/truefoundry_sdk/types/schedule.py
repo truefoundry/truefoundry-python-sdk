@@ -12,7 +12,7 @@ class Schedule(UniversalBaseModel):
     Run the job on a schedule. [Docs](https://docs.truefoundry.com/docs/deploy-a-cron-job)
     """
 
-    type: typing.Optional[typing.Literal["scheduled"]] = pydantic.Field(default=None)
+    type: typing.Literal["scheduled"] = pydantic.Field(default="scheduled")
     """
     +value=scheduled
     """

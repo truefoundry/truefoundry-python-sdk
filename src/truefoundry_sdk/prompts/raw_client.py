@@ -38,6 +38,7 @@ class RawPromptsClient:
         Parameters
         ----------
         id : str
+            Unique identifier of the prompt.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -91,6 +92,7 @@ class RawPromptsClient:
         Parameters
         ----------
         id : str
+            Unique identifier of the prompt.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -158,12 +160,16 @@ class RawPromptsClient:
             Number of items to skip
 
         fqn : typing.Optional[str]
+            Filter prompts by Fully Qualified Name.
 
         ml_repo_id : typing.Optional[str]
+            Filter prompts by the identifier of the ML Repo they belong to.
 
         name : typing.Optional[str]
+            Filter prompts by name.
 
         include_empty_prompts : typing.Optional[bool]
+            Whether to include prompts that have no versions in the results.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -284,6 +290,7 @@ class AsyncRawPromptsClient:
         Parameters
         ----------
         id : str
+            Unique identifier of the prompt.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -337,6 +344,7 @@ class AsyncRawPromptsClient:
         Parameters
         ----------
         id : str
+            Unique identifier of the prompt.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -404,12 +412,16 @@ class AsyncRawPromptsClient:
             Number of items to skip
 
         fqn : typing.Optional[str]
+            Filter prompts by Fully Qualified Name.
 
         ml_repo_id : typing.Optional[str]
+            Filter prompts by the identifier of the ML Repo they belong to.
 
         name : typing.Optional[str]
+            Filter prompts by name.
 
         include_empty_prompts : typing.Optional[bool]
+            Whether to include prompts that have no versions in the results.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

@@ -12,7 +12,9 @@ class QuayArtifactsRegistry(UniversalBaseModel):
     Quay Artifacts Registry
     """
 
-    type: typing.Optional[typing.Literal["integration/docker-registry/quay"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/docker-registry/quay"] = pydantic.Field(
+        default="integration/docker-registry/quay"
+    )
     """
     +value=integration/docker-registry/quay
     """

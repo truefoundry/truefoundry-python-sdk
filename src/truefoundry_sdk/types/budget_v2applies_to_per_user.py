@@ -12,7 +12,7 @@ class BudgetV2AppliesToPerUser(UniversalBaseModel):
     Track a separate budget for each unique user.
     """
 
-    type: typing.Optional[typing.Literal["per-user"]] = pydantic.Field(default=None)
+    type: typing.Literal["per-user"] = pydantic.Field(default="per-user")
     """
     Applies To Type
     """

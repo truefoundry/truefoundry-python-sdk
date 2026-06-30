@@ -11,7 +11,7 @@ class SparkExecutorFixedInstances(UniversalBaseModel):
     Fixed Instances
     """
 
-    type: typing.Optional[typing.Literal["fixed"]] = pydantic.Field(default=None)
+    type: typing.Literal["fixed"] = pydantic.Field(default="fixed")
     """
     +value=fixed
     """

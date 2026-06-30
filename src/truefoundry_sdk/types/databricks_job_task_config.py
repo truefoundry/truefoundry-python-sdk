@@ -13,7 +13,7 @@ class DatabricksJobTaskConfig(UniversalBaseModel):
     Task that triggers a Databricks job via API and polls until completion. Uses image and optional resources; no env or mounts. Execution is handled by the CLI (trigger + poll).
     """
 
-    type: typing.Optional[typing.Literal["databricks-job-task-config"]] = pydantic.Field(default=None)
+    type: typing.Literal["databricks-job-task-config"] = pydantic.Field(default="databricks-job-task-config")
     """
     +value=databricks-job-task-config
     """

@@ -12,7 +12,7 @@ class NodeSelector(UniversalBaseModel):
     Constraints to select a Node - Specific GPU / Instance Families, On-Demand/Spot.
     """
 
-    type: typing.Optional[typing.Literal["node_selector"]] = pydantic.Field(default=None)
+    type: typing.Literal["node_selector"] = pydantic.Field(default="node_selector")
     """
     +value=node_selector
     """

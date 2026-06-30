@@ -45,7 +45,11 @@ class DataDirectory(UniversalBaseModel):
     Timestamp when the data directory was last updated
     """
 
-    manifest: DataDirectoryManifest
+    manifest: DataDirectoryManifest = pydantic.Field()
+    """
+    Manifest describing the data directory.
+    """
+
     usage_code_snippet: typing.Optional[str] = pydantic.Field(default=None)
     """
     Code snippet demonstrating how to use this data directory

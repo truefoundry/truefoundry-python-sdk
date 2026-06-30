@@ -17,7 +17,7 @@ class OpenRouterProviderAccount(UniversalBaseModel):
     OpenRouter Provider Account
     """
 
-    type: typing.Optional[typing.Literal["provider-account/openrouter"]] = pydantic.Field(default=None)
+    type: typing.Literal["provider-account/openrouter"] = pydantic.Field(default="provider-account/openrouter")
     """
     +value=provider-account/openrouter
     """

@@ -11,7 +11,7 @@ class PagerDutyIntegrationKeyAuth(UniversalBaseModel):
     PagerDuty Credentails
     """
 
-    type: typing.Optional[typing.Literal["pagerduty-integration-auth"]] = pydantic.Field(default=None)
+    type: typing.Literal["pagerduty-integration-auth"] = pydantic.Field(default="pagerduty-integration-auth")
     """
     +value=pagerduty-integration-auth
     """

@@ -11,7 +11,7 @@ class LoggingModeNever(UniversalBaseModel):
     Enable this mode to disable request and response body logging for all gateway requests, regardless of headers. Request metadata and headers are still logged, but body content is excluded.
     """
 
-    type: typing.Optional[typing.Literal["never"]] = pydantic.Field(default=None)
+    type: typing.Literal["never"] = pydantic.Field(default="never")
     """
     +value=never
     """

@@ -11,7 +11,7 @@ class BasicAuthCreds(UniversalBaseModel):
     Username and password
     """
 
-    type: typing.Optional[typing.Literal["basic_auth"]] = pydantic.Field(default=None)
+    type: typing.Literal["basic_auth"] = pydantic.Field(default="basic_auth")
     """
     +value=basic_auth
     """

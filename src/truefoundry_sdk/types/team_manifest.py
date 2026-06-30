@@ -11,7 +11,7 @@ from .team_owned_by import TeamOwnedBy
 
 
 class TeamManifest(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["team"]] = pydantic.Field(default=None)
+    type: typing.Literal["team"] = pydantic.Field(default="team")
     """
     +value=team
     """

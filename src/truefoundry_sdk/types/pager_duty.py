@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class PagerDuty(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["pagerduty"]] = pydantic.Field(default=None)
+    type: typing.Literal["pagerduty"] = pydantic.Field(default="pagerduty")
     """
     +value=pagerduty
     """

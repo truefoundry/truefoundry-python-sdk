@@ -11,7 +11,7 @@ class SpaCyFramework(UniversalBaseModel):
     SpaCy
     """
 
-    type: typing.Optional[typing.Literal["spacy"]] = pydantic.Field(default=None)
+    type: typing.Literal["spacy"] = pydantic.Field(default="spacy")
     """
     Type of the framework
     """

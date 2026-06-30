@@ -11,7 +11,7 @@ class SparkJobJavaEntrypoint(UniversalBaseModel):
     java
     """
 
-    type: typing.Optional[typing.Literal["java"]] = pydantic.Field(default=None)
+    type: typing.Literal["java"] = pydantic.Field(default="java")
     """
     +value=java
     """

@@ -17,7 +17,7 @@ class SmallestAiProviderAccount(UniversalBaseModel):
     Smallest AI Provider Account
     """
 
-    type: typing.Optional[typing.Literal["provider-account/smallest-ai"]] = pydantic.Field(default=None)
+    type: typing.Literal["provider-account/smallest-ai"] = pydantic.Field(default="provider-account/smallest-ai")
     """
     +value=provider-account/smallest-ai
     """

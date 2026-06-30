@@ -11,7 +11,7 @@ class EnkryptAiKeyAuth(UniversalBaseModel):
     Authentication method using Enkrypt AI API key
     """
 
-    type: typing.Optional[typing.Literal["api-key"]] = pydantic.Field(default=None)
+    type: typing.Literal["api-key"] = pydantic.Field(default="api-key")
     """
     +value=api-key
     """

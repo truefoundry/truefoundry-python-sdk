@@ -12,7 +12,7 @@ class LatencyBasedLoadBalancing(UniversalBaseModel):
     Latency-based Load Balancing
     """
 
-    type: typing.Optional[typing.Literal["latency-based-routing"]] = pydantic.Field(default=None)
+    type: typing.Literal["latency-based-routing"] = pydantic.Field(default="latency-based-routing")
     """
     Routing Type
     """

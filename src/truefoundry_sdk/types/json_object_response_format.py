@@ -11,7 +11,7 @@ class JsonObjectResponseFormat(UniversalBaseModel):
     Simple JSON mode response format
     """
 
-    type: typing.Optional[typing.Literal["json_object"]] = pydantic.Field(default=None)
+    type: typing.Literal["json_object"] = pydantic.Field(default="json_object")
     """
     Type of response format
     """

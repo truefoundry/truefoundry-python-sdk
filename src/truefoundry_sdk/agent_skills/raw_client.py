@@ -38,6 +38,7 @@ class RawAgentSkillsClient:
         Parameters
         ----------
         agent_skill_id : str
+            Identifier of the agent skill.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -91,6 +92,7 @@ class RawAgentSkillsClient:
         Parameters
         ----------
         agent_skill_id : str
+            Identifier of the agent skill.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -158,12 +160,16 @@ class RawAgentSkillsClient:
             Number of items to skip
 
         fqn : typing.Optional[str]
+            Fully Qualified Name uniquely identifying the agent skill.
 
         ml_repo_id : typing.Optional[str]
+            Identifier of the ML Repo to filter agent skills by.
 
         name : typing.Optional[str]
+            Name of the agent skill to filter by.
 
         include_empty_agent_skills : typing.Optional[bool]
+            Whether to include agent skills that have no versions.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -284,6 +290,7 @@ class AsyncRawAgentSkillsClient:
         Parameters
         ----------
         agent_skill_id : str
+            Identifier of the agent skill.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -337,6 +344,7 @@ class AsyncRawAgentSkillsClient:
         Parameters
         ----------
         agent_skill_id : str
+            Identifier of the agent skill.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -404,12 +412,16 @@ class AsyncRawAgentSkillsClient:
             Number of items to skip
 
         fqn : typing.Optional[str]
+            Fully Qualified Name uniquely identifying the agent skill.
 
         ml_repo_id : typing.Optional[str]
+            Identifier of the ML Repo to filter agent skills by.
 
         name : typing.Optional[str]
+            Name of the agent skill to filter by.
 
         include_empty_agent_skills : typing.Optional[bool]
+            Whether to include agent skills that have no versions.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

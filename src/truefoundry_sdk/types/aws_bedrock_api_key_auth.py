@@ -11,7 +11,7 @@ class AwsBedrockApiKeyAuth(UniversalBaseModel):
     API Key Based
     """
 
-    type: typing.Optional[typing.Literal["api-key"]] = pydantic.Field(default=None)
+    type: typing.Literal["api-key"] = pydantic.Field(default="api-key")
     """
     +value=api-key
     """

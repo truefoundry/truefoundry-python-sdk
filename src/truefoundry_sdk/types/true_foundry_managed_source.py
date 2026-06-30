@@ -11,7 +11,7 @@ class TrueFoundryManagedSource(UniversalBaseModel):
     TrueFoundry Managed Source
     """
 
-    type: typing.Optional[typing.Literal["truefoundry"]] = pydantic.Field(default=None)
+    type: typing.Literal["truefoundry"] = pydantic.Field(default="truefoundry")
     """
     Type of the source
     """

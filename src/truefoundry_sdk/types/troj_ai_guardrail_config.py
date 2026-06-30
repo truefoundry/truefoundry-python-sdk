@@ -25,7 +25,9 @@ class TrojAiGuardrailConfig(UniversalBaseModel):
     Optional description for this Guardrail Config.
     """
 
-    type: typing.Optional[typing.Literal["integration/guardrail-config/trojai"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/guardrail-config/trojai"] = pydantic.Field(
+        default="integration/guardrail-config/trojai"
+    )
     """
     +uiType=Hidden
     +value=integration/guardrail-config/trojai

@@ -8,6 +8,10 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class GetSignedUrLsRequestOperation(enum.StrEnum):
+    """
+    Operation the signed URLs should permit (READ or WRITE).
+    """
+
     READ = "READ"
     WRITE = "WRITE"
     _UNKNOWN = "__GETSIGNEDURLSREQUESTOPERATION_UNKNOWN__"

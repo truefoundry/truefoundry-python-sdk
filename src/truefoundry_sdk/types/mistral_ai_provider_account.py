@@ -17,7 +17,7 @@ class MistralAiProviderAccount(UniversalBaseModel):
     Mistral AI Provider Account
     """
 
-    type: typing.Optional[typing.Literal["provider-account/mistral-ai"]] = pydantic.Field(default=None)
+    type: typing.Literal["provider-account/mistral-ai"] = pydantic.Field(default="provider-account/mistral-ai")
     """
     +value=provider-account/mistral-ai
     """

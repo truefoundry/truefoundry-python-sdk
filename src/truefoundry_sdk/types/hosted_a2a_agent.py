@@ -11,7 +11,7 @@ class HostedA2AAgent(UniversalBaseModel):
     Hosted A2A Agent
     """
 
-    type: typing.Optional[typing.Literal["hosted-a2a-agent"]] = pydantic.Field(default=None)
+    type: typing.Literal["hosted-a2a-agent"] = pydantic.Field(default="hosted-a2a-agent")
     """
     Type of agent source
     """

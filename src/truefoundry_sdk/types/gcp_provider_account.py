@@ -16,7 +16,7 @@ class GcpProviderAccount(UniversalBaseModel):
     GCP
     """
 
-    type: typing.Optional[typing.Literal["provider-account/gcp"]] = pydantic.Field(default=None)
+    type: typing.Literal["provider-account/gcp"] = pydantic.Field(default="provider-account/gcp")
     """
     +value=provider-account/gcp
     """

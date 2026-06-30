@@ -13,7 +13,7 @@ class OpenAiModel(UniversalBaseModel):
     OpenAI Model
     """
 
-    type: typing.Optional[typing.Literal["integration/model/openai"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/model/openai"] = pydantic.Field(default="integration/model/openai")
     """
     +value=integration/model/openai
     """

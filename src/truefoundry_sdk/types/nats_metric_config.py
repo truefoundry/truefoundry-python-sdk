@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class NatsMetricConfig(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["nats"]] = pydantic.Field(default=None)
+    type: typing.Literal["nats"] = pydantic.Field(default="nats")
     """
     +value=nats
     """

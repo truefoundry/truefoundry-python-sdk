@@ -15,7 +15,7 @@ class Service(BaseService):
     Describes the configuration for the service
     """
 
-    type: typing.Optional[typing.Literal["service"]] = pydantic.Field(default=None)
+    type: typing.Literal["service"] = pydantic.Field(default="service")
     """
     +value=service
     """

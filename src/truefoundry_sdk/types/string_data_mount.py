@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class StringDataMount(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["string"]] = pydantic.Field(default=None)
+    type: typing.Literal["string"] = pydantic.Field(default="string")
     """
     +value=string
     """

@@ -14,7 +14,7 @@ class TruefoundryBackedIdentity(UniversalBaseModel):
     Identity backed by a TrueFoundry issued token
     """
 
-    type: typing.Optional[typing.Literal["truefoundry-backed"]] = pydantic.Field(default=None)
+    type: typing.Literal["truefoundry-backed"] = pydantic.Field(default="truefoundry-backed")
     """
     +value=truefoundry-backed
     """

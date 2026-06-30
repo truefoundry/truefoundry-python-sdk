@@ -8,7 +8,10 @@ from .multi_part_upload import MultiPartUpload
 
 
 class MultiPartUploadResponse(UniversalBaseModel):
-    data: MultiPartUpload
+    data: MultiPartUpload = pydantic.Field()
+    """
+    Details of the created multipart upload.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

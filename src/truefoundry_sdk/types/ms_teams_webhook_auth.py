@@ -11,7 +11,7 @@ class MsTeamsWebhookAuth(UniversalBaseModel):
     MS Teams Webhook Auth
     """
 
-    type: typing.Optional[typing.Literal["ms-teams-webhook"]] = pydantic.Field(default=None)
+    type: typing.Literal["ms-teams-webhook"] = pydantic.Field(default="ms-teams-webhook")
     """
     +value=auth/ms-teams-webhook
     """

@@ -11,7 +11,7 @@ class FastAiFramework(UniversalBaseModel):
     FastAI
     """
 
-    type: typing.Optional[typing.Literal["fastai"]] = pydantic.Field(default=None)
+    type: typing.Literal["fastai"] = pydantic.Field(default="fastai")
     """
     Type of the framework
     """

@@ -11,7 +11,7 @@ class SemanticCacheConfig(UniversalBaseModel):
     Semantic Cache Configuration
     """
 
-    type: typing.Optional[typing.Literal["semantic"]] = pydantic.Field(default=None)
+    type: typing.Literal["semantic"] = pydantic.Field(default="semantic")
     """
     Cache type
     """

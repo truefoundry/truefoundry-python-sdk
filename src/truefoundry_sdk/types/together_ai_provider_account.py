@@ -17,7 +17,7 @@ class TogetherAiProviderAccount(UniversalBaseModel):
     Together AI Provider Account
     """
 
-    type: typing.Optional[typing.Literal["provider-account/together-ai"]] = pydantic.Field(default=None)
+    type: typing.Literal["provider-account/together-ai"] = pydantic.Field(default="provider-account/together-ai")
     """
     +value=provider-account/together-ai
     """

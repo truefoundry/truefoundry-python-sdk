@@ -12,7 +12,9 @@ class AzureBlobStorage(UniversalBaseModel):
     Azure ABS
     """
 
-    type: typing.Optional[typing.Literal["integration/blob-storage/azure/blob"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/blob-storage/azure/blob"] = pydantic.Field(
+        default="integration/blob-storage/azure/blob"
+    )
     """
     +value=integration/blob-storage/azure/blob
     """

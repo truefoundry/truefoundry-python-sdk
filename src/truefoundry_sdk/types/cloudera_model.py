@@ -13,7 +13,7 @@ class ClouderaModel(UniversalBaseModel):
     Cloudera Model
     """
 
-    type: typing.Optional[typing.Literal["integration/model/cloudera"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/model/cloudera"] = pydantic.Field(default="integration/model/cloudera")
     """
     +value=integration/model/cloudera
     """

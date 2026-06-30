@@ -12,7 +12,7 @@ class SqsOutputConfig(UniversalBaseModel):
     Describes the configuration for the output SQS worker
     """
 
-    type: typing.Optional[typing.Literal["sqs"]] = pydantic.Field(default=None)
+    type: typing.Literal["sqs"] = pydantic.Field(default="sqs")
     """
     +value=sqs
     """

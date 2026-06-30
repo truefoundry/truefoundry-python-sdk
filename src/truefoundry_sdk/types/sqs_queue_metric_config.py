@@ -8,7 +8,7 @@ from .sqs_queue_metric_config_auth import SqsQueueMetricConfigAuth
 
 
 class SqsQueueMetricConfig(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["sqs"]] = pydantic.Field(default=None)
+    type: typing.Literal["sqs"] = pydantic.Field(default="sqs")
     """
     +value=sqs
     """

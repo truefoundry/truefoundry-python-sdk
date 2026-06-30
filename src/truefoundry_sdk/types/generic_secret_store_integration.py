@@ -12,7 +12,9 @@ class GenericSecretStoreIntegration(UniversalBaseModel):
     Generic Secret Store
     """
 
-    type: typing.Optional[typing.Literal["integration/secret-store/custom/generic"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/secret-store/custom/generic"] = pydantic.Field(
+        default="integration/secret-store/custom/generic"
+    )
     """
     +value=integration/secret-store/custom/generic
     """

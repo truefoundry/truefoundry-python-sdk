@@ -16,7 +16,7 @@ class AzureFoundryProviderAccount(UniversalBaseModel):
     Azure AI Foundry Provider Account
     """
 
-    type: typing.Optional[typing.Literal["provider-account/azure-foundry"]] = pydantic.Field(default=None)
+    type: typing.Literal["provider-account/azure-foundry"] = pydantic.Field(default="provider-account/azure-foundry")
     """
     +value=provider-account/azure-foundry
     """

@@ -13,7 +13,7 @@ class Canary(UniversalBaseModel):
     This can help with verifying the health of the new release without shifting complete traffic.
     """
 
-    type: typing.Optional[typing.Literal["canary"]] = pydantic.Field(default=None)
+    type: typing.Literal["canary"] = pydantic.Field(default="canary")
     """
     +value=canary
     """

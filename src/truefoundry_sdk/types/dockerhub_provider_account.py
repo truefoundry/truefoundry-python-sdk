@@ -16,7 +16,7 @@ class DockerhubProviderAccount(UniversalBaseModel):
     Dockerhub
     """
 
-    type: typing.Optional[typing.Literal["provider-account/dockerhub"]] = pydantic.Field(default=None)
+    type: typing.Literal["provider-account/dockerhub"] = pydantic.Field(default="provider-account/dockerhub")
     """
     +value=provider-account/dockerhub
     """

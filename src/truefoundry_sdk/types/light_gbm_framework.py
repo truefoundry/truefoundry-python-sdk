@@ -11,7 +11,7 @@ class LightGbmFramework(UniversalBaseModel):
     LightGBM
     """
 
-    type: typing.Optional[typing.Literal["lightgbm"]] = pydantic.Field(default=None)
+    type: typing.Literal["lightgbm"] = pydantic.Field(default="lightgbm")
     """
     Type of the framework
     """

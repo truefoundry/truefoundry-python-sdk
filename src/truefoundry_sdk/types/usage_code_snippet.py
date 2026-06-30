@@ -7,11 +7,30 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class UsageCodeSnippet(UniversalBaseModel):
-    display_name: str
-    language: str
-    libraries: typing.Optional[typing.List[str]] = None
-    code: str
-    icon: typing.Optional[str] = None
+    display_name: str = pydantic.Field()
+    """
+    Display name of the usage code snippet.
+    """
+
+    language: str = pydantic.Field()
+    """
+    Programming language of the usage code snippet.
+    """
+
+    libraries: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Libraries required to run the usage code snippet.
+    """
+
+    code: str = pydantic.Field()
+    """
+    Source code of the usage code snippet.
+    """
+
+    icon: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Icon representing the usage code snippet.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

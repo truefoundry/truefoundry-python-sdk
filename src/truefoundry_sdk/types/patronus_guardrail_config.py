@@ -26,7 +26,9 @@ class PatronusGuardrailConfig(UniversalBaseModel):
     Optional description for this Guardrail Config.
     """
 
-    type: typing.Optional[typing.Literal["integration/guardrail-config/patronus"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/guardrail-config/patronus"] = pydantic.Field(
+        default="integration/guardrail-config/patronus"
+    )
     """
     +uiType=Hidden
     +value=integration/guardrail-config/patronus

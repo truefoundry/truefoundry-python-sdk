@@ -12,7 +12,7 @@ class VertexKeyFileAuth(UniversalBaseModel):
     Service account key file
     """
 
-    type: typing.Optional[typing.Literal["key-file"]] = pydantic.Field(default=None)
+    type: typing.Literal["key-file"] = pydantic.Field(default="key-file")
     """
     +value=key-file
     """

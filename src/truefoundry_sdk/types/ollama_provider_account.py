@@ -17,7 +17,7 @@ class OllamaProviderAccount(UniversalBaseModel):
     Ollama Provider Account
     """
 
-    type: typing.Optional[typing.Literal["provider-account/ollama"]] = pydantic.Field(default=None)
+    type: typing.Literal["provider-account/ollama"] = pydantic.Field(default="provider-account/ollama")
     """
     +value=provider-account/ollama
     """

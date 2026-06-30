@@ -12,7 +12,7 @@ class McpServerWithFqn(UniversalBaseModel):
     MCP server with FQN
     """
 
-    type: typing.Optional[typing.Literal["mcp-server-fqn"]] = pydantic.Field(default=None)
+    type: typing.Literal["mcp-server-fqn"] = pydantic.Field(default="mcp-server-fqn")
     """
     The FQN of the MCP server
     """

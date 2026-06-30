@@ -11,7 +11,7 @@ class OpaBearerAuth(UniversalBaseModel):
     Authentication using a bearer token for OPA server
     """
 
-    type: typing.Optional[typing.Literal["bearer-auth"]] = pydantic.Field(default=None)
+    type: typing.Literal["bearer-auth"] = pydantic.Field(default="bearer-auth")
     """
     +value=bearer-auth
     """

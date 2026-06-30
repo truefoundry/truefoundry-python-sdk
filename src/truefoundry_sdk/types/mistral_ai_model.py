@@ -13,7 +13,7 @@ class MistralAiModel(UniversalBaseModel):
     Mistral AI Model
     """
 
-    type: typing.Optional[typing.Literal["integration/model/mistral-ai"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/model/mistral-ai"] = pydantic.Field(default="integration/model/mistral-ai")
     """
     +value=integration/model/mistral-ai
     """

@@ -11,7 +11,7 @@ class TaskPythonBuild(UniversalBaseModel):
     Describes the configuration for the python build for a task
     """
 
-    type: typing.Optional[typing.Literal["task-python-build"]] = pydantic.Field(default=None)
+    type: typing.Literal["task-python-build"] = pydantic.Field(default="task-python-build")
     """
     +uiType=Hidden
     +value=task-python-build

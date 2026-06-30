@@ -17,7 +17,7 @@ class AnthropicProviderAccount(UniversalBaseModel):
     Anthropic
     """
 
-    type: typing.Optional[typing.Literal["provider-account/anthropic"]] = pydantic.Field(default=None)
+    type: typing.Literal["provider-account/anthropic"] = pydantic.Field(default="provider-account/anthropic")
     """
     +value=provider-account/anthropic
     """

@@ -51,26 +51,37 @@ class RawArtifactVersionsClient:
             Number of items to skip
 
         tag : typing.Optional[str]
+            Tag to filter artifact versions by.
 
         fqn : typing.Optional[str]
+            Fully Qualified Name uniquely identifying the artifact version.
 
         artifact_id : typing.Optional[str]
+            Identifier of the artifact whose versions to list.
 
         ml_repo_id : typing.Optional[str]
+            Identifier of the ML Repo the artifact versions belong to.
 
         name : typing.Optional[str]
+            Name of the artifact version.
 
         version : typing.Optional[Object]
+            Version number of the artifact version, or "latest" to fetch the most recent one.
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Run IDs to filter artifact versions by.
 
         run_steps : typing.Optional[typing.Union[float, typing.Sequence[float]]]
+            Run steps to filter artifact versions by.
 
         include_internal_metadata : typing.Optional[bool]
+            Whether to include internal metadata in the response.
 
         include_model_versions : typing.Optional[bool]
+            Whether to include model versions in the response.
 
         artifact_types : typing.Optional[typing.Union[ArtifactType, typing.Sequence[ArtifactType]]]
+            Artifact types to filter artifact versions by.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -176,26 +187,37 @@ class AsyncRawArtifactVersionsClient:
             Number of items to skip
 
         tag : typing.Optional[str]
+            Tag to filter artifact versions by.
 
         fqn : typing.Optional[str]
+            Fully Qualified Name uniquely identifying the artifact version.
 
         artifact_id : typing.Optional[str]
+            Identifier of the artifact whose versions to list.
 
         ml_repo_id : typing.Optional[str]
+            Identifier of the ML Repo the artifact versions belong to.
 
         name : typing.Optional[str]
+            Name of the artifact version.
 
         version : typing.Optional[Object]
+            Version number of the artifact version, or "latest" to fetch the most recent one.
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Run IDs to filter artifact versions by.
 
         run_steps : typing.Optional[typing.Union[float, typing.Sequence[float]]]
+            Run steps to filter artifact versions by.
 
         include_internal_metadata : typing.Optional[bool]
+            Whether to include internal metadata in the response.
 
         include_model_versions : typing.Optional[bool]
+            Whether to include model versions in the response.
 
         artifact_types : typing.Optional[typing.Union[ArtifactType, typing.Sequence[ArtifactType]]]
+            Artifact types to filter artifact versions by.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

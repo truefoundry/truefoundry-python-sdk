@@ -11,7 +11,7 @@ class AktoTokenAuth(UniversalBaseModel):
     Authentication method using an Akto JWT token
     """
 
-    type: typing.Optional[typing.Literal["token"]] = pydantic.Field(default=None)
+    type: typing.Literal["token"] = pydantic.Field(default="token")
     """
     +value=token
     """

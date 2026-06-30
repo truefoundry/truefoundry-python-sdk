@@ -12,7 +12,7 @@ from .policy_manifest_operation import PolicyManifestOperation
 
 
 class PolicyManifest(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["policy"]] = pydantic.Field(default=None)
+    type: typing.Literal["policy"] = pydantic.Field(default="policy")
     """
     +value=policy
     """

@@ -17,7 +17,7 @@ class ElevenLabsProviderAccount(UniversalBaseModel):
     ElevenLabs Provider Account
     """
 
-    type: typing.Optional[typing.Literal["provider-account/elevenlabs"]] = pydantic.Field(default=None)
+    type: typing.Literal["provider-account/elevenlabs"] = pydantic.Field(default="provider-account/elevenlabs")
     """
     +value=provider-account/elevenlabs
     """

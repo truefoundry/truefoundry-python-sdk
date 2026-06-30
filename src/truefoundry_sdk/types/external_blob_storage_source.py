@@ -11,7 +11,7 @@ class ExternalBlobStorageSource(UniversalBaseModel):
     External Blob Storage Source
     """
 
-    type: typing.Optional[typing.Literal["external"]] = pydantic.Field(default=None)
+    type: typing.Literal["external"] = pydantic.Field(default="external")
     """
     Type of the source
     """

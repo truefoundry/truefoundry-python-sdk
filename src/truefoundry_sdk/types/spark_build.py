@@ -11,7 +11,7 @@ class SparkBuild(UniversalBaseModel):
     Describes that we are using python to build a container image with a specific python version and pip packages installed.
     """
 
-    type: typing.Optional[typing.Literal["tfy-spark-buildpack"]] = pydantic.Field(default=None)
+    type: typing.Literal["tfy-spark-buildpack"] = pydantic.Field(default="tfy-spark-buildpack")
     """
     +value=tfy-spark-buildpack
     """

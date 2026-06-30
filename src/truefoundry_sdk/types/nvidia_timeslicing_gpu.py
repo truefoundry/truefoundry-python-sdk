@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class NvidiaTimeslicingGpu(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["nvidia_timeslicing_gpu"]] = pydantic.Field(default=None)
+    type: typing.Literal["nvidia_timeslicing_gpu"] = pydantic.Field(default="nvidia_timeslicing_gpu")
     """
     +value=nvidia_timeslicing_gpu
     """

@@ -12,8 +12,8 @@ class SlackWebhookIntegration(UniversalBaseModel):
     Slack Webhook Integration
     """
 
-    type: typing.Optional[typing.Literal["integration/notification-channel/slack-webhook"]] = pydantic.Field(
-        default=None
+    type: typing.Literal["integration/notification-channel/slack-webhook"] = pydantic.Field(
+        default="integration/notification-channel/slack-webhook"
     )
     """
     +value=integration/notification-channel/slack-webhook

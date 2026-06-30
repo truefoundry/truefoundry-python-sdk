@@ -13,7 +13,7 @@ class DockerFileBuild(UniversalBaseModel):
     Describes that we are using a dockerfile to build our image
     """
 
-    type: typing.Optional[typing.Literal["dockerfile"]] = pydantic.Field(default=None)
+    type: typing.Literal["dockerfile"] = pydantic.Field(default="dockerfile")
     """
     +value=dockerfile
     """

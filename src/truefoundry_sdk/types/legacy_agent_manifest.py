@@ -13,7 +13,7 @@ from .sample_agent_input import SampleAgentInput
 
 
 class LegacyAgentManifest(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["agent"]] = pydantic.Field(default=None)
+    type: typing.Literal["agent"] = pydantic.Field(default="agent")
     """
     Type of the manifest
     """

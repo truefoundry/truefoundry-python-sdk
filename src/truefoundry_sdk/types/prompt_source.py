@@ -12,7 +12,7 @@ class PromptSource(UniversalBaseModel):
     Prompt
     """
 
-    type: typing.Optional[typing.Literal["prompt"]] = pydantic.Field(default=None)
+    type: typing.Literal["prompt"] = pydantic.Field(default="prompt")
     """
     Type of agent source
     """

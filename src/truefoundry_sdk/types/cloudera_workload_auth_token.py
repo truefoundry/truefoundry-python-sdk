@@ -11,7 +11,7 @@ class ClouderaWorkloadAuthToken(UniversalBaseModel):
     Authenticate using Cloudera CDP workload authentication (recommended). This method generates a secure workload token using your API access key and private key, allowing you to securely access CDP workloads and services.
     """
 
-    type: typing.Optional[typing.Literal["workload-auth-token"]] = pydantic.Field(default=None)
+    type: typing.Literal["workload-auth-token"] = pydantic.Field(default="workload-auth-token")
     """
     +value=workload-auth-token
     """

@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class VolumeMount(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["volume"]] = pydantic.Field(default=None)
+    type: typing.Literal["volume"] = pydantic.Field(default="volume")
     """
     +value=volume
     """

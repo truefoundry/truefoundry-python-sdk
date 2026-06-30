@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class CpuUtilizationMetric(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["cpu_utilization"]] = pydantic.Field(default=None)
+    type: typing.Literal["cpu_utilization"] = pydantic.Field(default="cpu_utilization")
     """
     +value=cpu_utilization
     """

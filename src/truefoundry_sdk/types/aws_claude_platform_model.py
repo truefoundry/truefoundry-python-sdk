@@ -23,7 +23,9 @@ class AwsClaudePlatformModel(UniversalBaseModel):
     The Anthropic model identifier (e.g., claude-3-5-sonnet-20241022, claude-3-opus-20240229, claude-3-haiku-20240307). This is the standard model name from Anthropic's API documentation.
     """
 
-    type: typing.Optional[typing.Literal["integration/model/aws-claude-platform"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/model/aws-claude-platform"] = pydantic.Field(
+        default="integration/model/aws-claude-platform"
+    )
     """
     +value=integration/model/aws-claude-platform
     +icon=claude

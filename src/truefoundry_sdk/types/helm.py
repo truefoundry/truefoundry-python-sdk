@@ -11,7 +11,7 @@ from .kustomize import Kustomize
 
 
 class Helm(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["helm"]] = pydantic.Field(default=None)
+    type: typing.Literal["helm"] = pydantic.Field(default="helm")
     """
     +value=helm
     """

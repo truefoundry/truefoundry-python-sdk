@@ -12,7 +12,7 @@ class BlueGreen(UniversalBaseModel):
     This minimizes the time that two versions are serving traffic at the same time.
     """
 
-    type: typing.Optional[typing.Literal["blue_green"]] = pydantic.Field(default=None)
+    type: typing.Literal["blue_green"] = pydantic.Field(default="blue_green")
     """
     +value=blue_green
     """

@@ -12,7 +12,7 @@ class ApplicationSet(UniversalBaseModel):
     Describes the configuration for the application set
     """
 
-    type: typing.Optional[typing.Literal["application-set"]] = pydantic.Field(default=None)
+    type: typing.Literal["application-set"] = pydantic.Field(default="application-set")
     """
     +value=application-set
     """

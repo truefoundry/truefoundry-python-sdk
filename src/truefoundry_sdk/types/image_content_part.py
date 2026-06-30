@@ -12,7 +12,7 @@ class ImageContentPart(UniversalBaseModel):
     Image content for the message
     """
 
-    type: typing.Optional[typing.Literal["image_url"]] = pydantic.Field(default=None)
+    type: typing.Literal["image_url"] = pydantic.Field(default="image_url")
     """
     Type of the content part
     """

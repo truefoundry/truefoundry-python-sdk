@@ -17,7 +17,7 @@ class PerplexityAiProviderAccount(UniversalBaseModel):
     Perplexity AI Provider Account
     """
 
-    type: typing.Optional[typing.Literal["provider-account/perplexity-ai"]] = pydantic.Field(default=None)
+    type: typing.Literal["provider-account/perplexity-ai"] = pydantic.Field(default="provider-account/perplexity-ai")
     """
     +value=provider-account/perplexity-ai
     """

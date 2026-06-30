@@ -11,7 +11,7 @@ class RemoteSpecSource(UniversalBaseModel):
     Fetch the OpenAPI specification from a remote HTTP/HTTPS endpoint.
     """
 
-    type: typing.Optional[typing.Literal["remote"]] = pydantic.Field(default=None)
+    type: typing.Literal["remote"] = pydantic.Field(default="remote")
     """
     +value=remote
     """

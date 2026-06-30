@@ -12,7 +12,7 @@ class NatsInputConfig(UniversalBaseModel):
     Describes the configuration for the input NATS worker
     """
 
-    type: typing.Optional[typing.Literal["nats"]] = pydantic.Field(default=None)
+    type: typing.Literal["nats"] = pydantic.Field(default="nats")
     """
     +value=nats
     """

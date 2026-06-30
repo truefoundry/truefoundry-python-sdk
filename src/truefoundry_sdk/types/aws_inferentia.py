@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class AwsInferentia(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["aws_inferentia"]] = pydantic.Field(default=None)
+    type: typing.Literal["aws_inferentia"] = pydantic.Field(default="aws_inferentia")
     """
     +value=aws_inferentia
     """

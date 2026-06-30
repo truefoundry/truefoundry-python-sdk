@@ -157,10 +157,13 @@ class DataDirectoriesClient:
         Parameters
         ----------
         id : str
+            Identifier of the artifact version to list files for.
 
         path : typing.Optional[str]
+            Path within the artifact version to list files under.
 
         limit : typing.Optional[float]
+            Maximum number of files to return.
 
         page_token : typing.Optional[str]
             Token to retrieve the next page of results
@@ -241,10 +244,13 @@ class DataDirectoriesClient:
         Parameters
         ----------
         id : str
+            Identifier of the artifact version to upload to.
 
         path : str
+            Path of the file relative to the artifact version storage root.
 
         num_parts : float
+            Number of parts the file will be split into for the multipart upload.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -287,10 +293,13 @@ class DataDirectoriesClient:
         Parameters
         ----------
         id : str
+            Identifier of the artifact version to generate signed URLs for.
 
         paths : typing.Sequence[str]
+            Paths of the files to generate signed URLs for.
 
         operation : GetSignedUrLsRequestOperation
+            Operation the signed URLs should permit (READ or WRITE).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -537,10 +546,13 @@ class AsyncDataDirectoriesClient:
         Parameters
         ----------
         id : str
+            Identifier of the artifact version to list files for.
 
         path : typing.Optional[str]
+            Path within the artifact version to list files under.
 
         limit : typing.Optional[float]
+            Maximum number of files to return.
 
         page_token : typing.Optional[str]
             Token to retrieve the next page of results
@@ -638,10 +650,13 @@ class AsyncDataDirectoriesClient:
         Parameters
         ----------
         id : str
+            Identifier of the artifact version to upload to.
 
         path : str
+            Path of the file relative to the artifact version storage root.
 
         num_parts : float
+            Number of parts the file will be split into for the multipart upload.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -692,10 +707,13 @@ class AsyncDataDirectoriesClient:
         Parameters
         ----------
         id : str
+            Identifier of the artifact version to generate signed URLs for.
 
         paths : typing.Sequence[str]
+            Paths of the files to generate signed URLs for.
 
         operation : GetSignedUrLsRequestOperation
+            Operation the signed URLs should permit (READ or WRITE).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

@@ -11,7 +11,7 @@ class TaskPySparkBuild(UniversalBaseModel):
     Describes the configuration for the PySpark build for a task
     """
 
-    type: typing.Optional[typing.Literal["task-pyspark-build"]] = pydantic.Field(default=None)
+    type: typing.Literal["task-pyspark-build"] = pydantic.Field(default="task-pyspark-build")
     """
     +uiType=Hidden
     +value=task-pyspark-build

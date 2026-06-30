@@ -13,7 +13,7 @@ class ArtifactManifest(BaseArtifactVersion):
     Log a new Artifact Version containing files and folders with metadata
     """
 
-    type: typing.Optional[typing.Literal["artifact-version"]] = pydantic.Field(default=None)
+    type: typing.Literal["artifact-version"] = pydantic.Field(default="artifact-version")
     """
     Artifact Version
     """

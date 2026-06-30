@@ -11,7 +11,7 @@ from .owned_by import OwnedBy
 
 
 class SecretGroupManifest(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["secret-group"]] = pydantic.Field(default=None)
+    type: typing.Literal["secret-group"] = pydantic.Field(default="secret-group")
     """
     +value=secret-group
     """

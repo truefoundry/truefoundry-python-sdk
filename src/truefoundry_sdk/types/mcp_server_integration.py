@@ -13,7 +13,7 @@ class McpServerIntegration(UniversalBaseModel):
     MCP Server
     """
 
-    type: typing.Optional[typing.Literal["integration/mcp-server/remote"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/mcp-server/remote"] = pydantic.Field(default="integration/mcp-server/remote")
     """
     +value=integration/mcp-server/remote
     """

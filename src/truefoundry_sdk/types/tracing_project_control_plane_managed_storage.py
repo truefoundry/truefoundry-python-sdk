@@ -11,7 +11,7 @@ class TracingProjectControlPlaneManagedStorage(UniversalBaseModel):
     Managed Storage in Control-Plane.
     """
 
-    type: typing.Optional[typing.Literal["controlplane-managed"]] = pydantic.Field(default=None)
+    type: typing.Literal["controlplane-managed"] = pydantic.Field(default="controlplane-managed")
     """
     Type of storage configuration
     """

@@ -18,7 +18,7 @@ class CartesiaProviderAccount(UniversalBaseModel):
     Cartesia Provider Account
     """
 
-    type: typing.Optional[typing.Literal["provider-account/cartesia"]] = pydantic.Field(default=None)
+    type: typing.Literal["provider-account/cartesia"] = pydantic.Field(default="provider-account/cartesia")
     """
     +value=provider-account/cartesia
     """

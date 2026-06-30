@@ -12,7 +12,9 @@ class JfrogArtifactsRegistry(UniversalBaseModel):
     Jfrog Artifacts Registry
     """
 
-    type: typing.Optional[typing.Literal["integration/docker-registry/jfrog"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/docker-registry/jfrog"] = pydantic.Field(
+        default="integration/docker-registry/jfrog"
+    )
     """
     +value=integration/docker-registry/jfrog
     """

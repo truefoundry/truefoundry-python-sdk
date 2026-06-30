@@ -13,7 +13,7 @@ class AgentSkillManifest(BaseArtifactVersion):
     Agent skill version.
     """
 
-    type: typing.Optional[typing.Literal["agent-skill"]] = pydantic.Field(default=None)
+    type: typing.Literal["agent-skill"] = pydantic.Field(default="agent-skill")
     """
     Type
     """

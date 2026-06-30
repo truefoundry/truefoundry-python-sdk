@@ -11,7 +11,7 @@ class LoggingModeAlways(UniversalBaseModel):
     Enable this mode to log request and response bodies for all incoming gateway requests, ignoring request headers. Use it for in-depth logging required for debugging, compliance, or auditing.
     """
 
-    type: typing.Optional[typing.Literal["always"]] = pydantic.Field(default=None)
+    type: typing.Literal["always"] = pydantic.Field(default="always")
     """
     +value=always
     """

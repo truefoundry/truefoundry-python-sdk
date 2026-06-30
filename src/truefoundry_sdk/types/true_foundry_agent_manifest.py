@@ -19,7 +19,7 @@ from .true_foundry_agent_variable import TrueFoundryAgentVariable
 
 
 class TrueFoundryAgentManifest(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["truefoundry-agent"]] = pydantic.Field(default=None)
+    type: typing.Literal["truefoundry-agent"] = pydantic.Field(default="truefoundry-agent")
     """
     Type of the manifest
     """

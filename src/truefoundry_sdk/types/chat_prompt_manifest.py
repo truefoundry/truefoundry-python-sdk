@@ -23,7 +23,7 @@ class ChatPromptManifest(BaseArtifactVersion):
     Fill in the information for opening a new chat prompt
     """
 
-    type: typing.Optional[typing.Literal["chat_prompt"]] = pydantic.Field(default=None)
+    type: typing.Literal["chat_prompt"] = pydantic.Field(default="chat_prompt")
     """
     Type of the prompt
     """

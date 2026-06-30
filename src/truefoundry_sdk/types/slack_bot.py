@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class SlackBot(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["slack-bot"]] = pydantic.Field(default=None)
+    type: typing.Literal["slack-bot"] = pydantic.Field(default="slack-bot")
     """
     +value=slack-bot
     """

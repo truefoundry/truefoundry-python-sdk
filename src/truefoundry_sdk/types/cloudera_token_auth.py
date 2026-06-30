@@ -11,7 +11,7 @@ class ClouderaTokenAuth(UniversalBaseModel):
     Authenticate using a pre-generated API token. Alternative to workload authentication, this method uses a directly provided API token for accessing Cloudera CDP services.
     """
 
-    type: typing.Optional[typing.Literal["token"]] = pydantic.Field(default=None)
+    type: typing.Literal["token"] = pydantic.Field(default="token")
     """
     +value=token
     """

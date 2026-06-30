@@ -38,6 +38,7 @@ class RawModelsClient:
         Parameters
         ----------
         id : str
+            Unique identifier of the model.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -91,6 +92,7 @@ class RawModelsClient:
         Parameters
         ----------
         id : str
+            Unique identifier of the model.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -159,14 +161,19 @@ class RawModelsClient:
             Number of items to skip
 
         fqn : typing.Optional[str]
+            Filter models by Fully Qualified Name.
 
         ml_repo_id : typing.Optional[str]
+            Filter models by ML Repo identifier.
 
         name : typing.Optional[str]
+            Filter models by name.
 
         run_id : typing.Optional[str]
+            Filter models by associated run identifier.
 
         include_empty_models : typing.Optional[bool]
+            Whether to include models that have no versions.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -289,6 +296,7 @@ class AsyncRawModelsClient:
         Parameters
         ----------
         id : str
+            Unique identifier of the model.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -342,6 +350,7 @@ class AsyncRawModelsClient:
         Parameters
         ----------
         id : str
+            Unique identifier of the model.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -410,14 +419,19 @@ class AsyncRawModelsClient:
             Number of items to skip
 
         fqn : typing.Optional[str]
+            Filter models by Fully Qualified Name.
 
         ml_repo_id : typing.Optional[str]
+            Filter models by ML Repo identifier.
 
         name : typing.Optional[str]
+            Filter models by name.
 
         run_id : typing.Optional[str]
+            Filter models by associated run identifier.
 
         include_empty_models : typing.Optional[bool]
+            Whether to include models that have no versions.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

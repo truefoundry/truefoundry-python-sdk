@@ -35,6 +35,7 @@ client = TrueFoundry(
 
 client.apply(
     manifest=MlRepoManifest(
+        type="ml-repo",
         name="name",
         storage_integration_fqn="storage_integration_fqn",
         collaborators=[
@@ -124,6 +125,7 @@ client = TrueFoundry(
 
 client.delete(
     manifest=MlRepoManifest(
+        type="ml-repo",
         name="name",
         storage_integration_fqn="storage_integration_fqn",
         collaborators=[
@@ -1178,6 +1180,7 @@ client = TrueFoundry(
 
 client.teams.create_or_update(
     manifest=TeamManifest(
+        type="team",
         name="name",
         members=[
             "members"
@@ -2354,6 +2357,7 @@ client = TrueFoundry(
 client.virtual_accounts.create_or_update(
     manifest=VirtualAccountManifest(
         name="name",
+        type="virtual-account",
         permissions=[
             Permissions(
                 resource_fqn="resource_fqn",
@@ -2985,6 +2989,7 @@ client = TrueFoundry(
 
 client.clusters.create_or_update(
     manifest=ClusterManifest(
+        type="cluster",
         name="name",
         cluster_type=ClusterManifestClusterType.AWS_EKS,
         environment_names=[
@@ -4999,6 +5004,7 @@ client = TrueFoundry(
 
 client.workspaces.create_or_update(
     manifest=WorkspaceManifest(
+        type="workspace",
         cluster_fqn="cluster_fqn",
         name="name",
     ),
@@ -5407,6 +5413,7 @@ client = TrueFoundry(
 
 client.environments.create_or_update(
     manifest=EnvironmentManifest(
+        type="environment",
         name="name",
         color=EnvironmentColor(),
         is_production=True,
@@ -6098,6 +6105,7 @@ client = TrueFoundry(
 
 client.secret_groups.create_or_update(
     manifest=SecretGroupManifest(
+        type="secret-group",
         name="name",
         integration_fqn="integration_fqn",
         collaborators=[
@@ -6671,7 +6679,7 @@ client.prompts.get(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — Unique identifier of the prompt.
     
 </dd>
 </dl>
@@ -6743,7 +6751,7 @@ client.prompts.delete(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — Unique identifier of the prompt.
     
 </dd>
 </dl>
@@ -6836,7 +6844,7 @@ client.prompts.list(
 <dl>
 <dd>
 
-**fqn:** `typing.Optional[str]` 
+**fqn:** `typing.Optional[str]` — Filter prompts by Fully Qualified Name.
     
 </dd>
 </dl>
@@ -6844,7 +6852,7 @@ client.prompts.list(
 <dl>
 <dd>
 
-**ml_repo_id:** `typing.Optional[str]` 
+**ml_repo_id:** `typing.Optional[str]` — Filter prompts by the identifier of the ML Repo they belong to.
     
 </dd>
 </dl>
@@ -6852,7 +6860,7 @@ client.prompts.list(
 <dl>
 <dd>
 
-**name:** `typing.Optional[str]` 
+**name:** `typing.Optional[str]` — Filter prompts by name.
     
 </dd>
 </dl>
@@ -6860,7 +6868,7 @@ client.prompts.list(
 <dl>
 <dd>
 
-**include_empty_prompts:** `typing.Optional[bool]` 
+**include_empty_prompts:** `typing.Optional[bool]` — Whether to include prompts that have no versions in the results.
     
 </dd>
 </dl>
@@ -6919,6 +6927,7 @@ client.prompts.create_or_update(
         metadata={
             "key": "value"
         },
+        type="chat_prompt",
         messages=[
             SystemMessage(
                 role="system",
@@ -7037,7 +7046,7 @@ client.prompt_versions.list(
 <dl>
 <dd>
 
-**tag:** `typing.Optional[str]` 
+**tag:** `typing.Optional[str]` — Filter prompt versions by tag.
     
 </dd>
 </dl>
@@ -7045,7 +7054,7 @@ client.prompt_versions.list(
 <dl>
 <dd>
 
-**fqn:** `typing.Optional[str]` 
+**fqn:** `typing.Optional[str]` — Filter prompt versions by Fully Qualified Name.
     
 </dd>
 </dl>
@@ -7053,7 +7062,7 @@ client.prompt_versions.list(
 <dl>
 <dd>
 
-**prompt_id:** `typing.Optional[str]` 
+**prompt_id:** `typing.Optional[str]` — Filter prompt versions by the identifier of the prompt they belong to.
     
 </dd>
 </dl>
@@ -7061,7 +7070,7 @@ client.prompt_versions.list(
 <dl>
 <dd>
 
-**ml_repo_id:** `typing.Optional[str]` 
+**ml_repo_id:** `typing.Optional[str]` — Filter prompt versions by the identifier of the ML Repo they belong to.
     
 </dd>
 </dl>
@@ -7069,7 +7078,7 @@ client.prompt_versions.list(
 <dl>
 <dd>
 
-**name:** `typing.Optional[str]` 
+**name:** `typing.Optional[str]` — Filter prompt versions by name.
     
 </dd>
 </dl>
@@ -7152,7 +7161,7 @@ client.prompt_versions.apply_tags(
 <dl>
 <dd>
 
-**prompt_version_id:** `str` 
+**prompt_version_id:** `str` — Identifier of the prompt version to apply tags to.
     
 </dd>
 </dl>
@@ -7160,7 +7169,7 @@ client.prompt_versions.apply_tags(
 <dl>
 <dd>
 
-**tags:** `typing.List[str]` 
+**tags:** `typing.List[str]` — Tags to apply to the prompt version.
     
 </dd>
 </dl>
@@ -7168,7 +7177,7 @@ client.prompt_versions.apply_tags(
 <dl>
 <dd>
 
-**force:** `typing.Optional[bool]` 
+**force:** `typing.Optional[bool]` — Whether to forcibly reassign tags already in use by other prompt versions.
     
 </dd>
 </dl>
@@ -7559,7 +7568,7 @@ client.artifacts.list(
 <dl>
 <dd>
 
-**ml_repo_id:** `typing.Optional[str]` 
+**ml_repo_id:** `typing.Optional[str]` — Identifier of the ML Repo to filter artifacts by.
     
 </dd>
 </dl>
@@ -7567,7 +7576,7 @@ client.artifacts.list(
 <dl>
 <dd>
 
-**name:** `typing.Optional[str]` 
+**name:** `typing.Optional[str]` — Name of the artifact to filter by.
     
 </dd>
 </dl>
@@ -7575,7 +7584,7 @@ client.artifacts.list(
 <dl>
 <dd>
 
-**run_id:** `typing.Optional[str]` 
+**run_id:** `typing.Optional[str]` — Identifier of the run to filter artifacts by.
     
 </dd>
 </dl>
@@ -7583,7 +7592,7 @@ client.artifacts.list(
 <dl>
 <dd>
 
-**include_empty_artifacts:** `typing.Optional[bool]` 
+**include_empty_artifacts:** `typing.Optional[bool]` — Whether to include artifacts that have no versions.
     
 </dd>
 </dl>
@@ -7642,7 +7651,10 @@ client.artifacts.create_or_update(
         metadata={
             "key": "value"
         },
-        source=TrueFoundryManagedSource(),
+        type="artifact-version",
+        source=TrueFoundryManagedSource(
+            type="truefoundry",
+        ),
         step=1,
     ),
 )
@@ -7763,7 +7775,7 @@ client.artifact_versions.list(
 <dl>
 <dd>
 
-**tag:** `typing.Optional[str]` 
+**tag:** `typing.Optional[str]` — Tag to filter artifact versions by.
     
 </dd>
 </dl>
@@ -7771,7 +7783,7 @@ client.artifact_versions.list(
 <dl>
 <dd>
 
-**fqn:** `typing.Optional[str]` 
+**fqn:** `typing.Optional[str]` — Fully Qualified Name uniquely identifying the artifact version.
     
 </dd>
 </dl>
@@ -7779,7 +7791,7 @@ client.artifact_versions.list(
 <dl>
 <dd>
 
-**artifact_id:** `typing.Optional[str]` 
+**artifact_id:** `typing.Optional[str]` — Identifier of the artifact whose versions to list.
     
 </dd>
 </dl>
@@ -7787,7 +7799,7 @@ client.artifact_versions.list(
 <dl>
 <dd>
 
-**ml_repo_id:** `typing.Optional[str]` 
+**ml_repo_id:** `typing.Optional[str]` — Identifier of the ML Repo the artifact versions belong to.
     
 </dd>
 </dl>
@@ -7795,7 +7807,7 @@ client.artifact_versions.list(
 <dl>
 <dd>
 
-**name:** `typing.Optional[str]` 
+**name:** `typing.Optional[str]` — Name of the artifact version.
     
 </dd>
 </dl>
@@ -7803,7 +7815,7 @@ client.artifact_versions.list(
 <dl>
 <dd>
 
-**version:** `typing.Optional[Object]` 
+**version:** `typing.Optional[Object]` — Version number of the artifact version, or "latest" to fetch the most recent one.
     
 </dd>
 </dl>
@@ -7811,7 +7823,7 @@ client.artifact_versions.list(
 <dl>
 <dd>
 
-**run_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` 
+**run_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Run IDs to filter artifact versions by.
     
 </dd>
 </dl>
@@ -7819,7 +7831,7 @@ client.artifact_versions.list(
 <dl>
 <dd>
 
-**run_steps:** `typing.Optional[typing.Union[float, typing.Sequence[float]]]` 
+**run_steps:** `typing.Optional[typing.Union[float, typing.Sequence[float]]]` — Run steps to filter artifact versions by.
     
 </dd>
 </dl>
@@ -7827,7 +7839,7 @@ client.artifact_versions.list(
 <dl>
 <dd>
 
-**include_internal_metadata:** `typing.Optional[bool]` 
+**include_internal_metadata:** `typing.Optional[bool]` — Whether to include internal metadata in the response.
     
 </dd>
 </dl>
@@ -8199,7 +8211,10 @@ client.artifact_versions.stage(
         metadata={
             "key": "value"
         },
-        source=TrueFoundryManagedSource(),
+        type="artifact-version",
+        source=TrueFoundryManagedSource(
+            type="truefoundry",
+        ),
         step=1,
     ),
 )
@@ -8290,7 +8305,7 @@ client.artifact_versions.mark_stage_failure(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — Identifier of the staged artifact version to mark as failed.
     
 </dd>
 </dl>
@@ -8736,6 +8751,7 @@ client = TrueFoundry(
 
 client.ml_repos.create_or_update(
     manifest=MlRepoManifest(
+        type="ml-repo",
         name="name",
         storage_integration_fqn="storage_integration_fqn",
         collaborators=[
@@ -8934,12 +8950,15 @@ client = TrueFoundry(
 
 client.data_directories.create_or_update(
     manifest=DataDirectoryManifest(
+        type="data-dir",
         name="name",
         ml_repo="ml_repo",
         metadata={
             "key": "value"
         },
-        source=TrueFoundryManagedSource(),
+        source=TrueFoundryManagedSource(
+            type="truefoundry",
+        ),
     ),
 )
 
@@ -10824,7 +10843,7 @@ client.models.get(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — Unique identifier of the model.
     
 </dd>
 </dl>
@@ -10896,7 +10915,7 @@ client.models.delete(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — Unique identifier of the model.
     
 </dd>
 </dl>
@@ -10990,7 +11009,7 @@ client.models.list(
 <dl>
 <dd>
 
-**fqn:** `typing.Optional[str]` 
+**fqn:** `typing.Optional[str]` — Filter models by Fully Qualified Name.
     
 </dd>
 </dl>
@@ -10998,7 +11017,7 @@ client.models.list(
 <dl>
 <dd>
 
-**ml_repo_id:** `typing.Optional[str]` 
+**ml_repo_id:** `typing.Optional[str]` — Filter models by ML Repo identifier.
     
 </dd>
 </dl>
@@ -11006,7 +11025,7 @@ client.models.list(
 <dl>
 <dd>
 
-**name:** `typing.Optional[str]` 
+**name:** `typing.Optional[str]` — Filter models by name.
     
 </dd>
 </dl>
@@ -11014,7 +11033,7 @@ client.models.list(
 <dl>
 <dd>
 
-**run_id:** `typing.Optional[str]` 
+**run_id:** `typing.Optional[str]` — Filter models by associated run identifier.
     
 </dd>
 </dl>
@@ -11022,7 +11041,7 @@ client.models.list(
 <dl>
 <dd>
 
-**include_empty_models:** `typing.Optional[bool]` 
+**include_empty_models:** `typing.Optional[bool]` — Whether to include models that have no versions.
     
 </dd>
 </dl>
@@ -11081,7 +11100,10 @@ client.models.create_or_update(
         metadata={
             "key": "value"
         },
-        source=TrueFoundryManagedSource(),
+        type="model-version",
+        source=TrueFoundryManagedSource(
+            type="truefoundry",
+        ),
         step=1,
     ),
 )
@@ -11202,7 +11224,7 @@ client.model_versions.list(
 <dl>
 <dd>
 
-**tag:** `typing.Optional[str]` 
+**tag:** `typing.Optional[str]` — Filter model versions by tag.
     
 </dd>
 </dl>
@@ -11210,7 +11232,7 @@ client.model_versions.list(
 <dl>
 <dd>
 
-**fqn:** `typing.Optional[str]` 
+**fqn:** `typing.Optional[str]` — Filter model versions by Fully Qualified Name.
     
 </dd>
 </dl>
@@ -11218,7 +11240,7 @@ client.model_versions.list(
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[str]` 
+**model_id:** `typing.Optional[str]` — Filter model versions by model identifier.
     
 </dd>
 </dl>
@@ -11226,7 +11248,7 @@ client.model_versions.list(
 <dl>
 <dd>
 
-**ml_repo_id:** `typing.Optional[str]` 
+**ml_repo_id:** `typing.Optional[str]` — Filter model versions by ML Repo identifier.
     
 </dd>
 </dl>
@@ -11234,7 +11256,7 @@ client.model_versions.list(
 <dl>
 <dd>
 
-**name:** `typing.Optional[str]` 
+**name:** `typing.Optional[str]` — Filter model versions by name.
     
 </dd>
 </dl>
@@ -11250,7 +11272,7 @@ client.model_versions.list(
 <dl>
 <dd>
 
-**run_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` 
+**run_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter model versions by associated run identifiers.
     
 </dd>
 </dl>
@@ -11258,7 +11280,7 @@ client.model_versions.list(
 <dl>
 <dd>
 
-**run_steps:** `typing.Optional[typing.Union[float, typing.Sequence[float]]]` 
+**run_steps:** `typing.Optional[typing.Union[float, typing.Sequence[float]]]` — Filter model versions by associated run steps.
     
 </dd>
 </dl>
@@ -11266,7 +11288,7 @@ client.model_versions.list(
 <dl>
 <dd>
 
-**include_internal_metadata:** `typing.Optional[bool]` 
+**include_internal_metadata:** `typing.Optional[bool]` — Whether to include internal metadata in the response.
     
 </dd>
 </dl>
@@ -11341,7 +11363,7 @@ client.model_versions.apply_tags(
 <dl>
 <dd>
 
-**model_version_id:** `str` 
+**model_version_id:** `str` — Identifier of the model version to apply tags to.
     
 </dd>
 </dl>
@@ -11349,7 +11371,7 @@ client.model_versions.apply_tags(
 <dl>
 <dd>
 
-**tags:** `typing.List[str]` 
+**tags:** `typing.List[str]` — Tags to apply to the model version.
     
 </dd>
 </dl>
@@ -11357,7 +11379,7 @@ client.model_versions.apply_tags(
 <dl>
 <dd>
 
-**force:** `typing.Optional[bool]` 
+**force:** `typing.Optional[bool]` — Whether to overwrite existing tags that are already in use.
     
 </dd>
 </dl>
@@ -11793,7 +11815,7 @@ client.agent_skills.get(
 <dl>
 <dd>
 
-**agent_skill_id:** `str` 
+**agent_skill_id:** `str` — Identifier of the agent skill.
     
 </dd>
 </dl>
@@ -11865,7 +11887,7 @@ client.agent_skills.delete(
 <dl>
 <dd>
 
-**agent_skill_id:** `str` 
+**agent_skill_id:** `str` — Identifier of the agent skill.
     
 </dd>
 </dl>
@@ -11958,7 +11980,7 @@ client.agent_skills.list(
 <dl>
 <dd>
 
-**fqn:** `typing.Optional[str]` 
+**fqn:** `typing.Optional[str]` — Fully Qualified Name uniquely identifying the agent skill.
     
 </dd>
 </dl>
@@ -11966,7 +11988,7 @@ client.agent_skills.list(
 <dl>
 <dd>
 
-**ml_repo_id:** `typing.Optional[str]` 
+**ml_repo_id:** `typing.Optional[str]` — Identifier of the ML Repo to filter agent skills by.
     
 </dd>
 </dl>
@@ -11974,7 +11996,7 @@ client.agent_skills.list(
 <dl>
 <dd>
 
-**name:** `typing.Optional[str]` 
+**name:** `typing.Optional[str]` — Name of the agent skill to filter by.
     
 </dd>
 </dl>
@@ -11982,7 +12004,7 @@ client.agent_skills.list(
 <dl>
 <dd>
 
-**include_empty_agent_skills:** `typing.Optional[bool]` 
+**include_empty_agent_skills:** `typing.Optional[bool]` — Whether to include agent skills that have no versions.
     
 </dd>
 </dl>
@@ -12043,7 +12065,9 @@ client.agent_skills.create_or_update(
             "key": "value"
         },
         ml_repo="ml_repo",
+        type="agent-skill",
         source=AgentSkillSourceInline(
+            type="inline",
             skill_md="skill_md",
         ),
     ),
@@ -12157,7 +12181,7 @@ client.agent_skill_versions.list(
 <dl>
 <dd>
 
-**fqn:** `typing.Optional[str]` 
+**fqn:** `typing.Optional[str]` — Fully Qualified Name uniquely identifying the agent skill version.
     
 </dd>
 </dl>
@@ -12165,7 +12189,7 @@ client.agent_skill_versions.list(
 <dl>
 <dd>
 
-**agent_skill_id:** `typing.Optional[str]` 
+**agent_skill_id:** `typing.Optional[str]` — Identifier of the agent skill whose versions are being listed.
     
 </dd>
 </dl>
@@ -12173,7 +12197,7 @@ client.agent_skill_versions.list(
 <dl>
 <dd>
 
-**ml_repo_id:** `typing.Optional[str]` 
+**ml_repo_id:** `typing.Optional[str]` — Identifier of the ML Repo to filter agent skill versions by.
     
 </dd>
 </dl>
@@ -12181,7 +12205,7 @@ client.agent_skill_versions.list(
 <dl>
 <dd>
 
-**name:** `typing.Optional[str]` 
+**name:** `typing.Optional[str]` — Name of the agent skill to filter versions by.
     
 </dd>
 </dl>
@@ -13451,7 +13475,7 @@ client.internal.artifact_versions.list(
 <dl>
 <dd>
 
-**tag:** `typing.Optional[str]` 
+**tag:** `typing.Optional[str]` — Tag to filter artifact versions by.
     
 </dd>
 </dl>
@@ -13459,7 +13483,7 @@ client.internal.artifact_versions.list(
 <dl>
 <dd>
 
-**fqn:** `typing.Optional[str]` 
+**fqn:** `typing.Optional[str]` — Fully Qualified Name uniquely identifying the artifact version.
     
 </dd>
 </dl>
@@ -13467,7 +13491,7 @@ client.internal.artifact_versions.list(
 <dl>
 <dd>
 
-**artifact_id:** `typing.Optional[str]` 
+**artifact_id:** `typing.Optional[str]` — Identifier of the artifact whose versions to list.
     
 </dd>
 </dl>
@@ -13475,7 +13499,7 @@ client.internal.artifact_versions.list(
 <dl>
 <dd>
 
-**ml_repo_id:** `typing.Optional[str]` 
+**ml_repo_id:** `typing.Optional[str]` — Identifier of the ML Repo the artifact versions belong to.
     
 </dd>
 </dl>
@@ -13483,7 +13507,7 @@ client.internal.artifact_versions.list(
 <dl>
 <dd>
 
-**name:** `typing.Optional[str]` 
+**name:** `typing.Optional[str]` — Name of the artifact version.
     
 </dd>
 </dl>
@@ -13491,7 +13515,7 @@ client.internal.artifact_versions.list(
 <dl>
 <dd>
 
-**version:** `typing.Optional[Object]` 
+**version:** `typing.Optional[Object]` — Version number of the artifact version, or "latest" to fetch the most recent one.
     
 </dd>
 </dl>
@@ -13499,7 +13523,7 @@ client.internal.artifact_versions.list(
 <dl>
 <dd>
 
-**run_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` 
+**run_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Run IDs to filter artifact versions by.
     
 </dd>
 </dl>
@@ -13507,7 +13531,7 @@ client.internal.artifact_versions.list(
 <dl>
 <dd>
 
-**run_steps:** `typing.Optional[typing.Union[float, typing.Sequence[float]]]` 
+**run_steps:** `typing.Optional[typing.Union[float, typing.Sequence[float]]]` — Run steps to filter artifact versions by.
     
 </dd>
 </dl>
@@ -13515,7 +13539,7 @@ client.internal.artifact_versions.list(
 <dl>
 <dd>
 
-**include_internal_metadata:** `typing.Optional[bool]` 
+**include_internal_metadata:** `typing.Optional[bool]` — Whether to include internal metadata in the response.
     
 </dd>
 </dl>
@@ -13523,7 +13547,7 @@ client.internal.artifact_versions.list(
 <dl>
 <dd>
 
-**include_model_versions:** `typing.Optional[bool]` 
+**include_model_versions:** `typing.Optional[bool]` — Whether to include model versions in the response.
     
 </dd>
 </dl>
@@ -13531,7 +13555,7 @@ client.internal.artifact_versions.list(
 <dl>
 <dd>
 
-**artifact_types:** `typing.Optional[typing.Union[ArtifactType, typing.Sequence[ArtifactType]]]` 
+**artifact_types:** `typing.Optional[typing.Union[ArtifactType, typing.Sequence[ArtifactType]]]` — Artifact types to filter artifact versions by.
     
 </dd>
 </dl>

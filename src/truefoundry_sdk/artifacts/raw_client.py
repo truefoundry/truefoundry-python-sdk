@@ -164,12 +164,16 @@ class RawArtifactsClient:
             Human-readable Fully Qualified Name of the artifact.
 
         ml_repo_id : typing.Optional[str]
+            Identifier of the ML Repo to filter artifacts by.
 
         name : typing.Optional[str]
+            Name of the artifact to filter by.
 
         run_id : typing.Optional[str]
+            Identifier of the run to filter artifacts by.
 
         include_empty_artifacts : typing.Optional[bool]
+            Whether to include artifacts that have no versions.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -418,12 +422,16 @@ class AsyncRawArtifactsClient:
             Human-readable Fully Qualified Name of the artifact.
 
         ml_repo_id : typing.Optional[str]
+            Identifier of the ML Repo to filter artifacts by.
 
         name : typing.Optional[str]
+            Name of the artifact to filter by.
 
         run_id : typing.Optional[str]
+            Identifier of the run to filter artifacts by.
 
         include_empty_artifacts : typing.Optional[bool]
+            Whether to include artifacts that have no versions.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

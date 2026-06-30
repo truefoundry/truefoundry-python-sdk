@@ -15,7 +15,7 @@ class ModelManifest(BaseArtifactVersion):
     Log a new Model Version containing model files and folders with metadata
     """
 
-    type: typing.Optional[typing.Literal["model-version"]] = pydantic.Field(default=None)
+    type: typing.Literal["model-version"] = pydantic.Field(default="model-version")
     """
     Model Version
     """

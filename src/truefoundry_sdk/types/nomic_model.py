@@ -13,7 +13,7 @@ class NomicModel(UniversalBaseModel):
     Nomic Model
     """
 
-    type: typing.Optional[typing.Literal["integration/model/nomic"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/model/nomic"] = pydantic.Field(default="integration/model/nomic")
     """
     +value=integration/model/nomic
     """

@@ -11,7 +11,7 @@ class CommonToolsSettings(UniversalBaseModel):
     Describes the configuration for Common Tools MCP Server in AI Gateway
     """
 
-    type: typing.Optional[typing.Literal["settings/common-tools"]] = pydantic.Field(default=None)
+    type: typing.Literal["settings/common-tools"] = pydantic.Field(default="settings/common-tools")
     """
     +value=settings/common-tools
     """

@@ -28,7 +28,9 @@ class CustomGuardrailConfig(UniversalBaseModel):
     Optional description for this Guardrail Config.
     """
 
-    type: typing.Optional[typing.Literal["integration/guardrail-config/custom"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/guardrail-config/custom"] = pydantic.Field(
+        default="integration/guardrail-config/custom"
+    )
     """
     +uiType=Hidden
     +value=integration/guardrail-config/custom

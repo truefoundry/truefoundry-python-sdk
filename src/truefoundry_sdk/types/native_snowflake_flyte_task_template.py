@@ -11,7 +11,7 @@ from .snowflake_sql import SnowflakeSql
 
 class NativeSnowflakeFlyteTaskTemplate(UniversalBaseModel):
     id: FlyteTaskId
-    type: typing.Optional[typing.Literal["snowflake"]] = None
+    type: typing.Literal["snowflake"] = "snowflake"
     config: SnowflakeConfig
     sql: SnowflakeSql
 

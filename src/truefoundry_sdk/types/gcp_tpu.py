@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class GcpTpu(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["gcp_tpu"]] = pydantic.Field(default=None)
+    type: typing.Literal["gcp_tpu"] = pydantic.Field(default="gcp_tpu")
     """
     +value=gcp_tpu
     """

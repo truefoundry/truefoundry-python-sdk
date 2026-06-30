@@ -12,7 +12,7 @@ class GitlabIntegration(UniversalBaseModel):
     Gitlab
     """
 
-    type: typing.Optional[typing.Literal["integration/vcs/gitlab"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/vcs/gitlab"] = pydantic.Field(default="integration/vcs/gitlab")
     """
     +value=integration/vcs/gitlab
     """

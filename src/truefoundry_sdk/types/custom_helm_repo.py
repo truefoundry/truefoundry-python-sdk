@@ -12,7 +12,7 @@ class CustomHelmRepo(UniversalBaseModel):
     Custom Helm Repo
     """
 
-    type: typing.Optional[typing.Literal["integration/helm-repo/custom"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/helm-repo/custom"] = pydantic.Field(default="integration/helm-repo/custom")
     """
     +value=integration/helm-repo/custom
     """

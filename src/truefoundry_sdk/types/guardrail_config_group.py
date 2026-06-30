@@ -16,7 +16,9 @@ class GuardrailConfigGroup(UniversalBaseModel):
     Guardrail Configs Group
     """
 
-    type: typing.Optional[typing.Literal["provider-account/guardrail-config-group"]] = pydantic.Field(default=None)
+    type: typing.Literal["provider-account/guardrail-config-group"] = pydantic.Field(
+        default="provider-account/guardrail-config-group"
+    )
     """
     +uiType=Hidden
     +value=provider-account/guardrail-config-group

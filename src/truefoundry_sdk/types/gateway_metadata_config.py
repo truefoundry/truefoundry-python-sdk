@@ -17,7 +17,7 @@ class GatewayMetadataConfig(UniversalBaseModel):
     Name of the metadata configuration
     """
 
-    type: typing.Optional[typing.Literal["gateway-metadata-config"]] = pydantic.Field(default=None)
+    type: typing.Literal["gateway-metadata-config"] = pydantic.Field(default="gateway-metadata-config")
     """
     +value=gateway-metadata-config
     +sort=2

@@ -12,7 +12,7 @@ class BudgetV2AppliesToPerModel(UniversalBaseModel):
     Track a separate budget for each model.
     """
 
-    type: typing.Optional[typing.Literal["per-model"]] = pydantic.Field(default=None)
+    type: typing.Literal["per-model"] = pydantic.Field(default="per-model")
     """
     Applies To Type
     """

@@ -9,7 +9,7 @@ from .volume_config import VolumeConfig
 
 
 class Volume(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["volume"]] = pydantic.Field(default=None)
+    type: typing.Literal["volume"] = pydantic.Field(default="volume")
     """
     +value=volume
     """

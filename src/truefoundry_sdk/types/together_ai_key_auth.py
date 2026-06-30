@@ -11,7 +11,7 @@ class TogetherAiKeyAuth(UniversalBaseModel):
     Together AI API Key Auth
     """
 
-    type: typing.Optional[typing.Literal["api-key"]] = pydantic.Field(default=None)
+    type: typing.Literal["api-key"] = pydantic.Field(default="api-key")
     """
     +value=api-key
     """

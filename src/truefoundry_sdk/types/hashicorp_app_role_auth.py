@@ -11,7 +11,7 @@ class HashicorpAppRoleAuth(UniversalBaseModel):
     Role ID and secret ID from your AppRole. Token policies must allow KV v2 data and metadata on this mount for your root path, secret paths, and the connection check.
     """
 
-    type: typing.Optional[typing.Literal["approle"]] = pydantic.Field(default=None)
+    type: typing.Literal["approle"] = pydantic.Field(default="approle")
     """
     +value=approle
     """

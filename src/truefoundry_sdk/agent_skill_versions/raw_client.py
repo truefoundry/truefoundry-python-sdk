@@ -49,12 +49,16 @@ class RawAgentSkillVersionsClient:
             Number of items to skip
 
         fqn : typing.Optional[str]
+            Fully Qualified Name uniquely identifying the agent skill version.
 
         agent_skill_id : typing.Optional[str]
+            Identifier of the agent skill whose versions are being listed.
 
         ml_repo_id : typing.Optional[str]
+            Identifier of the ML Repo to filter agent skill versions by.
 
         name : typing.Optional[str]
+            Name of the agent skill to filter versions by.
 
         version : typing.Optional[Object]
             Version number (positive integer) or `latest`
@@ -253,12 +257,16 @@ class AsyncRawAgentSkillVersionsClient:
             Number of items to skip
 
         fqn : typing.Optional[str]
+            Fully Qualified Name uniquely identifying the agent skill version.
 
         agent_skill_id : typing.Optional[str]
+            Identifier of the agent skill whose versions are being listed.
 
         ml_repo_id : typing.Optional[str]
+            Identifier of the ML Repo to filter agent skill versions by.
 
         name : typing.Optional[str]
+            Name of the agent skill to filter versions by.
 
         version : typing.Optional[Object]
             Version number (positive integer) or `latest`

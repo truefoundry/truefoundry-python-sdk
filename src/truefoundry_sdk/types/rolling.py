@@ -17,7 +17,7 @@ class Rolling(UniversalBaseModel):
     [here](https://spot.io/resources/kubernetes-autoscaling/5-kubernetes-deployment-strategies-roll-out-like-the-pros/)
     """
 
-    type: typing.Optional[typing.Literal["rolling_update"]] = pydantic.Field(default=None)
+    type: typing.Literal["rolling_update"] = pydantic.Field(default="rolling_update")
     """
     +value=rolling_update
     """

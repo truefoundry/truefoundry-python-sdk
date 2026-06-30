@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class SnowflakeTaskConfig(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["snowflake-task-config"]] = pydantic.Field(default=None)
+    type: typing.Literal["snowflake-task-config"] = pydantic.Field(default="snowflake-task-config")
     """
     +value=snowflake-task-config
     """

@@ -11,7 +11,7 @@ class LoggingModeHeaderControlled(UniversalBaseModel):
     Enable this mode to allow per-request control of request body logging via HTTP headers. Individual requests can opt in or opt out of body logging using specific headers.
     """
 
-    type: typing.Optional[typing.Literal["header_controlled"]] = pydantic.Field(default=None)
+    type: typing.Literal["header_controlled"] = pydantic.Field(default="header_controlled")
     """
     +value=header_controlled
     """

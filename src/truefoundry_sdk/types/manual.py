@@ -11,7 +11,7 @@ class Manual(UniversalBaseModel):
     Trigger the job manually. [Docs](https://docs.truefoundry.com/docs/deploy-a-cron-job)
     """
 
-    type: typing.Optional[typing.Literal["manual"]] = pydantic.Field(default=None)
+    type: typing.Literal["manual"] = pydantic.Field(default="manual")
     """
     +value=manual
     """

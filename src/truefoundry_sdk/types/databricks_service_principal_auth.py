@@ -11,7 +11,7 @@ class DatabricksServicePrincipalAuth(UniversalBaseModel):
     You can authenticate using Databricks service principal. To generate OAuth secret and Client ID, go to Databricks workspace -> Workspace Settings -> Identity and Access -> Service Principals -> Secrets.
     """
 
-    type: typing.Optional[typing.Literal["service-principal"]] = pydantic.Field(default=None)
+    type: typing.Literal["service-principal"] = pydantic.Field(default="service-principal")
     """
     +value=service-principal
     """

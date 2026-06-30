@@ -12,7 +12,7 @@ class McpServerWithUrl(UniversalBaseModel):
     MCP server with URL
     """
 
-    type: typing.Optional[typing.Literal["mcp-server-url"]] = pydantic.Field(default=None)
+    type: typing.Literal["mcp-server-url"] = pydantic.Field(default="mcp-server-url")
     """
     The URL of the MCP server
     """

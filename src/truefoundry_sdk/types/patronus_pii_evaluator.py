@@ -8,7 +8,7 @@ from .patronus_pii_criteria import PatronusPiiCriteria
 
 
 class PatronusPiiEvaluator(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["pii"]] = pydantic.Field(default=None)
+    type: typing.Literal["pii"] = pydantic.Field(default="pii")
     """
     The type of the evaluator to use for the Patronus Guardrail.
     """

@@ -13,7 +13,7 @@ class WeightBasedLoadBalancing(UniversalBaseModel):
     Weight-based Load Balancing
     """
 
-    type: typing.Optional[typing.Literal["weight-based-routing"]] = pydantic.Field(default=None)
+    type: typing.Literal["weight-based-routing"] = pydantic.Field(default="weight-based-routing")
     """
     Routing Type
     """

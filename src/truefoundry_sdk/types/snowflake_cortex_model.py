@@ -9,7 +9,9 @@ from .model_type import ModelType
 
 
 class SnowflakeCortexModel(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["integration/model/snowflake-cortex"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/model/snowflake-cortex"] = pydantic.Field(
+        default="integration/model/snowflake-cortex"
+    )
     """
     +value=integration/model/snowflake-cortex
     """

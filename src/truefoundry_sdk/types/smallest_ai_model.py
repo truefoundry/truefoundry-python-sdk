@@ -13,7 +13,7 @@ class SmallestAiModel(UniversalBaseModel):
     Smallest AI Model
     """
 
-    type: typing.Optional[typing.Literal["integration/model/smallest-ai"]] = pydantic.Field(default=None)
+    type: typing.Literal["integration/model/smallest-ai"] = pydantic.Field(default="integration/model/smallest-ai")
     """
     +value=integration/model/smallest-ai
     """

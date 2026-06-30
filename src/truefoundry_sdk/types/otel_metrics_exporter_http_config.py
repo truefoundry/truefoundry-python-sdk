@@ -12,7 +12,7 @@ class OtelMetricsExporterHttpConfig(OtelExporterHttpConfigBase):
     HTTP Configuration
     """
 
-    type: typing.Optional[typing.Literal["http"]] = pydantic.Field(default=None)
+    type: typing.Literal["http"] = pydantic.Field(default="http")
     """
     Configuration type
     """

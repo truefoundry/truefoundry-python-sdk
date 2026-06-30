@@ -11,7 +11,7 @@ class ExactMatchCacheConfig(UniversalBaseModel):
     Exact Match Cache Configuration
     """
 
-    type: typing.Optional[typing.Literal["exact-match"]] = pydantic.Field(default=None)
+    type: typing.Literal["exact-match"] = pydantic.Field(default="exact-match")
     """
     Cache type
     """

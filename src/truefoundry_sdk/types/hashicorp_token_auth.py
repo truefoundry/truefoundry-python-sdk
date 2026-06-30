@@ -11,7 +11,7 @@ class HashicorpTokenAuth(UniversalBaseModel):
     Vault Token Auth
     """
 
-    type: typing.Optional[typing.Literal["token"]] = pydantic.Field(default=None)
+    type: typing.Literal["token"] = pydantic.Field(default="token")
     """
     +value=token
     """

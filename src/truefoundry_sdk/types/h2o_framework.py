@@ -11,7 +11,7 @@ class H2OFramework(UniversalBaseModel):
     H2O
     """
 
-    type: typing.Optional[typing.Literal["h2o"]] = pydantic.Field(default=None)
+    type: typing.Literal["h2o"] = pydantic.Field(default="h2o")
     """
     Type of the framework
     """

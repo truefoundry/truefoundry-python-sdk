@@ -14,7 +14,7 @@ class SelfHostedAgent(BaseRemoteAgent):
     Self Hosted
     """
 
-    type: typing.Optional[typing.Literal["remote-agent/self-hosted"]] = pydantic.Field(default=None)
+    type: typing.Literal["remote-agent/self-hosted"] = pydantic.Field(default="remote-agent/self-hosted")
     """
     Type of the manifest
     """

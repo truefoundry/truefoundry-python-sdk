@@ -7,8 +7,15 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class SignedUrl(UniversalBaseModel):
-    path: str
-    signed_url: str
+    path: str = pydantic.Field()
+    """
+    Path of the file relative to the artifact version storage root.
+    """
+
+    signed_url: str = pydantic.Field()
+    """
+    Signed URL used to access or upload the file.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

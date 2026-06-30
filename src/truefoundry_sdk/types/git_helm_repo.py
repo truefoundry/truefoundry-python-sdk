@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class GitHelmRepo(UniversalBaseModel):
-    type: typing.Optional[typing.Literal["git-helm-repo"]] = pydantic.Field(default=None)
+    type: typing.Literal["git-helm-repo"] = pydantic.Field(default="git-helm-repo")
     """
     +value=git-helm-repo
     """
