@@ -99,7 +99,7 @@ class RawTeamsClient:
                     ),
                 )
                 _items = _parsed_response.data
-                _has_next = True
+                _has_next = len(_items or []) > 0
                 _get_next = lambda: self.list(
                     limit=limit,
                     offset=offset + len(_items or []),
@@ -256,7 +256,7 @@ class RawTeamsClient:
                     ),
                 )
                 _items = _parsed_response.data
-                _has_next = True
+                _has_next = len(_items or []) > 0
                 _get_next = lambda: self.list_members(
                     id,
                     limit=limit,
@@ -352,7 +352,7 @@ class RawTeamsClient:
                     ),
                 )
                 _items = _parsed_response.data
-                _has_next = True
+                _has_next = len(_items or []) > 0
                 _get_next = lambda: self.list_managers(
                     id,
                     limit=limit,
@@ -641,7 +641,7 @@ class AsyncRawTeamsClient:
                     ),
                 )
                 _items = _parsed_response.data
-                _has_next = True
+                _has_next = len(_items or []) > 0
 
                 async def _get_next():
                     return await self.list(
@@ -801,7 +801,7 @@ class AsyncRawTeamsClient:
                     ),
                 )
                 _items = _parsed_response.data
-                _has_next = True
+                _has_next = len(_items or []) > 0
 
                 async def _get_next():
                     return await self.list_members(
@@ -900,7 +900,7 @@ class AsyncRawTeamsClient:
                     ),
                 )
                 _items = _parsed_response.data
-                _has_next = True
+                _has_next = len(_items or []) > 0
 
                 async def _get_next():
                     return await self.list_managers(

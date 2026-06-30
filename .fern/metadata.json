@@ -1,7 +1,7 @@
 {
-  "cliVersion": "5.7.8",
+  "cliVersion": "5.59.0",
   "generatorName": "fernapi/fern-python-sdk",
-  "generatorVersion": "5.10.0",
+  "generatorVersion": "5.15.0",
   "generatorConfig": {
     "package_name": "truefoundry_sdk",
     "use_request_defaults": "all",
@@ -15,14 +15,14 @@
       "exported_class_name": "TrueFoundry",
       "exported_filename": "client.py"
     },
-    "pyproject_python_version": ">=3.8",
+    "pyproject_python_version": ">=3.9",
     "extra_dev_dependencies": {
       "ipython": ">=8.0.0,<10.0.0",
       "Jinja2": ">=3.1.6,<4.0.0",
       "numpydoc": ">=1.7.0,<2.0.0"
     }
   },
-  "originGitCommit": "5ccd9ba31988ea7136a61e260cd85d8e7101e24b",
+  "originGitCommit": "56095f8263925603c28e33ffa2155fad61d61a50",
   "originGitCommitIsDirty": false,
   "invokedBy": "ci",
   "requestedVersion": "0.0.0",
