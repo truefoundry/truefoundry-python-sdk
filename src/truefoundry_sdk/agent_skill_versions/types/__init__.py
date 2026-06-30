@@ -6,8 +6,10 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import PromptVersionsListRequestVersion
-_dynamic_imports: typing.Dict[str, str] = {"PromptVersionsListRequestVersion": ".types"}
+    from .agent_skill_versions_list_request_version import AgentSkillVersionsListRequestVersion
+_dynamic_imports: typing.Dict[str, str] = {
+    "AgentSkillVersionsListRequestVersion": ".agent_skill_versions_list_request_version"
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +33,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["PromptVersionsListRequestVersion"]
+__all__ = ["AgentSkillVersionsListRequestVersion"]

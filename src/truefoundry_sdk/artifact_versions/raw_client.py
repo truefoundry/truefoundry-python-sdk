@@ -22,8 +22,8 @@ from ..types.get_signed_ur_ls_response import GetSignedUrLsResponse
 from ..types.list_artifact_versions_response import ListArtifactVersionsResponse
 from ..types.list_files_response import ListFilesResponse
 from ..types.multi_part_upload_response import MultiPartUploadResponse
-from ..types.object import Object
 from ..types.stage_artifact_response import StageArtifactResponse
+from .types.artifact_versions_list_request_version import ArtifactVersionsListRequestVersion
 from .types.stage_artifact_request_manifest import StageArtifactRequestManifest
 from pydantic import ValidationError
 
@@ -45,7 +45,7 @@ class RawArtifactVersionsClient:
         artifact_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[Object] = None,
+        version: typing.Optional[ArtifactVersionsListRequestVersion] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
         include_internal_metadata: typing.Optional[bool] = False,
@@ -77,7 +77,7 @@ class RawArtifactVersionsClient:
         name : typing.Optional[str]
             Name of the artifact version.
 
-        version : typing.Optional[Object]
+        version : typing.Optional[ArtifactVersionsListRequestVersion]
             Version number of the artifact version, or "latest" to fetch the most recent one.
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
@@ -110,9 +110,7 @@ class RawArtifactVersionsClient:
                 "artifact_id": artifact_id,
                 "ml_repo_id": ml_repo_id,
                 "name": name,
-                "version": convert_and_respect_annotation_metadata(
-                    object_=version, annotation=Object, direction="write"
-                ),
+                "version": version,
                 "run_ids": run_ids,
                 "run_steps": run_steps,
                 "include_internal_metadata": include_internal_metadata,
@@ -644,7 +642,7 @@ class AsyncRawArtifactVersionsClient:
         artifact_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[Object] = None,
+        version: typing.Optional[ArtifactVersionsListRequestVersion] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
         include_internal_metadata: typing.Optional[bool] = False,
@@ -676,7 +674,7 @@ class AsyncRawArtifactVersionsClient:
         name : typing.Optional[str]
             Name of the artifact version.
 
-        version : typing.Optional[Object]
+        version : typing.Optional[ArtifactVersionsListRequestVersion]
             Version number of the artifact version, or "latest" to fetch the most recent one.
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
@@ -709,9 +707,7 @@ class AsyncRawArtifactVersionsClient:
                 "artifact_id": artifact_id,
                 "ml_repo_id": ml_repo_id,
                 "name": name,
-                "version": convert_and_respect_annotation_metadata(
-                    object_=version, annotation=Object, direction="write"
-                ),
+                "version": version,
                 "run_ids": run_ids,
                 "run_steps": run_steps,
                 "include_internal_metadata": include_internal_metadata,

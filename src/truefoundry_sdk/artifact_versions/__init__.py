@@ -6,8 +6,11 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import StageArtifactRequestManifest
-_dynamic_imports: typing.Dict[str, str] = {"StageArtifactRequestManifest": ".types"}
+    from .types import ArtifactVersionsListRequestVersion, StageArtifactRequestManifest
+_dynamic_imports: typing.Dict[str, str] = {
+    "ArtifactVersionsListRequestVersion": ".types",
+    "StageArtifactRequestManifest": ".types",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +34,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["StageArtifactRequestManifest"]
+__all__ = ["ArtifactVersionsListRequestVersion", "StageArtifactRequestManifest"]

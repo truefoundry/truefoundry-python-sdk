@@ -6,8 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import PromptVersionsListRequestVersion
-_dynamic_imports: typing.Dict[str, str] = {"PromptVersionsListRequestVersion": ".types"}
+    from .prompt_versions_list_request_version import PromptVersionsListRequestVersion
+_dynamic_imports: typing.Dict[str, str] = {"PromptVersionsListRequestVersion": ".prompt_versions_list_request_version"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:

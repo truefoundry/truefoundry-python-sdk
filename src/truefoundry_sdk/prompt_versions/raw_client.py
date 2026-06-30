@@ -11,13 +11,12 @@ from ..core.pagination import AsyncPager, SyncPager
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..core.serialization import convert_and_respect_annotation_metadata
 from ..errors.not_found_error import NotFoundError
 from ..types.empty_response import EmptyResponse
 from ..types.get_prompt_version_response import GetPromptVersionResponse
 from ..types.list_prompt_versions_response import ListPromptVersionsResponse
-from ..types.object import Object
 from ..types.prompt_version import PromptVersion
+from .types.prompt_versions_list_request_version import PromptVersionsListRequestVersion
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -38,7 +37,7 @@ class RawPromptVersionsClient:
         prompt_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[Object] = None,
+        version: typing.Optional[PromptVersionsListRequestVersion] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[PromptVersion, ListPromptVersionsResponse]:
         """
@@ -67,7 +66,7 @@ class RawPromptVersionsClient:
         name : typing.Optional[str]
             Filter prompt versions by name.
 
-        version : typing.Optional[Object]
+        version : typing.Optional[PromptVersionsListRequestVersion]
             Version number (positive integer) or `latest`
 
         request_options : typing.Optional[RequestOptions]
@@ -91,9 +90,7 @@ class RawPromptVersionsClient:
                 "prompt_id": prompt_id,
                 "ml_repo_id": ml_repo_id,
                 "name": name,
-                "version": convert_and_respect_annotation_metadata(
-                    object_=version, annotation=Object, direction="write"
-                ),
+                "version": version,
             },
             request_options=request_options,
         )
@@ -315,7 +312,7 @@ class AsyncRawPromptVersionsClient:
         prompt_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[Object] = None,
+        version: typing.Optional[PromptVersionsListRequestVersion] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[PromptVersion, ListPromptVersionsResponse]:
         """
@@ -344,7 +341,7 @@ class AsyncRawPromptVersionsClient:
         name : typing.Optional[str]
             Filter prompt versions by name.
 
-        version : typing.Optional[Object]
+        version : typing.Optional[PromptVersionsListRequestVersion]
             Version number (positive integer) or `latest`
 
         request_options : typing.Optional[RequestOptions]
@@ -368,9 +365,7 @@ class AsyncRawPromptVersionsClient:
                 "prompt_id": prompt_id,
                 "ml_repo_id": ml_repo_id,
                 "name": name,
-                "version": convert_and_respect_annotation_metadata(
-                    object_=version, annotation=Object, direction="write"
-                ),
+                "version": version,
             },
             request_options=request_options,
         )

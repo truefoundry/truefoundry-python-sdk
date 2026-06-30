@@ -14,9 +14,9 @@ from ..types.get_signed_ur_ls_response import GetSignedUrLsResponse
 from ..types.list_artifact_versions_response import ListArtifactVersionsResponse
 from ..types.list_files_response import ListFilesResponse
 from ..types.multi_part_upload_response import MultiPartUploadResponse
-from ..types.object import Object
 from ..types.stage_artifact_response import StageArtifactResponse
 from .raw_client import AsyncRawArtifactVersionsClient, RawArtifactVersionsClient
+from .types.artifact_versions_list_request_version import ArtifactVersionsListRequestVersion
 from .types.stage_artifact_request_manifest import StageArtifactRequestManifest
 
 # this is used as the default value for optional parameters
@@ -48,7 +48,7 @@ class ArtifactVersionsClient:
         artifact_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[Object] = None,
+        version: typing.Optional[ArtifactVersionsListRequestVersion] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
         include_internal_metadata: typing.Optional[bool] = False,
@@ -80,7 +80,7 @@ class ArtifactVersionsClient:
         name : typing.Optional[str]
             Name of the artifact version.
 
-        version : typing.Optional[Object]
+        version : typing.Optional[ArtifactVersionsListRequestVersion]
             Version number of the artifact version, or "latest" to fetch the most recent one.
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
@@ -103,6 +103,7 @@ class ArtifactVersionsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
+        from truefoundry_sdk.artifact_versions import ArtifactVersionsListRequestVersion
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -116,6 +117,7 @@ class ArtifactVersionsClient:
             artifact_id="artifact_id",
             ml_repo_id="ml_repo_id",
             name="name",
+            version=ArtifactVersionsListRequestVersion.LATEST,
             run_ids=["run_ids"],
             run_steps=[1.1],
             include_internal_metadata=True,
@@ -501,7 +503,7 @@ class AsyncArtifactVersionsClient:
         artifact_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[Object] = None,
+        version: typing.Optional[ArtifactVersionsListRequestVersion] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
         include_internal_metadata: typing.Optional[bool] = False,
@@ -533,7 +535,7 @@ class AsyncArtifactVersionsClient:
         name : typing.Optional[str]
             Name of the artifact version.
 
-        version : typing.Optional[Object]
+        version : typing.Optional[ArtifactVersionsListRequestVersion]
             Version number of the artifact version, or "latest" to fetch the most recent one.
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
@@ -558,6 +560,7 @@ class AsyncArtifactVersionsClient:
         import asyncio
 
         from truefoundry_sdk import AsyncTrueFoundry
+        from truefoundry_sdk.artifact_versions import ArtifactVersionsListRequestVersion
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -574,6 +577,7 @@ class AsyncArtifactVersionsClient:
                 artifact_id="artifact_id",
                 ml_repo_id="ml_repo_id",
                 name="name",
+                version=ArtifactVersionsListRequestVersion.LATEST,
                 run_ids=["run_ids"],
                 run_steps=[1.1],
                 include_internal_metadata=True,

@@ -11,13 +11,12 @@ from ..core.pagination import AsyncPager, SyncPager
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..core.serialization import convert_and_respect_annotation_metadata
 from ..errors.not_found_error import NotFoundError
 from ..types.agent_skill_version import AgentSkillVersion
 from ..types.empty_response import EmptyResponse
 from ..types.get_agent_skill_version_response import GetAgentSkillVersionResponse
 from ..types.list_agent_skill_versions_response import ListAgentSkillVersionsResponse
-from ..types.object import Object
+from .types.agent_skill_versions_list_request_version import AgentSkillVersionsListRequestVersion
 from pydantic import ValidationError
 
 
@@ -34,7 +33,7 @@ class RawAgentSkillVersionsClient:
         agent_skill_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[Object] = None,
+        version: typing.Optional[AgentSkillVersionsListRequestVersion] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]:
         """
@@ -60,7 +59,7 @@ class RawAgentSkillVersionsClient:
         name : typing.Optional[str]
             Name of the agent skill to filter versions by.
 
-        version : typing.Optional[Object]
+        version : typing.Optional[AgentSkillVersionsListRequestVersion]
             Version number (positive integer) or `latest`
 
         request_options : typing.Optional[RequestOptions]
@@ -83,9 +82,7 @@ class RawAgentSkillVersionsClient:
                 "agent_skill_id": agent_skill_id,
                 "ml_repo_id": ml_repo_id,
                 "name": name,
-                "version": convert_and_respect_annotation_metadata(
-                    object_=version, annotation=Object, direction="write"
-                ),
+                "version": version,
             },
             request_options=request_options,
         )
@@ -242,7 +239,7 @@ class AsyncRawAgentSkillVersionsClient:
         agent_skill_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[Object] = None,
+        version: typing.Optional[AgentSkillVersionsListRequestVersion] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]:
         """
@@ -268,7 +265,7 @@ class AsyncRawAgentSkillVersionsClient:
         name : typing.Optional[str]
             Name of the agent skill to filter versions by.
 
-        version : typing.Optional[Object]
+        version : typing.Optional[AgentSkillVersionsListRequestVersion]
             Version number (positive integer) or `latest`
 
         request_options : typing.Optional[RequestOptions]
@@ -291,9 +288,7 @@ class AsyncRawAgentSkillVersionsClient:
                 "agent_skill_id": agent_skill_id,
                 "ml_repo_id": ml_repo_id,
                 "name": name,
-                "version": convert_and_respect_annotation_metadata(
-                    object_=version, annotation=Object, direction="write"
-                ),
+                "version": version,
             },
             request_options=request_options,
         )

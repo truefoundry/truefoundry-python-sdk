@@ -9,8 +9,8 @@ from ..types.empty_response import EmptyResponse
 from ..types.get_model_version_response import GetModelVersionResponse
 from ..types.list_model_versions_response import ListModelVersionsResponse
 from ..types.model_version import ModelVersion
-from ..types.object import Object
 from .raw_client import AsyncRawModelVersionsClient, RawModelVersionsClient
+from .types.model_versions_list_request_version import ModelVersionsListRequestVersion
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -41,7 +41,7 @@ class ModelVersionsClient:
         model_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[Object] = None,
+        version: typing.Optional[ModelVersionsListRequestVersion] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
         include_internal_metadata: typing.Optional[bool] = False,
@@ -73,7 +73,7 @@ class ModelVersionsClient:
         name : typing.Optional[str]
             Filter model versions by name.
 
-        version : typing.Optional[Object]
+        version : typing.Optional[ModelVersionsListRequestVersion]
             Version number (positive integer) or `latest`
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
@@ -96,6 +96,7 @@ class ModelVersionsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
+        from truefoundry_sdk.model_versions import ModelVersionsListRequestVersion
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -109,6 +110,7 @@ class ModelVersionsClient:
             model_id="model_id",
             ml_repo_id="ml_repo_id",
             name="name",
+            version=ModelVersionsListRequestVersion.LATEST,
             run_ids=["run_ids"],
             run_steps=[1.1],
             include_internal_metadata=True,
@@ -272,7 +274,7 @@ class AsyncModelVersionsClient:
         model_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[Object] = None,
+        version: typing.Optional[ModelVersionsListRequestVersion] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
         include_internal_metadata: typing.Optional[bool] = False,
@@ -304,7 +306,7 @@ class AsyncModelVersionsClient:
         name : typing.Optional[str]
             Filter model versions by name.
 
-        version : typing.Optional[Object]
+        version : typing.Optional[ModelVersionsListRequestVersion]
             Version number (positive integer) or `latest`
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
@@ -329,6 +331,7 @@ class AsyncModelVersionsClient:
         import asyncio
 
         from truefoundry_sdk import AsyncTrueFoundry
+        from truefoundry_sdk.model_versions import ModelVersionsListRequestVersion
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -345,6 +348,7 @@ class AsyncModelVersionsClient:
                 model_id="model_id",
                 ml_repo_id="ml_repo_id",
                 name="name",
+                version=ModelVersionsListRequestVersion.LATEST,
                 run_ids=["run_ids"],
                 run_steps=[1.1],
                 include_internal_metadata=True,

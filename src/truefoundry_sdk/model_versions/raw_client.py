@@ -11,13 +11,12 @@ from ..core.pagination import AsyncPager, SyncPager
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..core.serialization import convert_and_respect_annotation_metadata
 from ..errors.not_found_error import NotFoundError
 from ..types.empty_response import EmptyResponse
 from ..types.get_model_version_response import GetModelVersionResponse
 from ..types.list_model_versions_response import ListModelVersionsResponse
 from ..types.model_version import ModelVersion
-from ..types.object import Object
+from .types.model_versions_list_request_version import ModelVersionsListRequestVersion
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -38,7 +37,7 @@ class RawModelVersionsClient:
         model_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[Object] = None,
+        version: typing.Optional[ModelVersionsListRequestVersion] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
         include_internal_metadata: typing.Optional[bool] = False,
@@ -70,7 +69,7 @@ class RawModelVersionsClient:
         name : typing.Optional[str]
             Filter model versions by name.
 
-        version : typing.Optional[Object]
+        version : typing.Optional[ModelVersionsListRequestVersion]
             Version number (positive integer) or `latest`
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
@@ -103,9 +102,7 @@ class RawModelVersionsClient:
                 "model_id": model_id,
                 "ml_repo_id": ml_repo_id,
                 "name": name,
-                "version": convert_and_respect_annotation_metadata(
-                    object_=version, annotation=Object, direction="write"
-                ),
+                "version": version,
                 "run_ids": run_ids,
                 "run_steps": run_steps,
                 "include_internal_metadata": include_internal_metadata,
@@ -333,7 +330,7 @@ class AsyncRawModelVersionsClient:
         model_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[Object] = None,
+        version: typing.Optional[ModelVersionsListRequestVersion] = None,
         run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         run_steps: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
         include_internal_metadata: typing.Optional[bool] = False,
@@ -365,7 +362,7 @@ class AsyncRawModelVersionsClient:
         name : typing.Optional[str]
             Filter model versions by name.
 
-        version : typing.Optional[Object]
+        version : typing.Optional[ModelVersionsListRequestVersion]
             Version number (positive integer) or `latest`
 
         run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
@@ -398,9 +395,7 @@ class AsyncRawModelVersionsClient:
                 "model_id": model_id,
                 "ml_repo_id": ml_repo_id,
                 "name": name,
-                "version": convert_and_respect_annotation_metadata(
-                    object_=version, annotation=Object, direction="write"
-                ),
+                "version": version,
                 "run_ids": run_ids,
                 "run_steps": run_steps,
                 "include_internal_metadata": include_internal_metadata,

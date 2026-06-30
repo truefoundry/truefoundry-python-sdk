@@ -9,8 +9,8 @@ from ..types.agent_skill_version import AgentSkillVersion
 from ..types.empty_response import EmptyResponse
 from ..types.get_agent_skill_version_response import GetAgentSkillVersionResponse
 from ..types.list_agent_skill_versions_response import ListAgentSkillVersionsResponse
-from ..types.object import Object
 from .raw_client import AsyncRawAgentSkillVersionsClient, RawAgentSkillVersionsClient
+from .types.agent_skill_versions_list_request_version import AgentSkillVersionsListRequestVersion
 
 
 class AgentSkillVersionsClient:
@@ -37,7 +37,7 @@ class AgentSkillVersionsClient:
         agent_skill_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[Object] = None,
+        version: typing.Optional[AgentSkillVersionsListRequestVersion] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]:
         """
@@ -63,7 +63,7 @@ class AgentSkillVersionsClient:
         name : typing.Optional[str]
             Name of the agent skill to filter versions by.
 
-        version : typing.Optional[Object]
+        version : typing.Optional[AgentSkillVersionsListRequestVersion]
             Version number (positive integer) or `latest`
 
         request_options : typing.Optional[RequestOptions]
@@ -77,6 +77,9 @@ class AgentSkillVersionsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
+        from truefoundry_sdk.agent_skill_versions import (
+            AgentSkillVersionsListRequestVersion,
+        )
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -89,6 +92,7 @@ class AgentSkillVersionsClient:
             agent_skill_id="agent_skill_id",
             ml_repo_id="ml_repo_id",
             name="name",
+            version=AgentSkillVersionsListRequestVersion.LATEST,
         )
         for item in response:
             yield item
@@ -200,7 +204,7 @@ class AsyncAgentSkillVersionsClient:
         agent_skill_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[Object] = None,
+        version: typing.Optional[AgentSkillVersionsListRequestVersion] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[AgentSkillVersion, ListAgentSkillVersionsResponse]:
         """
@@ -226,7 +230,7 @@ class AsyncAgentSkillVersionsClient:
         name : typing.Optional[str]
             Name of the agent skill to filter versions by.
 
-        version : typing.Optional[Object]
+        version : typing.Optional[AgentSkillVersionsListRequestVersion]
             Version number (positive integer) or `latest`
 
         request_options : typing.Optional[RequestOptions]
@@ -242,6 +246,9 @@ class AsyncAgentSkillVersionsClient:
         import asyncio
 
         from truefoundry_sdk import AsyncTrueFoundry
+        from truefoundry_sdk.agent_skill_versions import (
+            AgentSkillVersionsListRequestVersion,
+        )
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -257,6 +264,7 @@ class AsyncAgentSkillVersionsClient:
                 agent_skill_id="agent_skill_id",
                 ml_repo_id="ml_repo_id",
                 name="name",
+                version=AgentSkillVersionsListRequestVersion.LATEST,
             )
             async for item in response:
                 yield item

@@ -8,9 +8,9 @@ from ..core.request_options import RequestOptions
 from ..types.empty_response import EmptyResponse
 from ..types.get_prompt_version_response import GetPromptVersionResponse
 from ..types.list_prompt_versions_response import ListPromptVersionsResponse
-from ..types.object import Object
 from ..types.prompt_version import PromptVersion
 from .raw_client import AsyncRawPromptVersionsClient, RawPromptVersionsClient
+from .types.prompt_versions_list_request_version import PromptVersionsListRequestVersion
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -41,7 +41,7 @@ class PromptVersionsClient:
         prompt_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[Object] = None,
+        version: typing.Optional[PromptVersionsListRequestVersion] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[PromptVersion, ListPromptVersionsResponse]:
         """
@@ -70,7 +70,7 @@ class PromptVersionsClient:
         name : typing.Optional[str]
             Filter prompt versions by name.
 
-        version : typing.Optional[Object]
+        version : typing.Optional[PromptVersionsListRequestVersion]
             Version number (positive integer) or `latest`
 
         request_options : typing.Optional[RequestOptions]
@@ -84,6 +84,7 @@ class PromptVersionsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
+        from truefoundry_sdk.prompt_versions import PromptVersionsListRequestVersion
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -97,6 +98,7 @@ class PromptVersionsClient:
             prompt_id="prompt_id",
             ml_repo_id="ml_repo_id",
             name="name",
+            version=PromptVersionsListRequestVersion.LATEST,
         )
         for item in response:
             yield item
@@ -254,7 +256,7 @@ class AsyncPromptVersionsClient:
         prompt_id: typing.Optional[str] = None,
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
-        version: typing.Optional[Object] = None,
+        version: typing.Optional[PromptVersionsListRequestVersion] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[PromptVersion, ListPromptVersionsResponse]:
         """
@@ -283,7 +285,7 @@ class AsyncPromptVersionsClient:
         name : typing.Optional[str]
             Filter prompt versions by name.
 
-        version : typing.Optional[Object]
+        version : typing.Optional[PromptVersionsListRequestVersion]
             Version number (positive integer) or `latest`
 
         request_options : typing.Optional[RequestOptions]
@@ -299,6 +301,7 @@ class AsyncPromptVersionsClient:
         import asyncio
 
         from truefoundry_sdk import AsyncTrueFoundry
+        from truefoundry_sdk.prompt_versions import PromptVersionsListRequestVersion
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -315,6 +318,7 @@ class AsyncPromptVersionsClient:
                 prompt_id="prompt_id",
                 ml_repo_id="ml_repo_id",
                 name="name",
+                version=PromptVersionsListRequestVersion.LATEST,
             )
             async for item in response:
                 yield item

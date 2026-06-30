@@ -7000,6 +7000,7 @@ List prompt versions with optional filtering by tag, FQN, prompt ID, ML Repo, na
 
 ```python
 from truefoundry_sdk import TrueFoundry
+from truefoundry_sdk.prompt_versions import PromptVersionsListRequestVersion
 
 client = TrueFoundry(
     api_key="<token>",
@@ -7014,6 +7015,7 @@ client.prompt_versions.list(
     prompt_id="prompt_id",
     ml_repo_id="ml_repo_id",
     name="name",
+    version=PromptVersionsListRequestVersion.LATEST,
 )
 
 ```
@@ -7086,7 +7088,7 @@ client.prompt_versions.list(
 <dl>
 <dd>
 
-**version:** `typing.Optional[Object]` — Version number (positive integer) or `latest`
+**version:** `typing.Optional[PromptVersionsListRequestVersion]` — Version number (positive integer) or `latest`
     
 </dd>
 </dl>
@@ -7722,6 +7724,7 @@ List artifact versions with optional filtering by tag, FQN, artifact ID, ML Repo
 
 ```python
 from truefoundry_sdk import TrueFoundry
+from truefoundry_sdk.artifact_versions import ArtifactVersionsListRequestVersion
 
 client = TrueFoundry(
     api_key="<token>",
@@ -7736,6 +7739,7 @@ client.artifact_versions.list(
     artifact_id="artifact_id",
     ml_repo_id="ml_repo_id",
     name="name",
+    version=ArtifactVersionsListRequestVersion.LATEST,
     run_ids=[
         "run_ids"
     ],
@@ -7815,7 +7819,7 @@ client.artifact_versions.list(
 <dl>
 <dd>
 
-**version:** `typing.Optional[Object]` — Version number of the artifact version, or "latest" to fetch the most recent one.
+**version:** `typing.Optional[ArtifactVersionsListRequestVersion]` — Version number of the artifact version, or "latest" to fetch the most recent one.
     
 </dd>
 </dl>
@@ -11171,6 +11175,7 @@ List model versions with optional filtering by tag, FQN, model ID, ML Repo, name
 
 ```python
 from truefoundry_sdk import TrueFoundry
+from truefoundry_sdk.model_versions import ModelVersionsListRequestVersion
 
 client = TrueFoundry(
     api_key="<token>",
@@ -11185,6 +11190,7 @@ client.model_versions.list(
     model_id="model_id",
     ml_repo_id="ml_repo_id",
     name="name",
+    version=ModelVersionsListRequestVersion.LATEST,
     run_ids=[
         "run_ids"
     ],
@@ -11264,7 +11270,7 @@ client.model_versions.list(
 <dl>
 <dd>
 
-**version:** `typing.Optional[Object]` — Version number (positive integer) or `latest`
+**version:** `typing.Optional[ModelVersionsListRequestVersion]` — Version number (positive integer) or `latest`
     
 </dd>
 </dl>
@@ -12136,6 +12142,7 @@ List agent skill versions with optional filtering by FQN, agent skill ID, ML Rep
 
 ```python
 from truefoundry_sdk import TrueFoundry
+from truefoundry_sdk.agent_skill_versions import AgentSkillVersionsListRequestVersion
 
 client = TrueFoundry(
     api_key="<token>",
@@ -12149,6 +12156,7 @@ client.agent_skill_versions.list(
     agent_skill_id="agent_skill_id",
     ml_repo_id="ml_repo_id",
     name="name",
+    version=AgentSkillVersionsListRequestVersion.LATEST,
 )
 
 ```
@@ -12213,7 +12221,7 @@ client.agent_skill_versions.list(
 <dl>
 <dd>
 
-**version:** `typing.Optional[Object]` — Version number (positive integer) or `latest`
+**version:** `typing.Optional[AgentSkillVersionsListRequestVersion]` — Version number (positive integer) or `latest`
     
 </dd>
 </dl>
@@ -13418,6 +13426,7 @@ List artifact versions with internal metadata, optionally including model versio
 
 ```python
 from truefoundry_sdk import TrueFoundry, ArtifactType
+from truefoundry_sdk.internal.artifact_versions import ArtifactVersionsListRequestVersion
 
 client = TrueFoundry(
     api_key="<token>",
@@ -13432,6 +13441,7 @@ client.internal.artifact_versions.list(
     artifact_id="artifact_id",
     ml_repo_id="ml_repo_id",
     name="name",
+    version=ArtifactVersionsListRequestVersion.LATEST,
     run_ids=[
         "run_ids"
     ],
@@ -13515,7 +13525,7 @@ client.internal.artifact_versions.list(
 <dl>
 <dd>
 
-**version:** `typing.Optional[Object]` — Version number of the artifact version, or "latest" to fetch the most recent one.
+**version:** `typing.Optional[ArtifactVersionsListRequestVersion]` — Version number of the artifact version, or "latest" to fetch the most recent one.
     
 </dd>
 </dl>

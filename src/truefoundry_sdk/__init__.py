@@ -703,7 +703,6 @@ if typing.TYPE_CHECKING:
         NvidiaMiggpuProfile,
         NvidiaTimeslicingGpu,
         OAuth2LoginProvider,
-        Object,
         OciRepo,
         OcrCostMetric,
         OcrCostMetricValue,
@@ -1178,18 +1177,21 @@ if typing.TYPE_CHECKING:
         workspaces,
     )
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
+    from .agent_skill_versions import AgentSkillVersionsListRequestVersion
     from .applications import (
         ApplicationsCancelDeploymentResponse,
         ApplicationsListRequestApplicationType,
         ApplicationsListRequestDeviceTypeFilter,
         ApplicationsListRequestLifecycleStage,
     )
-    from .artifact_versions import StageArtifactRequestManifest
+    from .artifact_versions import ArtifactVersionsListRequestVersion, StageArtifactRequestManifest
     from .artifacts import ApplyArtifactRequestManifest
     from .client import AsyncTrueFoundry, TrueFoundry
     from .gateway_configs import GatewayConfigsGetRequestType
     from .jobs import TriggerJobRequestInput
+    from .model_versions import ModelVersionsListRequestVersion
     from .personal_access_tokens import CreatePersonalAccessTokenRequestTokenType
+    from .prompt_versions import PromptVersionsListRequestVersion
     from .teams import TeamsListRequestType
     from .traces import QuerySpansRequestFiltersItem
     from .users import UpdateUserRolesRequestResourceType
@@ -1218,6 +1220,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentSkillSourceInline": ".types",
     "AgentSkillSourceLocal": ".types",
     "AgentSkillVersion": ".types",
+    "AgentSkillVersionsListRequestVersion": ".agent_skill_versions",
     "AgentSource": ".types",
     "Ai21Integrations": ".types",
     "Ai21KeyAuth": ".types",
@@ -1263,6 +1266,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ArtifactPath": ".types",
     "ArtifactType": ".types",
     "ArtifactVersion": ".types",
+    "ArtifactVersionsListRequestVersion": ".artifact_versions",
     "ArtifactsCacheVolume": ".types",
     "ArtifactsDownload": ".types",
     "ArtifactsDownloadArtifactsItem": ".types",
@@ -1876,6 +1880,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ModelType": ".types",
     "ModelVersion": ".types",
     "ModelVersionEnvironment": ".types",
+    "ModelVersionsListRequestVersion": ".model_versions",
     "MsTeamsIntegrations": ".types",
     "MsTeamsProviderAccount": ".types",
     "MsTeamsWebhook": ".types",
@@ -1909,7 +1914,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "NvidiaMiggpuProfile": ".types",
     "NvidiaTimeslicingGpu": ".types",
     "OAuth2LoginProvider": ".types",
-    "Object": ".types",
     "OciRepo": ".types",
     "OcrCostMetric": ".types",
     "OcrCostMetricValue": ".types",
@@ -2020,6 +2024,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Prompt": ".types",
     "PromptSource": ".types",
     "PromptVersion": ".types",
+    "PromptVersionsListRequestVersion": ".prompt_versions",
     "ProviderAccounts": ".types",
     "PublicCostMetric": ".types",
     "PySparkTaskConfig": ".types",
@@ -2425,6 +2430,7 @@ __all__ = [
     "AgentSkillSourceInline",
     "AgentSkillSourceLocal",
     "AgentSkillVersion",
+    "AgentSkillVersionsListRequestVersion",
     "AgentSource",
     "Ai21Integrations",
     "Ai21KeyAuth",
@@ -2470,6 +2476,7 @@ __all__ = [
     "ArtifactPath",
     "ArtifactType",
     "ArtifactVersion",
+    "ArtifactVersionsListRequestVersion",
     "ArtifactsCacheVolume",
     "ArtifactsDownload",
     "ArtifactsDownloadArtifactsItem",
@@ -3083,6 +3090,7 @@ __all__ = [
     "ModelType",
     "ModelVersion",
     "ModelVersionEnvironment",
+    "ModelVersionsListRequestVersion",
     "MsTeamsIntegrations",
     "MsTeamsProviderAccount",
     "MsTeamsWebhook",
@@ -3116,7 +3124,6 @@ __all__ = [
     "NvidiaMiggpuProfile",
     "NvidiaTimeslicingGpu",
     "OAuth2LoginProvider",
-    "Object",
     "OciRepo",
     "OcrCostMetric",
     "OcrCostMetricValue",
@@ -3227,6 +3234,7 @@ __all__ = [
     "Prompt",
     "PromptSource",
     "PromptVersion",
+    "PromptVersionsListRequestVersion",
     "ProviderAccounts",
     "PublicCostMetric",
     "PySparkTaskConfig",

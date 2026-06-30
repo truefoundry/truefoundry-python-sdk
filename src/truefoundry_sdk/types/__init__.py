@@ -719,7 +719,6 @@ if typing.TYPE_CHECKING:
     from .nvidia_miggpu_profile import NvidiaMiggpuProfile
     from .nvidia_timeslicing_gpu import NvidiaTimeslicingGpu
     from .o_auth2login_provider import OAuth2LoginProvider
-    from .object import Object
     from .oci_repo import OciRepo
     from .ocr_cost_metric import OcrCostMetric
     from .ocr_cost_metric_value import OcrCostMetricValue
@@ -1843,7 +1842,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "NvidiaMiggpuProfile": ".nvidia_miggpu_profile",
     "NvidiaTimeslicingGpu": ".nvidia_timeslicing_gpu",
     "OAuth2LoginProvider": ".o_auth2login_provider",
-    "Object": ".object",
     "OciRepo": ".oci_repo",
     "OcrCostMetric": ".ocr_cost_metric",
     "OcrCostMetricValue": ".ocr_cost_metric_value",
@@ -2994,7 +2992,6 @@ __all__ = [
     "NvidiaMiggpuProfile",
     "NvidiaTimeslicingGpu",
     "OAuth2LoginProvider",
-    "Object",
     "OciRepo",
     "OcrCostMetric",
     "OcrCostMetricValue",
