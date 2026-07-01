@@ -15,14 +15,14 @@
       "exported_class_name": "TrueFoundry",
       "exported_filename": "client.py"
     },
-    "pyproject_python_version": ">=3.9",
+    "pyproject_python_version": ">=3.10",
     "extra_dev_dependencies": {
       "ipython": ">=8.0.0,<10.0.0",
       "Jinja2": ">=3.1.6,<4.0.0",
       "numpydoc": ">=1.7.0,<2.0.0"
     }
   },
-  "originGitCommit": "56095f8263925603c28e33ffa2155fad61d61a50",
+  "originGitCommit": "597940c29c940a54eee61bad5e694d9315f83b46",
   "originGitCommitIsDirty": false,
   "invokedBy": "ci",
   "requestedVersion": "0.0.0",
