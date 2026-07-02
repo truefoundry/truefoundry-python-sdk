@@ -121,7 +121,7 @@ class RawJobsClient:
                     ),
                 )
                 _items = _parsed_response.data
-                _has_next = True
+                _has_next = len(_items or []) > 0
                 _get_next = lambda: self.list_runs(
                     job_id,
                     limit=limit,
@@ -620,7 +620,7 @@ class AsyncRawJobsClient:
                     ),
                 )
                 _items = _parsed_response.data
-                _has_next = True
+                _has_next = len(_items or []) > 0
 
                 async def _get_next():
                     return await self.list_runs(

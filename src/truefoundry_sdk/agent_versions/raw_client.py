@@ -70,7 +70,7 @@ class RawAgentVersionsClient:
                     ),
                 )
                 _items = _parsed_response.data
-                _has_next = True
+                _has_next = len(_items or []) > 0
                 _get_next = lambda: self.list(
                     limit=limit,
                     offset=offset + len(_items or []),
@@ -144,7 +144,7 @@ class AsyncRawAgentVersionsClient:
                     ),
                 )
                 _items = _parsed_response.data
-                _has_next = True
+                _has_next = len(_items or []) > 0
 
                 async def _get_next():
                     return await self.list(
