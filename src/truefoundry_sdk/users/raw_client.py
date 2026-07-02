@@ -21,14 +21,17 @@ from ..types.activate_user_response import ActivateUserResponse
 from ..types.change_password_response import ChangePasswordResponse
 from ..types.deactivate_user_response import DeactivateUserResponse
 from ..types.delete_user_response import DeleteUserResponse
+from ..types.get_user_permissions_response import GetUserPermissionsResponse
+from ..types.get_user_resources_response import GetUserResourcesResponse
 from ..types.get_user_response import GetUserResponse
+from ..types.get_user_teams_response import GetUserTeamsResponse
 from ..types.http_error import HttpError
 from ..types.invite_user_response import InviteUserResponse
 from ..types.list_users_response import ListUsersResponse
 from ..types.register_users_response import RegisterUsersResponse
+from ..types.resource_type import ResourceType
 from ..types.update_user_roles_response import UpdateUserRolesResponse
 from ..types.user import User
-from .types.update_user_roles_request_resource_type import UpdateUserRolesRequestResourceType
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -225,7 +228,7 @@ class RawUsersClient:
         *,
         email: str,
         roles: typing.Sequence[str],
-        resource_type: typing.Optional[UpdateUserRolesRequestResourceType] = OMIT,
+        resource_type: typing.Optional[ResourceType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[UpdateUserRolesResponse]:
         """
@@ -239,7 +242,7 @@ class RawUsersClient:
         roles : typing.Sequence[str]
             Role names to assign to the user.
 
-        resource_type : typing.Optional[UpdateUserRolesRequestResourceType]
+        resource_type : typing.Optional[ResourceType]
             Resource type scope for the role assignment.
 
         request_options : typing.Optional[RequestOptions]
@@ -764,6 +767,201 @@ class RawUsersClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def get_resources(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[GetUserResourcesResponse]:
+        """
+        Get all resources where the user is a collaborator.
+
+        Parameters
+        ----------
+        id : str
+            System-generated user ID.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetUserResourcesResponse]
+            Returns the resources associated with the user.
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/x/users/{encode_path_param(id)}/resources",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetUserResourcesResponse,
+                    parse_obj_as(
+                        type_=GetUserResourcesResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def get_permissions(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[GetUserPermissionsResponse]:
+        """
+        Get all role bindings for a user, including team-inherited bindings.
+
+        Parameters
+        ----------
+        id : str
+            System-generated user ID.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetUserPermissionsResponse]
+            Returns the role bindings for the user.
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/x/users/{encode_path_param(id)}/permissions",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetUserPermissionsResponse,
+                    parse_obj_as(
+                        type_=GetUserPermissionsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def get_teams(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[GetUserTeamsResponse]:
+        """
+        Get all teams a user belongs to, including their role in each team.
+
+        Parameters
+        ----------
+        id : str
+            System-generated user ID.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetUserTeamsResponse]
+            Returns the teams and roles for the user.
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/x/users/{encode_path_param(id)}/teams",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetUserTeamsResponse,
+                    parse_obj_as(
+                        type_=GetUserTeamsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawUsersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -958,7 +1156,7 @@ class AsyncRawUsersClient:
         *,
         email: str,
         roles: typing.Sequence[str],
-        resource_type: typing.Optional[UpdateUserRolesRequestResourceType] = OMIT,
+        resource_type: typing.Optional[ResourceType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[UpdateUserRolesResponse]:
         """
@@ -972,7 +1170,7 @@ class AsyncRawUsersClient:
         roles : typing.Sequence[str]
             Role names to assign to the user.
 
-        resource_type : typing.Optional[UpdateUserRolesRequestResourceType]
+        resource_type : typing.Optional[ResourceType]
             Resource type scope for the role assignment.
 
         request_options : typing.Optional[RequestOptions]
@@ -1490,6 +1688,201 @@ class AsyncRawUsersClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_resources(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[GetUserResourcesResponse]:
+        """
+        Get all resources where the user is a collaborator.
+
+        Parameters
+        ----------
+        id : str
+            System-generated user ID.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetUserResourcesResponse]
+            Returns the resources associated with the user.
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/x/users/{encode_path_param(id)}/resources",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetUserResourcesResponse,
+                    parse_obj_as(
+                        type_=GetUserResourcesResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_permissions(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[GetUserPermissionsResponse]:
+        """
+        Get all role bindings for a user, including team-inherited bindings.
+
+        Parameters
+        ----------
+        id : str
+            System-generated user ID.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetUserPermissionsResponse]
+            Returns the role bindings for the user.
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/x/users/{encode_path_param(id)}/permissions",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetUserPermissionsResponse,
+                    parse_obj_as(
+                        type_=GetUserPermissionsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_teams(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[GetUserTeamsResponse]:
+        """
+        Get all teams a user belongs to, including their role in each team.
+
+        Parameters
+        ----------
+        id : str
+            System-generated user ID.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetUserTeamsResponse]
+            Returns the teams and roles for the user.
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/x/users/{encode_path_param(id)}/teams",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetUserTeamsResponse,
+                    parse_obj_as(
+                        type_=GetUserTeamsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

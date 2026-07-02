@@ -98,7 +98,7 @@ class ArtifactVersionsClient:
 
         Examples
         --------
-        from truefoundry_sdk import ArtifactType, TrueFoundry
+        from truefoundry_sdk import TrueFoundry
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -117,7 +117,7 @@ class ArtifactVersionsClient:
             run_steps=[1.1],
             include_internal_metadata=True,
             include_model_versions=True,
-            artifact_types=[ArtifactType.ARTIFACT],
+            artifact_types=["artifact_types"],
         )
         for item in response:
             yield item
@@ -232,7 +232,7 @@ class AsyncArtifactVersionsClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import ArtifactType, AsyncTrueFoundry
+        from truefoundry_sdk import AsyncTrueFoundry
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -254,7 +254,7 @@ class AsyncArtifactVersionsClient:
                 run_steps=[1.1],
                 include_internal_metadata=True,
                 include_model_versions=True,
-                artifact_types=[ArtifactType.ARTIFACT],
+                artifact_types=["artifact_types"],
             )
             async for item in response:
                 yield item

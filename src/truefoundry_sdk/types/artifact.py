@@ -5,7 +5,6 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .artifact_type import ArtifactType
 from .artifact_version import ArtifactVersion
 from .subject import Subject
 
@@ -21,7 +20,7 @@ class Artifact(UniversalBaseModel):
     Identifier of the ML Repo the artifact belongs to.
     """
 
-    type: ArtifactType = pydantic.Field()
+    type: typing.Optional[typing.Literal["artifact"]] = pydantic.Field(default=None)
     """
     Discriminator for the artifact type; always `artifact` for a generic artifact.
     """

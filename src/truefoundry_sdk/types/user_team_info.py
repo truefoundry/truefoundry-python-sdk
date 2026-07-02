@@ -3,14 +3,18 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .columns import Columns
+from ..core.serialization import FieldMetadata
 
 
-class GetRunColumnsResponse(UniversalBaseModel):
-    columns: Columns = pydantic.Field()
+class UserTeamInfo(UniversalBaseModel):
+    team_name: typing_extensions.Annotated[
+        str, FieldMetadata(alias="teamName"), pydantic.Field(alias="teamName", description="Name of the team")
+    ]
+    roles: typing.List[str] = pydantic.Field()
     """
-    Distinct column keys for the run table in the ML Repo.
+    Roles of the user in the team
     """
 
     if IS_PYDANTIC_V2:

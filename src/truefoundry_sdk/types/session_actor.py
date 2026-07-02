@@ -6,21 +6,8 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class Columns(UniversalBaseModel):
-    metric_names: typing.List[str] = pydantic.Field()
-    """
-    Distinct metric keys across runs in the ML Repo.
-    """
-
-    param_names: typing.List[str] = pydantic.Field()
-    """
-    Distinct parameter keys across runs in the ML Repo.
-    """
-
-    tag_names: typing.List[str] = pydantic.Field()
-    """
-    Distinct tag keys across runs in the ML Repo.
-    """
+class SessionActor(UniversalBaseModel):
+    organization: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

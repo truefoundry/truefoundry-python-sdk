@@ -8,7 +8,6 @@ from ..core.request_options import RequestOptions
 from ..types.create_run_response import CreateRunResponse
 from ..types.empty_response import EmptyResponse
 from ..types.get_metric_history_response import GetMetricHistoryResponse
-from ..types.get_run_columns_response import GetRunColumnsResponse
 from ..types.get_run_response import GetRunResponse
 from ..types.list_metric_history_response import ListMetricHistoryResponse
 from ..types.metric import Metric
@@ -98,40 +97,6 @@ class RunsClient:
             description=description,
             request_options=request_options,
         )
-        return _response.data
-
-    def get_columns(
-        self, *, experiment_id: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetRunColumnsResponse:
-        """
-        List distinct metric, parameter, and tag keys for runs in an ML Repo.
-
-        Parameters
-        ----------
-        experiment_id : str
-            System-generated unique identifier for the ML Repo.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetRunColumnsResponse
-
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.runs.get_columns(
-            experiment_id="experiment_id",
-        )
-        """
-        _response = self._raw_client.get_columns(experiment_id=experiment_id, request_options=request_options)
         return _response.data
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetRunResponse:
@@ -340,70 +305,6 @@ class RunsClient:
             ml_repo_name=ml_repo_name,
             request_options=request_options,
         )
-
-    def archive(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
-        """
-        Soft-delete a run.
-
-        Parameters
-        ----------
-        id : str
-            System-generated unique identifier for the run.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        EmptyResponse
-
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.runs.archive(
-            id="id",
-        )
-        """
-        _response = self._raw_client.archive(id, request_options=request_options)
-        return _response.data
-
-    def restore(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
-        """
-        Restore an archived run.
-
-        Parameters
-        ----------
-        id : str
-            System-generated unique identifier for the run.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        EmptyResponse
-
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.runs.restore(
-            id="id",
-        )
-        """
-        _response = self._raw_client.restore(id, request_options=request_options)
-        return _response.data
 
     def get_metric_history(
         self, id: str, *, metric_key: str, request_options: typing.Optional[RequestOptions] = None
@@ -806,48 +707,6 @@ class AsyncRunsClient:
         )
         return _response.data
 
-    async def get_columns(
-        self, *, experiment_id: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetRunColumnsResponse:
-        """
-        List distinct metric, parameter, and tag keys for runs in an ML Repo.
-
-        Parameters
-        ----------
-        experiment_id : str
-            System-generated unique identifier for the ML Repo.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetRunColumnsResponse
-
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.runs.get_columns(
-                experiment_id="experiment_id",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.get_columns(experiment_id=experiment_id, request_options=request_options)
-        return _response.data
-
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetRunResponse:
         """
         Get metadata, metrics, params, and tags for a run.
@@ -1087,86 +946,6 @@ class AsyncRunsClient:
             ml_repo_name=ml_repo_name,
             request_options=request_options,
         )
-
-    async def archive(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
-        """
-        Soft-delete a run.
-
-        Parameters
-        ----------
-        id : str
-            System-generated unique identifier for the run.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        EmptyResponse
-
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.runs.archive(
-                id="id",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.archive(id, request_options=request_options)
-        return _response.data
-
-    async def restore(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
-        """
-        Restore an archived run.
-
-        Parameters
-        ----------
-        id : str
-            System-generated unique identifier for the run.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        EmptyResponse
-
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.runs.restore(
-                id="id",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.restore(id, request_options=request_options)
-        return _response.data
 
     async def get_metric_history(
         self, id: str, *, metric_key: str, request_options: typing.Optional[RequestOptions] = None

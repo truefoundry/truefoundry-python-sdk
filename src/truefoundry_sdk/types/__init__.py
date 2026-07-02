@@ -11,6 +11,7 @@ if typing.TYPE_CHECKING:
     from .resources_node import ResourcesNode
     from .a2a_agent_skill import A2AAgentSkill
     from .a2a_framework import A2AFramework
+    from .account import Account
     from .account_info import AccountInfo
     from .activate_user_response import ActivateUserResponse
     from .add_on_component_source import AddOnComponentSource
@@ -256,7 +257,6 @@ if typing.TYPE_CHECKING:
     from .cohere_model import CohereModel
     from .cohere_provider_account import CohereProviderAccount
     from .collaborator import Collaborator
-    from .columns import Columns
     from .common_tools_settings import CommonToolsSettings
     from .config import Config
     from .container_task_config import ContainerTaskConfig
@@ -465,7 +465,6 @@ if typing.TYPE_CHECKING:
     from .get_or_create_personal_access_token_response import GetOrCreatePersonalAccessTokenResponse
     from .get_prompt_response import GetPromptResponse
     from .get_prompt_version_response import GetPromptVersionResponse
-    from .get_run_columns_response import GetRunColumnsResponse
     from .get_run_response import GetRunResponse
     from .get_secret_group_response import GetSecretGroupResponse
     from .get_secret_response import GetSecretResponse
@@ -475,7 +474,10 @@ if typing.TYPE_CHECKING:
     from .get_team_permissions_response import GetTeamPermissionsResponse
     from .get_team_response import GetTeamResponse
     from .get_token_for_virtual_account_response import GetTokenForVirtualAccountResponse
+    from .get_user_permissions_response import GetUserPermissionsResponse
+    from .get_user_resources_response import GetUserResourcesResponse
     from .get_user_response import GetUserResponse
+    from .get_user_teams_response import GetUserTeamsResponse
     from .get_virtual_account_response import GetVirtualAccountResponse
     from .get_workspace_response import GetWorkspaceResponse
     from .git_helm_repo import GitHelmRepo
@@ -660,6 +662,7 @@ if typing.TYPE_CHECKING:
     from .mcp_server_o_auth2 import McpServerOAuth2
     from .mcp_server_o_auth2grant_type import McpServerOAuth2GrantType
     from .mcp_server_o_auth2jwt_source import McpServerOAuth2JwtSource
+    from .mcp_server_o_auth2provider import McpServerOAuth2Provider
     from .mcp_server_o_auth2provider_auth0settings import McpServerOAuth2ProviderAuth0Settings
     from .mcp_server_passthrough import McpServerPassthrough
     from .mcp_server_provider_account import McpServerProviderAccount
@@ -869,6 +872,7 @@ if typing.TYPE_CHECKING:
     from .remote_mcp_server_manifest import RemoteMcpServerManifest
     from .remote_source import RemoteSource
     from .remote_spec_source import RemoteSpecSource
+    from .resource_type import ResourceType
     from .response_format_json_object import ResponseFormatJsonObject
     from .response_format_json_schema import ResponseFormatJsonSchema
     from .response_format_json_schema_json_schema import ResponseFormatJsonSchemaJsonSchema
@@ -923,6 +927,10 @@ if typing.TYPE_CHECKING:
     from .service_autoscaling_metrics import ServiceAutoscalingMetrics
     from .service_replicas import ServiceReplicas
     from .service_rollout_strategy import ServiceRolloutStrategy
+    from .session import Session
+    from .session_account import SessionAccount
+    from .session_actor import SessionActor
+    from .session_team import SessionTeam
     from .signed_url import SignedUrl
     from .sklearn_framework import SklearnFramework
     from .sklearn_model_schema import SklearnModelSchema
@@ -1098,6 +1106,8 @@ if typing.TYPE_CHECKING:
     from .user_message_content_one_item import UserMessageContentOneItem
     from .user_metadata import UserMetadata
     from .user_metadata_tenant_role_managed_by import UserMetadataTenantRoleManagedBy
+    from .user_resource import UserResource
+    from .user_team_info import UserTeamInfo
     from .uv import Uv
     from .value_constraint import ValueConstraint
     from .vcs_token_auth_data import VcsTokenAuthData
@@ -1154,6 +1164,7 @@ if typing.TYPE_CHECKING:
 _dynamic_imports: typing.Dict[str, str] = {
     "A2AAgentSkill": ".a2a_agent_skill",
     "A2AFramework": ".a2a_framework",
+    "Account": ".account",
     "AccountInfo": ".account_info",
     "ActivateUserResponse": ".activate_user_response",
     "AddOnComponentSource": ".add_on_component_source",
@@ -1399,7 +1410,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CohereModel": ".cohere_model",
     "CohereProviderAccount": ".cohere_provider_account",
     "Collaborator": ".collaborator",
-    "Columns": ".columns",
     "CommonToolsSettings": ".common_tools_settings",
     "Config": ".config",
     "ContainerTaskConfig": ".container_task_config",
@@ -1596,7 +1606,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetOrCreatePersonalAccessTokenResponse": ".get_or_create_personal_access_token_response",
     "GetPromptResponse": ".get_prompt_response",
     "GetPromptVersionResponse": ".get_prompt_version_response",
-    "GetRunColumnsResponse": ".get_run_columns_response",
     "GetRunResponse": ".get_run_response",
     "GetSecretGroupResponse": ".get_secret_group_response",
     "GetSecretResponse": ".get_secret_response",
@@ -1606,7 +1615,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetTeamPermissionsResponse": ".get_team_permissions_response",
     "GetTeamResponse": ".get_team_response",
     "GetTokenForVirtualAccountResponse": ".get_token_for_virtual_account_response",
+    "GetUserPermissionsResponse": ".get_user_permissions_response",
+    "GetUserResourcesResponse": ".get_user_resources_response",
     "GetUserResponse": ".get_user_response",
+    "GetUserTeamsResponse": ".get_user_teams_response",
     "GetVirtualAccountResponse": ".get_virtual_account_response",
     "GetWorkspaceResponse": ".get_workspace_response",
     "GitHelmRepo": ".git_helm_repo",
@@ -1789,6 +1801,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "McpServerOAuth2": ".mcp_server_o_auth2",
     "McpServerOAuth2GrantType": ".mcp_server_o_auth2grant_type",
     "McpServerOAuth2JwtSource": ".mcp_server_o_auth2jwt_source",
+    "McpServerOAuth2Provider": ".mcp_server_o_auth2provider",
     "McpServerOAuth2ProviderAuth0Settings": ".mcp_server_o_auth2provider_auth0settings",
     "McpServerPassthrough": ".mcp_server_passthrough",
     "McpServerProviderAccount": ".mcp_server_provider_account",
@@ -1998,6 +2011,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RemoteMcpServerManifest": ".remote_mcp_server_manifest",
     "RemoteSource": ".remote_source",
     "RemoteSpecSource": ".remote_spec_source",
+    "ResourceType": ".resource_type",
     "Resources": ".resources",
     "ResourcesDevicesItem": ".resources_devices_item",
     "ResourcesNode": ".resources_node",
@@ -2055,6 +2069,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ServiceAutoscalingMetrics": ".service_autoscaling_metrics",
     "ServiceReplicas": ".service_replicas",
     "ServiceRolloutStrategy": ".service_rollout_strategy",
+    "Session": ".session",
+    "SessionAccount": ".session_account",
+    "SessionActor": ".session_actor",
+    "SessionTeam": ".session_team",
     "SignedUrl": ".signed_url",
     "SklearnFramework": ".sklearn_framework",
     "SklearnModelSchema": ".sklearn_model_schema",
@@ -2230,6 +2248,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UserMessageContentOneItem": ".user_message_content_one_item",
     "UserMetadata": ".user_metadata",
     "UserMetadataTenantRoleManagedBy": ".user_metadata_tenant_role_managed_by",
+    "UserResource": ".user_resource",
+    "UserTeamInfo": ".user_team_info",
     "Uv": ".uv",
     "ValueConstraint": ".value_constraint",
     "VcsTokenAuthData": ".vcs_token_auth_data",
@@ -2310,6 +2330,7 @@ def __dir__():
 __all__ = [
     "A2AAgentSkill",
     "A2AFramework",
+    "Account",
     "AccountInfo",
     "ActivateUserResponse",
     "AddOnComponentSource",
@@ -2555,7 +2576,6 @@ __all__ = [
     "CohereModel",
     "CohereProviderAccount",
     "Collaborator",
-    "Columns",
     "CommonToolsSettings",
     "Config",
     "ContainerTaskConfig",
@@ -2752,7 +2772,6 @@ __all__ = [
     "GetOrCreatePersonalAccessTokenResponse",
     "GetPromptResponse",
     "GetPromptVersionResponse",
-    "GetRunColumnsResponse",
     "GetRunResponse",
     "GetSecretGroupResponse",
     "GetSecretResponse",
@@ -2762,7 +2781,10 @@ __all__ = [
     "GetTeamPermissionsResponse",
     "GetTeamResponse",
     "GetTokenForVirtualAccountResponse",
+    "GetUserPermissionsResponse",
+    "GetUserResourcesResponse",
     "GetUserResponse",
+    "GetUserTeamsResponse",
     "GetVirtualAccountResponse",
     "GetWorkspaceResponse",
     "GitHelmRepo",
@@ -2945,6 +2967,7 @@ __all__ = [
     "McpServerOAuth2",
     "McpServerOAuth2GrantType",
     "McpServerOAuth2JwtSource",
+    "McpServerOAuth2Provider",
     "McpServerOAuth2ProviderAuth0Settings",
     "McpServerPassthrough",
     "McpServerProviderAccount",
@@ -3154,6 +3177,7 @@ __all__ = [
     "RemoteMcpServerManifest",
     "RemoteSource",
     "RemoteSpecSource",
+    "ResourceType",
     "Resources",
     "ResourcesDevicesItem",
     "ResourcesNode",
@@ -3211,6 +3235,10 @@ __all__ = [
     "ServiceAutoscalingMetrics",
     "ServiceReplicas",
     "ServiceRolloutStrategy",
+    "Session",
+    "SessionAccount",
+    "SessionActor",
+    "SessionTeam",
     "SignedUrl",
     "SklearnFramework",
     "SklearnModelSchema",
@@ -3386,6 +3414,8 @@ __all__ = [
     "UserMessageContentOneItem",
     "UserMetadata",
     "UserMetadataTenantRoleManagedBy",
+    "UserResource",
+    "UserTeamInfo",
     "Uv",
     "ValueConstraint",
     "VcsTokenAuthData",

@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from .mcp_server_o_auth2grant_type import McpServerOAuth2GrantType
 from .mcp_server_o_auth2jwt_source import McpServerOAuth2JwtSource
+from .mcp_server_o_auth2provider import McpServerOAuth2Provider
 from .mcp_server_o_auth2provider_auth0settings import McpServerOAuth2ProviderAuth0Settings
 
 
@@ -54,9 +55,9 @@ class McpServerOAuth2(McpServerOAuth2ProviderAuth0Settings):
     URL to fetch token expiry (RFC 7662) when the provider does not return expires_in (e.g. Salesforce). Requires client_id and client_secret.
     """
 
-    provider: typing.Optional[typing.Literal["auth0"]] = pydantic.Field(default=None)
+    provider: McpServerOAuth2Provider = pydantic.Field()
     """
-    Select the OAuth provider when provider-specific configuration is required.
+    Select the OAuth provider. Provider-specific configuration (e.g. Auth0 organization) is unlocked based on this value.
     """
 
     code_challenge_methods_supported: typing.Optional[typing.List[typing.Literal["S256"]]] = pydantic.Field(

@@ -5,7 +5,6 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .artifact_type import ArtifactType
 from .prompt_version import PromptVersion
 from .subject import Subject
 
@@ -21,7 +20,7 @@ class Prompt(UniversalBaseModel):
     Identifier of the ML Repo the prompt belongs to.
     """
 
-    type: ArtifactType = pydantic.Field()
+    type: typing.Optional[typing.Literal["chat_prompt"]] = pydantic.Field(default=None)
     """
     Discriminator for the artifact type; always `chat_prompt` for a prompt.
     """

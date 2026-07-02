@@ -5,7 +5,6 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .artifact_type import ArtifactType
 from .model_version import ModelVersion
 from .subject import Subject
 
@@ -21,7 +20,7 @@ class Model(UniversalBaseModel):
     Identifier of the ML Repo the model belongs to.
     """
 
-    type: ArtifactType = pydantic.Field()
+    type: typing.Optional[typing.Literal["model"]] = pydantic.Field(default=None)
     """
     Discriminator for the artifact type; always `model` for a model.
     """

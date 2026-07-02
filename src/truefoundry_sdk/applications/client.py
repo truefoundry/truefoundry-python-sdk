@@ -6,6 +6,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.application import Application
+from ..types.application_type import ApplicationType
 from ..types.delete_application_response import DeleteApplicationResponse
 from ..types.deployment import Deployment
 from ..types.get_application_deployment_response import GetApplicationDeploymentResponse
@@ -13,7 +14,6 @@ from ..types.get_application_response import GetApplicationResponse
 from ..types.list_applications_response import ListApplicationsResponse
 from .raw_client import AsyncRawApplicationsClient, RawApplicationsClient
 from .types.applications_cancel_deployment_response import ApplicationsCancelDeploymentResponse
-from .types.applications_list_request_application_type import ApplicationsListRequestApplicationType
 from .types.applications_list_request_device_type_filter import ApplicationsListRequestDeviceTypeFilter
 from .types.applications_list_request_lifecycle_stage import ApplicationsListRequestLifecycleStage
 
@@ -46,7 +46,7 @@ class ApplicationsClient:
         application_name: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         workspace_fqn: typing.Optional[str] = None,
-        application_type: typing.Optional[ApplicationsListRequestApplicationType] = None,
+        application_type: typing.Optional[ApplicationType] = None,
         name_search_query: typing.Optional[str] = None,
         environment_id: typing.Optional[str] = None,
         cluster_id: typing.Optional[str] = None,
@@ -84,7 +84,7 @@ class ApplicationsClient:
         workspace_fqn : typing.Optional[str]
             FQN of the workspace to filter by.
 
-        application_type : typing.Optional[ApplicationsListRequestApplicationType]
+        application_type : typing.Optional[ApplicationType]
             Application type to filter by (comma-separated).
 
         name_search_query : typing.Optional[str]
@@ -124,9 +124,8 @@ class ApplicationsClient:
 
         Examples
         --------
-        from truefoundry_sdk import TrueFoundry
+        from truefoundry_sdk import ApplicationType, TrueFoundry
         from truefoundry_sdk.applications import (
-            ApplicationsListRequestApplicationType,
             ApplicationsListRequestDeviceTypeFilter,
             ApplicationsListRequestLifecycleStage,
         )
@@ -143,7 +142,7 @@ class ApplicationsClient:
             application_name="applicationName",
             fqn="fqn",
             workspace_fqn="workspaceFqn",
-            application_type=ApplicationsListRequestApplicationType.ASYNC_SERVICE,
+            application_type=ApplicationType.ASYNC_SERVICE,
             name_search_query="nameSearchQuery",
             environment_id="environmentId",
             cluster_id="clusterId",
@@ -485,7 +484,7 @@ class AsyncApplicationsClient:
         application_name: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         workspace_fqn: typing.Optional[str] = None,
-        application_type: typing.Optional[ApplicationsListRequestApplicationType] = None,
+        application_type: typing.Optional[ApplicationType] = None,
         name_search_query: typing.Optional[str] = None,
         environment_id: typing.Optional[str] = None,
         cluster_id: typing.Optional[str] = None,
@@ -523,7 +522,7 @@ class AsyncApplicationsClient:
         workspace_fqn : typing.Optional[str]
             FQN of the workspace to filter by.
 
-        application_type : typing.Optional[ApplicationsListRequestApplicationType]
+        application_type : typing.Optional[ApplicationType]
             Application type to filter by (comma-separated).
 
         name_search_query : typing.Optional[str]
@@ -565,9 +564,8 @@ class AsyncApplicationsClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import AsyncTrueFoundry
+        from truefoundry_sdk import ApplicationType, AsyncTrueFoundry
         from truefoundry_sdk.applications import (
-            ApplicationsListRequestApplicationType,
             ApplicationsListRequestDeviceTypeFilter,
             ApplicationsListRequestLifecycleStage,
         )
@@ -587,7 +585,7 @@ class AsyncApplicationsClient:
                 application_name="applicationName",
                 fqn="fqn",
                 workspace_fqn="workspaceFqn",
-                application_type=ApplicationsListRequestApplicationType.ASYNC_SERVICE,
+                application_type=ApplicationType.ASYNC_SERVICE,
                 name_search_query="nameSearchQuery",
                 environment_id="environmentId",
                 cluster_id="clusterId",

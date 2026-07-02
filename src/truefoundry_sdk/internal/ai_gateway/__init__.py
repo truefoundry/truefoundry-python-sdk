@@ -6,10 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .update_user_roles_request_resource_type import UpdateUserRolesRequestResourceType
-_dynamic_imports: typing.Dict[str, str] = {
-    "UpdateUserRolesRequestResourceType": ".update_user_roles_request_resource_type"
-}
+    from .types import AiGatewayGetGatewayConfigRequestType
+_dynamic_imports: typing.Dict[str, str] = {"AiGatewayGetGatewayConfigRequestType": ".types"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -33,4 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["UpdateUserRolesRequestResourceType"]
+__all__ = ["AiGatewayGetGatewayConfigRequestType"]
