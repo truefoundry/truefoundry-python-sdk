@@ -20,7 +20,7 @@ class ArtifactVersion(UniversalBaseModel):
     Timestamp when the artifact version was last updated.
     """
 
-    manifest: typing.Optional[ArtifactManifest] = pydantic.Field(default=None)
+    manifest: ArtifactManifest = pydantic.Field()
     """
     Manifest describing the artifact version.
     """
