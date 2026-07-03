@@ -11,11 +11,10 @@ from ..types.get_team_response import GetTeamResponse
 from ..types.list_team_managers_response import ListTeamManagersResponse
 from ..types.list_team_members_response import ListTeamMembersResponse
 from ..types.list_teams_response import ListTeamsResponse
-from ..types.team_dto import TeamDto
+from ..types.team import Team
 from ..types.team_manifest import TeamManifest
 from ..types.team_subject_row import TeamSubjectRow
 from .raw_client import AsyncRawTeamsClient, RawTeamsClient
-from .types.teams_list_request_type import TeamsListRequestType
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -41,11 +40,10 @@ class TeamsClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
-        type: typing.Optional[TeamsListRequestType] = None,
         role: typing.Optional[typing.Literal["manager"]] = None,
         attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[TeamDto, ListTeamsResponse]:
+    ) -> SyncPager[Team, ListTeamsResponse]:
         """
         List teams accessible to the current user.
 
@@ -56,9 +54,6 @@ class TeamsClient:
 
         offset : typing.Optional[int]
             Number of items to skip
-
-        type : typing.Optional[TeamsListRequestType]
-            Filter teams by type.
 
         role : typing.Optional[typing.Literal["manager"]]
             Filter to teams where the caller holds this role. `manager` returns teams the caller can manage (team managers and admins).
@@ -71,13 +66,12 @@ class TeamsClient:
 
         Returns
         -------
-        SyncPager[TeamDto, ListTeamsResponse]
+        SyncPager[Team, ListTeamsResponse]
             Paginated list of teams the caller has access to.
 
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        from truefoundry_sdk.teams import TeamsListRequestType
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -86,7 +80,6 @@ class TeamsClient:
         response = client.teams.list(
             limit=10,
             offset=0,
-            type=TeamsListRequestType.TEAM,
             attributes=["attributes"],
         )
         for item in response:
@@ -96,7 +89,7 @@ class TeamsClient:
             yield page
         """
         return self._raw_client.list(
-            limit=limit, offset=offset, type=type, role=role, attributes=attributes, request_options=request_options
+            limit=limit, offset=offset, role=role, attributes=attributes, request_options=request_options
         )
 
     def create_or_update(
@@ -380,11 +373,10 @@ class AsyncTeamsClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
-        type: typing.Optional[TeamsListRequestType] = None,
         role: typing.Optional[typing.Literal["manager"]] = None,
         attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[TeamDto, ListTeamsResponse]:
+    ) -> AsyncPager[Team, ListTeamsResponse]:
         """
         List teams accessible to the current user.
 
@@ -395,9 +387,6 @@ class AsyncTeamsClient:
 
         offset : typing.Optional[int]
             Number of items to skip
-
-        type : typing.Optional[TeamsListRequestType]
-            Filter teams by type.
 
         role : typing.Optional[typing.Literal["manager"]]
             Filter to teams where the caller holds this role. `manager` returns teams the caller can manage (team managers and admins).
@@ -410,7 +399,7 @@ class AsyncTeamsClient:
 
         Returns
         -------
-        AsyncPager[TeamDto, ListTeamsResponse]
+        AsyncPager[Team, ListTeamsResponse]
             Paginated list of teams the caller has access to.
 
         Examples
@@ -418,7 +407,6 @@ class AsyncTeamsClient:
         import asyncio
 
         from truefoundry_sdk import AsyncTrueFoundry
-        from truefoundry_sdk.teams import TeamsListRequestType
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -430,7 +418,6 @@ class AsyncTeamsClient:
             response = await client.teams.list(
                 limit=10,
                 offset=0,
-                type=TeamsListRequestType.TEAM,
                 attributes=["attributes"],
             )
             async for item in response:
@@ -444,7 +431,7 @@ class AsyncTeamsClient:
         asyncio.run(main())
         """
         return await self._raw_client.list(
-            limit=limit, offset=offset, type=type, role=role, attributes=attributes, request_options=request_options
+            limit=limit, offset=offset, role=role, attributes=attributes, request_options=request_options
         )
 
     async def create_or_update(

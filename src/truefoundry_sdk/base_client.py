@@ -30,7 +30,6 @@ if typing.TYPE_CHECKING:
     from .data_directories.client import AsyncDataDirectoriesClient, DataDirectoriesClient
     from .environments.client import AsyncEnvironmentsClient, EnvironmentsClient
     from .events.client import AsyncEventsClient, EventsClient
-    from .gateway_configs.client import AsyncGatewayConfigsClient, GatewayConfigsClient
     from .internal.client import AsyncInternalClient, InternalClient
     from .jobs.client import AsyncJobsClient, JobsClient
     from .logs.client import AsyncLogsClient, LogsClient
@@ -135,7 +134,6 @@ class BaseTrueFoundry:
         self._internal: typing.Optional[InternalClient] = None
         self._users: typing.Optional[UsersClient] = None
         self._teams: typing.Optional[TeamsClient] = None
-        self._gateway_configs: typing.Optional[GatewayConfigsClient] = None
         self._personal_access_tokens: typing.Optional[PersonalAccessTokensClient] = None
         self._virtual_accounts: typing.Optional[VirtualAccountsClient] = None
         self._clusters: typing.Optional[ClustersClient] = None
@@ -291,14 +289,6 @@ class BaseTrueFoundry:
 
             self._teams = TeamsClient(client_wrapper=self._client_wrapper)
         return self._teams
-
-    @property
-    def gateway_configs(self):
-        if self._gateway_configs is None:
-            from .gateway_configs.client import GatewayConfigsClient  # noqa: E402
-
-            self._gateway_configs = GatewayConfigsClient(client_wrapper=self._client_wrapper)
-        return self._gateway_configs
 
     @property
     def personal_access_tokens(self):
@@ -621,7 +611,6 @@ class AsyncBaseTrueFoundry:
         self._internal: typing.Optional[AsyncInternalClient] = None
         self._users: typing.Optional[AsyncUsersClient] = None
         self._teams: typing.Optional[AsyncTeamsClient] = None
-        self._gateway_configs: typing.Optional[AsyncGatewayConfigsClient] = None
         self._personal_access_tokens: typing.Optional[AsyncPersonalAccessTokensClient] = None
         self._virtual_accounts: typing.Optional[AsyncVirtualAccountsClient] = None
         self._clusters: typing.Optional[AsyncClustersClient] = None
@@ -793,14 +782,6 @@ class AsyncBaseTrueFoundry:
 
             self._teams = AsyncTeamsClient(client_wrapper=self._client_wrapper)
         return self._teams
-
-    @property
-    def gateway_configs(self):
-        if self._gateway_configs is None:
-            from .gateway_configs.client import AsyncGatewayConfigsClient  # noqa: E402
-
-            self._gateway_configs = AsyncGatewayConfigsClient(client_wrapper=self._client_wrapper)
-        return self._gateway_configs
 
     @property
     def personal_access_tokens(self):

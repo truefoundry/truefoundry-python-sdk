@@ -7,6 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import (
+        ai_gateway,
         applications,
         artifact_versions,
         build_logs,
@@ -14,14 +15,18 @@ if typing.TYPE_CHECKING:
         deployments,
         docker_registries,
         metrics,
+        users,
         vcs,
         workflows,
     )
+    from .ai_gateway import AiGatewayGetGatewayConfigRequestType
     from .metrics import MetricsGetChartsRequestFilterEntity
     from .workflows import WorkflowsExecuteWorkflowResponse
 _dynamic_imports: typing.Dict[str, str] = {
+    "AiGatewayGetGatewayConfigRequestType": ".ai_gateway",
     "MetricsGetChartsRequestFilterEntity": ".metrics",
     "WorkflowsExecuteWorkflowResponse": ".workflows",
+    "ai_gateway": ".ai_gateway",
     "applications": ".applications",
     "artifact_versions": ".artifact_versions",
     "build_logs": ".build_logs",
@@ -29,6 +34,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "deployments": ".deployments",
     "docker_registries": ".docker_registries",
     "metrics": ".metrics",
+    "users": ".users",
     "vcs": ".vcs",
     "workflows": ".workflows",
 }
@@ -56,8 +62,10 @@ def __dir__():
 
 
 __all__ = [
+    "AiGatewayGetGatewayConfigRequestType",
     "MetricsGetChartsRequestFilterEntity",
     "WorkflowsExecuteWorkflowResponse",
+    "ai_gateway",
     "applications",
     "artifact_versions",
     "build_logs",
@@ -65,6 +73,7 @@ __all__ = [
     "deployments",
     "docker_registries",
     "metrics",
+    "users",
     "vcs",
     "workflows",
 ]

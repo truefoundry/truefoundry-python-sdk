@@ -18,6 +18,7 @@ from ..errors.method_not_allowed_error import MethodNotAllowedError
 from ..errors.not_found_error import NotFoundError
 from ..errors.not_implemented_error import NotImplementedError
 from ..types.application import Application
+from ..types.application_type import ApplicationType
 from ..types.delete_application_response import DeleteApplicationResponse
 from ..types.deployment import Deployment
 from ..types.get_application_deployment_response import GetApplicationDeploymentResponse
@@ -25,7 +26,6 @@ from ..types.get_application_response import GetApplicationResponse
 from ..types.http_error import HttpError
 from ..types.list_applications_response import ListApplicationsResponse
 from .types.applications_cancel_deployment_response import ApplicationsCancelDeploymentResponse
-from .types.applications_list_request_application_type import ApplicationsListRequestApplicationType
 from .types.applications_list_request_device_type_filter import ApplicationsListRequestDeviceTypeFilter
 from .types.applications_list_request_lifecycle_stage import ApplicationsListRequestLifecycleStage
 from pydantic import ValidationError
@@ -48,7 +48,7 @@ class RawApplicationsClient:
         application_name: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         workspace_fqn: typing.Optional[str] = None,
-        application_type: typing.Optional[ApplicationsListRequestApplicationType] = None,
+        application_type: typing.Optional[ApplicationType] = None,
         name_search_query: typing.Optional[str] = None,
         environment_id: typing.Optional[str] = None,
         cluster_id: typing.Optional[str] = None,
@@ -86,7 +86,7 @@ class RawApplicationsClient:
         workspace_fqn : typing.Optional[str]
             FQN of the workspace to filter by.
 
-        application_type : typing.Optional[ApplicationsListRequestApplicationType]
+        application_type : typing.Optional[ApplicationType]
             Application type to filter by (comma-separated).
 
         name_search_query : typing.Optional[str]
@@ -779,7 +779,7 @@ class AsyncRawApplicationsClient:
         application_name: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         workspace_fqn: typing.Optional[str] = None,
-        application_type: typing.Optional[ApplicationsListRequestApplicationType] = None,
+        application_type: typing.Optional[ApplicationType] = None,
         name_search_query: typing.Optional[str] = None,
         environment_id: typing.Optional[str] = None,
         cluster_id: typing.Optional[str] = None,
@@ -817,7 +817,7 @@ class AsyncRawApplicationsClient:
         workspace_fqn : typing.Optional[str]
             FQN of the workspace to filter by.
 
-        application_type : typing.Optional[ApplicationsListRequestApplicationType]
+        application_type : typing.Optional[ApplicationType]
             Application type to filter by (comma-separated).
 
         name_search_query : typing.Optional[str]

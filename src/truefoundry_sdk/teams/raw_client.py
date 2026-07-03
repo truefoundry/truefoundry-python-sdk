@@ -23,10 +23,9 @@ from ..types.http_error import HttpError
 from ..types.list_team_managers_response import ListTeamManagersResponse
 from ..types.list_team_members_response import ListTeamMembersResponse
 from ..types.list_teams_response import ListTeamsResponse
-from ..types.team_dto import TeamDto
+from ..types.team import Team
 from ..types.team_manifest import TeamManifest
 from ..types.team_subject_row import TeamSubjectRow
-from .types.teams_list_request_type import TeamsListRequestType
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -42,11 +41,10 @@ class RawTeamsClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
-        type: typing.Optional[TeamsListRequestType] = None,
         role: typing.Optional[typing.Literal["manager"]] = None,
         attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[TeamDto, ListTeamsResponse]:
+    ) -> SyncPager[Team, ListTeamsResponse]:
         """
         List teams accessible to the current user.
 
@@ -57,9 +55,6 @@ class RawTeamsClient:
 
         offset : typing.Optional[int]
             Number of items to skip
-
-        type : typing.Optional[TeamsListRequestType]
-            Filter teams by type.
 
         role : typing.Optional[typing.Literal["manager"]]
             Filter to teams where the caller holds this role. `manager` returns teams the caller can manage (team managers and admins).
@@ -72,7 +67,7 @@ class RawTeamsClient:
 
         Returns
         -------
-        SyncPager[TeamDto, ListTeamsResponse]
+        SyncPager[Team, ListTeamsResponse]
             Paginated list of teams the caller has access to.
         """
         offset = offset if offset is not None else 0
@@ -83,7 +78,6 @@ class RawTeamsClient:
             params={
                 "limit": limit,
                 "offset": offset,
-                "type": type,
                 "role": role,
                 "attributes": attributes,
             },
@@ -103,7 +97,6 @@ class RawTeamsClient:
                 _get_next = lambda: self.list(
                     limit=limit,
                     offset=offset + len(_items or []),
-                    type=type,
                     role=role,
                     attributes=attributes,
                     request_options=request_options,
@@ -584,11 +577,10 @@ class AsyncRawTeamsClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
-        type: typing.Optional[TeamsListRequestType] = None,
         role: typing.Optional[typing.Literal["manager"]] = None,
         attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[TeamDto, ListTeamsResponse]:
+    ) -> AsyncPager[Team, ListTeamsResponse]:
         """
         List teams accessible to the current user.
 
@@ -599,9 +591,6 @@ class AsyncRawTeamsClient:
 
         offset : typing.Optional[int]
             Number of items to skip
-
-        type : typing.Optional[TeamsListRequestType]
-            Filter teams by type.
 
         role : typing.Optional[typing.Literal["manager"]]
             Filter to teams where the caller holds this role. `manager` returns teams the caller can manage (team managers and admins).
@@ -614,7 +603,7 @@ class AsyncRawTeamsClient:
 
         Returns
         -------
-        AsyncPager[TeamDto, ListTeamsResponse]
+        AsyncPager[Team, ListTeamsResponse]
             Paginated list of teams the caller has access to.
         """
         offset = offset if offset is not None else 0
@@ -625,7 +614,6 @@ class AsyncRawTeamsClient:
             params={
                 "limit": limit,
                 "offset": offset,
-                "type": type,
                 "role": role,
                 "attributes": attributes,
             },
@@ -647,7 +635,6 @@ class AsyncRawTeamsClient:
                     return await self.list(
                         limit=limit,
                         offset=offset + len(_items or []),
-                        type=type,
                         role=role,
                         attributes=attributes,
                         request_options=request_options,

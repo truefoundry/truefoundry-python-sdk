@@ -9,14 +9,17 @@ from ..types.activate_user_response import ActivateUserResponse
 from ..types.change_password_response import ChangePasswordResponse
 from ..types.deactivate_user_response import DeactivateUserResponse
 from ..types.delete_user_response import DeleteUserResponse
+from ..types.get_user_permissions_response import GetUserPermissionsResponse
+from ..types.get_user_resources_response import GetUserResourcesResponse
 from ..types.get_user_response import GetUserResponse
+from ..types.get_user_teams_response import GetUserTeamsResponse
 from ..types.invite_user_response import InviteUserResponse
 from ..types.list_users_response import ListUsersResponse
 from ..types.register_users_response import RegisterUsersResponse
+from ..types.resource_type import ResourceType
 from ..types.update_user_roles_response import UpdateUserRolesResponse
 from ..types.user import User
 from .raw_client import AsyncRawUsersClient, RawUsersClient
-from .types.update_user_roles_request_resource_type import UpdateUserRolesRequestResourceType
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -164,7 +167,7 @@ class UsersClient:
         *,
         email: str,
         roles: typing.Sequence[str],
-        resource_type: typing.Optional[UpdateUserRolesRequestResourceType] = OMIT,
+        resource_type: typing.Optional[ResourceType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> UpdateUserRolesResponse:
         """
@@ -178,7 +181,7 @@ class UsersClient:
         roles : typing.Sequence[str]
             Role names to assign to the user.
 
-        resource_type : typing.Optional[UpdateUserRolesRequestResourceType]
+        resource_type : typing.Optional[ResourceType]
             Resource type scope for the role assignment.
 
         request_options : typing.Optional[RequestOptions]
@@ -452,6 +455,106 @@ class UsersClient:
         )
         return _response.data
 
+    def get_resources(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetUserResourcesResponse:
+        """
+        Get all resources where the user is a collaborator.
+
+        Parameters
+        ----------
+        id : str
+            System-generated user ID.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetUserResourcesResponse
+            Returns the resources associated with the user.
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.users.get_resources(
+            id="jqfwg345gi25n5ju2yz5iz6m",
+        )
+        """
+        _response = self._raw_client.get_resources(id, request_options=request_options)
+        return _response.data
+
+    def get_permissions(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetUserPermissionsResponse:
+        """
+        Get all role bindings for a user, including team-inherited bindings.
+
+        Parameters
+        ----------
+        id : str
+            System-generated user ID.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetUserPermissionsResponse
+            Returns the role bindings for the user.
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.users.get_permissions(
+            id="jqfwg345gi25n5ju2yz5iz6m",
+        )
+        """
+        _response = self._raw_client.get_permissions(id, request_options=request_options)
+        return _response.data
+
+    def get_teams(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetUserTeamsResponse:
+        """
+        Get all teams a user belongs to, including their role in each team.
+
+        Parameters
+        ----------
+        id : str
+            System-generated user ID.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetUserTeamsResponse
+            Returns the teams and roles for the user.
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.users.get_teams(
+            id="jqfwg345gi25n5ju2yz5iz6m",
+        )
+        """
+        _response = self._raw_client.get_teams(id, request_options=request_options)
+        return _response.data
+
 
 class AsyncUsersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -612,7 +715,7 @@ class AsyncUsersClient:
         *,
         email: str,
         roles: typing.Sequence[str],
-        resource_type: typing.Optional[UpdateUserRolesRequestResourceType] = OMIT,
+        resource_type: typing.Optional[ResourceType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> UpdateUserRolesResponse:
         """
@@ -626,7 +729,7 @@ class AsyncUsersClient:
         roles : typing.Sequence[str]
             Role names to assign to the user.
 
-        resource_type : typing.Optional[UpdateUserRolesRequestResourceType]
+        resource_type : typing.Optional[ResourceType]
             Resource type scope for the role assignment.
 
         request_options : typing.Optional[RequestOptions]
@@ -958,4 +1061,130 @@ class AsyncUsersClient:
         _response = await self._raw_client.change_password(
             login_id=login_id, new_password=new_password, old_password=old_password, request_options=request_options
         )
+        return _response.data
+
+    async def get_resources(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetUserResourcesResponse:
+        """
+        Get all resources where the user is a collaborator.
+
+        Parameters
+        ----------
+        id : str
+            System-generated user ID.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetUserResourcesResponse
+            Returns the resources associated with the user.
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.users.get_resources(
+                id="jqfwg345gi25n5ju2yz5iz6m",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_resources(id, request_options=request_options)
+        return _response.data
+
+    async def get_permissions(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetUserPermissionsResponse:
+        """
+        Get all role bindings for a user, including team-inherited bindings.
+
+        Parameters
+        ----------
+        id : str
+            System-generated user ID.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetUserPermissionsResponse
+            Returns the role bindings for the user.
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.users.get_permissions(
+                id="jqfwg345gi25n5ju2yz5iz6m",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_permissions(id, request_options=request_options)
+        return _response.data
+
+    async def get_teams(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetUserTeamsResponse:
+        """
+        Get all teams a user belongs to, including their role in each team.
+
+        Parameters
+        ----------
+        id : str
+            System-generated user ID.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetUserTeamsResponse
+            Returns the teams and roles for the user.
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.users.get_teams(
+                id="jqfwg345gi25n5ju2yz5iz6m",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_teams(id, request_options=request_options)
         return _response.data

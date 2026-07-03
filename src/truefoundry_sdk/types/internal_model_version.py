@@ -66,7 +66,7 @@ class InternalModelVersion(UniversalBaseModel):
     Metrics logged for the model version.
     """
 
-    deployable: bool = pydantic.Field(default=False)
+    deployable: typing.Optional[bool] = pydantic.Field(default=False)
     """
     Whether the model version can be deployed.
     """

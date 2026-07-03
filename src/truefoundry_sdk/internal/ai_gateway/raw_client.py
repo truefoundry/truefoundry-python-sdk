@@ -3,32 +3,32 @@
 import typing
 from json.decoder import JSONDecodeError
 
-from ..core.api_error import ApiError
-from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import encode_path_param
-from ..core.parse_error import ParsingError
-from ..core.pydantic_utilities import parse_obj_as
-from ..core.request_options import RequestOptions
-from ..errors.bad_request_error import BadRequestError
-from ..types.gateway_configuration import GatewayConfiguration
-from .types.gateway_configs_get_request_type import GatewayConfigsGetRequestType
+from ...core.api_error import ApiError
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.http_response import AsyncHttpResponse, HttpResponse
+from ...core.jsonable_encoder import encode_path_param
+from ...core.parse_error import ParsingError
+from ...core.pydantic_utilities import parse_obj_as
+from ...core.request_options import RequestOptions
+from ...errors.bad_request_error import BadRequestError
+from ...types.gateway_configuration import GatewayConfiguration
+from .types.ai_gateway_get_gateway_config_request_type import AiGatewayGetGatewayConfigRequestType
 from pydantic import ValidationError
 
 
-class RawGatewayConfigsClient:
+class RawAiGatewayClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get(
-        self, type: GatewayConfigsGetRequestType, *, request_options: typing.Optional[RequestOptions] = None
+    def get_gateway_config(
+        self, type: AiGatewayGetGatewayConfigRequestType, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GatewayConfiguration]:
         """
         Get the AI Gateway configuration for the given type.
 
         Parameters
         ----------
-        type : GatewayConfigsGetRequestType
+        type : AiGatewayGetGatewayConfigRequestType
             The type of gateway configuration to retrieve or delete.
 
         request_options : typing.Optional[RequestOptions]
@@ -105,19 +105,19 @@ class RawGatewayConfigsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
-class AsyncRawGatewayConfigsClient:
+class AsyncRawAiGatewayClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get(
-        self, type: GatewayConfigsGetRequestType, *, request_options: typing.Optional[RequestOptions] = None
+    async def get_gateway_config(
+        self, type: AiGatewayGetGatewayConfigRequestType, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GatewayConfiguration]:
         """
         Get the AI Gateway configuration for the given type.
 
         Parameters
         ----------
-        type : GatewayConfigsGetRequestType
+        type : AiGatewayGetGatewayConfigRequestType
             The type of gateway configuration to retrieve or delete.
 
         request_options : typing.Optional[RequestOptions]

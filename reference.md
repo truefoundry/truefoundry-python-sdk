@@ -528,7 +528,7 @@ client.users.update_roles(
 <dl>
 <dd>
 
-**resource_type:** `typing.Optional[UpdateUserRolesRequestResourceType]` — Resource type scope for the role assignment.
+**resource_type:** `typing.Optional[ResourceType]` — Resource type scope for the role assignment.
     
 </dd>
 </dl>
@@ -1032,6 +1032,222 @@ client.users.change_password(
 </dl>
 </details>
 
+<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">get_resources</a>(...) -> GetUserResourcesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all resources where the user is a collaborator.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.users.get_resources(
+    id="jqfwg345gi25n5ju2yz5iz6m",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — System-generated user ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">get_permissions</a>(...) -> GetUserPermissionsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all role bindings for a user, including team-inherited bindings.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.users.get_permissions(
+    id="jqfwg345gi25n5ju2yz5iz6m",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — System-generated user ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.<a href="src/truefoundry_sdk/users/client.py">get_teams</a>(...) -> GetUserTeamsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all teams a user belongs to, including their role in each team.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.users.get_teams(
+    id="jqfwg345gi25n5ju2yz5iz6m",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — System-generated user ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Teams
 <details><summary><code>client.teams.<a href="src/truefoundry_sdk/teams/client.py">list</a>(...) -> ListTeamsResponse</code></summary>
 <dl>
@@ -1061,7 +1277,6 @@ List teams accessible to the current user.
 
 ```python
 from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk.teams import TeamsListRequestType
 
 client = TrueFoundry(
     api_key="<token>",
@@ -1071,7 +1286,6 @@ client = TrueFoundry(
 client.teams.list(
     limit=10,
     offset=0,
-    type=TeamsListRequestType.TEAM,
     role="manager",
     attributes=[
         "attributes"
@@ -1101,14 +1315,6 @@ client.teams.list(
 <dd>
 
 **offset:** `typing.Optional[int]` — Number of items to skip
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**type:** `typing.Optional[TeamsListRequestType]` — Filter teams by type.
     
 </dd>
 </dl>
@@ -1628,142 +1834,6 @@ client.teams.get_permissions(
     
 </dd>
 </dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## GatewayConfigs
-<details><summary><code>client.gateway_configs.<a href="src/truefoundry_sdk/gateway_configs/client.py">get</a>(...) -> GatewayConfiguration</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get the AI Gateway configuration for the given type.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk.gateway_configs import GatewayConfigsGetRequestType
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.gateway_configs.get(
-    type=GatewayConfigsGetRequestType.GATEWAY_RATE_LIMITING_CONFIG,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**type:** `GatewayConfigsGetRequestType` — The type of gateway configuration to retrieve or delete.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.gateway_configs.<a href="src/truefoundry_sdk/gateway_configs/client.py">get_budget_usage</a>()</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get the current budget usage for every budget rule configured in the tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.gateway_configs.get_budget_usage()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
 
 <dl>
 <dd>
@@ -3391,8 +3461,8 @@ List applications the caller can read.
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk.applications import ApplicationsListRequestApplicationType, ApplicationsListRequestDeviceTypeFilter, ApplicationsListRequestLifecycleStage
+from truefoundry_sdk import TrueFoundry, ApplicationType
+from truefoundry_sdk.applications import ApplicationsListRequestDeviceTypeFilter, ApplicationsListRequestLifecycleStage
 
 client = TrueFoundry(
     api_key="<token>",
@@ -3407,7 +3477,7 @@ client.applications.list(
     application_name="applicationName",
     fqn="fqn",
     workspace_fqn="workspaceFqn",
-    application_type=ApplicationsListRequestApplicationType.ASYNC_SERVICE,
+    application_type=ApplicationType.ASYNC_SERVICE,
     name_search_query="nameSearchQuery",
     environment_id="environmentId",
     cluster_id="clusterId",
@@ -3489,7 +3559,7 @@ client.applications.list(
 <dl>
 <dd>
 
-**application_type:** `typing.Optional[ApplicationsListRequestApplicationType]` — Application type to filter by (comma-separated).
+**application_type:** `typing.Optional[ApplicationType]` — Application type to filter by (comma-separated).
     
 </dd>
 </dl>
@@ -9860,6 +9930,7 @@ client = TrueFoundry(
 
 client.data_directories.delete(
     id="id",
+    delete_contents=True,
 )
 
 ```
@@ -9877,6 +9948,14 @@ client.data_directories.delete(
 <dd>
 
 **id:** `str` — Data directory ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**delete_contents:** `typing.Optional[bool]` — When true, also delete the contents (files) stored under the data directory.
     
 </dd>
 </dl>
@@ -9983,78 +10062,6 @@ client.runs.create(
 <dd>
 
 **description:** `typing.Optional[str]` — Description of the run.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.runs.<a href="src/truefoundry_sdk/runs/client.py">get_columns</a>(...) -> GetRunColumnsResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List distinct metric, parameter, and tag keys for runs in an ML Repo.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.runs.get_columns(
-    experiment_id="experiment_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**experiment_id:** `str` — System-generated unique identifier for the ML Repo.
     
 </dd>
 </dl>
@@ -10445,150 +10452,6 @@ client.runs.search()
 <dd>
 
 **ml_repo_name:** `typing.Optional[str]` — ML Repo name when resolving by run name.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.runs.<a href="src/truefoundry_sdk/runs/client.py">archive</a>(...) -> EmptyResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Soft-delete a run.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.runs.archive(
-    id="id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `str` — System-generated unique identifier for the run.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.runs.<a href="src/truefoundry_sdk/runs/client.py">restore</a>(...) -> EmptyResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Restore an archived run.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from truefoundry_sdk import TrueFoundry
-
-client = TrueFoundry(
-    api_key="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.runs.restore(
-    id="id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `str` — System-generated unique identifier for the run.
     
 </dd>
 </dl>
@@ -13001,6 +12864,205 @@ client.traces.query_spans(
 </dl>
 </details>
 
+## Internal Users
+<details><summary><code>client.internal.users.<a href="src/truefoundry_sdk/internal/users/client.py">get_info</a>() -> Session</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the session details for the currently authenticated user.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.internal.users.get_info()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Internal AiGateway
+<details><summary><code>client.internal.ai_gateway.<a href="src/truefoundry_sdk/internal/ai_gateway/client.py">get_gateway_config</a>(...) -> GatewayConfiguration</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the AI Gateway configuration for the given type.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+from truefoundry_sdk.internal.ai_gateway import AiGatewayGetGatewayConfigRequestType
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.internal.ai_gateway.get_gateway_config(
+    type=AiGatewayGetGatewayConfigRequestType.GATEWAY_RATE_LIMITING_CONFIG,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**type:** `AiGatewayGetGatewayConfigRequestType` — The type of gateway configuration to retrieve or delete.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.internal.ai_gateway.<a href="src/truefoundry_sdk/internal/ai_gateway/client.py">get_budget_usage</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the current budget usage for every budget rule configured in the tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.internal.ai_gateway.get_budget_usage()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Internal Clusters
 <details><summary><code>client.internal.clusters.<a href="src/truefoundry_sdk/internal/clusters/client.py">get_autoprovisioning_state</a>(...) -> GetAutoProvisioningStateResponse</code></summary>
 <dl>
@@ -13870,7 +13932,7 @@ List artifact versions with internal metadata, optionally including model versio
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, ArtifactType
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="<token>",
@@ -13895,7 +13957,7 @@ client.internal.artifact_versions.list(
     include_internal_metadata=True,
     include_model_versions=True,
     artifact_types=[
-        ArtifactType.ARTIFACT
+        "artifact_types"
     ],
 )
 

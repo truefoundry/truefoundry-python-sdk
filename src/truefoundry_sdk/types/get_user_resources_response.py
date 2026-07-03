@@ -4,19 +4,13 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .pagination import Pagination
-from .team import Team
+from .user_resource import UserResource
 
 
-class ListTeamsResponse(UniversalBaseModel):
-    data: typing.List[Team] = pydantic.Field()
+class GetUserResourcesResponse(UniversalBaseModel):
+    data: typing.List[UserResource] = pydantic.Field()
     """
-    Array of teams matching the query.
-    """
-
-    pagination: Pagination = pydantic.Field()
-    """
-    Pagination metadata.
+    Resources where user is a collaborator
     """
 
     if IS_PYDANTIC_V2:

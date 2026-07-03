@@ -2,37 +2,37 @@
 
 import typing
 
-from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.request_options import RequestOptions
-from ..types.gateway_configuration import GatewayConfiguration
-from .raw_client import AsyncRawGatewayConfigsClient, RawGatewayConfigsClient
-from .types.gateway_configs_get_request_type import GatewayConfigsGetRequestType
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.request_options import RequestOptions
+from ...types.gateway_configuration import GatewayConfiguration
+from .raw_client import AsyncRawAiGatewayClient, RawAiGatewayClient
+from .types.ai_gateway_get_gateway_config_request_type import AiGatewayGetGatewayConfigRequestType
 
 
-class GatewayConfigsClient:
+class AiGatewayClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawGatewayConfigsClient(client_wrapper=client_wrapper)
+        self._raw_client = RawAiGatewayClient(client_wrapper=client_wrapper)
 
     @property
-    def with_raw_response(self) -> RawGatewayConfigsClient:
+    def with_raw_response(self) -> RawAiGatewayClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        RawGatewayConfigsClient
+        RawAiGatewayClient
         """
         return self._raw_client
 
-    def get(
-        self, type: GatewayConfigsGetRequestType, *, request_options: typing.Optional[RequestOptions] = None
+    def get_gateway_config(
+        self, type: AiGatewayGetGatewayConfigRequestType, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GatewayConfiguration:
         """
         Get the AI Gateway configuration for the given type.
 
         Parameters
         ----------
-        type : GatewayConfigsGetRequestType
+        type : AiGatewayGetGatewayConfigRequestType
             The type of gateway configuration to retrieve or delete.
 
         request_options : typing.Optional[RequestOptions]
@@ -46,17 +46,19 @@ class GatewayConfigsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        from truefoundry_sdk.gateway_configs import GatewayConfigsGetRequestType
+        from truefoundry_sdk.internal.ai_gateway import (
+            AiGatewayGetGatewayConfigRequestType,
+        )
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.gateway_configs.get(
-            type=GatewayConfigsGetRequestType.GATEWAY_RATE_LIMITING_CONFIG,
+        client.internal.ai_gateway.get_gateway_config(
+            type=AiGatewayGetGatewayConfigRequestType.GATEWAY_RATE_LIMITING_CONFIG,
         )
         """
-        _response = self._raw_client.get(type, request_options=request_options)
+        _response = self._raw_client.get_gateway_config(type, request_options=request_options)
         return _response.data
 
     def get_budget_usage(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
@@ -80,36 +82,36 @@ class GatewayConfigsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.gateway_configs.get_budget_usage()
+        client.internal.ai_gateway.get_budget_usage()
         """
         _response = self._raw_client.get_budget_usage(request_options=request_options)
         return _response.data
 
 
-class AsyncGatewayConfigsClient:
+class AsyncAiGatewayClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawGatewayConfigsClient(client_wrapper=client_wrapper)
+        self._raw_client = AsyncRawAiGatewayClient(client_wrapper=client_wrapper)
 
     @property
-    def with_raw_response(self) -> AsyncRawGatewayConfigsClient:
+    def with_raw_response(self) -> AsyncRawAiGatewayClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        AsyncRawGatewayConfigsClient
+        AsyncRawAiGatewayClient
         """
         return self._raw_client
 
-    async def get(
-        self, type: GatewayConfigsGetRequestType, *, request_options: typing.Optional[RequestOptions] = None
+    async def get_gateway_config(
+        self, type: AiGatewayGetGatewayConfigRequestType, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GatewayConfiguration:
         """
         Get the AI Gateway configuration for the given type.
 
         Parameters
         ----------
-        type : GatewayConfigsGetRequestType
+        type : AiGatewayGetGatewayConfigRequestType
             The type of gateway configuration to retrieve or delete.
 
         request_options : typing.Optional[RequestOptions]
@@ -125,7 +127,9 @@ class AsyncGatewayConfigsClient:
         import asyncio
 
         from truefoundry_sdk import AsyncTrueFoundry
-        from truefoundry_sdk.gateway_configs import GatewayConfigsGetRequestType
+        from truefoundry_sdk.internal.ai_gateway import (
+            AiGatewayGetGatewayConfigRequestType,
+        )
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -134,14 +138,14 @@ class AsyncGatewayConfigsClient:
 
 
         async def main() -> None:
-            await client.gateway_configs.get(
-                type=GatewayConfigsGetRequestType.GATEWAY_RATE_LIMITING_CONFIG,
+            await client.internal.ai_gateway.get_gateway_config(
+                type=AiGatewayGetGatewayConfigRequestType.GATEWAY_RATE_LIMITING_CONFIG,
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get(type, request_options=request_options)
+        _response = await self._raw_client.get_gateway_config(type, request_options=request_options)
         return _response.data
 
     async def get_budget_usage(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
@@ -170,7 +174,7 @@ class AsyncGatewayConfigsClient:
 
 
         async def main() -> None:
-            await client.gateway_configs.get_budget_usage()
+            await client.internal.ai_gateway.get_budget_usage()
 
 
         asyncio.run(main())

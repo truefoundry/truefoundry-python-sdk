@@ -8,10 +8,6 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class ApplicationType(enum.StrEnum):
-    """
-    Type of the application
-    """
-
     ASYNC_SERVICE = "async-service"
     SERVICE = "service"
     JOB = "job"

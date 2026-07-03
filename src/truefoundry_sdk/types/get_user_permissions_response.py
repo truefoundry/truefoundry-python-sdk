@@ -4,19 +4,13 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .pagination import Pagination
-from .team import Team
+from .subject_permission import SubjectPermission
 
 
-class ListTeamsResponse(UniversalBaseModel):
-    data: typing.List[Team] = pydantic.Field()
+class GetUserPermissionsResponse(UniversalBaseModel):
+    data: typing.List[SubjectPermission] = pydantic.Field()
     """
-    Array of teams matching the query.
-    """
-
-    pagination: Pagination = pydantic.Field()
-    """
-    Pagination metadata.
+    Role bindings for the user (including team-inherited)
     """
 
     if IS_PYDANTIC_V2:

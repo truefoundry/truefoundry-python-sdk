@@ -477,7 +477,11 @@ class RawDataDirectoriesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: str,
+        *,
+        delete_contents: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[EmptyResponse]:
         """
         Delete a data directory, optionally including its contents.
@@ -486,6 +490,9 @@ class RawDataDirectoriesClient:
         ----------
         id : str
             Data directory ID
+
+        delete_contents : typing.Optional[bool]
+            When true, also delete the contents (files) stored under the data directory.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -498,6 +505,9 @@ class RawDataDirectoriesClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/data-directories/{encode_path_param(id)}",
             method="DELETE",
+            params={
+                "delete_contents": delete_contents,
+            },
             request_options=request_options,
         )
         try:
@@ -985,7 +995,11 @@ class AsyncRawDataDirectoriesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: str,
+        *,
+        delete_contents: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[EmptyResponse]:
         """
         Delete a data directory, optionally including its contents.
@@ -994,6 +1008,9 @@ class AsyncRawDataDirectoriesClient:
         ----------
         id : str
             Data directory ID
+
+        delete_contents : typing.Optional[bool]
+            When true, also delete the contents (files) stored under the data directory.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1006,6 +1023,9 @@ class AsyncRawDataDirectoriesClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/data-directories/{encode_path_param(id)}",
             method="DELETE",
+            params={
+                "delete_contents": delete_contents,
+            },
             request_options=request_options,
         )
         try:

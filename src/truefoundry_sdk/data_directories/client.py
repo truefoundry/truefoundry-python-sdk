@@ -360,7 +360,13 @@ class DataDirectoriesClient:
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
 
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
+    def delete(
+        self,
+        id: str,
+        *,
+        delete_contents: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> EmptyResponse:
         """
         Delete a data directory, optionally including its contents.
 
@@ -368,6 +374,9 @@ class DataDirectoriesClient:
         ----------
         id : str
             Data directory ID
+
+        delete_contents : typing.Optional[bool]
+            When true, also delete the contents (files) stored under the data directory.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -387,9 +396,10 @@ class DataDirectoriesClient:
         )
         client.data_directories.delete(
             id="id",
+            delete_contents=True,
         )
         """
-        _response = self._raw_client.delete(id, request_options=request_options)
+        _response = self._raw_client.delete(id, delete_contents=delete_contents, request_options=request_options)
         return _response.data
 
 
@@ -792,7 +802,13 @@ class AsyncDataDirectoriesClient:
         _response = await self._raw_client.get(id, request_options=request_options)
         return _response.data
 
-    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EmptyResponse:
+    async def delete(
+        self,
+        id: str,
+        *,
+        delete_contents: typing.Optional[bool] = False,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> EmptyResponse:
         """
         Delete a data directory, optionally including its contents.
 
@@ -800,6 +816,9 @@ class AsyncDataDirectoriesClient:
         ----------
         id : str
             Data directory ID
+
+        delete_contents : typing.Optional[bool]
+            When true, also delete the contents (files) stored under the data directory.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -824,10 +843,11 @@ class AsyncDataDirectoriesClient:
         async def main() -> None:
             await client.data_directories.delete(
                 id="id",
+                delete_contents=True,
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.delete(id, request_options=request_options)
+        _response = await self._raw_client.delete(id, delete_contents=delete_contents, request_options=request_options)
         return _response.data
