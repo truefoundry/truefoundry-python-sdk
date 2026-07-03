@@ -192,7 +192,6 @@ if typing.TYPE_CHECKING:
     from .budget_limit_unit import BudgetLimitUnit
     from .budget_rule import BudgetRule
     from .budget_v2alert import BudgetV2Alert
-    from .budget_v2alert_send_to import BudgetV2AlertSendTo
     from .budget_v2applies_to import BudgetV2AppliesTo
     from .budget_v2applies_to_aggregate import BudgetV2AppliesToAggregate
     from .budget_v2applies_to_metadata import BudgetV2AppliesToMetadata
@@ -1020,7 +1019,6 @@ if typing.TYPE_CHECKING:
     from .team_budget_config import TeamBudgetConfig
     from .team_budget_config_mode import TeamBudgetConfigMode
     from .team_data_access_rule import TeamDataAccessRule
-    from .team_dto import TeamDto
     from .team_manifest import TeamManifest
     from .team_metadata import TeamMetadata
     from .team_owned_by import TeamOwnedBy
@@ -1345,7 +1343,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BudgetLimitUnit": ".budget_limit_unit",
     "BudgetRule": ".budget_rule",
     "BudgetV2Alert": ".budget_v2alert",
-    "BudgetV2AlertSendTo": ".budget_v2alert_send_to",
     "BudgetV2AppliesTo": ".budget_v2applies_to",
     "BudgetV2AppliesToAggregate": ".budget_v2applies_to_aggregate",
     "BudgetV2AppliesToMetadata": ".budget_v2applies_to_metadata",
@@ -2162,7 +2159,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TeamBudgetConfig": ".team_budget_config",
     "TeamBudgetConfigMode": ".team_budget_config_mode",
     "TeamDataAccessRule": ".team_data_access_rule",
-    "TeamDto": ".team_dto",
     "TeamManifest": ".team_manifest",
     "TeamMetadata": ".team_metadata",
     "TeamOwnedBy": ".team_owned_by",
@@ -2511,7 +2507,6 @@ __all__ = [
     "BudgetLimitUnit",
     "BudgetRule",
     "BudgetV2Alert",
-    "BudgetV2AlertSendTo",
     "BudgetV2AppliesTo",
     "BudgetV2AppliesToAggregate",
     "BudgetV2AppliesToMetadata",
@@ -3328,7 +3323,6 @@ __all__ = [
     "TeamBudgetConfig",
     "TeamBudgetConfigMode",
     "TeamDataAccessRule",
-    "TeamDto",
     "TeamManifest",
     "TeamMetadata",
     "TeamOwnedBy",

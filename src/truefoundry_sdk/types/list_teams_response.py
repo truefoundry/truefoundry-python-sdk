@@ -5,11 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .pagination import Pagination
-from .team_dto import TeamDto
+from .team import Team
 
 
 class ListTeamsResponse(UniversalBaseModel):
-    data: typing.List[TeamDto] = pydantic.Field()
+    data: typing.List[Team] = pydantic.Field()
     """
     Array of teams matching the query.
     """

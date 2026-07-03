@@ -77,6 +77,39 @@ class Team(UniversalBaseModel):
     Role names assigned to the team.
     """
 
+    top_members: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]],
+        FieldMetadata(alias="topMembers"),
+        pydantic.Field(
+            alias="topMembers",
+            description="Up to 5 team member emails, sourced from cache. Absent when the cache is unavailable.",
+        ),
+    ] = None
+    top_managers: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]],
+        FieldMetadata(alias="topManagers"),
+        pydantic.Field(
+            alias="topManagers",
+            description="Up to 5 team manager emails, sourced from cache. Absent when the cache is unavailable.",
+        ),
+    ] = None
+    total_member_count: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="totalMemberCount"),
+        pydantic.Field(
+            alias="totalMemberCount",
+            description="Total number of team members, sourced from cache. Absent when the cache is unavailable.",
+        ),
+    ] = None
+    total_manager_count: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="totalManagerCount"),
+        pydantic.Field(
+            alias="totalManagerCount",
+            description="Total number of team managers, sourced from cache. Absent when the cache is unavailable.",
+        ),
+    ] = None
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:

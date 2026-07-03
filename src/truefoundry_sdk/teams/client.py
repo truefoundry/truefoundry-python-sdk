@@ -11,7 +11,7 @@ from ..types.get_team_response import GetTeamResponse
 from ..types.list_team_managers_response import ListTeamManagersResponse
 from ..types.list_team_members_response import ListTeamMembersResponse
 from ..types.list_teams_response import ListTeamsResponse
-from ..types.team_dto import TeamDto
+from ..types.team import Team
 from ..types.team_manifest import TeamManifest
 from ..types.team_subject_row import TeamSubjectRow
 from .raw_client import AsyncRawTeamsClient, RawTeamsClient
@@ -43,7 +43,7 @@ class TeamsClient:
         role: typing.Optional[typing.Literal["manager"]] = None,
         attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[TeamDto, ListTeamsResponse]:
+    ) -> SyncPager[Team, ListTeamsResponse]:
         """
         List teams accessible to the current user.
 
@@ -66,7 +66,7 @@ class TeamsClient:
 
         Returns
         -------
-        SyncPager[TeamDto, ListTeamsResponse]
+        SyncPager[Team, ListTeamsResponse]
             Paginated list of teams the caller has access to.
 
         Examples
@@ -376,7 +376,7 @@ class AsyncTeamsClient:
         role: typing.Optional[typing.Literal["manager"]] = None,
         attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[TeamDto, ListTeamsResponse]:
+    ) -> AsyncPager[Team, ListTeamsResponse]:
         """
         List teams accessible to the current user.
 
@@ -399,7 +399,7 @@ class AsyncTeamsClient:
 
         Returns
         -------
-        AsyncPager[TeamDto, ListTeamsResponse]
+        AsyncPager[Team, ListTeamsResponse]
             Paginated list of teams the caller has access to.
 
         Examples
