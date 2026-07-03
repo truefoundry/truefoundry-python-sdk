@@ -14,11 +14,11 @@ from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..errors.not_found_error import NotFoundError
 from ..types.artifact import Artifact
+from ..types.artifact_manifest import ArtifactManifest
 from ..types.empty_response import EmptyResponse
 from ..types.get_artifact_response import GetArtifactResponse
 from ..types.get_artifact_version_response import GetArtifactVersionResponse
 from ..types.list_artifacts_response import ListArtifactsResponse
-from .types.apply_artifact_request_manifest import ApplyArtifactRequestManifest
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -231,14 +231,14 @@ class RawArtifactsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create_or_update(
-        self, *, manifest: ApplyArtifactRequestManifest, request_options: typing.Optional[RequestOptions] = None
+        self, *, manifest: ArtifactManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetArtifactVersionResponse]:
         """
         Create or update an artifact version from a manifest.
 
         Parameters
         ----------
-        manifest : ApplyArtifactRequestManifest
+        manifest : ArtifactManifest
             Manifest containing metadata for the artifact version to create or update
 
         request_options : typing.Optional[RequestOptions]
@@ -254,7 +254,7 @@ class RawArtifactsClient:
             method="PUT",
             json={
                 "manifest": convert_and_respect_annotation_metadata(
-                    object_=manifest, annotation=ApplyArtifactRequestManifest, direction="write"
+                    object_=manifest, annotation=ArtifactManifest, direction="write"
                 ),
             },
             headers={
@@ -492,14 +492,14 @@ class AsyncRawArtifactsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create_or_update(
-        self, *, manifest: ApplyArtifactRequestManifest, request_options: typing.Optional[RequestOptions] = None
+        self, *, manifest: ArtifactManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetArtifactVersionResponse]:
         """
         Create or update an artifact version from a manifest.
 
         Parameters
         ----------
-        manifest : ApplyArtifactRequestManifest
+        manifest : ArtifactManifest
             Manifest containing metadata for the artifact version to create or update
 
         request_options : typing.Optional[RequestOptions]
@@ -515,7 +515,7 @@ class AsyncRawArtifactsClient:
             method="PUT",
             json={
                 "manifest": convert_and_respect_annotation_metadata(
-                    object_=manifest, annotation=ApplyArtifactRequestManifest, direction="write"
+                    object_=manifest, annotation=ArtifactManifest, direction="write"
                 ),
             },
             headers={

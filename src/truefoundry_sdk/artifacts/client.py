@@ -6,12 +6,12 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.artifact import Artifact
+from ..types.artifact_manifest import ArtifactManifest
 from ..types.empty_response import EmptyResponse
 from ..types.get_artifact_response import GetArtifactResponse
 from ..types.get_artifact_version_response import GetArtifactVersionResponse
 from ..types.list_artifacts_response import ListArtifactsResponse
 from .raw_client import AsyncRawArtifactsClient, RawArtifactsClient
-from .types.apply_artifact_request_manifest import ApplyArtifactRequestManifest
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -177,14 +177,14 @@ class ArtifactsClient:
         )
 
     def create_or_update(
-        self, *, manifest: ApplyArtifactRequestManifest, request_options: typing.Optional[RequestOptions] = None
+        self, *, manifest: ArtifactManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetArtifactVersionResponse:
         """
         Create or update an artifact version from a manifest.
 
         Parameters
         ----------
-        manifest : ApplyArtifactRequestManifest
+        manifest : ArtifactManifest
             Manifest containing metadata for the artifact version to create or update
 
         request_options : typing.Optional[RequestOptions]
@@ -404,14 +404,14 @@ class AsyncArtifactsClient:
         )
 
     async def create_or_update(
-        self, *, manifest: ApplyArtifactRequestManifest, request_options: typing.Optional[RequestOptions] = None
+        self, *, manifest: ArtifactManifest, request_options: typing.Optional[RequestOptions] = None
     ) -> GetArtifactVersionResponse:
         """
         Create or update an artifact version from a manifest.
 
         Parameters
         ----------
-        manifest : ApplyArtifactRequestManifest
+        manifest : ArtifactManifest
             Manifest containing metadata for the artifact version to create or update
 
         request_options : typing.Optional[RequestOptions]

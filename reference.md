@@ -8193,7 +8193,7 @@ client.artifacts.create_or_update(
 <dl>
 <dd>
 
-**manifest:** `ApplyArtifactRequestManifest` — Manifest containing metadata for the artifact version to create or update
+**manifest:** `ArtifactManifest` — Manifest containing metadata for the artifact version to create or update
     
 </dd>
 </dl>

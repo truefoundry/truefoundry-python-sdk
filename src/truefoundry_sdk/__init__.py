@@ -1200,7 +1200,6 @@ if typing.TYPE_CHECKING:
         ApplicationsListRequestLifecycleStage,
     )
     from .artifact_versions import StageArtifactRequestManifest
-    from .artifacts import ApplyArtifactRequestManifest
     from .client import AsyncTrueFoundry, TrueFoundry
     from .jobs import TriggerJobRequestInput
     from .personal_access_tokens import CreatePersonalAccessTokenRequestTokenType
@@ -1272,7 +1271,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ApplicationsCancelDeploymentResponse": ".applications",
     "ApplicationsListRequestDeviceTypeFilter": ".applications",
     "ApplicationsListRequestLifecycleStage": ".applications",
-    "ApplyArtifactRequestManifest": ".artifacts",
     "Artifact": ".types",
     "ArtifactManifest": ".types",
     "ArtifactManifestSource": ".types",
@@ -2491,7 +2489,6 @@ __all__ = [
     "ApplicationsCancelDeploymentResponse",
     "ApplicationsListRequestDeviceTypeFilter",
     "ApplicationsListRequestLifecycleStage",
-    "ApplyArtifactRequestManifest",
     "Artifact",
     "ArtifactManifest",
     "ArtifactManifestSource",
