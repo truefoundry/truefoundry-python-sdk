@@ -31,6 +31,11 @@ class AwsBedrockMantleProviderAccount(UniversalBaseModel):
     """
 
     region: AwsRegion
+    base_url: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Optional custom base URL (e.g. a VPC/PrivateLink endpoint) for AWS Bedrock Mantle. When set, requests are sent here instead of the default bedrock-mantle.{region}.api.aws host.
+    """
+
     auth_data: typing.Optional[AwsBedrockMantleProviderAccountAuthData] = pydantic.Field(default=None)
     """
     Authentication data for the AWS account

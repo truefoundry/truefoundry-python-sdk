@@ -6016,7 +6016,7 @@ client.secret_groups.list(
 <dl>
 <dd>
 
-**search:** `typing.Optional[str]` — Search query - filters by secret group names that contain the search string
+**search:** `typing.Optional[str]` — Search query - filters by secret group names or secret names that contain the search string
     
 </dd>
 </dl>

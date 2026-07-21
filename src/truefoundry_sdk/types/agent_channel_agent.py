@@ -4,22 +4,16 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .notification_target import NotificationTarget
 
 
-class BudgetV2Alert(UniversalBaseModel):
+class AgentChannelAgent(UniversalBaseModel):
     """
-    Budget Alert
-    """
-
-    thresholds: typing.List[float] = pydantic.Field()
-    """
-    List of usage percentages (0-100) at which alerts should be triggered. Default thresholds are [75, 90, 95, 100].
+    Agent
     """
 
-    notification_target: typing.Optional[typing.List[NotificationTarget]] = pydantic.Field(default=None)
+    name: str = pydantic.Field()
     """
-    Select where to send budget alert notifications
+    The name of the agent this channel routes messages to.
     """
 
     if IS_PYDANTIC_V2:

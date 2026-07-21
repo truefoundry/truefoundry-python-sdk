@@ -26,6 +26,11 @@ class HashicorpAppRoleAuth(UniversalBaseModel):
     AppRole secret ID for Vault authentication.
     """
 
+    role_path: typing.Optional[str] = pydantic.Field(default="approle")
+    """
+    Optional app role path which is used to authenticate the app role.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:

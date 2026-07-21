@@ -6,14 +6,19 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class GatewayLoggingWhen(UniversalBaseModel):
+class NomaSecurityApiKeyAuth(UniversalBaseModel):
     """
-    Rule Conditions
+    Noma Security API Key Auth
     """
 
-    subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    type: typing.Literal["api-key"] = pydantic.Field(default="api-key")
     """
-    List of subjects that this rule applies to
+    +value=api-key
+    """
+
+    api_key: str = pydantic.Field()
+    """
+    Noma API key for AI-DR scan access
     """
 
     if IS_PYDANTIC_V2:

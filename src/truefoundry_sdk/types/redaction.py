@@ -4,22 +4,23 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .notification_target import NotificationTarget
+from .custom_regex_pattern import CustomRegexPattern
+from .preset_regex_pattern_enum import PresetRegexPatternEnum
 
 
-class BudgetV2Alert(UniversalBaseModel):
+class Redaction(UniversalBaseModel):
     """
-    Budget Alert
-    """
-
-    thresholds: typing.List[float] = pydantic.Field()
-    """
-    List of usage percentages (0-100) at which alerts should be triggered. Default thresholds are [75, 90, 95, 100].
+    Redaction
     """
 
-    notification_target: typing.Optional[typing.List[NotificationTarget]] = pydantic.Field(default=None)
+    presets: typing.Optional[typing.List[PresetRegexPatternEnum]] = pydantic.Field(default=None)
     """
-    Select where to send budget alert notifications
+    Predefined patterns to redact from the logged copy.
+    """
+
+    custom_patterns: typing.Optional[typing.List[CustomRegexPattern]] = pydantic.Field(default=None)
+    """
+    Custom patterns to redact from the logged copy.
     """
 
     if IS_PYDANTIC_V2:

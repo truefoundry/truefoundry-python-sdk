@@ -32,7 +32,7 @@ class TeamBudgetConfig(UniversalBaseModel):
     Unique name for this budget
     """
 
-    when: BudgetV2WhenTeamScoped
+    when: typing.Optional[BudgetV2WhenTeamScoped] = None
     limits: BudgetV2Limits
     applies_to: BudgetV2AppliesTo
     mode: TeamBudgetConfigMode = pydantic.Field()

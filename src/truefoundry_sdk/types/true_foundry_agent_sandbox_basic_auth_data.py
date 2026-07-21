@@ -4,22 +4,26 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .notification_target import NotificationTarget
 
 
-class BudgetV2Alert(UniversalBaseModel):
+class TrueFoundryAgentSandboxBasicAuthData(UniversalBaseModel):
     """
-    Budget Alert
-    """
-
-    thresholds: typing.List[float] = pydantic.Field()
-    """
-    List of usage percentages (0-100) at which alerts should be triggered. Default thresholds are [75, 90, 95, 100].
+    Basic Auth
     """
 
-    notification_target: typing.Optional[typing.List[NotificationTarget]] = pydantic.Field(default=None)
+    type: typing.Literal["basic"] = pydantic.Field(default="basic")
     """
-    Select where to send budget alert notifications
+    +value=basic
+    """
+
+    username: str = pydantic.Field()
+    """
+    Username for basic authentication.
+    """
+
+    password: str = pydantic.Field()
+    """
+    Password or token for basic authentication. Stored as a secret reference (tfy-secret://…).
     """
 
     if IS_PYDANTIC_V2:

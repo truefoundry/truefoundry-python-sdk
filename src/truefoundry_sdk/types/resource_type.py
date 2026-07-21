@@ -40,10 +40,12 @@ class ResourceType(enum.StrEnum):
     GATEWAY_CONFIG = "gateway-config"
     GATEWAY_CONTROLS = "gateway-controls"
     GATEWAY_BUDGET = "gateway-budget"
+    GATEWAY_POLICY = "gateway-policy"
     TRACING_PROJECT = "tracing-project"
     TRACING_APPLICATION = "tracing-application"
     AGENT = "agent"
     AGENT_APP = "agent-app"
+    AGENT_CHANNEL = "agent-channel"
     GATEWAY_INSTALLATION = "gateway-installation"
     VIRTUAL_ACCOUNT = "virtual-account"
     SSO_BASED_IDENTITY = "sso-based-identity"
@@ -92,10 +94,12 @@ class ResourceType(enum.StrEnum):
         gateway_config: typing.Callable[[], T_Result],
         gateway_controls: typing.Callable[[], T_Result],
         gateway_budget: typing.Callable[[], T_Result],
+        gateway_policy: typing.Callable[[], T_Result],
         tracing_project: typing.Callable[[], T_Result],
         tracing_application: typing.Callable[[], T_Result],
         agent: typing.Callable[[], T_Result],
         agent_app: typing.Callable[[], T_Result],
+        agent_channel: typing.Callable[[], T_Result],
         gateway_installation: typing.Callable[[], T_Result],
         virtual_account: typing.Callable[[], T_Result],
         sso_based_identity: typing.Callable[[], T_Result],
@@ -161,6 +165,8 @@ class ResourceType(enum.StrEnum):
             return gateway_controls()
         if self is ResourceType.GATEWAY_BUDGET:
             return gateway_budget()
+        if self is ResourceType.GATEWAY_POLICY:
+            return gateway_policy()
         if self is ResourceType.TRACING_PROJECT:
             return tracing_project()
         if self is ResourceType.TRACING_APPLICATION:
@@ -169,6 +175,8 @@ class ResourceType(enum.StrEnum):
             return agent()
         if self is ResourceType.AGENT_APP:
             return agent_app()
+        if self is ResourceType.AGENT_CHANNEL:
+            return agent_channel()
         if self is ResourceType.GATEWAY_INSTALLATION:
             return gateway_installation()
         if self is ResourceType.VIRTUAL_ACCOUNT:

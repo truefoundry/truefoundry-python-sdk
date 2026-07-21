@@ -28,6 +28,11 @@ class AnthropicProviderAccount(UniversalBaseModel):
     """
 
     auth_data: typing.Optional[AnthropicKeyAuth] = None
+    base_url: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Optional custom base URL for the Anthropic API. Must include the version path, e.g. https://my-proxy.example.com/v1. When set, requests are sent here instead of the default https://api.anthropic.com/v1.
+    """
+
     integrations: typing.Optional[typing.List[AnthropicIntegrations]] = pydantic.Field(default=None)
     """
     List of integrations that are associated with the Anthropic provider account

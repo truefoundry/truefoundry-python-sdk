@@ -24,8 +24,8 @@ GatewayConfig = typing.Union[
     TeamBudgetConfig,
     GatewayOtelConfig,
     GatewayMetadataConfig,
-    GatewayLoggingConfig,
     GlobalSettings,
     GatewayDataAccessConfig,
     GatewayDataRoutingConfig,
+    GatewayLoggingConfig,
 ]

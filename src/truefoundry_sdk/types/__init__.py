@@ -19,6 +19,12 @@ if typing.TYPE_CHECKING:
     from .addon_component_name import AddonComponentName
     from .addon_component_status import AddonComponentStatus
     from .agent import Agent
+    from .agent_channel_agent import AgentChannelAgent
+    from .agent_channel_config import AgentChannelConfig
+    from .agent_channel_manifest import AgentChannelManifest
+    from .agent_channel_slack_auth import AgentChannelSlackAuth
+    from .agent_channel_slack_bot_token_auth import AgentChannelSlackBotTokenAuth
+    from .agent_channel_slack_config import AgentChannelSlackConfig
     from .agent_framework import AgentFramework
     from .agent_identity_auto_rotate import AgentIdentityAutoRotate
     from .agent_identity_config import AgentIdentityConfig
@@ -414,8 +420,6 @@ if typing.TYPE_CHECKING:
     )
     from .gateway_data_type import GatewayDataType
     from .gateway_logging_config import GatewayLoggingConfig
-    from .gateway_logging_rule import GatewayLoggingRule
-    from .gateway_logging_when import GatewayLoggingWhen
     from .gateway_metadata_config import GatewayMetadataConfig
     from .gateway_metadata_rule import GatewayMetadataRule
     from .gateway_metadata_when import GatewayMetadataWhen
@@ -547,6 +551,7 @@ if typing.TYPE_CHECKING:
     from .image_content_part import ImageContentPart
     from .image_content_part_image_url import ImageContentPartImageUrl
     from .image_content_part_image_url_url import ImageContentPartImageUrlUrl
+    from .in_not_in import InNotIn
     from .in_not_in_operator import InNotInOperator
     from .in_not_in_operator_condition import InNotInOperatorCondition
     from .infer_method_name import InferMethodName
@@ -643,6 +648,7 @@ if typing.TYPE_CHECKING:
     from .logging_mode_always import LoggingModeAlways
     from .logging_mode_header_controlled import LoggingModeHeaderControlled
     from .logging_mode_never import LoggingModeNever
+    from .logging_when import LoggingWhen
     from .logs_response import LogsResponse
     from .logs_search_filter_type import LogsSearchFilterType
     from .logs_search_operator_type import LogsSearchOperatorType
@@ -663,6 +669,7 @@ if typing.TYPE_CHECKING:
     from .mcp_server_o_auth2jwt_source import McpServerOAuth2JwtSource
     from .mcp_server_o_auth2provider import McpServerOAuth2Provider
     from .mcp_server_o_auth2provider_auth0settings import McpServerOAuth2ProviderAuth0Settings
+    from .mcp_server_o_auth2provider_okta_settings import McpServerOAuth2ProviderOktaSettings
     from .mcp_server_passthrough import McpServerPassthrough
     from .mcp_server_provider_account import McpServerProviderAccount
     from .mcp_server_source import McpServerSource
@@ -713,6 +720,9 @@ if typing.TYPE_CHECKING:
     from .node_selector_capacity_type import NodeSelectorCapacityType
     from .nodepool import Nodepool
     from .nodepool_selector import NodepoolSelector
+    from .noma_security_api_key_auth import NomaSecurityApiKeyAuth
+    from .noma_security_guardrail_config import NomaSecurityGuardrailConfig
+    from .noma_security_guardrail_config_config import NomaSecurityGuardrailConfigConfig
     from .nomic_integrations import NomicIntegrations
     from .nomic_key_auth import NomicKeyAuth
     from .nomic_model import NomicModel
@@ -861,6 +871,7 @@ if typing.TYPE_CHECKING:
     from .rate_limit_unit import RateLimitUnit
     from .rate_limit_when import RateLimitWhen
     from .recommendation import Recommendation
+    from .redaction import Redaction
     from .refusal_content_part import RefusalContentPart
     from .regex_constraint import RegexConstraint
     from .regex_guardrail_config import RegexGuardrailConfig
@@ -981,6 +992,7 @@ if typing.TYPE_CHECKING:
     from .spark_job_python_notebook_entrypoint import SparkJobPythonNotebookEntrypoint
     from .spark_job_scala_entrypoint import SparkJobScalaEntrypoint
     from .spark_job_scala_notebook_entrypoint import SparkJobScalaNotebookEntrypoint
+    from .spark_job_trigger import SparkJobTrigger
     from .spark_job_trigger_input import SparkJobTriggerInput
     from .sql_sanitizer_guardrail_config import SqlSanitizerGuardrailConfig
     from .sql_sanitizer_guardrail_config_config import SqlSanitizerGuardrailConfigConfig
@@ -1071,7 +1083,13 @@ if typing.TYPE_CHECKING:
     from .true_foundry_agent_model import TrueFoundryAgentModel
     from .true_foundry_agent_model_params import TrueFoundryAgentModelParams
     from .true_foundry_agent_response_format import TrueFoundryAgentResponseFormat
+    from .true_foundry_agent_sandbox_auth_data import TrueFoundryAgentSandboxAuthData
+    from .true_foundry_agent_sandbox_auth_inject import TrueFoundryAgentSandboxAuthInject
+    from .true_foundry_agent_sandbox_auth_inject_match import TrueFoundryAgentSandboxAuthInjectMatch
+    from .true_foundry_agent_sandbox_basic_auth_data import TrueFoundryAgentSandboxBasicAuthData
     from .true_foundry_agent_sandbox_config import TrueFoundryAgentSandboxConfig
+    from .true_foundry_agent_sandbox_git_auth_inject import TrueFoundryAgentSandboxGitAuthInject
+    from .true_foundry_agent_sandbox_network_policy import TrueFoundryAgentSandboxNetworkPolicy
     from .true_foundry_agent_skill import TrueFoundryAgentSkill
     from .true_foundry_agent_user_message import TrueFoundryAgentUserMessage
     from .true_foundry_agent_variable import TrueFoundryAgentVariable
@@ -1170,6 +1188,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AddonComponentName": ".addon_component_name",
     "AddonComponentStatus": ".addon_component_status",
     "Agent": ".agent",
+    "AgentChannelAgent": ".agent_channel_agent",
+    "AgentChannelConfig": ".agent_channel_config",
+    "AgentChannelManifest": ".agent_channel_manifest",
+    "AgentChannelSlackAuth": ".agent_channel_slack_auth",
+    "AgentChannelSlackBotTokenAuth": ".agent_channel_slack_bot_token_auth",
+    "AgentChannelSlackConfig": ".agent_channel_slack_config",
     "AgentFramework": ".agent_framework",
     "AgentIdentityAutoRotate": ".agent_identity_auto_rotate",
     "AgentIdentityConfig": ".agent_identity_config",
@@ -1553,8 +1577,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GatewayDataRoutingConfigDestinationStorageStorage": ".gateway_data_routing_config_destination_storage_storage",
     "GatewayDataType": ".gateway_data_type",
     "GatewayLoggingConfig": ".gateway_logging_config",
-    "GatewayLoggingRule": ".gateway_logging_rule",
-    "GatewayLoggingWhen": ".gateway_logging_when",
     "GatewayMetadataConfig": ".gateway_metadata_config",
     "GatewayMetadataRule": ".gateway_metadata_rule",
     "GatewayMetadataWhen": ".gateway_metadata_when",
@@ -1684,6 +1706,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ImageContentPart": ".image_content_part",
     "ImageContentPartImageUrl": ".image_content_part_image_url",
     "ImageContentPartImageUrlUrl": ".image_content_part_image_url_url",
+    "InNotIn": ".in_not_in",
     "InNotInOperator": ".in_not_in_operator",
     "InNotInOperatorCondition": ".in_not_in_operator_condition",
     "InferMethodName": ".infer_method_name",
@@ -1780,6 +1803,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LoggingModeAlways": ".logging_mode_always",
     "LoggingModeHeaderControlled": ".logging_mode_header_controlled",
     "LoggingModeNever": ".logging_mode_never",
+    "LoggingWhen": ".logging_when",
     "LogsResponse": ".logs_response",
     "LogsSearchFilterType": ".logs_search_filter_type",
     "LogsSearchOperatorType": ".logs_search_operator_type",
@@ -1800,6 +1824,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "McpServerOAuth2JwtSource": ".mcp_server_o_auth2jwt_source",
     "McpServerOAuth2Provider": ".mcp_server_o_auth2provider",
     "McpServerOAuth2ProviderAuth0Settings": ".mcp_server_o_auth2provider_auth0settings",
+    "McpServerOAuth2ProviderOktaSettings": ".mcp_server_o_auth2provider_okta_settings",
     "McpServerPassthrough": ".mcp_server_passthrough",
     "McpServerProviderAccount": ".mcp_server_provider_account",
     "McpServerSource": ".mcp_server_source",
@@ -1850,6 +1875,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "NodeSelectorCapacityType": ".node_selector_capacity_type",
     "Nodepool": ".nodepool",
     "NodepoolSelector": ".nodepool_selector",
+    "NomaSecurityApiKeyAuth": ".noma_security_api_key_auth",
+    "NomaSecurityGuardrailConfig": ".noma_security_guardrail_config",
+    "NomaSecurityGuardrailConfigConfig": ".noma_security_guardrail_config_config",
     "NomicIntegrations": ".nomic_integrations",
     "NomicKeyAuth": ".nomic_key_auth",
     "NomicModel": ".nomic_model",
@@ -1998,6 +2026,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RateLimitUnit": ".rate_limit_unit",
     "RateLimitWhen": ".rate_limit_when",
     "Recommendation": ".recommendation",
+    "Redaction": ".redaction",
     "RefusalContentPart": ".refusal_content_part",
     "RegexConstraint": ".regex_constraint",
     "RegexGuardrailConfig": ".regex_guardrail_config",
@@ -2121,6 +2150,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SparkJobPythonNotebookEntrypoint": ".spark_job_python_notebook_entrypoint",
     "SparkJobScalaEntrypoint": ".spark_job_scala_entrypoint",
     "SparkJobScalaNotebookEntrypoint": ".spark_job_scala_notebook_entrypoint",
+    "SparkJobTrigger": ".spark_job_trigger",
     "SparkJobTriggerInput": ".spark_job_trigger_input",
     "SqlSanitizerGuardrailConfig": ".sql_sanitizer_guardrail_config",
     "SqlSanitizerGuardrailConfigConfig": ".sql_sanitizer_guardrail_config_config",
@@ -2211,7 +2241,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TrueFoundryAgentModel": ".true_foundry_agent_model",
     "TrueFoundryAgentModelParams": ".true_foundry_agent_model_params",
     "TrueFoundryAgentResponseFormat": ".true_foundry_agent_response_format",
+    "TrueFoundryAgentSandboxAuthData": ".true_foundry_agent_sandbox_auth_data",
+    "TrueFoundryAgentSandboxAuthInject": ".true_foundry_agent_sandbox_auth_inject",
+    "TrueFoundryAgentSandboxAuthInjectMatch": ".true_foundry_agent_sandbox_auth_inject_match",
+    "TrueFoundryAgentSandboxBasicAuthData": ".true_foundry_agent_sandbox_basic_auth_data",
     "TrueFoundryAgentSandboxConfig": ".true_foundry_agent_sandbox_config",
+    "TrueFoundryAgentSandboxGitAuthInject": ".true_foundry_agent_sandbox_git_auth_inject",
+    "TrueFoundryAgentSandboxNetworkPolicy": ".true_foundry_agent_sandbox_network_policy",
     "TrueFoundryAgentSkill": ".true_foundry_agent_skill",
     "TrueFoundryAgentUserMessage": ".true_foundry_agent_user_message",
     "TrueFoundryAgentVariable": ".true_foundry_agent_variable",
@@ -2334,6 +2370,12 @@ __all__ = [
     "AddonComponentName",
     "AddonComponentStatus",
     "Agent",
+    "AgentChannelAgent",
+    "AgentChannelConfig",
+    "AgentChannelManifest",
+    "AgentChannelSlackAuth",
+    "AgentChannelSlackBotTokenAuth",
+    "AgentChannelSlackConfig",
     "AgentFramework",
     "AgentIdentityAutoRotate",
     "AgentIdentityConfig",
@@ -2717,8 +2759,6 @@ __all__ = [
     "GatewayDataRoutingConfigDestinationStorageStorage",
     "GatewayDataType",
     "GatewayLoggingConfig",
-    "GatewayLoggingRule",
-    "GatewayLoggingWhen",
     "GatewayMetadataConfig",
     "GatewayMetadataRule",
     "GatewayMetadataWhen",
@@ -2848,6 +2888,7 @@ __all__ = [
     "ImageContentPart",
     "ImageContentPartImageUrl",
     "ImageContentPartImageUrlUrl",
+    "InNotIn",
     "InNotInOperator",
     "InNotInOperatorCondition",
     "InferMethodName",
@@ -2944,6 +2985,7 @@ __all__ = [
     "LoggingModeAlways",
     "LoggingModeHeaderControlled",
     "LoggingModeNever",
+    "LoggingWhen",
     "LogsResponse",
     "LogsSearchFilterType",
     "LogsSearchOperatorType",
@@ -2964,6 +3006,7 @@ __all__ = [
     "McpServerOAuth2JwtSource",
     "McpServerOAuth2Provider",
     "McpServerOAuth2ProviderAuth0Settings",
+    "McpServerOAuth2ProviderOktaSettings",
     "McpServerPassthrough",
     "McpServerProviderAccount",
     "McpServerSource",
@@ -3014,6 +3057,9 @@ __all__ = [
     "NodeSelectorCapacityType",
     "Nodepool",
     "NodepoolSelector",
+    "NomaSecurityApiKeyAuth",
+    "NomaSecurityGuardrailConfig",
+    "NomaSecurityGuardrailConfigConfig",
     "NomicIntegrations",
     "NomicKeyAuth",
     "NomicModel",
@@ -3162,6 +3208,7 @@ __all__ = [
     "RateLimitUnit",
     "RateLimitWhen",
     "Recommendation",
+    "Redaction",
     "RefusalContentPart",
     "RegexConstraint",
     "RegexGuardrailConfig",
@@ -3285,6 +3332,7 @@ __all__ = [
     "SparkJobPythonNotebookEntrypoint",
     "SparkJobScalaEntrypoint",
     "SparkJobScalaNotebookEntrypoint",
+    "SparkJobTrigger",
     "SparkJobTriggerInput",
     "SqlSanitizerGuardrailConfig",
     "SqlSanitizerGuardrailConfigConfig",
@@ -3375,7 +3423,13 @@ __all__ = [
     "TrueFoundryAgentModel",
     "TrueFoundryAgentModelParams",
     "TrueFoundryAgentResponseFormat",
+    "TrueFoundryAgentSandboxAuthData",
+    "TrueFoundryAgentSandboxAuthInject",
+    "TrueFoundryAgentSandboxAuthInjectMatch",
+    "TrueFoundryAgentSandboxBasicAuthData",
     "TrueFoundryAgentSandboxConfig",
+    "TrueFoundryAgentSandboxGitAuthInject",
+    "TrueFoundryAgentSandboxNetworkPolicy",
     "TrueFoundryAgentSkill",
     "TrueFoundryAgentUserMessage",
     "TrueFoundryAgentVariable",

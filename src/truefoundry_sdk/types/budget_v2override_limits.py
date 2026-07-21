@@ -31,6 +31,11 @@ class BudgetV2OverrideLimits(UniversalBaseModel):
     Override quarterly cost cap in USD
     """
 
+    cost_per_lifetime: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Override lifetime cost cap in USD
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:

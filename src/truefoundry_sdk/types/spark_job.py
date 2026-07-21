@@ -8,6 +8,7 @@ from .spark_driver_config import SparkDriverConfig
 from .spark_executor_config import SparkExecutorConfig
 from .spark_job_entrypoint import SparkJobEntrypoint
 from .spark_job_image import SparkJobImage
+from .spark_job_trigger import SparkJobTrigger
 from .volume_mount import VolumeMount
 
 
@@ -31,6 +32,11 @@ class SparkJob(UniversalBaseModel):
     entrypoint: SparkJobEntrypoint = pydantic.Field()
     """
     Entrypoint
+    """
+
+    trigger: typing.Optional[SparkJobTrigger] = pydantic.Field(default=None)
+    """
+    Specify the trigger
     """
 
     driver_config: SparkDriverConfig

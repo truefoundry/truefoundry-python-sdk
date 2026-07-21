@@ -2,6 +2,7 @@
 
 import typing
 
+from .agent_channel_manifest import AgentChannelManifest
 from .agent_identity_manifest import AgentIdentityManifest
 from .agent_manifest import AgentManifest
 from .ai_features_settings import AiFeaturesSettings
@@ -72,4 +73,5 @@ TrueFoundryApplyResponseExistingManifest = typing.Union[
     McpServerManifest,
     RoleBindingManifest,
     AgentIdentityManifest,
+    AgentChannelManifest,
 ]

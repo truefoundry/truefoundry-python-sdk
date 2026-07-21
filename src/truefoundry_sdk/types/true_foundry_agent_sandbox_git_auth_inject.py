@@ -4,23 +4,22 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .notification_target import NotificationTarget
+from .true_foundry_agent_sandbox_auth_data import TrueFoundryAgentSandboxAuthData
+from .true_foundry_agent_sandbox_auth_inject_match import TrueFoundryAgentSandboxAuthInjectMatch
 
 
-class BudgetV2Alert(UniversalBaseModel):
+class TrueFoundryAgentSandboxGitAuthInject(UniversalBaseModel):
     """
-    Budget Alert
-    """
-
-    thresholds: typing.List[float] = pydantic.Field()
-    """
-    List of usage percentages (0-100) at which alerts should be triggered. Default thresholds are [75, 90, 95, 100].
+    Git Auth Inject
     """
 
-    notification_target: typing.Optional[typing.List[NotificationTarget]] = pydantic.Field(default=None)
+    type: typing.Literal["git"] = pydantic.Field(default="git")
     """
-    Select where to send budget alert notifications
+    +value=git
     """
+
+    match: TrueFoundryAgentSandboxAuthInjectMatch
+    auth_data: TrueFoundryAgentSandboxAuthData
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

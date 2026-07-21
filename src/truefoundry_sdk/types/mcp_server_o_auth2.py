@@ -8,9 +8,10 @@ from .mcp_server_o_auth2grant_type import McpServerOAuth2GrantType
 from .mcp_server_o_auth2jwt_source import McpServerOAuth2JwtSource
 from .mcp_server_o_auth2provider import McpServerOAuth2Provider
 from .mcp_server_o_auth2provider_auth0settings import McpServerOAuth2ProviderAuth0Settings
+from .mcp_server_o_auth2provider_okta_settings import McpServerOAuth2ProviderOktaSettings
 
 
-class McpServerOAuth2(McpServerOAuth2ProviderAuth0Settings):
+class McpServerOAuth2(McpServerOAuth2ProviderAuth0Settings, McpServerOAuth2ProviderOktaSettings):
     """
     OAuth2
     """
@@ -67,7 +68,7 @@ class McpServerOAuth2(McpServerOAuth2ProviderAuth0Settings):
     List of supported PKCE code challenge methods (S256 only)
     """
 
-    jwt_source: McpServerOAuth2JwtSource = pydantic.Field()
+    jwt_source: typing.Optional[McpServerOAuth2JwtSource] = pydantic.Field(default=None)
     """
     Source of the JWT token to be used for verification.
     """
@@ -79,7 +80,7 @@ class McpServerOAuth2(McpServerOAuth2ProviderAuth0Settings):
 
     additional_token_params: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
     """
-    Extra key/value pairs sent on every token endpoint request (e.g. Auth0 'audience').
+    Extra key/value pairs sent on every token endpoint request (e.g. Auth0 'organization').
     """
 
     if IS_PYDANTIC_V2:

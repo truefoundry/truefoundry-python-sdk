@@ -7,9 +7,9 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class TrueFoundryAgentUserMessage(UniversalBaseModel):
-    role: typing.Literal["user"] = pydantic.Field(default="user")
+    type: typing.Literal["user.message"] = pydantic.Field(default="user.message")
     """
-    Role of the message sender.
+    Message type discriminator.
     """
 
     content: str = pydantic.Field()

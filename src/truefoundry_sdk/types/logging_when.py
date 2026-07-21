@@ -4,22 +4,19 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .notification_target import NotificationTarget
+from .in_not_in import InNotIn
 
 
-class BudgetV2Alert(UniversalBaseModel):
+class LoggingWhen(UniversalBaseModel):
     """
-    Budget Alert
-    """
-
-    thresholds: typing.List[float] = pydantic.Field()
-    """
-    List of usage percentages (0-100) at which alerts should be triggered. Default thresholds are [75, 90, 95, 100].
+    Conditions
     """
 
-    notification_target: typing.Optional[typing.List[NotificationTarget]] = pydantic.Field(default=None)
+    subjects: typing.Optional[InNotIn] = None
+    models: typing.Optional[InNotIn] = None
+    metadata: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
     """
-    Select where to send budget alert notifications
+    Metadata key-value pairs this config applies to (exact match)
     """
 
     if IS_PYDANTIC_V2:

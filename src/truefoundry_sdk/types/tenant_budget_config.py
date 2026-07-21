@@ -27,7 +27,7 @@ class TenantBudgetConfig(UniversalBaseModel):
     Unique name for this budget
     """
 
-    when: BudgetV2WhenTenantScoped
+    when: typing.Optional[BudgetV2WhenTenantScoped] = None
     limits: BudgetV2Limits
     applies_to: BudgetV2AppliesTo
     mode: TenantBudgetConfigMode = pydantic.Field()

@@ -36,6 +36,11 @@ class AwsClaudePlatformProviderAccount(UniversalBaseModel):
     """
 
     region: AwsRegion
+    base_url: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Optional custom base URL (e.g. a VPC/PrivateLink endpoint) for Claude Platform on AWS. Must include the version path, e.g. https://my-endpoint.example.com/v1. When set, requests are sent here instead of the default aws-external-anthropic.{region}.api.aws/v1 host.
+    """
+
     auth_data: typing.Optional[AwsClaudePlatformProviderAccountAuthData] = pydantic.Field(default=None)
     """
     Authentication data for the AWS account. Supports SigV4 (access key or assumed role) and API key authentication.

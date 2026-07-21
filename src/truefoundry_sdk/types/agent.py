@@ -36,6 +36,16 @@ class Agent(UniversalBaseModel):
     created_by_subject: typing_extensions.Annotated[
         Subject, FieldMetadata(alias="createdBySubject"), pydantic.Field(alias="createdBySubject")
     ]
+    manifest: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    """
+    Copy of the agent manifest (v2).
+    """
+
+    agent_identity_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="agentIdentityId"),
+        pydantic.Field(alias="agentIdentityId", description="ID of the agent identity created for this agent."),
+    ] = None
     created_by: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="createdBy"), pydantic.Field(alias="createdBy")
     ] = None

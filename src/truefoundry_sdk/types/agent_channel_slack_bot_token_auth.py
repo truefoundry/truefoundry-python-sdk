@@ -4,22 +4,21 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .notification_target import NotificationTarget
 
 
-class BudgetV2Alert(UniversalBaseModel):
+class AgentChannelSlackBotTokenAuth(UniversalBaseModel):
     """
-    Budget Alert
-    """
-
-    thresholds: typing.List[float] = pydantic.Field()
-    """
-    List of usage percentages (0-100) at which alerts should be triggered. Default thresholds are [75, 90, 95, 100].
+    Provide the Slack bot token directly.
     """
 
-    notification_target: typing.Optional[typing.List[NotificationTarget]] = pydantic.Field(default=None)
+    type: typing.Literal["bot-token"] = pydantic.Field(default="bot-token")
     """
-    Select where to send budget alert notifications
+    +value=bot-token
+    """
+
+    bot_token: str = pydantic.Field()
+    """
+    Slack bot token (xoxb-…) used to post replies. Requires chat:write, chat:write.public.
     """
 
     if IS_PYDANTIC_V2:

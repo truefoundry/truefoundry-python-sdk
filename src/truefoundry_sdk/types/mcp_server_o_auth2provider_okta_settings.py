@@ -4,23 +4,12 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .gateway_logging_when import GatewayLoggingWhen
 
 
-class GatewayLoggingRule(UniversalBaseModel):
+class McpServerOAuth2ProviderOktaSettings(UniversalBaseModel):
+    audience: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Logging Rule
-    """
-
-    id: str = pydantic.Field()
-    """
-    Unique identifier for the rule
-    """
-
-    when: GatewayLoggingWhen
-    tracing_project_fqn: str = pydantic.Field()
-    """
-    FQN of the tracing project to send logs to
+    Okta target audience (RFC 8693 'audience'). Required when the token_exchange grant type is used with the okta provider.
     """
 
     if IS_PYDANTIC_V2:

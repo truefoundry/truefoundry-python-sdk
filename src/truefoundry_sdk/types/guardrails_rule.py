@@ -40,7 +40,7 @@ class GuardrailsRule(UniversalBaseModel):
 
     custom_error_message: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Optional message returned to the client when a guardrail in this rule blocks a request. Use {{guardrail_message}} to include the default guardrail failure message.
+    Optional message returned to the client when a guardrail in this rule blocks a request. Supported placeholders: {{guardrail_message}} (default guardrail failure detail), {{failed_guardrails}} (comma-separated list of the guardrails that failed).
     """
 
     if IS_PYDANTIC_V2:
