@@ -8,7 +8,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
 from .build_info import BuildInfo
-from .build_status import BuildStatus
+from .deployment_build_status import DeploymentBuildStatus
 
 
 class DeploymentBuild(UniversalBaseModel):
@@ -27,7 +27,7 @@ class DeploymentBuild(UniversalBaseModel):
         typing.Optional[str], FieldMetadata(alias="imageUri"), pydantic.Field(alias="imageUri")
     ] = None
     name: typing.Optional[str] = None
-    status: typing.Optional[BuildStatus] = None
+    status: typing.Optional[DeploymentBuildStatus] = None
     get_logs_url: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="getLogsUrl"), pydantic.Field(alias="getLogsUrl")
     ] = None

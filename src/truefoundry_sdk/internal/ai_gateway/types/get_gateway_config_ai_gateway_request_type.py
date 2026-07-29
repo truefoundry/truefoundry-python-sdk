@@ -19,6 +19,7 @@ class GetGatewayConfigAiGatewayRequestType(enum.StrEnum):
     GATEWAY_GLOBAL_SETTINGS = "gateway-global-settings"
     GATEWAY_DATA_ACCESS_CONFIG = "gateway-data-access-config"
     GATEWAY_DATA_ROUTING_CONFIG = "gateway-data-routing-config"
+    GATEWAY_LOGGING_CONFIG = "gateway-logging-config"
     _UNKNOWN = "__GETGATEWAYCONFIGAIGATEWAYREQUESTTYPE_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
@@ -43,6 +44,7 @@ class GetGatewayConfigAiGatewayRequestType(enum.StrEnum):
         gateway_global_settings: typing.Callable[[], T_Result],
         gateway_data_access_config: typing.Callable[[], T_Result],
         gateway_data_routing_config: typing.Callable[[], T_Result],
+        gateway_logging_config: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is GetGatewayConfigAiGatewayRequestType.GATEWAY_RATE_LIMITING_CONFIG:
@@ -67,4 +69,6 @@ class GetGatewayConfigAiGatewayRequestType(enum.StrEnum):
             return gateway_data_access_config()
         if self is GetGatewayConfigAiGatewayRequestType.GATEWAY_DATA_ROUTING_CONFIG:
             return gateway_data_routing_config()
+        if self is GetGatewayConfigAiGatewayRequestType.GATEWAY_LOGGING_CONFIG:
+            return gateway_logging_config()
         return _unknown_member(self._value_)

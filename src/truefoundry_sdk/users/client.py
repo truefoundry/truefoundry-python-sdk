@@ -16,10 +16,10 @@ from ..types.get_user_teams_response import GetUserTeamsResponse
 from ..types.invite_user_response import InviteUserResponse
 from ..types.list_users_response import ListUsersResponse
 from ..types.register_users_response import RegisterUsersResponse
-from ..types.resource_type import ResourceType
 from ..types.update_user_roles_response import UpdateUserRolesResponse
 from ..types.user import User
 from .raw_client import AsyncRawUsersClient, RawUsersClient
+from .types.update_user_roles_request_resource_type import UpdateUserRolesRequestResourceType
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -166,7 +166,7 @@ class UsersClient:
         *,
         email: str,
         roles: typing.Sequence[str],
-        resource_type: typing.Optional[ResourceType] = OMIT,
+        resource_type: typing.Optional[UpdateUserRolesRequestResourceType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> UpdateUserRolesResponse:
         """
@@ -180,7 +180,7 @@ class UsersClient:
         roles : typing.Sequence[str]
             Role names to assign to the user.
 
-        resource_type : typing.Optional[ResourceType]
+        resource_type : typing.Optional[UpdateUserRolesRequestResourceType]
             Resource type scope for the role assignment.
 
         request_options : typing.Optional[RequestOptions]
@@ -246,6 +246,7 @@ class UsersClient:
         id: str,
         *,
         tenant_name: typing.Optional[str] = None,
+        force_delete: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DeleteUserResponse:
         """
@@ -258,6 +259,9 @@ class UsersClient:
 
         tenant_name : typing.Optional[str]
             Tenant name override. Defaults to the caller's tenant when omitted.
+
+        force_delete : typing.Optional[bool]
+            When true, force-deletes the user by automatically removing all resource collaborations and team memberships.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -279,7 +283,9 @@ class UsersClient:
             id="jqfwg345gi25n5ju2yz5iz6m",
         )
         """
-        _response = self._raw_client.delete(id, tenant_name=tenant_name, request_options=request_options)
+        _response = self._raw_client.delete(
+            id, tenant_name=tenant_name, force_delete=force_delete, request_options=request_options
+        )
         return _response.data
 
     def invite_user(
@@ -712,7 +718,7 @@ class AsyncUsersClient:
         *,
         email: str,
         roles: typing.Sequence[str],
-        resource_type: typing.Optional[ResourceType] = OMIT,
+        resource_type: typing.Optional[UpdateUserRolesRequestResourceType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> UpdateUserRolesResponse:
         """
@@ -726,7 +732,7 @@ class AsyncUsersClient:
         roles : typing.Sequence[str]
             Role names to assign to the user.
 
-        resource_type : typing.Optional[ResourceType]
+        resource_type : typing.Optional[UpdateUserRolesRequestResourceType]
             Resource type scope for the role assignment.
 
         request_options : typing.Optional[RequestOptions]
@@ -808,6 +814,7 @@ class AsyncUsersClient:
         id: str,
         *,
         tenant_name: typing.Optional[str] = None,
+        force_delete: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DeleteUserResponse:
         """
@@ -820,6 +827,9 @@ class AsyncUsersClient:
 
         tenant_name : typing.Optional[str]
             Tenant name override. Defaults to the caller's tenant when omitted.
+
+        force_delete : typing.Optional[bool]
+            When true, force-deletes the user by automatically removing all resource collaborations and team memberships.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -849,7 +859,9 @@ class AsyncUsersClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.delete(id, tenant_name=tenant_name, request_options=request_options)
+        _response = await self._raw_client.delete(
+            id, tenant_name=tenant_name, force_delete=force_delete, request_options=request_options
+        )
         return _response.data
 
     async def invite_user(

@@ -14,7 +14,7 @@ from .smallest_ai_model import SmallestAiModel
 
 class SmallestAiProviderAccount(UniversalBaseModel):
     """
-    Smallest AI Provider Account
+    Smallest AI Model Account
     """
 
     type: typing.Literal["provider-account/smallest-ai"] = pydantic.Field(default="provider-account/smallest-ai")
@@ -24,7 +24,7 @@ class SmallestAiProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    The name of the Smallest AI provider account
+    The name of the Smallest AI model account
     """
 
     auth_data: SmallestAiApiKeyAuth
@@ -35,12 +35,12 @@ class SmallestAiProviderAccount(UniversalBaseModel):
 
     integrations: typing.List[SmallestAiModel] = pydantic.Field()
     """
-    List of integrations that are associated with the Smallest AI provider account
+    List of integrations that are associated with the Smallest AI model account
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    List of users who have access to this provider account
+    List of users who have access to this model account
     """
 
     owned_by: typing_extensions.Annotated[
@@ -48,7 +48,7 @@ class SmallestAiProviderAccount(UniversalBaseModel):
     ] = None
     discount_percent: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Discount % applied to upstream list price for this provider account.
+    Discount % applied to upstream list price for this model account.
     """
 
     if IS_PYDANTIC_V2:

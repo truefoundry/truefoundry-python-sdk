@@ -27,7 +27,7 @@ class AwsClaudePlatformProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    The name of the AWS Claude Platform provider account
+    The name of the AWS Claude Platform model account
     """
 
     workspace_id: str = pydantic.Field()
@@ -36,6 +36,11 @@ class AwsClaudePlatformProviderAccount(UniversalBaseModel):
     """
 
     region: AwsRegion
+    base_url: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Optional custom base URL (e.g. a VPC/PrivateLink endpoint) for Claude Platform on AWS. Must include the version path, e.g. https://my-endpoint.example.com/v1. When set, requests are sent here instead of the default aws-external-anthropic.{region}.api.aws/v1 host.
+    """
+
     auth_data: typing.Optional[AwsClaudePlatformProviderAccountAuthData] = pydantic.Field(default=None)
     """
     Authentication data for the AWS account. Supports SigV4 (access key or assumed role) and API key authentication.
@@ -43,12 +48,12 @@ class AwsClaudePlatformProviderAccount(UniversalBaseModel):
 
     integrations: typing.Optional[typing.List[AwsClaudePlatformIntegrations]] = pydantic.Field(default=None)
     """
-    List of integrations that are associated with the AWS Claude Platform provider account
+    List of integrations that are associated with the AWS Claude Platform model account
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    List of users who have access to this provider account
+    List of users who have access to this model account
     """
 
     owned_by: typing_extensions.Annotated[
@@ -56,7 +61,7 @@ class AwsClaudePlatformProviderAccount(UniversalBaseModel):
     ] = None
     discount_percent: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Discount % applied to upstream list price for this provider account.
+    Discount % applied to upstream list price for this model account.
     """
 
     if IS_PYDANTIC_V2:

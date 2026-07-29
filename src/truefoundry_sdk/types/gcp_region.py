@@ -9,18 +9,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class GcpRegion(enum.StrEnum):
     GLOBAL = "global"
-    NORTHAMERICA_NORTHEAST1 = "northamerica-northeast1"
-    NORTHAMERICA_NORTHEAST2 = "northamerica-northeast2"
-    SOUTHAMERICA_EAST1 = "southamerica-east1"
-    US_CENTRAL1 = "us-central1"
-    US_EAST1 = "us-east1"
-    US_EAST4 = "us-east4"
-    US_EAST5 = "us-east5"
-    US_SOUTH1 = "us-south1"
-    US_WEST1 = "us-west1"
-    US_WEST2 = "us-west2"
-    US_WEST3 = "us-west3"
-    US_WEST4 = "us-west4"
+    AFRICA_SOUTH1 = "africa-south1"
     ASIA_EAST1 = "asia-east1"
     ASIA_EAST2 = "asia-east2"
     ASIA_NORTHEAST1 = "asia-northeast1"
@@ -30,10 +19,12 @@ class GcpRegion(enum.StrEnum):
     ASIA_SOUTH2 = "asia-south2"
     ASIA_SOUTHEAST1 = "asia-southeast1"
     ASIA_SOUTHEAST2 = "asia-southeast2"
+    ASIA_SOUTHEAST3 = "asia-southeast3"
     AUSTRALIA_SOUTHEAST1 = "australia-southeast1"
     AUSTRALIA_SOUTHEAST2 = "australia-southeast2"
     EUROPE_CENTRAL2 = "europe-central2"
     EUROPE_NORTH1 = "europe-north1"
+    EUROPE_NORTH2 = "europe-north2"
     EUROPE_SOUTHWEST1 = "europe-southwest1"
     EUROPE_WEST1 = "europe-west1"
     EUROPE_WEST2 = "europe-west2"
@@ -42,9 +33,25 @@ class GcpRegion(enum.StrEnum):
     EUROPE_WEST6 = "europe-west6"
     EUROPE_WEST8 = "europe-west8"
     EUROPE_WEST9 = "europe-west9"
+    EUROPE_WEST10 = "europe-west10"
+    EUROPE_WEST12 = "europe-west12"
     ME_CENTRAL1 = "me-central1"
     ME_CENTRAL2 = "me-central2"
     ME_WEST1 = "me-west1"
+    NORTHAMERICA_NORTHEAST1 = "northamerica-northeast1"
+    NORTHAMERICA_NORTHEAST2 = "northamerica-northeast2"
+    NORTHAMERICA_SOUTH1 = "northamerica-south1"
+    SOUTHAMERICA_EAST1 = "southamerica-east1"
+    SOUTHAMERICA_WEST1 = "southamerica-west1"
+    US_CENTRAL1 = "us-central1"
+    US_EAST1 = "us-east1"
+    US_EAST4 = "us-east4"
+    US_EAST5 = "us-east5"
+    US_SOUTH1 = "us-south1"
+    US_WEST1 = "us-west1"
+    US_WEST2 = "us-west2"
+    US_WEST3 = "us-west3"
+    US_WEST4 = "us-west4"
     _UNKNOWN = "__GCPREGION_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
@@ -59,18 +66,7 @@ class GcpRegion(enum.StrEnum):
     def visit(
         self,
         global_: typing.Callable[[], T_Result],
-        northamerica_northeast1: typing.Callable[[], T_Result],
-        northamerica_northeast2: typing.Callable[[], T_Result],
-        southamerica_east1: typing.Callable[[], T_Result],
-        us_central1: typing.Callable[[], T_Result],
-        us_east1: typing.Callable[[], T_Result],
-        us_east4: typing.Callable[[], T_Result],
-        us_east5: typing.Callable[[], T_Result],
-        us_south1: typing.Callable[[], T_Result],
-        us_west1: typing.Callable[[], T_Result],
-        us_west2: typing.Callable[[], T_Result],
-        us_west3: typing.Callable[[], T_Result],
-        us_west4: typing.Callable[[], T_Result],
+        africa_south1: typing.Callable[[], T_Result],
         asia_east1: typing.Callable[[], T_Result],
         asia_east2: typing.Callable[[], T_Result],
         asia_northeast1: typing.Callable[[], T_Result],
@@ -80,10 +76,12 @@ class GcpRegion(enum.StrEnum):
         asia_south2: typing.Callable[[], T_Result],
         asia_southeast1: typing.Callable[[], T_Result],
         asia_southeast2: typing.Callable[[], T_Result],
+        asia_southeast3: typing.Callable[[], T_Result],
         australia_southeast1: typing.Callable[[], T_Result],
         australia_southeast2: typing.Callable[[], T_Result],
         europe_central2: typing.Callable[[], T_Result],
         europe_north1: typing.Callable[[], T_Result],
+        europe_north2: typing.Callable[[], T_Result],
         europe_southwest1: typing.Callable[[], T_Result],
         europe_west1: typing.Callable[[], T_Result],
         europe_west2: typing.Callable[[], T_Result],
@@ -92,37 +90,31 @@ class GcpRegion(enum.StrEnum):
         europe_west6: typing.Callable[[], T_Result],
         europe_west8: typing.Callable[[], T_Result],
         europe_west9: typing.Callable[[], T_Result],
+        europe_west10: typing.Callable[[], T_Result],
+        europe_west12: typing.Callable[[], T_Result],
         me_central1: typing.Callable[[], T_Result],
         me_central2: typing.Callable[[], T_Result],
         me_west1: typing.Callable[[], T_Result],
+        northamerica_northeast1: typing.Callable[[], T_Result],
+        northamerica_northeast2: typing.Callable[[], T_Result],
+        northamerica_south1: typing.Callable[[], T_Result],
+        southamerica_east1: typing.Callable[[], T_Result],
+        southamerica_west1: typing.Callable[[], T_Result],
+        us_central1: typing.Callable[[], T_Result],
+        us_east1: typing.Callable[[], T_Result],
+        us_east4: typing.Callable[[], T_Result],
+        us_east5: typing.Callable[[], T_Result],
+        us_south1: typing.Callable[[], T_Result],
+        us_west1: typing.Callable[[], T_Result],
+        us_west2: typing.Callable[[], T_Result],
+        us_west3: typing.Callable[[], T_Result],
+        us_west4: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is GcpRegion.GLOBAL:
             return global_()
-        if self is GcpRegion.NORTHAMERICA_NORTHEAST1:
-            return northamerica_northeast1()
-        if self is GcpRegion.NORTHAMERICA_NORTHEAST2:
-            return northamerica_northeast2()
-        if self is GcpRegion.SOUTHAMERICA_EAST1:
-            return southamerica_east1()
-        if self is GcpRegion.US_CENTRAL1:
-            return us_central1()
-        if self is GcpRegion.US_EAST1:
-            return us_east1()
-        if self is GcpRegion.US_EAST4:
-            return us_east4()
-        if self is GcpRegion.US_EAST5:
-            return us_east5()
-        if self is GcpRegion.US_SOUTH1:
-            return us_south1()
-        if self is GcpRegion.US_WEST1:
-            return us_west1()
-        if self is GcpRegion.US_WEST2:
-            return us_west2()
-        if self is GcpRegion.US_WEST3:
-            return us_west3()
-        if self is GcpRegion.US_WEST4:
-            return us_west4()
+        if self is GcpRegion.AFRICA_SOUTH1:
+            return africa_south1()
         if self is GcpRegion.ASIA_EAST1:
             return asia_east1()
         if self is GcpRegion.ASIA_EAST2:
@@ -141,6 +133,8 @@ class GcpRegion(enum.StrEnum):
             return asia_southeast1()
         if self is GcpRegion.ASIA_SOUTHEAST2:
             return asia_southeast2()
+        if self is GcpRegion.ASIA_SOUTHEAST3:
+            return asia_southeast3()
         if self is GcpRegion.AUSTRALIA_SOUTHEAST1:
             return australia_southeast1()
         if self is GcpRegion.AUSTRALIA_SOUTHEAST2:
@@ -149,6 +143,8 @@ class GcpRegion(enum.StrEnum):
             return europe_central2()
         if self is GcpRegion.EUROPE_NORTH1:
             return europe_north1()
+        if self is GcpRegion.EUROPE_NORTH2:
+            return europe_north2()
         if self is GcpRegion.EUROPE_SOUTHWEST1:
             return europe_southwest1()
         if self is GcpRegion.EUROPE_WEST1:
@@ -165,10 +161,42 @@ class GcpRegion(enum.StrEnum):
             return europe_west8()
         if self is GcpRegion.EUROPE_WEST9:
             return europe_west9()
+        if self is GcpRegion.EUROPE_WEST10:
+            return europe_west10()
+        if self is GcpRegion.EUROPE_WEST12:
+            return europe_west12()
         if self is GcpRegion.ME_CENTRAL1:
             return me_central1()
         if self is GcpRegion.ME_CENTRAL2:
             return me_central2()
         if self is GcpRegion.ME_WEST1:
             return me_west1()
+        if self is GcpRegion.NORTHAMERICA_NORTHEAST1:
+            return northamerica_northeast1()
+        if self is GcpRegion.NORTHAMERICA_NORTHEAST2:
+            return northamerica_northeast2()
+        if self is GcpRegion.NORTHAMERICA_SOUTH1:
+            return northamerica_south1()
+        if self is GcpRegion.SOUTHAMERICA_EAST1:
+            return southamerica_east1()
+        if self is GcpRegion.SOUTHAMERICA_WEST1:
+            return southamerica_west1()
+        if self is GcpRegion.US_CENTRAL1:
+            return us_central1()
+        if self is GcpRegion.US_EAST1:
+            return us_east1()
+        if self is GcpRegion.US_EAST4:
+            return us_east4()
+        if self is GcpRegion.US_EAST5:
+            return us_east5()
+        if self is GcpRegion.US_SOUTH1:
+            return us_south1()
+        if self is GcpRegion.US_WEST1:
+            return us_west1()
+        if self is GcpRegion.US_WEST2:
+            return us_west2()
+        if self is GcpRegion.US_WEST3:
+            return us_west3()
+        if self is GcpRegion.US_WEST4:
+            return us_west4()
         return _unknown_member(self._value_)

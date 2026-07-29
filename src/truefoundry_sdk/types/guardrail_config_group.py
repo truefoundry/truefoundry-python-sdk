@@ -13,7 +13,7 @@ from .owned_by import OwnedBy
 
 class GuardrailConfigGroup(UniversalBaseModel):
     """
-    Guardrail Configs Group
+    Guardrail Group
     """
 
     type: typing.Literal["provider-account/guardrail-config-group"] = pydantic.Field(

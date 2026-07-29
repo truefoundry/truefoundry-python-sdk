@@ -36,10 +36,13 @@ class RoleWithResourceResourceType(enum.StrEnum):
     GATEWAY_CONFIG = "gateway-config"
     GATEWAY_CONTROLS = "gateway-controls"
     GATEWAY_BUDGET = "gateway-budget"
+    GATEWAY_POLICY = "gateway-policy"
+    GATEWAY_APPROVAL_REQUEST = "gateway-approval-request"
     TRACING_PROJECT = "tracing-project"
     TRACING_APPLICATION = "tracing-application"
     AGENT = "agent"
     AGENT_APP = "agent-app"
+    AGENT_CHANNEL = "agent-channel"
     GATEWAY_INSTALLATION = "gateway-installation"
     VIRTUAL_ACCOUNT = "virtual-account"
     SSO_BASED_IDENTITY = "sso-based-identity"
@@ -88,10 +91,13 @@ class RoleWithResourceResourceType(enum.StrEnum):
         gateway_config: typing.Callable[[], T_Result],
         gateway_controls: typing.Callable[[], T_Result],
         gateway_budget: typing.Callable[[], T_Result],
+        gateway_policy: typing.Callable[[], T_Result],
+        gateway_approval_request: typing.Callable[[], T_Result],
         tracing_project: typing.Callable[[], T_Result],
         tracing_application: typing.Callable[[], T_Result],
         agent: typing.Callable[[], T_Result],
         agent_app: typing.Callable[[], T_Result],
+        agent_channel: typing.Callable[[], T_Result],
         gateway_installation: typing.Callable[[], T_Result],
         virtual_account: typing.Callable[[], T_Result],
         sso_based_identity: typing.Callable[[], T_Result],
@@ -157,6 +163,10 @@ class RoleWithResourceResourceType(enum.StrEnum):
             return gateway_controls()
         if self is RoleWithResourceResourceType.GATEWAY_BUDGET:
             return gateway_budget()
+        if self is RoleWithResourceResourceType.GATEWAY_POLICY:
+            return gateway_policy()
+        if self is RoleWithResourceResourceType.GATEWAY_APPROVAL_REQUEST:
+            return gateway_approval_request()
         if self is RoleWithResourceResourceType.TRACING_PROJECT:
             return tracing_project()
         if self is RoleWithResourceResourceType.TRACING_APPLICATION:
@@ -165,6 +175,8 @@ class RoleWithResourceResourceType(enum.StrEnum):
             return agent()
         if self is RoleWithResourceResourceType.AGENT_APP:
             return agent_app()
+        if self is RoleWithResourceResourceType.AGENT_CHANNEL:
+            return agent_channel()
         if self is RoleWithResourceResourceType.GATEWAY_INSTALLATION:
             return gateway_installation()
         if self is RoleWithResourceResourceType.VIRTUAL_ACCOUNT:

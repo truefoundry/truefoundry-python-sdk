@@ -2,8 +2,11 @@
 
 import typing
 
+from .complexity_based_load_balancing import ComplexityBasedLoadBalancing
 from .latency_based_load_balancing import LatencyBasedLoadBalancing
 from .priority_based_load_balancing import PriorityBasedLoadBalancing
 from .weight_based_load_balancing import WeightBasedLoadBalancing
 
-HeaderRoutingConfig = typing.Union[WeightBasedLoadBalancing, LatencyBasedLoadBalancing, PriorityBasedLoadBalancing]
+HeaderRoutingConfig = typing.Union[
+    WeightBasedLoadBalancing, LatencyBasedLoadBalancing, PriorityBasedLoadBalancing, ComplexityBasedLoadBalancing
+]

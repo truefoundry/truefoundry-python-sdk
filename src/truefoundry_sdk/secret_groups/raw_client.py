@@ -61,7 +61,7 @@ class RawSecretGroupsClient:
             Fqn of secret group.
 
         search : typing.Optional[str]
-            Search query - filters by secret group names that contain the search string
+            Search query - filters by secret group names or secret names that contain the search string
 
         attributes : typing.Optional[typing.Sequence[str]]
             Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
@@ -602,7 +602,7 @@ class AsyncRawSecretGroupsClient:
             Fqn of secret group.
 
         search : typing.Optional[str]
-            Search query - filters by secret group names that contain the search string
+            Search query - filters by secret group names or secret names that contain the search string
 
         attributes : typing.Optional[typing.Sequence[str]]
             Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.

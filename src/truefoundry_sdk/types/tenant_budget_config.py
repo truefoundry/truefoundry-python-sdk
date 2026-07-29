@@ -27,12 +27,12 @@ class TenantBudgetConfig(UniversalBaseModel):
     Unique name for this budget
     """
 
-    when: BudgetV2WhenTenantScoped
+    when: typing.Optional[BudgetV2WhenTenantScoped] = None
     limits: BudgetV2Limits
     applies_to: BudgetV2AppliesTo
     mode: TenantBudgetConfigMode = pydantic.Field()
     """
-    `enforce` blocks breaching requests, `audit` only tracks them.
+    `enforce` blocks breaching requests, `audit` only tracks them, `enforce_with_low_priority` blocks only when no other matching budget allows the request.
     """
 
     alerts: typing.Optional[BudgetV2Alert] = None

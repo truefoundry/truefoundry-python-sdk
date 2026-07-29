@@ -14,7 +14,7 @@ from .owned_by import OwnedBy
 
 class ElevenLabsProviderAccount(UniversalBaseModel):
     """
-    ElevenLabs Provider Account
+    ElevenLabs Model Account
     """
 
     type: typing.Literal["provider-account/elevenlabs"] = pydantic.Field(default="provider-account/elevenlabs")
@@ -24,7 +24,7 @@ class ElevenLabsProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    The name of the ElevenLabs provider account
+    The name of the ElevenLabs model account
     """
 
     auth_data: ElevenLabsApiKeyAuth
@@ -35,12 +35,12 @@ class ElevenLabsProviderAccount(UniversalBaseModel):
 
     integrations: typing.List[ElevenLabsModel] = pydantic.Field()
     """
-    List of integrations that are associated with the ElevenLabs provider account
+    List of integrations that are associated with the ElevenLabs model account
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    List of users who have access to this provider account
+    List of users who have access to this model account
     """
 
     owned_by: typing_extensions.Annotated[
@@ -48,7 +48,7 @@ class ElevenLabsProviderAccount(UniversalBaseModel):
     ] = None
     discount_percent: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Discount % applied to upstream list price for this provider account.
+    Discount % applied to upstream list price for this model account.
     """
 
     if IS_PYDANTIC_V2:

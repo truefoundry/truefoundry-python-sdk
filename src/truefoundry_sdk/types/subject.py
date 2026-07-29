@@ -6,7 +6,7 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
-from .subject_type import SubjectType
+from .subject_subject_type import SubjectSubjectType
 
 
 class Subject(UniversalBaseModel):
@@ -18,7 +18,9 @@ class Subject(UniversalBaseModel):
     """
 
     subject_type: typing_extensions.Annotated[
-        SubjectType, FieldMetadata(alias="subjectType"), pydantic.Field(alias="subjectType", description="Subject type")
+        SubjectSubjectType,
+        FieldMetadata(alias="subjectType"),
+        pydantic.Field(alias="subjectType", description="Subject type"),
     ]
     """
     Subject type

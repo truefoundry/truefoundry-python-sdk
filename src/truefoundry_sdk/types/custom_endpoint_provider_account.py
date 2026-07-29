@@ -28,7 +28,7 @@ class CustomEndpointProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    The name of the custom endpoint provider account.
+    The name of the custom endpoint model account.
     """
 
     endpoint_type: typing.Optional[CustomEndpointProviderAccountEndpointType] = pydantic.Field(default=None)
@@ -49,7 +49,7 @@ class CustomEndpointProviderAccount(UniversalBaseModel):
     auth_data: typing.Optional[CustomHeaderAuth] = None
     integrations: typing.List[CustomEndpointIntegrations] = pydantic.Field()
     """
-    List of endpoint integrations associated with this provider account.
+    List of endpoint integrations associated with this model account.
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)

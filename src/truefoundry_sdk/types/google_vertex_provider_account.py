@@ -15,7 +15,7 @@ from .vertex_region import VertexRegion
 
 class GoogleVertexProviderAccount(UniversalBaseModel):
     """
-    Google Vertex Provider Account
+    Google Vertex Model Account
     """
 
     type: typing.Literal["provider-account/google-vertex"] = pydantic.Field(default="provider-account/google-vertex")
@@ -25,7 +25,7 @@ class GoogleVertexProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    The name of the Google Vertex provider account
+    The name of the Google Vertex model account
     """
 
     project_id: str = pydantic.Field()
@@ -41,12 +41,12 @@ class GoogleVertexProviderAccount(UniversalBaseModel):
 
     integrations: typing.List[VertexModel] = pydantic.Field()
     """
-    List of integrations that are associated with the Google Vertex provider account
+    List of integrations that are associated with the Google Vertex model account
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    List of users who have access to this provider account
+    List of users who have access to this model account
     """
 
     owned_by: typing_extensions.Annotated[
@@ -54,7 +54,7 @@ class GoogleVertexProviderAccount(UniversalBaseModel):
     ] = None
     discount_percent: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Discount % applied to upstream list price for this provider account.
+    Discount % applied to upstream list price for this model account.
     """
 
     if IS_PYDANTIC_V2:

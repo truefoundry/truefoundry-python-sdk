@@ -8,9 +8,13 @@ from .mcp_server_o_auth2grant_type import McpServerOAuth2GrantType
 from .mcp_server_o_auth2jwt_source import McpServerOAuth2JwtSource
 from .mcp_server_o_auth2provider import McpServerOAuth2Provider
 from .mcp_server_o_auth2provider_auth0settings import McpServerOAuth2ProviderAuth0Settings
+from .mcp_server_o_auth2provider_okta_id_jag_settings import McpServerOAuth2ProviderOktaIdJagSettings
+from .mcp_server_o_auth2provider_okta_settings import McpServerOAuth2ProviderOktaSettings
 
 
-class McpServerOAuth2(McpServerOAuth2ProviderAuth0Settings):
+class McpServerOAuth2(
+    McpServerOAuth2ProviderAuth0Settings, McpServerOAuth2ProviderOktaSettings, McpServerOAuth2ProviderOktaIdJagSettings
+):
     """
     OAuth2
     """
@@ -30,7 +34,7 @@ class McpServerOAuth2(McpServerOAuth2ProviderAuth0Settings):
     URL for the authorization request
     """
 
-    token_url: str = pydantic.Field()
+    token_url: typing.Optional[str] = pydantic.Field(default=None)
     """
     The endpoint to exchange auth code for tokens.
     """
@@ -55,6 +59,11 @@ class McpServerOAuth2(McpServerOAuth2ProviderAuth0Settings):
     URL to fetch token expiry (RFC 7662) when the provider does not return expires_in (e.g. Salesforce). Requires client_id and client_secret.
     """
 
+    include_resource: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    When enabled, the MCP server URL is sent as the resource parameter (RFC 8707) on both authorization and token endpoint requests.
+    """
+
     provider: McpServerOAuth2Provider = pydantic.Field()
     """
     Select the OAuth provider. Provider-specific configuration (e.g. Auth0 organization) is unlocked based on this value.
@@ -67,7 +76,7 @@ class McpServerOAuth2(McpServerOAuth2ProviderAuth0Settings):
     List of supported PKCE code challenge methods (S256 only)
     """
 
-    jwt_source: McpServerOAuth2JwtSource = pydantic.Field()
+    jwt_source: typing.Optional[McpServerOAuth2JwtSource] = pydantic.Field(default=None)
     """
     Source of the JWT token to be used for verification.
     """
@@ -79,7 +88,7 @@ class McpServerOAuth2(McpServerOAuth2ProviderAuth0Settings):
 
     additional_token_params: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
     """
-    Extra key/value pairs sent on every token endpoint request (e.g. Auth0 'audience').
+    Extra key/value pairs sent on every token endpoint request (e.g. Auth0 'organization').
     """
 
     if IS_PYDANTIC_V2:

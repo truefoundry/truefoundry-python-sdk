@@ -17,11 +17,6 @@ class BudgetV2Alert(UniversalBaseModel):
     List of usage percentages (0-100) at which alerts should be triggered. Default thresholds are [75, 90, 95, 100].
     """
 
-    notify_breaching_user: typing.Optional[bool] = pydantic.Field(default=False)
-    """
-    Notify the user who caused the breach. Only applies to per-user budgets.
-    """
-
     notification_target: typing.Optional[typing.List[NotificationTarget]] = pydantic.Field(default=None)
     """
     Select where to send budget alert notifications

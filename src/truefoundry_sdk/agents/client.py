@@ -7,6 +7,7 @@ from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.agent import Agent
 from ..types.agent_manifest import AgentManifest
+from ..types.get_agent_identity_token_response import GetAgentIdentityTokenResponse
 from ..types.get_agent_response import GetAgentResponse
 from ..types.get_agent_version_response import GetAgentVersionResponse
 from ..types.list_agents_response import ListAgentsResponse
@@ -223,6 +224,40 @@ class AgentsClient:
         )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
+        return _response.data
+
+    def get_token(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetAgentIdentityTokenResponse:
+        """
+        Returns the TrueFoundry-backed token for the agent's linked identity, generating one on demand if none exists yet (or the stored one has expired). Only valid for agents whose identity is TrueFoundry-backed. 404s if the agent has no linked identity.
+
+        Parameters
+        ----------
+        id : str
+            System-generated agent ID.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetAgentIdentityTokenResponse
+            The TrueFoundry-backed token for the agent's identity.
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.agents.get_token(
+            id="jqfwg345gi25n5ju2yz5iz6m",
+        )
+        """
+        _response = self._raw_client.get_token(id, request_options=request_options)
         return _response.data
 
 
@@ -465,4 +500,46 @@ class AsyncAgentsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
+        return _response.data
+
+    async def get_token(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetAgentIdentityTokenResponse:
+        """
+        Returns the TrueFoundry-backed token for the agent's linked identity, generating one on demand if none exists yet (or the stored one has expired). Only valid for agents whose identity is TrueFoundry-backed. 404s if the agent has no linked identity.
+
+        Parameters
+        ----------
+        id : str
+            System-generated agent ID.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetAgentIdentityTokenResponse
+            The TrueFoundry-backed token for the agent's identity.
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.agents.get_token(
+                id="jqfwg345gi25n5ju2yz5iz6m",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_token(id, request_options=request_options)
         return _response.data

@@ -24,18 +24,23 @@ class AnthropicProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    The name of the Anthropic provider account
+    The name of the Anthropic model account
     """
 
     auth_data: typing.Optional[AnthropicKeyAuth] = None
+    base_url: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Optional custom base URL for the Anthropic API. Must include the version path, e.g. https://my-proxy.example.com/v1. When set, requests are sent here instead of the default https://api.anthropic.com/v1.
+    """
+
     integrations: typing.Optional[typing.List[AnthropicIntegrations]] = pydantic.Field(default=None)
     """
-    List of integrations that are associated with the Anthropic provider account
+    List of integrations that are associated with the Anthropic model account
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    List of users who have access to this provider account
+    List of users who have access to this model account
     """
 
     owned_by: typing_extensions.Annotated[
@@ -43,7 +48,7 @@ class AnthropicProviderAccount(UniversalBaseModel):
     ] = None
     discount_percent: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Discount % applied to upstream list price for this provider account.
+    Discount % applied to upstream list price for this model account.
     """
 
     if IS_PYDANTIC_V2:

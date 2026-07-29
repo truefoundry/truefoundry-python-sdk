@@ -17,6 +17,7 @@ class VirtualModelModelType(enum.StrEnum):
     AUDIO_TRANSLATION = "audio_translation"
     TEXT_TO_SPEECH = "text_to_speech"
     IMAGE = "image"
+    RESPONSES = "responses"
     _UNKNOWN = "__VIRTUALMODELMODELTYPE_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
@@ -39,6 +40,7 @@ class VirtualModelModelType(enum.StrEnum):
         audio_translation: typing.Callable[[], T_Result],
         text_to_speech: typing.Callable[[], T_Result],
         image: typing.Callable[[], T_Result],
+        responses: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is VirtualModelModelType.CHAT:
@@ -59,4 +61,6 @@ class VirtualModelModelType(enum.StrEnum):
             return text_to_speech()
         if self is VirtualModelModelType.IMAGE:
             return image()
+        if self is VirtualModelModelType.RESPONSES:
+            return responses()
         return _unknown_member(self._value_)

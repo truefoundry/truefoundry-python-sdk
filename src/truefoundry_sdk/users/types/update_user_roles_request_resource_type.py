@@ -2,12 +2,12 @@
 
 import typing
 
-from ..core import enum
+from ...core import enum
 
 T_Result = typing.TypeVar("T_Result")
 
 
-class ResourceType(enum.StrEnum):
+class UpdateUserRolesRequestResourceType(enum.StrEnum):
     """
     Resource type scope for the role assignment.
     """
@@ -40,10 +40,13 @@ class ResourceType(enum.StrEnum):
     GATEWAY_CONFIG = "gateway-config"
     GATEWAY_CONTROLS = "gateway-controls"
     GATEWAY_BUDGET = "gateway-budget"
+    GATEWAY_POLICY = "gateway-policy"
+    GATEWAY_APPROVAL_REQUEST = "gateway-approval-request"
     TRACING_PROJECT = "tracing-project"
     TRACING_APPLICATION = "tracing-application"
     AGENT = "agent"
     AGENT_APP = "agent-app"
+    AGENT_CHANNEL = "agent-channel"
     GATEWAY_INSTALLATION = "gateway-installation"
     VIRTUAL_ACCOUNT = "virtual-account"
     SSO_BASED_IDENTITY = "sso-based-identity"
@@ -51,13 +54,13 @@ class ResourceType(enum.StrEnum):
     MCP_SERVER = "mcp-server"
     EXTERNAL_IDENTITY_PROVIDER = "external-identity-provider"
     AGENT_IDENTITY = "agent-identity"
-    _UNKNOWN = "__RESOURCETYPE_UNKNOWN__"
+    _UNKNOWN = "__UPDATEUSERROLESREQUESTRESOURCETYPE_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
     """
 
     @classmethod
-    def _missing_(cls, value: typing.Any) -> "ResourceType":
+    def _missing_(cls, value: typing.Any) -> "UpdateUserRolesRequestResourceType":
         unknown = cls._UNKNOWN
         unknown._value_ = value
         return unknown
@@ -92,10 +95,13 @@ class ResourceType(enum.StrEnum):
         gateway_config: typing.Callable[[], T_Result],
         gateway_controls: typing.Callable[[], T_Result],
         gateway_budget: typing.Callable[[], T_Result],
+        gateway_policy: typing.Callable[[], T_Result],
+        gateway_approval_request: typing.Callable[[], T_Result],
         tracing_project: typing.Callable[[], T_Result],
         tracing_application: typing.Callable[[], T_Result],
         agent: typing.Callable[[], T_Result],
         agent_app: typing.Callable[[], T_Result],
+        agent_channel: typing.Callable[[], T_Result],
         gateway_installation: typing.Callable[[], T_Result],
         virtual_account: typing.Callable[[], T_Result],
         sso_based_identity: typing.Callable[[], T_Result],
@@ -105,82 +111,88 @@ class ResourceType(enum.StrEnum):
         agent_identity: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
-        if self is ResourceType.ROLE:
+        if self is UpdateUserRolesRequestResourceType.ROLE:
             return role()
-        if self is ResourceType.ACCOUNT:
+        if self is UpdateUserRolesRequestResourceType.ACCOUNT:
             return account()
-        if self is ResourceType.CLUSTER:
+        if self is UpdateUserRolesRequestResourceType.CLUSTER:
             return cluster()
-        if self is ResourceType.WORKSPACE:
+        if self is UpdateUserRolesRequestResourceType.WORKSPACE:
             return workspace()
-        if self is ResourceType.ENVIRONMENT:
+        if self is UpdateUserRolesRequestResourceType.ENVIRONMENT:
             return environment()
-        if self is ResourceType.SECRET_GROUP:
+        if self is UpdateUserRolesRequestResourceType.SECRET_GROUP:
             return secret_group()
-        if self is ResourceType.DEPLOYMENT:
+        if self is UpdateUserRolesRequestResourceType.DEPLOYMENT:
             return deployment()
-        if self is ResourceType.APPLICATION:
+        if self is UpdateUserRolesRequestResourceType.APPLICATION:
             return application()
-        if self is ResourceType.SECRET:
+        if self is UpdateUserRolesRequestResourceType.SECRET:
             return secret()
-        if self is ResourceType.DOCKER_REGISTRY:
+        if self is UpdateUserRolesRequestResourceType.DOCKER_REGISTRY:
             return docker_registry()
-        if self is ResourceType.TENANT:
+        if self is UpdateUserRolesRequestResourceType.TENANT:
             return tenant()
-        if self is ResourceType.VCS_INTEGRATION:
+        if self is UpdateUserRolesRequestResourceType.VCS_INTEGRATION:
             return vcs_integration()
-        if self is ResourceType.MLF_PROJECT:
+        if self is UpdateUserRolesRequestResourceType.MLF_PROJECT:
             return mlf_project()
-        if self is ResourceType.REPOSITORY:
+        if self is UpdateUserRolesRequestResourceType.REPOSITORY:
             return repository()
-        if self is ResourceType.PROVIDER_INTEGRATION:
+        if self is UpdateUserRolesRequestResourceType.PROVIDER_INTEGRATION:
             return provider_integration()
-        if self is ResourceType.TEAM:
+        if self is UpdateUserRolesRequestResourceType.TEAM:
             return team()
-        if self is ResourceType.SERVICE_ACCOUNT:
+        if self is UpdateUserRolesRequestResourceType.SERVICE_ACCOUNT:
             return service_account()
-        if self is ResourceType.LLM_GATEWAY:
+        if self is UpdateUserRolesRequestResourceType.LLM_GATEWAY:
             return llm_gateway()
-        if self is ResourceType.POLICY:
+        if self is UpdateUserRolesRequestResourceType.POLICY:
             return policy()
-        if self is ResourceType.ROLE_BINDING:
+        if self is UpdateUserRolesRequestResourceType.ROLE_BINDING:
             return role_binding()
-        if self is ResourceType.SETTINGS:
+        if self is UpdateUserRolesRequestResourceType.SETTINGS:
             return settings()
-        if self is ResourceType.PROVIDER_ACCOUNT:
+        if self is UpdateUserRolesRequestResourceType.PROVIDER_ACCOUNT:
             return provider_account()
-        if self is ResourceType.USER:
+        if self is UpdateUserRolesRequestResourceType.USER:
             return user()
-        if self is ResourceType.ALERT_CONFIG:
+        if self is UpdateUserRolesRequestResourceType.ALERT_CONFIG:
             return alert_config()
-        if self is ResourceType.ALERT_RULE:
+        if self is UpdateUserRolesRequestResourceType.ALERT_RULE:
             return alert_rule()
-        if self is ResourceType.GATEWAY_CONFIG:
+        if self is UpdateUserRolesRequestResourceType.GATEWAY_CONFIG:
             return gateway_config()
-        if self is ResourceType.GATEWAY_CONTROLS:
+        if self is UpdateUserRolesRequestResourceType.GATEWAY_CONTROLS:
             return gateway_controls()
-        if self is ResourceType.GATEWAY_BUDGET:
+        if self is UpdateUserRolesRequestResourceType.GATEWAY_BUDGET:
             return gateway_budget()
-        if self is ResourceType.TRACING_PROJECT:
+        if self is UpdateUserRolesRequestResourceType.GATEWAY_POLICY:
+            return gateway_policy()
+        if self is UpdateUserRolesRequestResourceType.GATEWAY_APPROVAL_REQUEST:
+            return gateway_approval_request()
+        if self is UpdateUserRolesRequestResourceType.TRACING_PROJECT:
             return tracing_project()
-        if self is ResourceType.TRACING_APPLICATION:
+        if self is UpdateUserRolesRequestResourceType.TRACING_APPLICATION:
             return tracing_application()
-        if self is ResourceType.AGENT:
+        if self is UpdateUserRolesRequestResourceType.AGENT:
             return agent()
-        if self is ResourceType.AGENT_APP:
+        if self is UpdateUserRolesRequestResourceType.AGENT_APP:
             return agent_app()
-        if self is ResourceType.GATEWAY_INSTALLATION:
+        if self is UpdateUserRolesRequestResourceType.AGENT_CHANNEL:
+            return agent_channel()
+        if self is UpdateUserRolesRequestResourceType.GATEWAY_INSTALLATION:
             return gateway_installation()
-        if self is ResourceType.VIRTUAL_ACCOUNT:
+        if self is UpdateUserRolesRequestResourceType.VIRTUAL_ACCOUNT:
             return virtual_account()
-        if self is ResourceType.SSO_BASED_IDENTITY:
+        if self is UpdateUserRolesRequestResourceType.SSO_BASED_IDENTITY:
             return sso_based_identity()
-        if self is ResourceType.EXTERNAL_IDENTITY:
+        if self is UpdateUserRolesRequestResourceType.EXTERNAL_IDENTITY:
             return external_identity()
-        if self is ResourceType.MCP_SERVER:
+        if self is UpdateUserRolesRequestResourceType.MCP_SERVER:
             return mcp_server()
-        if self is ResourceType.EXTERNAL_IDENTITY_PROVIDER:
+        if self is UpdateUserRolesRequestResourceType.EXTERNAL_IDENTITY_PROVIDER:
             return external_identity_provider()
-        if self is ResourceType.AGENT_IDENTITY:
+        if self is UpdateUserRolesRequestResourceType.AGENT_IDENTITY:
             return agent_identity()
         return _unknown_member(self._value_)

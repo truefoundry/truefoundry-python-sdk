@@ -14,7 +14,7 @@ from .owned_by import OwnedBy
 
 class OpenaiProviderAccount(UniversalBaseModel):
     """
-    OpenAI Provider Account
+    OpenAI Model Account
     """
 
     type: typing.Literal["provider-account/openai"] = pydantic.Field(default="provider-account/openai")
@@ -24,7 +24,7 @@ class OpenaiProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    The name of the OpenAI provider account
+    The name of the OpenAI model account
     """
 
     auth_data: typing.Optional[OpenaiApiKeyAuth] = None
@@ -35,12 +35,12 @@ class OpenaiProviderAccount(UniversalBaseModel):
 
     integrations: typing.List[OpenAiIntegrations] = pydantic.Field()
     """
-    List of integrations that are associated with the OpenAI provider account
+    List of integrations that are associated with the OpenAI model account
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    List of users who have access to this provider account
+    List of users who have access to this model account
     """
 
     owned_by: typing_extensions.Annotated[
@@ -48,7 +48,7 @@ class OpenaiProviderAccount(UniversalBaseModel):
     ] = None
     discount_percent: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Discount % applied to upstream list price for this provider account.
+    Discount % applied to upstream list price for this model account.
     """
 
     if IS_PYDANTIC_V2:

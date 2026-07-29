@@ -14,6 +14,8 @@ class McpServerOAuth2GrantType(enum.StrEnum):
 
     AUTHORIZATION_CODE = "authorization_code"
     CLIENT_CREDENTIALS = "client_credentials"
+    TOKEN_EXCHANGE = "token_exchange"
+    ID_JAG = "id_jag"
     _UNKNOWN = "__MCPSERVEROAUTH2GRANTTYPE_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
@@ -29,10 +31,16 @@ class McpServerOAuth2GrantType(enum.StrEnum):
         self,
         authorization_code: typing.Callable[[], T_Result],
         client_credentials: typing.Callable[[], T_Result],
+        token_exchange: typing.Callable[[], T_Result],
+        id_jag: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is McpServerOAuth2GrantType.AUTHORIZATION_CODE:
             return authorization_code()
         if self is McpServerOAuth2GrantType.CLIENT_CREDENTIALS:
             return client_credentials()
+        if self is McpServerOAuth2GrantType.TOKEN_EXCHANGE:
+            return token_exchange()
+        if self is McpServerOAuth2GrantType.ID_JAG:
+            return id_jag()
         return _unknown_member(self._value_)

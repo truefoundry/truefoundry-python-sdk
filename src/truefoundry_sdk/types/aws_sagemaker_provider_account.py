@@ -25,7 +25,7 @@ class AwsSagemakerProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    The name of the Sagemaker provider account
+    The name of the Sagemaker model account
     """
 
     region: AwsRegion
@@ -36,12 +36,12 @@ class AwsSagemakerProviderAccount(UniversalBaseModel):
 
     integrations: typing.List[SagemakerModel] = pydantic.Field()
     """
-    List of integrations that are associated with the Sagemaker provider account
+    List of integrations that are associated with the Sagemaker model account
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    List of users who have access to this provider account
+    List of users who have access to this model account
     """
 
     owned_by: typing_extensions.Annotated[
@@ -49,7 +49,7 @@ class AwsSagemakerProviderAccount(UniversalBaseModel):
     ] = None
     discount_percent: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Discount % applied to upstream list price for this provider account.
+    Discount % applied to upstream list price for this model account.
     """
 
     if IS_PYDANTIC_V2:

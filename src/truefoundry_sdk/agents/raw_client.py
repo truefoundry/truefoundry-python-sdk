@@ -17,8 +17,10 @@ from ..errors.forbidden_error import ForbiddenError
 from ..errors.internal_server_error import InternalServerError
 from ..errors.not_found_error import NotFoundError
 from ..errors.unauthorized_error import UnauthorizedError
+from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.agent import Agent
 from ..types.agent_manifest import AgentManifest
+from ..types.get_agent_identity_token_response import GetAgentIdentityTokenResponse
 from ..types.get_agent_response import GetAgentResponse
 from ..types.get_agent_version_response import GetAgentVersionResponse
 from ..types.http_error import HttpError
@@ -389,6 +391,82 @@ class RawAgentsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def get_token(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[GetAgentIdentityTokenResponse]:
+        """
+        Returns the TrueFoundry-backed token for the agent's linked identity, generating one on demand if none exists yet (or the stored one has expired). Only valid for agents whose identity is TrueFoundry-backed. 404s if the agent has no linked identity.
+
+        Parameters
+        ----------
+        id : str
+            System-generated agent ID.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetAgentIdentityTokenResponse]
+            The TrueFoundry-backed token for the agent's identity.
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/agents/{encode_path_param(id)}/token",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetAgentIdentityTokenResponse,
+                    parse_obj_as(
+                        type_=GetAgentIdentityTokenResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawAgentsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -736,6 +814,82 @@ class AsyncRawAgentsClient:
                 )
             if _response.status_code == 500:
                 raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_token(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[GetAgentIdentityTokenResponse]:
+        """
+        Returns the TrueFoundry-backed token for the agent's linked identity, generating one on demand if none exists yet (or the stored one has expired). Only valid for agents whose identity is TrueFoundry-backed. 404s if the agent has no linked identity.
+
+        Parameters
+        ----------
+        id : str
+            System-generated agent ID.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetAgentIdentityTokenResponse]
+            The TrueFoundry-backed token for the agent's identity.
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/svc/v1/agents/{encode_path_param(id)}/token",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetAgentIdentityTokenResponse,
+                    parse_obj_as(
+                        type_=GetAgentIdentityTokenResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         HttpError,

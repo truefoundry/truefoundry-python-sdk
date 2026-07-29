@@ -8,17 +8,17 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class IdentityProviderMapping(UniversalBaseModel):
     """
-    Configuration for mapping IdP claim values to this virtual account
+    Map specific claim values from an external IdP token (e.g., Okta, Azure AD) to this agent identity.
     """
 
     identity_provider: str = pydantic.Field()
     """
-    Name of the external identity provider
+    Must already be configured under Platform → Identity Providers. Choosing a SPIRE provider means this agent's credential is an attested JWT-SVID from its runtime.
     """
 
     value: str = pydantic.Field()
     """
-    Claim value that should resolve to this virtual account
+    The value that must appear in the subject claim of the IdP token for this mapping to match. For example, a service account email or a group name.
     """
 
     if IS_PYDANTIC_V2:

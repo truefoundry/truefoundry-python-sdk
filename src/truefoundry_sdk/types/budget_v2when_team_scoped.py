@@ -15,6 +15,7 @@ class BudgetV2WhenTeamScoped(UniversalBaseModel):
 
     subjects: typing.Optional[BudgetV2SubjectsTeamScoped] = None
     models: typing.Optional[BudgetV2InNotInFilter] = None
+    provider_accounts: typing.Optional[BudgetV2InNotInFilter] = None
     metadata: typing.Optional[typing.Dict[str, BudgetV2InNotInFilter]] = pydantic.Field(default=None)
     """
     Filter by metadata key-value pairs this budget applies to

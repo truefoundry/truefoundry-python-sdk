@@ -15,6 +15,7 @@ from .enkrypt_ai_guardrail_config import EnkryptAiGuardrailConfig
 from .fiddler_guardrail_config import FiddlerGuardrailConfig
 from .google_model_armor_guardrail_config import GoogleModelArmorGuardrailConfig
 from .gray_swan_cygnal_guardrail_config import GraySwanCygnalGuardrailConfig
+from .noma_security_guardrail_config import NomaSecurityGuardrailConfig
 from .opa_guardrail_config import OpaGuardrailConfig
 from .open_ai_moderations_guardrail_config import OpenAiModerationsGuardrailConfig
 from .palo_alto_prisma_airs_guardrail_config import PaloAltoPrismaAirsGuardrailConfig
@@ -52,6 +53,7 @@ GuardrailConfigIntegrations = typing.Union[
     OpaGuardrailConfig,
     GoogleModelArmorGuardrailConfig,
     GraySwanCygnalGuardrailConfig,
+    NomaSecurityGuardrailConfig,
     AktoGuardrailConfig,
     TrojAiGuardrailConfig,
 ]

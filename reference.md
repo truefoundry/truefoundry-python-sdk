@@ -527,7 +527,7 @@ client.users.update_roles(
 <dl>
 <dd>
 
-**resource_type:** `typing.Optional[ResourceType]` — Resource type scope for the role assignment.
+**resource_type:** `typing.Optional[UpdateUserRolesRequestResourceType]` — Resource type scope for the role assignment.
     
 </dd>
 </dl>
@@ -680,6 +680,14 @@ client.users.delete(
 <dd>
 
 **tenant_name:** `typing.Optional[str]` — Tenant name override. Defaults to the caller's tenant when omitted.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force_delete:** `typing.Optional[bool]` — When true, force-deletes the user by automatically removing all resource collaborations and team memberships.
     
 </dd>
 </dl>
@@ -1825,6 +1833,570 @@ client.teams.get_permissions(
 <dd>
 
 **id:** `str` — System-generated team ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## GatewayBudgets
+<details><summary><code>client.gateway_budgets.<a href="src/truefoundry_sdk/gateway_budgets/client.py">list</a>(...) -> typing.List[GatewayBudget]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns all budgets for the tenant. Supports filtering by type and team_name.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.gateway_budgets.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**type:** `typing.Optional[ListGatewayBudgetsRequestType]` — Filter by budget type. One of tenant-budget-config | team-budget-config.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**team_name:** `typing.Optional[str]` — Filter by team_name (only meaningful for team-budget-config).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.gateway_budgets.<a href="src/truefoundry_sdk/gateway_budgets/client.py">create_or_update</a>(...) -> GatewayBudget</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates or updates a budget manifest for the tenant. Budgets are upserted by `manifest.name` (unique per tenant).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry, TenantBudgetConfig, BudgetV2Limits, BudgetV2AppliesToAggregate, TenantBudgetConfigMode
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.gateway_budgets.create_or_update(
+    manifest=TenantBudgetConfig(
+        type="tenant-budget-config",
+        name="name",
+        limits=BudgetV2Limits(),
+        applies_to=BudgetV2AppliesToAggregate(
+            type="aggregate",
+        ),
+        mode=TenantBudgetConfigMode.ENFORCE,
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**manifest:** `CreateOrUpdateBudgetDtoManifest` — The budget manifest. Must match either the TenantBudgetConfig or TeamBudgetConfig schema.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dry_run:** `typing.Optional[bool]` — When `true`, validates the manifest without persisting changes.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.gateway_budgets.<a href="src/truefoundry_sdk/gateway_budgets/client.py">get_my_usage</a>() -> BudgetUsageResponseDto</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns every per-user budget that currently applies to the caller, with current usage per period.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.gateway_budgets.get_my_usage()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.gateway_budgets.<a href="src/truefoundry_sdk/gateway_budgets/client.py">simulate</a>(...) -> BudgetUsageResponseDto</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the budgets that would apply to a hypothetical user/team/model/metadata selection, with current usage.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.gateway_budgets.simulate()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**user:** `typing.Optional[str]` — User email to simulate as.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**virtual_account:** `typing.Optional[str]` — Virtual account slug to simulate as. Use this instead of `user` for virtual-account budgets.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**team:** `typing.Optional[str]` — Single team to simulate membership of. Use `teams` to pass multiple teams.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**teams:** `typing.Optional[typing.List[str]]` — All teams the simulated user belongs to. Merged with `team` when both are provided.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model:** `typing.Optional[str]` — Model to simulate.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**metadata:** `typing.Optional[typing.Dict[str, str]]` — Request metadata key/value pairs to simulate.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.gateway_budgets.<a href="src/truefoundry_sdk/gateway_budgets/client.py">get</a>(...) -> GatewayBudget</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a single budget by id.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.gateway_budgets.get(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The budget id to retrieve or delete.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.gateway_budgets.<a href="src/truefoundry_sdk/gateway_budgets/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Permanently deletes a budget manifest.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.gateway_budgets.delete(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The budget id to retrieve or delete.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.gateway_budgets.<a href="src/truefoundry_sdk/gateway_budgets/client.py">get_leaderboard</a>(...) -> BudgetUsageResponseDto</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the top spenders for a budget in its applies_to dimension, for the configured period. Aggregate budgets return a single whole-budget entity (entity: null).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.gateway_budgets.get_leaderboard(
+    id="id",
+    limit=50,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The budget id to retrieve or delete.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[float]` — Maximum number of entries to return. Defaults to 500 and is capped at 500.
     
 </dd>
 </dl>
@@ -5958,7 +6530,7 @@ client.secret_groups.list(
 <dl>
 <dd>
 
-**search:** `typing.Optional[str]` — Search query - filters by secret group names that contain the search string
+**search:** `typing.Optional[str]` — Search query - filters by secret group names or secret names that contain the search string
     
 </dd>
 </dl>
@@ -6936,6 +7508,78 @@ client = TrueFoundry(
 )
 
 client.agents.delete(
+    id="jqfwg345gi25n5ju2yz5iz6m",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — System-generated agent ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.<a href="src/truefoundry_sdk/agents/client.py">get_token</a>(...) -> GetAgentIdentityTokenResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the TrueFoundry-backed token for the agent's linked identity, generating one on demand if none exists yet (or the stored one has expired). Only valid for agents whose identity is TrueFoundry-backed. 404s if the agent has no linked identity.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.agents.get_token(
     id="jqfwg345gi25n5ju2yz5iz6m",
 )
 

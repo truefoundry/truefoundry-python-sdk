@@ -8,11 +8,11 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from ..core.serialization import FieldMetadata
-from .i_change_operation import IChangeOperation
+from .i_change_type import IChangeType
 
 
 class IChange(UniversalBaseModel):
-    type: IChangeOperation
+    type: IChangeType
     key: str
     value: typing.Optional[typing.Dict[str, typing.Any]] = None
     old_value: typing_extensions.Annotated[
