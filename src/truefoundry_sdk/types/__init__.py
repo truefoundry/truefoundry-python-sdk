@@ -198,13 +198,13 @@ if typing.TYPE_CHECKING:
     from .blue_green import BlueGreen
     from .budget_alert import BudgetAlert
     from .budget_config import BudgetConfig
-    from .budget_entity_usage_dto import BudgetEntityUsageDto
+    from .budget_entity_usage import BudgetEntityUsage
     from .budget_limit_unit import BudgetLimitUnit
     from .budget_rule import BudgetRule
-    from .budget_usage_entry_dto import BudgetUsageEntryDto
-    from .budget_usage_entry_dto_mode import BudgetUsageEntryDtoMode
-    from .budget_usage_entry_dto_type import BudgetUsageEntryDtoType
-    from .budget_usage_response_dto import BudgetUsageResponseDto
+    from .budget_usage_entry import BudgetUsageEntry
+    from .budget_usage_entry_mode import BudgetUsageEntryMode
+    from .budget_usage_entry_type import BudgetUsageEntryType
+    from .budget_usage_response import BudgetUsageResponse
     from .budget_v2alert import BudgetV2Alert
     from .budget_v2applies_to import BudgetV2AppliesTo
     from .budget_v2applies_to_aggregate import BudgetV2AppliesToAggregate
@@ -248,6 +248,10 @@ if typing.TYPE_CHECKING:
     from .chat_prompt_manifest_mcp_servers_item import ChatPromptManifestMcpServersItem
     from .chat_prompt_manifest_response_format import ChatPromptManifestResponseFormat
     from .chat_prompt_manifest_routing_config import ChatPromptManifestRoutingConfig
+    from .cisco_ai_defense_guardrail_config import CiscoAiDefenseGuardrailConfig
+    from .cisco_ai_defense_guardrail_config_config import CiscoAiDefenseGuardrailConfigConfig
+    from .cisco_ai_defense_guardrail_config_config_region import CiscoAiDefenseGuardrailConfigConfigRegion
+    from .cisco_ai_defense_key_auth import CiscoAiDefenseKeyAuth
     from .cloudera_integrations import ClouderaIntegrations
     from .cloudera_model import ClouderaModel
     from .cloudera_provider_account import ClouderaProviderAccount
@@ -848,7 +852,7 @@ if typing.TYPE_CHECKING:
     from .per_minute_of_audio_cost_metric_value import PerMinuteOfAudioCostMetricValue
     from .per_thousand_embedding_tokens_cost_metric import PerThousandEmbeddingTokensCostMetric
     from .per_thousand_tokens_cost_metric import PerThousandTokensCostMetric
-    from .period_usage_dto import PeriodUsageDto
+    from .period_usage import PeriodUsage
     from .permission_set_v2 import PermissionSetV2
     from .permission_set_v2resource_type import PermissionSetV2ResourceType
     from .permissions import Permissions
@@ -892,6 +896,7 @@ if typing.TYPE_CHECKING:
     from .provider_integration_type import ProviderIntegrationType
     from .public_cost_metric import PublicCostMetric
     from .py_spark_task_config import PySparkTaskConfig
+    from .py_spark_task_config_image import PySparkTaskConfigImage
     from .py_torch_framework import PyTorchFramework
     from .python_build import PythonBuild
     from .python_build_command import PythonBuildCommand
@@ -1072,6 +1077,7 @@ if typing.TYPE_CHECKING:
     from .task_docker_file_build import TaskDockerFileBuild
     from .task_py_spark_build import TaskPySparkBuild
     from .task_python_build import TaskPythonBuild
+    from .task_spark_image import TaskSparkImage
     from .team import Team
     from .team_budget_config import TeamBudgetConfig
     from .team_budget_config_mode import TeamBudgetConfigMode
@@ -1418,13 +1424,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BlueGreen": ".blue_green",
     "BudgetAlert": ".budget_alert",
     "BudgetConfig": ".budget_config",
-    "BudgetEntityUsageDto": ".budget_entity_usage_dto",
+    "BudgetEntityUsage": ".budget_entity_usage",
     "BudgetLimitUnit": ".budget_limit_unit",
     "BudgetRule": ".budget_rule",
-    "BudgetUsageEntryDto": ".budget_usage_entry_dto",
-    "BudgetUsageEntryDtoMode": ".budget_usage_entry_dto_mode",
-    "BudgetUsageEntryDtoType": ".budget_usage_entry_dto_type",
-    "BudgetUsageResponseDto": ".budget_usage_response_dto",
+    "BudgetUsageEntry": ".budget_usage_entry",
+    "BudgetUsageEntryMode": ".budget_usage_entry_mode",
+    "BudgetUsageEntryType": ".budget_usage_entry_type",
+    "BudgetUsageResponse": ".budget_usage_response",
     "BudgetV2Alert": ".budget_v2alert",
     "BudgetV2AppliesTo": ".budget_v2applies_to",
     "BudgetV2AppliesToAggregate": ".budget_v2applies_to_aggregate",
@@ -1468,6 +1474,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ChatPromptManifestMcpServersItem": ".chat_prompt_manifest_mcp_servers_item",
     "ChatPromptManifestResponseFormat": ".chat_prompt_manifest_response_format",
     "ChatPromptManifestRoutingConfig": ".chat_prompt_manifest_routing_config",
+    "CiscoAiDefenseGuardrailConfig": ".cisco_ai_defense_guardrail_config",
+    "CiscoAiDefenseGuardrailConfigConfig": ".cisco_ai_defense_guardrail_config_config",
+    "CiscoAiDefenseGuardrailConfigConfigRegion": ".cisco_ai_defense_guardrail_config_config_region",
+    "CiscoAiDefenseKeyAuth": ".cisco_ai_defense_key_auth",
     "ClouderaIntegrations": ".cloudera_integrations",
     "ClouderaModel": ".cloudera_model",
     "ClouderaProviderAccount": ".cloudera_provider_account",
@@ -2052,7 +2062,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PerMinuteOfAudioCostMetricValue": ".per_minute_of_audio_cost_metric_value",
     "PerThousandEmbeddingTokensCostMetric": ".per_thousand_embedding_tokens_cost_metric",
     "PerThousandTokensCostMetric": ".per_thousand_tokens_cost_metric",
-    "PeriodUsageDto": ".period_usage_dto",
+    "PeriodUsage": ".period_usage",
     "PermissionSetV2": ".permission_set_v2",
     "PermissionSetV2ResourceType": ".permission_set_v2resource_type",
     "Permissions": ".permissions",
@@ -2096,6 +2106,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ProviderIntegrationType": ".provider_integration_type",
     "PublicCostMetric": ".public_cost_metric",
     "PySparkTaskConfig": ".py_spark_task_config",
+    "PySparkTaskConfigImage": ".py_spark_task_config_image",
     "PyTorchFramework": ".py_torch_framework",
     "PythonBuild": ".python_build",
     "PythonBuildCommand": ".python_build_command",
@@ -2279,6 +2290,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TaskDockerFileBuild": ".task_docker_file_build",
     "TaskPySparkBuild": ".task_py_spark_build",
     "TaskPythonBuild": ".task_python_build",
+    "TaskSparkImage": ".task_spark_image",
     "Team": ".team",
     "TeamBudgetConfig": ".team_budget_config",
     "TeamBudgetConfigMode": ".team_budget_config_mode",
@@ -2649,13 +2661,13 @@ __all__ = [
     "BlueGreen",
     "BudgetAlert",
     "BudgetConfig",
-    "BudgetEntityUsageDto",
+    "BudgetEntityUsage",
     "BudgetLimitUnit",
     "BudgetRule",
-    "BudgetUsageEntryDto",
-    "BudgetUsageEntryDtoMode",
-    "BudgetUsageEntryDtoType",
-    "BudgetUsageResponseDto",
+    "BudgetUsageEntry",
+    "BudgetUsageEntryMode",
+    "BudgetUsageEntryType",
+    "BudgetUsageResponse",
     "BudgetV2Alert",
     "BudgetV2AppliesTo",
     "BudgetV2AppliesToAggregate",
@@ -2699,6 +2711,10 @@ __all__ = [
     "ChatPromptManifestMcpServersItem",
     "ChatPromptManifestResponseFormat",
     "ChatPromptManifestRoutingConfig",
+    "CiscoAiDefenseGuardrailConfig",
+    "CiscoAiDefenseGuardrailConfigConfig",
+    "CiscoAiDefenseGuardrailConfigConfigRegion",
+    "CiscoAiDefenseKeyAuth",
     "ClouderaIntegrations",
     "ClouderaModel",
     "ClouderaProviderAccount",
@@ -3283,7 +3299,7 @@ __all__ = [
     "PerMinuteOfAudioCostMetricValue",
     "PerThousandEmbeddingTokensCostMetric",
     "PerThousandTokensCostMetric",
-    "PeriodUsageDto",
+    "PeriodUsage",
     "PermissionSetV2",
     "PermissionSetV2ResourceType",
     "Permissions",
@@ -3327,6 +3343,7 @@ __all__ = [
     "ProviderIntegrationType",
     "PublicCostMetric",
     "PySparkTaskConfig",
+    "PySparkTaskConfigImage",
     "PyTorchFramework",
     "PythonBuild",
     "PythonBuildCommand",
@@ -3510,6 +3527,7 @@ __all__ = [
     "TaskDockerFileBuild",
     "TaskPySparkBuild",
     "TaskPythonBuild",
+    "TaskSparkImage",
     "Team",
     "TeamBudgetConfig",
     "TeamBudgetConfigMode",

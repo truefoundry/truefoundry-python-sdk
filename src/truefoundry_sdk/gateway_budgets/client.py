@@ -4,10 +4,10 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.budget_usage_response_dto import BudgetUsageResponseDto
+from ..types.budget_usage_response import BudgetUsageResponse
 from ..types.gateway_budget import GatewayBudget
 from .raw_client import AsyncRawGatewayBudgetsClient, RawGatewayBudgetsClient
-from .types.create_or_update_budget_dto_manifest import CreateOrUpdateBudgetDtoManifest
+from .types.create_or_update_budget_request_manifest import CreateOrUpdateBudgetRequestManifest
 from .types.list_gateway_budgets_request_type import ListGatewayBudgetsRequestType
 
 # this is used as the default value for optional parameters
@@ -71,7 +71,7 @@ class GatewayBudgetsClient:
     def create_or_update(
         self,
         *,
-        manifest: CreateOrUpdateBudgetDtoManifest,
+        manifest: CreateOrUpdateBudgetRequestManifest,
         dry_run: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GatewayBudget:
@@ -80,7 +80,7 @@ class GatewayBudgetsClient:
 
         Parameters
         ----------
-        manifest : CreateOrUpdateBudgetDtoManifest
+        manifest : CreateOrUpdateBudgetRequestManifest
             The budget manifest. Must match either the TenantBudgetConfig or TeamBudgetConfig schema.
 
         dry_run : typing.Optional[bool]
@@ -122,7 +122,7 @@ class GatewayBudgetsClient:
         )
         return _response.data
 
-    def get_my_usage(self, *, request_options: typing.Optional[RequestOptions] = None) -> BudgetUsageResponseDto:
+    def get_my_usage(self, *, request_options: typing.Optional[RequestOptions] = None) -> BudgetUsageResponse:
         """
         Returns every per-user budget that currently applies to the caller, with current usage per period.
 
@@ -133,7 +133,7 @@ class GatewayBudgetsClient:
 
         Returns
         -------
-        BudgetUsageResponseDto
+        BudgetUsageResponse
             The caller-scoped budget usage.
 
         Examples
@@ -159,7 +159,7 @@ class GatewayBudgetsClient:
         model: typing.Optional[str] = OMIT,
         metadata: typing.Optional[typing.Dict[str, str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> BudgetUsageResponseDto:
+    ) -> BudgetUsageResponse:
         """
         Returns the budgets that would apply to a hypothetical user/team/model/metadata selection, with current usage.
 
@@ -188,7 +188,7 @@ class GatewayBudgetsClient:
 
         Returns
         -------
-        BudgetUsageResponseDto
+        BudgetUsageResponse
             The budgets matching the selection.
 
         Examples
@@ -277,7 +277,7 @@ class GatewayBudgetsClient:
 
     def get_leaderboard(
         self, id: str, *, limit: typing.Optional[float] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> BudgetUsageResponseDto:
+    ) -> BudgetUsageResponse:
         """
         Returns the top spenders for a budget in its applies_to dimension, for the configured period. Aggregate budgets return a single whole-budget entity (entity: null).
 
@@ -294,7 +294,7 @@ class GatewayBudgetsClient:
 
         Returns
         -------
-        BudgetUsageResponseDto
+        BudgetUsageResponse
             The budget leaderboard.
 
         Examples
@@ -379,7 +379,7 @@ class AsyncGatewayBudgetsClient:
     async def create_or_update(
         self,
         *,
-        manifest: CreateOrUpdateBudgetDtoManifest,
+        manifest: CreateOrUpdateBudgetRequestManifest,
         dry_run: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GatewayBudget:
@@ -388,7 +388,7 @@ class AsyncGatewayBudgetsClient:
 
         Parameters
         ----------
-        manifest : CreateOrUpdateBudgetDtoManifest
+        manifest : CreateOrUpdateBudgetRequestManifest
             The budget manifest. Must match either the TenantBudgetConfig or TeamBudgetConfig schema.
 
         dry_run : typing.Optional[bool]
@@ -438,7 +438,7 @@ class AsyncGatewayBudgetsClient:
         )
         return _response.data
 
-    async def get_my_usage(self, *, request_options: typing.Optional[RequestOptions] = None) -> BudgetUsageResponseDto:
+    async def get_my_usage(self, *, request_options: typing.Optional[RequestOptions] = None) -> BudgetUsageResponse:
         """
         Returns every per-user budget that currently applies to the caller, with current usage per period.
 
@@ -449,7 +449,7 @@ class AsyncGatewayBudgetsClient:
 
         Returns
         -------
-        BudgetUsageResponseDto
+        BudgetUsageResponse
             The caller-scoped budget usage.
 
         Examples
@@ -483,7 +483,7 @@ class AsyncGatewayBudgetsClient:
         model: typing.Optional[str] = OMIT,
         metadata: typing.Optional[typing.Dict[str, str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> BudgetUsageResponseDto:
+    ) -> BudgetUsageResponse:
         """
         Returns the budgets that would apply to a hypothetical user/team/model/metadata selection, with current usage.
 
@@ -512,7 +512,7 @@ class AsyncGatewayBudgetsClient:
 
         Returns
         -------
-        BudgetUsageResponseDto
+        BudgetUsageResponse
             The budgets matching the selection.
 
         Examples
@@ -625,7 +625,7 @@ class AsyncGatewayBudgetsClient:
 
     async def get_leaderboard(
         self, id: str, *, limit: typing.Optional[float] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> BudgetUsageResponseDto:
+    ) -> BudgetUsageResponse:
         """
         Returns the top spenders for a budget in its applies_to dimension, for the configured period. Aggregate budgets return a single whole-budget entity (entity: null).
 
@@ -642,7 +642,7 @@ class AsyncGatewayBudgetsClient:
 
         Returns
         -------
-        BudgetUsageResponseDto
+        BudgetUsageResponse
             The budget leaderboard.
 
         Examples

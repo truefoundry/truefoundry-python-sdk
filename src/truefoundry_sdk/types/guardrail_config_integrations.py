@@ -8,6 +8,7 @@ from .azure_content_safety_guardrail_config import AzureContentSafetyGuardrailCo
 from .azure_pii_guardrail_config import AzurePiiGuardrailConfig
 from .azure_prompt_shield_guardrail_config import AzurePromptShieldGuardrailConfig
 from .cedar_guardrail_config import CedarGuardrailConfig
+from .cisco_ai_defense_guardrail_config import CiscoAiDefenseGuardrailConfig
 from .code_safety_linter_guardrail_config import CodeSafetyLinterGuardrailConfig
 from .crowd_strike_aidr_guardrail_config import CrowdStrikeAidrGuardrailConfig
 from .custom_guardrail_config import CustomGuardrailConfig
@@ -39,6 +40,7 @@ GuardrailConfigIntegrations = typing.Union[
     EnkryptAiGuardrailConfig,
     PaloAltoPrismaAirsGuardrailConfig,
     FiddlerGuardrailConfig,
+    CiscoAiDefenseGuardrailConfig,
     CrowdStrikeAidrGuardrailConfig,
     PatronusGuardrailConfig,
     SecretDetectionGuardrailConfig,

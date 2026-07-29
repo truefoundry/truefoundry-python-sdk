@@ -4,16 +4,16 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .period_usage_dto import PeriodUsageDto
+from .period_usage import PeriodUsage
 
 
-class BudgetEntityUsageDto(UniversalBaseModel):
+class BudgetEntityUsage(UniversalBaseModel):
     entity: typing.Optional[str] = pydantic.Field(default=None)
     """
     Entity counter this usage maps to; null for aggregate budgets.
     """
 
-    periods: typing.Dict[str, PeriodUsageDto] = pydantic.Field()
+    periods: typing.Dict[str, PeriodUsage] = pydantic.Field()
     """
     Per-period usage keyed by period (cost_per_day, cost_per_month, ...).
     """

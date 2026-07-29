@@ -1991,7 +1991,7 @@ client.gateway_budgets.create_or_update(
 <dl>
 <dd>
 
-**manifest:** `CreateOrUpdateBudgetDtoManifest` — The budget manifest. Must match either the TenantBudgetConfig or TeamBudgetConfig schema.
+**manifest:** `CreateOrUpdateBudgetRequestManifest` — The budget manifest. Must match either the TenantBudgetConfig or TeamBudgetConfig schema.
     
 </dd>
 </dl>
@@ -2019,7 +2019,7 @@ client.gateway_budgets.create_or_update(
 </dl>
 </details>
 
-<details><summary><code>client.gateway_budgets.<a href="src/truefoundry_sdk/gateway_budgets/client.py">get_my_usage</a>() -> BudgetUsageResponseDto</code></summary>
+<details><summary><code>client.gateway_budgets.<a href="src/truefoundry_sdk/gateway_budgets/client.py">get_my_usage</a>() -> BudgetUsageResponse</code></summary>
 <dl>
 <dd>
 
@@ -2081,7 +2081,7 @@ client.gateway_budgets.get_my_usage()
 </dl>
 </details>
 
-<details><summary><code>client.gateway_budgets.<a href="src/truefoundry_sdk/gateway_budgets/client.py">simulate</a>(...) -> BudgetUsageResponseDto</code></summary>
+<details><summary><code>client.gateway_budgets.<a href="src/truefoundry_sdk/gateway_budgets/client.py">simulate</a>(...) -> BudgetUsageResponse</code></summary>
 <dl>
 <dd>
 
@@ -2335,7 +2335,7 @@ client.gateway_budgets.delete(
 </dl>
 </details>
 
-<details><summary><code>client.gateway_budgets.<a href="src/truefoundry_sdk/gateway_budgets/client.py">get_leaderboard</a>(...) -> BudgetUsageResponseDto</code></summary>
+<details><summary><code>client.gateway_budgets.<a href="src/truefoundry_sdk/gateway_budgets/client.py">get_leaderboard</a>(...) -> BudgetUsageResponse</code></summary>
 <dl>
 <dd>
 

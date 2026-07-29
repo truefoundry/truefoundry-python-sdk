@@ -6,9 +6,9 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import CreateOrUpdateBudgetDtoManifest, ListGatewayBudgetsRequestType
+    from .types import CreateOrUpdateBudgetRequestManifest, ListGatewayBudgetsRequestType
 _dynamic_imports: typing.Dict[str, str] = {
-    "CreateOrUpdateBudgetDtoManifest": ".types",
+    "CreateOrUpdateBudgetRequestManifest": ".types",
     "ListGatewayBudgetsRequestType": ".types",
 }
 
@@ -34,4 +34,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["CreateOrUpdateBudgetDtoManifest", "ListGatewayBudgetsRequestType"]
+__all__ = ["CreateOrUpdateBudgetRequestManifest", "ListGatewayBudgetsRequestType"]

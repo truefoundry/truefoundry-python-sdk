@@ -6,10 +6,10 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .create_or_update_budget_dto_manifest import CreateOrUpdateBudgetDtoManifest
+    from .create_or_update_budget_request_manifest import CreateOrUpdateBudgetRequestManifest
     from .list_gateway_budgets_request_type import ListGatewayBudgetsRequestType
 _dynamic_imports: typing.Dict[str, str] = {
-    "CreateOrUpdateBudgetDtoManifest": ".create_or_update_budget_dto_manifest",
+    "CreateOrUpdateBudgetRequestManifest": ".create_or_update_budget_request_manifest",
     "ListGatewayBudgetsRequestType": ".list_gateway_budgets_request_type",
 }
 
@@ -35,4 +35,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["CreateOrUpdateBudgetDtoManifest", "ListGatewayBudgetsRequestType"]
+__all__ = ["CreateOrUpdateBudgetRequestManifest", "ListGatewayBudgetsRequestType"]

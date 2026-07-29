@@ -13,9 +13,9 @@ from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..errors.bad_request_error import BadRequestError
 from ..errors.not_found_error import NotFoundError
-from ..types.budget_usage_response_dto import BudgetUsageResponseDto
+from ..types.budget_usage_response import BudgetUsageResponse
 from ..types.gateway_budget import GatewayBudget
-from .types.create_or_update_budget_dto_manifest import CreateOrUpdateBudgetDtoManifest
+from .types.create_or_update_budget_request_manifest import CreateOrUpdateBudgetRequestManifest
 from .types.list_gateway_budgets_request_type import ListGatewayBudgetsRequestType
 from pydantic import ValidationError
 
@@ -84,7 +84,7 @@ class RawGatewayBudgetsClient:
     def create_or_update(
         self,
         *,
-        manifest: CreateOrUpdateBudgetDtoManifest,
+        manifest: CreateOrUpdateBudgetRequestManifest,
         dry_run: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GatewayBudget]:
@@ -93,7 +93,7 @@ class RawGatewayBudgetsClient:
 
         Parameters
         ----------
-        manifest : CreateOrUpdateBudgetDtoManifest
+        manifest : CreateOrUpdateBudgetRequestManifest
             The budget manifest. Must match either the TenantBudgetConfig or TeamBudgetConfig schema.
 
         dry_run : typing.Optional[bool]
@@ -112,7 +112,7 @@ class RawGatewayBudgetsClient:
             method="PUT",
             json={
                 "manifest": convert_and_respect_annotation_metadata(
-                    object_=manifest, annotation=CreateOrUpdateBudgetDtoManifest, direction="write"
+                    object_=manifest, annotation=CreateOrUpdateBudgetRequestManifest, direction="write"
                 ),
                 "dryRun": dry_run,
             },
@@ -154,7 +154,7 @@ class RawGatewayBudgetsClient:
 
     def get_my_usage(
         self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[BudgetUsageResponseDto]:
+    ) -> HttpResponse[BudgetUsageResponse]:
         """
         Returns every per-user budget that currently applies to the caller, with current usage per period.
 
@@ -165,7 +165,7 @@ class RawGatewayBudgetsClient:
 
         Returns
         -------
-        HttpResponse[BudgetUsageResponseDto]
+        HttpResponse[BudgetUsageResponse]
             The caller-scoped budget usage.
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -176,9 +176,9 @@ class RawGatewayBudgetsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    BudgetUsageResponseDto,
+                    BudgetUsageResponse,
                     parse_obj_as(
-                        type_=BudgetUsageResponseDto,  # type: ignore
+                        type_=BudgetUsageResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -202,7 +202,7 @@ class RawGatewayBudgetsClient:
         model: typing.Optional[str] = OMIT,
         metadata: typing.Optional[typing.Dict[str, str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[BudgetUsageResponseDto]:
+    ) -> HttpResponse[BudgetUsageResponse]:
         """
         Returns the budgets that would apply to a hypothetical user/team/model/metadata selection, with current usage.
 
@@ -231,7 +231,7 @@ class RawGatewayBudgetsClient:
 
         Returns
         -------
-        HttpResponse[BudgetUsageResponseDto]
+        HttpResponse[BudgetUsageResponse]
             The budgets matching the selection.
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -254,9 +254,9 @@ class RawGatewayBudgetsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    BudgetUsageResponseDto,
+                    BudgetUsageResponse,
                     parse_obj_as(
-                        type_=BudgetUsageResponseDto,  # type: ignore
+                        type_=BudgetUsageResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -368,7 +368,7 @@ class RawGatewayBudgetsClient:
 
     def get_leaderboard(
         self, id: str, *, limit: typing.Optional[float] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[BudgetUsageResponseDto]:
+    ) -> HttpResponse[BudgetUsageResponse]:
         """
         Returns the top spenders for a budget in its applies_to dimension, for the configured period. Aggregate budgets return a single whole-budget entity (entity: null).
 
@@ -385,7 +385,7 @@ class RawGatewayBudgetsClient:
 
         Returns
         -------
-        HttpResponse[BudgetUsageResponseDto]
+        HttpResponse[BudgetUsageResponse]
             The budget leaderboard.
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -399,9 +399,9 @@ class RawGatewayBudgetsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    BudgetUsageResponseDto,
+                    BudgetUsageResponse,
                     parse_obj_as(
-                        type_=BudgetUsageResponseDto,  # type: ignore
+                        type_=BudgetUsageResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -488,7 +488,7 @@ class AsyncRawGatewayBudgetsClient:
     async def create_or_update(
         self,
         *,
-        manifest: CreateOrUpdateBudgetDtoManifest,
+        manifest: CreateOrUpdateBudgetRequestManifest,
         dry_run: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GatewayBudget]:
@@ -497,7 +497,7 @@ class AsyncRawGatewayBudgetsClient:
 
         Parameters
         ----------
-        manifest : CreateOrUpdateBudgetDtoManifest
+        manifest : CreateOrUpdateBudgetRequestManifest
             The budget manifest. Must match either the TenantBudgetConfig or TeamBudgetConfig schema.
 
         dry_run : typing.Optional[bool]
@@ -516,7 +516,7 @@ class AsyncRawGatewayBudgetsClient:
             method="PUT",
             json={
                 "manifest": convert_and_respect_annotation_metadata(
-                    object_=manifest, annotation=CreateOrUpdateBudgetDtoManifest, direction="write"
+                    object_=manifest, annotation=CreateOrUpdateBudgetRequestManifest, direction="write"
                 ),
                 "dryRun": dry_run,
             },
@@ -558,7 +558,7 @@ class AsyncRawGatewayBudgetsClient:
 
     async def get_my_usage(
         self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[BudgetUsageResponseDto]:
+    ) -> AsyncHttpResponse[BudgetUsageResponse]:
         """
         Returns every per-user budget that currently applies to the caller, with current usage per period.
 
@@ -569,7 +569,7 @@ class AsyncRawGatewayBudgetsClient:
 
         Returns
         -------
-        AsyncHttpResponse[BudgetUsageResponseDto]
+        AsyncHttpResponse[BudgetUsageResponse]
             The caller-scoped budget usage.
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -580,9 +580,9 @@ class AsyncRawGatewayBudgetsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    BudgetUsageResponseDto,
+                    BudgetUsageResponse,
                     parse_obj_as(
-                        type_=BudgetUsageResponseDto,  # type: ignore
+                        type_=BudgetUsageResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -606,7 +606,7 @@ class AsyncRawGatewayBudgetsClient:
         model: typing.Optional[str] = OMIT,
         metadata: typing.Optional[typing.Dict[str, str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[BudgetUsageResponseDto]:
+    ) -> AsyncHttpResponse[BudgetUsageResponse]:
         """
         Returns the budgets that would apply to a hypothetical user/team/model/metadata selection, with current usage.
 
@@ -635,7 +635,7 @@ class AsyncRawGatewayBudgetsClient:
 
         Returns
         -------
-        AsyncHttpResponse[BudgetUsageResponseDto]
+        AsyncHttpResponse[BudgetUsageResponse]
             The budgets matching the selection.
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -658,9 +658,9 @@ class AsyncRawGatewayBudgetsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    BudgetUsageResponseDto,
+                    BudgetUsageResponse,
                     parse_obj_as(
-                        type_=BudgetUsageResponseDto,  # type: ignore
+                        type_=BudgetUsageResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -776,7 +776,7 @@ class AsyncRawGatewayBudgetsClient:
 
     async def get_leaderboard(
         self, id: str, *, limit: typing.Optional[float] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[BudgetUsageResponseDto]:
+    ) -> AsyncHttpResponse[BudgetUsageResponse]:
         """
         Returns the top spenders for a budget in its applies_to dimension, for the configured period. Aggregate budgets return a single whole-budget entity (entity: null).
 
@@ -793,7 +793,7 @@ class AsyncRawGatewayBudgetsClient:
 
         Returns
         -------
-        AsyncHttpResponse[BudgetUsageResponseDto]
+        AsyncHttpResponse[BudgetUsageResponse]
             The budget leaderboard.
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -807,9 +807,9 @@ class AsyncRawGatewayBudgetsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    BudgetUsageResponseDto,
+                    BudgetUsageResponse,
                     parse_obj_as(
-                        type_=BudgetUsageResponseDto,  # type: ignore
+                        type_=BudgetUsageResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

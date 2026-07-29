@@ -4,18 +4,18 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .budget_entity_usage_dto import BudgetEntityUsageDto
-from .budget_usage_entry_dto_mode import BudgetUsageEntryDtoMode
-from .budget_usage_entry_dto_type import BudgetUsageEntryDtoType
+from .budget_entity_usage import BudgetEntityUsage
+from .budget_usage_entry_mode import BudgetUsageEntryMode
+from .budget_usage_entry_type import BudgetUsageEntryType
 
 
-class BudgetUsageEntryDto(UniversalBaseModel):
+class BudgetUsageEntry(UniversalBaseModel):
     name: str = pydantic.Field()
     """
     Human-readable name of the budget.
     """
 
-    type: BudgetUsageEntryDtoType = pydantic.Field()
+    type: BudgetUsageEntryType = pydantic.Field()
     """
     Budget type.
     """
@@ -30,12 +30,12 @@ class BudgetUsageEntryDto(UniversalBaseModel):
     How counters are partitioned (per-user, per-model, per-virtual-account, aggregate, or metadata:<key>).
     """
 
-    mode: BudgetUsageEntryDtoMode = pydantic.Field()
+    mode: BudgetUsageEntryMode = pydantic.Field()
     """
     Budget mode.
     """
 
-    entities: typing.List[BudgetEntityUsageDto] = pydantic.Field()
+    entities: typing.List[BudgetEntityUsage] = pydantic.Field()
     """
     Per-entity usage for this budget. For my-usage and simulate this contains a single entity; leaderboard-style endpoints may return many.
     """

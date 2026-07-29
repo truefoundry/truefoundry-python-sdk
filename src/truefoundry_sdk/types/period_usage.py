@@ -6,7 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class PeriodUsageDto(UniversalBaseModel):
+class PeriodUsage(UniversalBaseModel):
     limit: float = pydantic.Field()
     """
     Resolved (override-aware) cost limit for the period.

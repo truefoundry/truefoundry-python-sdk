@@ -5,4 +5,4 @@ import typing
 from ...types.team_budget_config import TeamBudgetConfig
 from ...types.tenant_budget_config import TenantBudgetConfig
 
-CreateOrUpdateBudgetDtoManifest = typing.Union[TenantBudgetConfig, TeamBudgetConfig]
+CreateOrUpdateBudgetRequestManifest = typing.Union[TenantBudgetConfig, TeamBudgetConfig]

@@ -4,13 +4,17 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .budget_usage_entry_dto import BudgetUsageEntryDto
 
 
-class BudgetUsageResponseDto(UniversalBaseModel):
-    matched: typing.List[BudgetUsageEntryDto] = pydantic.Field()
+class CiscoAiDefenseKeyAuth(UniversalBaseModel):
+    type: typing.Literal["api-key"] = pydantic.Field(default="api-key")
     """
-    Budgets that apply, with current usage.
+    +value=api-key
+    """
+
+    api_key: str = pydantic.Field()
+    """
+    API key generated from the Cisco AI Defense UI
     """
 
     if IS_PYDANTIC_V2:

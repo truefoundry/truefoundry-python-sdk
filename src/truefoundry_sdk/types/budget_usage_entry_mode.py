@@ -7,7 +7,7 @@ from ..core import enum
 T_Result = typing.TypeVar("T_Result")
 
 
-class BudgetUsageEntryDtoMode(enum.StrEnum):
+class BudgetUsageEntryMode(enum.StrEnum):
     """
     Budget mode.
     """
@@ -15,13 +15,13 @@ class BudgetUsageEntryDtoMode(enum.StrEnum):
     ENFORCE = "enforce"
     AUDIT = "audit"
     ENFORCE_WITH_LOW_PRIORITY = "enforce_with_low_priority"
-    _UNKNOWN = "__BUDGETUSAGEENTRYDTOMODE_UNKNOWN__"
+    _UNKNOWN = "__BUDGETUSAGEENTRYMODE_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
     """
 
     @classmethod
-    def _missing_(cls, value: typing.Any) -> "BudgetUsageEntryDtoMode":
+    def _missing_(cls, value: typing.Any) -> "BudgetUsageEntryMode":
         unknown = cls._UNKNOWN
         unknown._value_ = value
         return unknown
@@ -33,10 +33,10 @@ class BudgetUsageEntryDtoMode(enum.StrEnum):
         enforce_with_low_priority: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
-        if self is BudgetUsageEntryDtoMode.ENFORCE:
+        if self is BudgetUsageEntryMode.ENFORCE:
             return enforce()
-        if self is BudgetUsageEntryDtoMode.AUDIT:
+        if self is BudgetUsageEntryMode.AUDIT:
             return audit()
-        if self is BudgetUsageEntryDtoMode.ENFORCE_WITH_LOW_PRIORITY:
+        if self is BudgetUsageEntryMode.ENFORCE_WITH_LOW_PRIORITY:
             return enforce_with_low_priority()
         return _unknown_member(self._value_)
