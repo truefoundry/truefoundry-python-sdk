@@ -91,12 +91,6 @@ class PromptVersionsClient:
         response = client.prompt_versions.list(
             limit=10,
             offset=0,
-            tag="tag",
-            fqn="fqn",
-            prompt_id="prompt_id",
-            ml_repo_id="ml_repo_id",
-            name="name",
-            version=1,
         )
         for item in response:
             yield item
@@ -310,12 +304,6 @@ class AsyncPromptVersionsClient:
             response = await client.prompt_versions.list(
                 limit=10,
                 offset=0,
-                tag="tag",
-                fqn="fqn",
-                prompt_id="prompt_id",
-                ml_repo_id="ml_repo_id",
-                name="name",
-                version=1,
             )
             async for item in response:
                 yield item

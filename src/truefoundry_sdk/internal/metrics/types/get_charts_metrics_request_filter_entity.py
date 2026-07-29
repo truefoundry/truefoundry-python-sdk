@@ -7,19 +7,19 @@ from ....core import enum
 T_Result = typing.TypeVar("T_Result")
 
 
-class MetricsGetChartsRequestFilterEntity(enum.StrEnum):
+class GetChartsMetricsRequestFilterEntity(enum.StrEnum):
     APPLICATION = "application"
     POD = "pod"
     JOB_RUN = "job-run"
     EVENT = "event"
     CLUSTER = "cluster"
-    _UNKNOWN = "__METRICSGETCHARTSREQUESTFILTERENTITY_UNKNOWN__"
+    _UNKNOWN = "__GETCHARTSMETRICSREQUESTFILTERENTITY_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
     """
 
     @classmethod
-    def _missing_(cls, value: typing.Any) -> "MetricsGetChartsRequestFilterEntity":
+    def _missing_(cls, value: typing.Any) -> "GetChartsMetricsRequestFilterEntity":
         unknown = cls._UNKNOWN
         unknown._value_ = value
         return unknown
@@ -33,14 +33,14 @@ class MetricsGetChartsRequestFilterEntity(enum.StrEnum):
         cluster: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
-        if self is MetricsGetChartsRequestFilterEntity.APPLICATION:
+        if self is GetChartsMetricsRequestFilterEntity.APPLICATION:
             return application()
-        if self is MetricsGetChartsRequestFilterEntity.POD:
+        if self is GetChartsMetricsRequestFilterEntity.POD:
             return pod()
-        if self is MetricsGetChartsRequestFilterEntity.JOB_RUN:
+        if self is GetChartsMetricsRequestFilterEntity.JOB_RUN:
             return job_run()
-        if self is MetricsGetChartsRequestFilterEntity.EVENT:
+        if self is GetChartsMetricsRequestFilterEntity.EVENT:
             return event()
-        if self is MetricsGetChartsRequestFilterEntity.CLUSTER:
+        if self is GetChartsMetricsRequestFilterEntity.CLUSTER:
             return cluster()
         return _unknown_member(self._value_)

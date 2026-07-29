@@ -39,7 +39,7 @@ class VirtualAccountsClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         name_search_query: typing.Optional[str] = None,
-        owned_by_teams: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        owned_by_teams: typing.Optional[typing.Sequence[str]] = None,
         is_expired: typing.Optional[bool] = None,
         filter: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -58,7 +58,7 @@ class VirtualAccountsClient:
         name_search_query : typing.Optional[str]
             Return virtual accounts with names that contain this string.
 
-        owned_by_teams : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        owned_by_teams : typing.Optional[typing.Sequence[str]]
             Comma-separated team names. Return virtual accounts owned by these teams.
 
         is_expired : typing.Optional[bool]
@@ -87,8 +87,6 @@ class VirtualAccountsClient:
             limit=10,
             offset=0,
             name_search_query="staging-bot",
-            owned_by_teams=["ownedByTeams"],
-            is_expired=True,
             filter='{"type":"AND","children":[{"column":"name","op":"STRING_CONTAINS","value":"bot"}]}',
         )
         for item in response:
@@ -390,7 +388,7 @@ class AsyncVirtualAccountsClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         name_search_query: typing.Optional[str] = None,
-        owned_by_teams: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        owned_by_teams: typing.Optional[typing.Sequence[str]] = None,
         is_expired: typing.Optional[bool] = None,
         filter: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -409,7 +407,7 @@ class AsyncVirtualAccountsClient:
         name_search_query : typing.Optional[str]
             Return virtual accounts with names that contain this string.
 
-        owned_by_teams : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        owned_by_teams : typing.Optional[typing.Sequence[str]]
             Comma-separated team names. Return virtual accounts owned by these teams.
 
         is_expired : typing.Optional[bool]
@@ -443,8 +441,6 @@ class AsyncVirtualAccountsClient:
                 limit=10,
                 offset=0,
                 name_search_query="staging-bot",
-                owned_by_teams=["ownedByTeams"],
-                is_expired=True,
                 filter='{"type":"AND","children":[{"column":"name","op":"STRING_CONTAINS","value":"bot"}]}',
             )
             async for item in response:

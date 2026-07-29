@@ -7,7 +7,7 @@ from ....core import enum
 T_Result = typing.TypeVar("T_Result")
 
 
-class AiGatewayGetGatewayConfigRequestType(enum.StrEnum):
+class GetGatewayConfigAiGatewayRequestType(enum.StrEnum):
     GATEWAY_RATE_LIMITING_CONFIG = "gateway-rate-limiting-config"
     GATEWAY_FALLBACK_CONFIG = "gateway-fallback-config"
     GATEWAY_LOAD_BALANCING_CONFIG = "gateway-load-balancing-config"
@@ -19,13 +19,13 @@ class AiGatewayGetGatewayConfigRequestType(enum.StrEnum):
     GATEWAY_GLOBAL_SETTINGS = "gateway-global-settings"
     GATEWAY_DATA_ACCESS_CONFIG = "gateway-data-access-config"
     GATEWAY_DATA_ROUTING_CONFIG = "gateway-data-routing-config"
-    _UNKNOWN = "__AIGATEWAYGETGATEWAYCONFIGREQUESTTYPE_UNKNOWN__"
+    _UNKNOWN = "__GETGATEWAYCONFIGAIGATEWAYREQUESTTYPE_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
     """
 
     @classmethod
-    def _missing_(cls, value: typing.Any) -> "AiGatewayGetGatewayConfigRequestType":
+    def _missing_(cls, value: typing.Any) -> "GetGatewayConfigAiGatewayRequestType":
         unknown = cls._UNKNOWN
         unknown._value_ = value
         return unknown
@@ -45,26 +45,26 @@ class AiGatewayGetGatewayConfigRequestType(enum.StrEnum):
         gateway_data_routing_config: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
-        if self is AiGatewayGetGatewayConfigRequestType.GATEWAY_RATE_LIMITING_CONFIG:
+        if self is GetGatewayConfigAiGatewayRequestType.GATEWAY_RATE_LIMITING_CONFIG:
             return gateway_rate_limiting_config()
-        if self is AiGatewayGetGatewayConfigRequestType.GATEWAY_FALLBACK_CONFIG:
+        if self is GetGatewayConfigAiGatewayRequestType.GATEWAY_FALLBACK_CONFIG:
             return gateway_fallback_config()
-        if self is AiGatewayGetGatewayConfigRequestType.GATEWAY_LOAD_BALANCING_CONFIG:
+        if self is GetGatewayConfigAiGatewayRequestType.GATEWAY_LOAD_BALANCING_CONFIG:
             return gateway_load_balancing_config()
-        if self is AiGatewayGetGatewayConfigRequestType.GATEWAY_GUARDRAILS_CONFIG:
+        if self is GetGatewayConfigAiGatewayRequestType.GATEWAY_GUARDRAILS_CONFIG:
             return gateway_guardrails_config()
-        if self is AiGatewayGetGatewayConfigRequestType.GATEWAY_BUDGET_CONFIG:
+        if self is GetGatewayConfigAiGatewayRequestType.GATEWAY_BUDGET_CONFIG:
             return gateway_budget_config()
-        if self is AiGatewayGetGatewayConfigRequestType.TENANT_BUDGET_CONFIG:
+        if self is GetGatewayConfigAiGatewayRequestType.TENANT_BUDGET_CONFIG:
             return tenant_budget_config()
-        if self is AiGatewayGetGatewayConfigRequestType.TEAM_BUDGET_CONFIG:
+        if self is GetGatewayConfigAiGatewayRequestType.TEAM_BUDGET_CONFIG:
             return team_budget_config()
-        if self is AiGatewayGetGatewayConfigRequestType.GATEWAY_OTEL_CONFIG:
+        if self is GetGatewayConfigAiGatewayRequestType.GATEWAY_OTEL_CONFIG:
             return gateway_otel_config()
-        if self is AiGatewayGetGatewayConfigRequestType.GATEWAY_GLOBAL_SETTINGS:
+        if self is GetGatewayConfigAiGatewayRequestType.GATEWAY_GLOBAL_SETTINGS:
             return gateway_global_settings()
-        if self is AiGatewayGetGatewayConfigRequestType.GATEWAY_DATA_ACCESS_CONFIG:
+        if self is GetGatewayConfigAiGatewayRequestType.GATEWAY_DATA_ACCESS_CONFIG:
             return gateway_data_access_config()
-        if self is AiGatewayGetGatewayConfigRequestType.GATEWAY_DATA_ROUTING_CONFIG:
+        if self is GetGatewayConfigAiGatewayRequestType.GATEWAY_DATA_ROUTING_CONFIG:
             return gateway_data_routing_config()
         return _unknown_member(self._value_)

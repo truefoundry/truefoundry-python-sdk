@@ -7,14 +7,14 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
-        ApplicationsCancelDeploymentResponse,
-        ApplicationsListRequestDeviceTypeFilter,
-        ApplicationsListRequestLifecycleStage,
+        CancelDeploymentApplicationsResponse,
+        ListApplicationsRequestDeviceTypeFilter,
+        ListApplicationsRequestLifecycleStage,
     )
 _dynamic_imports: typing.Dict[str, str] = {
-    "ApplicationsCancelDeploymentResponse": ".types",
-    "ApplicationsListRequestDeviceTypeFilter": ".types",
-    "ApplicationsListRequestLifecycleStage": ".types",
+    "CancelDeploymentApplicationsResponse": ".types",
+    "ListApplicationsRequestDeviceTypeFilter": ".types",
+    "ListApplicationsRequestLifecycleStage": ".types",
 }
 
 
@@ -40,7 +40,7 @@ def __dir__():
 
 
 __all__ = [
-    "ApplicationsCancelDeploymentResponse",
-    "ApplicationsListRequestDeviceTypeFilter",
-    "ApplicationsListRequestLifecycleStage",
+    "CancelDeploymentApplicationsResponse",
+    "ListApplicationsRequestDeviceTypeFilter",
+    "ListApplicationsRequestLifecycleStage",
 ]

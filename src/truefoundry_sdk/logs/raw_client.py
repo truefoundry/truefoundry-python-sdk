@@ -35,7 +35,7 @@ class RawLogsClient:
         job_run_name: typing.Optional[str] = None,
         pod_name: typing.Optional[str] = None,
         container_name: typing.Optional[str] = None,
-        pod_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        pod_names: typing.Optional[typing.Sequence[str]] = None,
         pod_names_regex: typing.Optional[str] = None,
         search_filters: typing.Optional[str] = None,
         search_string: typing.Optional[str] = None,
@@ -81,7 +81,7 @@ class RawLogsClient:
         container_name : typing.Optional[str]
             Name of the container whose logs to fetch.
 
-        pod_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        pod_names : typing.Optional[typing.Sequence[str]]
             List of pod names whose logs to fetch. Cannot be used together with podName or podNamesRegex.
 
         pod_names_regex : typing.Optional[str]
@@ -180,7 +180,7 @@ class AsyncRawLogsClient:
         job_run_name: typing.Optional[str] = None,
         pod_name: typing.Optional[str] = None,
         container_name: typing.Optional[str] = None,
-        pod_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        pod_names: typing.Optional[typing.Sequence[str]] = None,
         pod_names_regex: typing.Optional[str] = None,
         search_filters: typing.Optional[str] = None,
         search_string: typing.Optional[str] = None,
@@ -226,7 +226,7 @@ class AsyncRawLogsClient:
         container_name : typing.Optional[str]
             Name of the container whose logs to fetch.
 
-        pod_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        pod_names : typing.Optional[typing.Sequence[str]]
             List of pod names whose logs to fetch. Cannot be used together with podName or podNamesRegex.
 
         pod_names_regex : typing.Optional[str]

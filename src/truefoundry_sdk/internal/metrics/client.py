@@ -6,7 +6,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.get_charts_response import GetChartsResponse
 from .raw_client import AsyncRawMetricsClient, RawMetricsClient
-from .types.metrics_get_charts_request_filter_entity import MetricsGetChartsRequestFilterEntity
+from .types.get_charts_metrics_request_filter_entity import GetChartsMetricsRequestFilterEntity
 
 
 class MetricsClient:
@@ -29,7 +29,7 @@ class MetricsClient:
         workspace_id: str,
         *,
         application_id: str,
-        filter_entity: MetricsGetChartsRequestFilterEntity,
+        filter_entity: GetChartsMetricsRequestFilterEntity,
         start_ts: typing.Optional[str] = None,
         end_ts: typing.Optional[str] = None,
         filter_query: typing.Optional[str] = None,
@@ -45,7 +45,7 @@ class MetricsClient:
         application_id : str
             Unique identifier of the application.
 
-        filter_entity : MetricsGetChartsRequestFilterEntity
+        filter_entity : GetChartsMetricsRequestFilterEntity
             Scope of the chart bundle to return.
 
         start_ts : typing.Optional[str]
@@ -68,7 +68,7 @@ class MetricsClient:
         Examples
         --------
         from truefoundry_sdk import TrueFoundry
-        from truefoundry_sdk.internal.metrics import MetricsGetChartsRequestFilterEntity
+        from truefoundry_sdk.internal.metrics import GetChartsMetricsRequestFilterEntity
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -77,9 +77,7 @@ class MetricsClient:
         client.internal.metrics.get_charts(
             workspace_id="workspaceId",
             application_id="applicationId",
-            start_ts="startTs",
-            end_ts="endTs",
-            filter_entity=MetricsGetChartsRequestFilterEntity.APPLICATION,
+            filter_entity=GetChartsMetricsRequestFilterEntity.APPLICATION,
             filter_query='{"pod":"my-app-abc123-xyz"}',
         )
         """
@@ -115,7 +113,7 @@ class AsyncMetricsClient:
         workspace_id: str,
         *,
         application_id: str,
-        filter_entity: MetricsGetChartsRequestFilterEntity,
+        filter_entity: GetChartsMetricsRequestFilterEntity,
         start_ts: typing.Optional[str] = None,
         end_ts: typing.Optional[str] = None,
         filter_query: typing.Optional[str] = None,
@@ -131,7 +129,7 @@ class AsyncMetricsClient:
         application_id : str
             Unique identifier of the application.
 
-        filter_entity : MetricsGetChartsRequestFilterEntity
+        filter_entity : GetChartsMetricsRequestFilterEntity
             Scope of the chart bundle to return.
 
         start_ts : typing.Optional[str]
@@ -156,7 +154,7 @@ class AsyncMetricsClient:
         import asyncio
 
         from truefoundry_sdk import AsyncTrueFoundry
-        from truefoundry_sdk.internal.metrics import MetricsGetChartsRequestFilterEntity
+        from truefoundry_sdk.internal.metrics import GetChartsMetricsRequestFilterEntity
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -168,9 +166,7 @@ class AsyncMetricsClient:
             await client.internal.metrics.get_charts(
                 workspace_id="workspaceId",
                 application_id="applicationId",
-                start_ts="startTs",
-                end_ts="endTs",
-                filter_entity=MetricsGetChartsRequestFilterEntity.APPLICATION,
+                filter_entity=GetChartsMetricsRequestFilterEntity.APPLICATION,
                 filter_query='{"pod":"my-app-abc123-xyz"}',
             )
 

@@ -39,7 +39,7 @@ class RawVirtualAccountsClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         name_search_query: typing.Optional[str] = None,
-        owned_by_teams: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        owned_by_teams: typing.Optional[typing.Sequence[str]] = None,
         is_expired: typing.Optional[bool] = None,
         filter: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -58,7 +58,7 @@ class RawVirtualAccountsClient:
         name_search_query : typing.Optional[str]
             Return virtual accounts with names that contain this string.
 
-        owned_by_teams : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        owned_by_teams : typing.Optional[typing.Sequence[str]]
             Comma-separated team names. Return virtual accounts owned by these teams.
 
         is_expired : typing.Optional[bool]
@@ -542,7 +542,7 @@ class AsyncRawVirtualAccountsClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         name_search_query: typing.Optional[str] = None,
-        owned_by_teams: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        owned_by_teams: typing.Optional[typing.Sequence[str]] = None,
         is_expired: typing.Optional[bool] = None,
         filter: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -561,7 +561,7 @@ class AsyncRawVirtualAccountsClient:
         name_search_query : typing.Optional[str]
             Return virtual accounts with names that contain this string.
 
-        owned_by_teams : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        owned_by_teams : typing.Optional[typing.Sequence[str]]
             Comma-separated team names. Return virtual accounts owned by these teams.
 
         is_expired : typing.Optional[bool]

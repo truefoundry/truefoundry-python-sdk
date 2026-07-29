@@ -40,7 +40,7 @@ class LogsClient:
         job_run_name: typing.Optional[str] = None,
         pod_name: typing.Optional[str] = None,
         container_name: typing.Optional[str] = None,
-        pod_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        pod_names: typing.Optional[typing.Sequence[str]] = None,
         pod_names_regex: typing.Optional[str] = None,
         search_filters: typing.Optional[str] = None,
         search_string: typing.Optional[str] = None,
@@ -86,7 +86,7 @@ class LogsClient:
         container_name : typing.Optional[str]
             Name of the container whose logs to fetch.
 
-        pod_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        pod_names : typing.Optional[typing.Sequence[str]]
             List of pod names whose logs to fetch. Cannot be used together with podName or podNamesRegex.
 
         pod_names_regex : typing.Optional[str]
@@ -114,12 +114,7 @@ class LogsClient:
 
         Examples
         --------
-        from truefoundry_sdk import (
-            LogsSearchFilterType,
-            LogsSearchOperatorType,
-            LogsSortingDirection,
-            TrueFoundry,
-        )
+        from truefoundry_sdk import TrueFoundry
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -128,21 +123,7 @@ class LogsClient:
         client.logs.get(
             start_ts="1779262323000000000",
             end_ts="1779348723000000000",
-            limit=1,
-            direction=LogsSortingDirection.ASC,
-            num_logs_to_ignore=1,
-            application_id="applicationId",
-            application_fqn="applicationFqn",
-            deployment_id="deploymentId",
-            job_run_name="jobRunName",
-            pod_name="podName",
-            container_name="containerName",
-            pod_names=["podNames"],
-            pod_names_regex="podNamesRegex",
             search_filters='[{"string":"error","type":"substring","operator":"equal"}]',
-            search_string="searchString",
-            search_type=LogsSearchFilterType.REGEX,
-            search_operator=LogsSearchOperatorType.EQUAL,
         )
         """
         _response = self._raw_client.get(
@@ -197,7 +178,7 @@ class AsyncLogsClient:
         job_run_name: typing.Optional[str] = None,
         pod_name: typing.Optional[str] = None,
         container_name: typing.Optional[str] = None,
-        pod_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        pod_names: typing.Optional[typing.Sequence[str]] = None,
         pod_names_regex: typing.Optional[str] = None,
         search_filters: typing.Optional[str] = None,
         search_string: typing.Optional[str] = None,
@@ -243,7 +224,7 @@ class AsyncLogsClient:
         container_name : typing.Optional[str]
             Name of the container whose logs to fetch.
 
-        pod_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        pod_names : typing.Optional[typing.Sequence[str]]
             List of pod names whose logs to fetch. Cannot be used together with podName or podNamesRegex.
 
         pod_names_regex : typing.Optional[str]
@@ -273,12 +254,7 @@ class AsyncLogsClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import (
-            AsyncTrueFoundry,
-            LogsSearchFilterType,
-            LogsSearchOperatorType,
-            LogsSortingDirection,
-        )
+        from truefoundry_sdk import AsyncTrueFoundry
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -290,21 +266,7 @@ class AsyncLogsClient:
             await client.logs.get(
                 start_ts="1779262323000000000",
                 end_ts="1779348723000000000",
-                limit=1,
-                direction=LogsSortingDirection.ASC,
-                num_logs_to_ignore=1,
-                application_id="applicationId",
-                application_fqn="applicationFqn",
-                deployment_id="deploymentId",
-                job_run_name="jobRunName",
-                pod_name="podName",
-                container_name="containerName",
-                pod_names=["podNames"],
-                pod_names_regex="podNamesRegex",
                 search_filters='[{"string":"error","type":"substring","operator":"equal"}]',
-                search_string="searchString",
-                search_type=LogsSearchFilterType.REGEX,
-                search_operator=LogsSearchOperatorType.EQUAL,
             )
 
 

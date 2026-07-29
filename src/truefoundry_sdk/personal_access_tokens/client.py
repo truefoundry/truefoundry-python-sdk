@@ -249,7 +249,6 @@ class PersonalAccessTokensClient:
         )
         client.personal_access_tokens.get(
             name="name",
-            team_name="teamName",
         )
         """
         _response = self._raw_client.get(name, team_name=team_name, request_options=request_options)
@@ -525,7 +524,6 @@ class AsyncPersonalAccessTokensClient:
         async def main() -> None:
             await client.personal_access_tokens.get(
                 name="name",
-                team_name="teamName",
             )
 
 

@@ -292,7 +292,6 @@ client.users.list(
     limit=10,
     offset=0,
     query="john@example.com",
-    show_invalid_users=True,
 )
 
 ```
@@ -656,7 +655,6 @@ client = TrueFoundry(
 
 client.users.delete(
     id="jqfwg345gi25n5ju2yz5iz6m",
-    tenant_name="tenantName",
 )
 
 ```
@@ -1286,10 +1284,6 @@ client = TrueFoundry(
 client.teams.list(
     limit=10,
     offset=0,
-    role="manager",
-    attributes=[
-        "attributes"
-    ],
 )
 
 ```
@@ -1330,7 +1324,7 @@ client.teams.list(
 <dl>
 <dd>
 
-**attributes:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Comma-separated list of attributes to return (e.g. `id,teamName`). When provided, only the specified fields are fetched. `id` is always included.
+**attributes:** `typing.Optional[typing.List[str]]` — Comma-separated list of attributes to return (e.g. `id,teamName`). When provided, only the specified fields are fetched. `id` is always included.
     
 </dd>
 </dl>
@@ -2225,7 +2219,6 @@ client = TrueFoundry(
 
 client.personal_access_tokens.get(
     name="name",
-    team_name="teamName",
 )
 
 ```
@@ -2309,10 +2302,6 @@ client.virtual_accounts.list(
     limit=10,
     offset=0,
     name_search_query="staging-bot",
-    owned_by_teams=[
-        "ownedByTeams"
-    ],
-    is_expired=True,
     filter="{\"type\":\"AND\",\"children\":[{\"column\":\"name\",\"op\":\"STRING_CONTAINS\",\"value\":\"bot\"}]}",
 )
 
@@ -2354,7 +2343,7 @@ client.virtual_accounts.list(
 <dl>
 <dd>
 
-**owned_by_teams:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Comma-separated team names. Return virtual accounts owned by these teams.
+**owned_by_teams:** `typing.Optional[typing.List[str]]` — Comma-separated team names. Return virtual accounts owned by these teams.
     
 </dd>
 </dl>
@@ -2968,9 +2957,6 @@ client = TrueFoundry(
 client.clusters.list(
     limit=10,
     offset=0,
-    attributes=[
-        "attributes"
-    ],
 )
 
 ```
@@ -3003,7 +2989,7 @@ client.clusters.list(
 <dl>
 <dd>
 
-**attributes:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
+**attributes:** `typing.Optional[typing.List[str]]` — Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
     
 </dd>
 </dl>
@@ -3298,9 +3284,6 @@ client.clusters.get_addons(
     id="id",
     limit=10,
     offset=0,
-    attributes=[
-        "attributes"
-    ],
 )
 
 ```
@@ -3341,7 +3324,7 @@ client.clusters.get_addons(
 <dl>
 <dd>
 
-**attributes:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
+**attributes:** `typing.Optional[typing.List[str]]` — Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
     
 </dd>
 </dl>
@@ -3461,8 +3444,7 @@ List applications the caller can read.
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, ApplicationType
-from truefoundry_sdk.applications import ApplicationsListRequestDeviceTypeFilter, ApplicationsListRequestLifecycleStage
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="<token>",
@@ -3472,21 +3454,6 @@ client = TrueFoundry(
 client.applications.list(
     limit=10,
     offset=0,
-    application_id="applicationId",
-    workspace_id="workspaceId",
-    application_name="applicationName",
-    fqn="fqn",
-    workspace_fqn="workspaceFqn",
-    application_type=ApplicationType.ASYNC_SERVICE,
-    name_search_query="nameSearchQuery",
-    environment_id="environmentId",
-    cluster_id="clusterId",
-    application_set_id="applicationSetId",
-    paused=True,
-    device_type_filter=ApplicationsListRequestDeviceTypeFilter.CPU,
-    last_deployed_by_subjects="lastDeployedBySubjects",
-    lifecycle_stage=ApplicationsListRequestLifecycleStage.ACTIVE,
-    is_recommendation_present_and_visible=True,
 )
 
 ```
@@ -3607,7 +3574,7 @@ client.applications.list(
 <dl>
 <dd>
 
-**device_type_filter:** `typing.Optional[ApplicationsListRequestDeviceTypeFilter]` — Device type to filter by (comma-separated).
+**device_type_filter:** `typing.Optional[ListApplicationsRequestDeviceTypeFilter]` — Device type to filter by (comma-separated).
     
 </dd>
 </dl>
@@ -3623,7 +3590,7 @@ client.applications.list(
 <dl>
 <dd>
 
-**lifecycle_stage:** `typing.Optional[ApplicationsListRequestLifecycleStage]` — Application lifecycle stage to filter by
+**lifecycle_stage:** `typing.Optional[ListApplicationsRequestLifecycleStage]` — Application lifecycle stage to filter by
     
 </dd>
 </dl>
@@ -4150,7 +4117,7 @@ client.applications.scale_to_original(
 </dl>
 </details>
 
-<details><summary><code>client.applications.<a href="src/truefoundry_sdk/applications/client.py">cancel_deployment</a>(...) -> ApplicationsCancelDeploymentResponse</code></summary>
+<details><summary><code>client.applications.<a href="src/truefoundry_sdk/applications/client.py">cancel_deployment</a>(...) -> CancelDeploymentApplicationsResponse</code></summary>
 <dl>
 <dd>
 
@@ -4449,7 +4416,7 @@ List Job Runs for provided Job Id. Filter the data based on parameters passed in
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, JobRunsSortBy, SortDirection, JobRunStatus
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="<token>",
@@ -4460,18 +4427,6 @@ client.jobs.list_runs(
     job_id="jobId",
     limit=10,
     offset=0,
-    search_prefix="searchPrefix",
-    sort_by=JobRunsSortBy.START_TIME,
-    order=SortDirection.ASC,
-    triggered_by=[
-        "triggeredBy"
-    ],
-    status=[
-        JobRunStatus.CREATED
-    ],
-    version_numbers=[
-        1.1
-    ],
 )
 
 ```
@@ -4536,7 +4491,7 @@ client.jobs.list_runs(
 <dl>
 <dd>
 
-**triggered_by:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Array of subject slugs
+**triggered_by:** `typing.Optional[typing.List[str]]` — Array of subject slugs
     
 </dd>
 </dl>
@@ -4552,7 +4507,7 @@ client.jobs.list_runs(
 <dl>
 <dd>
 
-**version_numbers:** `typing.Optional[typing.Union[float, typing.Sequence[float]]]` — Version number of the deployment
+**version_numbers:** `typing.Optional[typing.List[float]]` — Version number of the deployment
     
 </dd>
 </dl>
@@ -4948,12 +4903,6 @@ client.workspaces.list(
     limit=10,
     offset=0,
     cluster_id="jqfwg345gi25n5ju2yz5iz6m",
-    name="name",
-    fqn="fqn",
-    include_cluster=True,
-    attributes=[
-        "attributes"
-    ],
 )
 
 ```
@@ -5018,7 +4967,7 @@ client.workspaces.list(
 <dl>
 <dd>
 
-**attributes:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
+**attributes:** `typing.Optional[typing.List[str]]` — Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
     
 </dd>
 </dl>
@@ -5160,7 +5109,6 @@ client.workspaces.search(
     limit=10,
     offset=0,
     filter="[{\"type\":\"name\",\"operator\":\"STRING_CONTAINS\",\"value\":\"prod\"}]",
-    include_cluster=True,
 )
 
 ```
@@ -5888,7 +5836,6 @@ client = TrueFoundry(
 
 client.secrets.delete(
     id="id",
-    force_delete=True,
 )
 
 ```
@@ -5971,11 +5918,6 @@ client = TrueFoundry(
 client.secret_groups.list(
     limit=10,
     offset=0,
-    fqn="fqn",
-    search="search",
-    attributes=[
-        "attributes"
-    ],
 )
 
 ```
@@ -6024,7 +5966,7 @@ client.secret_groups.list(
 <dl>
 <dd>
 
-**attributes:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
+**attributes:** `typing.Optional[typing.List[str]]` — Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
     
 </dd>
 </dl>
@@ -6422,7 +6364,6 @@ client = TrueFoundry(
 
 client.secret_groups.delete(
     id="id",
-    force_delete=True,
 )
 
 ```
@@ -6502,16 +6443,7 @@ client = TrueFoundry(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.events.get(
-    start_ts="startTs",
-    end_ts="endTs",
-    application_id="applicationId",
-    application_fqn="applicationFqn",
-    pod_names=[
-        "podNames"
-    ],
-    job_run_name="jobRunName",
-)
+client.events.get()
 
 ```
 </dd>
@@ -6559,7 +6491,7 @@ client.events.get(
 <dl>
 <dd>
 
-**pod_names:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — List of Kubernetes pod names to filter events. Cannot be provided together with jobRunName.
+**pod_names:** `typing.Optional[typing.List[str]]` — List of Kubernetes pod names to filter events. Cannot be provided together with jobRunName.
     
 </dd>
 </dl>
@@ -6615,20 +6547,14 @@ Get alerts for a given application or cluster filtered by start and end timestam
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, AlertStatus
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.alerts.list(
-    start_ts="startTs",
-    end_ts="endTs",
-    cluster_id="clusterId",
-    application_id="applicationId",
-    alert_status=AlertStatus.FIRING,
-)
+client.alerts.list()
 
 ```
 </dd>
@@ -6725,7 +6651,6 @@ List all Agents for a tenant.
 
 ```python
 from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk.agents import AgentsListRequestType
 
 client = TrueFoundry(
     api_key="<token>",
@@ -6735,12 +6660,6 @@ client = TrueFoundry(
 client.agents.list(
     limit=10,
     offset=0,
-    name="name",
-    name_prefix="namePrefix",
-    type=AgentsListRequestType.REMOTE_AGENT,
-    attributes=[
-        "attributes"
-    ],
 )
 
 ```
@@ -6789,7 +6708,7 @@ client.agents.list(
 <dl>
 <dd>
 
-**type:** `typing.Optional[AgentsListRequestType]` — Filter by latest manifest discriminator (`remote-agent`, `truefoundry-agent`, or `agent`). NOTE: `agent` is a legacy type and will be removed in the future.
+**type:** `typing.Optional[ListAgentsRequestType]` — Filter by latest manifest discriminator (`remote-agent`, `truefoundry-agent`, or `agent`). NOTE: `agent` is a legacy type and will be removed in the future.
     
 </dd>
 </dl>
@@ -6797,7 +6716,7 @@ client.agents.list(
 <dl>
 <dd>
 
-**attributes:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
+**attributes:** `typing.Optional[typing.List[str]]` — Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
     
 </dd>
 </dl>
@@ -7092,7 +7011,6 @@ client = TrueFoundry(
 client.agent_versions.list(
     limit=10,
     offset=0,
-    id="id",
 )
 
 ```
@@ -7327,10 +7245,6 @@ client = TrueFoundry(
 client.prompts.list(
     limit=10,
     offset=0,
-    fqn="fqn",
-    ml_repo_id="ml_repo_id",
-    name="name",
-    include_empty_prompts=True,
 )
 
 ```
@@ -7528,12 +7442,6 @@ client = TrueFoundry(
 client.prompt_versions.list(
     limit=10,
     offset=0,
-    tag="tag",
-    fqn="fqn",
-    prompt_id="prompt_id",
-    ml_repo_id="ml_repo_id",
-    name="name",
-    version=1,
 )
 
 ```
@@ -8043,11 +7951,6 @@ client = TrueFoundry(
 client.artifacts.list(
     limit=10,
     offset=0,
-    fqn="fqn",
-    ml_repo_id="ml_repo_id",
-    name="name",
-    run_id="run_id",
-    include_empty_artifacts=True,
 )
 
 ```
@@ -8251,19 +8154,6 @@ client = TrueFoundry(
 client.artifact_versions.list(
     limit=10,
     offset=0,
-    tag="tag",
-    fqn="fqn",
-    artifact_id="artifact_id",
-    ml_repo_id="ml_repo_id",
-    name="name",
-    version=1,
-    run_ids=[
-        "run_ids"
-    ],
-    run_steps=[
-        1.1
-    ],
-    include_internal_metadata=True,
 )
 
 ```
@@ -8344,7 +8234,7 @@ client.artifact_versions.list(
 <dl>
 <dd>
 
-**run_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Run IDs to filter artifact versions by.
+**run_ids:** `typing.Optional[typing.List[str]]` — Run IDs to filter artifact versions by.
     
 </dd>
 </dl>
@@ -8352,7 +8242,7 @@ client.artifact_versions.list(
 <dl>
 <dd>
 
-**run_steps:** `typing.Optional[typing.Union[float, typing.Sequence[float]]]` — Run steps to filter artifact versions by.
+**run_steps:** `typing.Optional[typing.List[float]]` — Run steps to filter artifact versions by.
     
 </dd>
 </dl>
@@ -9172,10 +9062,6 @@ client = TrueFoundry(
 client.ml_repos.list(
     limit=10,
     offset=0,
-    name="name",
-    attributes=[
-        "attributes"
-    ],
 )
 
 ```
@@ -9216,7 +9102,7 @@ client.ml_repos.list(
 <dl>
 <dd>
 
-**attributes:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
+**attributes:** `typing.Optional[typing.List[str]]` — Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
     
 </dd>
 </dl>
@@ -9364,9 +9250,6 @@ client = TrueFoundry(
 client.data_directories.list(
     limit=10,
     offset=0,
-    fqn="fqn",
-    ml_repo_id="ml_repo_id",
-    name="name",
 )
 
 ```
@@ -9930,7 +9813,6 @@ client = TrueFoundry(
 
 client.data_directories.delete(
     id="id",
-    delete_contents=True,
 )
 
 ```
@@ -11286,11 +11168,6 @@ client = TrueFoundry(
 client.models.list(
     limit=10,
     offset=0,
-    fqn="fqn",
-    ml_repo_id="ml_repo_id",
-    name="name",
-    run_id="run_id",
-    include_empty_models=True,
 )
 
 ```
@@ -11494,19 +11371,6 @@ client = TrueFoundry(
 client.model_versions.list(
     limit=10,
     offset=0,
-    tag="tag",
-    fqn="fqn",
-    model_id="model_id",
-    ml_repo_id="ml_repo_id",
-    name="name",
-    version=1,
-    run_ids=[
-        "run_ids"
-    ],
-    run_steps=[
-        1.1
-    ],
-    include_internal_metadata=True,
 )
 
 ```
@@ -11587,7 +11451,7 @@ client.model_versions.list(
 <dl>
 <dd>
 
-**run_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter model versions by associated run identifiers.
+**run_ids:** `typing.Optional[typing.List[str]]` — Filter model versions by associated run identifiers.
     
 </dd>
 </dl>
@@ -11595,7 +11459,7 @@ client.model_versions.list(
 <dl>
 <dd>
 
-**run_steps:** `typing.Optional[typing.Union[float, typing.Sequence[float]]]` — Filter model versions by associated run steps.
+**run_steps:** `typing.Optional[typing.List[float]]` — Filter model versions by associated run steps.
     
 </dd>
 </dl>
@@ -11886,7 +11750,7 @@ Get runtime logs (stdout/stderr) emitted by the pods of a deployed application.
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, LogsSortingDirection, LogsSearchFilterType, LogsSearchOperatorType
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="<token>",
@@ -11896,23 +11760,7 @@ client = TrueFoundry(
 client.logs.get(
     start_ts="1779262323000000000",
     end_ts="1779348723000000000",
-    limit=1,
-    direction=LogsSortingDirection.ASC,
-    num_logs_to_ignore=1,
-    application_id="applicationId",
-    application_fqn="applicationFqn",
-    deployment_id="deploymentId",
-    job_run_name="jobRunName",
-    pod_name="podName",
-    container_name="containerName",
-    pod_names=[
-        "podNames"
-    ],
-    pod_names_regex="podNamesRegex",
     search_filters="[{\"string\":\"error\",\"type\":\"substring\",\"operator\":\"equal\"}]",
-    search_string="searchString",
-    search_type=LogsSearchFilterType.REGEX,
-    search_operator=LogsSearchOperatorType.EQUAL,
 )
 
 ```
@@ -12017,7 +11865,7 @@ client.logs.get(
 <dl>
 <dd>
 
-**pod_names:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — List of pod names whose logs to fetch. Cannot be used together with podName or podNamesRegex.
+**pod_names:** `typing.Optional[typing.List[str]]` — List of pod names whose logs to fetch. Cannot be used together with podName or podNamesRegex.
     
 </dd>
 </dl>
@@ -12259,10 +12107,6 @@ client = TrueFoundry(
 client.agent_skills.list(
     limit=10,
     offset=0,
-    fqn="fqn",
-    ml_repo_id="ml_repo_id",
-    name="name",
-    include_empty_agent_skills=True,
 )
 
 ```
@@ -12460,11 +12304,6 @@ client = TrueFoundry(
 client.agent_skill_versions.list(
     limit=10,
     offset=0,
-    fqn="fqn",
-    agent_skill_id="agent_skill_id",
-    ml_repo_id="ml_repo_id",
-    name="name",
-    version=1,
 )
 
 ```
@@ -12956,7 +12795,7 @@ Get the AI Gateway configuration for the given type.
 
 ```python
 from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk.internal.ai_gateway import AiGatewayGetGatewayConfigRequestType
+from truefoundry_sdk.internal.ai_gateway import GetGatewayConfigAiGatewayRequestType
 
 client = TrueFoundry(
     api_key="<token>",
@@ -12964,7 +12803,7 @@ client = TrueFoundry(
 )
 
 client.internal.ai_gateway.get_gateway_config(
-    type=AiGatewayGetGatewayConfigRequestType.GATEWAY_RATE_LIMITING_CONFIG,
+    type=GetGatewayConfigAiGatewayRequestType.GATEWAY_RATE_LIMITING_CONFIG,
 )
 
 ```
@@ -12981,7 +12820,7 @@ client.internal.ai_gateway.get_gateway_config(
 <dl>
 <dd>
 
-**type:** `AiGatewayGetGatewayConfigRequestType` — The type of gateway configuration to retrieve or delete.
+**type:** `GetGatewayConfigAiGatewayRequestType` — The type of gateway configuration to retrieve or delete.
     
 </dd>
 </dl>
@@ -13418,9 +13257,6 @@ client.internal.deployments.get_suggested_endpoint(
     application_type=ApplicationType.ASYNC_SERVICE,
     application_name="applicationName",
     workspace_id="workspaceId",
-    base_domain="baseDomain",
-    port="port",
-    prefer_wildcard=True,
 )
 
 ```
@@ -13534,7 +13370,6 @@ client = TrueFoundry(
 
 client.internal.applications.promote_rollout(
     id="id",
-    full=True,
 )
 
 ```
@@ -13615,7 +13450,6 @@ client = TrueFoundry(
 
 client.internal.applications.get_pod_template_hash_to_deployment_version(
     id="id",
-    pod_template_hashes="podTemplateHashes",
 )
 
 ```
@@ -13689,7 +13523,7 @@ List metric charts available for an application.
 
 ```python
 from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk.internal.metrics import MetricsGetChartsRequestFilterEntity
+from truefoundry_sdk.internal.metrics import GetChartsMetricsRequestFilterEntity
 
 client = TrueFoundry(
     api_key="<token>",
@@ -13699,9 +13533,7 @@ client = TrueFoundry(
 client.internal.metrics.get_charts(
     workspace_id="workspaceId",
     application_id="applicationId",
-    start_ts="startTs",
-    end_ts="endTs",
-    filter_entity=MetricsGetChartsRequestFilterEntity.APPLICATION,
+    filter_entity=GetChartsMetricsRequestFilterEntity.APPLICATION,
     filter_query="{\"pod\":\"my-app-abc123-xyz\"}",
 )
 
@@ -13735,7 +13567,7 @@ client.internal.metrics.get_charts(
 <dl>
 <dd>
 
-**filter_entity:** `MetricsGetChartsRequestFilterEntity` — Scope of the chart bundle to return.
+**filter_entity:** `GetChartsMetricsRequestFilterEntity` — Scope of the chart bundle to return.
     
 </dd>
 </dl>
@@ -13942,23 +13774,6 @@ client = TrueFoundry(
 client.internal.artifact_versions.list(
     limit=10,
     offset=0,
-    tag="tag",
-    fqn="fqn",
-    artifact_id="artifact_id",
-    ml_repo_id="ml_repo_id",
-    name="name",
-    version=1,
-    run_ids=[
-        "run_ids"
-    ],
-    run_steps=[
-        1.1
-    ],
-    include_internal_metadata=True,
-    include_model_versions=True,
-    artifact_types=[
-        "artifact_types"
-    ],
 )
 
 ```
@@ -14039,7 +13854,7 @@ client.internal.artifact_versions.list(
 <dl>
 <dd>
 
-**run_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Run IDs to filter artifact versions by.
+**run_ids:** `typing.Optional[typing.List[str]]` — Run IDs to filter artifact versions by.
     
 </dd>
 </dl>
@@ -14047,7 +13862,7 @@ client.internal.artifact_versions.list(
 <dl>
 <dd>
 
-**run_steps:** `typing.Optional[typing.Union[float, typing.Sequence[float]]]` — Run steps to filter artifact versions by.
+**run_steps:** `typing.Optional[typing.List[float]]` — Run steps to filter artifact versions by.
     
 </dd>
 </dl>
@@ -14216,10 +14031,7 @@ client = TrueFoundry(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.internal.docker_registries.get_credentials(
-    fqn="fqn",
-    cluster_id="clusterId",
-)
+client.internal.docker_registries.get_credentials()
 
 ```
 </dd>
@@ -14264,7 +14076,7 @@ client.internal.docker_registries.get_credentials(
 </details>
 
 ## Internal Workflows
-<details><summary><code>client.internal.workflows.<a href="src/truefoundry_sdk/internal/workflows/client.py">execute_workflow</a>(...) -> WorkflowsExecuteWorkflowResponse</code></summary>
+<details><summary><code>client.internal.workflows.<a href="src/truefoundry_sdk/internal/workflows/client.py">execute_workflow</a>(...) -> ExecuteWorkflowWorkflowsResponse</code></summary>
 <dl>
 <dd>
 
@@ -14391,10 +14203,7 @@ client.internal.build_logs.get(
     pipeline_run_name="pipelineRunName",
     start_ts="1635467890123456789",
     end_ts="1635467891123456789",
-    limit="limit",
-    direction="direction",
     filter_query="{\"matchString\":\"error\",\"type\":\"substring\",\"operator\":\"equal\"}",
-    num_logs_to_ignore=1.1,
 )
 
 ```

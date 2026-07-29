@@ -6,9 +6,9 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .metrics_get_charts_request_filter_entity import MetricsGetChartsRequestFilterEntity
+    from .get_charts_metrics_request_filter_entity import GetChartsMetricsRequestFilterEntity
 _dynamic_imports: typing.Dict[str, str] = {
-    "MetricsGetChartsRequestFilterEntity": ".metrics_get_charts_request_filter_entity"
+    "GetChartsMetricsRequestFilterEntity": ".get_charts_metrics_request_filter_entity"
 }
 
 
@@ -33,4 +33,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["MetricsGetChartsRequestFilterEntity"]
+__all__ = ["GetChartsMetricsRequestFilterEntity"]

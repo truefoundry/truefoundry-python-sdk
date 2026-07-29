@@ -159,7 +159,6 @@ class SecretsClient:
         )
         client.secrets.delete(
             id="id",
-            force_delete=True,
         )
         """
         _response = self._raw_client.delete(id, force_delete=force_delete, request_options=request_options)
@@ -333,7 +332,6 @@ class AsyncSecretsClient:
         async def main() -> None:
             await client.secrets.delete(
                 id="id",
-                force_delete=True,
             )
 
 

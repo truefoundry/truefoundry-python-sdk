@@ -86,7 +86,6 @@ class UsersClient:
             limit=10,
             offset=0,
             query="john@example.com",
-            show_invalid_users=True,
         )
         for item in response:
             yield item
@@ -278,7 +277,6 @@ class UsersClient:
         )
         client.users.delete(
             id="jqfwg345gi25n5ju2yz5iz6m",
-            tenant_name="tenantName",
         )
         """
         _response = self._raw_client.delete(id, tenant_name=tenant_name, request_options=request_options)
@@ -622,7 +620,6 @@ class AsyncUsersClient:
                 limit=10,
                 offset=0,
                 query="john@example.com",
-                show_invalid_users=True,
             )
             async for item in response:
                 yield item
@@ -847,7 +844,6 @@ class AsyncUsersClient:
         async def main() -> None:
             await client.users.delete(
                 id="jqfwg345gi25n5ju2yz5iz6m",
-                tenant_name="tenantName",
             )
 
 

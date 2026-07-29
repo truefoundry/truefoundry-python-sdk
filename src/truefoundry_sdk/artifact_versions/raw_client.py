@@ -45,8 +45,8 @@ class RawArtifactVersionsClient:
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
         version: typing.Optional[int] = None,
-        run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        run_steps: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
+        run_ids: typing.Optional[typing.Sequence[str]] = None,
+        run_steps: typing.Optional[typing.Sequence[float]] = None,
         include_internal_metadata: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[ArtifactVersion, ListArtifactVersionsResponse]:
@@ -79,10 +79,10 @@ class RawArtifactVersionsClient:
         version : typing.Optional[int]
             Version number (positive integer) to filter by.
 
-        run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        run_ids : typing.Optional[typing.Sequence[str]]
             Run IDs to filter artifact versions by.
 
-        run_steps : typing.Optional[typing.Union[float, typing.Sequence[float]]]
+        run_steps : typing.Optional[typing.Sequence[float]]
             Run steps to filter artifact versions by.
 
         include_internal_metadata : typing.Optional[bool]
@@ -642,8 +642,8 @@ class AsyncRawArtifactVersionsClient:
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
         version: typing.Optional[int] = None,
-        run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        run_steps: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
+        run_ids: typing.Optional[typing.Sequence[str]] = None,
+        run_steps: typing.Optional[typing.Sequence[float]] = None,
         include_internal_metadata: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[ArtifactVersion, ListArtifactVersionsResponse]:
@@ -676,10 +676,10 @@ class AsyncRawArtifactVersionsClient:
         version : typing.Optional[int]
             Version number (positive integer) to filter by.
 
-        run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        run_ids : typing.Optional[typing.Sequence[str]]
             Run IDs to filter artifact versions by.
 
-        run_steps : typing.Optional[typing.Union[float, typing.Sequence[float]]]
+        run_steps : typing.Optional[typing.Sequence[float]]
             Run steps to filter artifact versions by.
 
         include_internal_metadata : typing.Optional[bool]

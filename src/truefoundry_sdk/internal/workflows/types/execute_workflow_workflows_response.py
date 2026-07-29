@@ -8,7 +8,7 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ....core.serialization import FieldMetadata
 
 
-class WorkflowsExecuteWorkflowResponse(UniversalBaseModel):
+class ExecuteWorkflowWorkflowsResponse(UniversalBaseModel):
     execution_name: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="executionName"),

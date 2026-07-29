@@ -39,7 +39,7 @@ class RawClustersClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
-        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        attributes: typing.Optional[typing.Sequence[str]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Cluster, ListClustersResponse]:
         """
@@ -53,7 +53,7 @@ class RawClustersClient:
         offset : typing.Optional[int]
             Number of items to skip
 
-        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        attributes : typing.Optional[typing.Sequence[str]]
             Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
 
         request_options : typing.Optional[RequestOptions]
@@ -343,7 +343,7 @@ class RawClustersClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
-        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        attributes: typing.Optional[typing.Sequence[str]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListClusterAddonsResponse]:
         """
@@ -360,7 +360,7 @@ class RawClustersClient:
         offset : typing.Optional[int]
             Number of items to skip
 
-        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        attributes : typing.Optional[typing.Sequence[str]]
             Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
 
         request_options : typing.Optional[RequestOptions]
@@ -486,7 +486,7 @@ class AsyncRawClustersClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
-        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        attributes: typing.Optional[typing.Sequence[str]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Cluster, ListClustersResponse]:
         """
@@ -500,7 +500,7 @@ class AsyncRawClustersClient:
         offset : typing.Optional[int]
             Number of items to skip
 
-        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        attributes : typing.Optional[typing.Sequence[str]]
             Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
 
         request_options : typing.Optional[RequestOptions]
@@ -793,7 +793,7 @@ class AsyncRawClustersClient:
         *,
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
-        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        attributes: typing.Optional[typing.Sequence[str]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListClusterAddonsResponse]:
         """
@@ -810,7 +810,7 @@ class AsyncRawClustersClient:
         offset : typing.Optional[int]
             Number of items to skip
 
-        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        attributes : typing.Optional[typing.Sequence[str]]
             Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
 
         request_options : typing.Optional[RequestOptions]

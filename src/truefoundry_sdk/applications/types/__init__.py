@@ -6,13 +6,13 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .applications_cancel_deployment_response import ApplicationsCancelDeploymentResponse
-    from .applications_list_request_device_type_filter import ApplicationsListRequestDeviceTypeFilter
-    from .applications_list_request_lifecycle_stage import ApplicationsListRequestLifecycleStage
+    from .cancel_deployment_applications_response import CancelDeploymentApplicationsResponse
+    from .list_applications_request_device_type_filter import ListApplicationsRequestDeviceTypeFilter
+    from .list_applications_request_lifecycle_stage import ListApplicationsRequestLifecycleStage
 _dynamic_imports: typing.Dict[str, str] = {
-    "ApplicationsCancelDeploymentResponse": ".applications_cancel_deployment_response",
-    "ApplicationsListRequestDeviceTypeFilter": ".applications_list_request_device_type_filter",
-    "ApplicationsListRequestLifecycleStage": ".applications_list_request_lifecycle_stage",
+    "CancelDeploymentApplicationsResponse": ".cancel_deployment_applications_response",
+    "ListApplicationsRequestDeviceTypeFilter": ".list_applications_request_device_type_filter",
+    "ListApplicationsRequestLifecycleStage": ".list_applications_request_lifecycle_stage",
 }
 
 
@@ -38,7 +38,7 @@ def __dir__():
 
 
 __all__ = [
-    "ApplicationsCancelDeploymentResponse",
-    "ApplicationsListRequestDeviceTypeFilter",
-    "ApplicationsListRequestLifecycleStage",
+    "CancelDeploymentApplicationsResponse",
+    "ListApplicationsRequestDeviceTypeFilter",
+    "ListApplicationsRequestLifecycleStage",
 ]

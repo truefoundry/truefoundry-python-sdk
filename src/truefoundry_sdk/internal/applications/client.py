@@ -53,7 +53,6 @@ class ApplicationsClient:
         )
         client.internal.applications.promote_rollout(
             id="id",
-            full=True,
         )
         """
         _response = self._raw_client.promote_rollout(id, full=full, request_options=request_options)
@@ -95,7 +94,6 @@ class ApplicationsClient:
         )
         client.internal.applications.get_pod_template_hash_to_deployment_version(
             id="id",
-            pod_template_hashes="podTemplateHashes",
         )
         """
         _response = self._raw_client.get_pod_template_hash_to_deployment_version(
@@ -155,7 +153,6 @@ class AsyncApplicationsClient:
         async def main() -> None:
             await client.internal.applications.promote_rollout(
                 id="id",
-                full=True,
             )
 
 
@@ -205,7 +202,6 @@ class AsyncApplicationsClient:
         async def main() -> None:
             await client.internal.applications.get_pod_template_hash_to_deployment_version(
                 id="id",
-                pod_template_hashes="podTemplateHashes",
             )
 
 

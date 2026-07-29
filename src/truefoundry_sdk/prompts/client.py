@@ -149,10 +149,6 @@ class PromptsClient:
         response = client.prompts.list(
             limit=10,
             offset=0,
-            fqn="fqn",
-            ml_repo_id="ml_repo_id",
-            name="name",
-            include_empty_prompts=True,
         )
         for item in response:
             yield item
@@ -365,10 +361,6 @@ class AsyncPromptsClient:
             response = await client.prompts.list(
                 limit=10,
                 offset=0,
-                fqn="fqn",
-                ml_repo_id="ml_repo_id",
-                name="name",
-                include_empty_prompts=True,
             )
             async for item in response:
                 yield item

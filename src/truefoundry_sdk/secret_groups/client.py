@@ -40,7 +40,7 @@ class SecretGroupsClient:
         offset: typing.Optional[int] = 0,
         fqn: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
-        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        attributes: typing.Optional[typing.Sequence[str]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[SecretGroup, ListSecretGroupResponse]:
         """
@@ -60,7 +60,7 @@ class SecretGroupsClient:
         search : typing.Optional[str]
             Search query - filters by secret group names that contain the search string
 
-        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        attributes : typing.Optional[typing.Sequence[str]]
             Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
 
         request_options : typing.Optional[RequestOptions]
@@ -82,9 +82,6 @@ class SecretGroupsClient:
         response = client.secret_groups.list(
             limit=10,
             offset=0,
-            fqn="fqn",
-            search="search",
-            attributes=["attributes"],
         )
         for item in response:
             yield item
@@ -315,7 +312,6 @@ class SecretGroupsClient:
         )
         client.secret_groups.delete(
             id="id",
-            force_delete=True,
         )
         """
         _response = self._raw_client.delete(id, force_delete=force_delete, request_options=request_options)
@@ -344,7 +340,7 @@ class AsyncSecretGroupsClient:
         offset: typing.Optional[int] = 0,
         fqn: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
-        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        attributes: typing.Optional[typing.Sequence[str]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[SecretGroup, ListSecretGroupResponse]:
         """
@@ -364,7 +360,7 @@ class AsyncSecretGroupsClient:
         search : typing.Optional[str]
             Search query - filters by secret group names that contain the search string
 
-        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        attributes : typing.Optional[typing.Sequence[str]]
             Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
 
         request_options : typing.Optional[RequestOptions]
@@ -391,9 +387,6 @@ class AsyncSecretGroupsClient:
             response = await client.secret_groups.list(
                 limit=10,
                 offset=0,
-                fqn="fqn",
-                search="search",
-                attributes=["attributes"],
             )
             async for item in response:
                 yield item
@@ -665,7 +658,6 @@ class AsyncSecretGroupsClient:
         async def main() -> None:
             await client.secret_groups.delete(
                 id="id",
-                force_delete=True,
             )
 
 

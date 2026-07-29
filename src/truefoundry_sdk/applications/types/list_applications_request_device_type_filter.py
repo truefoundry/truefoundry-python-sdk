@@ -7,20 +7,20 @@ from ...core import enum
 T_Result = typing.TypeVar("T_Result")
 
 
-class ApplicationsListRequestDeviceTypeFilter(enum.StrEnum):
+class ListApplicationsRequestDeviceTypeFilter(enum.StrEnum):
     CPU = "cpu"
     NVIDIA_GPU = "nvidia_gpu"
     AWS_INFERENTIA = "aws_inferentia"
     NVIDIA_MIG_GPU = "nvidia_mig_gpu"
     NVIDIA_TIMESLICING_GPU = "nvidia_timeslicing_gpu"
     GCP_TPU = "gcp_tpu"
-    _UNKNOWN = "__APPLICATIONSLISTREQUESTDEVICETYPEFILTER_UNKNOWN__"
+    _UNKNOWN = "__LISTAPPLICATIONSREQUESTDEVICETYPEFILTER_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
     """
 
     @classmethod
-    def _missing_(cls, value: typing.Any) -> "ApplicationsListRequestDeviceTypeFilter":
+    def _missing_(cls, value: typing.Any) -> "ListApplicationsRequestDeviceTypeFilter":
         unknown = cls._UNKNOWN
         unknown._value_ = value
         return unknown
@@ -35,16 +35,16 @@ class ApplicationsListRequestDeviceTypeFilter(enum.StrEnum):
         gcp_tpu: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
-        if self is ApplicationsListRequestDeviceTypeFilter.CPU:
+        if self is ListApplicationsRequestDeviceTypeFilter.CPU:
             return cpu()
-        if self is ApplicationsListRequestDeviceTypeFilter.NVIDIA_GPU:
+        if self is ListApplicationsRequestDeviceTypeFilter.NVIDIA_GPU:
             return nvidia_gpu()
-        if self is ApplicationsListRequestDeviceTypeFilter.AWS_INFERENTIA:
+        if self is ListApplicationsRequestDeviceTypeFilter.AWS_INFERENTIA:
             return aws_inferentia()
-        if self is ApplicationsListRequestDeviceTypeFilter.NVIDIA_MIG_GPU:
+        if self is ListApplicationsRequestDeviceTypeFilter.NVIDIA_MIG_GPU:
             return nvidia_mig_gpu()
-        if self is ApplicationsListRequestDeviceTypeFilter.NVIDIA_TIMESLICING_GPU:
+        if self is ListApplicationsRequestDeviceTypeFilter.NVIDIA_TIMESLICING_GPU:
             return nvidia_timeslicing_gpu()
-        if self is ApplicationsListRequestDeviceTypeFilter.GCP_TPU:
+        if self is ListApplicationsRequestDeviceTypeFilter.GCP_TPU:
             return gcp_tpu()
         return _unknown_member(self._value_)

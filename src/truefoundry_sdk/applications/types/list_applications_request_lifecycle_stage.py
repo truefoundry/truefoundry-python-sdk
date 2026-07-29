@@ -7,17 +7,17 @@ from ...core import enum
 T_Result = typing.TypeVar("T_Result")
 
 
-class ApplicationsListRequestLifecycleStage(enum.StrEnum):
+class ListApplicationsRequestLifecycleStage(enum.StrEnum):
     ACTIVE = "active"
     DELETING = "deleting"
     DELETION_FAILED = "deletion_failed"
-    _UNKNOWN = "__APPLICATIONSLISTREQUESTLIFECYCLESTAGE_UNKNOWN__"
+    _UNKNOWN = "__LISTAPPLICATIONSREQUESTLIFECYCLESTAGE_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
     """
 
     @classmethod
-    def _missing_(cls, value: typing.Any) -> "ApplicationsListRequestLifecycleStage":
+    def _missing_(cls, value: typing.Any) -> "ListApplicationsRequestLifecycleStage":
         unknown = cls._UNKNOWN
         unknown._value_ = value
         return unknown
@@ -29,10 +29,10 @@ class ApplicationsListRequestLifecycleStage(enum.StrEnum):
         deletion_failed: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
-        if self is ApplicationsListRequestLifecycleStage.ACTIVE:
+        if self is ListApplicationsRequestLifecycleStage.ACTIVE:
             return active()
-        if self is ApplicationsListRequestLifecycleStage.DELETING:
+        if self is ListApplicationsRequestLifecycleStage.DELETING:
             return deleting()
-        if self is ApplicationsListRequestLifecycleStage.DELETION_FAILED:
+        if self is ListApplicationsRequestLifecycleStage.DELETION_FAILED:
             return deletion_failed()
         return _unknown_member(self._value_)

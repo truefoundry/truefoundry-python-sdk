@@ -43,7 +43,7 @@ class RawSecretGroupsClient:
         offset: typing.Optional[int] = 0,
         fqn: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
-        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        attributes: typing.Optional[typing.Sequence[str]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[SecretGroup, ListSecretGroupResponse]:
         """
@@ -63,7 +63,7 @@ class RawSecretGroupsClient:
         search : typing.Optional[str]
             Search query - filters by secret group names that contain the search string
 
-        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        attributes : typing.Optional[typing.Sequence[str]]
             Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
 
         request_options : typing.Optional[RequestOptions]
@@ -584,7 +584,7 @@ class AsyncRawSecretGroupsClient:
         offset: typing.Optional[int] = 0,
         fqn: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
-        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        attributes: typing.Optional[typing.Sequence[str]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[SecretGroup, ListSecretGroupResponse]:
         """
@@ -604,7 +604,7 @@ class AsyncRawSecretGroupsClient:
         search : typing.Optional[str]
             Search query - filters by secret group names that contain the search string
 
-        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        attributes : typing.Optional[typing.Sequence[str]]
             Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
 
         request_options : typing.Optional[RequestOptions]

@@ -14,7 +14,7 @@ from ...errors.bad_request_error import BadRequestError
 from ...errors.method_not_allowed_error import MethodNotAllowedError
 from ...errors.not_found_error import NotFoundError
 from ...types.get_charts_response import GetChartsResponse
-from .types.metrics_get_charts_request_filter_entity import MetricsGetChartsRequestFilterEntity
+from .types.get_charts_metrics_request_filter_entity import GetChartsMetricsRequestFilterEntity
 from pydantic import ValidationError
 
 
@@ -27,7 +27,7 @@ class RawMetricsClient:
         workspace_id: str,
         *,
         application_id: str,
-        filter_entity: MetricsGetChartsRequestFilterEntity,
+        filter_entity: GetChartsMetricsRequestFilterEntity,
         start_ts: typing.Optional[str] = None,
         end_ts: typing.Optional[str] = None,
         filter_query: typing.Optional[str] = None,
@@ -43,7 +43,7 @@ class RawMetricsClient:
         application_id : str
             Unique identifier of the application.
 
-        filter_entity : MetricsGetChartsRequestFilterEntity
+        filter_entity : GetChartsMetricsRequestFilterEntity
             Scope of the chart bundle to return.
 
         start_ts : typing.Optional[str]
@@ -137,7 +137,7 @@ class AsyncRawMetricsClient:
         workspace_id: str,
         *,
         application_id: str,
-        filter_entity: MetricsGetChartsRequestFilterEntity,
+        filter_entity: GetChartsMetricsRequestFilterEntity,
         start_ts: typing.Optional[str] = None,
         end_ts: typing.Optional[str] = None,
         filter_query: typing.Optional[str] = None,
@@ -153,7 +153,7 @@ class AsyncRawMetricsClient:
         application_id : str
             Unique identifier of the application.
 
-        filter_entity : MetricsGetChartsRequestFilterEntity
+        filter_entity : GetChartsMetricsRequestFilterEntity
             Scope of the chart bundle to return.
 
         start_ts : typing.Optional[str]

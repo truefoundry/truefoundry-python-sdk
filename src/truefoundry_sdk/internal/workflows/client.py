@@ -5,7 +5,7 @@ import typing
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from .raw_client import AsyncRawWorkflowsClient, RawWorkflowsClient
-from .types.workflows_execute_workflow_response import WorkflowsExecuteWorkflowResponse
+from .types.execute_workflow_workflows_response import ExecuteWorkflowWorkflowsResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -33,7 +33,7 @@ class WorkflowsClient:
         inputs: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         inputs_literal_map: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> WorkflowsExecuteWorkflowResponse:
+    ) -> ExecuteWorkflowWorkflowsResponse:
         """
         Execute a workflow for the specified application
 
@@ -53,7 +53,7 @@ class WorkflowsClient:
 
         Returns
         -------
-        WorkflowsExecuteWorkflowResponse
+        ExecuteWorkflowWorkflowsResponse
             Returns execution name of the workflow
 
         Examples
@@ -96,7 +96,7 @@ class AsyncWorkflowsClient:
         inputs: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         inputs_literal_map: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> WorkflowsExecuteWorkflowResponse:
+    ) -> ExecuteWorkflowWorkflowsResponse:
         """
         Execute a workflow for the specified application
 
@@ -116,7 +116,7 @@ class AsyncWorkflowsClient:
 
         Returns
         -------
-        WorkflowsExecuteWorkflowResponse
+        ExecuteWorkflowWorkflowsResponse
             Returns execution name of the workflow
 
         Examples

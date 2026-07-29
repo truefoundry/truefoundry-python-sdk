@@ -46,9 +46,9 @@ class JobsClient:
         search_prefix: typing.Optional[str] = None,
         sort_by: typing.Optional[JobRunsSortBy] = None,
         order: typing.Optional[SortDirection] = None,
-        triggered_by: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        triggered_by: typing.Optional[typing.Sequence[str]] = None,
         status: typing.Optional[typing.Union[JobRunStatus, typing.Sequence[JobRunStatus]]] = None,
-        version_numbers: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
+        version_numbers: typing.Optional[typing.Sequence[float]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[JobRun, ListJobRunResponse]:
         """
@@ -74,13 +74,13 @@ class JobsClient:
         order : typing.Optional[SortDirection]
             Sorting order
 
-        triggered_by : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        triggered_by : typing.Optional[typing.Sequence[str]]
             Array of subject slugs
 
         status : typing.Optional[typing.Union[JobRunStatus, typing.Sequence[JobRunStatus]]]
             Status of the job run
 
-        version_numbers : typing.Optional[typing.Union[float, typing.Sequence[float]]]
+        version_numbers : typing.Optional[typing.Sequence[float]]
             Version number of the deployment
 
         request_options : typing.Optional[RequestOptions]
@@ -93,12 +93,7 @@ class JobsClient:
 
         Examples
         --------
-        from truefoundry_sdk import (
-            JobRunsSortBy,
-            JobRunStatus,
-            SortDirection,
-            TrueFoundry,
-        )
+        from truefoundry_sdk import TrueFoundry
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -108,12 +103,6 @@ class JobsClient:
             job_id="jobId",
             limit=10,
             offset=0,
-            search_prefix="searchPrefix",
-            sort_by=JobRunsSortBy.START_TIME,
-            order=SortDirection.ASC,
-            triggered_by=["triggeredBy"],
-            status=[JobRunStatus.CREATED],
-            version_numbers=[1.1],
         )
         for item in response:
             yield item
@@ -328,9 +317,9 @@ class AsyncJobsClient:
         search_prefix: typing.Optional[str] = None,
         sort_by: typing.Optional[JobRunsSortBy] = None,
         order: typing.Optional[SortDirection] = None,
-        triggered_by: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        triggered_by: typing.Optional[typing.Sequence[str]] = None,
         status: typing.Optional[typing.Union[JobRunStatus, typing.Sequence[JobRunStatus]]] = None,
-        version_numbers: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
+        version_numbers: typing.Optional[typing.Sequence[float]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[JobRun, ListJobRunResponse]:
         """
@@ -356,13 +345,13 @@ class AsyncJobsClient:
         order : typing.Optional[SortDirection]
             Sorting order
 
-        triggered_by : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        triggered_by : typing.Optional[typing.Sequence[str]]
             Array of subject slugs
 
         status : typing.Optional[typing.Union[JobRunStatus, typing.Sequence[JobRunStatus]]]
             Status of the job run
 
-        version_numbers : typing.Optional[typing.Union[float, typing.Sequence[float]]]
+        version_numbers : typing.Optional[typing.Sequence[float]]
             Version number of the deployment
 
         request_options : typing.Optional[RequestOptions]
@@ -377,12 +366,7 @@ class AsyncJobsClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import (
-            AsyncTrueFoundry,
-            JobRunsSortBy,
-            JobRunStatus,
-            SortDirection,
-        )
+        from truefoundry_sdk import AsyncTrueFoundry
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -395,12 +379,6 @@ class AsyncJobsClient:
                 job_id="jobId",
                 limit=10,
                 offset=0,
-                search_prefix="searchPrefix",
-                sort_by=JobRunsSortBy.START_TIME,
-                order=SortDirection.ASC,
-                triggered_by=["triggeredBy"],
-                status=[JobRunStatus.CREATED],
-                version_numbers=[1.1],
             )
             async for item in response:
                 yield item

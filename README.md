@@ -41,8 +41,7 @@ A full reference for this library is available [here](https://github.com/truefou
 Instantiate and use the client with the following:
 
 ```python
-from truefoundry_sdk import TrueFoundry, ApplicationType
-from truefoundry_sdk.applications import ApplicationsListRequestDeviceTypeFilter, ApplicationsListRequestLifecycleStage
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="<token>",
@@ -52,21 +51,6 @@ client = TrueFoundry(
 client.applications.list(
     limit=10,
     offset=0,
-    application_id="applicationId",
-    workspace_id="workspaceId",
-    application_name="applicationName",
-    fqn="fqn",
-    workspace_fqn="workspaceFqn",
-    application_type=ApplicationType.ASYNC_SERVICE,
-    name_search_query="nameSearchQuery",
-    environment_id="environmentId",
-    cluster_id="clusterId",
-    application_set_id="applicationSetId",
-    paused=True,
-    device_type_filter=ApplicationsListRequestDeviceTypeFilter.CPU,
-    last_deployed_by_subjects="lastDeployedBySubjects",
-    lifecycle_stage=ApplicationsListRequestLifecycleStage.ACTIVE,
-    is_recommendation_present_and_visible=True,
 )
 ```
 
@@ -76,7 +60,6 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 
 ```python
 import asyncio
-from truefoundry_sdk.applications import ApplicationsListRequestDeviceTypeFilter, ApplicationsListRequestLifecycleStage
 
 from truefoundry_sdk import AsyncTrueFoundry
 
@@ -90,21 +73,6 @@ async def main() -> None:
     await client.applications.list(
         limit=10,
         offset=0,
-        application_id="applicationId",
-        workspace_id="workspaceId",
-        application_name="applicationName",
-        fqn="fqn",
-        workspace_fqn="workspaceFqn",
-        application_type=ApplicationType.ASYNC_SERVICE,
-        name_search_query="nameSearchQuery",
-        environment_id="environmentId",
-        cluster_id="clusterId",
-        application_set_id="applicationSetId",
-        paused=True,
-        device_type_filter=ApplicationsListRequestDeviceTypeFilter.CPU,
-        last_deployed_by_subjects="lastDeployedBySubjects",
-        lifecycle_stage=ApplicationsListRequestLifecycleStage.ACTIVE,
-        is_recommendation_present_and_visible=True,
     )
 
 
@@ -131,8 +99,7 @@ except ApiError as e:
 Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used as generators for the underlying object.
 
 ```python
-from truefoundry_sdk import TrueFoundry, ApplicationType
-from truefoundry_sdk.applications import ApplicationsListRequestDeviceTypeFilter, ApplicationsListRequestLifecycleStage
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="<token>",
@@ -142,21 +109,6 @@ client = TrueFoundry(
 client.applications.list(
     limit=10,
     offset=0,
-    application_id="applicationId",
-    workspace_id="workspaceId",
-    application_name="applicationName",
-    fqn="fqn",
-    workspace_fqn="workspaceFqn",
-    application_type=ApplicationType.ASYNC_SERVICE,
-    name_search_query="nameSearchQuery",
-    environment_id="environmentId",
-    cluster_id="clusterId",
-    application_set_id="applicationSetId",
-    paused=True,
-    device_type_filter=ApplicationsListRequestDeviceTypeFilter.CPU,
-    last_deployed_by_subjects="lastDeployedBySubjects",
-    lifecycle_stage=ApplicationsListRequestLifecycleStage.ACTIVE,
-    is_recommendation_present_and_visible=True,
 )
 ```
 

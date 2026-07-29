@@ -41,7 +41,7 @@ class TeamsClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         role: typing.Optional[typing.Literal["manager"]] = None,
-        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        attributes: typing.Optional[typing.Sequence[str]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Team, ListTeamsResponse]:
         """
@@ -58,7 +58,7 @@ class TeamsClient:
         role : typing.Optional[typing.Literal["manager"]]
             Filter to teams where the caller holds this role. `manager` returns teams the caller can manage (team managers and admins).
 
-        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        attributes : typing.Optional[typing.Sequence[str]]
             Comma-separated list of attributes to return (e.g. `id,teamName`). When provided, only the specified fields are fetched. `id` is always included.
 
         request_options : typing.Optional[RequestOptions]
@@ -80,7 +80,6 @@ class TeamsClient:
         response = client.teams.list(
             limit=10,
             offset=0,
-            attributes=["attributes"],
         )
         for item in response:
             yield item
@@ -374,7 +373,7 @@ class AsyncTeamsClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         role: typing.Optional[typing.Literal["manager"]] = None,
-        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        attributes: typing.Optional[typing.Sequence[str]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Team, ListTeamsResponse]:
         """
@@ -391,7 +390,7 @@ class AsyncTeamsClient:
         role : typing.Optional[typing.Literal["manager"]]
             Filter to teams where the caller holds this role. `manager` returns teams the caller can manage (team managers and admins).
 
-        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        attributes : typing.Optional[typing.Sequence[str]]
             Comma-separated list of attributes to return (e.g. `id,teamName`). When provided, only the specified fields are fetched. `id` is always included.
 
         request_options : typing.Optional[RequestOptions]
@@ -418,7 +417,6 @@ class AsyncTeamsClient:
             response = await client.teams.list(
                 limit=10,
                 offset=0,
-                attributes=["attributes"],
             )
             async for item in response:
                 yield item

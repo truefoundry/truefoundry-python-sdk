@@ -6,7 +6,7 @@ import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class ApplicationsCancelDeploymentResponse(UniversalBaseModel):
+class CancelDeploymentApplicationsResponse(UniversalBaseModel):
     message: typing.Optional[str] = pydantic.Field(default=None)
     """
     Deployment cancelled

@@ -6,8 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .workflows_execute_workflow_response import WorkflowsExecuteWorkflowResponse
-_dynamic_imports: typing.Dict[str, str] = {"WorkflowsExecuteWorkflowResponse": ".workflows_execute_workflow_response"}
+    from .execute_workflow_workflows_response import ExecuteWorkflowWorkflowsResponse
+_dynamic_imports: typing.Dict[str, str] = {"ExecuteWorkflowWorkflowsResponse": ".execute_workflow_workflows_response"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["WorkflowsExecuteWorkflowResponse"]
+__all__ = ["ExecuteWorkflowWorkflowsResponse"]

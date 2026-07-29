@@ -23,7 +23,7 @@ from ..types.get_agent_response import GetAgentResponse
 from ..types.get_agent_version_response import GetAgentVersionResponse
 from ..types.http_error import HttpError
 from ..types.list_agents_response import ListAgentsResponse
-from .types.agents_list_request_type import AgentsListRequestType
+from .types.list_agents_request_type import ListAgentsRequestType
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -41,8 +41,8 @@ class RawAgentsClient:
         offset: typing.Optional[int] = 0,
         name: typing.Optional[str] = None,
         name_prefix: typing.Optional[str] = None,
-        type: typing.Optional[AgentsListRequestType] = None,
-        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        type: typing.Optional[ListAgentsRequestType] = None,
+        attributes: typing.Optional[typing.Sequence[str]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Agent, ListAgentsResponse]:
         """
@@ -62,10 +62,10 @@ class RawAgentsClient:
         name_prefix : typing.Optional[str]
             When set, only agents whose name starts with this string (case-sensitive). Ignored when `name` is also provided.
 
-        type : typing.Optional[AgentsListRequestType]
+        type : typing.Optional[ListAgentsRequestType]
             Filter by latest manifest discriminator (`remote-agent`, `truefoundry-agent`, or `agent`). NOTE: `agent` is a legacy type and will be removed in the future.
 
-        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        attributes : typing.Optional[typing.Sequence[str]]
             Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
 
         request_options : typing.Optional[RequestOptions]
@@ -401,8 +401,8 @@ class AsyncRawAgentsClient:
         offset: typing.Optional[int] = 0,
         name: typing.Optional[str] = None,
         name_prefix: typing.Optional[str] = None,
-        type: typing.Optional[AgentsListRequestType] = None,
-        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        type: typing.Optional[ListAgentsRequestType] = None,
+        attributes: typing.Optional[typing.Sequence[str]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Agent, ListAgentsResponse]:
         """
@@ -422,10 +422,10 @@ class AsyncRawAgentsClient:
         name_prefix : typing.Optional[str]
             When set, only agents whose name starts with this string (case-sensitive). Ignored when `name` is also provided.
 
-        type : typing.Optional[AgentsListRequestType]
+        type : typing.Optional[ListAgentsRequestType]
             Filter by latest manifest discriminator (`remote-agent`, `truefoundry-agent`, or `agent`). NOTE: `agent` is a legacy type and will be removed in the future.
 
-        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        attributes : typing.Optional[typing.Sequence[str]]
             Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
 
         request_options : typing.Optional[RequestOptions]

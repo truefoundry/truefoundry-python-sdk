@@ -13,9 +13,9 @@ from ..types.get_application_deployment_response import GetApplicationDeployment
 from ..types.get_application_response import GetApplicationResponse
 from ..types.list_applications_response import ListApplicationsResponse
 from .raw_client import AsyncRawApplicationsClient, RawApplicationsClient
-from .types.applications_cancel_deployment_response import ApplicationsCancelDeploymentResponse
-from .types.applications_list_request_device_type_filter import ApplicationsListRequestDeviceTypeFilter
-from .types.applications_list_request_lifecycle_stage import ApplicationsListRequestLifecycleStage
+from .types.cancel_deployment_applications_response import CancelDeploymentApplicationsResponse
+from .types.list_applications_request_device_type_filter import ListApplicationsRequestDeviceTypeFilter
+from .types.list_applications_request_lifecycle_stage import ListApplicationsRequestLifecycleStage
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -52,9 +52,9 @@ class ApplicationsClient:
         cluster_id: typing.Optional[str] = None,
         application_set_id: typing.Optional[str] = None,
         paused: typing.Optional[bool] = None,
-        device_type_filter: typing.Optional[ApplicationsListRequestDeviceTypeFilter] = None,
+        device_type_filter: typing.Optional[ListApplicationsRequestDeviceTypeFilter] = None,
         last_deployed_by_subjects: typing.Optional[str] = None,
-        lifecycle_stage: typing.Optional[ApplicationsListRequestLifecycleStage] = None,
+        lifecycle_stage: typing.Optional[ListApplicationsRequestLifecycleStage] = None,
         is_recommendation_present_and_visible: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Application, ListApplicationsResponse]:
@@ -102,13 +102,13 @@ class ApplicationsClient:
         paused : typing.Optional[bool]
             Filter by explicit pause state (true = paused, false = not paused). Does not account for autoshutdown.
 
-        device_type_filter : typing.Optional[ApplicationsListRequestDeviceTypeFilter]
+        device_type_filter : typing.Optional[ListApplicationsRequestDeviceTypeFilter]
             Device type to filter by (comma-separated).
 
         last_deployed_by_subjects : typing.Optional[str]
             Subject slugs of last deployers to filter by (comma-separated). Email for users (e.g. user@example.com), name for virtual accounts.
 
-        lifecycle_stage : typing.Optional[ApplicationsListRequestLifecycleStage]
+        lifecycle_stage : typing.Optional[ListApplicationsRequestLifecycleStage]
             Application lifecycle stage to filter by
 
         is_recommendation_present_and_visible : typing.Optional[bool]
@@ -124,11 +124,7 @@ class ApplicationsClient:
 
         Examples
         --------
-        from truefoundry_sdk import ApplicationType, TrueFoundry
-        from truefoundry_sdk.applications import (
-            ApplicationsListRequestDeviceTypeFilter,
-            ApplicationsListRequestLifecycleStage,
-        )
+        from truefoundry_sdk import TrueFoundry
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -137,21 +133,6 @@ class ApplicationsClient:
         response = client.applications.list(
             limit=10,
             offset=0,
-            application_id="applicationId",
-            workspace_id="workspaceId",
-            application_name="applicationName",
-            fqn="fqn",
-            workspace_fqn="workspaceFqn",
-            application_type=ApplicationType.ASYNC_SERVICE,
-            name_search_query="nameSearchQuery",
-            environment_id="environmentId",
-            cluster_id="clusterId",
-            application_set_id="applicationSetId",
-            paused=True,
-            device_type_filter=ApplicationsListRequestDeviceTypeFilter.CPU,
-            last_deployed_by_subjects="lastDeployedBySubjects",
-            lifecycle_stage=ApplicationsListRequestLifecycleStage.ACTIVE,
-            is_recommendation_present_and_visible=True,
         )
         for item in response:
             yield item
@@ -422,7 +403,7 @@ class ApplicationsClient:
 
     def cancel_deployment(
         self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ApplicationsCancelDeploymentResponse:
+    ) -> CancelDeploymentApplicationsResponse:
         """
         Cancel an in-progress deployment.
 
@@ -439,7 +420,7 @@ class ApplicationsClient:
 
         Returns
         -------
-        ApplicationsCancelDeploymentResponse
+        CancelDeploymentApplicationsResponse
             Deployment cancelled.
 
         Examples
@@ -490,9 +471,9 @@ class AsyncApplicationsClient:
         cluster_id: typing.Optional[str] = None,
         application_set_id: typing.Optional[str] = None,
         paused: typing.Optional[bool] = None,
-        device_type_filter: typing.Optional[ApplicationsListRequestDeviceTypeFilter] = None,
+        device_type_filter: typing.Optional[ListApplicationsRequestDeviceTypeFilter] = None,
         last_deployed_by_subjects: typing.Optional[str] = None,
-        lifecycle_stage: typing.Optional[ApplicationsListRequestLifecycleStage] = None,
+        lifecycle_stage: typing.Optional[ListApplicationsRequestLifecycleStage] = None,
         is_recommendation_present_and_visible: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Application, ListApplicationsResponse]:
@@ -540,13 +521,13 @@ class AsyncApplicationsClient:
         paused : typing.Optional[bool]
             Filter by explicit pause state (true = paused, false = not paused). Does not account for autoshutdown.
 
-        device_type_filter : typing.Optional[ApplicationsListRequestDeviceTypeFilter]
+        device_type_filter : typing.Optional[ListApplicationsRequestDeviceTypeFilter]
             Device type to filter by (comma-separated).
 
         last_deployed_by_subjects : typing.Optional[str]
             Subject slugs of last deployers to filter by (comma-separated). Email for users (e.g. user@example.com), name for virtual accounts.
 
-        lifecycle_stage : typing.Optional[ApplicationsListRequestLifecycleStage]
+        lifecycle_stage : typing.Optional[ListApplicationsRequestLifecycleStage]
             Application lifecycle stage to filter by
 
         is_recommendation_present_and_visible : typing.Optional[bool]
@@ -564,11 +545,7 @@ class AsyncApplicationsClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import ApplicationType, AsyncTrueFoundry
-        from truefoundry_sdk.applications import (
-            ApplicationsListRequestDeviceTypeFilter,
-            ApplicationsListRequestLifecycleStage,
-        )
+        from truefoundry_sdk import AsyncTrueFoundry
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -580,21 +557,6 @@ class AsyncApplicationsClient:
             response = await client.applications.list(
                 limit=10,
                 offset=0,
-                application_id="applicationId",
-                workspace_id="workspaceId",
-                application_name="applicationName",
-                fqn="fqn",
-                workspace_fqn="workspaceFqn",
-                application_type=ApplicationType.ASYNC_SERVICE,
-                name_search_query="nameSearchQuery",
-                environment_id="environmentId",
-                cluster_id="clusterId",
-                application_set_id="applicationSetId",
-                paused=True,
-                device_type_filter=ApplicationsListRequestDeviceTypeFilter.CPU,
-                last_deployed_by_subjects="lastDeployedBySubjects",
-                lifecycle_stage=ApplicationsListRequestLifecycleStage.ACTIVE,
-                is_recommendation_present_and_visible=True,
             )
             async for item in response:
                 yield item
@@ -921,7 +883,7 @@ class AsyncApplicationsClient:
 
     async def cancel_deployment(
         self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ApplicationsCancelDeploymentResponse:
+    ) -> CancelDeploymentApplicationsResponse:
         """
         Cancel an in-progress deployment.
 
@@ -938,7 +900,7 @@ class AsyncApplicationsClient:
 
         Returns
         -------
-        ApplicationsCancelDeploymentResponse
+        CancelDeploymentApplicationsResponse
             Deployment cancelled.
 
         Examples

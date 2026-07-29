@@ -64,19 +64,13 @@ class AlertsClient:
 
         Examples
         --------
-        from truefoundry_sdk import AlertStatus, TrueFoundry
+        from truefoundry_sdk import TrueFoundry
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.alerts.list(
-            start_ts="startTs",
-            end_ts="endTs",
-            cluster_id="clusterId",
-            application_id="applicationId",
-            alert_status=AlertStatus.FIRING,
-        )
+        client.alerts.list()
         """
         _response = self._raw_client.list(
             start_ts=start_ts,
@@ -146,7 +140,7 @@ class AsyncAlertsClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import AlertStatus, AsyncTrueFoundry
+        from truefoundry_sdk import AsyncTrueFoundry
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -155,13 +149,7 @@ class AsyncAlertsClient:
 
 
         async def main() -> None:
-            await client.alerts.list(
-                start_ts="startTs",
-                end_ts="endTs",
-                cluster_id="clusterId",
-                application_id="applicationId",
-                alert_status=AlertStatus.FIRING,
-            )
+            await client.alerts.list()
 
 
         asyncio.run(main())

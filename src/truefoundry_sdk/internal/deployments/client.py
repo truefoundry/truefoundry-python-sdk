@@ -200,9 +200,6 @@ class DeploymentsClient:
             application_type=ApplicationType.ASYNC_SERVICE,
             application_name="applicationName",
             workspace_id="workspaceId",
-            base_domain="baseDomain",
-            port="port",
-            prefer_wildcard=True,
         )
         """
         _response = self._raw_client.get_suggested_endpoint(
@@ -431,9 +428,6 @@ class AsyncDeploymentsClient:
                 application_type=ApplicationType.ASYNC_SERVICE,
                 application_name="applicationName",
                 workspace_id="workspaceId",
-                base_domain="baseDomain",
-                port="port",
-                prefer_wildcard=True,
             )
 
 

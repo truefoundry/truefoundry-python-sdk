@@ -151,10 +151,6 @@ class AgentSkillsClient:
         response = client.agent_skills.list(
             limit=10,
             offset=0,
-            fqn="fqn",
-            ml_repo_id="ml_repo_id",
-            name="name",
-            include_empty_agent_skills=True,
         )
         for item in response:
             yield item
@@ -375,10 +371,6 @@ class AsyncAgentSkillsClient:
             response = await client.agent_skills.list(
                 limit=10,
                 offset=0,
-                fqn="fqn",
-                ml_repo_id="ml_repo_id",
-                name="name",
-                include_empty_agent_skills=True,
             )
             async for item in response:
                 yield item

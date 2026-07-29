@@ -81,10 +81,7 @@ class BuildLogsClient:
             pipeline_run_name="pipelineRunName",
             start_ts="1635467890123456789",
             end_ts="1635467891123456789",
-            limit="limit",
-            direction="direction",
             filter_query='{"matchString":"error","type":"substring","operator":"equal"}',
-            num_logs_to_ignore=1.1,
         )
         """
         _response = self._raw_client.get(
@@ -178,10 +175,7 @@ class AsyncBuildLogsClient:
                 pipeline_run_name="pipelineRunName",
                 start_ts="1635467890123456789",
                 end_ts="1635467891123456789",
-                limit="limit",
-                direction="direction",
                 filter_query='{"matchString":"error","type":"substring","operator":"equal"}',
-                num_logs_to_ignore=1.1,
             )
 
 

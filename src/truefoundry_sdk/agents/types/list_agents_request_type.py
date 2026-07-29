@@ -7,17 +7,17 @@ from ...core import enum
 T_Result = typing.TypeVar("T_Result")
 
 
-class AgentsListRequestType(enum.StrEnum):
+class ListAgentsRequestType(enum.StrEnum):
     REMOTE_AGENT = "remote-agent"
     TRUEFOUNDRY_AGENT = "truefoundry-agent"
     AGENT = "agent"
-    _UNKNOWN = "__AGENTSLISTREQUESTTYPE_UNKNOWN__"
+    _UNKNOWN = "__LISTAGENTSREQUESTTYPE_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
     """
 
     @classmethod
-    def _missing_(cls, value: typing.Any) -> "AgentsListRequestType":
+    def _missing_(cls, value: typing.Any) -> "ListAgentsRequestType":
         unknown = cls._UNKNOWN
         unknown._value_ = value
         return unknown
@@ -29,10 +29,10 @@ class AgentsListRequestType(enum.StrEnum):
         agent: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
-        if self is AgentsListRequestType.REMOTE_AGENT:
+        if self is ListAgentsRequestType.REMOTE_AGENT:
             return remote_agent()
-        if self is AgentsListRequestType.TRUEFOUNDRY_AGENT:
+        if self is ListAgentsRequestType.TRUEFOUNDRY_AGENT:
             return truefoundry_agent()
-        if self is AgentsListRequestType.AGENT:
+        if self is ListAgentsRequestType.AGENT:
             return agent()
         return _unknown_member(self._value_)
