@@ -28,11 +28,19 @@ class Team(UniversalBaseModel):
         FieldMetadata(alias="tenantName"),
         pydantic.Field(alias="tenantName", description="Tenant the team belongs to."),
     ]
+    """
+    Tenant the team belongs to.
+    """
+
     account_id: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="accountId"),
         pydantic.Field(alias="accountId", description="System-generated ID of the account that owns the team."),
     ]
+    """
+    System-generated ID of the account that owns the team.
+    """
+
     created_by_subject: typing_extensions.Annotated[
         Subject,
         FieldMetadata(alias="createdBySubject"),
@@ -40,6 +48,10 @@ class Team(UniversalBaseModel):
             alias="createdBySubject", description="The subject (user or service account) that created the team."
         ),
     ]
+    """
+    The subject (user or service account) that created the team.
+    """
+
     members: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     Email addresses of team members.
@@ -50,11 +62,19 @@ class Team(UniversalBaseModel):
         FieldMetadata(alias="createdAt"),
         pydantic.Field(alias="createdAt", description="Timestamp when the team was created."),
     ]
+    """
+    Timestamp when the team was created.
+    """
+
     updated_at: typing_extensions.Annotated[
         dt.datetime,
         FieldMetadata(alias="updatedAt"),
         pydantic.Field(alias="updatedAt", description="Timestamp when the team was last updated."),
     ]
+    """
+    Timestamp when the team was last updated.
+    """
+
     manifest: TeamManifest = pydantic.Field()
     """
     The team manifest defining name, members, managers, and ownership.
@@ -72,6 +92,10 @@ class Team(UniversalBaseModel):
             alias="isEditable", description="Whether the team can be edited. SCIM-managed teams may be non-editable."
         ),
     ]
+    """
+    Whether the team can be edited. SCIM-managed teams may be non-editable.
+    """
+
     roles: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     Role names assigned to the team.
@@ -85,6 +109,10 @@ class Team(UniversalBaseModel):
             description="Up to 5 team member emails, sourced from cache. Absent when the cache is unavailable.",
         ),
     ] = None
+    """
+    Up to 5 team member emails, sourced from cache. Absent when the cache is unavailable.
+    """
+
     top_managers: typing_extensions.Annotated[
         typing.Optional[typing.List[str]],
         FieldMetadata(alias="topManagers"),
@@ -93,6 +121,10 @@ class Team(UniversalBaseModel):
             description="Up to 5 team manager emails, sourced from cache. Absent when the cache is unavailable.",
         ),
     ] = None
+    """
+    Up to 5 team manager emails, sourced from cache. Absent when the cache is unavailable.
+    """
+
     total_member_count: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="totalMemberCount"),
@@ -101,6 +133,10 @@ class Team(UniversalBaseModel):
             description="Total number of team members, sourced from cache. Absent when the cache is unavailable.",
         ),
     ] = None
+    """
+    Total number of team members, sourced from cache. Absent when the cache is unavailable.
+    """
+
     total_manager_count: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="totalManagerCount"),
@@ -109,6 +145,9 @@ class Team(UniversalBaseModel):
             description="Total number of team managers, sourced from cache. Absent when the cache is unavailable.",
         ),
     ] = None
+    """
+    Total number of team managers, sourced from cache. Absent when the cache is unavailable.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

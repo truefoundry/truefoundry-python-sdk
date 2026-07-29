@@ -16,6 +16,9 @@ class IsClusterConnectedResponse(UniversalBaseModel):
             alias="isConnected", description="Whether the cluster agent is currently connected to the control plane."
         ),
     ]
+    """
+    Whether the cluster agent is currently connected to the control plane.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

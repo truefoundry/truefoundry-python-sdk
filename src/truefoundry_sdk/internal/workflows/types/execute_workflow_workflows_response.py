@@ -14,6 +14,9 @@ class ExecuteWorkflowWorkflowsResponse(UniversalBaseModel):
         FieldMetadata(alias="executionName"),
         pydantic.Field(alias="executionName", description="The name of the execution"),
     ] = None
+    """
+    The name of the execution
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

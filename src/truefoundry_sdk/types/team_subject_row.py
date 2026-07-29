@@ -15,16 +15,27 @@ class TeamSubjectRow(UniversalBaseModel):
         FieldMetadata(alias="subjectId"),
         pydantic.Field(alias="subjectId", description="System-generated ID of the subject."),
     ]
+    """
+    System-generated ID of the subject.
+    """
+
     subject_slug: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="subjectSlug"),
         pydantic.Field(alias="subjectSlug", description="Human-readable slug of the subject (e.g. user email)."),
     ]
+    """
+    Human-readable slug of the subject (e.g. user email).
+    """
+
     subject_type: typing_extensions.Annotated[
         SubjectType,
         FieldMetadata(alias="subjectType"),
         pydantic.Field(alias="subjectType", description="Type of the subject."),
     ]
+    """
+    Type of the subject.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

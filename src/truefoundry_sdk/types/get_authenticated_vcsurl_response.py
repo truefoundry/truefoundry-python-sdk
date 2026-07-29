@@ -14,6 +14,9 @@ class GetAuthenticatedVcsurlResponse(UniversalBaseModel):
         FieldMetadata(alias="authenticatedURL"),
         pydantic.Field(alias="authenticatedURL", description="Authenticated URL to access the repository"),
     ]
+    """
+    Authenticated URL to access the repository
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

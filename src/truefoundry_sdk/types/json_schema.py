@@ -23,6 +23,9 @@ class JsonSchema(UniversalBaseModel):
         FieldMetadata(alias="schema"),
         pydantic.Field(alias="schema", description="JSON schema object defining the expected structure"),
     ]
+    """
+    JSON schema object defining the expected structure
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -26,19 +26,35 @@ class JobRun(UniversalBaseModel):
         FieldMetadata(alias="applicationName"),
         pydantic.Field(alias="applicationName", description="Application Name"),
     ]
+    """
+    Application Name
+    """
+
     deployment_version: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="deploymentVersion"),
         pydantic.Field(alias="deploymentVersion", description="Deployment Version"),
     ]
+    """
+    Deployment Version
+    """
+
     created_at: typing_extensions.Annotated[
         float, FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt", description="Created At")
     ]
+    """
+    Created At
+    """
+
     end_time: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="endTime"),
         pydantic.Field(alias="endTime", description="End Time of JobRun"),
     ] = None
+    """
+    End Time of JobRun
+    """
+
     duration: typing.Optional[int] = pydantic.Field(default=None)
     """
     Duration of JobRun
@@ -52,6 +68,10 @@ class JobRun(UniversalBaseModel):
     total_retries: typing_extensions.Annotated[
         int, FieldMetadata(alias="totalRetries"), pydantic.Field(alias="totalRetries", description="Total Retries")
     ]
+    """
+    Total Retries
+    """
+
     error: typing.Optional[str] = pydantic.Field(default=None)
     """
     Error
@@ -67,34 +87,61 @@ class JobRun(UniversalBaseModel):
         FieldMetadata(alias="triggeredBy"),
         pydantic.Field(alias="triggeredBy", description="Triggered By"),
     ] = None
+    """
+    Triggered By
+    """
+
     triggered_by_subject: typing_extensions.Annotated[
         typing.Optional[Subject],
         FieldMetadata(alias="triggeredBySubject"),
         pydantic.Field(alias="triggeredBySubject", description="Triggered By Subject"),
     ] = None
+    """
+    Triggered By Subject
+    """
+
     exit_code: typing_extensions.Annotated[
         typing.Optional[int], FieldMetadata(alias="exitCode"), pydantic.Field(alias="exitCode", description="Exit Code")
     ] = None
+    """
+    Exit Code
+    """
+
     spark_ui: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="sparkUi"),
         pydantic.Field(alias="sparkUi", description="Spark UI Url"),
     ] = None
+    """
+    Spark UI Url
+    """
+
     application_id: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="applicationId"),
         pydantic.Field(alias="applicationId", description="Application ID"),
     ] = None
+    """
+    Application ID
+    """
+
     deployment_id: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="deploymentId"),
         pydantic.Field(alias="deploymentId", description="Deployment ID"),
     ] = None
+    """
+    Deployment ID
+    """
+
     tenant_name: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="tenantName"),
         pydantic.Field(alias="tenantName", description="Tenant Name"),
     ] = None
+    """
+    Tenant Name
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

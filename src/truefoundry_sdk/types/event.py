@@ -21,16 +21,28 @@ class Event(UniversalBaseModel):
         FieldMetadata(alias="firstTimestamp"),
         pydantic.Field(alias="firstTimestamp", description="Timestamp when the event was first observed"),
     ] = None
+    """
+    Timestamp when the event was first observed
+    """
+
     last_timestamp: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="lastTimestamp"),
         pydantic.Field(alias="lastTimestamp", description="Timestamp when the event was last observed"),
     ]
+    """
+    Timestamp when the event was last observed
+    """
+
     involved_object: typing_extensions.Annotated[
         EventInvolvedObject,
         FieldMetadata(alias="involvedObject"),
         pydantic.Field(alias="involvedObject", description="Details of the involved object"),
     ]
+    """
+    Details of the involved object
+    """
+
     type: str = pydantic.Field()
     """
     Type of the event

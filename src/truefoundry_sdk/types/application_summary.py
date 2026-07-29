@@ -42,6 +42,10 @@ class ApplicationSummary(UniversalBaseModel):
         FieldMetadata(alias="lifecycleStage"),
         pydantic.Field(alias="lifecycleStage", description="Current lifecycle stage of the application"),
     ]
+    """
+    Current lifecycle stage of the application
+    """
+
     workspace_id: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="workspaceId"),
@@ -49,11 +53,19 @@ class ApplicationSummary(UniversalBaseModel):
             alias="workspaceId", description="Unique identifier of the workspace this application belongs to"
         ),
     ] = None
+    """
+    Unique identifier of the workspace this application belongs to
+    """
+
     active_version: typing_extensions.Annotated[
         typing.Optional[int],
         FieldMetadata(alias="activeVersion"),
         pydantic.Field(alias="activeVersion", description="Version number of the currently active deployment"),
     ] = None
+    """
+    Version number of the currently active deployment
+    """
+
     application_set_id: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="applicationSetId"),
@@ -62,6 +74,9 @@ class ApplicationSummary(UniversalBaseModel):
             description="Unique identifier of the application set this application belongs to, if any",
         ),
     ] = None
+    """
+    Unique identifier of the application set this application belongs to, if any
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

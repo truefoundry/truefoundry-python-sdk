@@ -23,6 +23,9 @@ class GcpApiKeyAuth(UniversalBaseModel):
         FieldMetadata(alias="apiKey"),
         pydantic.Field(alias="apiKey", description="The API key for Google Cloud authentication"),
     ]
+    """
+    The API key for Google Cloud authentication
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -22,6 +22,10 @@ class PrivatePricingTier(UniversalBaseModel):
             description="Token count threshold where this pricing tier begins (e.g., 200000 for 200k tokens)",
         ),
     ]
+    """
+    Token count threshold where this pricing tier begins (e.g., 200000 for 200k tokens)
+    """
+
     cost_per_token: NonNegativeFloat
 
     if IS_PYDANTIC_V2:

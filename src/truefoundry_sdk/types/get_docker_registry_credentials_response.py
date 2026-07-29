@@ -17,6 +17,10 @@ class GetDockerRegistryCredentialsResponse(UniversalBaseModel):
     registry_url: typing_extensions.Annotated[
         str, FieldMetadata(alias="registryUrl"), pydantic.Field(alias="registryUrl", description="Docker registry URL")
     ]
+    """
+    Docker registry URL
+    """
+
     username: str = pydantic.Field()
     """
     Docker registry username

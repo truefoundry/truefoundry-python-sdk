@@ -12,17 +12,32 @@ class UserResource(UniversalBaseModel):
     resource_type: typing_extensions.Annotated[
         str, FieldMetadata(alias="resourceType"), pydantic.Field(alias="resourceType", description="Resource Type")
     ]
+    """
+    Resource Type
+    """
+
     resource_id: typing_extensions.Annotated[
         str, FieldMetadata(alias="resourceId"), pydantic.Field(alias="resourceId", description="Resource ID")
     ]
+    """
+    Resource ID
+    """
+
     role_id: typing_extensions.Annotated[
         str, FieldMetadata(alias="roleId"), pydantic.Field(alias="roleId", description="Role ID")
     ]
+    """
+    Role ID
+    """
+
     resource_name: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="resourceName"),
         pydantic.Field(alias="resourceName", description="Resource Name (if available)"),
     ] = None
+    """
+    Resource Name (if available)
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
