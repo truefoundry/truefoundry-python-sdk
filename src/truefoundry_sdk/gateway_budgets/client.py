@@ -6,6 +6,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.budget_usage_response import BudgetUsageResponse
 from ..types.gateway_budget import GatewayBudget
+from ..types.list_budgets_response import ListBudgetsResponse
 from .raw_client import AsyncRawGatewayBudgetsClient, RawGatewayBudgetsClient
 from .types.create_or_update_budget_request_manifest import CreateOrUpdateBudgetRequestManifest
 from .types.list_gateway_budgets_request_type import ListGatewayBudgetsRequestType
@@ -35,24 +36,24 @@ class GatewayBudgetsClient:
         type: typing.Optional[ListGatewayBudgetsRequestType] = None,
         team_name: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[GatewayBudget]:
+    ) -> ListBudgetsResponse:
         """
-        Returns all budgets for the tenant. Supports filtering by type and team_name.
+        List the gateway budgets the caller can read within the tenant.
 
         Parameters
         ----------
         type : typing.Optional[ListGatewayBudgetsRequestType]
-            Filter by budget type. One of tenant-budget-config | team-budget-config.
+            Filter by budget type.
 
         team_name : typing.Optional[str]
-            Filter by team_name (only meaningful for team-budget-config).
+            Human-readable name of the team owning the budget. Only matches team budgets.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.List[GatewayBudget]
+        ListBudgetsResponse
             List of budgets.
 
         Examples
@@ -335,24 +336,24 @@ class AsyncGatewayBudgetsClient:
         type: typing.Optional[ListGatewayBudgetsRequestType] = None,
         team_name: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[GatewayBudget]:
+    ) -> ListBudgetsResponse:
         """
-        Returns all budgets for the tenant. Supports filtering by type and team_name.
+        List the gateway budgets the caller can read within the tenant.
 
         Parameters
         ----------
         type : typing.Optional[ListGatewayBudgetsRequestType]
-            Filter by budget type. One of tenant-budget-config | team-budget-config.
+            Filter by budget type.
 
         team_name : typing.Optional[str]
-            Filter by team_name (only meaningful for team-budget-config).
+            Human-readable name of the team owning the budget. Only matches team budgets.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.List[GatewayBudget]
+        ListBudgetsResponse
             List of budgets.
 
         Examples

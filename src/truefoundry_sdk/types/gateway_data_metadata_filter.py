@@ -4,6 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .gateway_data_metadata_filter_operator import GatewayDataMetadataFilterOperator
 
 
 class GatewayDataMetadataFilter(UniversalBaseModel):
@@ -21,7 +22,7 @@ class GatewayDataMetadataFilter(UniversalBaseModel):
     Metadata key to filter on
     """
 
-    operator: typing.Literal["IN"] = pydantic.Field(default="IN")
+    operator: GatewayDataMetadataFilterOperator = pydantic.Field()
     """
     Comparison operator
     """

@@ -1853,7 +1853,7 @@ client.teams.get_permissions(
 </details>
 
 ## GatewayBudgets
-<details><summary><code>client.gateway_budgets.<a href="src/truefoundry_sdk/gateway_budgets/client.py">list</a>(...) -> typing.List[GatewayBudget]</code></summary>
+<details><summary><code>client.gateway_budgets.<a href="src/truefoundry_sdk/gateway_budgets/client.py">list</a>(...) -> ListBudgetsResponse</code></summary>
 <dl>
 <dd>
 
@@ -1865,7 +1865,7 @@ client.teams.get_permissions(
 <dl>
 <dd>
 
-Returns all budgets for the tenant. Supports filtering by type and team_name.
+List the gateway budgets the caller can read within the tenant.
 </dd>
 </dl>
 </dd>
@@ -1903,7 +1903,7 @@ client.gateway_budgets.list()
 <dl>
 <dd>
 
-**type:** `typing.Optional[ListGatewayBudgetsRequestType]` — Filter by budget type. One of tenant-budget-config | team-budget-config.
+**type:** `typing.Optional[ListGatewayBudgetsRequestType]` — Filter by budget type.
     
 </dd>
 </dl>
@@ -1911,7 +1911,7 @@ client.gateway_budgets.list()
 <dl>
 <dd>
 
-**team_name:** `typing.Optional[str]` — Filter by team_name (only meaningful for team-budget-config).
+**team_name:** `typing.Optional[str]` — Human-readable name of the team owning the budget. Only matches team budgets.
     
 </dd>
 </dl>

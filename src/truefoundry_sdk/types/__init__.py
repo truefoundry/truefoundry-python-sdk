@@ -417,7 +417,9 @@ if typing.TYPE_CHECKING:
     from .gateway_configuration import GatewayConfiguration
     from .gateway_data_access_config import GatewayDataAccessConfig
     from .gateway_data_created_by_filter import GatewayDataCreatedByFilter
+    from .gateway_data_created_by_filter_operator import GatewayDataCreatedByFilterOperator
     from .gateway_data_metadata_filter import GatewayDataMetadataFilter
+    from .gateway_data_metadata_filter_operator import GatewayDataMetadataFilterOperator
     from .gateway_data_routing_config import GatewayDataRoutingConfig
     from .gateway_data_routing_config_destination import GatewayDataRoutingConfigDestination
     from .gateway_data_routing_config_destination_condition import GatewayDataRoutingConfigDestinationCondition
@@ -640,6 +642,7 @@ if typing.TYPE_CHECKING:
     from .list_applications_response import ListApplicationsResponse
     from .list_artifact_versions_response import ListArtifactVersionsResponse
     from .list_artifacts_response import ListArtifactsResponse
+    from .list_budgets_response import ListBudgetsResponse
     from .list_cluster_addons_response import ListClusterAddonsResponse
     from .list_clusters_response import ListClustersResponse
     from .list_data_directories_response import ListDataDirectoriesResponse
@@ -1641,7 +1644,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GatewayConfiguration": ".gateway_configuration",
     "GatewayDataAccessConfig": ".gateway_data_access_config",
     "GatewayDataCreatedByFilter": ".gateway_data_created_by_filter",
+    "GatewayDataCreatedByFilterOperator": ".gateway_data_created_by_filter_operator",
     "GatewayDataMetadataFilter": ".gateway_data_metadata_filter",
+    "GatewayDataMetadataFilterOperator": ".gateway_data_metadata_filter_operator",
     "GatewayDataRoutingConfig": ".gateway_data_routing_config",
     "GatewayDataRoutingConfigDestination": ".gateway_data_routing_config_destination",
     "GatewayDataRoutingConfigDestinationCondition": ".gateway_data_routing_config_destination_condition",
@@ -1850,6 +1855,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListApplicationsResponse": ".list_applications_response",
     "ListArtifactVersionsResponse": ".list_artifact_versions_response",
     "ListArtifactsResponse": ".list_artifacts_response",
+    "ListBudgetsResponse": ".list_budgets_response",
     "ListClusterAddonsResponse": ".list_cluster_addons_response",
     "ListClustersResponse": ".list_clusters_response",
     "ListDataDirectoriesResponse": ".list_data_directories_response",
@@ -2878,7 +2884,9 @@ __all__ = [
     "GatewayConfiguration",
     "GatewayDataAccessConfig",
     "GatewayDataCreatedByFilter",
+    "GatewayDataCreatedByFilterOperator",
     "GatewayDataMetadataFilter",
+    "GatewayDataMetadataFilterOperator",
     "GatewayDataRoutingConfig",
     "GatewayDataRoutingConfigDestination",
     "GatewayDataRoutingConfigDestinationCondition",
@@ -3087,6 +3095,7 @@ __all__ = [
     "ListApplicationsResponse",
     "ListArtifactVersionsResponse",
     "ListArtifactsResponse",
+    "ListBudgetsResponse",
     "ListClusterAddonsResponse",
     "ListClustersResponse",
     "ListDataDirectoriesResponse",

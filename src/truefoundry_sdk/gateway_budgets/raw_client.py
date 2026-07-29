@@ -15,6 +15,7 @@ from ..errors.bad_request_error import BadRequestError
 from ..errors.not_found_error import NotFoundError
 from ..types.budget_usage_response import BudgetUsageResponse
 from ..types.gateway_budget import GatewayBudget
+from ..types.list_budgets_response import ListBudgetsResponse
 from .types.create_or_update_budget_request_manifest import CreateOrUpdateBudgetRequestManifest
 from .types.list_gateway_budgets_request_type import ListGatewayBudgetsRequestType
 from pydantic import ValidationError
@@ -33,24 +34,24 @@ class RawGatewayBudgetsClient:
         type: typing.Optional[ListGatewayBudgetsRequestType] = None,
         team_name: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[typing.List[GatewayBudget]]:
+    ) -> HttpResponse[ListBudgetsResponse]:
         """
-        Returns all budgets for the tenant. Supports filtering by type and team_name.
+        List the gateway budgets the caller can read within the tenant.
 
         Parameters
         ----------
         type : typing.Optional[ListGatewayBudgetsRequestType]
-            Filter by budget type. One of tenant-budget-config | team-budget-config.
+            Filter by budget type.
 
         team_name : typing.Optional[str]
-            Filter by team_name (only meaningful for team-budget-config).
+            Human-readable name of the team owning the budget. Only matches team budgets.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[typing.List[GatewayBudget]]
+        HttpResponse[ListBudgetsResponse]
             List of budgets.
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -65,9 +66,9 @@ class RawGatewayBudgetsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.List[GatewayBudget],
+                    ListBudgetsResponse,
                     parse_obj_as(
-                        type_=typing.List[GatewayBudget],  # type: ignore
+                        type_=ListBudgetsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -437,24 +438,24 @@ class AsyncRawGatewayBudgetsClient:
         type: typing.Optional[ListGatewayBudgetsRequestType] = None,
         team_name: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[typing.List[GatewayBudget]]:
+    ) -> AsyncHttpResponse[ListBudgetsResponse]:
         """
-        Returns all budgets for the tenant. Supports filtering by type and team_name.
+        List the gateway budgets the caller can read within the tenant.
 
         Parameters
         ----------
         type : typing.Optional[ListGatewayBudgetsRequestType]
-            Filter by budget type. One of tenant-budget-config | team-budget-config.
+            Filter by budget type.
 
         team_name : typing.Optional[str]
-            Filter by team_name (only meaningful for team-budget-config).
+            Human-readable name of the team owning the budget. Only matches team budgets.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[typing.List[GatewayBudget]]
+        AsyncHttpResponse[ListBudgetsResponse]
             List of budgets.
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -469,9 +470,9 @@ class AsyncRawGatewayBudgetsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.List[GatewayBudget],
+                    ListBudgetsResponse,
                     parse_obj_as(
-                        type_=typing.List[GatewayBudget],  # type: ignore
+                        type_=ListBudgetsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
