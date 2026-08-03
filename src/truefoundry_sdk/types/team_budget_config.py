@@ -37,7 +37,7 @@ class TeamBudgetConfig(UniversalBaseModel):
     applies_to: BudgetV2AppliesTo
     mode: TeamBudgetConfigMode = pydantic.Field()
     """
-    `enforce` blocks breaching requests, `audit` only tracks them, `enforce_with_low_priority` blocks only when no other matching budget allows the request.
+    `enforce` blocks breaching requests, `audit` only tracks them, `soft_enforce` blocks only when no other matching budget allows the request.
     """
 
     alerts: typing.Optional[BudgetV2Alert] = None

@@ -7,6 +7,7 @@ from .aws_bedrock_guardrail_config import AwsBedrockGuardrailConfig
 from .azure_content_safety_guardrail_config import AzureContentSafetyGuardrailConfig
 from .azure_pii_guardrail_config import AzurePiiGuardrailConfig
 from .azure_prompt_shield_guardrail_config import AzurePromptShieldGuardrailConfig
+from .calypso_ai_guardrail_config import CalypsoAiGuardrailConfig
 from .cedar_guardrail_config import CedarGuardrailConfig
 from .cisco_ai_defense_guardrail_config import CiscoAiDefenseGuardrailConfig
 from .code_safety_linter_guardrail_config import CodeSafetyLinterGuardrailConfig
@@ -56,6 +57,7 @@ GuardrailConfigIntegrations = typing.Union[
     GoogleModelArmorGuardrailConfig,
     GraySwanCygnalGuardrailConfig,
     NomaSecurityGuardrailConfig,
+    CalypsoAiGuardrailConfig,
     AktoGuardrailConfig,
     TrojAiGuardrailConfig,
 ]

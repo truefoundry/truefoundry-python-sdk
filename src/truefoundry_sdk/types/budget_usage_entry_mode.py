@@ -14,7 +14,7 @@ class BudgetUsageEntryMode(enum.StrEnum):
 
     ENFORCE = "enforce"
     AUDIT = "audit"
-    ENFORCE_WITH_LOW_PRIORITY = "enforce_with_low_priority"
+    SOFT_ENFORCE = "soft_enforce"
     _UNKNOWN = "__BUDGETUSAGEENTRYMODE_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
@@ -30,13 +30,13 @@ class BudgetUsageEntryMode(enum.StrEnum):
         self,
         enforce: typing.Callable[[], T_Result],
         audit: typing.Callable[[], T_Result],
-        enforce_with_low_priority: typing.Callable[[], T_Result],
+        soft_enforce: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is BudgetUsageEntryMode.ENFORCE:
             return enforce()
         if self is BudgetUsageEntryMode.AUDIT:
             return audit()
-        if self is BudgetUsageEntryMode.ENFORCE_WITH_LOW_PRIORITY:
-            return enforce_with_low_priority()
+        if self is BudgetUsageEntryMode.SOFT_ENFORCE:
+            return soft_enforce()
         return _unknown_member(self._value_)

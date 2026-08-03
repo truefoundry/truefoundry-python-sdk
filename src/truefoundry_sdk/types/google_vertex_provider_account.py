@@ -39,6 +39,11 @@ class GoogleVertexProviderAccount(UniversalBaseModel):
     Service account key JSON, or Workload Identity Federation file (workload-identity-federation-file) with external_account JSON (e.g. create-cred-config). https://docs.truefoundry.com/gateway/google-vertex
     """
 
+    base_url: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Optional custom base URL for the Vertex AI inference endpoint (e.g. a Private Service Connect / PSC endpoint for private connectivity). When set, chat/generate requests are routed here instead of the region-derived public host (<region>-aiplatform.googleapis.com). Leave empty to use the public Vertex AI API.
+    """
+
     integrations: typing.List[VertexModel] = pydantic.Field()
     """
     List of integrations that are associated with the Google Vertex model account

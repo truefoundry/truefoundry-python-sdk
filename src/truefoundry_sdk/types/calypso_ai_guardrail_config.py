@@ -4,15 +4,15 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .calypso_ai_api_key_auth import CalypsoAiApiKeyAuth
+from .calypso_ai_guardrail_config_config import CalypsoAiGuardrailConfigConfig
+from .calypso_ai_guardrail_config_operation import CalypsoAiGuardrailConfigOperation
 from .enforcing_strategy import EnforcingStrategy
-from .noma_security_api_key_auth import NomaSecurityApiKeyAuth
-from .noma_security_guardrail_config_config import NomaSecurityGuardrailConfigConfig
-from .noma_security_guardrail_config_operation import NomaSecurityGuardrailConfigOperation
 
 
-class NomaSecurityGuardrailConfig(UniversalBaseModel):
+class CalypsoAiGuardrailConfig(UniversalBaseModel):
     """
-    Noma Security
+    CalypsoAI (F5 AI Security)
     """
 
     name: str = pydantic.Field()
@@ -21,24 +21,24 @@ class NomaSecurityGuardrailConfig(UniversalBaseModel):
     """
 
     description: typing.Optional[str] = pydantic.Field(
-        default="Noma TrueFoundry Guardrail for prompt, response, and tool content safety"
+        default="F5 AI Security (CalypsoAI) for prompt injection, jailbreak, PII, and policy-violation scanning"
     )
     """
     Optional description for this Guardrail Config.
     """
 
-    type: typing.Literal["integration/guardrail-config/noma-security"] = pydantic.Field(
-        default="integration/guardrail-config/noma-security"
+    type: typing.Literal["integration/guardrail-config/calypsoai"] = pydantic.Field(
+        default="integration/guardrail-config/calypsoai"
     )
     """
     +uiType=Hidden
-    +value=integration/guardrail-config/noma-security
+    +value=integration/guardrail-config/calypsoai
     """
 
-    auth_data: NomaSecurityApiKeyAuth
-    operation: NomaSecurityGuardrailConfigOperation = pydantic.Field()
+    auth_data: CalypsoAiApiKeyAuth
+    operation: CalypsoAiGuardrailConfigOperation = pydantic.Field()
     """
-    Validate blocks policy denials. Mutate also applies complete masked request or response payloads returned by Noma.
+    The operation type to use for the Guardrail. Validate guardrails are used to validate requests and mutate can validate as well as mutate requests (forward redactedInput).
     Validate guardrails are run in parallel while mutate guardrails are run sequentially.
     """
 
@@ -48,7 +48,7 @@ class NomaSecurityGuardrailConfig(UniversalBaseModel):
     """
 
     enforcing_strategy: EnforcingStrategy
-    config: NomaSecurityGuardrailConfigConfig = pydantic.Field()
+    config: CalypsoAiGuardrailConfigConfig = pydantic.Field()
     """
     +uiType=Ignore
     +uiProps={"forwardJsonKey": true}

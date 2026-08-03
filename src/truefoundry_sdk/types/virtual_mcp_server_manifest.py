@@ -26,6 +26,11 @@ class VirtualMcpServerManifest(UniversalBaseModel):
     The name of the Virtual MCP Server.
     """
 
+    display_name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    A human-readable label for the Virtual MCP Server in the UI. If omitted, the server name is shown.
+    """
+
     description: str = pydantic.Field()
     """
     Provide a brief description of the purpose of this Virtual MCP Server.

@@ -18,7 +18,7 @@ class NomaSecurityApiKeyAuth(UniversalBaseModel):
 
     api_key: str = pydantic.Field()
     """
-    Noma API key for AI-DR scan access
+    Noma scoped access token with truefoundry_guardrail scope (sent as Bearer)
     """
 
     if IS_PYDANTIC_V2:

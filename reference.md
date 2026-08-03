@@ -1267,7 +1267,7 @@ client.users.get_teams(
 <dl>
 <dd>
 
-List teams accessible to the current user.
+List teams accessible to the current user. Set includeMembership=false to omit full member and manager lists and return cached membership summaries instead.
 </dd>
 </dl>
 </dd>
@@ -1333,6 +1333,14 @@ client.teams.list(
 <dd>
 
 **attributes:** `typing.Optional[typing.List[str]]` — Comma-separated list of attributes to return (e.g. `id,teamName`). When provided, only the specified fields are fetched. `id` is always included.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_membership:** `typing.Optional[bool]` — Whether to include full member and manager lists. Set to false for a metadata-only response with cached membership summaries.
     
 </dd>
 </dl>
@@ -1474,8 +1482,8 @@ client = TrueFoundry(
 
 client.teams.list_members(
     id="jqfwg345gi25n5ju2yz5iz6m",
-    limit=10,
     offset=0,
+    limit=10,
     filter="{\"type\":\"AND\",\"children\":[{\"column\":\"email\",\"op\":\"STRING_CONTAINS\",\"value\":\"@example.com\"}]}",
 )
 
@@ -1501,7 +1509,7 @@ client.teams.list_members(
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` — Number of items per page
+**offset:** `typing.Optional[int]` — Number of items to skip
     
 </dd>
 </dl>
@@ -1509,7 +1517,7 @@ client.teams.list_members(
 <dl>
 <dd>
 
-**offset:** `typing.Optional[int]` — Number of items to skip
+**limit:** `typing.Optional[int]` — Number of items per page
     
 </dd>
 </dl>
@@ -1573,8 +1581,8 @@ client = TrueFoundry(
 
 client.teams.list_managers(
     id="jqfwg345gi25n5ju2yz5iz6m",
-    limit=10,
     offset=0,
+    limit=10,
     filter="{\"type\":\"AND\",\"children\":[{\"column\":\"email\",\"op\":\"STRING_CONTAINS\",\"value\":\"@example.com\"}]}",
 )
 
@@ -1600,7 +1608,7 @@ client.teams.list_managers(
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` — Number of items per page
+**offset:** `typing.Optional[int]` — Number of items to skip
     
 </dd>
 </dl>
@@ -1608,7 +1616,7 @@ client.teams.list_managers(
 <dl>
 <dd>
 
-**offset:** `typing.Optional[int]` — Number of items to skip
+**limit:** `typing.Optional[int]` — Number of items per page
     
 </dd>
 </dl>
@@ -7557,7 +7565,7 @@ client.agents.delete(
 <dl>
 <dd>
 
-Returns the TrueFoundry-backed token for the agent's linked identity, generating one on demand if none exists yet (or the stored one has expired). Only valid for agents whose identity is TrueFoundry-backed. 404s if the agent has no linked identity.
+Returns the TrueFoundry-backed token for the agent's linked identity, generating one on demand if none exists yet (or the stored one has expired). Only valid for agents whose identity is TrueFoundry-backed. Requires manage access on the agent since the token authenticates as it. 404s if the agent has no linked identity.
 </dd>
 </dl>
 </dd>

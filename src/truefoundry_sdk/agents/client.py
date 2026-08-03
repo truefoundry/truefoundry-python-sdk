@@ -230,7 +230,7 @@ class AgentsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetAgentIdentityTokenResponse:
         """
-        Returns the TrueFoundry-backed token for the agent's linked identity, generating one on demand if none exists yet (or the stored one has expired). Only valid for agents whose identity is TrueFoundry-backed. 404s if the agent has no linked identity.
+        Returns the TrueFoundry-backed token for the agent's linked identity, generating one on demand if none exists yet (or the stored one has expired). Only valid for agents whose identity is TrueFoundry-backed. Requires manage access on the agent since the token authenticates as it. 404s if the agent has no linked identity.
 
         Parameters
         ----------
@@ -506,7 +506,7 @@ class AsyncAgentsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetAgentIdentityTokenResponse:
         """
-        Returns the TrueFoundry-backed token for the agent's linked identity, generating one on demand if none exists yet (or the stored one has expired). Only valid for agents whose identity is TrueFoundry-backed. 404s if the agent has no linked identity.
+        Returns the TrueFoundry-backed token for the agent's linked identity, generating one on demand if none exists yet (or the stored one has expired). Only valid for agents whose identity is TrueFoundry-backed. Requires manage access on the agent since the token authenticates as it. 404s if the agent has no linked identity.
 
         Parameters
         ----------

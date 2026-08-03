@@ -6,19 +6,19 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class CustomServerHeaderAuth(UniversalBaseModel):
+class CalypsoAiApiKeyAuth(UniversalBaseModel):
     """
-    Static API key or token authentication via request headers.
-    """
-
-    type: typing.Literal["header"] = pydantic.Field(default="header")
-    """
-    +value=header
+    CalypsoAI API Key Auth
     """
 
-    headers: typing.Dict[str, str] = pydantic.Field()
+    type: typing.Literal["api-key"] = pydantic.Field(default="api-key")
     """
-    Map each header name to its value.
+    +value=api-key
+    """
+
+    api_key: str = pydantic.Field()
+    """
+    CalypsoAI API token from Configuration → API tokens
     """
 
     if IS_PYDANTIC_V2:

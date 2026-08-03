@@ -6,7 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class NomaSecurityGuardrailConfigConfig(UniversalBaseModel):
+class CalypsoAiGuardrailConfigConfig(UniversalBaseModel):
     """
     +uiType=Ignore
     +uiProps={"forwardJsonKey": true}
@@ -14,17 +14,12 @@ class NomaSecurityGuardrailConfigConfig(UniversalBaseModel):
 
     base_url: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Optional override for the Noma API base URL. Defaults to https://api.noma.security if not provided.
+    Optional override for the CalypsoAI base URL. Defaults to https://www.us1.calypsoai.app if not provided. Set this if your tenant is provisioned in another region (e.g. https://www.eu1.calypsoai.app).
     """
 
-    application_id: typing.Optional[str] = pydantic.Field(default=None)
+    project: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Literal applicationId sent as config.config.applicationId and used to select the Noma Runtime Protection profile. Defaults to truefoundry.
-    """
-
-    user_id_metadata_key: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Fallback subjectId sent in context.user when no authenticated runtime subject is available. Defaults to gateway.
+    Optional CalypsoAI project ID or friendly ID. Omit to use the tenant's global default scanner configuration.
     """
 
     if IS_PYDANTIC_V2:

@@ -31,6 +31,7 @@ class ProviderIntegration(UniversalBaseModel):
     provider_account_fqn: typing_extensions.Annotated[
         str, FieldMetadata(alias="providerAccountFqn"), pydantic.Field(alias="providerAccountFqn")
     ]
+    tenant_name: typing_extensions.Annotated[str, FieldMetadata(alias="tenantName"), pydantic.Field(alias="tenantName")]
     provider_account: typing_extensions.Annotated[
         typing.Optional["ProviderAccount"],
         FieldMetadata(alias="providerAccount"),

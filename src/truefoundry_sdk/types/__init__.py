@@ -229,6 +229,10 @@ if typing.TYPE_CHECKING:
     from .build_build_spec import BuildBuildSpec
     from .build_info import BuildInfo
     from .build_secret import BuildSecret
+    from .calypso_ai_api_key_auth import CalypsoAiApiKeyAuth
+    from .calypso_ai_guardrail_config import CalypsoAiGuardrailConfig
+    from .calypso_ai_guardrail_config_config import CalypsoAiGuardrailConfigConfig
+    from .calypso_ai_guardrail_config_operation import CalypsoAiGuardrailConfigOperation
     from .canary import Canary
     from .canary_step import CanaryStep
     from .cartesia_api_key_auth import CartesiaApiKeyAuth
@@ -760,6 +764,7 @@ if typing.TYPE_CHECKING:
     from .noma_security_api_key_auth import NomaSecurityApiKeyAuth
     from .noma_security_guardrail_config import NomaSecurityGuardrailConfig
     from .noma_security_guardrail_config_config import NomaSecurityGuardrailConfigConfig
+    from .noma_security_guardrail_config_operation import NomaSecurityGuardrailConfigOperation
     from .nomic_integrations import NomicIntegrations
     from .nomic_key_auth import NomicKeyAuth
     from .nomic_model import NomicModel
@@ -1458,6 +1463,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BuildBuildSpec": ".build_build_spec",
     "BuildInfo": ".build_info",
     "BuildSecret": ".build_secret",
+    "CalypsoAiApiKeyAuth": ".calypso_ai_api_key_auth",
+    "CalypsoAiGuardrailConfig": ".calypso_ai_guardrail_config",
+    "CalypsoAiGuardrailConfigConfig": ".calypso_ai_guardrail_config_config",
+    "CalypsoAiGuardrailConfigOperation": ".calypso_ai_guardrail_config_operation",
     "Canary": ".canary",
     "CanaryStep": ".canary_step",
     "CartesiaApiKeyAuth": ".cartesia_api_key_auth",
@@ -1973,6 +1982,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "NomaSecurityApiKeyAuth": ".noma_security_api_key_auth",
     "NomaSecurityGuardrailConfig": ".noma_security_guardrail_config",
     "NomaSecurityGuardrailConfigConfig": ".noma_security_guardrail_config_config",
+    "NomaSecurityGuardrailConfigOperation": ".noma_security_guardrail_config_operation",
     "NomicIntegrations": ".nomic_integrations",
     "NomicKeyAuth": ".nomic_key_auth",
     "NomicModel": ".nomic_model",
@@ -2698,6 +2708,10 @@ __all__ = [
     "BuildBuildSpec",
     "BuildInfo",
     "BuildSecret",
+    "CalypsoAiApiKeyAuth",
+    "CalypsoAiGuardrailConfig",
+    "CalypsoAiGuardrailConfigConfig",
+    "CalypsoAiGuardrailConfigOperation",
     "Canary",
     "CanaryStep",
     "CartesiaApiKeyAuth",
@@ -3213,6 +3227,7 @@ __all__ = [
     "NomaSecurityApiKeyAuth",
     "NomaSecurityGuardrailConfig",
     "NomaSecurityGuardrailConfigConfig",
+    "NomaSecurityGuardrailConfigOperation",
     "NomicIntegrations",
     "NomicKeyAuth",
     "NomicModel",
