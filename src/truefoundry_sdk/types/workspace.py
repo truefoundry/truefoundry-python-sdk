@@ -28,6 +28,10 @@ class Workspace(UniversalBaseModel):
         FieldMetadata(alias="clusterId"),
         pydantic.Field(alias="clusterId", description="System-generated ID of the cluster this workspace belongs to."),
     ]
+    """
+    System-generated ID of the cluster this workspace belongs to.
+    """
+
     created_by_subject: typing_extensions.Annotated[
         Subject, FieldMetadata(alias="createdBySubject"), pydantic.Field(alias="createdBySubject")
     ]
@@ -44,12 +48,20 @@ class Workspace(UniversalBaseModel):
             alias="environmentId", description="System-generated ID of the environment this workspace belongs to."
         ),
     ] = None
+    """
+    System-generated ID of the environment this workspace belongs to.
+    """
+
     manifest: WorkspaceManifest
     account_id: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="accountId"),
         pydantic.Field(alias="accountId", description="System-generated ID of the account."),
     ]
+    """
+    System-generated ID of the account.
+    """
+
     is_system_ws: typing_extensions.Annotated[
         typing.Optional[bool], FieldMetadata(alias="isSystemWs"), pydantic.Field(alias="isSystemWs")
     ] = None

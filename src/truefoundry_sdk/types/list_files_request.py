@@ -29,6 +29,9 @@ class ListFilesRequest(UniversalBaseModel):
         FieldMetadata(alias="pageToken"),
         pydantic.Field(alias="pageToken", description="Token to retrieve the next page of results"),
     ] = None
+    """
+    Token to retrieve the next page of results
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

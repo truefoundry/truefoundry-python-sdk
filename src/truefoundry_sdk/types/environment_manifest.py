@@ -29,6 +29,10 @@ class EnvironmentManifest(UniversalBaseModel):
             alias="isProduction", description="Environment Type - Indicates if the environment is for production use"
         ),
     ]
+    """
+    Environment Type - Indicates if the environment is for production use
+    """
+
     optimize_for: typing_extensions.Annotated[
         EnvironmentOptimizeFor, FieldMetadata(alias="optimizeFor"), pydantic.Field(alias="optimizeFor")
     ]

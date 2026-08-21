@@ -29,6 +29,10 @@ class TeamManifest(UniversalBaseModel):
             description="A human-readable label for the team in the UI. If omitted, the team name is shown.",
         ),
     ] = None
+    """
+    A human-readable label for the team in the UI. If omitted, the team name is shown.
+    """
+
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     A short description of the team and its purpose.

@@ -37,6 +37,10 @@ class PrometheusAlertRule(UniversalBaseModel):
             description="The prometheus expression must remain true for this duration (in seconds) before the alert is triggered. If the condition becomes false before this time elapses, the alert will not fire.",
         ),
     ]
+    """
+    The prometheus expression must remain true for this duration (in seconds) before the alert is triggered. If the condition becomes false before this time elapses, the alert will not fire.
+    """
+
     severity: AlertSeverity
     description: typing.Optional[str] = pydantic.Field(default=None)
     """

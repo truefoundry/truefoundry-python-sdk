@@ -47,11 +47,19 @@ class Application(UniversalBaseModel):
             alias="createdBySubject", description="Subject (user or service account) that created this application"
         ),
     ]
+    """
+    Subject (user or service account) that created this application
+    """
+
     tenant_name: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="tenantName"),
         pydantic.Field(alias="tenantName", description="Tenant this application belongs to"),
     ] = None
+    """
+    Tenant this application belongs to
+    """
+
     metadata: typing.Optional[ApplicationMetadata] = pydantic.Field(default=None)
     """
     Application metadata including pause state and sync info
@@ -62,6 +70,10 @@ class Application(UniversalBaseModel):
         FieldMetadata(alias="lifecycleStage"),
         pydantic.Field(alias="lifecycleStage", description="Current lifecycle stage of the application"),
     ]
+    """
+    Current lifecycle stage of the application
+    """
+
     workspace_id: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="workspaceId"),
@@ -69,16 +81,28 @@ class Application(UniversalBaseModel):
             alias="workspaceId", description="Unique identifier of the workspace this application belongs to"
         ),
     ] = None
+    """
+    Unique identifier of the workspace this application belongs to
+    """
+
     last_version: typing_extensions.Annotated[
         typing.Optional[int],
         FieldMetadata(alias="lastVersion"),
         pydantic.Field(alias="lastVersion", description="Version number of the latest deployment"),
     ] = None
+    """
+    Version number of the latest deployment
+    """
+
     active_version: typing_extensions.Annotated[
         typing.Optional[int],
         FieldMetadata(alias="activeVersion"),
         pydantic.Field(alias="activeVersion", description="Version number of the currently active deployment"),
     ] = None
+    """
+    Version number of the currently active deployment
+    """
+
     application_set_id: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="applicationSetId"),
@@ -87,6 +111,10 @@ class Application(UniversalBaseModel):
             description="Unique identifier of the application set this application belongs to, if any",
         ),
     ] = None
+    """
+    Unique identifier of the application set this application belongs to, if any
+    """
+
     created_at: typing_extensions.Annotated[
         typing.Optional[dt.datetime], FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
     ] = None
@@ -108,16 +136,28 @@ class Application(UniversalBaseModel):
         FieldMetadata(alias="alertsSummary"),
         pydantic.Field(alias="alertsSummary", description="Summary of alerts for this application"),
     ] = None
+    """
+    Summary of alerts for this application
+    """
+
     application_debug_infos: typing_extensions.Annotated[
         typing.Optional[typing.List["ApplicationDebugInfo"]],
         FieldMetadata(alias="applicationDebugInfos"),
         pydantic.Field(alias="applicationDebugInfos", description="Debug infos for this application"),
     ] = None
+    """
+    Debug infos for this application
+    """
+
     potential_problems: typing_extensions.Annotated[
         typing.Optional[typing.List[ApplicationProblem]],
         FieldMetadata(alias="potentialProblems"),
         pydantic.Field(alias="potentialProblems", description="Potential problems with the application"),
     ] = None
+    """
+    Potential problems with the application
+    """
+
     autopilot: typing.Dict[str, typing.Any]
     workspace_fqn: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="workspaceFqn"), pydantic.Field(alias="workspaceFqn")

@@ -14,6 +14,10 @@ class SyncTokenInSecretStoreInfo(UniversalBaseModel):
         FieldMetadata(alias="updatedAt"),
         pydantic.Field(alias="updatedAt", description="ISO timestamp of when the token was synced"),
     ]
+    """
+    ISO timestamp of when the token was synced
+    """
+
     error: typing.Optional[str] = pydantic.Field(default=None)
     """
     Error message if sync failed

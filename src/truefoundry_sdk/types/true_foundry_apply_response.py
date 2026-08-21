@@ -16,6 +16,10 @@ class TrueFoundryApplyResponse(UniversalBaseModel):
         FieldMetadata(alias="existingManifest"),
         pydantic.Field(alias="existingManifest", description="The existing manifest of the resource"),
     ] = None
+    """
+    The existing manifest of the resource
+    """
+
     action: typing.Optional[TrueFoundryApplyResponseAction] = pydantic.Field(default=None)
     """
     The action performed: CREATE or UPDATE

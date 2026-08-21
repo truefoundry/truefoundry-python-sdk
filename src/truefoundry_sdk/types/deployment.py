@@ -38,6 +38,10 @@ class Deployment(UniversalBaseModel):
             alias="applicationId", description="Unique identifier of the application this deployment belongs to"
         ),
     ] = None
+    """
+    Unique identifier of the application this deployment belongs to
+    """
+
     manifest: DeploymentManifest = pydantic.Field()
     """
     Deployment manifest defining the application configuration.
@@ -55,26 +59,46 @@ class Deployment(UniversalBaseModel):
             alias="createdBySubject", description="Subject (user or service account) that created this deployment"
         ),
     ]
+    """
+    Subject (user or service account) that created this deployment
+    """
+
     created_at: typing_extensions.Annotated[
         typing.Optional[dt.datetime],
         FieldMetadata(alias="createdAt"),
         pydantic.Field(alias="createdAt", description="Timestamp when the deployment was created"),
     ] = None
+    """
+    Timestamp when the deployment was created
+    """
+
     updated_at: typing_extensions.Annotated[
         typing.Optional[dt.datetime],
         FieldMetadata(alias="updatedAt"),
         pydantic.Field(alias="updatedAt", description="Timestamp when the deployment was last updated"),
     ] = None
+    """
+    Timestamp when the deployment was last updated
+    """
+
     deployment_builds: typing_extensions.Annotated[
         typing.Optional[typing.List[BuildInfo]],
         FieldMetadata(alias="deploymentBuilds"),
         pydantic.Field(alias="deploymentBuilds", description="Build steps associated with this deployment"),
     ] = None
+    """
+    Build steps associated with this deployment
+    """
+
     deployment_statuses: typing_extensions.Annotated[
         typing.Optional[typing.List[DeploymentStatus]],
         FieldMetadata(alias="deploymentStatuses"),
         pydantic.Field(alias="deploymentStatuses", description="Full history of deployment status transitions"),
     ] = None
+    """
+    Full history of deployment status transitions
+    """
+
     current_status_id: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="currentStatusId"),
@@ -82,21 +106,36 @@ class Deployment(UniversalBaseModel):
             alias="currentStatusId", description="Unique identifier of the current deployment status record"
         ),
     ] = None
+    """
+    Unique identifier of the current deployment status record
+    """
+
     current_status: typing_extensions.Annotated[
         typing.Optional[DeploymentStatus],
         FieldMetadata(alias="currentStatus"),
         pydantic.Field(alias="currentStatus", description="Current deployment status object."),
     ] = None
+    """
+    Current deployment status object.
+    """
+
     applied_recommendations: typing_extensions.Annotated[
         typing.Optional[typing.List[Recommendation]],
         FieldMetadata(alias="appliedRecommendations"),
         pydantic.Field(alias="appliedRecommendations", description="Applied recommendations for this deployment"),
     ] = None
+    """
+    Applied recommendations for this deployment
+    """
+
     created_by: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="createdBy"),
         pydantic.Field(alias="createdBy", description="Slug of the subject that created this deployment"),
     ] = None
+    """
+    Slug of the subject that created this deployment
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -18,11 +18,19 @@ class RoleBindingPermission(UniversalBaseModel):
         FieldMetadata(alias="resourceType"),
         pydantic.Field(alias="resourceType", description="Target resource kind (e.g. workspace, cluster, ml-repo)."),
     ]
+    """
+    Target resource kind (e.g. workspace, cluster, ml-repo).
+    """
+
     resource_fqn: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="resourceFqn"),
         pydantic.Field(alias="resourceFqn", description="Fully qualified name of the resource."),
     ]
+    """
+    Fully qualified name of the resource.
+    """
+
     role: str = pydantic.Field()
     """
     Name of the role to bind (e.g. workspace-editor, model-user).

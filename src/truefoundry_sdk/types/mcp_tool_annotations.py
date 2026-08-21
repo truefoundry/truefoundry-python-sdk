@@ -20,11 +20,18 @@ class McpToolAnnotations(UniversalBaseModel):
             alias="readOnlyHint", description="Indicates the tool only reads data and does not modify anything."
         ),
     ] = None
+    """
+    Indicates the tool only reads data and does not modify anything.
+    """
+
     destructive_hint: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="destructiveHint"),
         pydantic.Field(alias="destructiveHint", description="Indicates the tool may perform destructive updates."),
     ] = None
+    """
+    Indicates the tool may perform destructive updates.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
