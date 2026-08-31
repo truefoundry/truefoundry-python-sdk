@@ -16,6 +16,7 @@ class PolicyEntityTypes(enum.StrEnum):
     WORKFLOW = "workflow"
     HELM = "helm"
     VOLUME = "volume"
+    SPARK_JOB = "spark-job"
     _UNKNOWN = "__POLICYENTITYTYPES_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
@@ -37,6 +38,7 @@ class PolicyEntityTypes(enum.StrEnum):
         workflow: typing.Callable[[], T_Result],
         helm: typing.Callable[[], T_Result],
         volume: typing.Callable[[], T_Result],
+        spark_job: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is PolicyEntityTypes.SERVICE:
@@ -55,4 +57,6 @@ class PolicyEntityTypes(enum.StrEnum):
             return helm()
         if self is PolicyEntityTypes.VOLUME:
             return volume()
+        if self is PolicyEntityTypes.SPARK_JOB:
+            return spark_job()
         return _unknown_member(self._value_)

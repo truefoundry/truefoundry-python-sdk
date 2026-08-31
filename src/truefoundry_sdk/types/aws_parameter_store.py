@@ -41,6 +41,11 @@ class AwsParameterStore(UniversalBaseModel):
     The ARN of the KMS key to use for encryption.
     """
 
+    tags: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    """
+    Key-value pairs attached as metadata to secrets created in this store
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:

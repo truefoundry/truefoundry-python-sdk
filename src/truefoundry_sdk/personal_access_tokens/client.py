@@ -97,7 +97,7 @@ class PersonalAccessTokensClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreatePersonalAccessTokenResponse:
         """
-        Create a new personal access token for the current user.
+        Create a new personal access token for the current user. Cannot be called while authenticated with a personal access token.
 
         Parameters
         ----------
@@ -142,6 +142,62 @@ class PersonalAccessTokensClient:
             account_name=account_name,
             team_name=team_name,
             token_type=token_type,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def create_for_user(
+        self,
+        *,
+        name: str,
+        user_email: str,
+        expiration_date: typing.Optional[str] = OMIT,
+        team_name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> CreatePersonalAccessTokenResponse:
+        """
+        Create a personal access token owned by another user in the current tenant. Requires tenant admin. Cannot be called while authenticated with a personal access token.
+
+        Parameters
+        ----------
+        name : str
+            Name for the personal access token. Must be 3-36 characters, start with a lowercase letter, end with a lowercase alphanumeric character, and contain only lowercase letters, numbers, and hyphens.
+
+        user_email : str
+            Email of the user in the current tenant who will own the personal access token.
+
+        expiration_date : typing.Optional[str]
+            Expiration date in ISO format. The token becomes invalid after this date.
+
+        team_name : typing.Optional[str]
+            Team to attribute this token cost to. The token owner must be a member of this team.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CreatePersonalAccessTokenResponse
+            The newly created personal access token owned by the target user.
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.personal_access_tokens.create_for_user(
+            name="my-ci-token",
+            user_email="alice@example.com",
+        )
+        """
+        _response = self._raw_client.create_for_user(
+            name=name,
+            user_email=user_email,
+            expiration_date=expiration_date,
+            team_name=team_name,
             request_options=request_options,
         )
         return _response.data
@@ -222,7 +278,7 @@ class PersonalAccessTokensClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetOrCreatePersonalAccessTokenResponse:
         """
-        Get an existing personal access token by name. If none exists, a new one is created and returned with a fresh token.
+        Get an existing personal access token by name. If none exists, a new one is created and returned with a fresh token. Creating a new token cannot be done while authenticated with a personal access token.
 
         Parameters
         ----------
@@ -249,7 +305,6 @@ class PersonalAccessTokensClient:
         )
         client.personal_access_tokens.get(
             name="name",
-            team_name="teamName",
         )
         """
         _response = self._raw_client.get(name, team_name=team_name, request_options=request_options)
@@ -344,7 +399,7 @@ class AsyncPersonalAccessTokensClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreatePersonalAccessTokenResponse:
         """
-        Create a new personal access token for the current user.
+        Create a new personal access token for the current user. Cannot be called while authenticated with a personal access token.
 
         Parameters
         ----------
@@ -397,6 +452,70 @@ class AsyncPersonalAccessTokensClient:
             account_name=account_name,
             team_name=team_name,
             token_type=token_type,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def create_for_user(
+        self,
+        *,
+        name: str,
+        user_email: str,
+        expiration_date: typing.Optional[str] = OMIT,
+        team_name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> CreatePersonalAccessTokenResponse:
+        """
+        Create a personal access token owned by another user in the current tenant. Requires tenant admin. Cannot be called while authenticated with a personal access token.
+
+        Parameters
+        ----------
+        name : str
+            Name for the personal access token. Must be 3-36 characters, start with a lowercase letter, end with a lowercase alphanumeric character, and contain only lowercase letters, numbers, and hyphens.
+
+        user_email : str
+            Email of the user in the current tenant who will own the personal access token.
+
+        expiration_date : typing.Optional[str]
+            Expiration date in ISO format. The token becomes invalid after this date.
+
+        team_name : typing.Optional[str]
+            Team to attribute this token cost to. The token owner must be a member of this team.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CreatePersonalAccessTokenResponse
+            The newly created personal access token owned by the target user.
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.personal_access_tokens.create_for_user(
+                name="my-ci-token",
+                user_email="alice@example.com",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.create_for_user(
+            name=name,
+            user_email=user_email,
+            expiration_date=expiration_date,
+            team_name=team_name,
             request_options=request_options,
         )
         return _response.data
@@ -493,7 +612,7 @@ class AsyncPersonalAccessTokensClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetOrCreatePersonalAccessTokenResponse:
         """
-        Get an existing personal access token by name. If none exists, a new one is created and returned with a fresh token.
+        Get an existing personal access token by name. If none exists, a new one is created and returned with a fresh token. Creating a new token cannot be done while authenticated with a personal access token.
 
         Parameters
         ----------
@@ -525,7 +644,6 @@ class AsyncPersonalAccessTokensClient:
         async def main() -> None:
             await client.personal_access_tokens.get(
                 name="name",
-                team_name="teamName",
             )
 
 

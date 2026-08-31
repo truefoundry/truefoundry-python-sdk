@@ -12,35 +12,66 @@ class SubjectPermission(UniversalBaseModel):
     resource_type: typing_extensions.Annotated[
         str, FieldMetadata(alias="resourceType"), pydantic.Field(alias="resourceType", description="Resource Type")
     ]
+    """
+    Resource Type
+    """
+
     resource_id: typing_extensions.Annotated[
         str, FieldMetadata(alias="resourceId"), pydantic.Field(alias="resourceId", description="Resource ID")
     ]
+    """
+    Resource ID
+    """
+
     resource_name: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="resourceName"),
         pydantic.Field(alias="resourceName", description="Resource Name (if available)"),
     ] = None
+    """
+    Resource Name (if available)
+    """
+
     resource_fqn: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="resourceFqn"),
         pydantic.Field(alias="resourceFqn", description="Resource FQN (if available)"),
     ] = None
+    """
+    Resource FQN (if available)
+    """
+
     role_id: typing_extensions.Annotated[
         str, FieldMetadata(alias="roleId"), pydantic.Field(alias="roleId", description="Role ID")
     ]
+    """
+    Role ID
+    """
+
     role_name: typing_extensions.Annotated[
         str, FieldMetadata(alias="roleName"), pydantic.Field(alias="roleName", description="Role Name")
     ]
+    """
+    Role Name
+    """
+
     subject_id: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="subjectId"),
         pydantic.Field(alias="subjectId", description="Subject ID (user or team)"),
     ]
+    """
+    Subject ID (user or team)
+    """
+
     subject_type: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="subjectType"),
         pydantic.Field(alias="subjectType", description="Subject Type (user or team)"),
     ]
+    """
+    Subject Type (user or team)
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

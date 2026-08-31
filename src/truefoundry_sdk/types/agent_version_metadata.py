@@ -17,6 +17,9 @@ class AgentVersionMetadata(UniversalBaseModel):
             description="Prompt template variables (variable name to default value) saved from the linked prompt version. Only set for agents with an instruction.",
         ),
     ] = None
+    """
+    Prompt template variables (variable name to default value) saved from the linked prompt version. Only set for agents with an instruction.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

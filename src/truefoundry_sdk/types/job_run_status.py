@@ -8,6 +8,10 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class JobRunStatus(enum.StrEnum):
+    """
+    Status of JobRun
+    """
+
     CREATED = "CREATED"
     SCHEDULED = "SCHEDULED"
     RUNNING = "RUNNING"

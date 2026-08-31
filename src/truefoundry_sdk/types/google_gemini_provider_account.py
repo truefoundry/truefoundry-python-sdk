@@ -14,7 +14,7 @@ from .owned_by import OwnedBy
 
 class GoogleGeminiProviderAccount(UniversalBaseModel):
     """
-    Google Gemini Provider Account
+    Google Gemini Model Account
     """
 
     type: typing.Literal["provider-account/google-gemini"] = pydantic.Field(default="provider-account/google-gemini")
@@ -24,18 +24,18 @@ class GoogleGeminiProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    The name of the Google Gemini provider account
+    The name of the Google Gemini model account
     """
 
     auth_data: GcpApiKeyAuth
     integrations: typing.List[GeminiModel] = pydantic.Field()
     """
-    List of integrations that are associated with the Google Gemini provider account
+    List of integrations that are associated with the Google Gemini model account
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    List of users who have access to this provider account
+    List of users who have access to this model account
     """
 
     owned_by: typing_extensions.Annotated[
@@ -43,7 +43,7 @@ class GoogleGeminiProviderAccount(UniversalBaseModel):
     ] = None
     discount_percent: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Discount % applied to upstream list price for this provider account.
+    Discount % applied to upstream list price for this model account.
     """
 
     if IS_PYDANTIC_V2:

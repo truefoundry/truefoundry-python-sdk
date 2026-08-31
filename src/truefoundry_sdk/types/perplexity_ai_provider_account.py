@@ -14,7 +14,7 @@ from .perplexity_integrations import PerplexityIntegrations
 
 class PerplexityAiProviderAccount(UniversalBaseModel):
     """
-    Perplexity AI Provider Account
+    Perplexity AI Model Account
     """
 
     type: typing.Literal["provider-account/perplexity-ai"] = pydantic.Field(default="provider-account/perplexity-ai")
@@ -24,18 +24,18 @@ class PerplexityAiProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    The name of the Perplexity AI provider account
+    The name of the Perplexity AI model account
     """
 
     auth_data: PerplexityAiKeyAuth
     integrations: typing.List[PerplexityIntegrations] = pydantic.Field()
     """
-    List of integrations that are associated with the Perplexity AI provider account
+    List of integrations that are associated with the Perplexity AI model account
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    List of users who have access to this provider account
+    List of users who have access to this model account
     """
 
     owned_by: typing_extensions.Annotated[
@@ -43,7 +43,7 @@ class PerplexityAiProviderAccount(UniversalBaseModel):
     ] = None
     discount_percent: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Discount % applied to upstream list price for this provider account.
+    Discount % applied to upstream list price for this model account.
     """
 
     if IS_PYDANTIC_V2:

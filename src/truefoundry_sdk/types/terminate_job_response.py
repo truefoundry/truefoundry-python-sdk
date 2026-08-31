@@ -20,6 +20,9 @@ class TerminateJobResponse(UniversalBaseModel):
         FieldMetadata(alias="jobRunStatus"),
         pydantic.Field(alias="jobRunStatus", description="Job run status"),
     ]
+    """
+    Job run status
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

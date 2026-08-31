@@ -12,7 +12,7 @@ from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
 from ...errors.bad_request_error import BadRequestError
 from ...types.gateway_configuration import GatewayConfiguration
-from .types.ai_gateway_get_gateway_config_request_type import AiGatewayGetGatewayConfigRequestType
+from .types.get_gateway_config_ai_gateway_request_type import GetGatewayConfigAiGatewayRequestType
 from pydantic import ValidationError
 
 
@@ -21,14 +21,14 @@ class RawAiGatewayClient:
         self._client_wrapper = client_wrapper
 
     def get_gateway_config(
-        self, type: AiGatewayGetGatewayConfigRequestType, *, request_options: typing.Optional[RequestOptions] = None
+        self, type: GetGatewayConfigAiGatewayRequestType, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GatewayConfiguration]:
         """
         Get the AI Gateway configuration for the given type.
 
         Parameters
         ----------
-        type : AiGatewayGetGatewayConfigRequestType
+        type : GetGatewayConfigAiGatewayRequestType
             The type of gateway configuration to retrieve or delete.
 
         request_options : typing.Optional[RequestOptions]
@@ -110,14 +110,14 @@ class AsyncRawAiGatewayClient:
         self._client_wrapper = client_wrapper
 
     async def get_gateway_config(
-        self, type: AiGatewayGetGatewayConfigRequestType, *, request_options: typing.Optional[RequestOptions] = None
+        self, type: GetGatewayConfigAiGatewayRequestType, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GatewayConfiguration]:
         """
         Get the AI Gateway configuration for the given type.
 
         Parameters
         ----------
-        type : AiGatewayGetGatewayConfigRequestType
+        type : GetGatewayConfigAiGatewayRequestType
             The type of gateway configuration to retrieve or delete.
 
         request_options : typing.Optional[RequestOptions]

@@ -17,6 +17,10 @@ class ClusterGateway(UniversalBaseModel):
         FieldMetadata(alias="isTieBreaker"),
         pydantic.Field(alias="isTieBreaker", description="Used when there are 2 gateways with same host"),
     ] = None
+    """
+    Used when there are 2 gateways with same host
+    """
+
     selector: typing.Dict[str, str]
 
     if IS_PYDANTIC_V2:

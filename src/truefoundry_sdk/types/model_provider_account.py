@@ -23,6 +23,7 @@ from .eleven_labs_provider_account import ElevenLabsProviderAccount
 from .google_gemini_provider_account import GoogleGeminiProviderAccount
 from .google_vertex_provider_account import GoogleVertexProviderAccount
 from .groq_provider_account import GroqProviderAccount
+from .microsoft_foundry_provider_account import MicrosoftFoundryProviderAccount
 from .mistral_ai_provider_account import MistralAiProviderAccount
 from .nomic_provider_account import NomicProviderAccount
 from .ollama_provider_account import OllamaProviderAccount
@@ -45,6 +46,7 @@ ModelProviderAccount = typing.Union[
     GoogleGeminiProviderAccount,
     AzureOpenAiProviderAccount,
     AzureFoundryProviderAccount,
+    MicrosoftFoundryProviderAccount,
     CohereProviderAccount,
     Ai21ProviderAccount,
     AnthropicProviderAccount,

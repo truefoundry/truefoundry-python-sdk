@@ -146,7 +146,7 @@ class RawMlReposClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         name: typing.Optional[str] = None,
-        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        attributes: typing.Optional[typing.Sequence[str]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[MlRepo, ListMlReposResponse]:
         """
@@ -163,7 +163,7 @@ class RawMlReposClient:
         name : typing.Optional[str]
             ML Repo Name
 
-        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        attributes : typing.Optional[typing.Sequence[str]]
             Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
 
         request_options : typing.Optional[RequestOptions]
@@ -438,7 +438,7 @@ class AsyncRawMlReposClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         name: typing.Optional[str] = None,
-        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        attributes: typing.Optional[typing.Sequence[str]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[MlRepo, ListMlReposResponse]:
         """
@@ -455,7 +455,7 @@ class AsyncRawMlReposClient:
         name : typing.Optional[str]
             ML Repo Name
 
-        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        attributes : typing.Optional[typing.Sequence[str]]
             Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
 
         request_options : typing.Optional[RequestOptions]

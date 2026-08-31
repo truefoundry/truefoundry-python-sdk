@@ -15,12 +15,12 @@ class RoleBindingSubject(UniversalBaseModel):
 
     type: RoleBindingSubjectType = pydantic.Field()
     """
-    Whether this row identifies a user (email), a team (name), a virtual account (name), or an external identity (name).
+    Whether this row identifies a user (email), a team (name), a virtual account (name), or an agent (name).
     """
 
     name: str = pydantic.Field()
     """
-    User email when type is user; team or virtual account name when type is team or virtualaccount; external identity name when type is external-identity.
+    User email when type is user; team, virtual account, or agent name otherwise.
     """
 
     if IS_PYDANTIC_V2:

@@ -9,7 +9,7 @@ from .mcp_server_env_auth_auth_level import McpServerEnvAuthAuthLevel
 
 class McpServerEnvAuth(UniversalBaseModel):
     """
-    Environment variable authentication for stdio MCP. For individual credentials, use a single {{placeholder}} name in values (same rules as header auth).
+    Environment variable authentication for stdio MCP. For individual credentials, use one or more {{placeholder}} names in values (same rules as header auth).
     """
 
     type: typing.Literal["env"] = pydantic.Field(default="env")

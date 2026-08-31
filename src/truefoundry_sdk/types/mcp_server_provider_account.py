@@ -28,7 +28,7 @@ class McpServerProviderAccount(UniversalBaseModel):
     The name of the MCP Server Group.
     """
 
-    collaborators: typing.List[Collaborator] = pydantic.Field()
+    collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
     List of teams/users who can manage this MCP Server Group. These subjects can add new MCP server integrations, can edit existing ones and can also use the MCP server.
     """

@@ -119,7 +119,9 @@ class RawTracesClient:
                 "tracingProjectFqn": tracing_project_fqn,
                 "dataRoutingDestination": data_routing_destination,
                 "filters": convert_and_respect_annotation_metadata(
-                    object_=filters, annotation=typing.Sequence[QuerySpansRequestFiltersItem], direction="write"
+                    object_=filters,
+                    annotation=typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]],
+                    direction="write",
                 ),
                 "includeFeedbacks": include_feedbacks,
             },
@@ -271,7 +273,9 @@ class AsyncRawTracesClient:
                 "tracingProjectFqn": tracing_project_fqn,
                 "dataRoutingDestination": data_routing_destination,
                 "filters": convert_and_respect_annotation_metadata(
-                    object_=filters, annotation=typing.Sequence[QuerySpansRequestFiltersItem], direction="write"
+                    object_=filters,
+                    annotation=typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]],
+                    direction="write",
                 ),
                 "includeFeedbacks": include_feedbacks,
             },

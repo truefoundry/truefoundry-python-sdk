@@ -66,7 +66,6 @@ class AgentVersionsClient:
         response = client.agent_versions.list(
             limit=10,
             offset=0,
-            id="id",
         )
         for item in response:
             yield item
@@ -138,7 +137,6 @@ class AsyncAgentVersionsClient:
             response = await client.agent_versions.list(
                 limit=10,
                 offset=0,
-                id="id",
             )
             async for item in response:
                 yield item

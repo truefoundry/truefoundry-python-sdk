@@ -6,7 +6,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.gateway_configuration import GatewayConfiguration
 from .raw_client import AsyncRawAiGatewayClient, RawAiGatewayClient
-from .types.ai_gateway_get_gateway_config_request_type import AiGatewayGetGatewayConfigRequestType
+from .types.get_gateway_config_ai_gateway_request_type import GetGatewayConfigAiGatewayRequestType
 
 
 class AiGatewayClient:
@@ -25,14 +25,14 @@ class AiGatewayClient:
         return self._raw_client
 
     def get_gateway_config(
-        self, type: AiGatewayGetGatewayConfigRequestType, *, request_options: typing.Optional[RequestOptions] = None
+        self, type: GetGatewayConfigAiGatewayRequestType, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GatewayConfiguration:
         """
         Get the AI Gateway configuration for the given type.
 
         Parameters
         ----------
-        type : AiGatewayGetGatewayConfigRequestType
+        type : GetGatewayConfigAiGatewayRequestType
             The type of gateway configuration to retrieve or delete.
 
         request_options : typing.Optional[RequestOptions]
@@ -47,7 +47,7 @@ class AiGatewayClient:
         --------
         from truefoundry_sdk import TrueFoundry
         from truefoundry_sdk.internal.ai_gateway import (
-            AiGatewayGetGatewayConfigRequestType,
+            GetGatewayConfigAiGatewayRequestType,
         )
 
         client = TrueFoundry(
@@ -55,7 +55,7 @@ class AiGatewayClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.internal.ai_gateway.get_gateway_config(
-            type=AiGatewayGetGatewayConfigRequestType.GATEWAY_RATE_LIMITING_CONFIG,
+            type=GetGatewayConfigAiGatewayRequestType.GATEWAY_RATE_LIMITING_CONFIG,
         )
         """
         _response = self._raw_client.get_gateway_config(type, request_options=request_options)
@@ -104,14 +104,14 @@ class AsyncAiGatewayClient:
         return self._raw_client
 
     async def get_gateway_config(
-        self, type: AiGatewayGetGatewayConfigRequestType, *, request_options: typing.Optional[RequestOptions] = None
+        self, type: GetGatewayConfigAiGatewayRequestType, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GatewayConfiguration:
         """
         Get the AI Gateway configuration for the given type.
 
         Parameters
         ----------
-        type : AiGatewayGetGatewayConfigRequestType
+        type : GetGatewayConfigAiGatewayRequestType
             The type of gateway configuration to retrieve or delete.
 
         request_options : typing.Optional[RequestOptions]
@@ -128,7 +128,7 @@ class AsyncAiGatewayClient:
 
         from truefoundry_sdk import AsyncTrueFoundry
         from truefoundry_sdk.internal.ai_gateway import (
-            AiGatewayGetGatewayConfigRequestType,
+            GetGatewayConfigAiGatewayRequestType,
         )
 
         client = AsyncTrueFoundry(
@@ -139,7 +139,7 @@ class AsyncAiGatewayClient:
 
         async def main() -> None:
             await client.internal.ai_gateway.get_gateway_config(
-                type=AiGatewayGetGatewayConfigRequestType.GATEWAY_RATE_LIMITING_CONFIG,
+                type=GetGatewayConfigAiGatewayRequestType.GATEWAY_RATE_LIMITING_CONFIG,
             )
 
 

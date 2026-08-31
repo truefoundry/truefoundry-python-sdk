@@ -24,18 +24,18 @@ class Ai21ProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    The name of the AI21 provider account
+    The name of the AI21 model account
     """
 
     auth_data: Ai21KeyAuth
     integrations: typing.Optional[typing.List[Ai21Integrations]] = pydantic.Field(default=None)
     """
-    List of integrations that are associated with the AI21 provider account
+    List of integrations that are associated with the AI21 model account
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    List of users who have access to this provider account
+    List of users who have access to this model account
     """
 
     owned_by: typing_extensions.Annotated[
@@ -43,7 +43,7 @@ class Ai21ProviderAccount(UniversalBaseModel):
     ] = None
     discount_percent: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Discount % applied to upstream list price for this provider account.
+    Discount % applied to upstream list price for this model account.
     """
 
     if IS_PYDANTIC_V2:

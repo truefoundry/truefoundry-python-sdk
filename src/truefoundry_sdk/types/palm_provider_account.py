@@ -14,7 +14,7 @@ from .palm_key_auth import PalmKeyAuth
 
 class PalmProviderAccount(UniversalBaseModel):
     """
-    PaLM Provider Account
+    PaLM Model Account
     """
 
     type: typing.Literal["provider-account/palm"] = pydantic.Field(default="provider-account/palm")
@@ -24,18 +24,18 @@ class PalmProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    The name of the PaLM provider account
+    The name of the PaLM model account
     """
 
     auth_data: PalmKeyAuth
     integrations: typing.List[PalmIntegrations] = pydantic.Field()
     """
-    List of integrations that are associated with the PaLM provider account
+    List of integrations that are associated with the PaLM model account
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    List of users who have access to this provider account
+    List of users who have access to this model account
     """
 
     owned_by: typing_extensions.Annotated[
@@ -43,7 +43,7 @@ class PalmProviderAccount(UniversalBaseModel):
     ] = None
     discount_percent: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Discount % applied to upstream list price for this provider account.
+    Discount % applied to upstream list price for this model account.
     """
 
     if IS_PYDANTIC_V2:

@@ -2,25 +2,7 @@
 
 import typing
 
-import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .true_foundry_agent_git_source_skill import TrueFoundryAgentGitSourceSkill
+from .true_foundry_agent_true_foundry_skill import TrueFoundryAgentTrueFoundrySkill
 
-
-class TrueFoundryAgentSkill(UniversalBaseModel):
-    fqn: str = pydantic.Field()
-    """
-    Fully qualified name of the agent skill
-    """
-
-    preload: bool = pydantic.Field(default=False)
-    """
-    If true, the SKILL.md content is injected into the agent context.
-    """
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            smart_union = True
-            extra = pydantic.Extra.allow
+TrueFoundryAgentSkill = typing.Union[TrueFoundryAgentTrueFoundrySkill, TrueFoundryAgentGitSourceSkill]

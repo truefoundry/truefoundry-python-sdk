@@ -14,7 +14,7 @@ from .owned_by import OwnedBy
 
 class AzureOpenAiProviderAccount(UniversalBaseModel):
     """
-    Azure OpenAI Provider Account
+    Azure OpenAI Model Account
     """
 
     type: typing.Literal["provider-account/azure-openai"] = pydantic.Field(default="provider-account/azure-openai")
@@ -24,12 +24,12 @@ class AzureOpenAiProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    The name of the Azure OpenAI provider account
+    The name of the Azure OpenAI model account
     """
 
     azure_endpoint: str = pydantic.Field()
     """
-    The Azure OpenAI Service endpoint URL. Should look like https://{resource-name}.openai.azure.com
+    The Azure OpenAI Service endpoint URL. Should look like https://{resource-name}.openai.azure.com (a trailing /openai suffix is optional and stripped automatically)
     """
 
     auth_data: AzureOpenAiProviderAccountAuthData = pydantic.Field()
@@ -39,12 +39,12 @@ class AzureOpenAiProviderAccount(UniversalBaseModel):
 
     integrations: typing.List[AzureOpenAiModel] = pydantic.Field()
     """
-    List of integrations that are associated with the Azure OpenAI provider account
+    List of integrations that are associated with the Azure OpenAI model account
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    List of users who have access to this provider account
+    List of users who have access to this model account
     """
 
     owned_by: typing_extensions.Annotated[
@@ -52,7 +52,7 @@ class AzureOpenAiProviderAccount(UniversalBaseModel):
     ] = None
     discount_percent: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Discount % applied to upstream list price for this provider account.
+    Discount % applied to upstream list price for this model account.
     """
 
     if IS_PYDANTIC_V2:

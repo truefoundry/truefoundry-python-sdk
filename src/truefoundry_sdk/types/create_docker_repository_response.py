@@ -14,6 +14,9 @@ class CreateDockerRepositoryResponse(UniversalBaseModel):
         FieldMetadata(alias="repoName"),
         pydantic.Field(alias="repoName", description="Created Docker repository name"),
     ]
+    """
+    Created Docker repository name
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

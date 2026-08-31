@@ -49,9 +49,9 @@ class RawJobsClient:
         search_prefix: typing.Optional[str] = None,
         sort_by: typing.Optional[JobRunsSortBy] = None,
         order: typing.Optional[SortDirection] = None,
-        triggered_by: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        triggered_by: typing.Optional[typing.Sequence[str]] = None,
         status: typing.Optional[typing.Union[JobRunStatus, typing.Sequence[JobRunStatus]]] = None,
-        version_numbers: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
+        version_numbers: typing.Optional[typing.Sequence[float]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[JobRun, ListJobRunResponse]:
         """
@@ -77,13 +77,13 @@ class RawJobsClient:
         order : typing.Optional[SortDirection]
             Sorting order
 
-        triggered_by : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        triggered_by : typing.Optional[typing.Sequence[str]]
             Array of subject slugs
 
         status : typing.Optional[typing.Union[JobRunStatus, typing.Sequence[JobRunStatus]]]
             Status of the job run
 
-        version_numbers : typing.Optional[typing.Union[float, typing.Sequence[float]]]
+        version_numbers : typing.Optional[typing.Sequence[float]]
             Version number of the deployment
 
         request_options : typing.Optional[RequestOptions]
@@ -365,10 +365,10 @@ class RawJobsClient:
                 "deploymentId": deployment_id,
                 "applicationId": application_id,
                 "input": convert_and_respect_annotation_metadata(
-                    object_=input, annotation=TriggerJobRequestInput, direction="write"
+                    object_=input, annotation=typing.Optional[TriggerJobRequestInput], direction="write"
                 ),
                 "metadata": convert_and_respect_annotation_metadata(
-                    object_=metadata, annotation=Metadata, direction="write"
+                    object_=metadata, annotation=typing.Optional[Metadata], direction="write"
                 ),
             },
             headers={
@@ -548,9 +548,9 @@ class AsyncRawJobsClient:
         search_prefix: typing.Optional[str] = None,
         sort_by: typing.Optional[JobRunsSortBy] = None,
         order: typing.Optional[SortDirection] = None,
-        triggered_by: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        triggered_by: typing.Optional[typing.Sequence[str]] = None,
         status: typing.Optional[typing.Union[JobRunStatus, typing.Sequence[JobRunStatus]]] = None,
-        version_numbers: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
+        version_numbers: typing.Optional[typing.Sequence[float]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[JobRun, ListJobRunResponse]:
         """
@@ -576,13 +576,13 @@ class AsyncRawJobsClient:
         order : typing.Optional[SortDirection]
             Sorting order
 
-        triggered_by : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        triggered_by : typing.Optional[typing.Sequence[str]]
             Array of subject slugs
 
         status : typing.Optional[typing.Union[JobRunStatus, typing.Sequence[JobRunStatus]]]
             Status of the job run
 
-        version_numbers : typing.Optional[typing.Union[float, typing.Sequence[float]]]
+        version_numbers : typing.Optional[typing.Sequence[float]]
             Version number of the deployment
 
         request_options : typing.Optional[RequestOptions]
@@ -867,10 +867,10 @@ class AsyncRawJobsClient:
                 "deploymentId": deployment_id,
                 "applicationId": application_id,
                 "input": convert_and_respect_annotation_metadata(
-                    object_=input, annotation=TriggerJobRequestInput, direction="write"
+                    object_=input, annotation=typing.Optional[TriggerJobRequestInput], direction="write"
                 ),
                 "metadata": convert_and_respect_annotation_metadata(
-                    object_=metadata, annotation=Metadata, direction="write"
+                    object_=metadata, annotation=typing.Optional[Metadata], direction="write"
                 ),
             },
             headers={

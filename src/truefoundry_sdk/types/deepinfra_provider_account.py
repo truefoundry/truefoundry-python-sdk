@@ -14,7 +14,7 @@ from .owned_by import OwnedBy
 
 class DeepinfraProviderAccount(UniversalBaseModel):
     """
-    DeepInfra Provider Account
+    DeepInfra Model Account
     """
 
     type: typing.Literal["provider-account/deepinfra"] = pydantic.Field(default="provider-account/deepinfra")
@@ -24,18 +24,18 @@ class DeepinfraProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    The name of the DeepInfra provider account
+    The name of the DeepInfra model account
     """
 
     auth_data: DeepinfraKeyAuth
     integrations: typing.Optional[typing.List[DeepinfraIntegrations]] = pydantic.Field(default=None)
     """
-    List of integrations that are associated with the DeepInfra provider account
+    List of integrations that are associated with the DeepInfra model account
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    List of users who have access to this provider account
+    List of users who have access to this model account
     """
 
     owned_by: typing_extensions.Annotated[
@@ -43,7 +43,7 @@ class DeepinfraProviderAccount(UniversalBaseModel):
     ] = None
     discount_percent: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Discount % applied to upstream list price for this provider account.
+    Discount % applied to upstream list price for this model account.
     """
 
     if IS_PYDANTIC_V2:

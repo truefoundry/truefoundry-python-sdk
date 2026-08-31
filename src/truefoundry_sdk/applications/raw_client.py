@@ -25,9 +25,9 @@ from ..types.get_application_deployment_response import GetApplicationDeployment
 from ..types.get_application_response import GetApplicationResponse
 from ..types.http_error import HttpError
 from ..types.list_applications_response import ListApplicationsResponse
-from .types.applications_cancel_deployment_response import ApplicationsCancelDeploymentResponse
-from .types.applications_list_request_device_type_filter import ApplicationsListRequestDeviceTypeFilter
-from .types.applications_list_request_lifecycle_stage import ApplicationsListRequestLifecycleStage
+from .types.cancel_deployment_applications_response import CancelDeploymentApplicationsResponse
+from .types.list_applications_request_device_type_filter import ListApplicationsRequestDeviceTypeFilter
+from .types.list_applications_request_lifecycle_stage import ListApplicationsRequestLifecycleStage
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -54,9 +54,9 @@ class RawApplicationsClient:
         cluster_id: typing.Optional[str] = None,
         application_set_id: typing.Optional[str] = None,
         paused: typing.Optional[bool] = None,
-        device_type_filter: typing.Optional[ApplicationsListRequestDeviceTypeFilter] = None,
+        device_type_filter: typing.Optional[ListApplicationsRequestDeviceTypeFilter] = None,
         last_deployed_by_subjects: typing.Optional[str] = None,
-        lifecycle_stage: typing.Optional[ApplicationsListRequestLifecycleStage] = None,
+        lifecycle_stage: typing.Optional[ListApplicationsRequestLifecycleStage] = None,
         is_recommendation_present_and_visible: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Application, ListApplicationsResponse]:
@@ -104,13 +104,13 @@ class RawApplicationsClient:
         paused : typing.Optional[bool]
             Filter by explicit pause state (true = paused, false = not paused). Does not account for autoshutdown.
 
-        device_type_filter : typing.Optional[ApplicationsListRequestDeviceTypeFilter]
+        device_type_filter : typing.Optional[ListApplicationsRequestDeviceTypeFilter]
             Device type to filter by (comma-separated).
 
         last_deployed_by_subjects : typing.Optional[str]
             Subject slugs of last deployers to filter by (comma-separated). Email for users (e.g. user@example.com), name for virtual accounts.
 
-        lifecycle_stage : typing.Optional[ApplicationsListRequestLifecycleStage]
+        lifecycle_stage : typing.Optional[ListApplicationsRequestLifecycleStage]
             Application lifecycle stage to filter by
 
         is_recommendation_present_and_visible : typing.Optional[bool]
@@ -687,7 +687,7 @@ class RawApplicationsClient:
 
     def cancel_deployment(
         self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[ApplicationsCancelDeploymentResponse]:
+    ) -> HttpResponse[CancelDeploymentApplicationsResponse]:
         """
         Cancel an in-progress deployment.
 
@@ -704,7 +704,7 @@ class RawApplicationsClient:
 
         Returns
         -------
-        HttpResponse[ApplicationsCancelDeploymentResponse]
+        HttpResponse[CancelDeploymentApplicationsResponse]
             Deployment cancelled.
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -715,9 +715,9 @@ class RawApplicationsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ApplicationsCancelDeploymentResponse,
+                    CancelDeploymentApplicationsResponse,
                     parse_obj_as(
-                        type_=ApplicationsCancelDeploymentResponse,  # type: ignore
+                        type_=CancelDeploymentApplicationsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -785,9 +785,9 @@ class AsyncRawApplicationsClient:
         cluster_id: typing.Optional[str] = None,
         application_set_id: typing.Optional[str] = None,
         paused: typing.Optional[bool] = None,
-        device_type_filter: typing.Optional[ApplicationsListRequestDeviceTypeFilter] = None,
+        device_type_filter: typing.Optional[ListApplicationsRequestDeviceTypeFilter] = None,
         last_deployed_by_subjects: typing.Optional[str] = None,
-        lifecycle_stage: typing.Optional[ApplicationsListRequestLifecycleStage] = None,
+        lifecycle_stage: typing.Optional[ListApplicationsRequestLifecycleStage] = None,
         is_recommendation_present_and_visible: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Application, ListApplicationsResponse]:
@@ -835,13 +835,13 @@ class AsyncRawApplicationsClient:
         paused : typing.Optional[bool]
             Filter by explicit pause state (true = paused, false = not paused). Does not account for autoshutdown.
 
-        device_type_filter : typing.Optional[ApplicationsListRequestDeviceTypeFilter]
+        device_type_filter : typing.Optional[ListApplicationsRequestDeviceTypeFilter]
             Device type to filter by (comma-separated).
 
         last_deployed_by_subjects : typing.Optional[str]
             Subject slugs of last deployers to filter by (comma-separated). Email for users (e.g. user@example.com), name for virtual accounts.
 
-        lifecycle_stage : typing.Optional[ApplicationsListRequestLifecycleStage]
+        lifecycle_stage : typing.Optional[ListApplicationsRequestLifecycleStage]
             Application lifecycle stage to filter by
 
         is_recommendation_present_and_visible : typing.Optional[bool]
@@ -1423,7 +1423,7 @@ class AsyncRawApplicationsClient:
 
     async def cancel_deployment(
         self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[ApplicationsCancelDeploymentResponse]:
+    ) -> AsyncHttpResponse[CancelDeploymentApplicationsResponse]:
         """
         Cancel an in-progress deployment.
 
@@ -1440,7 +1440,7 @@ class AsyncRawApplicationsClient:
 
         Returns
         -------
-        AsyncHttpResponse[ApplicationsCancelDeploymentResponse]
+        AsyncHttpResponse[CancelDeploymentApplicationsResponse]
             Deployment cancelled.
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -1451,9 +1451,9 @@ class AsyncRawApplicationsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ApplicationsCancelDeploymentResponse,
+                    CancelDeploymentApplicationsResponse,
                     parse_obj_as(
-                        type_=ApplicationsCancelDeploymentResponse,  # type: ignore
+                        type_=CancelDeploymentApplicationsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

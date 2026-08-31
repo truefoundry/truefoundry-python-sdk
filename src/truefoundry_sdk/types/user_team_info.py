@@ -12,6 +12,10 @@ class UserTeamInfo(UniversalBaseModel):
     team_name: typing_extensions.Annotated[
         str, FieldMetadata(alias="teamName"), pydantic.Field(alias="teamName", description="Name of the team")
     ]
+    """
+    Name of the team
+    """
+
     roles: typing.List[str] = pydantic.Field()
     """
     Roles of the user in the team

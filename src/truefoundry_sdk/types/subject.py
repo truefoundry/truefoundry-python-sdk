@@ -6,31 +6,53 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
-from .subject_type import SubjectType
+from .subject_subject_type import SubjectSubjectType
 
 
 class Subject(UniversalBaseModel):
     subject_id: typing_extensions.Annotated[
         str, FieldMetadata(alias="subjectId"), pydantic.Field(alias="subjectId", description="Subject ID")
     ]
+    """
+    Subject ID
+    """
+
     subject_type: typing_extensions.Annotated[
-        SubjectType, FieldMetadata(alias="subjectType"), pydantic.Field(alias="subjectType", description="Subject type")
+        SubjectSubjectType,
+        FieldMetadata(alias="subjectType"),
+        pydantic.Field(alias="subjectType", description="Subject type"),
     ]
+    """
+    Subject type
+    """
+
     subject_slug: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="subjectSlug"),
         pydantic.Field(alias="subjectSlug", description="Subject slug"),
     ] = None
+    """
+    Subject slug
+    """
+
     subject_display_name: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="subjectDisplayName"),
         pydantic.Field(alias="subjectDisplayName", description="Subject display name"),
     ] = None
+    """
+    Subject display name
+    """
+
     subject_pat_name: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="subjectPatName"),
         pydantic.Field(alias="subjectPatName", description="Subject PAT name"),
     ] = None
+    """
+    Subject PAT name
+    """
+
     subject_controller_name: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="subjectControllerName"),
@@ -43,6 +65,9 @@ class Subject(UniversalBaseModel):
             alias="subjectExternalIdentitySlug", description="External identity slug (external_identity_id:sub:email)"
         ),
     ] = None
+    """
+    External identity slug (external_identity_id:sub:email)
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

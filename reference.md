@@ -26,7 +26,7 @@ Apply a manifest to create or update a resource.
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, MlRepoManifest, Collaborator
+from truefoundry_sdk import TrueFoundry, MlRepoManifest
 
 client = TrueFoundry(
     api_key="<token>",
@@ -38,12 +38,6 @@ client.apply(
         type="ml-repo",
         name="name",
         storage_integration_fqn="storage_integration_fqn",
-        collaborators=[
-            Collaborator(
-                subject="subject",
-                role_id="role_id",
-            )
-        ],
     ),
 )
 
@@ -70,6 +64,14 @@ client.apply(
 <dd>
 
 **dry_run:** `typing.Optional[bool]` — Dry run the apply operation without actually applying
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force:** `typing.Optional[bool]` — When `true`, acknowledges that updating this manifest may delete existing per-subject auth records. Currently used for MCP server apply.
     
 </dd>
 </dl>
@@ -116,7 +118,7 @@ Delete a resource identified by the provided manifest.
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, MlRepoManifest, Collaborator
+from truefoundry_sdk import TrueFoundry, MlRepoManifest
 
 client = TrueFoundry(
     api_key="<token>",
@@ -128,12 +130,6 @@ client.delete(
         type="ml-repo",
         name="name",
         storage_integration_fqn="storage_integration_fqn",
-        collaborators=[
-            Collaborator(
-                subject="subject",
-                role_id="role_id",
-            )
-        ],
     ),
 )
 
@@ -292,7 +288,6 @@ client.users.list(
     limit=10,
     offset=0,
     query="john@example.com",
-    show_invalid_users=True,
 )
 
 ```
@@ -528,7 +523,7 @@ client.users.update_roles(
 <dl>
 <dd>
 
-**resource_type:** `typing.Optional[ResourceType]` — Resource type scope for the role assignment.
+**resource_type:** `typing.Optional[UpdateUserRolesRequestResourceType]` — Resource type scope for the role assignment.
     
 </dd>
 </dl>
@@ -656,7 +651,6 @@ client = TrueFoundry(
 
 client.users.delete(
     id="jqfwg345gi25n5ju2yz5iz6m",
-    tenant_name="tenantName",
 )
 
 ```
@@ -682,6 +676,14 @@ client.users.delete(
 <dd>
 
 **tenant_name:** `typing.Optional[str]` — Tenant name override. Defaults to the caller's tenant when omitted.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force_delete:** `typing.Optional[bool]` — When true, force-deletes the user by automatically removing all resource collaborations and team memberships.
     
 </dd>
 </dl>
@@ -1261,7 +1263,7 @@ client.users.get_teams(
 <dl>
 <dd>
 
-List teams accessible to the current user.
+List teams accessible to the current user. Set includeMembership=false to omit full member and manager lists and return cached membership summaries instead.
 </dd>
 </dl>
 </dd>
@@ -1286,10 +1288,6 @@ client = TrueFoundry(
 client.teams.list(
     limit=10,
     offset=0,
-    role="manager",
-    attributes=[
-        "attributes"
-    ],
 )
 
 ```
@@ -1330,7 +1328,15 @@ client.teams.list(
 <dl>
 <dd>
 
-**attributes:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Comma-separated list of attributes to return (e.g. `id,teamName`). When provided, only the specified fields are fetched. `id` is always included.
+**attributes:** `typing.Optional[typing.List[str]]` — Comma-separated list of attributes to return (e.g. `id,teamName`). When provided, only the specified fields are fetched. `id` is always included.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_membership:** `typing.Optional[bool]` — Whether to include full member and manager lists. Set to false for a metadata-only response with cached membership summaries.
     
 </dd>
 </dl>
@@ -1472,8 +1478,8 @@ client = TrueFoundry(
 
 client.teams.list_members(
     id="jqfwg345gi25n5ju2yz5iz6m",
-    limit=10,
     offset=0,
+    limit=10,
     filter="{\"type\":\"AND\",\"children\":[{\"column\":\"email\",\"op\":\"STRING_CONTAINS\",\"value\":\"@example.com\"}]}",
 )
 
@@ -1499,7 +1505,7 @@ client.teams.list_members(
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` — Number of items per page
+**offset:** `typing.Optional[int]` — Number of items to skip
     
 </dd>
 </dl>
@@ -1507,7 +1513,7 @@ client.teams.list_members(
 <dl>
 <dd>
 
-**offset:** `typing.Optional[int]` — Number of items to skip
+**limit:** `typing.Optional[int]` — Number of items per page
     
 </dd>
 </dl>
@@ -1571,8 +1577,8 @@ client = TrueFoundry(
 
 client.teams.list_managers(
     id="jqfwg345gi25n5ju2yz5iz6m",
-    limit=10,
     offset=0,
+    limit=10,
     filter="{\"type\":\"AND\",\"children\":[{\"column\":\"email\",\"op\":\"STRING_CONTAINS\",\"value\":\"@example.com\"}]}",
 )
 
@@ -1598,7 +1604,7 @@ client.teams.list_managers(
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` — Number of items per page
+**offset:** `typing.Optional[int]` — Number of items to skip
     
 </dd>
 </dl>
@@ -1606,7 +1612,7 @@ client.teams.list_managers(
 <dl>
 <dd>
 
-**offset:** `typing.Optional[int]` — Number of items to skip
+**limit:** `typing.Optional[int]` — Number of items per page
     
 </dd>
 </dl>
@@ -1850,6 +1856,570 @@ client.teams.get_permissions(
 </dl>
 </details>
 
+## GatewayBudgets
+<details><summary><code>client.gateway_budgets.<a href="src/truefoundry_sdk/gateway_budgets/client.py">list</a>(...) -> ListBudgetsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the gateway budgets the caller can read within the tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.gateway_budgets.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**type:** `typing.Optional[ListGatewayBudgetsRequestType]` — Filter by budget type.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**team_name:** `typing.Optional[str]` — Human-readable name of the team owning the budget. Only matches team budgets.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.gateway_budgets.<a href="src/truefoundry_sdk/gateway_budgets/client.py">create_or_update</a>(...) -> GatewayBudget</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates or updates a budget manifest for the tenant. Budgets are upserted by `manifest.name` (unique per tenant).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry, TenantBudgetConfig, BudgetV2Limits, BudgetV2AppliesToAggregate, TenantBudgetConfigMode
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.gateway_budgets.create_or_update(
+    manifest=TenantBudgetConfig(
+        type="tenant-budget-config",
+        name="name",
+        limits=BudgetV2Limits(),
+        applies_to=BudgetV2AppliesToAggregate(
+            type="aggregate",
+        ),
+        mode=TenantBudgetConfigMode.ENFORCE,
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**manifest:** `CreateOrUpdateBudgetRequestManifest` — The budget manifest. Must match either the TenantBudgetConfig or TeamBudgetConfig schema.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dry_run:** `typing.Optional[bool]` — When `true`, validates the manifest without persisting changes.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.gateway_budgets.<a href="src/truefoundry_sdk/gateway_budgets/client.py">get_my_usage</a>() -> BudgetUsageResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns every per-user budget that currently applies to the caller, with current usage per period.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.gateway_budgets.get_my_usage()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.gateway_budgets.<a href="src/truefoundry_sdk/gateway_budgets/client.py">simulate</a>(...) -> BudgetUsageResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the budgets that would apply to a hypothetical user/team/model/metadata selection, with current usage. Pass a virtual model id in `model` to preview virtual-model traffic.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.gateway_budgets.simulate()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**user:** `typing.Optional[str]` — User email to simulate as.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**virtual_account:** `typing.Optional[str]` — Virtual account slug to simulate as. Use this instead of `user` for virtual-account budgets.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**team:** `typing.Optional[str]` — Single team to simulate membership of. Use `teams` to pass multiple teams.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**teams:** `typing.Optional[typing.List[str]]` — All teams the simulated user belongs to. Merged with `team` when both are provided.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model:** `typing.Optional[str]` — Model id to simulate (`account/model`). Use the virtual model id when previewing virtual-model traffic.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**metadata:** `typing.Optional[typing.Dict[str, str]]` — Request metadata key/value pairs to simulate.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.gateway_budgets.<a href="src/truefoundry_sdk/gateway_budgets/client.py">get</a>(...) -> GatewayBudget</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a single budget by id.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.gateway_budgets.get(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The budget id to retrieve or delete.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.gateway_budgets.<a href="src/truefoundry_sdk/gateway_budgets/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Permanently deletes a budget manifest.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.gateway_budgets.delete(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The budget id to retrieve or delete.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.gateway_budgets.<a href="src/truefoundry_sdk/gateway_budgets/client.py">get_leaderboard</a>(...) -> BudgetUsageResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the top spenders for a budget in its applies_to dimension, for the configured period. Aggregate budgets return a single whole-budget entity (entity: null).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.gateway_budgets.get_leaderboard(
+    id="id",
+    limit=50,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The budget id to retrieve or delete.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[float]` — Maximum number of entries to return. Defaults to 500 and is capped at 500.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## PersonalAccessTokens
 <details><summary><code>client.personal_access_tokens.<a href="src/truefoundry_sdk/personal_access_tokens/client.py">list</a>(...) -> ListPersonalAccessTokenResponse</code></summary>
 <dl>
@@ -1953,7 +2523,7 @@ client.personal_access_tokens.list(
 <dl>
 <dd>
 
-Create a new personal access token for the current user.
+Create a new personal access token for the current user. Cannot be called while authenticated with a personal access token.
 </dd>
 </dl>
 </dd>
@@ -2026,6 +2596,103 @@ client.personal_access_tokens.create(
 <dd>
 
 **token_type:** `typing.Optional[CreatePersonalAccessTokenRequestTokenType]` — Format of the issued token. Leave empty to use the tenant override or platform default.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.personal_access_tokens.<a href="src/truefoundry_sdk/personal_access_tokens/client.py">create_for_user</a>(...) -> CreatePersonalAccessTokenResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a personal access token owned by another user in the current tenant. Requires tenant admin. Cannot be called while authenticated with a personal access token.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.personal_access_tokens.create_for_user(
+    name="my-ci-token",
+    user_email="alice@example.com",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `str` — Name for the personal access token. Must be 3-36 characters, start with a lowercase letter, end with a lowercase alphanumeric character, and contain only lowercase letters, numbers, and hyphens.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_email:** `str` — Email of the user in the current tenant who will own the personal access token.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**expiration_date:** `typing.Optional[str]` — Expiration date in ISO format. The token becomes invalid after this date.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**team_name:** `typing.Optional[str]` — Team to attribute this token cost to. The token owner must be a member of this team.
     
 </dd>
 </dl>
@@ -2201,7 +2868,7 @@ client.personal_access_tokens.delete(
 <dl>
 <dd>
 
-Get an existing personal access token by name. If none exists, a new one is created and returned with a fresh token.
+Get an existing personal access token by name. If none exists, a new one is created and returned with a fresh token. Creating a new token cannot be done while authenticated with a personal access token.
 </dd>
 </dl>
 </dd>
@@ -2225,7 +2892,6 @@ client = TrueFoundry(
 
 client.personal_access_tokens.get(
     name="name",
-    team_name="teamName",
 )
 
 ```
@@ -2309,10 +2975,6 @@ client.virtual_accounts.list(
     limit=10,
     offset=0,
     name_search_query="staging-bot",
-    owned_by_teams=[
-        "ownedByTeams"
-    ],
-    is_expired=True,
     filter="{\"type\":\"AND\",\"children\":[{\"column\":\"name\",\"op\":\"STRING_CONTAINS\",\"value\":\"bot\"}]}",
 )
 
@@ -2354,7 +3016,7 @@ client.virtual_accounts.list(
 <dl>
 <dd>
 
-**owned_by_teams:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Comma-separated team names. Return virtual accounts owned by these teams.
+**owned_by_teams:** `typing.Optional[typing.List[str]]` — Comma-separated team names. Return virtual accounts owned by these teams.
     
 </dd>
 </dl>
@@ -2402,7 +3064,7 @@ client.virtual_accounts.list(
 <dl>
 <dd>
 
-Create a new virtual account or update an existing one using the provided VirtualAccountManifest. Matching is by name — if the name matches an existing virtual account it is updated, otherwise a new one is created.
+Create a new virtual account or update an existing one using the provided VirtualAccountManifest. Matching is by name — if the name matches an existing virtual account it is updated, otherwise a new one is created. Omitting `permissions` leaves the existing access untouched; an empty list is rejected.
 </dd>
 </dl>
 </dd>
@@ -2417,7 +3079,7 @@ Create a new virtual account or update an existing one using the provided Virtua
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, VirtualAccountManifest, Permissions
+from truefoundry_sdk import TrueFoundry, VirtualAccountManifest
 
 client = TrueFoundry(
     api_key="<token>",
@@ -2428,13 +3090,6 @@ client.virtual_accounts.create_or_update(
     manifest=VirtualAccountManifest(
         name="name",
         type="virtual-account",
-        permissions=[
-            Permissions(
-                resource_fqn="resource_fqn",
-                resource_type="resource_type",
-                role_id="role_id",
-            )
-        ],
     ),
 )
 
@@ -2708,7 +3363,7 @@ client.virtual_accounts.get_token(
 <dl>
 <dd>
 
-Sync the virtual account token to the configured secret store. Returns the sync metadata including timestamp and error (if any).
+Sync the virtual account token to the configured secret store. By default the write is skipped when the active jwt already matches the last successful sync (used by the rotation cron). Pass force=true to rewrite unconditionally. Returns the sync metadata including timestamp and error (if any).
 </dd>
 </dl>
 </dd>
@@ -2756,6 +3411,14 @@ client.virtual_accounts.sync_to_secret_store(
 <dl>
 <dd>
 
+**force:** `typing.Optional[bool]` — When true, rewrite the token to the secret store even if the active jwt was already synced. Defaults to false so periodic syncs stay idempotent.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -2780,7 +3443,7 @@ client.virtual_accounts.sync_to_secret_store(
 <dl>
 <dd>
 
-Regenerate the authentication token for a virtual account. The old token remains valid for the specified grace period.
+Regenerate the authentication token for a virtual account. The old token remains valid for the specified grace period. Not allowed when the virtual account has identity provider mapping configured.
 </dd>
 </dl>
 </dd>
@@ -2804,7 +3467,7 @@ client = TrueFoundry(
 
 client.virtual_accounts.regenerate_token(
     id="jqfwg345gi25n5ju2yz5iz6m",
-    grace_period_in_days=30,
+    grace_period_in_minutes=30,
 )
 
 ```
@@ -2829,7 +3492,7 @@ client.virtual_accounts.regenerate_token(
 <dl>
 <dd>
 
-**grace_period_in_days:** `float` — Grace period in days for which the old token will remain valid after regeneration
+**grace_period_in_minutes:** `float` — Grace period in minutes for which the old token will remain valid after regeneration
     
 </dd>
 </dl>
@@ -2968,9 +3631,6 @@ client = TrueFoundry(
 client.clusters.list(
     limit=10,
     offset=0,
-    attributes=[
-        "attributes"
-    ],
 )
 
 ```
@@ -3003,7 +3663,7 @@ client.clusters.list(
 <dl>
 <dd>
 
-**attributes:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
+**attributes:** `typing.Optional[typing.List[str]]` — Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
     
 </dd>
 </dl>
@@ -3050,7 +3710,7 @@ Create a new cluster or update an existing one using the provided `ClusterManife
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, ClusterManifest, ClusterManifestClusterType, Collaborator
+from truefoundry_sdk import TrueFoundry, ClusterManifest, ClusterManifestClusterType
 
 client = TrueFoundry(
     api_key="<token>",
@@ -3064,12 +3724,6 @@ client.clusters.create_or_update(
         cluster_type=ClusterManifestClusterType.AWS_EKS,
         environment_names=[
             "environment_names"
-        ],
-        collaborators=[
-            Collaborator(
-                subject="subject",
-                role_id="role_id",
-            )
         ],
     ),
 )
@@ -3298,9 +3952,6 @@ client.clusters.get_addons(
     id="id",
     limit=10,
     offset=0,
-    attributes=[
-        "attributes"
-    ],
 )
 
 ```
@@ -3341,7 +3992,7 @@ client.clusters.get_addons(
 <dl>
 <dd>
 
-**attributes:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
+**attributes:** `typing.Optional[typing.List[str]]` — Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
     
 </dd>
 </dl>
@@ -3461,8 +4112,7 @@ List applications the caller can read.
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, ApplicationType
-from truefoundry_sdk.applications import ApplicationsListRequestDeviceTypeFilter, ApplicationsListRequestLifecycleStage
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="<token>",
@@ -3472,21 +4122,6 @@ client = TrueFoundry(
 client.applications.list(
     limit=10,
     offset=0,
-    application_id="applicationId",
-    workspace_id="workspaceId",
-    application_name="applicationName",
-    fqn="fqn",
-    workspace_fqn="workspaceFqn",
-    application_type=ApplicationType.ASYNC_SERVICE,
-    name_search_query="nameSearchQuery",
-    environment_id="environmentId",
-    cluster_id="clusterId",
-    application_set_id="applicationSetId",
-    paused=True,
-    device_type_filter=ApplicationsListRequestDeviceTypeFilter.CPU,
-    last_deployed_by_subjects="lastDeployedBySubjects",
-    lifecycle_stage=ApplicationsListRequestLifecycleStage.ACTIVE,
-    is_recommendation_present_and_visible=True,
 )
 
 ```
@@ -3607,7 +4242,7 @@ client.applications.list(
 <dl>
 <dd>
 
-**device_type_filter:** `typing.Optional[ApplicationsListRequestDeviceTypeFilter]` — Device type to filter by (comma-separated).
+**device_type_filter:** `typing.Optional[ListApplicationsRequestDeviceTypeFilter]` — Device type to filter by (comma-separated).
     
 </dd>
 </dl>
@@ -3623,7 +4258,7 @@ client.applications.list(
 <dl>
 <dd>
 
-**lifecycle_stage:** `typing.Optional[ApplicationsListRequestLifecycleStage]` — Application lifecycle stage to filter by
+**lifecycle_stage:** `typing.Optional[ListApplicationsRequestLifecycleStage]` — Application lifecycle stage to filter by
     
 </dd>
 </dl>
@@ -4150,7 +4785,7 @@ client.applications.scale_to_original(
 </dl>
 </details>
 
-<details><summary><code>client.applications.<a href="src/truefoundry_sdk/applications/client.py">cancel_deployment</a>(...) -> ApplicationsCancelDeploymentResponse</code></summary>
+<details><summary><code>client.applications.<a href="src/truefoundry_sdk/applications/client.py">cancel_deployment</a>(...) -> CancelDeploymentApplicationsResponse</code></summary>
 <dl>
 <dd>
 
@@ -4352,7 +4987,7 @@ client.application_versions.list(
 <dl>
 <dd>
 
-Get a single deployment by application ID and deployment ID.
+Get a single deployment by application ID and deployment ID, with its status history and builds. A status of DEPLOY_SUCCESS means the rollout was accepted, not that the workload is healthy: a pod that is crashlooping, out of memory or unable to pull its image still reports DEPLOY_SUCCESS. Confirm health with list_k8s_pods or get_application_state before reporting success. Read currentStatus.state.isTerminalState first — currentStatus.state.type says `success` while a deployment is still in progress, so it is only meaningful once the state is terminal.
 </dd>
 </dl>
 </dd>
@@ -4449,7 +5084,7 @@ List Job Runs for provided Job Id. Filter the data based on parameters passed in
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, JobRunsSortBy, SortDirection, JobRunStatus
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="<token>",
@@ -4460,18 +5095,6 @@ client.jobs.list_runs(
     job_id="jobId",
     limit=10,
     offset=0,
-    search_prefix="searchPrefix",
-    sort_by=JobRunsSortBy.START_TIME,
-    order=SortDirection.ASC,
-    triggered_by=[
-        "triggeredBy"
-    ],
-    status=[
-        JobRunStatus.CREATED
-    ],
-    version_numbers=[
-        1.1
-    ],
 )
 
 ```
@@ -4536,7 +5159,7 @@ client.jobs.list_runs(
 <dl>
 <dd>
 
-**triggered_by:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Array of subject slugs
+**triggered_by:** `typing.Optional[typing.List[str]]` — Array of subject slugs
     
 </dd>
 </dl>
@@ -4552,7 +5175,7 @@ client.jobs.list_runs(
 <dl>
 <dd>
 
-**version_numbers:** `typing.Optional[typing.Union[float, typing.Sequence[float]]]` — Version number of the deployment
+**version_numbers:** `typing.Optional[typing.List[float]]` — Version number of the deployment
     
 </dd>
 </dl>
@@ -4948,12 +5571,6 @@ client.workspaces.list(
     limit=10,
     offset=0,
     cluster_id="jqfwg345gi25n5ju2yz5iz6m",
-    name="name",
-    fqn="fqn",
-    include_cluster=True,
-    attributes=[
-        "attributes"
-    ],
 )
 
 ```
@@ -5018,7 +5635,7 @@ client.workspaces.list(
 <dl>
 <dd>
 
-**attributes:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
+**attributes:** `typing.Optional[typing.List[str]]` — Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
     
 </dd>
 </dl>
@@ -5160,7 +5777,6 @@ client.workspaces.search(
     limit=10,
     offset=0,
     filter="[{\"type\":\"name\",\"operator\":\"STRING_CONTAINS\",\"value\":\"prod\"}]",
-    include_cluster=True,
 )
 
 ```
@@ -5888,7 +6504,6 @@ client = TrueFoundry(
 
 client.secrets.delete(
     id="id",
-    force_delete=True,
 )
 
 ```
@@ -5971,11 +6586,6 @@ client = TrueFoundry(
 client.secret_groups.list(
     limit=10,
     offset=0,
-    fqn="fqn",
-    search="search",
-    attributes=[
-        "attributes"
-    ],
 )
 
 ```
@@ -6016,7 +6626,7 @@ client.secret_groups.list(
 <dl>
 <dd>
 
-**search:** `typing.Optional[str]` — Search query - filters by secret group names that contain the search string
+**search:** `typing.Optional[str]` — Search query - filters by secret group names or secret names that contain the search string
     
 </dd>
 </dl>
@@ -6024,7 +6634,7 @@ client.secret_groups.list(
 <dl>
 <dd>
 
-**attributes:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
+**attributes:** `typing.Optional[typing.List[str]]` — Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
     
 </dd>
 </dl>
@@ -6166,7 +6776,7 @@ Create a new secret group or update an existing one using the provided manifest.
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, SecretGroupManifest, Collaborator
+from truefoundry_sdk import TrueFoundry, SecretGroupManifest
 
 client = TrueFoundry(
     api_key="<token>",
@@ -6178,12 +6788,6 @@ client.secret_groups.create_or_update(
         type="secret-group",
         name="name",
         integration_fqn="integration_fqn",
-        collaborators=[
-            Collaborator(
-                subject="subject",
-                role_id="role_id",
-            )
-        ],
     ),
 )
 
@@ -6422,7 +7026,6 @@ client = TrueFoundry(
 
 client.secret_groups.delete(
     id="id",
-    force_delete=True,
 )
 
 ```
@@ -6502,16 +7105,7 @@ client = TrueFoundry(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.events.get(
-    start_ts="startTs",
-    end_ts="endTs",
-    application_id="applicationId",
-    application_fqn="applicationFqn",
-    pod_names=[
-        "podNames"
-    ],
-    job_run_name="jobRunName",
-)
+client.events.get()
 
 ```
 </dd>
@@ -6559,7 +7153,7 @@ client.events.get(
 <dl>
 <dd>
 
-**pod_names:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — List of Kubernetes pod names to filter events. Cannot be provided together with jobRunName.
+**pod_names:** `typing.Optional[typing.List[str]]` — List of Kubernetes pod names to filter events. Cannot be provided together with jobRunName.
     
 </dd>
 </dl>
@@ -6615,20 +7209,14 @@ Get alerts for a given application or cluster filtered by start and end timestam
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, AlertStatus
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.alerts.list(
-    start_ts="startTs",
-    end_ts="endTs",
-    cluster_id="clusterId",
-    application_id="applicationId",
-    alert_status=AlertStatus.FIRING,
-)
+client.alerts.list()
 
 ```
 </dd>
@@ -6725,7 +7313,6 @@ List all Agents for a tenant.
 
 ```python
 from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk.agents import AgentsListRequestType
 
 client = TrueFoundry(
     api_key="<token>",
@@ -6735,12 +7322,6 @@ client = TrueFoundry(
 client.agents.list(
     limit=10,
     offset=0,
-    name="name",
-    name_prefix="namePrefix",
-    type=AgentsListRequestType.REMOTE_AGENT,
-    attributes=[
-        "attributes"
-    ],
 )
 
 ```
@@ -6789,7 +7370,7 @@ client.agents.list(
 <dl>
 <dd>
 
-**type:** `typing.Optional[AgentsListRequestType]` — Filter by latest manifest discriminator (`remote-agent`, `truefoundry-agent`, or `agent`). NOTE: `agent` is a legacy type and will be removed in the future.
+**type:** `typing.Optional[ListAgentsRequestType]` — Filter by latest manifest discriminator (`remote-agent`, `truefoundry-agent`, or `agent`). NOTE: `agent` is a legacy type and will be removed in the future.
     
 </dd>
 </dl>
@@ -6797,7 +7378,7 @@ client.agents.list(
 <dl>
 <dd>
 
-**attributes:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
+**attributes:** `typing.Optional[typing.List[str]]` — Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
     
 </dd>
 </dl>
@@ -6844,7 +7425,7 @@ Create or Update an Agent.
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, TrueFoundryAgentManifest, TrueFoundryAgentModel, Collaborator
+from truefoundry_sdk import TrueFoundry, TrueFoundryAgentManifest, TrueFoundryAgentModel
 
 client = TrueFoundry(
     api_key="<token>",
@@ -6859,12 +7440,6 @@ client.agents.create_or_update(
         model=TrueFoundryAgentModel(
             name="name",
         ),
-        collaborators=[
-            Collaborator(
-                subject="subject",
-                role_id="role_id",
-            )
-        ],
     ),
 )
 
@@ -7054,6 +7629,247 @@ client.agents.delete(
 </dl>
 </details>
 
+<details><summary><code>client.agents.<a href="src/truefoundry_sdk/agents/client.py">get_token</a>(...) -> GetAgentIdentityTokenResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the stored TrueFoundry-backed token for the agent's linked identity. Only valid for agents whose identity is TrueFoundry-backed. Requires manage access on the agent since the token authenticates as it. Use the create-token endpoint to issue one.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.agents.get_token(
+    id="jqfwg345gi25n5ju2yz5iz6m",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — System-generated agent ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.<a href="src/truefoundry_sdk/agents/client.py">create_token</a>(...) -> GetAgentIdentityTokenResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Issues a new TrueFoundry-backed token for the agent's linked identity. Fails with 409 when a valid token already exists — use the get-token endpoint to retrieve it. An expired token is replaced by a new one. An optional expirationDate (yyyy-mm-dd) sets the token's expiry; the identity manifest is not modified. Requires manage access on the agent since the token authenticates as it.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.agents.create_token(
+    id="jqfwg345gi25n5ju2yz5iz6m",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — System-generated agent ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**expiration_date:** `typing.Optional[str]` — Token expiry as yyyy-mm-dd, applied to the issued token's own expiry only (the identity manifest is not modified). Defaults to a long-lived, effectively non-expiring token when omitted.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.<a href="src/truefoundry_sdk/agents/client.py">regenerate_token</a>(...) -> GetAgentIdentityTokenResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Regenerates the TrueFoundry-backed token for the agent's linked identity. The old token remains valid for the specified grace period. Fails when a previous token is still in its grace window. An optional expirationDate (yyyy-mm-dd) sets the new token's expiry; the identity manifest is not modified. Requires manage access on the agent since the token authenticates as it.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.agents.regenerate_token(
+    id="jqfwg345gi25n5ju2yz5iz6m",
+    grace_period_in_minutes=60,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — System-generated agent ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**grace_period_in_minutes:** `float` — Grace period in minutes for which the old token will remain valid after regeneration
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**expiration_date:** `typing.Optional[str]` — Token expiry as yyyy-mm-dd, applied to the newly issued token's own expiry only (the identity manifest is not modified). Defaults to a long-lived, effectively non-expiring token when omitted.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## AgentVersions
 <details><summary><code>client.agent_versions.<a href="src/truefoundry_sdk/agent_versions/client.py">list</a>(...) -> ListAgentVersionsResponse</code></summary>
 <dl>
@@ -7092,7 +7908,6 @@ client = TrueFoundry(
 client.agent_versions.list(
     limit=10,
     offset=0,
-    id="id",
 )
 
 ```
@@ -7327,10 +8142,6 @@ client = TrueFoundry(
 client.prompts.list(
     limit=10,
     offset=0,
-    fqn="fqn",
-    ml_repo_id="ml_repo_id",
-    name="name",
-    include_empty_prompts=True,
 )
 
 ```
@@ -7528,12 +8339,6 @@ client = TrueFoundry(
 client.prompt_versions.list(
     limit=10,
     offset=0,
-    tag="tag",
-    fqn="fqn",
-    prompt_id="prompt_id",
-    ml_repo_id="ml_repo_id",
-    name="name",
-    version=1,
 )
 
 ```
@@ -8043,11 +8848,6 @@ client = TrueFoundry(
 client.artifacts.list(
     limit=10,
     offset=0,
-    fqn="fqn",
-    ml_repo_id="ml_repo_id",
-    name="name",
-    run_id="run_id",
-    include_empty_artifacts=True,
 )
 
 ```
@@ -8251,19 +9051,6 @@ client = TrueFoundry(
 client.artifact_versions.list(
     limit=10,
     offset=0,
-    tag="tag",
-    fqn="fqn",
-    artifact_id="artifact_id",
-    ml_repo_id="ml_repo_id",
-    name="name",
-    version=1,
-    run_ids=[
-        "run_ids"
-    ],
-    run_steps=[
-        1.1
-    ],
-    include_internal_metadata=True,
 )
 
 ```
@@ -8344,7 +9131,7 @@ client.artifact_versions.list(
 <dl>
 <dd>
 
-**run_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Run IDs to filter artifact versions by.
+**run_ids:** `typing.Optional[typing.List[str]]` — Run IDs to filter artifact versions by.
     
 </dd>
 </dl>
@@ -8352,7 +9139,7 @@ client.artifact_versions.list(
 <dl>
 <dd>
 
-**run_steps:** `typing.Optional[typing.Union[float, typing.Sequence[float]]]` — Run steps to filter artifact versions by.
+**run_steps:** `typing.Optional[typing.List[float]]` — Run steps to filter artifact versions by.
     
 </dd>
 </dl>
@@ -9172,10 +9959,6 @@ client = TrueFoundry(
 client.ml_repos.list(
     limit=10,
     offset=0,
-    name="name",
-    attributes=[
-        "attributes"
-    ],
 )
 
 ```
@@ -9216,7 +9999,7 @@ client.ml_repos.list(
 <dl>
 <dd>
 
-**attributes:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
+**attributes:** `typing.Optional[typing.List[str]]` — Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
     
 </dd>
 </dl>
@@ -9263,7 +10046,7 @@ Creates or updates an MLRepo entity based on the provided manifest.
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, MlRepoManifest, Collaborator
+from truefoundry_sdk import TrueFoundry, MlRepoManifest
 
 client = TrueFoundry(
     api_key="<token>",
@@ -9275,12 +10058,6 @@ client.ml_repos.create_or_update(
         type="ml-repo",
         name="name",
         storage_integration_fqn="storage_integration_fqn",
-        collaborators=[
-            Collaborator(
-                subject="subject",
-                role_id="role_id",
-            )
-        ],
     ),
 )
 
@@ -9364,9 +10141,6 @@ client = TrueFoundry(
 client.data_directories.list(
     limit=10,
     offset=0,
-    fqn="fqn",
-    ml_repo_id="ml_repo_id",
-    name="name",
 )
 
 ```
@@ -9930,7 +10704,6 @@ client = TrueFoundry(
 
 client.data_directories.delete(
     id="id",
-    delete_contents=True,
 )
 
 ```
@@ -11286,11 +12059,6 @@ client = TrueFoundry(
 client.models.list(
     limit=10,
     offset=0,
-    fqn="fqn",
-    ml_repo_id="ml_repo_id",
-    name="name",
-    run_id="run_id",
-    include_empty_models=True,
 )
 
 ```
@@ -11494,19 +12262,6 @@ client = TrueFoundry(
 client.model_versions.list(
     limit=10,
     offset=0,
-    tag="tag",
-    fqn="fqn",
-    model_id="model_id",
-    ml_repo_id="ml_repo_id",
-    name="name",
-    version=1,
-    run_ids=[
-        "run_ids"
-    ],
-    run_steps=[
-        1.1
-    ],
-    include_internal_metadata=True,
 )
 
 ```
@@ -11587,7 +12342,7 @@ client.model_versions.list(
 <dl>
 <dd>
 
-**run_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter model versions by associated run identifiers.
+**run_ids:** `typing.Optional[typing.List[str]]` — Filter model versions by associated run identifiers.
     
 </dd>
 </dl>
@@ -11595,7 +12350,7 @@ client.model_versions.list(
 <dl>
 <dd>
 
-**run_steps:** `typing.Optional[typing.Union[float, typing.Sequence[float]]]` — Filter model versions by associated run steps.
+**run_steps:** `typing.Optional[typing.List[float]]` — Filter model versions by associated run steps.
     
 </dd>
 </dl>
@@ -11886,7 +12641,7 @@ Get runtime logs (stdout/stderr) emitted by the pods of a deployed application.
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, LogsSortingDirection, LogsSearchFilterType, LogsSearchOperatorType
+from truefoundry_sdk import TrueFoundry
 
 client = TrueFoundry(
     api_key="<token>",
@@ -11896,23 +12651,7 @@ client = TrueFoundry(
 client.logs.get(
     start_ts="1779262323000000000",
     end_ts="1779348723000000000",
-    limit=1,
-    direction=LogsSortingDirection.ASC,
-    num_logs_to_ignore=1,
-    application_id="applicationId",
-    application_fqn="applicationFqn",
-    deployment_id="deploymentId",
-    job_run_name="jobRunName",
-    pod_name="podName",
-    container_name="containerName",
-    pod_names=[
-        "podNames"
-    ],
-    pod_names_regex="podNamesRegex",
     search_filters="[{\"string\":\"error\",\"type\":\"substring\",\"operator\":\"equal\"}]",
-    search_string="searchString",
-    search_type=LogsSearchFilterType.REGEX,
-    search_operator=LogsSearchOperatorType.EQUAL,
 )
 
 ```
@@ -12017,7 +12756,7 @@ client.logs.get(
 <dl>
 <dd>
 
-**pod_names:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — List of pod names whose logs to fetch. Cannot be used together with podName or podNamesRegex.
+**pod_names:** `typing.Optional[typing.List[str]]` — List of pod names whose logs to fetch. Cannot be used together with podName or podNamesRegex.
     
 </dd>
 </dl>
@@ -12259,10 +12998,6 @@ client = TrueFoundry(
 client.agent_skills.list(
     limit=10,
     offset=0,
-    fqn="fqn",
-    ml_repo_id="ml_repo_id",
-    name="name",
-    include_empty_agent_skills=True,
 )
 
 ```
@@ -12460,11 +13195,6 @@ client = TrueFoundry(
 client.agent_skill_versions.list(
     limit=10,
     offset=0,
-    fqn="fqn",
-    agent_skill_id="agent_skill_id",
-    ml_repo_id="ml_repo_id",
-    name="name",
-    version=1,
 )
 
 ```
@@ -12956,7 +13686,7 @@ Get the AI Gateway configuration for the given type.
 
 ```python
 from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk.internal.ai_gateway import AiGatewayGetGatewayConfigRequestType
+from truefoundry_sdk.internal.ai_gateway import GetGatewayConfigAiGatewayRequestType
 
 client = TrueFoundry(
     api_key="<token>",
@@ -12964,7 +13694,7 @@ client = TrueFoundry(
 )
 
 client.internal.ai_gateway.get_gateway_config(
-    type=AiGatewayGetGatewayConfigRequestType.GATEWAY_RATE_LIMITING_CONFIG,
+    type=GetGatewayConfigAiGatewayRequestType.GATEWAY_RATE_LIMITING_CONFIG,
 )
 
 ```
@@ -12981,7 +13711,7 @@ client.internal.ai_gateway.get_gateway_config(
 <dl>
 <dd>
 
-**type:** `AiGatewayGetGatewayConfigRequestType` — The type of gateway configuration to retrieve or delete.
+**type:** `GetGatewayConfigAiGatewayRequestType` — The type of gateway configuration to retrieve or delete.
     
 </dd>
 </dl>
@@ -13418,9 +14148,6 @@ client.internal.deployments.get_suggested_endpoint(
     application_type=ApplicationType.ASYNC_SERVICE,
     application_name="applicationName",
     workspace_id="workspaceId",
-    base_domain="baseDomain",
-    port="port",
-    prefer_wildcard=True,
 )
 
 ```
@@ -13534,7 +14261,6 @@ client = TrueFoundry(
 
 client.internal.applications.promote_rollout(
     id="id",
-    full=True,
 )
 
 ```
@@ -13615,7 +14341,6 @@ client = TrueFoundry(
 
 client.internal.applications.get_pod_template_hash_to_deployment_version(
     id="id",
-    pod_template_hashes="podTemplateHashes",
 )
 
 ```
@@ -13689,7 +14414,7 @@ List metric charts available for an application.
 
 ```python
 from truefoundry_sdk import TrueFoundry
-from truefoundry_sdk.internal.metrics import MetricsGetChartsRequestFilterEntity
+from truefoundry_sdk.internal.metrics import GetChartsMetricsRequestFilterEntity
 
 client = TrueFoundry(
     api_key="<token>",
@@ -13699,9 +14424,7 @@ client = TrueFoundry(
 client.internal.metrics.get_charts(
     workspace_id="workspaceId",
     application_id="applicationId",
-    start_ts="startTs",
-    end_ts="endTs",
-    filter_entity=MetricsGetChartsRequestFilterEntity.APPLICATION,
+    filter_entity=GetChartsMetricsRequestFilterEntity.APPLICATION,
     filter_query="{\"pod\":\"my-app-abc123-xyz\"}",
 )
 
@@ -13735,7 +14458,7 @@ client.internal.metrics.get_charts(
 <dl>
 <dd>
 
-**filter_entity:** `MetricsGetChartsRequestFilterEntity` — Scope of the chart bundle to return.
+**filter_entity:** `GetChartsMetricsRequestFilterEntity` — Scope of the chart bundle to return.
     
 </dd>
 </dl>
@@ -13942,23 +14665,6 @@ client = TrueFoundry(
 client.internal.artifact_versions.list(
     limit=10,
     offset=0,
-    tag="tag",
-    fqn="fqn",
-    artifact_id="artifact_id",
-    ml_repo_id="ml_repo_id",
-    name="name",
-    version=1,
-    run_ids=[
-        "run_ids"
-    ],
-    run_steps=[
-        1.1
-    ],
-    include_internal_metadata=True,
-    include_model_versions=True,
-    artifact_types=[
-        "artifact_types"
-    ],
 )
 
 ```
@@ -14039,7 +14745,7 @@ client.internal.artifact_versions.list(
 <dl>
 <dd>
 
-**run_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Run IDs to filter artifact versions by.
+**run_ids:** `typing.Optional[typing.List[str]]` — Run IDs to filter artifact versions by.
     
 </dd>
 </dl>
@@ -14047,7 +14753,7 @@ client.internal.artifact_versions.list(
 <dl>
 <dd>
 
-**run_steps:** `typing.Optional[typing.Union[float, typing.Sequence[float]]]` — Run steps to filter artifact versions by.
+**run_steps:** `typing.Optional[typing.List[float]]` — Run steps to filter artifact versions by.
     
 </dd>
 </dl>
@@ -14216,10 +14922,7 @@ client = TrueFoundry(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.internal.docker_registries.get_credentials(
-    fqn="fqn",
-    cluster_id="clusterId",
-)
+client.internal.docker_registries.get_credentials()
 
 ```
 </dd>
@@ -14264,7 +14967,7 @@ client.internal.docker_registries.get_credentials(
 </details>
 
 ## Internal Workflows
-<details><summary><code>client.internal.workflows.<a href="src/truefoundry_sdk/internal/workflows/client.py">execute_workflow</a>(...) -> WorkflowsExecuteWorkflowResponse</code></summary>
+<details><summary><code>client.internal.workflows.<a href="src/truefoundry_sdk/internal/workflows/client.py">execute_workflow</a>(...) -> ExecuteWorkflowWorkflowsResponse</code></summary>
 <dl>
 <dd>
 
@@ -14391,10 +15094,7 @@ client.internal.build_logs.get(
     pipeline_run_name="pipelineRunName",
     start_ts="1635467890123456789",
     end_ts="1635467891123456789",
-    limit="limit",
-    direction="direction",
     filter_query="{\"matchString\":\"error\",\"type\":\"substring\",\"operator\":\"equal\"}",
-    num_logs_to_ignore=1.1,
 )
 
 ```
@@ -14419,7 +15119,7 @@ client.internal.build_logs.get(
 <dl>
 <dd>
 
-**start_ts:** `typing.Optional[str]` — Start timestamp for querying logs, in nanoseconds from the Unix epoch.
+**start_ts:** `typing.Optional[str]` — Start timestamp for querying logs, in nanoseconds from the Unix epoch. Supply the `logsStartTs` of the build; omitting it searches from the epoch and matches nothing.
     
 </dd>
 </dl>
@@ -14443,7 +15143,7 @@ client.internal.build_logs.get(
 <dl>
 <dd>
 
-**direction:** `typing.Optional[str]` — Direction of sorting logs. Can be `asc` or `desc`
+**direction:** `typing.Optional[LogsSortingDirection]` — Direction of sorting logs by timestamp.
     
 </dd>
 </dl>

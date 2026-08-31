@@ -13,6 +13,10 @@ class HttpError(UniversalBaseModel):
     status_code: typing_extensions.Annotated[
         int, FieldMetadata(alias="statusCode"), pydantic.Field(alias="statusCode", description="HTTP Status Code")
     ]
+    """
+    HTTP Status Code
+    """
+
     message: str = pydantic.Field()
     """
     Error Message

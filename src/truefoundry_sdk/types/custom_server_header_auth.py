@@ -16,7 +16,10 @@ class CustomServerHeaderAuth(UniversalBaseModel):
     +value=header
     """
 
-    headers: typing.Dict[str, str]
+    headers: typing.Dict[str, str] = pydantic.Field()
+    """
+    Map each header name to its value.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

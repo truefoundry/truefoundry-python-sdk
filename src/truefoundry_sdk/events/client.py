@@ -30,7 +30,7 @@ class EventsClient:
         end_ts: typing.Optional[str] = None,
         application_id: typing.Optional[str] = None,
         application_fqn: typing.Optional[str] = None,
-        pod_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        pod_names: typing.Optional[typing.Sequence[str]] = None,
         job_run_name: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetEventsResponse:
@@ -51,7 +51,7 @@ class EventsClient:
         application_fqn : typing.Optional[str]
             Fully qualified name of the application. Either applicationId or applicationFqn must be provided.
 
-        pod_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        pod_names : typing.Optional[typing.Sequence[str]]
             List of Kubernetes pod names to filter events. Cannot be provided together with jobRunName.
 
         job_run_name : typing.Optional[str]
@@ -73,14 +73,7 @@ class EventsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.events.get(
-            start_ts="startTs",
-            end_ts="endTs",
-            application_id="applicationId",
-            application_fqn="applicationFqn",
-            pod_names=["podNames"],
-            job_run_name="jobRunName",
-        )
+        client.events.get()
         """
         _response = self._raw_client.get(
             start_ts=start_ts,
@@ -116,7 +109,7 @@ class AsyncEventsClient:
         end_ts: typing.Optional[str] = None,
         application_id: typing.Optional[str] = None,
         application_fqn: typing.Optional[str] = None,
-        pod_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        pod_names: typing.Optional[typing.Sequence[str]] = None,
         job_run_name: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetEventsResponse:
@@ -137,7 +130,7 @@ class AsyncEventsClient:
         application_fqn : typing.Optional[str]
             Fully qualified name of the application. Either applicationId or applicationFqn must be provided.
 
-        pod_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        pod_names : typing.Optional[typing.Sequence[str]]
             List of Kubernetes pod names to filter events. Cannot be provided together with jobRunName.
 
         job_run_name : typing.Optional[str]
@@ -164,14 +157,7 @@ class AsyncEventsClient:
 
 
         async def main() -> None:
-            await client.events.get(
-                start_ts="startTs",
-                end_ts="endTs",
-                application_id="applicationId",
-                application_fqn="applicationFqn",
-                pod_names=["podNames"],
-                job_run_name="jobRunName",
-            )
+            await client.events.get()
 
 
         asyncio.run(main())

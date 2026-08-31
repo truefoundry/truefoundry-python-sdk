@@ -4,7 +4,8 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .gateway_logging_rule import GatewayLoggingRule
+from .logging_when import LoggingWhen
+from .redaction import Redaction
 
 
 class GatewayLoggingConfig(UniversalBaseModel):
@@ -12,21 +13,24 @@ class GatewayLoggingConfig(UniversalBaseModel):
     Logging Configuration
     """
 
-    name: str = pydantic.Field()
-    """
-    Name of the logging configuration
-    """
-
     type: typing.Literal["gateway-logging-config"] = pydantic.Field(default="gateway-logging-config")
     """
     +value=gateway-logging-config
-    +sort=2
+    +sort=1
     """
 
-    rules: typing.List[GatewayLoggingRule] = pydantic.Field()
+    name: str = pydantic.Field()
     """
-    List of logging rules
+    Unique name for this logging configuration
     """
+
+    when: typing.Optional[LoggingWhen] = None
+    log: bool = pydantic.Field()
+    """
+    Whether requests matched by this config should be logged.
+    """
+
+    redact_with: typing.Optional[Redaction] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

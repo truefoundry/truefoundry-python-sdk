@@ -2,8 +2,9 @@
 
 import typing
 
+from .mcp_server_aws_sig_v4auth import McpServerAwsSigV4Auth
 from .mcp_server_header_auth import McpServerHeaderAuth
 from .mcp_server_o_auth2 import McpServerOAuth2
 from .mcp_server_passthrough import McpServerPassthrough
 
-McpServerAuth = typing.Union[McpServerHeaderAuth, McpServerOAuth2, McpServerPassthrough]
+McpServerAuth = typing.Union[McpServerHeaderAuth, McpServerOAuth2, McpServerPassthrough, McpServerAwsSigV4Auth]

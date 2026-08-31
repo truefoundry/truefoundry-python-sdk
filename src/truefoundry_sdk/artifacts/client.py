@@ -153,11 +153,6 @@ class ArtifactsClient:
         response = client.artifacts.list(
             limit=10,
             offset=0,
-            fqn="fqn",
-            ml_repo_id="ml_repo_id",
-            name="name",
-            run_id="run_id",
-            include_empty_artifacts=True,
         )
         for item in response:
             yield item
@@ -376,11 +371,6 @@ class AsyncArtifactsClient:
             response = await client.artifacts.list(
                 limit=10,
                 offset=0,
-                fqn="fqn",
-                ml_repo_id="ml_repo_id",
-                name="name",
-                run_id="run_id",
-                include_empty_artifacts=True,
             )
             async for item in response:
                 yield item

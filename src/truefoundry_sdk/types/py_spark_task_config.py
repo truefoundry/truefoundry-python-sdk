@@ -4,9 +4,9 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .py_spark_task_config_image import PySparkTaskConfigImage
 from .spark_driver_config import SparkDriverConfig
 from .spark_executor_config import SparkExecutorConfig
-from .task_py_spark_build import TaskPySparkBuild
 from .volume_mount import VolumeMount
 
 
@@ -16,7 +16,12 @@ class PySparkTaskConfig(UniversalBaseModel):
     +value=pyspark-task-config
     """
 
-    image: TaskPySparkBuild
+    image: PySparkTaskConfigImage = pydantic.Field()
+    """
+    Specification for the image to be used for the task. Use TaskPySparkBuild to build an image,
+    or TaskSparkImage to use a pre-built image that already contains all code and dependencies.
+    """
+
     driver_config: SparkDriverConfig
     executor_config: SparkExecutorConfig
     spark_conf: typing.Optional[typing.Dict[str, typing.Optional[str]]] = pydantic.Field(default=None)

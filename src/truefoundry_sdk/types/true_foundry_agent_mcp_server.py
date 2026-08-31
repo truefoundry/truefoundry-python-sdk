@@ -2,50 +2,7 @@
 
 import typing
 
-import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .true_foundry_agent_mcp_server_inline import TrueFoundryAgentMcpServerInline
+from .true_foundry_agent_mcp_server_registry import TrueFoundryAgentMcpServerRegistry
 
-
-class TrueFoundryAgentMcpServer(UniversalBaseModel):
-    """
-    A tool selector is either a literal tool name or one of the special tags:
-    @all, @read-only, @write, @destructive.
-    """
-
-    name: str = pydantic.Field()
-    """
-    MCP server name
-    """
-
-    preload: typing.Optional[bool] = pydantic.Field(default=False)
-    """
-    When true, this server's tools are preloaded into context. When false (default), tools are discovered lazily and only preload_tools stay eager.
-    """
-
-    enable_tools: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
-    """
-    Tools to enable. Supports tags @all, @read-only, @write, @destructive or literal tool names.
-    """
-
-    disable_tools: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
-    """
-    Tools to disable (subtracted from enable_tools).
-    """
-
-    preload_tools: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
-    """
-    When preload is false, tools to still preload into context.
-    """
-
-    require_approval_for_tools: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
-    """
-    Tools that require human approval before execution. Supports tags and literal tool names.
-    """
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            smart_union = True
-            extra = pydantic.Extra.allow
+TrueFoundryAgentMcpServer = typing.Union[TrueFoundryAgentMcpServerRegistry, TrueFoundryAgentMcpServerInline]

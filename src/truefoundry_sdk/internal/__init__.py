@@ -19,13 +19,13 @@ if typing.TYPE_CHECKING:
         vcs,
         workflows,
     )
-    from .ai_gateway import AiGatewayGetGatewayConfigRequestType
-    from .metrics import MetricsGetChartsRequestFilterEntity
-    from .workflows import WorkflowsExecuteWorkflowResponse
+    from .ai_gateway import GetGatewayConfigAiGatewayRequestType
+    from .metrics import GetChartsMetricsRequestFilterEntity
+    from .workflows import ExecuteWorkflowWorkflowsResponse
 _dynamic_imports: typing.Dict[str, str] = {
-    "AiGatewayGetGatewayConfigRequestType": ".ai_gateway",
-    "MetricsGetChartsRequestFilterEntity": ".metrics",
-    "WorkflowsExecuteWorkflowResponse": ".workflows",
+    "ExecuteWorkflowWorkflowsResponse": ".workflows",
+    "GetChartsMetricsRequestFilterEntity": ".metrics",
+    "GetGatewayConfigAiGatewayRequestType": ".ai_gateway",
     "ai_gateway": ".ai_gateway",
     "applications": ".applications",
     "artifact_versions": ".artifact_versions",
@@ -62,9 +62,9 @@ def __dir__():
 
 
 __all__ = [
-    "AiGatewayGetGatewayConfigRequestType",
-    "MetricsGetChartsRequestFilterEntity",
-    "WorkflowsExecuteWorkflowResponse",
+    "ExecuteWorkflowWorkflowsResponse",
+    "GetChartsMetricsRequestFilterEntity",
+    "GetGatewayConfigAiGatewayRequestType",
     "ai_gateway",
     "applications",
     "artifact_versions",

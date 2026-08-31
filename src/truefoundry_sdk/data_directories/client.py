@@ -85,9 +85,6 @@ class DataDirectoriesClient:
         response = client.data_directories.list(
             limit=10,
             offset=0,
-            fqn="fqn",
-            ml_repo_id="ml_repo_id",
-            name="name",
         )
         for item in response:
             yield item
@@ -396,7 +393,6 @@ class DataDirectoriesClient:
         )
         client.data_directories.delete(
             id="id",
-            delete_contents=True,
         )
         """
         _response = self._raw_client.delete(id, delete_contents=delete_contents, request_options=request_options)
@@ -472,9 +468,6 @@ class AsyncDataDirectoriesClient:
             response = await client.data_directories.list(
                 limit=10,
                 offset=0,
-                fqn="fqn",
-                ml_repo_id="ml_repo_id",
-                name="name",
             )
             async for item in response:
                 yield item
@@ -843,7 +836,6 @@ class AsyncDataDirectoriesClient:
         async def main() -> None:
             await client.data_directories.delete(
                 id="id",
-                delete_contents=True,
             )
 
 

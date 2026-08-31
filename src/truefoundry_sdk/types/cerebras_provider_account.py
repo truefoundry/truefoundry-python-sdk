@@ -14,7 +14,7 @@ from .owned_by import OwnedBy
 
 class CerebrasProviderAccount(UniversalBaseModel):
     """
-    Cerebras Provider Account
+    Cerebras Model Account
     """
 
     type: typing.Literal["provider-account/cerebras"] = pydantic.Field(default="provider-account/cerebras")
@@ -24,18 +24,18 @@ class CerebrasProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    The name of the Cerebras provider account
+    The name of the Cerebras model account
     """
 
     auth_data: CerebrasKeyAuth
     integrations: typing.Optional[typing.List[CerebrasIntegrations]] = pydantic.Field(default=None)
     """
-    List of integrations that are associated with the Cerebras provider account
+    List of integrations that are associated with the Cerebras model account
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    List of users who have access to this provider account
+    List of users who have access to this model account
     """
 
     owned_by: typing_extensions.Annotated[
@@ -43,7 +43,7 @@ class CerebrasProviderAccount(UniversalBaseModel):
     ] = None
     discount_percent: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Discount % applied to upstream list price for this provider account.
+    Discount % applied to upstream list price for this model account.
     """
 
     if IS_PYDANTIC_V2:

@@ -84,11 +84,6 @@ class AgentSkillVersionsClient:
         response = client.agent_skill_versions.list(
             limit=10,
             offset=0,
-            fqn="fqn",
-            agent_skill_id="agent_skill_id",
-            ml_repo_id="ml_repo_id",
-            name="name",
-            version=1,
         )
         for item in response:
             yield item
@@ -253,11 +248,6 @@ class AsyncAgentSkillVersionsClient:
             response = await client.agent_skill_versions.list(
                 limit=10,
                 offset=0,
-                fqn="fqn",
-                agent_skill_id="agent_skill_id",
-                ml_repo_id="ml_repo_id",
-                name="name",
-                version=1,
             )
             async for item in response:
                 yield item

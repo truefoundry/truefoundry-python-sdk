@@ -14,7 +14,7 @@ from .owned_by import OwnedBy
 
 class DeepgramProviderAccount(UniversalBaseModel):
     """
-    Deepgram Provider Account
+    Deepgram Model Account
     """
 
     type: typing.Literal["provider-account/deepgram"] = pydantic.Field(default="provider-account/deepgram")
@@ -24,7 +24,7 @@ class DeepgramProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    The name of the Deepgram provider account
+    The name of the Deepgram model account
     """
 
     auth_data: DeepgramApiKeyAuth
@@ -35,12 +35,12 @@ class DeepgramProviderAccount(UniversalBaseModel):
 
     integrations: typing.List[DeepgramModel] = pydantic.Field()
     """
-    List of integrations that are associated with the Deepgram provider account
+    List of integrations that are associated with the Deepgram model account
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    List of users who have access to this provider account
+    List of users who have access to this model account
     """
 
     owned_by: typing_extensions.Annotated[
@@ -48,7 +48,7 @@ class DeepgramProviderAccount(UniversalBaseModel):
     ] = None
     discount_percent: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Discount % applied to upstream list price for this provider account.
+    Discount % applied to upstream list price for this model account.
     """
 
     if IS_PYDANTIC_V2:

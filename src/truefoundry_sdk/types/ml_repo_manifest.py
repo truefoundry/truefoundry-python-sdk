@@ -35,7 +35,7 @@ class MlRepoManifest(UniversalBaseModel):
     Storage Integration to store artifacts and models. A storage integration represents a connected blob storage like AWS S3 / Azure Blob Storage / Google Cloud Storage.
     """
 
-    collaborators: typing.List[Collaborator] = pydantic.Field()
+    collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
     Users and Teams that have access to MLRepo
     """

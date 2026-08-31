@@ -15,24 +15,44 @@ class TraceSpan(UniversalBaseModel):
         FieldMetadata(alias="spanId"),
         pydantic.Field(alias="spanId", description="Unique identifier for the span within the trace."),
     ]
+    """
+    Unique identifier for the span within the trace.
+    """
+
     trace_id: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="traceId"),
         pydantic.Field(alias="traceId", description="Unique identifier for the trace that contains this span."),
     ]
+    """
+    Unique identifier for the trace that contains this span.
+    """
+
     parent_span_id: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="parentSpanId"),
         pydantic.Field(alias="parentSpanId", description="Identifier of the parent span in the trace hierarchy."),
     ]
+    """
+    Identifier of the parent span in the trace hierarchy.
+    """
+
     service_name: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="serviceName"),
         pydantic.Field(alias="serviceName", description="Name of the service that generated this span."),
     ]
+    """
+    Name of the service that generated this span.
+    """
+
     span_name: typing_extensions.Annotated[
         str, FieldMetadata(alias="spanName"), pydantic.Field(alias="spanName", description="Name of the span")
     ]
+    """
+    Name of the span
+    """
+
     span_kind: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="spanKind"),
@@ -40,11 +60,19 @@ class TraceSpan(UniversalBaseModel):
             alias="spanKind", description="Type of span (e.g., CLIENT, SERVER, INTERNAL, PRODUCER, CONSUMER)."
         ),
     ]
+    """
+    Type of span (e.g., CLIENT, SERVER, INTERNAL, PRODUCER, CONSUMER).
+    """
+
     scope_name: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="scopeName"),
         pydantic.Field(alias="scopeName", description="Name of the instrumentation scope that created this span."),
     ]
+    """
+    Name of the instrumentation scope that created this span.
+    """
+
     scope_version: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="scopeVersion"),
@@ -52,6 +80,10 @@ class TraceSpan(UniversalBaseModel):
             alias="scopeVersion", description="Version of the instrumentation scope that created this span."
         ),
     ]
+    """
+    Version of the instrumentation scope that created this span.
+    """
+
     timestamp: str = pydantic.Field()
     """
     Timestamp in ISO 8601 format (e.g., 2025-03-12T00:00:09.872Z).
@@ -62,16 +94,28 @@ class TraceSpan(UniversalBaseModel):
         FieldMetadata(alias="durationNs"),
         pydantic.Field(alias="durationNs", description="Duration of the span in nanoseconds."),
     ]
+    """
+    Duration of the span in nanoseconds.
+    """
+
     status_code: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="statusCode"),
         pydantic.Field(alias="statusCode", description="Status code of the span (e.g., OK, ERROR, UNSET)."),
     ]
+    """
+    Status code of the span (e.g., OK, ERROR, UNSET).
+    """
+
     status_message: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="statusMessage"),
         pydantic.Field(alias="statusMessage", description="Human-readable status message describing the span result."),
     ]
+    """
+    Human-readable status message describing the span result.
+    """
+
     span_attributes: typing_extensions.Annotated[
         typing.Dict[str, typing.Any],
         FieldMetadata(alias="spanAttributes"),
@@ -79,6 +123,10 @@ class TraceSpan(UniversalBaseModel):
             alias="spanAttributes", description="Key-value pairs containing additional metadata about the span."
         ),
     ]
+    """
+    Key-value pairs containing additional metadata about the span.
+    """
+
     events: typing.List[typing.Dict[str, typing.Any]] = pydantic.Field()
     """
     Array of events that occurred during the span execution.
@@ -91,6 +139,10 @@ class TraceSpan(UniversalBaseModel):
             alias="createdBySubject", description="Subject (user or virtualaccount) that created this span."
         ),
     ]
+    """
+    Subject (user or virtualaccount) that created this span.
+    """
+
     feedbacks: typing.Optional[typing.List[typing.List[typing.Any]]] = pydantic.Field(default=None)
     """
     Gateway feedbacks associated with this span (if any).

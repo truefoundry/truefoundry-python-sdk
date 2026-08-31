@@ -30,6 +30,7 @@ if typing.TYPE_CHECKING:
     from .data_directories.client import AsyncDataDirectoriesClient, DataDirectoriesClient
     from .environments.client import AsyncEnvironmentsClient, EnvironmentsClient
     from .events.client import AsyncEventsClient, EventsClient
+    from .gateway_budgets.client import AsyncGatewayBudgetsClient, GatewayBudgetsClient
     from .internal.client import AsyncInternalClient, InternalClient
     from .jobs.client import AsyncJobsClient, JobsClient
     from .logs.client import AsyncLogsClient, LogsClient
@@ -109,9 +110,7 @@ class BaseTrueFoundry:
         httpx_client: typing.Optional[httpx.Client] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
-        _defaulted_timeout = (
-            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
-        )
+        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
         if api_key is None:
             raise ApiError(body="The client must be instantiated be either passing in api_key or setting TFY_API_KEY")
@@ -134,6 +133,7 @@ class BaseTrueFoundry:
         self._internal: typing.Optional[InternalClient] = None
         self._users: typing.Optional[UsersClient] = None
         self._teams: typing.Optional[TeamsClient] = None
+        self._gateway_budgets: typing.Optional[GatewayBudgetsClient] = None
         self._personal_access_tokens: typing.Optional[PersonalAccessTokensClient] = None
         self._virtual_accounts: typing.Optional[VirtualAccountsClient] = None
         self._clusters: typing.Optional[ClustersClient] = None
@@ -178,6 +178,7 @@ class BaseTrueFoundry:
         *,
         manifest: TrueFoundryApplyRequestManifest,
         dry_run: typing.Optional[bool] = False,
+        force: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TrueFoundryApplyResponse:
         """
@@ -191,6 +192,9 @@ class BaseTrueFoundry:
         dry_run : typing.Optional[bool]
             Dry run the apply operation without actually applying
 
+        force : typing.Optional[bool]
+            When `true`, acknowledges that updating this manifest may delete existing per-subject auth records. Currently used for MCP server apply.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -201,7 +205,7 @@ class BaseTrueFoundry:
 
         Examples
         --------
-        from truefoundry_sdk import Collaborator, MlRepoManifest, TrueFoundry
+        from truefoundry_sdk import MlRepoManifest, TrueFoundry
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -211,16 +215,12 @@ class BaseTrueFoundry:
             manifest=MlRepoManifest(
                 name="name",
                 storage_integration_fqn="storage_integration_fqn",
-                collaborators=[
-                    Collaborator(
-                        subject="subject",
-                        role_id="role_id",
-                    )
-                ],
             ),
         )
         """
-        _response = self._raw_client.apply(manifest=manifest, dry_run=dry_run, request_options=request_options)
+        _response = self._raw_client.apply(
+            manifest=manifest, dry_run=dry_run, force=force, request_options=request_options
+        )
         return _response.data
 
     def delete(
@@ -244,7 +244,7 @@ class BaseTrueFoundry:
 
         Examples
         --------
-        from truefoundry_sdk import Collaborator, MlRepoManifest, TrueFoundry
+        from truefoundry_sdk import MlRepoManifest, TrueFoundry
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -254,12 +254,6 @@ class BaseTrueFoundry:
             manifest=MlRepoManifest(
                 name="name",
                 storage_integration_fqn="storage_integration_fqn",
-                collaborators=[
-                    Collaborator(
-                        subject="subject",
-                        role_id="role_id",
-                    )
-                ],
             ),
         )
         """
@@ -289,6 +283,14 @@ class BaseTrueFoundry:
 
             self._teams = TeamsClient(client_wrapper=self._client_wrapper)
         return self._teams
+
+    @property
+    def gateway_budgets(self):
+        if self._gateway_budgets is None:
+            from .gateway_budgets.client import GatewayBudgetsClient  # noqa: E402
+
+            self._gateway_budgets = GatewayBudgetsClient(client_wrapper=self._client_wrapper)
+        return self._gateway_budgets
 
     @property
     def personal_access_tokens(self):
@@ -587,9 +589,7 @@ class AsyncBaseTrueFoundry:
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
-        _defaulted_timeout = (
-            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
-        )
+        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
         if api_key is None:
             raise ApiError(body="The client must be instantiated be either passing in api_key or setting TFY_API_KEY")
@@ -611,6 +611,7 @@ class AsyncBaseTrueFoundry:
         self._internal: typing.Optional[AsyncInternalClient] = None
         self._users: typing.Optional[AsyncUsersClient] = None
         self._teams: typing.Optional[AsyncTeamsClient] = None
+        self._gateway_budgets: typing.Optional[AsyncGatewayBudgetsClient] = None
         self._personal_access_tokens: typing.Optional[AsyncPersonalAccessTokensClient] = None
         self._virtual_accounts: typing.Optional[AsyncVirtualAccountsClient] = None
         self._clusters: typing.Optional[AsyncClustersClient] = None
@@ -655,6 +656,7 @@ class AsyncBaseTrueFoundry:
         *,
         manifest: TrueFoundryApplyRequestManifest,
         dry_run: typing.Optional[bool] = False,
+        force: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TrueFoundryApplyResponse:
         """
@@ -668,6 +670,9 @@ class AsyncBaseTrueFoundry:
         dry_run : typing.Optional[bool]
             Dry run the apply operation without actually applying
 
+        force : typing.Optional[bool]
+            When `true`, acknowledges that updating this manifest may delete existing per-subject auth records. Currently used for MCP server apply.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -680,7 +685,7 @@ class AsyncBaseTrueFoundry:
         --------
         import asyncio
 
-        from truefoundry_sdk import AsyncTrueFoundry, Collaborator, MlRepoManifest
+        from truefoundry_sdk import AsyncTrueFoundry, MlRepoManifest
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -693,19 +698,15 @@ class AsyncBaseTrueFoundry:
                 manifest=MlRepoManifest(
                     name="name",
                     storage_integration_fqn="storage_integration_fqn",
-                    collaborators=[
-                        Collaborator(
-                            subject="subject",
-                            role_id="role_id",
-                        )
-                    ],
                 ),
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.apply(manifest=manifest, dry_run=dry_run, request_options=request_options)
+        _response = await self._raw_client.apply(
+            manifest=manifest, dry_run=dry_run, force=force, request_options=request_options
+        )
         return _response.data
 
     async def delete(
@@ -731,7 +732,7 @@ class AsyncBaseTrueFoundry:
         --------
         import asyncio
 
-        from truefoundry_sdk import AsyncTrueFoundry, Collaborator, MlRepoManifest
+        from truefoundry_sdk import AsyncTrueFoundry, MlRepoManifest
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -744,12 +745,6 @@ class AsyncBaseTrueFoundry:
                 manifest=MlRepoManifest(
                     name="name",
                     storage_integration_fqn="storage_integration_fqn",
-                    collaborators=[
-                        Collaborator(
-                            subject="subject",
-                            role_id="role_id",
-                        )
-                    ],
                 ),
             )
 
@@ -782,6 +777,14 @@ class AsyncBaseTrueFoundry:
 
             self._teams = AsyncTeamsClient(client_wrapper=self._client_wrapper)
         return self._teams
+
+    @property
+    def gateway_budgets(self):
+        if self._gateway_budgets is None:
+            from .gateway_budgets.client import AsyncGatewayBudgetsClient  # noqa: E402
+
+            self._gateway_budgets = AsyncGatewayBudgetsClient(client_wrapper=self._client_wrapper)
+        return self._gateway_budgets
 
     @property
     def personal_access_tokens(self):

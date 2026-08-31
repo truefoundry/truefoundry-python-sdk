@@ -23,6 +23,9 @@ class HeadersOverride(UniversalBaseModel):
         FieldMetadata(alias="set"),
         pydantic.Field(alias="set", description="Headers to add or overwrite in upstream request"),
     ] = None
+    """
+    Headers to add or overwrite in upstream request
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -14,7 +14,7 @@ from .owned_by import OwnedBy
 
 class DatabricksProviderAccount(UniversalBaseModel):
     """
-    Databricks Provider Account
+    Databricks Model Account
     """
 
     type: typing.Literal["provider-account/databricks"] = pydantic.Field(default="provider-account/databricks")
@@ -24,7 +24,7 @@ class DatabricksProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    The name of the Databricks provider account
+    The name of the Databricks model account
     """
 
     auth_data: DatabricksProviderAccountAuthData = pydantic.Field()
@@ -39,12 +39,12 @@ class DatabricksProviderAccount(UniversalBaseModel):
 
     integrations: typing.List[DatabricksIntegrations] = pydantic.Field()
     """
-    List of integrations that are associated with the Databricks provider account
+    List of integrations that are associated with the Databricks model account
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    List of users who have access to this provider account
+    List of users who have access to this model account
     """
 
     owned_by: typing_extensions.Annotated[
@@ -52,7 +52,7 @@ class DatabricksProviderAccount(UniversalBaseModel):
     ] = None
     discount_percent: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Discount % applied to upstream list price for this provider account.
+    Discount % applied to upstream list price for this model account.
     """
 
     if IS_PYDANTIC_V2:

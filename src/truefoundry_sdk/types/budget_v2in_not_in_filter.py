@@ -18,6 +18,10 @@ class BudgetV2InNotInFilter(UniversalBaseModel):
         FieldMetadata(alias="in"),
         pydantic.Field(alias="in", description="Match when the value is present in this list"),
     ] = None
+    """
+    Match when the value is present in this list
+    """
+
     not_in: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     Match when the value is NOT present in this list

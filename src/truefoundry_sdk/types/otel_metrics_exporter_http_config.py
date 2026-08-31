@@ -5,9 +5,10 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from .otel_exporter_http_config_base import OtelExporterHttpConfigBase
+from .otel_metrics_exporter_common_config import OtelMetricsExporterCommonConfig
 
 
-class OtelMetricsExporterHttpConfig(OtelExporterHttpConfigBase):
+class OtelMetricsExporterHttpConfig(OtelExporterHttpConfigBase, OtelMetricsExporterCommonConfig):
     """
     HTTP Configuration
     """

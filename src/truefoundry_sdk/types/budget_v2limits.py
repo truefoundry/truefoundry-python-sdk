@@ -31,6 +31,11 @@ class BudgetV2Limits(UniversalBaseModel):
     Maximum quarterly cost in USD
     """
 
+    cost_per_lifetime: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Maximum lifetime cost in USD. Mutually exclusive with the day/week/month/quarter limits.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:

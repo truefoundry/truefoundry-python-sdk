@@ -34,6 +34,9 @@ class Log(UniversalBaseModel):
         FieldMetadata(alias="containerName"),
         pydantic.Field(alias="containerName", description="Name of the container that emitted the log."),
     ] = None
+    """
+    Name of the container that emitted the log.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

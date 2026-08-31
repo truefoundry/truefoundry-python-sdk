@@ -7,6 +7,8 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
 from .collaborator import Collaborator
+from .mcp_tool_metadata import McpToolMetadata
+from .mcp_tool_policy import McpToolPolicy
 from .mcp_tool_setting import McpToolSetting
 from .owned_by import OwnedBy
 from .tfy_managed_mcp_server_o_auth import TfyManagedMcpServerOAuth
@@ -27,6 +29,11 @@ class TfyManagedMcpServerManifest(UniversalBaseModel):
     The name of the MCP Server.
     """
 
+    display_name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    A human-readable label for the MCP Server in the UI. If omitted, the server name is shown.
+    """
+
     description: str = pydantic.Field()
     """
     Provide a brief description of the purpose of this MCP Server.
@@ -42,7 +49,13 @@ class TfyManagedMcpServerManifest(UniversalBaseModel):
     Customize tool descriptions or enable/disable specific tools from the MCP Server.
     """
 
-    collaborators: typing.List[Collaborator] = pydantic.Field()
+    tool_policy: typing.Optional[McpToolPolicy] = None
+    tool_metadata: typing.Optional[typing.Dict[str, McpToolMetadata]] = pydantic.Field(default=None)
+    """
+    Per-tool description and annotation overrides keyed by tool name.
+    """
+
+    collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
     Users and Teams that have access to this MCP Server
     """

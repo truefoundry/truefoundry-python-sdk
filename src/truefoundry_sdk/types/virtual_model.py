@@ -33,6 +33,11 @@ class VirtualModel(UniversalBaseModel):
     It should be a unique identifier for the virtual model. It is used to uniquely identify the virtual model. It can be used in place of virtualGroupName/virtualModelName.
     """
 
+    alias: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Alternate identifiers for the virtual model. Can be used in place of virtualGroupName/virtualModelName (same as slug). Slug takes priority if both match.
+    """
+
     routing_config: HeaderRoutingConfig
 
     if IS_PYDANTIC_V2:

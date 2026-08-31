@@ -29,6 +29,10 @@ class VirtualAccount(UniversalBaseModel):
         FieldMetadata(alias="tenantName"),
         pydantic.Field(alias="tenantName", description="Tenant the virtual account belongs to."),
     ]
+    """
+    Tenant the virtual account belongs to.
+    """
+
     manifest: typing.Optional[VirtualAccountManifest] = pydantic.Field(default=None)
     """
     The manifest defining name, permissions, ownership, and configuration.
@@ -39,6 +43,10 @@ class VirtualAccount(UniversalBaseModel):
         FieldMetadata(alias="jwtId"),
         pydantic.Field(alias="jwtId", description="System-generated ID of the currently active JWT."),
     ] = None
+    """
+    System-generated ID of the currently active JWT.
+    """
+
     created_by_subject: typing_extensions.Annotated[
         Subject,
         FieldMetadata(alias="createdBySubject"),
@@ -47,16 +55,28 @@ class VirtualAccount(UniversalBaseModel):
             description="The subject (user or service account) that created this virtual account.",
         ),
     ]
+    """
+    The subject (user or service account) that created this virtual account.
+    """
+
     created_at: typing_extensions.Annotated[
         dt.datetime,
         FieldMetadata(alias="createdAt"),
         pydantic.Field(alias="createdAt", description="Timestamp when the virtual account was created."),
     ]
+    """
+    Timestamp when the virtual account was created.
+    """
+
     updated_at: typing_extensions.Annotated[
         dt.datetime,
         FieldMetadata(alias="updatedAt"),
         pydantic.Field(alias="updatedAt", description="Timestamp when the virtual account was last updated."),
     ]
+    """
+    Timestamp when the virtual account was last updated.
+    """
+
     last_accessed_at: typing_extensions.Annotated[
         typing.Optional[dt.datetime],
         FieldMetadata(alias="lastAccessedAt"),
@@ -64,11 +84,19 @@ class VirtualAccount(UniversalBaseModel):
             alias="lastAccessedAt", description="Timestamp when the virtual account was last used to authenticate."
         ),
     ] = None
+    """
+    Timestamp when the virtual account was last used to authenticate.
+    """
+
     is_expired: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="isExpired"),
         pydantic.Field(alias="isExpired", description="Whether the virtual account token has expired."),
     ] = None
+    """
+    Whether the virtual account token has expired.
+    """
+
     jwts: typing.Optional[typing.List[Jwt]] = pydantic.Field(default=None)
     """
     JWT tokens associated with this virtual account.
@@ -79,6 +107,10 @@ class VirtualAccount(UniversalBaseModel):
         FieldMetadata(alias="accountId"),
         pydantic.Field(alias="accountId", description="ID of the account that owns this virtual account."),
     ]
+    """
+    ID of the account that owns this virtual account.
+    """
+
     metadata: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     Additional metadata for the virtual account.
@@ -89,11 +121,19 @@ class VirtualAccount(UniversalBaseModel):
         FieldMetadata(alias="roleIds"),
         pydantic.Field(alias="roleIds", description="Role IDs assigned to this virtual account."),
     ] = None
+    """
+    Role IDs assigned to this virtual account.
+    """
+
     roles_with_resource: typing_extensions.Annotated[
         typing.Optional[typing.List[RoleWithResource]],
         FieldMetadata(alias="rolesWithResource"),
         pydantic.Field(alias="rolesWithResource", description="Roles with their associated resources."),
     ] = None
+    """
+    Roles with their associated resources.
+    """
+
     created_by: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="createdBy"), pydantic.Field(alias="createdBy")
     ] = None

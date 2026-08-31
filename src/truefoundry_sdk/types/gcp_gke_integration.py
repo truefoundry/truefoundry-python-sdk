@@ -4,8 +4,8 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .gcp_gke_integration_location import GcpGkeIntegrationLocation
 from .gcp_key_file_auth import GcpKeyFileAuth
-from .gcp_region import GcpRegion
 
 
 class GcpGkeIntegration(UniversalBaseModel):
@@ -25,7 +25,11 @@ class GcpGkeIntegration(UniversalBaseModel):
     The name of the integration that will be displayed in the TrueFoundry UI.
     """
 
-    location: GcpRegion
+    location: GcpGkeIntegrationLocation = pydantic.Field()
+    """
+    The location of the cluster.
+    """
+
     cluster_name: str = pydantic.Field()
     """
     Name of the cluster given in the cloud account.

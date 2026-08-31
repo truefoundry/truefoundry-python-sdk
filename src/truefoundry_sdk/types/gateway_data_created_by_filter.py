@@ -4,6 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .gateway_data_created_by_filter_operator import GatewayDataCreatedByFilterOperator
 
 
 class GatewayDataCreatedByFilter(UniversalBaseModel):
@@ -16,7 +17,7 @@ class GatewayDataCreatedByFilter(UniversalBaseModel):
     Filter type
     """
 
-    operator: typing.Literal["IN"] = pydantic.Field(default="IN")
+    operator: GatewayDataCreatedByFilterOperator = pydantic.Field()
     """
     Comparison operator
     """

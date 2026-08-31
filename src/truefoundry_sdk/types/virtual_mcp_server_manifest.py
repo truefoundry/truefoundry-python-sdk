@@ -26,9 +26,19 @@ class VirtualMcpServerManifest(UniversalBaseModel):
     The name of the Virtual MCP Server.
     """
 
+    display_name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    A human-readable label for the Virtual MCP Server in the UI. If omitted, the server name is shown.
+    """
+
     description: str = pydantic.Field()
     """
     Provide a brief description of the purpose of this Virtual MCP Server.
+    """
+
+    best_effort_mode: typing.Optional[bool] = pydantic.Field(default=False)
+    """
+    When enabled, the virtual MCP server continues with available source servers even if some servers fail.
     """
 
     servers: typing.List[McpServerSource] = pydantic.Field()
@@ -36,7 +46,7 @@ class VirtualMcpServerManifest(UniversalBaseModel):
     List of source MCP servers to include in this virtual server.
     """
 
-    collaborators: typing.List[Collaborator] = pydantic.Field()
+    collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
     Users and Teams that have access to this Virtual MCP Server
     """

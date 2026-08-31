@@ -72,7 +72,7 @@ class TrueFoundryAgentManifest(UniversalBaseModel):
 
     response_format: typing.Optional[TrueFoundryAgentResponseFormat] = None
     config: typing.Optional[TrueFoundryAgentConfig] = None
-    collaborators: typing.List[Collaborator] = pydantic.Field()
+    collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
     List of users who have access to this Agent
     """

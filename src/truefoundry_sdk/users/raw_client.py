@@ -29,9 +29,9 @@ from ..types.http_error import HttpError
 from ..types.invite_user_response import InviteUserResponse
 from ..types.list_users_response import ListUsersResponse
 from ..types.register_users_response import RegisterUsersResponse
-from ..types.resource_type import ResourceType
 from ..types.update_user_roles_response import UpdateUserRolesResponse
 from ..types.user import User
+from .types.update_user_roles_request_resource_type import UpdateUserRolesRequestResourceType
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -228,7 +228,7 @@ class RawUsersClient:
         *,
         email: str,
         roles: typing.Sequence[str],
-        resource_type: typing.Optional[ResourceType] = OMIT,
+        resource_type: typing.Optional[UpdateUserRolesRequestResourceType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[UpdateUserRolesResponse]:
         """
@@ -242,7 +242,7 @@ class RawUsersClient:
         roles : typing.Sequence[str]
             Role names to assign to the user.
 
-        resource_type : typing.Optional[ResourceType]
+        resource_type : typing.Optional[UpdateUserRolesRequestResourceType]
             Resource type scope for the role assignment.
 
         request_options : typing.Optional[RequestOptions]
@@ -376,6 +376,7 @@ class RawUsersClient:
         id: str,
         *,
         tenant_name: typing.Optional[str] = None,
+        force_delete: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DeleteUserResponse]:
         """
@@ -388,6 +389,9 @@ class RawUsersClient:
 
         tenant_name : typing.Optional[str]
             Tenant name override. Defaults to the caller's tenant when omitted.
+
+        force_delete : typing.Optional[bool]
+            When true, force-deletes the user by automatically removing all resource collaborations and team memberships.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -402,6 +406,7 @@ class RawUsersClient:
             method="DELETE",
             params={
                 "tenantName": tenant_name,
+                "forceDelete": force_delete,
             },
             request_options=request_options,
         )
@@ -1156,7 +1161,7 @@ class AsyncRawUsersClient:
         *,
         email: str,
         roles: typing.Sequence[str],
-        resource_type: typing.Optional[ResourceType] = OMIT,
+        resource_type: typing.Optional[UpdateUserRolesRequestResourceType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[UpdateUserRolesResponse]:
         """
@@ -1170,7 +1175,7 @@ class AsyncRawUsersClient:
         roles : typing.Sequence[str]
             Role names to assign to the user.
 
-        resource_type : typing.Optional[ResourceType]
+        resource_type : typing.Optional[UpdateUserRolesRequestResourceType]
             Resource type scope for the role assignment.
 
         request_options : typing.Optional[RequestOptions]
@@ -1306,6 +1311,7 @@ class AsyncRawUsersClient:
         id: str,
         *,
         tenant_name: typing.Optional[str] = None,
+        force_delete: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DeleteUserResponse]:
         """
@@ -1318,6 +1324,9 @@ class AsyncRawUsersClient:
 
         tenant_name : typing.Optional[str]
             Tenant name override. Defaults to the caller's tenant when omitted.
+
+        force_delete : typing.Optional[bool]
+            When true, force-deletes the user by automatically removing all resource collaborations and team memberships.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1332,6 +1341,7 @@ class AsyncRawUsersClient:
             method="DELETE",
             params={
                 "tenantName": tenant_name,
+                "forceDelete": force_delete,
             },
             request_options=request_options,
         )

@@ -41,8 +41,8 @@ class ModelVersionsClient:
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
         version: typing.Optional[int] = None,
-        run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        run_steps: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
+        run_ids: typing.Optional[typing.Sequence[str]] = None,
+        run_steps: typing.Optional[typing.Sequence[float]] = None,
         include_internal_metadata: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[ModelVersion, ListModelVersionsResponse]:
@@ -75,10 +75,10 @@ class ModelVersionsClient:
         version : typing.Optional[int]
             Version number (positive integer) to filter by.
 
-        run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        run_ids : typing.Optional[typing.Sequence[str]]
             Filter model versions by associated run identifiers.
 
-        run_steps : typing.Optional[typing.Union[float, typing.Sequence[float]]]
+        run_steps : typing.Optional[typing.Sequence[float]]
             Filter model versions by associated run steps.
 
         include_internal_metadata : typing.Optional[bool]
@@ -103,15 +103,6 @@ class ModelVersionsClient:
         response = client.model_versions.list(
             limit=10,
             offset=0,
-            tag="tag",
-            fqn="fqn",
-            model_id="model_id",
-            ml_repo_id="ml_repo_id",
-            name="name",
-            version=1,
-            run_ids=["run_ids"],
-            run_steps=[1.1],
-            include_internal_metadata=True,
         )
         for item in response:
             yield item
@@ -273,8 +264,8 @@ class AsyncModelVersionsClient:
         ml_repo_id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
         version: typing.Optional[int] = None,
-        run_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        run_steps: typing.Optional[typing.Union[float, typing.Sequence[float]]] = None,
+        run_ids: typing.Optional[typing.Sequence[str]] = None,
+        run_steps: typing.Optional[typing.Sequence[float]] = None,
         include_internal_metadata: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[ModelVersion, ListModelVersionsResponse]:
@@ -307,10 +298,10 @@ class AsyncModelVersionsClient:
         version : typing.Optional[int]
             Version number (positive integer) to filter by.
 
-        run_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        run_ids : typing.Optional[typing.Sequence[str]]
             Filter model versions by associated run identifiers.
 
-        run_steps : typing.Optional[typing.Union[float, typing.Sequence[float]]]
+        run_steps : typing.Optional[typing.Sequence[float]]
             Filter model versions by associated run steps.
 
         include_internal_metadata : typing.Optional[bool]
@@ -340,15 +331,6 @@ class AsyncModelVersionsClient:
             response = await client.model_versions.list(
                 limit=10,
                 offset=0,
-                tag="tag",
-                fqn="fqn",
-                model_id="model_id",
-                ml_repo_id="ml_repo_id",
-                name="name",
-                version=1,
-                run_ids=["run_ids"],
-                run_steps=[1.1],
-                include_internal_metadata=True,
             )
             async for item in response:
                 yield item

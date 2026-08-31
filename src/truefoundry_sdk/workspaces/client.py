@@ -40,7 +40,7 @@ class WorkspacesClient:
         name: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         include_cluster: typing.Optional[bool] = None,
-        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        attributes: typing.Optional[typing.Sequence[str]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Workspace, ListWorkspacesResponse]:
         """
@@ -66,7 +66,7 @@ class WorkspacesClient:
         include_cluster : typing.Optional[bool]
             When true, each workspace in the response includes summary information about its cluster.
 
-        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        attributes : typing.Optional[typing.Sequence[str]]
             Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
 
         request_options : typing.Optional[RequestOptions]
@@ -89,10 +89,6 @@ class WorkspacesClient:
             limit=10,
             offset=0,
             cluster_id="jqfwg345gi25n5ju2yz5iz6m",
-            name="name",
-            fqn="fqn",
-            include_cluster=True,
-            attributes=["attributes"],
         )
         for item in response:
             yield item
@@ -203,7 +199,6 @@ class WorkspacesClient:
             limit=10,
             offset=0,
             filter='[{"type":"name","operator":"STRING_CONTAINS","value":"prod"}]',
-            include_cluster=True,
         )
         for item in response:
             yield item
@@ -304,7 +299,7 @@ class AsyncWorkspacesClient:
         name: typing.Optional[str] = None,
         fqn: typing.Optional[str] = None,
         include_cluster: typing.Optional[bool] = None,
-        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        attributes: typing.Optional[typing.Sequence[str]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Workspace, ListWorkspacesResponse]:
         """
@@ -330,7 +325,7 @@ class AsyncWorkspacesClient:
         include_cluster : typing.Optional[bool]
             When true, each workspace in the response includes summary information about its cluster.
 
-        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        attributes : typing.Optional[typing.Sequence[str]]
             Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
 
         request_options : typing.Optional[RequestOptions]
@@ -358,10 +353,6 @@ class AsyncWorkspacesClient:
                 limit=10,
                 offset=0,
                 cluster_id="jqfwg345gi25n5ju2yz5iz6m",
-                name="name",
-                fqn="fqn",
-                include_cluster=True,
-                attributes=["attributes"],
             )
             async for item in response:
                 yield item
@@ -489,7 +480,6 @@ class AsyncWorkspacesClient:
                 limit=10,
                 offset=0,
                 filter='[{"type":"name","operator":"STRING_CONTAINS","value":"prod"}]',
-                include_cluster=True,
             )
             async for item in response:
                 yield item

@@ -30,6 +30,10 @@ class Graph(UniversalBaseModel):
         FieldMetadata(alias="chartType"),
         pydantic.Field(alias="chartType", description="Chart visualisation type."),
     ]
+    """
+    Chart visualisation type.
+    """
+
     params: str = pydantic.Field()
     """
     Opaque params string describing chart configuration to pass back to the corresponding chart data endpoint.

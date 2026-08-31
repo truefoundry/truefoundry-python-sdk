@@ -42,11 +42,12 @@ class RawTeamsClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         role: typing.Optional[typing.Literal["manager"]] = None,
-        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        attributes: typing.Optional[typing.Sequence[str]] = None,
+        include_membership: typing.Optional[bool] = True,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Team, ListTeamsResponse]:
         """
-        List teams accessible to the current user.
+        List teams accessible to the current user. Set includeMembership=false to omit full member and manager lists and return cached membership summaries instead.
 
         Parameters
         ----------
@@ -59,8 +60,11 @@ class RawTeamsClient:
         role : typing.Optional[typing.Literal["manager"]]
             Filter to teams where the caller holds this role. `manager` returns teams the caller can manage (team managers and admins).
 
-        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        attributes : typing.Optional[typing.Sequence[str]]
             Comma-separated list of attributes to return (e.g. `id,teamName`). When provided, only the specified fields are fetched. `id` is always included.
+
+        include_membership : typing.Optional[bool]
+            Whether to include full member and manager lists. Set to false for a metadata-only response with cached membership summaries.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -80,6 +84,7 @@ class RawTeamsClient:
                 "offset": offset,
                 "role": role,
                 "attributes": attributes,
+                "includeMembership": include_membership,
             },
             request_options=request_options,
         )
@@ -99,6 +104,7 @@ class RawTeamsClient:
                     offset=offset + len(_items or []),
                     role=role,
                     attributes=attributes,
+                    include_membership=include_membership,
                     request_options=request_options,
                 )
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
@@ -197,8 +203,8 @@ class RawTeamsClient:
         self,
         id: str,
         *,
-        limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = None,
         filter: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[TeamSubjectRow, ListTeamMembersResponse]:
@@ -210,11 +216,11 @@ class RawTeamsClient:
         id : str
             System-generated team ID.
 
-        limit : typing.Optional[int]
-            Number of items per page
-
         offset : typing.Optional[int]
             Number of items to skip
+
+        limit : typing.Optional[int]
+            Number of items per page
 
         filter : typing.Optional[str]
             JSON string: structured filter tree (AND/OR groups, column leaves on `email` and `userId`).
@@ -233,8 +239,8 @@ class RawTeamsClient:
             f"api/svc/v1/teams/{encode_path_param(id)}/members",
             method="GET",
             params={
-                "limit": limit,
                 "offset": offset,
+                "limit": limit,
                 "filter": filter,
             },
             request_options=request_options,
@@ -252,8 +258,8 @@ class RawTeamsClient:
                 _has_next = len(_items or []) > 0
                 _get_next = lambda: self.list_members(
                     id,
-                    limit=limit,
                     offset=offset + len(_items or []),
+                    limit=limit,
                     filter=filter,
                     request_options=request_options,
                 )
@@ -293,8 +299,8 @@ class RawTeamsClient:
         self,
         id: str,
         *,
-        limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = None,
         filter: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[TeamSubjectRow, ListTeamManagersResponse]:
@@ -306,11 +312,11 @@ class RawTeamsClient:
         id : str
             System-generated team ID.
 
-        limit : typing.Optional[int]
-            Number of items per page
-
         offset : typing.Optional[int]
             Number of items to skip
+
+        limit : typing.Optional[int]
+            Number of items per page
 
         filter : typing.Optional[str]
             JSON string: structured filter tree (AND/OR groups, column leaves on `email` and `userId`).
@@ -329,8 +335,8 @@ class RawTeamsClient:
             f"api/svc/v1/teams/{encode_path_param(id)}/managers",
             method="GET",
             params={
-                "limit": limit,
                 "offset": offset,
+                "limit": limit,
                 "filter": filter,
             },
             request_options=request_options,
@@ -348,8 +354,8 @@ class RawTeamsClient:
                 _has_next = len(_items or []) > 0
                 _get_next = lambda: self.list_managers(
                     id,
-                    limit=limit,
                     offset=offset + len(_items or []),
+                    limit=limit,
                     filter=filter,
                     request_options=request_options,
                 )
@@ -578,11 +584,12 @@ class AsyncRawTeamsClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         role: typing.Optional[typing.Literal["manager"]] = None,
-        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        attributes: typing.Optional[typing.Sequence[str]] = None,
+        include_membership: typing.Optional[bool] = True,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Team, ListTeamsResponse]:
         """
-        List teams accessible to the current user.
+        List teams accessible to the current user. Set includeMembership=false to omit full member and manager lists and return cached membership summaries instead.
 
         Parameters
         ----------
@@ -595,8 +602,11 @@ class AsyncRawTeamsClient:
         role : typing.Optional[typing.Literal["manager"]]
             Filter to teams where the caller holds this role. `manager` returns teams the caller can manage (team managers and admins).
 
-        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        attributes : typing.Optional[typing.Sequence[str]]
             Comma-separated list of attributes to return (e.g. `id,teamName`). When provided, only the specified fields are fetched. `id` is always included.
+
+        include_membership : typing.Optional[bool]
+            Whether to include full member and manager lists. Set to false for a metadata-only response with cached membership summaries.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -616,6 +626,7 @@ class AsyncRawTeamsClient:
                 "offset": offset,
                 "role": role,
                 "attributes": attributes,
+                "includeMembership": include_membership,
             },
             request_options=request_options,
         )
@@ -637,6 +648,7 @@ class AsyncRawTeamsClient:
                         offset=offset + len(_items or []),
                         role=role,
                         attributes=attributes,
+                        include_membership=include_membership,
                         request_options=request_options,
                     )
 
@@ -736,8 +748,8 @@ class AsyncRawTeamsClient:
         self,
         id: str,
         *,
-        limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = None,
         filter: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[TeamSubjectRow, ListTeamMembersResponse]:
@@ -749,11 +761,11 @@ class AsyncRawTeamsClient:
         id : str
             System-generated team ID.
 
-        limit : typing.Optional[int]
-            Number of items per page
-
         offset : typing.Optional[int]
             Number of items to skip
+
+        limit : typing.Optional[int]
+            Number of items per page
 
         filter : typing.Optional[str]
             JSON string: structured filter tree (AND/OR groups, column leaves on `email` and `userId`).
@@ -772,8 +784,8 @@ class AsyncRawTeamsClient:
             f"api/svc/v1/teams/{encode_path_param(id)}/members",
             method="GET",
             params={
-                "limit": limit,
                 "offset": offset,
+                "limit": limit,
                 "filter": filter,
             },
             request_options=request_options,
@@ -793,8 +805,8 @@ class AsyncRawTeamsClient:
                 async def _get_next():
                     return await self.list_members(
                         id,
-                        limit=limit,
                         offset=offset + len(_items or []),
+                        limit=limit,
                         filter=filter,
                         request_options=request_options,
                     )
@@ -835,8 +847,8 @@ class AsyncRawTeamsClient:
         self,
         id: str,
         *,
-        limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
+        limit: typing.Optional[int] = None,
         filter: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[TeamSubjectRow, ListTeamManagersResponse]:
@@ -848,11 +860,11 @@ class AsyncRawTeamsClient:
         id : str
             System-generated team ID.
 
-        limit : typing.Optional[int]
-            Number of items per page
-
         offset : typing.Optional[int]
             Number of items to skip
+
+        limit : typing.Optional[int]
+            Number of items per page
 
         filter : typing.Optional[str]
             JSON string: structured filter tree (AND/OR groups, column leaves on `email` and `userId`).
@@ -871,8 +883,8 @@ class AsyncRawTeamsClient:
             f"api/svc/v1/teams/{encode_path_param(id)}/managers",
             method="GET",
             params={
-                "limit": limit,
                 "offset": offset,
+                "limit": limit,
                 "filter": filter,
             },
             request_options=request_options,
@@ -892,8 +904,8 @@ class AsyncRawTeamsClient:
                 async def _get_next():
                     return await self.list_managers(
                         id,
-                        limit=limit,
                         offset=offset + len(_items or []),
+                        limit=limit,
                         filter=filter,
                         request_options=request_options,
                     )

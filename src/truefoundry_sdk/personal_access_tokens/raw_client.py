@@ -13,6 +13,7 @@ from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..errors.bad_request_error import BadRequestError
 from ..errors.conflict_error import ConflictError
+from ..errors.forbidden_error import ForbiddenError
 from ..errors.not_found_error import NotFoundError
 from ..types.create_personal_access_token_response import CreatePersonalAccessTokenResponse
 from ..types.delete_personal_access_token_response import DeletePersonalAccessTokenResponse
@@ -112,7 +113,7 @@ class RawPersonalAccessTokensClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[CreatePersonalAccessTokenResponse]:
         """
-        Create a new personal access token for the current user.
+        Create a new personal access token for the current user. Cannot be called while authenticated with a personal access token.
 
         Parameters
         ----------
@@ -167,6 +168,118 @@ class RawPersonalAccessTokensClient:
                 return HttpResponse(response=_response, data=_data)
             if _response.status_code == 400:
                 raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def create_for_user(
+        self,
+        *,
+        name: str,
+        user_email: str,
+        expiration_date: typing.Optional[str] = OMIT,
+        team_name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[CreatePersonalAccessTokenResponse]:
+        """
+        Create a personal access token owned by another user in the current tenant. Requires tenant admin. Cannot be called while authenticated with a personal access token.
+
+        Parameters
+        ----------
+        name : str
+            Name for the personal access token. Must be 3-36 characters, start with a lowercase letter, end with a lowercase alphanumeric character, and contain only lowercase letters, numbers, and hyphens.
+
+        user_email : str
+            Email of the user in the current tenant who will own the personal access token.
+
+        expiration_date : typing.Optional[str]
+            Expiration date in ISO format. The token becomes invalid after this date.
+
+        team_name : typing.Optional[str]
+            Team to attribute this token cost to. The token owner must be a member of this team.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[CreatePersonalAccessTokenResponse]
+            The newly created personal access token owned by the target user.
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/svc/v1/personal-access-tokens/for-user",
+            method="POST",
+            json={
+                "name": name,
+                "userEmail": user_email,
+                "expirationDate": expiration_date,
+                "teamName": team_name,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    CreatePersonalAccessTokenResponse,
+                    parse_obj_as(
+                        type_=CreatePersonalAccessTokenResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -319,7 +432,7 @@ class RawPersonalAccessTokensClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetOrCreatePersonalAccessTokenResponse]:
         """
-        Get an existing personal access token by name. If none exists, a new one is created and returned with a fresh token.
+        Get an existing personal access token by name. If none exists, a new one is created and returned with a fresh token. Creating a new token cannot be done while authenticated with a personal access token.
 
         Parameters
         ----------
@@ -462,7 +575,7 @@ class AsyncRawPersonalAccessTokensClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[CreatePersonalAccessTokenResponse]:
         """
-        Create a new personal access token for the current user.
+        Create a new personal access token for the current user. Cannot be called while authenticated with a personal access token.
 
         Parameters
         ----------
@@ -517,6 +630,118 @@ class AsyncRawPersonalAccessTokensClient:
                 return AsyncHttpResponse(response=_response, data=_data)
             if _response.status_code == 400:
                 raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def create_for_user(
+        self,
+        *,
+        name: str,
+        user_email: str,
+        expiration_date: typing.Optional[str] = OMIT,
+        team_name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[CreatePersonalAccessTokenResponse]:
+        """
+        Create a personal access token owned by another user in the current tenant. Requires tenant admin. Cannot be called while authenticated with a personal access token.
+
+        Parameters
+        ----------
+        name : str
+            Name for the personal access token. Must be 3-36 characters, start with a lowercase letter, end with a lowercase alphanumeric character, and contain only lowercase letters, numbers, and hyphens.
+
+        user_email : str
+            Email of the user in the current tenant who will own the personal access token.
+
+        expiration_date : typing.Optional[str]
+            Expiration date in ISO format. The token becomes invalid after this date.
+
+        team_name : typing.Optional[str]
+            Team to attribute this token cost to. The token owner must be a member of this team.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[CreatePersonalAccessTokenResponse]
+            The newly created personal access token owned by the target user.
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/svc/v1/personal-access-tokens/for-user",
+            method="POST",
+            json={
+                "name": name,
+                "userEmail": user_email,
+                "expirationDate": expiration_date,
+                "teamName": team_name,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    CreatePersonalAccessTokenResponse,
+                    parse_obj_as(
+                        type_=CreatePersonalAccessTokenResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -669,7 +894,7 @@ class AsyncRawPersonalAccessTokensClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetOrCreatePersonalAccessTokenResponse]:
         """
-        Get an existing personal access token by name. If none exists, a new one is created and returned with a fresh token.
+        Get an existing personal access token by name. If none exists, a new one is created and returned with a fresh token. Creating a new token cannot be done while authenticated with a personal access token.
 
         Parameters
         ----------

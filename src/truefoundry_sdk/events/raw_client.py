@@ -28,7 +28,7 @@ class RawEventsClient:
         end_ts: typing.Optional[str] = None,
         application_id: typing.Optional[str] = None,
         application_fqn: typing.Optional[str] = None,
-        pod_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        pod_names: typing.Optional[typing.Sequence[str]] = None,
         job_run_name: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetEventsResponse]:
@@ -49,7 +49,7 @@ class RawEventsClient:
         application_fqn : typing.Optional[str]
             Fully qualified name of the application. Either applicationId or applicationFqn must be provided.
 
-        pod_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        pod_names : typing.Optional[typing.Sequence[str]]
             List of Kubernetes pod names to filter events. Cannot be provided together with jobRunName.
 
         job_run_name : typing.Optional[str]
@@ -140,7 +140,7 @@ class AsyncRawEventsClient:
         end_ts: typing.Optional[str] = None,
         application_id: typing.Optional[str] = None,
         application_fqn: typing.Optional[str] = None,
-        pod_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        pod_names: typing.Optional[typing.Sequence[str]] = None,
         job_run_name: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetEventsResponse]:
@@ -161,7 +161,7 @@ class AsyncRawEventsClient:
         application_fqn : typing.Optional[str]
             Fully qualified name of the application. Either applicationId or applicationFqn must be provided.
 
-        pod_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        pod_names : typing.Optional[typing.Sequence[str]]
             List of Kubernetes pod names to filter events. Cannot be provided together with jobRunName.
 
         job_run_name : typing.Optional[str]

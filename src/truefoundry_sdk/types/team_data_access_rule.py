@@ -14,7 +14,7 @@ class TeamDataAccessRule(DataAccessRuleBase):
 
     scope: typing.Literal["team_data"] = pydantic.Field(default="team_data")
     """
-    Data access scope - access to team data including owned virtual accounts
+    Data access scope - access to data created by teammates and by virtual accounts owned by the team
     """
 
     if IS_PYDANTIC_V2:

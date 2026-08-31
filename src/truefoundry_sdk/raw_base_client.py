@@ -29,6 +29,7 @@ class RawBaseTrueFoundry:
         *,
         manifest: TrueFoundryApplyRequestManifest,
         dry_run: typing.Optional[bool] = False,
+        force: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[TrueFoundryApplyResponse]:
         """
@@ -41,6 +42,9 @@ class RawBaseTrueFoundry:
 
         dry_run : typing.Optional[bool]
             Dry run the apply operation without actually applying
+
+        force : typing.Optional[bool]
+            When `true`, acknowledges that updating this manifest may delete existing per-subject auth records. Currently used for MCP server apply.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -58,6 +62,7 @@ class RawBaseTrueFoundry:
                     object_=manifest, annotation=TrueFoundryApplyRequestManifest, direction="write"
                 ),
                 "dryRun": dry_run,
+                "force": force,
             },
             headers={
                 "content-type": "application/json",
@@ -146,6 +151,7 @@ class AsyncRawBaseTrueFoundry:
         *,
         manifest: TrueFoundryApplyRequestManifest,
         dry_run: typing.Optional[bool] = False,
+        force: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[TrueFoundryApplyResponse]:
         """
@@ -158,6 +164,9 @@ class AsyncRawBaseTrueFoundry:
 
         dry_run : typing.Optional[bool]
             Dry run the apply operation without actually applying
+
+        force : typing.Optional[bool]
+            When `true`, acknowledges that updating this manifest may delete existing per-subject auth records. Currently used for MCP server apply.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -175,6 +184,7 @@ class AsyncRawBaseTrueFoundry:
                     object_=manifest, annotation=TrueFoundryApplyRequestManifest, direction="write"
                 ),
                 "dryRun": dry_run,
+                "force": force,
             },
             headers={
                 "content-type": "application/json",

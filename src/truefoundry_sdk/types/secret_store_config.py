@@ -2,29 +2,7 @@
 
 import typing
 
-import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .secret_store_integration_config import SecretStoreIntegrationConfig
+from .tfy_secrets_config import TfySecretsConfig
 
-
-class SecretStoreConfig(UniversalBaseModel):
-    """
-    Enable to store the virtual account token in a secret store
-    """
-
-    integration_fqn: str = pydantic.Field()
-    """
-    The secret store to store the virtual account token in
-    """
-
-    secret_path: str = pydantic.Field()
-    """
-    The path where the virtual account token will be stored in the secret store (example: secret/path/to/virtual-account-token)
-    """
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            smart_union = True
-            extra = pydantic.Extra.allow
+SecretStoreConfig = typing.Union[SecretStoreIntegrationConfig, TfySecretsConfig]

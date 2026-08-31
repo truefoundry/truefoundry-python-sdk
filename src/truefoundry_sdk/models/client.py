@@ -153,11 +153,6 @@ class ModelsClient:
         response = client.models.list(
             limit=10,
             offset=0,
-            fqn="fqn",
-            ml_repo_id="ml_repo_id",
-            name="name",
-            run_id="run_id",
-            include_empty_models=True,
         )
         for item in response:
             yield item
@@ -372,11 +367,6 @@ class AsyncModelsClient:
             response = await client.models.list(
                 limit=10,
                 offset=0,
-                fqn="fqn",
-                ml_repo_id="ml_repo_id",
-                name="name",
-                run_id="run_id",
-                include_empty_models=True,
             )
             async for item in response:
                 yield item

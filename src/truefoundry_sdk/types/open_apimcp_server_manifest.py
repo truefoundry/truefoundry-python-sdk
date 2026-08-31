@@ -29,6 +29,11 @@ class OpenApimcpServerManifest(UniversalBaseModel):
     The name of the OpenAPI MCP Server.
     """
 
+    display_name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    A human-readable label for the OpenAPI MCP Server in the UI. If omitted, the server name is shown.
+    """
+
     description: str = pydantic.Field()
     """
     Provide a brief description of the purpose of this OpenAPI MCP Server.
@@ -52,7 +57,7 @@ class OpenApimcpServerManifest(UniversalBaseModel):
     """
 
     auth_data: typing.Optional[McpServerAuth] = None
-    collaborators: typing.List[Collaborator] = pydantic.Field()
+    collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
     Users and Teams that have access to this OpenAPI Server
     """

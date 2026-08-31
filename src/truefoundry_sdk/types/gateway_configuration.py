@@ -22,6 +22,10 @@ class GatewayConfiguration(UniversalBaseModel):
         FieldMetadata(alias="tenantName"),
         pydantic.Field(alias="tenantName", description="Tenant the gateway configuration belongs to."),
     ]
+    """
+    Tenant the gateway configuration belongs to.
+    """
+
     type: str = pydantic.Field()
     """
     Configuration type.
@@ -40,16 +44,27 @@ class GatewayConfiguration(UniversalBaseModel):
             description="Principal (user or service account) that created or last updated this configuration.",
         ),
     ]
+    """
+    Principal (user or service account) that created or last updated this configuration.
+    """
+
     created_at: typing_extensions.Annotated[
         typing.Optional[dt.datetime],
         FieldMetadata(alias="createdAt"),
         pydantic.Field(alias="createdAt", description="Creation timestamp."),
     ] = None
+    """
+    Creation timestamp.
+    """
+
     updated_at: typing_extensions.Annotated[
         typing.Optional[dt.datetime],
         FieldMetadata(alias="updatedAt"),
         pydantic.Field(alias="updatedAt", description="Last-update timestamp."),
     ] = None
+    """
+    Last-update timestamp.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -25,12 +25,12 @@ class SelfHostedModelProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    The name of the provider account.
+    The name of the model account.
     """
 
     integrations: typing.List[SelfHostedModelIntegrations] = pydantic.Field()
     """
-    List of integrations that are associated with the provider account.
+    List of integrations that are associated with the model account.
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
@@ -43,7 +43,7 @@ class SelfHostedModelProviderAccount(UniversalBaseModel):
     ] = None
     discount_percent: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Discount % applied to upstream list price for this provider account.
+    Discount % applied to upstream list price for this model account.
     """
 
     if IS_PYDANTIC_V2:

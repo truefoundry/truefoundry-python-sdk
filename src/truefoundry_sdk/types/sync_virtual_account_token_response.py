@@ -17,6 +17,9 @@ class SyncVirtualAccountTokenResponse(UniversalBaseModel):
             alias="syncTokenInSecretStoreInfo", description="Sync status including timestamp and error (if any)"
         ),
     ]
+    """
+    Sync status including timestamp and error (if any)
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

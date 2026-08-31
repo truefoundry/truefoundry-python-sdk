@@ -28,8 +28,8 @@ class AgentIdentityManifest(UniversalBaseModel):
     """
 
     owned_by: typing_extensions.Annotated[
-        AgentIdentityOwnedBy, FieldMetadata(alias="ownedBy"), pydantic.Field(alias="ownedBy")
-    ]
+        typing.Optional[AgentIdentityOwnedBy], FieldMetadata(alias="ownedBy"), pydantic.Field(alias="ownedBy")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

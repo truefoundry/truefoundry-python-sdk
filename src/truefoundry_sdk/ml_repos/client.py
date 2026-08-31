@@ -101,7 +101,7 @@ class MlReposClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         name: typing.Optional[str] = None,
-        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        attributes: typing.Optional[typing.Sequence[str]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[MlRepo, ListMlReposResponse]:
         """
@@ -118,7 +118,7 @@ class MlReposClient:
         name : typing.Optional[str]
             ML Repo Name
 
-        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        attributes : typing.Optional[typing.Sequence[str]]
             Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
 
         request_options : typing.Optional[RequestOptions]
@@ -140,8 +140,6 @@ class MlReposClient:
         response = client.ml_repos.list(
             limit=10,
             offset=0,
-            name="name",
-            attributes=["attributes"],
         )
         for item in response:
             yield item
@@ -181,7 +179,7 @@ class MlReposClient:
 
         Examples
         --------
-        from truefoundry_sdk import Collaborator, MlRepoManifest, TrueFoundry
+        from truefoundry_sdk import MlRepoManifest, TrueFoundry
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -191,12 +189,6 @@ class MlReposClient:
             manifest=MlRepoManifest(
                 name="name",
                 storage_integration_fqn="storage_integration_fqn",
-                collaborators=[
-                    Collaborator(
-                        subject="subject",
-                        role_id="role_id",
-                    )
-                ],
             ),
         )
         """
@@ -307,7 +299,7 @@ class AsyncMlReposClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         name: typing.Optional[str] = None,
-        attributes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        attributes: typing.Optional[typing.Sequence[str]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[MlRepo, ListMlReposResponse]:
         """
@@ -324,7 +316,7 @@ class AsyncMlReposClient:
         name : typing.Optional[str]
             ML Repo Name
 
-        attributes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        attributes : typing.Optional[typing.Sequence[str]]
             Comma-separated list of attributes to return (e.g. id,name). When provided, only the specified fields are fetched. `id` is always included.
 
         request_options : typing.Optional[RequestOptions]
@@ -351,8 +343,6 @@ class AsyncMlReposClient:
             response = await client.ml_repos.list(
                 limit=10,
                 offset=0,
-                name="name",
-                attributes=["attributes"],
             )
             async for item in response:
                 yield item
@@ -398,7 +388,7 @@ class AsyncMlReposClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import AsyncTrueFoundry, Collaborator, MlRepoManifest
+        from truefoundry_sdk import AsyncTrueFoundry, MlRepoManifest
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -411,12 +401,6 @@ class AsyncMlReposClient:
                 manifest=MlRepoManifest(
                     name="name",
                     storage_integration_fqn="storage_integration_fqn",
-                    collaborators=[
-                        Collaborator(
-                            subject="subject",
-                            role_id="role_id",
-                        )
-                    ],
                 ),
             )
 

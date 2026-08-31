@@ -43,6 +43,9 @@ class User(UniversalBaseModel):
         FieldMetadata(alias="lastAccessedAt"),
         pydantic.Field(alias="lastAccessedAt", description="Timestamp when the user last accessed the platform."),
     ] = None
+    """
+    Timestamp when the user last accessed the platform.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

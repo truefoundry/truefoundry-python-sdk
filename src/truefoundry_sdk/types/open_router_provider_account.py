@@ -14,7 +14,7 @@ from .owned_by import OwnedBy
 
 class OpenRouterProviderAccount(UniversalBaseModel):
     """
-    OpenRouter Provider Account
+    OpenRouter Model Account
     """
 
     type: typing.Literal["provider-account/openrouter"] = pydantic.Field(default="provider-account/openrouter")
@@ -24,18 +24,18 @@ class OpenRouterProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    The name of the OpenRouter provider account
+    The name of the OpenRouter model account
     """
 
     auth_data: OpenRouterApiKeyAuth
     integrations: typing.List[OpenRouterIntegrations] = pydantic.Field()
     """
-    List of integrations that are associated with the OpenRouter provider account
+    List of integrations that are associated with the OpenRouter model account
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    List of users who have access to this provider account
+    List of users who have access to this model account
     """
 
     owned_by: typing_extensions.Annotated[
@@ -43,7 +43,7 @@ class OpenRouterProviderAccount(UniversalBaseModel):
     ] = None
     discount_percent: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Discount % applied to upstream list price for this provider account.
+    Discount % applied to upstream list price for this model account.
     """
 
     if IS_PYDANTIC_V2:

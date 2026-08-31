@@ -15,7 +15,7 @@ from .owned_by import OwnedBy
 
 class CartesiaProviderAccount(UniversalBaseModel):
     """
-    Cartesia Provider Account
+    Cartesia Model Account
     """
 
     type: typing.Literal["provider-account/cartesia"] = pydantic.Field(default="provider-account/cartesia")
@@ -25,7 +25,7 @@ class CartesiaProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    The name of the Cartesia provider account
+    The name of the Cartesia model account
     """
 
     base_url: typing.Optional[str] = pydantic.Field(default=None)
@@ -41,12 +41,12 @@ class CartesiaProviderAccount(UniversalBaseModel):
     auth_data: CartesiaApiKeyAuth
     integrations: typing.List[CartesiaModel] = pydantic.Field()
     """
-    List of integrations that are associated with the Cartesia provider account
+    List of integrations that are associated with the Cartesia model account
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    List of users who have access to this provider account
+    List of users who have access to this model account
     """
 
     owned_by: typing_extensions.Annotated[
@@ -54,7 +54,7 @@ class CartesiaProviderAccount(UniversalBaseModel):
     ] = None
     discount_percent: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Discount % applied to upstream list price for this provider account.
+    Discount % applied to upstream list price for this model account.
     """
 
     if IS_PYDANTIC_V2:

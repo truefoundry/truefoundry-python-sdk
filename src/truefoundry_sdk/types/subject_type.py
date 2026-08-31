@@ -16,8 +16,9 @@ class SubjectType(enum.StrEnum):
     TEAM = "team"
     SERVICEACCOUNT = "serviceaccount"
     VIRTUALACCOUNT = "virtualaccount"
-    EXTERNAL_IDENTITY = "external-identity"
     AGENT_IDENTITY = "agent-identity"
+    AGENT = "agent"
+    AGENT_CHANNEL_IDENTITY = "agent-channel-identity"
     ROLE = "role"
     _UNKNOWN = "__SUBJECTTYPE_UNKNOWN__"
     """
@@ -36,8 +37,9 @@ class SubjectType(enum.StrEnum):
         team: typing.Callable[[], T_Result],
         serviceaccount: typing.Callable[[], T_Result],
         virtualaccount: typing.Callable[[], T_Result],
-        external_identity: typing.Callable[[], T_Result],
         agent_identity: typing.Callable[[], T_Result],
+        agent: typing.Callable[[], T_Result],
+        agent_channel_identity: typing.Callable[[], T_Result],
         role: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
@@ -49,10 +51,12 @@ class SubjectType(enum.StrEnum):
             return serviceaccount()
         if self is SubjectType.VIRTUALACCOUNT:
             return virtualaccount()
-        if self is SubjectType.EXTERNAL_IDENTITY:
-            return external_identity()
         if self is SubjectType.AGENT_IDENTITY:
             return agent_identity()
+        if self is SubjectType.AGENT:
+            return agent()
+        if self is SubjectType.AGENT_CHANNEL_IDENTITY:
+            return agent_channel_identity()
         if self is SubjectType.ROLE:
             return role()
         return _unknown_member(self._value_)

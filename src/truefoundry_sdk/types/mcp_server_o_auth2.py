@@ -4,13 +4,18 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from .mcp_server_o_auth2client_authentication import McpServerOAuth2ClientAuthentication
 from .mcp_server_o_auth2grant_type import McpServerOAuth2GrantType
 from .mcp_server_o_auth2jwt_source import McpServerOAuth2JwtSource
 from .mcp_server_o_auth2provider import McpServerOAuth2Provider
 from .mcp_server_o_auth2provider_auth0settings import McpServerOAuth2ProviderAuth0Settings
+from .mcp_server_o_auth2provider_okta_id_jag_settings import McpServerOAuth2ProviderOktaIdJagSettings
+from .mcp_server_o_auth2provider_okta_settings import McpServerOAuth2ProviderOktaSettings
 
 
-class McpServerOAuth2(McpServerOAuth2ProviderAuth0Settings):
+class McpServerOAuth2(
+    McpServerOAuth2ProviderAuth0Settings, McpServerOAuth2ProviderOktaSettings, McpServerOAuth2ProviderOktaIdJagSettings
+):
     """
     OAuth2
     """
@@ -30,7 +35,7 @@ class McpServerOAuth2(McpServerOAuth2ProviderAuth0Settings):
     URL for the authorization request
     """
 
-    token_url: str = pydantic.Field()
+    token_url: typing.Optional[str] = pydantic.Field(default=None)
     """
     The endpoint to exchange auth code for tokens.
     """
@@ -40,9 +45,24 @@ class McpServerOAuth2(McpServerOAuth2ProviderAuth0Settings):
     client ID for OAuth2 or the TrueFoundry secret FQN containing the client ID.
     """
 
+    client_authentication: typing.Optional[McpServerOAuth2ClientAuthentication] = pydantic.Field(default=None)
+    """
+    How the OAuth client authenticates to the token endpoint. Certificate auth is available for Microsoft Entra client_credentials and jwt_bearer (on-behalf-of).
+    """
+
     client_secret: typing.Optional[str] = pydantic.Field(default=None)
     """
     Client secret or the TrueFoundry secret FQN containing the client secret for OAuth2.
+    """
+
+    certificate_thumbprint: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Hex SHA-1 thumbprint from the Azure portal, or the TrueFoundry secret FQN containing it.
+    """
+
+    private_key: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    PEM private key for Microsoft Entra certificate-based client authentication, or the TrueFoundry secret FQN containing it.
     """
 
     registration_url: typing.Optional[str] = pydantic.Field(default=None)
@@ -53,6 +73,11 @@ class McpServerOAuth2(McpServerOAuth2ProviderAuth0Settings):
     introspection_url: typing.Optional[str] = pydantic.Field(default=None)
     """
     URL to fetch token expiry (RFC 7662) when the provider does not return expires_in (e.g. Salesforce). Requires client_id and client_secret.
+    """
+
+    include_resource: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    When enabled, the MCP server URL is sent as the resource parameter (RFC 8707) on both authorization and token endpoint requests.
     """
 
     provider: McpServerOAuth2Provider = pydantic.Field()
@@ -67,7 +92,7 @@ class McpServerOAuth2(McpServerOAuth2ProviderAuth0Settings):
     List of supported PKCE code challenge methods (S256 only)
     """
 
-    jwt_source: McpServerOAuth2JwtSource = pydantic.Field()
+    jwt_source: typing.Optional[McpServerOAuth2JwtSource] = pydantic.Field(default=None)
     """
     Source of the JWT token to be used for verification.
     """
@@ -79,7 +104,7 @@ class McpServerOAuth2(McpServerOAuth2ProviderAuth0Settings):
 
     additional_token_params: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
     """
-    Extra key/value pairs sent on every token endpoint request (e.g. Auth0 'audience').
+    Extra key/value pairs sent on every token endpoint request (e.g. Auth0 'organization').
     """
 
     if IS_PYDANTIC_V2:

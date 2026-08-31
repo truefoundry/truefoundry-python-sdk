@@ -21,7 +21,7 @@ class RoleBindingManifest(UniversalBaseModel):
 
     subjects: typing.List[RoleBindingSubject] = pydantic.Field()
     """
-    One row per principal; set type and name (email, team name, virtual account name, or external identity name).
+    One row per principal; set type and name (email, team name, virtual account name, agent name, or external identity name).
     """
 
     permissions: typing.List[RoleBindingPermission] = pydantic.Field()

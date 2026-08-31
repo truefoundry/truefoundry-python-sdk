@@ -39,7 +39,7 @@ class VirtualAccountsClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         name_search_query: typing.Optional[str] = None,
-        owned_by_teams: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        owned_by_teams: typing.Optional[typing.Sequence[str]] = None,
         is_expired: typing.Optional[bool] = None,
         filter: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -58,7 +58,7 @@ class VirtualAccountsClient:
         name_search_query : typing.Optional[str]
             Return virtual accounts with names that contain this string.
 
-        owned_by_teams : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        owned_by_teams : typing.Optional[typing.Sequence[str]]
             Comma-separated team names. Return virtual accounts owned by these teams.
 
         is_expired : typing.Optional[bool]
@@ -87,8 +87,6 @@ class VirtualAccountsClient:
             limit=10,
             offset=0,
             name_search_query="staging-bot",
-            owned_by_teams=["ownedByTeams"],
-            is_expired=True,
             filter='{"type":"AND","children":[{"column":"name","op":"STRING_CONTAINS","value":"bot"}]}',
         )
         for item in response:
@@ -115,7 +113,7 @@ class VirtualAccountsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetVirtualAccountResponse:
         """
-        Create a new virtual account or update an existing one using the provided VirtualAccountManifest. Matching is by name — if the name matches an existing virtual account it is updated, otherwise a new one is created.
+        Create a new virtual account or update an existing one using the provided VirtualAccountManifest. Matching is by name — if the name matches an existing virtual account it is updated, otherwise a new one is created. Omitting `permissions` leaves the existing access untouched; an empty list is rejected.
 
         Parameters
         ----------
@@ -135,7 +133,7 @@ class VirtualAccountsClient:
 
         Examples
         --------
-        from truefoundry_sdk import Permissions, TrueFoundry, VirtualAccountManifest
+        from truefoundry_sdk import TrueFoundry, VirtualAccountManifest
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -144,13 +142,6 @@ class VirtualAccountsClient:
         client.virtual_accounts.create_or_update(
             manifest=VirtualAccountManifest(
                 name="name",
-                permissions=[
-                    Permissions(
-                        resource_fqn="resource_fqn",
-                        resource_type="resource_type",
-                        role_id="role_id",
-                    )
-                ],
             ),
         )
         """
@@ -260,15 +251,18 @@ class VirtualAccountsClient:
         return _response.data
 
     def sync_to_secret_store(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: str, *, force: typing.Optional[bool] = False, request_options: typing.Optional[RequestOptions] = None
     ) -> SyncVirtualAccountTokenResponse:
         """
-        Sync the virtual account token to the configured secret store. Returns the sync metadata including timestamp and error (if any).
+        Sync the virtual account token to the configured secret store. By default the write is skipped when the active jwt already matches the last successful sync (used by the rotation cron). Pass force=true to rewrite unconditionally. Returns the sync metadata including timestamp and error (if any).
 
         Parameters
         ----------
         id : str
             System-generated service account ID.
+
+        force : typing.Optional[bool]
+            When true, rewrite the token to the secret store even if the active jwt was already synced. Defaults to false so periodic syncs stay idempotent.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -290,22 +284,22 @@ class VirtualAccountsClient:
             id="jqfwg345gi25n5ju2yz5iz6m",
         )
         """
-        _response = self._raw_client.sync_to_secret_store(id, request_options=request_options)
+        _response = self._raw_client.sync_to_secret_store(id, force=force, request_options=request_options)
         return _response.data
 
     def regenerate_token(
-        self, id: str, *, grace_period_in_days: float, request_options: typing.Optional[RequestOptions] = None
+        self, id: str, *, grace_period_in_minutes: float, request_options: typing.Optional[RequestOptions] = None
     ) -> GetTokenForVirtualAccountResponse:
         """
-        Regenerate the authentication token for a virtual account. The old token remains valid for the specified grace period.
+        Regenerate the authentication token for a virtual account. The old token remains valid for the specified grace period. Not allowed when the virtual account has identity provider mapping configured.
 
         Parameters
         ----------
         id : str
             System-generated service account ID.
 
-        grace_period_in_days : float
-            Grace period in days for which the old token will remain valid after regeneration
+        grace_period_in_minutes : float
+            Grace period in minutes for which the old token will remain valid after regeneration
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -325,11 +319,11 @@ class VirtualAccountsClient:
         )
         client.virtual_accounts.regenerate_token(
             id="jqfwg345gi25n5ju2yz5iz6m",
-            grace_period_in_days=30.0,
+            grace_period_in_minutes=30.0,
         )
         """
         _response = self._raw_client.regenerate_token(
-            id, grace_period_in_days=grace_period_in_days, request_options=request_options
+            id, grace_period_in_minutes=grace_period_in_minutes, request_options=request_options
         )
         return _response.data
 
@@ -390,7 +384,7 @@ class AsyncVirtualAccountsClient:
         limit: typing.Optional[int] = 100,
         offset: typing.Optional[int] = 0,
         name_search_query: typing.Optional[str] = None,
-        owned_by_teams: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        owned_by_teams: typing.Optional[typing.Sequence[str]] = None,
         is_expired: typing.Optional[bool] = None,
         filter: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -409,7 +403,7 @@ class AsyncVirtualAccountsClient:
         name_search_query : typing.Optional[str]
             Return virtual accounts with names that contain this string.
 
-        owned_by_teams : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        owned_by_teams : typing.Optional[typing.Sequence[str]]
             Comma-separated team names. Return virtual accounts owned by these teams.
 
         is_expired : typing.Optional[bool]
@@ -443,8 +437,6 @@ class AsyncVirtualAccountsClient:
                 limit=10,
                 offset=0,
                 name_search_query="staging-bot",
-                owned_by_teams=["ownedByTeams"],
-                is_expired=True,
                 filter='{"type":"AND","children":[{"column":"name","op":"STRING_CONTAINS","value":"bot"}]}',
             )
             async for item in response:
@@ -475,7 +467,7 @@ class AsyncVirtualAccountsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetVirtualAccountResponse:
         """
-        Create a new virtual account or update an existing one using the provided VirtualAccountManifest. Matching is by name — if the name matches an existing virtual account it is updated, otherwise a new one is created.
+        Create a new virtual account or update an existing one using the provided VirtualAccountManifest. Matching is by name — if the name matches an existing virtual account it is updated, otherwise a new one is created. Omitting `permissions` leaves the existing access untouched; an empty list is rejected.
 
         Parameters
         ----------
@@ -497,11 +489,7 @@ class AsyncVirtualAccountsClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import (
-            AsyncTrueFoundry,
-            Permissions,
-            VirtualAccountManifest,
-        )
+        from truefoundry_sdk import AsyncTrueFoundry, VirtualAccountManifest
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -513,13 +501,6 @@ class AsyncVirtualAccountsClient:
             await client.virtual_accounts.create_or_update(
                 manifest=VirtualAccountManifest(
                     name="name",
-                    permissions=[
-                        Permissions(
-                            resource_fqn="resource_fqn",
-                            resource_type="resource_type",
-                            role_id="role_id",
-                        )
-                    ],
                 ),
             )
 
@@ -658,15 +639,18 @@ class AsyncVirtualAccountsClient:
         return _response.data
 
     async def sync_to_secret_store(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: str, *, force: typing.Optional[bool] = False, request_options: typing.Optional[RequestOptions] = None
     ) -> SyncVirtualAccountTokenResponse:
         """
-        Sync the virtual account token to the configured secret store. Returns the sync metadata including timestamp and error (if any).
+        Sync the virtual account token to the configured secret store. By default the write is skipped when the active jwt already matches the last successful sync (used by the rotation cron). Pass force=true to rewrite unconditionally. Returns the sync metadata including timestamp and error (if any).
 
         Parameters
         ----------
         id : str
             System-generated service account ID.
+
+        force : typing.Optional[bool]
+            When true, rewrite the token to the secret store even if the active jwt was already synced. Defaults to false so periodic syncs stay idempotent.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -696,22 +680,22 @@ class AsyncVirtualAccountsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.sync_to_secret_store(id, request_options=request_options)
+        _response = await self._raw_client.sync_to_secret_store(id, force=force, request_options=request_options)
         return _response.data
 
     async def regenerate_token(
-        self, id: str, *, grace_period_in_days: float, request_options: typing.Optional[RequestOptions] = None
+        self, id: str, *, grace_period_in_minutes: float, request_options: typing.Optional[RequestOptions] = None
     ) -> GetTokenForVirtualAccountResponse:
         """
-        Regenerate the authentication token for a virtual account. The old token remains valid for the specified grace period.
+        Regenerate the authentication token for a virtual account. The old token remains valid for the specified grace period. Not allowed when the virtual account has identity provider mapping configured.
 
         Parameters
         ----------
         id : str
             System-generated service account ID.
 
-        grace_period_in_days : float
-            Grace period in days for which the old token will remain valid after regeneration
+        grace_period_in_minutes : float
+            Grace period in minutes for which the old token will remain valid after regeneration
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -736,14 +720,14 @@ class AsyncVirtualAccountsClient:
         async def main() -> None:
             await client.virtual_accounts.regenerate_token(
                 id="jqfwg345gi25n5ju2yz5iz6m",
-                grace_period_in_days=30.0,
+                grace_period_in_minutes=30.0,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.regenerate_token(
-            id, grace_period_in_days=grace_period_in_days, request_options=request_options
+            id, grace_period_in_minutes=grace_period_in_minutes, request_options=request_options
         )
         return _response.data
 

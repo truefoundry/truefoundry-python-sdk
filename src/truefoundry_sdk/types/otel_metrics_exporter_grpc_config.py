@@ -5,9 +5,10 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from .otel_exporter_grpc_config_base import OtelExporterGrpcConfigBase
+from .otel_metrics_exporter_common_config import OtelMetricsExporterCommonConfig
 
 
-class OtelMetricsExporterGrpcConfig(OtelExporterGrpcConfigBase):
+class OtelMetricsExporterGrpcConfig(OtelExporterGrpcConfigBase, OtelMetricsExporterCommonConfig):
     """
     gRPC Configuration
     """

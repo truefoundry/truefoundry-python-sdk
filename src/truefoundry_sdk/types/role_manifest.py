@@ -24,6 +24,10 @@ class RoleManifest(UniversalBaseModel):
         FieldMetadata(alias="displayName"),
         pydantic.Field(alias="displayName", description="Human-readable name for the role"),
     ]
+    """
+    Human-readable name for the role
+    """
+
     description: str = pydantic.Field()
     """
     Description of the role that explains its purpose and permissions
@@ -34,6 +38,10 @@ class RoleManifest(UniversalBaseModel):
         FieldMetadata(alias="resourceType"),
         pydantic.Field(alias="resourceType", description="Type of resource this role applies to"),
     ]
+    """
+    Type of resource this role applies to
+    """
+
     permissions: typing.List[str] = pydantic.Field()
     """
     Define the resource type and the corresponding actions this role can perform on the resource

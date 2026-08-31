@@ -27,10 +27,20 @@ class AwsBedrockMantleProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    The name of the AWS Bedrock Mantle provider account
+    The name of the AWS Bedrock Mantle model account
     """
 
     region: AwsRegion
+    project: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The default AWS Bedrock project that inference requests will be attributed to (e.g., proj_5d5ykleja6cwpirysbb7). Used for all models unless overridden at the model level. If not specified, the AWS account's default project is used.
+    """
+
+    base_url: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Optional custom base URL (e.g. a VPC/PrivateLink endpoint) for AWS Bedrock Mantle. When set, requests are sent here instead of the default bedrock-mantle.{region}.api.aws host.
+    """
+
     auth_data: typing.Optional[AwsBedrockMantleProviderAccountAuthData] = pydantic.Field(default=None)
     """
     Authentication data for the AWS account
@@ -38,12 +48,12 @@ class AwsBedrockMantleProviderAccount(UniversalBaseModel):
 
     integrations: typing.List[AwsBedrockMantleIntegrations] = pydantic.Field()
     """
-    List of integrations that are associated with the AWS Bedrock Mantle provider account
+    List of integrations that are associated with the AWS Bedrock Mantle model account
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    List of users who have access to this provider account
+    List of users who have access to this model account
     """
 
     owned_by: typing_extensions.Annotated[
@@ -51,7 +61,7 @@ class AwsBedrockMantleProviderAccount(UniversalBaseModel):
     ] = None
     discount_percent: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Discount % applied to upstream list price for this provider account.
+    Discount % applied to upstream list price for this model account.
     """
 
     if IS_PYDANTIC_V2:

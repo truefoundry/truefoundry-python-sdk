@@ -29,7 +29,7 @@ class LegacyAgentManifest(UniversalBaseModel):
     """
 
     source: AgentSource
-    collaborators: typing.List[Collaborator] = pydantic.Field()
+    collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
     List of users who have access to this Agent
     """

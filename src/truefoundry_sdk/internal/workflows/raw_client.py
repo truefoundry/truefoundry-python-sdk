@@ -12,7 +12,7 @@ from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
 from ...errors.bad_request_error import BadRequestError
 from ...errors.not_found_error import NotFoundError
-from .types.workflows_execute_workflow_response import WorkflowsExecuteWorkflowResponse
+from .types.execute_workflow_workflows_response import ExecuteWorkflowWorkflowsResponse
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -30,7 +30,7 @@ class RawWorkflowsClient:
         inputs: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         inputs_literal_map: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[WorkflowsExecuteWorkflowResponse]:
+    ) -> HttpResponse[ExecuteWorkflowWorkflowsResponse]:
         """
         Execute a workflow for the specified application
 
@@ -50,7 +50,7 @@ class RawWorkflowsClient:
 
         Returns
         -------
-        HttpResponse[WorkflowsExecuteWorkflowResponse]
+        HttpResponse[ExecuteWorkflowWorkflowsResponse]
             Returns execution name of the workflow
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -69,9 +69,9 @@ class RawWorkflowsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    WorkflowsExecuteWorkflowResponse,
+                    ExecuteWorkflowWorkflowsResponse,
                     parse_obj_as(
-                        type_=WorkflowsExecuteWorkflowResponse,  # type: ignore
+                        type_=ExecuteWorkflowWorkflowsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -119,7 +119,7 @@ class AsyncRawWorkflowsClient:
         inputs: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         inputs_literal_map: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[WorkflowsExecuteWorkflowResponse]:
+    ) -> AsyncHttpResponse[ExecuteWorkflowWorkflowsResponse]:
         """
         Execute a workflow for the specified application
 
@@ -139,7 +139,7 @@ class AsyncRawWorkflowsClient:
 
         Returns
         -------
-        AsyncHttpResponse[WorkflowsExecuteWorkflowResponse]
+        AsyncHttpResponse[ExecuteWorkflowWorkflowsResponse]
             Returns execution name of the workflow
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -158,9 +158,9 @@ class AsyncRawWorkflowsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    WorkflowsExecuteWorkflowResponse,
+                    ExecuteWorkflowWorkflowsResponse,
                     parse_obj_as(
-                        type_=WorkflowsExecuteWorkflowResponse,  # type: ignore
+                        type_=ExecuteWorkflowWorkflowsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

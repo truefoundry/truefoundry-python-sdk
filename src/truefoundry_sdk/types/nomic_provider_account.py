@@ -14,7 +14,7 @@ from .owned_by import OwnedBy
 
 class NomicProviderAccount(UniversalBaseModel):
     """
-    Nomic Provider Account
+    Nomic Model Account
     """
 
     type: typing.Literal["provider-account/nomic"] = pydantic.Field(default="provider-account/nomic")
@@ -24,18 +24,18 @@ class NomicProviderAccount(UniversalBaseModel):
 
     name: str = pydantic.Field()
     """
-    The name of the Nomic provider account
+    The name of the Nomic model account
     """
 
     auth_data: NomicKeyAuth
     integrations: typing.List[NomicIntegrations] = pydantic.Field()
     """
-    List of integrations that are associated with the Nomic provider account
+    List of integrations that are associated with the Nomic model account
     """
 
     collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
-    List of users who have access to this provider account
+    List of users who have access to this model account
     """
 
     owned_by: typing_extensions.Annotated[
@@ -43,7 +43,7 @@ class NomicProviderAccount(UniversalBaseModel):
     ] = None
     discount_percent: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Discount % applied to upstream list price for this provider account.
+    Discount % applied to upstream list price for this model account.
     """
 
     if IS_PYDANTIC_V2:

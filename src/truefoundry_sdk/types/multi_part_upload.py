@@ -33,6 +33,10 @@ class MultiPartUpload(UniversalBaseModel):
             alias="s3_compatible_upload_id", description="Upload identifier for S3-compatible storage providers."
         ),
     ] = None
+    """
+    Upload identifier for S3-compatible storage providers.
+    """
+
     azure_blob_block_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     Block identifiers used for Azure Blob storage uploads.

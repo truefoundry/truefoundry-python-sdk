@@ -9,11 +9,12 @@ T_Result = typing.TypeVar("T_Result")
 
 class TenantBudgetConfigMode(enum.StrEnum):
     """
-    `enforce` blocks breaching requests, `audit` only tracks them.
+    `enforce` blocks breaching requests, `audit` only tracks them, `soft_enforce` blocks only when no other matching budget allows the request.
     """
 
     ENFORCE = "enforce"
     AUDIT = "audit"
+    SOFT_ENFORCE = "soft_enforce"
     _UNKNOWN = "__TENANTBUDGETCONFIGMODE_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
@@ -29,10 +30,13 @@ class TenantBudgetConfigMode(enum.StrEnum):
         self,
         enforce: typing.Callable[[], T_Result],
         audit: typing.Callable[[], T_Result],
+        soft_enforce: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is TenantBudgetConfigMode.ENFORCE:
             return enforce()
         if self is TenantBudgetConfigMode.AUDIT:
             return audit()
+        if self is TenantBudgetConfigMode.SOFT_ENFORCE:
+            return soft_enforce()
         return _unknown_member(self._value_)
