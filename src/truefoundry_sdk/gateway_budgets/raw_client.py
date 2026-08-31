@@ -205,7 +205,7 @@ class RawGatewayBudgetsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[BudgetUsageResponse]:
         """
-        Returns the budgets that would apply to a hypothetical user/team/model/metadata selection, with current usage.
+        Returns the budgets that would apply to a hypothetical user/team/model/metadata selection, with current usage. Pass a virtual model id in `model` to preview virtual-model traffic.
 
         Parameters
         ----------
@@ -222,7 +222,7 @@ class RawGatewayBudgetsClient:
             All teams the simulated user belongs to. Merged with `team` when both are provided.
 
         model : typing.Optional[str]
-            Model to simulate.
+            Model id to simulate (`account/model`). Use the virtual model id when previewing virtual-model traffic.
 
         metadata : typing.Optional[typing.Dict[str, str]]
             Request metadata key/value pairs to simulate.
@@ -609,7 +609,7 @@ class AsyncRawGatewayBudgetsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[BudgetUsageResponse]:
         """
-        Returns the budgets that would apply to a hypothetical user/team/model/metadata selection, with current usage.
+        Returns the budgets that would apply to a hypothetical user/team/model/metadata selection, with current usage. Pass a virtual model id in `model` to preview virtual-model traffic.
 
         Parameters
         ----------
@@ -626,7 +626,7 @@ class AsyncRawGatewayBudgetsClient:
             All teams the simulated user belongs to. Merged with `team` when both are provided.
 
         model : typing.Optional[str]
-            Model to simulate.
+            Model id to simulate (`account/model`). Use the virtual model id when previewing virtual-model traffic.
 
         metadata : typing.Optional[typing.Dict[str, str]]
             Request metadata key/value pairs to simulate.

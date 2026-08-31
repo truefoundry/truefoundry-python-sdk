@@ -26,7 +26,7 @@ class VirtualAccountManifest(UniversalBaseModel):
     +value=virtual-account
     """
 
-    permissions: typing.List[Permissions] = pydantic.Field()
+    permissions: typing.Optional[typing.List[Permissions]] = pydantic.Field(default=None)
     """
     Permissions
     """

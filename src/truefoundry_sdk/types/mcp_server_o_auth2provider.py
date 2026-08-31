@@ -15,6 +15,7 @@ class McpServerOAuth2Provider(enum.StrEnum):
     CUSTOM = "custom"
     AUTH0 = "auth0"
     OKTA = "okta"
+    MICROSOFT_ENTRA = "microsoft-entra"
     _UNKNOWN = "__MCPSERVEROAUTH2PROVIDER_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
@@ -31,6 +32,7 @@ class McpServerOAuth2Provider(enum.StrEnum):
         custom: typing.Callable[[], T_Result],
         auth0: typing.Callable[[], T_Result],
         okta: typing.Callable[[], T_Result],
+        microsoft_entra: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is McpServerOAuth2Provider.CUSTOM:
@@ -39,4 +41,6 @@ class McpServerOAuth2Provider(enum.StrEnum):
             return auth0()
         if self is McpServerOAuth2Provider.OKTA:
             return okta()
+        if self is McpServerOAuth2Provider.MICROSOFT_ENTRA:
+            return microsoft_entra()
         return _unknown_member(self._value_)

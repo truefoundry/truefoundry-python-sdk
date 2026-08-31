@@ -36,12 +36,17 @@ class VirtualMcpServerManifest(UniversalBaseModel):
     Provide a brief description of the purpose of this Virtual MCP Server.
     """
 
+    best_effort_mode: typing.Optional[bool] = pydantic.Field(default=False)
+    """
+    When enabled, the virtual MCP server continues with available source servers even if some servers fail.
+    """
+
     servers: typing.List[McpServerSource] = pydantic.Field()
     """
     List of source MCP servers to include in this virtual server.
     """
 
-    collaborators: typing.List[Collaborator] = pydantic.Field()
+    collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
     Users and Teams that have access to this Virtual MCP Server
     """

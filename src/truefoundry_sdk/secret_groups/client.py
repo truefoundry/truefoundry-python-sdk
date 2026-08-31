@@ -175,7 +175,7 @@ class SecretGroupsClient:
 
         Examples
         --------
-        from truefoundry_sdk import Collaborator, SecretGroupManifest, TrueFoundry
+        from truefoundry_sdk import SecretGroupManifest, TrueFoundry
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -185,12 +185,6 @@ class SecretGroupsClient:
             manifest=SecretGroupManifest(
                 name="name",
                 integration_fqn="integration_fqn",
-                collaborators=[
-                    Collaborator(
-                        subject="subject",
-                        role_id="role_id",
-                    )
-                ],
             ),
         )
         """
@@ -494,7 +488,7 @@ class AsyncSecretGroupsClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import AsyncTrueFoundry, Collaborator, SecretGroupManifest
+        from truefoundry_sdk import AsyncTrueFoundry, SecretGroupManifest
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -507,12 +501,6 @@ class AsyncSecretGroupsClient:
                 manifest=SecretGroupManifest(
                     name="name",
                     integration_fqn="integration_fqn",
-                    collaborators=[
-                        Collaborator(
-                            subject="subject",
-                            role_id="role_id",
-                        )
-                    ],
                 ),
             )
 

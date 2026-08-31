@@ -179,7 +179,7 @@ class MlReposClient:
 
         Examples
         --------
-        from truefoundry_sdk import Collaborator, MlRepoManifest, TrueFoundry
+        from truefoundry_sdk import MlRepoManifest, TrueFoundry
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -189,12 +189,6 @@ class MlReposClient:
             manifest=MlRepoManifest(
                 name="name",
                 storage_integration_fqn="storage_integration_fqn",
-                collaborators=[
-                    Collaborator(
-                        subject="subject",
-                        role_id="role_id",
-                    )
-                ],
             ),
         )
         """
@@ -394,7 +388,7 @@ class AsyncMlReposClient:
         --------
         import asyncio
 
-        from truefoundry_sdk import AsyncTrueFoundry, Collaborator, MlRepoManifest
+        from truefoundry_sdk import AsyncTrueFoundry, MlRepoManifest
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -407,12 +401,6 @@ class AsyncMlReposClient:
                 manifest=MlRepoManifest(
                     name="name",
                     storage_integration_fqn="storage_integration_fqn",
-                    collaborators=[
-                        Collaborator(
-                            subject="subject",
-                            role_id="role_id",
-                        )
-                    ],
                 ),
             )
 

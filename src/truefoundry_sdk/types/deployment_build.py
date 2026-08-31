@@ -12,38 +12,122 @@ from .deployment_build_status import DeploymentBuildStatus
 
 
 class DeploymentBuild(UniversalBaseModel):
-    id: typing.Optional[str] = None
+    id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    System-generated unique identifier for the deployment build.
+    """
+
     deployment_id: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="deploymentId"), pydantic.Field(alias="deploymentId")
+        typing.Optional[str],
+        FieldMetadata(alias="deploymentId"),
+        pydantic.Field(
+            alias="deploymentId",
+            description="System-generated unique identifier for the deployment this build belongs to.",
+        ),
     ] = None
+    """
+    System-generated unique identifier for the deployment this build belongs to.
+    """
+
     component_name: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="componentName"), pydantic.Field(alias="componentName")
+        typing.Optional[str],
+        FieldMetadata(alias="componentName"),
+        pydantic.Field(
+            alias="componentName",
+            description="Human-readable name of the application component this build produces an image for.",
+        ),
     ] = None
-    build: typing.Optional[BuildInfo] = None
+    """
+    Human-readable name of the application component this build produces an image for.
+    """
+
+    build: typing.Optional[BuildInfo] = pydantic.Field(default=None)
+    """
+    Underlying build record.
+    """
+
     build_id: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="buildId"), pydantic.Field(alias="buildId")
+        typing.Optional[str],
+        FieldMetadata(alias="buildId"),
+        pydantic.Field(alias="buildId", description="System-generated unique identifier for the build."),
     ] = None
+    """
+    System-generated unique identifier for the build.
+    """
+
     image_uri: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="imageUri"), pydantic.Field(alias="imageUri")
+        typing.Optional[str],
+        FieldMetadata(alias="imageUri"),
+        pydantic.Field(alias="imageUri", description="Fully-qualified URI of the image produced by this build."),
     ] = None
-    name: typing.Optional[str] = None
-    status: typing.Optional[DeploymentBuildStatus] = None
+    """
+    Fully-qualified URI of the image produced by this build.
+    """
+
+    name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Human-readable name of the build, accepted as the `pipelineRunName` by the build logs API.
+    """
+
+    status: typing.Optional[DeploymentBuildStatus] = pydantic.Field(default=None)
+    """
+    Current status of the build.
+    """
+
     get_logs_url: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="getLogsUrl"), pydantic.Field(alias="getLogsUrl")
+        typing.Optional[str],
+        FieldMetadata(alias="getLogsUrl"),
+        pydantic.Field(alias="getLogsUrl", description="URL for fetching this build’s logs."),
     ] = None
+    """
+    URL for fetching this build’s logs.
+    """
+
     tail_logs_url: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="tailLogsUrl"), pydantic.Field(alias="tailLogsUrl")
+        typing.Optional[str],
+        FieldMetadata(alias="tailLogsUrl"),
+        pydantic.Field(
+            alias="tailLogsUrl", description="JSON-encoded connection details for streaming this build’s logs."
+        ),
     ] = None
+    """
+    JSON-encoded connection details for streaming this build’s logs.
+    """
+
     logs_start_ts: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="logsStartTs"), pydantic.Field(alias="logsStartTs")
+        typing.Optional[str],
+        FieldMetadata(alias="logsStartTs"),
+        pydantic.Field(
+            alias="logsStartTs",
+            description="Timestamp the build started, in nanoseconds. Pass as `startTs` when fetching build logs.",
+        ),
     ] = None
-    metadata: typing.Optional[typing.Dict[str, typing.Any]] = None
+    """
+    Timestamp the build started, in nanoseconds. Pass as `startTs` when fetching build logs.
+    """
+
+    metadata: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    """
+    Additional metadata recorded against the build.
+    """
+
     created_at: typing_extensions.Annotated[
-        typing.Optional[dt.datetime], FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="createdAt"),
+        pydantic.Field(alias="createdAt", description="Timestamp when the build was created."),
     ] = None
+    """
+    Timestamp when the build was created.
+    """
+
     updated_at: typing_extensions.Annotated[
-        typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt"), pydantic.Field(alias="updatedAt")
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="updatedAt"),
+        pydantic.Field(alias="updatedAt", description="Timestamp when the build was last updated."),
     ] = None
+    """
+    Timestamp when the build was last updated.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

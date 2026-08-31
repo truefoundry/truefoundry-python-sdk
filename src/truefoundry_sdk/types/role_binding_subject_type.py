@@ -9,12 +9,13 @@ T_Result = typing.TypeVar("T_Result")
 
 class RoleBindingSubjectType(enum.StrEnum):
     """
-    Whether this row identifies a user (email), a team (name), or a virtual account (name).
+    Whether this row identifies a user (email), a team (name), a virtual account (name), or an agent (name).
     """
 
     USER = "user"
     TEAM = "team"
     VIRTUALACCOUNT = "virtualaccount"
+    AGENT = "agent"
     _UNKNOWN = "__ROLEBINDINGSUBJECTTYPE_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
@@ -31,6 +32,7 @@ class RoleBindingSubjectType(enum.StrEnum):
         user: typing.Callable[[], T_Result],
         team: typing.Callable[[], T_Result],
         virtualaccount: typing.Callable[[], T_Result],
+        agent: typing.Callable[[], T_Result],
         _unknown_member: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self is RoleBindingSubjectType.USER:
@@ -39,4 +41,6 @@ class RoleBindingSubjectType(enum.StrEnum):
             return team()
         if self is RoleBindingSubjectType.VIRTUALACCOUNT:
             return virtualaccount()
+        if self is RoleBindingSubjectType.AGENT:
+            return agent()
         return _unknown_member(self._value_)

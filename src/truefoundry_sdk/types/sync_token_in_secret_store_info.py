@@ -18,6 +18,17 @@ class SyncTokenInSecretStoreInfo(UniversalBaseModel):
     ISO timestamp of when the token was synced
     """
 
+    jwt_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="jwtId"),
+        pydantic.Field(
+            alias="jwtId", description="JWT id of the token that was last successfully written to the secret store"
+        ),
+    ]
+    """
+    JWT id of the token that was last successfully written to the secret store
+    """
+
     error: typing.Optional[str] = pydantic.Field(default=None)
     """
     Error message if sync failed

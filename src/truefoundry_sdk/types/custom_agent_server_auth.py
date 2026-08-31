@@ -2,7 +2,11 @@
 
 import typing
 
+from .custom_server_aws_sig_v4 import CustomServerAwsSigV4
 from .custom_server_header_auth import CustomServerHeaderAuth
+from .custom_server_o_auth2marker import CustomServerOAuth2Marker
 from .custom_server_passthrough import CustomServerPassthrough
 
-CustomAgentServerAuth = typing.Union[CustomServerHeaderAuth, CustomServerPassthrough]
+CustomAgentServerAuth = typing.Union[
+    CustomServerHeaderAuth, CustomServerPassthrough, CustomServerOAuth2Marker, CustomServerAwsSigV4
+]

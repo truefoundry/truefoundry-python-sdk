@@ -9,6 +9,8 @@ from ..core.serialization import FieldMetadata
 from .collaborator import Collaborator
 from .custom_tls_settings import CustomTlsSettings
 from .mcp_server_auth import McpServerAuth
+from .mcp_tool_metadata import McpToolMetadata
+from .mcp_tool_policy import McpToolPolicy
 from .mcp_tool_setting import McpToolSetting
 from .owned_by import OwnedBy
 
@@ -49,8 +51,14 @@ class RemoteMcpServerManifest(UniversalBaseModel):
     Customize tool descriptions or enable/disable specific tools from the MCP Server.
     """
 
+    tool_policy: typing.Optional[McpToolPolicy] = None
+    tool_metadata: typing.Optional[typing.Dict[str, McpToolMetadata]] = pydantic.Field(default=None)
+    """
+    Per-tool description and annotation overrides keyed by tool name.
+    """
+
     auth_data: typing.Optional[McpServerAuth] = None
-    collaborators: typing.List[Collaborator] = pydantic.Field()
+    collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
     Users and Teams that have access to this MCP Server
     """

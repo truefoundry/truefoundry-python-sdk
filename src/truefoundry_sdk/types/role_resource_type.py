@@ -49,8 +49,6 @@ class RoleResourceType(enum.StrEnum):
     AGENT_CHANNEL = "agent-channel"
     GATEWAY_INSTALLATION = "gateway-installation"
     VIRTUAL_ACCOUNT = "virtual-account"
-    SSO_BASED_IDENTITY = "sso-based-identity"
-    EXTERNAL_IDENTITY = "external-identity"
     MCP_SERVER = "mcp-server"
     EXTERNAL_IDENTITY_PROVIDER = "external-identity-provider"
     AGENT_IDENTITY = "agent-identity"
@@ -104,8 +102,6 @@ class RoleResourceType(enum.StrEnum):
         agent_channel: typing.Callable[[], T_Result],
         gateway_installation: typing.Callable[[], T_Result],
         virtual_account: typing.Callable[[], T_Result],
-        sso_based_identity: typing.Callable[[], T_Result],
-        external_identity: typing.Callable[[], T_Result],
         mcp_server: typing.Callable[[], T_Result],
         external_identity_provider: typing.Callable[[], T_Result],
         agent_identity: typing.Callable[[], T_Result],
@@ -185,10 +181,6 @@ class RoleResourceType(enum.StrEnum):
             return gateway_installation()
         if self is RoleResourceType.VIRTUAL_ACCOUNT:
             return virtual_account()
-        if self is RoleResourceType.SSO_BASED_IDENTITY:
-            return sso_based_identity()
-        if self is RoleResourceType.EXTERNAL_IDENTITY:
-            return external_identity()
         if self is RoleResourceType.MCP_SERVER:
             return mcp_server()
         if self is RoleResourceType.EXTERNAL_IDENTITY_PROVIDER:

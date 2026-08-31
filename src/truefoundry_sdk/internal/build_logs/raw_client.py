@@ -12,6 +12,7 @@ from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
 from ...errors.bad_request_error import BadRequestError
 from ...types.logs_response import LogsResponse
+from ...types.logs_sorting_direction import LogsSortingDirection
 from pydantic import ValidationError
 
 
@@ -25,8 +26,8 @@ class RawBuildLogsClient:
         *,
         start_ts: typing.Optional[str] = None,
         end_ts: typing.Optional[str] = None,
-        limit: typing.Optional[str] = None,
-        direction: typing.Optional[str] = None,
+        limit: typing.Optional[str] = "10000",
+        direction: typing.Optional[LogsSortingDirection] = None,
         filter_query: typing.Optional[str] = None,
         num_logs_to_ignore: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -40,7 +41,7 @@ class RawBuildLogsClient:
             PipelineRun Name
 
         start_ts : typing.Optional[str]
-            Start timestamp for querying logs, in nanoseconds from the Unix epoch.
+            Start timestamp for querying logs, in nanoseconds from the Unix epoch. Supply the `logsStartTs` of the build; omitting it searches from the epoch and matches nothing.
 
         end_ts : typing.Optional[str]
             End timestamp for querying logs, in nanoseconds from the Unix epoch.
@@ -48,8 +49,8 @@ class RawBuildLogsClient:
         limit : typing.Optional[str]
             Max number of log lines to fetch
 
-        direction : typing.Optional[str]
-            Direction of sorting logs. Can be `asc` or `desc`
+        direction : typing.Optional[LogsSortingDirection]
+            Direction of sorting logs by timestamp.
 
         filter_query : typing.Optional[str]
             JSON-encoded filter object with shape `{ matchString, type, operator }`. `type` is `regex` or `substring`; `operator` is `equal` or `not_equal`.
@@ -119,8 +120,8 @@ class AsyncRawBuildLogsClient:
         *,
         start_ts: typing.Optional[str] = None,
         end_ts: typing.Optional[str] = None,
-        limit: typing.Optional[str] = None,
-        direction: typing.Optional[str] = None,
+        limit: typing.Optional[str] = "10000",
+        direction: typing.Optional[LogsSortingDirection] = None,
         filter_query: typing.Optional[str] = None,
         num_logs_to_ignore: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -134,7 +135,7 @@ class AsyncRawBuildLogsClient:
             PipelineRun Name
 
         start_ts : typing.Optional[str]
-            Start timestamp for querying logs, in nanoseconds from the Unix epoch.
+            Start timestamp for querying logs, in nanoseconds from the Unix epoch. Supply the `logsStartTs` of the build; omitting it searches from the epoch and matches nothing.
 
         end_ts : typing.Optional[str]
             End timestamp for querying logs, in nanoseconds from the Unix epoch.
@@ -142,8 +143,8 @@ class AsyncRawBuildLogsClient:
         limit : typing.Optional[str]
             Max number of log lines to fetch
 
-        direction : typing.Optional[str]
-            Direction of sorting logs. Can be `asc` or `desc`
+        direction : typing.Optional[LogsSortingDirection]
+            Direction of sorting logs by timestamp.
 
         filter_query : typing.Optional[str]
             JSON-encoded filter object with shape `{ matchString, type, operator }`. `type` is `regex` or `substring`; `operator` is `equal` or `not_equal`.

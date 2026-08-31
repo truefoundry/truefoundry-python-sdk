@@ -132,7 +132,6 @@ class AgentsClient:
         Examples
         --------
         from truefoundry_sdk import (
-            Collaborator,
             TrueFoundry,
             TrueFoundryAgentManifest,
             TrueFoundryAgentModel,
@@ -149,12 +148,6 @@ class AgentsClient:
                 model=TrueFoundryAgentModel(
                     name="name",
                 ),
-                collaborators=[
-                    Collaborator(
-                        subject="subject",
-                        role_id="role_id",
-                    )
-                ],
             ),
         )
         """
@@ -230,7 +223,7 @@ class AgentsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetAgentIdentityTokenResponse:
         """
-        Returns the TrueFoundry-backed token for the agent's linked identity, generating one on demand if none exists yet (or the stored one has expired). Only valid for agents whose identity is TrueFoundry-backed. Requires manage access on the agent since the token authenticates as it. 404s if the agent has no linked identity.
+        Returns the stored TrueFoundry-backed token for the agent's linked identity. Only valid for agents whose identity is TrueFoundry-backed. Requires manage access on the agent since the token authenticates as it. Use the create-token endpoint to issue one.
 
         Parameters
         ----------
@@ -258,6 +251,98 @@ class AgentsClient:
         )
         """
         _response = self._raw_client.get_token(id, request_options=request_options)
+        return _response.data
+
+    def create_token(
+        self,
+        id: str,
+        *,
+        expiration_date: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetAgentIdentityTokenResponse:
+        """
+        Issues a new TrueFoundry-backed token for the agent's linked identity. Fails with 409 when a valid token already exists — use the get-token endpoint to retrieve it. An expired token is replaced by a new one. An optional expirationDate (yyyy-mm-dd) sets the token's expiry; the identity manifest is not modified. Requires manage access on the agent since the token authenticates as it.
+
+        Parameters
+        ----------
+        id : str
+            System-generated agent ID.
+
+        expiration_date : typing.Optional[str]
+            Token expiry as yyyy-mm-dd, applied to the issued token's own expiry only (the identity manifest is not modified). Defaults to a long-lived, effectively non-expiring token when omitted.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetAgentIdentityTokenResponse
+            The newly issued TrueFoundry-backed token for the agent's identity.
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.agents.create_token(
+            id="jqfwg345gi25n5ju2yz5iz6m",
+        )
+        """
+        _response = self._raw_client.create_token(id, expiration_date=expiration_date, request_options=request_options)
+        return _response.data
+
+    def regenerate_token(
+        self,
+        id: str,
+        *,
+        grace_period_in_minutes: float,
+        expiration_date: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetAgentIdentityTokenResponse:
+        """
+        Regenerates the TrueFoundry-backed token for the agent's linked identity. The old token remains valid for the specified grace period. Fails when a previous token is still in its grace window. An optional expirationDate (yyyy-mm-dd) sets the new token's expiry; the identity manifest is not modified. Requires manage access on the agent since the token authenticates as it.
+
+        Parameters
+        ----------
+        id : str
+            System-generated agent ID.
+
+        grace_period_in_minutes : float
+            Grace period in minutes for which the old token will remain valid after regeneration
+
+        expiration_date : typing.Optional[str]
+            Token expiry as yyyy-mm-dd, applied to the newly issued token's own expiry only (the identity manifest is not modified). Defaults to a long-lived, effectively non-expiring token when omitted.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetAgentIdentityTokenResponse
+            The newly issued TrueFoundry-backed token for the agent's identity.
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.agents.regenerate_token(
+            id="jqfwg345gi25n5ju2yz5iz6m",
+            grace_period_in_minutes=60.0,
+        )
+        """
+        _response = self._raw_client.regenerate_token(
+            id,
+            grace_period_in_minutes=grace_period_in_minutes,
+            expiration_date=expiration_date,
+            request_options=request_options,
+        )
         return _response.data
 
 
@@ -387,7 +472,6 @@ class AsyncAgentsClient:
 
         from truefoundry_sdk import (
             AsyncTrueFoundry,
-            Collaborator,
             TrueFoundryAgentManifest,
             TrueFoundryAgentModel,
         )
@@ -406,12 +490,6 @@ class AsyncAgentsClient:
                     model=TrueFoundryAgentModel(
                         name="name",
                     ),
-                    collaborators=[
-                        Collaborator(
-                            subject="subject",
-                            role_id="role_id",
-                        )
-                    ],
                 ),
             )
 
@@ -506,7 +584,7 @@ class AsyncAgentsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetAgentIdentityTokenResponse:
         """
-        Returns the TrueFoundry-backed token for the agent's linked identity, generating one on demand if none exists yet (or the stored one has expired). Only valid for agents whose identity is TrueFoundry-backed. Requires manage access on the agent since the token authenticates as it. 404s if the agent has no linked identity.
+        Returns the stored TrueFoundry-backed token for the agent's linked identity. Only valid for agents whose identity is TrueFoundry-backed. Requires manage access on the agent since the token authenticates as it. Use the create-token endpoint to issue one.
 
         Parameters
         ----------
@@ -542,4 +620,114 @@ class AsyncAgentsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get_token(id, request_options=request_options)
+        return _response.data
+
+    async def create_token(
+        self,
+        id: str,
+        *,
+        expiration_date: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetAgentIdentityTokenResponse:
+        """
+        Issues a new TrueFoundry-backed token for the agent's linked identity. Fails with 409 when a valid token already exists — use the get-token endpoint to retrieve it. An expired token is replaced by a new one. An optional expirationDate (yyyy-mm-dd) sets the token's expiry; the identity manifest is not modified. Requires manage access on the agent since the token authenticates as it.
+
+        Parameters
+        ----------
+        id : str
+            System-generated agent ID.
+
+        expiration_date : typing.Optional[str]
+            Token expiry as yyyy-mm-dd, applied to the issued token's own expiry only (the identity manifest is not modified). Defaults to a long-lived, effectively non-expiring token when omitted.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetAgentIdentityTokenResponse
+            The newly issued TrueFoundry-backed token for the agent's identity.
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.agents.create_token(
+                id="jqfwg345gi25n5ju2yz5iz6m",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.create_token(
+            id, expiration_date=expiration_date, request_options=request_options
+        )
+        return _response.data
+
+    async def regenerate_token(
+        self,
+        id: str,
+        *,
+        grace_period_in_minutes: float,
+        expiration_date: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetAgentIdentityTokenResponse:
+        """
+        Regenerates the TrueFoundry-backed token for the agent's linked identity. The old token remains valid for the specified grace period. Fails when a previous token is still in its grace window. An optional expirationDate (yyyy-mm-dd) sets the new token's expiry; the identity manifest is not modified. Requires manage access on the agent since the token authenticates as it.
+
+        Parameters
+        ----------
+        id : str
+            System-generated agent ID.
+
+        grace_period_in_minutes : float
+            Grace period in minutes for which the old token will remain valid after regeneration
+
+        expiration_date : typing.Optional[str]
+            Token expiry as yyyy-mm-dd, applied to the newly issued token's own expiry only (the identity manifest is not modified). Defaults to a long-lived, effectively non-expiring token when omitted.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetAgentIdentityTokenResponse
+            The newly issued TrueFoundry-backed token for the agent's identity.
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.agents.regenerate_token(
+                id="jqfwg345gi25n5ju2yz5iz6m",
+                grace_period_in_minutes=60.0,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.regenerate_token(
+            id,
+            grace_period_in_minutes=grace_period_in_minutes,
+            expiration_date=expiration_date,
+            request_options=request_options,
+        )
         return _response.data

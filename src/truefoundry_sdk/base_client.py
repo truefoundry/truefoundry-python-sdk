@@ -178,6 +178,7 @@ class BaseTrueFoundry:
         *,
         manifest: TrueFoundryApplyRequestManifest,
         dry_run: typing.Optional[bool] = False,
+        force: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TrueFoundryApplyResponse:
         """
@@ -191,6 +192,9 @@ class BaseTrueFoundry:
         dry_run : typing.Optional[bool]
             Dry run the apply operation without actually applying
 
+        force : typing.Optional[bool]
+            When `true`, acknowledges that updating this manifest may delete existing per-subject auth records. Currently used for MCP server apply.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -201,7 +205,7 @@ class BaseTrueFoundry:
 
         Examples
         --------
-        from truefoundry_sdk import Collaborator, MlRepoManifest, TrueFoundry
+        from truefoundry_sdk import MlRepoManifest, TrueFoundry
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -211,16 +215,12 @@ class BaseTrueFoundry:
             manifest=MlRepoManifest(
                 name="name",
                 storage_integration_fqn="storage_integration_fqn",
-                collaborators=[
-                    Collaborator(
-                        subject="subject",
-                        role_id="role_id",
-                    )
-                ],
             ),
         )
         """
-        _response = self._raw_client.apply(manifest=manifest, dry_run=dry_run, request_options=request_options)
+        _response = self._raw_client.apply(
+            manifest=manifest, dry_run=dry_run, force=force, request_options=request_options
+        )
         return _response.data
 
     def delete(
@@ -244,7 +244,7 @@ class BaseTrueFoundry:
 
         Examples
         --------
-        from truefoundry_sdk import Collaborator, MlRepoManifest, TrueFoundry
+        from truefoundry_sdk import MlRepoManifest, TrueFoundry
 
         client = TrueFoundry(
             api_key="YOUR_API_KEY",
@@ -254,12 +254,6 @@ class BaseTrueFoundry:
             manifest=MlRepoManifest(
                 name="name",
                 storage_integration_fqn="storage_integration_fqn",
-                collaborators=[
-                    Collaborator(
-                        subject="subject",
-                        role_id="role_id",
-                    )
-                ],
             ),
         )
         """
@@ -662,6 +656,7 @@ class AsyncBaseTrueFoundry:
         *,
         manifest: TrueFoundryApplyRequestManifest,
         dry_run: typing.Optional[bool] = False,
+        force: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TrueFoundryApplyResponse:
         """
@@ -675,6 +670,9 @@ class AsyncBaseTrueFoundry:
         dry_run : typing.Optional[bool]
             Dry run the apply operation without actually applying
 
+        force : typing.Optional[bool]
+            When `true`, acknowledges that updating this manifest may delete existing per-subject auth records. Currently used for MCP server apply.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -687,7 +685,7 @@ class AsyncBaseTrueFoundry:
         --------
         import asyncio
 
-        from truefoundry_sdk import AsyncTrueFoundry, Collaborator, MlRepoManifest
+        from truefoundry_sdk import AsyncTrueFoundry, MlRepoManifest
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -700,19 +698,15 @@ class AsyncBaseTrueFoundry:
                 manifest=MlRepoManifest(
                     name="name",
                     storage_integration_fqn="storage_integration_fqn",
-                    collaborators=[
-                        Collaborator(
-                            subject="subject",
-                            role_id="role_id",
-                        )
-                    ],
                 ),
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.apply(manifest=manifest, dry_run=dry_run, request_options=request_options)
+        _response = await self._raw_client.apply(
+            manifest=manifest, dry_run=dry_run, force=force, request_options=request_options
+        )
         return _response.data
 
     async def delete(
@@ -738,7 +732,7 @@ class AsyncBaseTrueFoundry:
         --------
         import asyncio
 
-        from truefoundry_sdk import AsyncTrueFoundry, Collaborator, MlRepoManifest
+        from truefoundry_sdk import AsyncTrueFoundry, MlRepoManifest
 
         client = AsyncTrueFoundry(
             api_key="YOUR_API_KEY",
@@ -751,12 +745,6 @@ class AsyncBaseTrueFoundry:
                 manifest=MlRepoManifest(
                     name="name",
                     storage_integration_fqn="storage_integration_fqn",
-                    collaborators=[
-                        Collaborator(
-                            subject="subject",
-                            role_id="role_id",
-                        )
-                    ],
                 ),
             )
 

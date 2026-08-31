@@ -21,6 +21,11 @@ class AwsAssumedRoleBasedAuth(UniversalBaseModel):
     ARN of the role you want to assume.
     """
 
+    external_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Optional external ID to use when assuming the role. This provides an added layer of security by ensuring only parties with the correct external ID can assume the role.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:

@@ -12,6 +12,8 @@ class PresetRegexPatternEnum(enum.StrEnum):
     US_SSN_NO_DASH = "us_ssn_no_dash"
     EMAIL = "email"
     US_PHONE = "us_phone"
+    INDIA_AADHAAR = "india_aadhaar"
+    INDIA_PAN = "india_pan"
     VISA = "visa"
     MASTERCARD = "mastercard"
     AMEX = "amex"
@@ -68,6 +70,8 @@ class PresetRegexPatternEnum(enum.StrEnum):
         us_ssn_no_dash: typing.Callable[[], T_Result],
         email: typing.Callable[[], T_Result],
         us_phone: typing.Callable[[], T_Result],
+        india_aadhaar: typing.Callable[[], T_Result],
+        india_pan: typing.Callable[[], T_Result],
         visa: typing.Callable[[], T_Result],
         mastercard: typing.Callable[[], T_Result],
         amex: typing.Callable[[], T_Result],
@@ -117,6 +121,10 @@ class PresetRegexPatternEnum(enum.StrEnum):
             return email()
         if self is PresetRegexPatternEnum.US_PHONE:
             return us_phone()
+        if self is PresetRegexPatternEnum.INDIA_AADHAAR:
+            return india_aadhaar()
+        if self is PresetRegexPatternEnum.INDIA_PAN:
+            return india_pan()
         if self is PresetRegexPatternEnum.VISA:
             return visa()
         if self is PresetRegexPatternEnum.MASTERCARD:

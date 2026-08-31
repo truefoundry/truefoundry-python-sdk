@@ -19,12 +19,12 @@ class NomaSecurityGuardrailConfigConfig(UniversalBaseModel):
 
     application_id: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Literal applicationId sent as config.config.applicationId and used to select the Noma Runtime Protection profile. Defaults to truefoundry.
+    Literal applicationId sent in the x-noma-context header and used to select the Noma Runtime Protection profile. Defaults to truefoundry.
     """
 
-    user_id_metadata_key: typing.Optional[str] = pydantic.Field(default=None)
+    session_id: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Fallback subjectId sent in context.user when no authenticated runtime subject is available. Defaults to gateway.
+    Literal sessionId sent in the x-noma-context header for session attribution in Noma. Optional.
     """
 
     if IS_PYDANTIC_V2:

@@ -3,11 +3,10 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from .aws_assumed_role_based_auth import AwsAssumedRoleBasedAuth
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class AwsBedrockAssumedRoleBasedAuth(AwsAssumedRoleBasedAuth):
+class AwsBedrockAssumedRoleBasedAuth(UniversalBaseModel):
     """
     Assumed Role Based
     """
@@ -15,6 +14,16 @@ class AwsBedrockAssumedRoleBasedAuth(AwsAssumedRoleBasedAuth):
     external_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     Optional external ID to use when assuming the role. This provides an added layer of security by ensuring only parties with the correct external ID can assume the role.
+    """
+
+    type: typing.Literal["assumed-role-based"] = pydantic.Field(default="assumed-role-based")
+    """
+    +value=assumed-role-based
+    """
+
+    assumed_role_arn: str = pydantic.Field()
+    """
+    ARN of the role you want to assume.
     """
 
     if IS_PYDANTIC_V2:

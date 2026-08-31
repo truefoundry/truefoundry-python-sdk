@@ -128,7 +128,7 @@ class RawVirtualAccountsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetVirtualAccountResponse]:
         """
-        Create a new virtual account or update an existing one using the provided VirtualAccountManifest. Matching is by name — if the name matches an existing virtual account it is updated, otherwise a new one is created.
+        Create a new virtual account or update an existing one using the provided VirtualAccountManifest. Matching is by name — if the name matches an existing virtual account it is updated, otherwise a new one is created. Omitting `permissions` leaves the existing access untouched; an empty list is rejected.
 
         Parameters
         ----------
@@ -365,15 +365,18 @@ class RawVirtualAccountsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def sync_to_secret_store(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: str, *, force: typing.Optional[bool] = False, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[SyncVirtualAccountTokenResponse]:
         """
-        Sync the virtual account token to the configured secret store. Returns the sync metadata including timestamp and error (if any).
+        Sync the virtual account token to the configured secret store. By default the write is skipped when the active jwt already matches the last successful sync (used by the rotation cron). Pass force=true to rewrite unconditionally. Returns the sync metadata including timestamp and error (if any).
 
         Parameters
         ----------
         id : str
             System-generated service account ID.
+
+        force : typing.Optional[bool]
+            When true, rewrite the token to the secret store even if the active jwt was already synced. Defaults to false so periodic syncs stay idempotent.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -386,6 +389,9 @@ class RawVirtualAccountsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/svc/v1/virtual-accounts/{encode_path_param(id)}/sync-to-secret-store",
             method="POST",
+            params={
+                "force": force,
+            },
             request_options=request_options,
         )
         try:
@@ -430,18 +436,18 @@ class RawVirtualAccountsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def regenerate_token(
-        self, id: str, *, grace_period_in_days: float, request_options: typing.Optional[RequestOptions] = None
+        self, id: str, *, grace_period_in_minutes: float, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetTokenForVirtualAccountResponse]:
         """
-        Regenerate the authentication token for a virtual account. The old token remains valid for the specified grace period.
+        Regenerate the authentication token for a virtual account. The old token remains valid for the specified grace period. Not allowed when the virtual account has identity provider mapping configured.
 
         Parameters
         ----------
         id : str
             System-generated service account ID.
 
-        grace_period_in_days : float
-            Grace period in days for which the old token will remain valid after regeneration
+        grace_period_in_minutes : float
+            Grace period in minutes for which the old token will remain valid after regeneration
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -455,7 +461,7 @@ class RawVirtualAccountsClient:
             f"api/svc/v1/virtual-accounts/{encode_path_param(id)}/regenerate-token",
             method="POST",
             json={
-                "gracePeriodInDays": grace_period_in_days,
+                "gracePeriodInMinutes": grace_period_in_minutes,
             },
             headers={
                 "content-type": "application/json",
@@ -480,6 +486,17 @@ class RawVirtualAccountsClient:
                         typing.Any,
                         parse_obj_as(
                             type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -634,7 +651,7 @@ class AsyncRawVirtualAccountsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetVirtualAccountResponse]:
         """
-        Create a new virtual account or update an existing one using the provided VirtualAccountManifest. Matching is by name — if the name matches an existing virtual account it is updated, otherwise a new one is created.
+        Create a new virtual account or update an existing one using the provided VirtualAccountManifest. Matching is by name — if the name matches an existing virtual account it is updated, otherwise a new one is created. Omitting `permissions` leaves the existing access untouched; an empty list is rejected.
 
         Parameters
         ----------
@@ -871,15 +888,18 @@ class AsyncRawVirtualAccountsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def sync_to_secret_store(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: str, *, force: typing.Optional[bool] = False, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[SyncVirtualAccountTokenResponse]:
         """
-        Sync the virtual account token to the configured secret store. Returns the sync metadata including timestamp and error (if any).
+        Sync the virtual account token to the configured secret store. By default the write is skipped when the active jwt already matches the last successful sync (used by the rotation cron). Pass force=true to rewrite unconditionally. Returns the sync metadata including timestamp and error (if any).
 
         Parameters
         ----------
         id : str
             System-generated service account ID.
+
+        force : typing.Optional[bool]
+            When true, rewrite the token to the secret store even if the active jwt was already synced. Defaults to false so periodic syncs stay idempotent.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -892,6 +912,9 @@ class AsyncRawVirtualAccountsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/svc/v1/virtual-accounts/{encode_path_param(id)}/sync-to-secret-store",
             method="POST",
+            params={
+                "force": force,
+            },
             request_options=request_options,
         )
         try:
@@ -936,18 +959,18 @@ class AsyncRawVirtualAccountsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def regenerate_token(
-        self, id: str, *, grace_period_in_days: float, request_options: typing.Optional[RequestOptions] = None
+        self, id: str, *, grace_period_in_minutes: float, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetTokenForVirtualAccountResponse]:
         """
-        Regenerate the authentication token for a virtual account. The old token remains valid for the specified grace period.
+        Regenerate the authentication token for a virtual account. The old token remains valid for the specified grace period. Not allowed when the virtual account has identity provider mapping configured.
 
         Parameters
         ----------
         id : str
             System-generated service account ID.
 
-        grace_period_in_days : float
-            Grace period in days for which the old token will remain valid after regeneration
+        grace_period_in_minutes : float
+            Grace period in minutes for which the old token will remain valid after regeneration
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -961,7 +984,7 @@ class AsyncRawVirtualAccountsClient:
             f"api/svc/v1/virtual-accounts/{encode_path_param(id)}/regenerate-token",
             method="POST",
             json={
-                "gracePeriodInDays": grace_period_in_days,
+                "gracePeriodInMinutes": grace_period_in_minutes,
             },
             headers={
                 "content-type": "application/json",
@@ -986,6 +1009,17 @@ class AsyncRawVirtualAccountsClient:
                         typing.Any,
                         parse_obj_as(
                             type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpError,
+                        parse_obj_as(
+                            type_=HttpError,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

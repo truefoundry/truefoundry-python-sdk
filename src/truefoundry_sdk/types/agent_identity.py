@@ -28,6 +28,29 @@ class AgentIdentity(UniversalBaseModel):
     updated_at: typing_extensions.Annotated[
         dt.datetime, FieldMetadata(alias="updatedAt"), pydantic.Field(alias="updatedAt")
     ]
+    token_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="tokenId"),
+        pydantic.Field(
+            alias="tokenId",
+            description="Id of the active TrueFoundry-backed token. Absent when the identity has no token.",
+        ),
+    ] = None
+    """
+    Id of the active TrueFoundry-backed token. Absent when the identity has no token.
+    """
+
+    token_expiry: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="tokenExpiry"),
+        pydantic.Field(
+            alias="tokenExpiry",
+            description="Expiry of the active TrueFoundry-backed token. Absent when the identity has no token.",
+        ),
+    ] = None
+    """
+    Expiry of the active TrueFoundry-backed token. Absent when the identity has no token.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -57,7 +57,7 @@ class OpenApimcpServerManifest(UniversalBaseModel):
     """
 
     auth_data: typing.Optional[McpServerAuth] = None
-    collaborators: typing.List[Collaborator] = pydantic.Field()
+    collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
     Users and Teams that have access to this OpenAPI Server
     """

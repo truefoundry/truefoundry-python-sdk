@@ -4,6 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from .mcp_server_o_auth2client_authentication import McpServerOAuth2ClientAuthentication
 from .mcp_server_o_auth2grant_type import McpServerOAuth2GrantType
 from .mcp_server_o_auth2jwt_source import McpServerOAuth2JwtSource
 from .mcp_server_o_auth2provider import McpServerOAuth2Provider
@@ -44,9 +45,24 @@ class McpServerOAuth2(
     client ID for OAuth2 or the TrueFoundry secret FQN containing the client ID.
     """
 
+    client_authentication: typing.Optional[McpServerOAuth2ClientAuthentication] = pydantic.Field(default=None)
+    """
+    How the OAuth client authenticates to the token endpoint. Certificate auth is available for Microsoft Entra client_credentials and jwt_bearer (on-behalf-of).
+    """
+
     client_secret: typing.Optional[str] = pydantic.Field(default=None)
     """
     Client secret or the TrueFoundry secret FQN containing the client secret for OAuth2.
+    """
+
+    certificate_thumbprint: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Hex SHA-1 thumbprint from the Azure portal, or the TrueFoundry secret FQN containing it.
+    """
+
+    private_key: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    PEM private key for Microsoft Entra certificate-based client authentication, or the TrueFoundry secret FQN containing it.
     """
 
     registration_url: typing.Optional[str] = pydantic.Field(default=None)

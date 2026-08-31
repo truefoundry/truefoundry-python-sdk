@@ -41,6 +41,7 @@ class ProviderAccountProvider(enum.StrEnum):
     GOOGLE_GEMINI = "google-gemini"
     AZURE_OPENAI = "azure-openai"
     AZURE_FOUNDRY = "azure-foundry"
+    MICROSOFT_FOUNDRY = "microsoft-foundry"
     SELF_HOSTED_MODEL = "self-hosted-model"
     MCP_SERVER_GROUP = "mcp-server-group"
     PAGERDUTY = "pagerduty"
@@ -111,6 +112,7 @@ class ProviderAccountProvider(enum.StrEnum):
         google_gemini: typing.Callable[[], T_Result],
         azure_openai: typing.Callable[[], T_Result],
         azure_foundry: typing.Callable[[], T_Result],
+        microsoft_foundry: typing.Callable[[], T_Result],
         self_hosted_model: typing.Callable[[], T_Result],
         mcp_server_group: typing.Callable[[], T_Result],
         pagerduty: typing.Callable[[], T_Result],
@@ -203,6 +205,8 @@ class ProviderAccountProvider(enum.StrEnum):
             return azure_openai()
         if self is ProviderAccountProvider.AZURE_FOUNDRY:
             return azure_foundry()
+        if self is ProviderAccountProvider.MICROSOFT_FOUNDRY:
+            return microsoft_foundry()
         if self is ProviderAccountProvider.SELF_HOSTED_MODEL:
             return self_hosted_model()
         if self is ProviderAccountProvider.MCP_SERVER_GROUP:

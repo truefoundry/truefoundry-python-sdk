@@ -284,7 +284,6 @@ if typing.TYPE_CHECKING:
     from .complexity_based_load_balancing_classification_strategy import (
         ComplexityBasedLoadBalancingClassificationStrategy,
     )
-    from .complexity_sticky_routing import ComplexityStickyRouting
     from .config import Config
     from .container_task_config import ContainerTaskConfig
     from .container_task_config_image import ContainerTaskConfigImage
@@ -322,7 +321,13 @@ if typing.TYPE_CHECKING:
     from .custom_jwt_auth_integration import CustomJwtAuthIntegration
     from .custom_provider_account import CustomProviderAccount
     from .custom_regex_pattern import CustomRegexPattern
+    from .custom_server_aws_access_key_auth import CustomServerAwsAccessKeyAuth
+    from .custom_server_aws_assume_role_auth import CustomServerAwsAssumeRoleAuth
+    from .custom_server_aws_sig_v4 import CustomServerAwsSigV4
+    from .custom_server_aws_sig_v4auth import CustomServerAwsSigV4Auth
     from .custom_server_header_auth import CustomServerHeaderAuth
+    from .custom_server_o_auth2marker import CustomServerOAuth2Marker
+    from .custom_server_o_auth2marker_grant_type import CustomServerOAuth2MarkerGrantType
     from .custom_server_passthrough import CustomServerPassthrough
     from .custom_tls_settings import CustomTlsSettings
     from .custom_username_password_artifacts_registry import CustomUsernamePasswordArtifactsRegistry
@@ -695,6 +700,10 @@ if typing.TYPE_CHECKING:
     from .mcp_server_auth_status_info import McpServerAuthStatusInfo
     from .mcp_server_auth_status_info_method import McpServerAuthStatusInfoMethod
     from .mcp_server_auth_status_info_status import McpServerAuthStatusInfoStatus
+    from .mcp_server_aws_access_key_auth import McpServerAwsAccessKeyAuth
+    from .mcp_server_aws_assume_role_auth import McpServerAwsAssumeRoleAuth
+    from .mcp_server_aws_sig_v4auth import McpServerAwsSigV4Auth
+    from .mcp_server_aws_sig_v4auth_auth import McpServerAwsSigV4AuthAuth
     from .mcp_server_env_auth import McpServerEnvAuth
     from .mcp_server_env_auth_auth_level import McpServerEnvAuthAuthLevel
     from .mcp_server_header_auth import McpServerHeaderAuth
@@ -705,6 +714,7 @@ if typing.TYPE_CHECKING:
     from .mcp_server_integrations import McpServerIntegrations
     from .mcp_server_manifest import McpServerManifest
     from .mcp_server_o_auth2 import McpServerOAuth2
+    from .mcp_server_o_auth2client_authentication import McpServerOAuth2ClientAuthentication
     from .mcp_server_o_auth2grant_type import McpServerOAuth2GrantType
     from .mcp_server_o_auth2jwt_source import McpServerOAuth2JwtSource
     from .mcp_server_o_auth2provider import McpServerOAuth2Provider
@@ -719,6 +729,8 @@ if typing.TYPE_CHECKING:
     from .mcp_server_with_url import McpServerWithUrl
     from .mcp_tool import McpTool
     from .mcp_tool_annotations import McpToolAnnotations
+    from .mcp_tool_metadata import McpToolMetadata
+    from .mcp_tool_policy import McpToolPolicy
     from .mcp_tool_setting import McpToolSetting
     from .mcp_tool_target import McpToolTarget
     from .mcp_tools_operator import McpToolsOperator
@@ -726,6 +738,11 @@ if typing.TYPE_CHECKING:
     from .metadata import Metadata
     from .metric import Metric
     from .metric_collection import MetricCollection
+    from .microsoft_foundry_model import MicrosoftFoundryModel
+    from .microsoft_foundry_model_deployment_type import MicrosoftFoundryModelDeploymentType
+    from .microsoft_foundry_model_publisher import MicrosoftFoundryModelPublisher
+    from .microsoft_foundry_provider_account import MicrosoftFoundryProviderAccount
+    from .microsoft_foundry_provider_account_auth_data import MicrosoftFoundryProviderAccountAuthData
     from .mime_type import MimeType
     from .mirror_action import MirrorAction
     from .mistral_ai_integrations import MistralAiIntegrations
@@ -810,6 +827,7 @@ if typing.TYPE_CHECKING:
     from .otel_exporter_grpc_config_base import OtelExporterGrpcConfigBase
     from .otel_exporter_http_config_base import OtelExporterHttpConfigBase
     from .otel_exporter_http_config_base_encoding import OtelExporterHttpConfigBaseEncoding
+    from .otel_metrics_exporter_common_config import OtelMetricsExporterCommonConfig
     from .otel_metrics_exporter_grpc_config import OtelMetricsExporterGrpcConfig
     from .otel_metrics_exporter_http_config import OtelMetricsExporterHttpConfig
     from .otel_traces_exporter_common_config import OtelTracesExporterCommonConfig
@@ -977,6 +995,7 @@ if typing.TYPE_CHECKING:
     from .secret_input import SecretInput
     from .secret_mount import SecretMount
     from .secret_store_config import SecretStoreConfig
+    from .secret_store_integration_config import SecretStoreIntegrationConfig
     from .secret_version import SecretVersion
     from .self_hosted_agent import SelfHostedAgent
     from .self_hosted_model import SelfHostedModel
@@ -1040,7 +1059,9 @@ if typing.TYPE_CHECKING:
     from .spark_image_build import SparkImageBuild
     from .spark_image_build_build_source import SparkImageBuildBuildSource
     from .spark_job import SparkJob
+    from .spark_job_driver_config import SparkJobDriverConfig
     from .spark_job_entrypoint import SparkJobEntrypoint
+    from .spark_job_executor_config import SparkJobExecutorConfig
     from .spark_job_image import SparkJobImage
     from .spark_job_java_entrypoint import SparkJobJavaEntrypoint
     from .spark_job_python_entrypoint import SparkJobPythonEntrypoint
@@ -1094,6 +1115,7 @@ if typing.TYPE_CHECKING:
     from .team_metadata import TeamMetadata
     from .team_owned_by import TeamOwnedBy
     from .team_subject_row import TeamSubjectRow
+    from .team_virtual_account_data_access_rule import TeamVirtualAccountDataAccessRule
     from .tenant_budget_config import TenantBudgetConfig
     from .tenant_budget_config_mode import TenantBudgetConfigMode
     from .tensor_flow_framework import TensorFlowFramework
@@ -1110,6 +1132,7 @@ if typing.TYPE_CHECKING:
     from .tfy_pii_guardrail_config_config import TfyPiiGuardrailConfigConfig
     from .tfy_pii_guardrail_config_operation import TfyPiiGuardrailConfigOperation
     from .tfy_prompt_injection_guardrail_config import TfyPromptInjectionGuardrailConfig
+    from .tfy_secrets_config import TfySecretsConfig
     from .together_ai_integrations import TogetherAiIntegrations
     from .together_ai_key_auth import TogetherAiKeyAuth
     from .together_ai_model import TogetherAiModel
@@ -1516,7 +1539,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ComplexityBasedLoadBalanceTargetTier": ".complexity_based_load_balance_target_tier",
     "ComplexityBasedLoadBalancing": ".complexity_based_load_balancing",
     "ComplexityBasedLoadBalancingClassificationStrategy": ".complexity_based_load_balancing_classification_strategy",
-    "ComplexityStickyRouting": ".complexity_sticky_routing",
     "Config": ".config",
     "ContainerTaskConfig": ".container_task_config",
     "ContainerTaskConfigImage": ".container_task_config_image",
@@ -1554,7 +1576,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CustomJwtAuthIntegration": ".custom_jwt_auth_integration",
     "CustomProviderAccount": ".custom_provider_account",
     "CustomRegexPattern": ".custom_regex_pattern",
+    "CustomServerAwsAccessKeyAuth": ".custom_server_aws_access_key_auth",
+    "CustomServerAwsAssumeRoleAuth": ".custom_server_aws_assume_role_auth",
+    "CustomServerAwsSigV4": ".custom_server_aws_sig_v4",
+    "CustomServerAwsSigV4Auth": ".custom_server_aws_sig_v4auth",
     "CustomServerHeaderAuth": ".custom_server_header_auth",
+    "CustomServerOAuth2Marker": ".custom_server_o_auth2marker",
+    "CustomServerOAuth2MarkerGrantType": ".custom_server_o_auth2marker_grant_type",
     "CustomServerPassthrough": ".custom_server_passthrough",
     "CustomTlsSettings": ".custom_tls_settings",
     "CustomUsernamePasswordArtifactsRegistry": ".custom_username_password_artifacts_registry",
@@ -1913,6 +1941,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "McpServerAuthStatusInfo": ".mcp_server_auth_status_info",
     "McpServerAuthStatusInfoMethod": ".mcp_server_auth_status_info_method",
     "McpServerAuthStatusInfoStatus": ".mcp_server_auth_status_info_status",
+    "McpServerAwsAccessKeyAuth": ".mcp_server_aws_access_key_auth",
+    "McpServerAwsAssumeRoleAuth": ".mcp_server_aws_assume_role_auth",
+    "McpServerAwsSigV4Auth": ".mcp_server_aws_sig_v4auth",
+    "McpServerAwsSigV4AuthAuth": ".mcp_server_aws_sig_v4auth_auth",
     "McpServerEnvAuth": ".mcp_server_env_auth",
     "McpServerEnvAuthAuthLevel": ".mcp_server_env_auth_auth_level",
     "McpServerHeaderAuth": ".mcp_server_header_auth",
@@ -1923,6 +1955,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "McpServerIntegrations": ".mcp_server_integrations",
     "McpServerManifest": ".mcp_server_manifest",
     "McpServerOAuth2": ".mcp_server_o_auth2",
+    "McpServerOAuth2ClientAuthentication": ".mcp_server_o_auth2client_authentication",
     "McpServerOAuth2GrantType": ".mcp_server_o_auth2grant_type",
     "McpServerOAuth2JwtSource": ".mcp_server_o_auth2jwt_source",
     "McpServerOAuth2Provider": ".mcp_server_o_auth2provider",
@@ -1937,6 +1970,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "McpServerWithUrl": ".mcp_server_with_url",
     "McpTool": ".mcp_tool",
     "McpToolAnnotations": ".mcp_tool_annotations",
+    "McpToolMetadata": ".mcp_tool_metadata",
+    "McpToolPolicy": ".mcp_tool_policy",
     "McpToolSetting": ".mcp_tool_setting",
     "McpToolTarget": ".mcp_tool_target",
     "McpToolsOperator": ".mcp_tools_operator",
@@ -1944,6 +1979,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Metadata": ".metadata",
     "Metric": ".metric",
     "MetricCollection": ".metric_collection",
+    "MicrosoftFoundryModel": ".microsoft_foundry_model",
+    "MicrosoftFoundryModelDeploymentType": ".microsoft_foundry_model_deployment_type",
+    "MicrosoftFoundryModelPublisher": ".microsoft_foundry_model_publisher",
+    "MicrosoftFoundryProviderAccount": ".microsoft_foundry_provider_account",
+    "MicrosoftFoundryProviderAccountAuthData": ".microsoft_foundry_provider_account_auth_data",
     "MimeType": ".mime_type",
     "MirrorAction": ".mirror_action",
     "MistralAiIntegrations": ".mistral_ai_integrations",
@@ -2028,6 +2068,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OtelExporterGrpcConfigBase": ".otel_exporter_grpc_config_base",
     "OtelExporterHttpConfigBase": ".otel_exporter_http_config_base",
     "OtelExporterHttpConfigBaseEncoding": ".otel_exporter_http_config_base_encoding",
+    "OtelMetricsExporterCommonConfig": ".otel_metrics_exporter_common_config",
     "OtelMetricsExporterGrpcConfig": ".otel_metrics_exporter_grpc_config",
     "OtelMetricsExporterHttpConfig": ".otel_metrics_exporter_http_config",
     "OtelTracesExporterCommonConfig": ".otel_traces_exporter_common_config",
@@ -2198,6 +2239,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SecretInput": ".secret_input",
     "SecretMount": ".secret_mount",
     "SecretStoreConfig": ".secret_store_config",
+    "SecretStoreIntegrationConfig": ".secret_store_integration_config",
     "SecretVersion": ".secret_version",
     "SelfHostedAgent": ".self_hosted_agent",
     "SelfHostedModel": ".self_hosted_model",
@@ -2261,7 +2303,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SparkImageBuild": ".spark_image_build",
     "SparkImageBuildBuildSource": ".spark_image_build_build_source",
     "SparkJob": ".spark_job",
+    "SparkJobDriverConfig": ".spark_job_driver_config",
     "SparkJobEntrypoint": ".spark_job_entrypoint",
+    "SparkJobExecutorConfig": ".spark_job_executor_config",
     "SparkJobImage": ".spark_job_image",
     "SparkJobJavaEntrypoint": ".spark_job_java_entrypoint",
     "SparkJobPythonEntrypoint": ".spark_job_python_entrypoint",
@@ -2315,6 +2359,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TeamMetadata": ".team_metadata",
     "TeamOwnedBy": ".team_owned_by",
     "TeamSubjectRow": ".team_subject_row",
+    "TeamVirtualAccountDataAccessRule": ".team_virtual_account_data_access_rule",
     "TenantBudgetConfig": ".tenant_budget_config",
     "TenantBudgetConfigMode": ".tenant_budget_config_mode",
     "TensorFlowFramework": ".tensor_flow_framework",
@@ -2331,6 +2376,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TfyPiiGuardrailConfigConfig": ".tfy_pii_guardrail_config_config",
     "TfyPiiGuardrailConfigOperation": ".tfy_pii_guardrail_config_operation",
     "TfyPromptInjectionGuardrailConfig": ".tfy_prompt_injection_guardrail_config",
+    "TfySecretsConfig": ".tfy_secrets_config",
     "TogetherAiIntegrations": ".together_ai_integrations",
     "TogetherAiKeyAuth": ".together_ai_key_auth",
     "TogetherAiModel": ".together_ai_model",
@@ -2761,7 +2807,6 @@ __all__ = [
     "ComplexityBasedLoadBalanceTargetTier",
     "ComplexityBasedLoadBalancing",
     "ComplexityBasedLoadBalancingClassificationStrategy",
-    "ComplexityStickyRouting",
     "Config",
     "ContainerTaskConfig",
     "ContainerTaskConfigImage",
@@ -2799,7 +2844,13 @@ __all__ = [
     "CustomJwtAuthIntegration",
     "CustomProviderAccount",
     "CustomRegexPattern",
+    "CustomServerAwsAccessKeyAuth",
+    "CustomServerAwsAssumeRoleAuth",
+    "CustomServerAwsSigV4",
+    "CustomServerAwsSigV4Auth",
     "CustomServerHeaderAuth",
+    "CustomServerOAuth2Marker",
+    "CustomServerOAuth2MarkerGrantType",
     "CustomServerPassthrough",
     "CustomTlsSettings",
     "CustomUsernamePasswordArtifactsRegistry",
@@ -3158,6 +3209,10 @@ __all__ = [
     "McpServerAuthStatusInfo",
     "McpServerAuthStatusInfoMethod",
     "McpServerAuthStatusInfoStatus",
+    "McpServerAwsAccessKeyAuth",
+    "McpServerAwsAssumeRoleAuth",
+    "McpServerAwsSigV4Auth",
+    "McpServerAwsSigV4AuthAuth",
     "McpServerEnvAuth",
     "McpServerEnvAuthAuthLevel",
     "McpServerHeaderAuth",
@@ -3168,6 +3223,7 @@ __all__ = [
     "McpServerIntegrations",
     "McpServerManifest",
     "McpServerOAuth2",
+    "McpServerOAuth2ClientAuthentication",
     "McpServerOAuth2GrantType",
     "McpServerOAuth2JwtSource",
     "McpServerOAuth2Provider",
@@ -3182,6 +3238,8 @@ __all__ = [
     "McpServerWithUrl",
     "McpTool",
     "McpToolAnnotations",
+    "McpToolMetadata",
+    "McpToolPolicy",
     "McpToolSetting",
     "McpToolTarget",
     "McpToolsOperator",
@@ -3189,6 +3247,11 @@ __all__ = [
     "Metadata",
     "Metric",
     "MetricCollection",
+    "MicrosoftFoundryModel",
+    "MicrosoftFoundryModelDeploymentType",
+    "MicrosoftFoundryModelPublisher",
+    "MicrosoftFoundryProviderAccount",
+    "MicrosoftFoundryProviderAccountAuthData",
     "MimeType",
     "MirrorAction",
     "MistralAiIntegrations",
@@ -3273,6 +3336,7 @@ __all__ = [
     "OtelExporterGrpcConfigBase",
     "OtelExporterHttpConfigBase",
     "OtelExporterHttpConfigBaseEncoding",
+    "OtelMetricsExporterCommonConfig",
     "OtelMetricsExporterGrpcConfig",
     "OtelMetricsExporterHttpConfig",
     "OtelTracesExporterCommonConfig",
@@ -3443,6 +3507,7 @@ __all__ = [
     "SecretInput",
     "SecretMount",
     "SecretStoreConfig",
+    "SecretStoreIntegrationConfig",
     "SecretVersion",
     "SelfHostedAgent",
     "SelfHostedModel",
@@ -3506,7 +3571,9 @@ __all__ = [
     "SparkImageBuild",
     "SparkImageBuildBuildSource",
     "SparkJob",
+    "SparkJobDriverConfig",
     "SparkJobEntrypoint",
+    "SparkJobExecutorConfig",
     "SparkJobImage",
     "SparkJobJavaEntrypoint",
     "SparkJobPythonEntrypoint",
@@ -3560,6 +3627,7 @@ __all__ = [
     "TeamMetadata",
     "TeamOwnedBy",
     "TeamSubjectRow",
+    "TeamVirtualAccountDataAccessRule",
     "TenantBudgetConfig",
     "TenantBudgetConfigMode",
     "TensorFlowFramework",
@@ -3576,6 +3644,7 @@ __all__ = [
     "TfyPiiGuardrailConfigConfig",
     "TfyPiiGuardrailConfigOperation",
     "TfyPromptInjectionGuardrailConfig",
+    "TfySecretsConfig",
     "TogetherAiIntegrations",
     "TogetherAiKeyAuth",
     "TogetherAiModel",

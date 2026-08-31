@@ -14,6 +14,11 @@ class FiddlerGuardrailConfigConfig(UniversalBaseModel):
     """
 
     guard_type: FiddlerGuardType
+    base_url: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Optional override for the Fiddler guardrails base URL. Defaults to https://guardrails.cloud.fiddler.ai if not provided. Set this if your tenant is provisioned on a different host (e.g. https://creditone-pov.cloud.fiddler.ai).
+    """
+
     threshold: typing.Optional[float] = pydantic.Field(default=None)
     """
     Confidence threshold (0.0-1.0) for flagging content. Content scoring above the threshold will be flagged

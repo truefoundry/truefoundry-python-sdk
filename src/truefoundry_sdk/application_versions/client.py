@@ -98,7 +98,7 @@ class ApplicationVersionsClient:
         self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetApplicationDeploymentResponse:
         """
-        Get a single deployment by application ID and deployment ID.
+        Get a single deployment by application ID and deployment ID, with its status history and builds. A status of DEPLOY_SUCCESS means the rollout was accepted, not that the workload is healthy: a pod that is crashlooping, out of memory or unable to pull its image still reports DEPLOY_SUCCESS. Confirm health with list_k8s_pods or get_application_state before reporting success. Read currentStatus.state.isTerminalState first — currentStatus.state.type says `success` while a deployment is still in progress, so it is only meaningful once the state is terminal.
 
         Parameters
         ----------
@@ -229,7 +229,7 @@ class AsyncApplicationVersionsClient:
         self, id: str, deployment_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetApplicationDeploymentResponse:
         """
-        Get a single deployment by application ID and deployment ID.
+        Get a single deployment by application ID and deployment ID, with its status history and builds. A status of DEPLOY_SUCCESS means the rollout was accepted, not that the workload is healthy: a pod that is crashlooping, out of memory or unable to pull its image still reports DEPLOY_SUCCESS. Confirm health with list_k8s_pods or get_application_state before reporting success. Read currentStatus.state.isTerminalState first — currentStatus.state.type says `success` while a deployment is still in progress, so it is only meaningful once the state is terminal.
 
         Parameters
         ----------

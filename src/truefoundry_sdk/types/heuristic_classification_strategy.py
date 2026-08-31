@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class HeuristicClassificationStrategy(UniversalBaseModel):
     """
-    Fast, in-process heuristic classifier. Runs with zero added latency and no classifier model. This is the default strategy.
+    Fast built-in classifier, zero added latency
     """
 
     type: typing.Literal["heuristic"] = pydantic.Field(default="heuristic")

@@ -4,9 +4,9 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .spark_driver_config import SparkDriverConfig
-from .spark_executor_config import SparkExecutorConfig
+from .spark_job_driver_config import SparkJobDriverConfig
 from .spark_job_entrypoint import SparkJobEntrypoint
+from .spark_job_executor_config import SparkJobExecutorConfig
 from .spark_job_image import SparkJobImage
 from .spark_job_trigger import SparkJobTrigger
 from .volume_mount import VolumeMount
@@ -39,8 +39,8 @@ class SparkJob(UniversalBaseModel):
     Specify the trigger
     """
 
-    driver_config: SparkDriverConfig
-    executor_config: SparkExecutorConfig
+    driver_config: SparkJobDriverConfig
+    executor_config: SparkJobExecutorConfig
     env: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     Configure environment variables to be injected in the service either as plain text. [Docs](https://docs.truefoundry.com/docs/env-variables)

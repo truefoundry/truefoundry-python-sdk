@@ -29,7 +29,7 @@ class AzureOpenAiProviderAccount(UniversalBaseModel):
 
     azure_endpoint: str = pydantic.Field()
     """
-    The Azure OpenAI Service endpoint URL. Should look like https://{resource-name}.openai.azure.com
+    The Azure OpenAI Service endpoint URL. Should look like https://{resource-name}.openai.azure.com (a trailing /openai suffix is optional and stripped automatically)
     """
 
     auth_data: AzureOpenAiProviderAccountAuthData = pydantic.Field()

@@ -37,6 +37,11 @@ class BedrockMantleModel(UniversalBaseModel):
     """
 
     region: typing.Optional[AwsRegion] = None
+    project: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The AWS Bedrock project that inference requests for this model will be attributed to (e.g., proj_5d5ykleja6cwpirysbb7). If not specified, the project from the model account will be used, and if that is also unset the AWS account's default project is used.
+    """
+
     cost: typing.Optional[ModelCostMetric] = None
     authorized_subjects: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """

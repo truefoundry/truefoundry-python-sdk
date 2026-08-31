@@ -32,7 +32,7 @@ class TracingProjectManifest(UniversalBaseModel):
     Description for the Tracing Project.
     """
 
-    collaborators: typing.List[Collaborator] = pydantic.Field()
+    collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
     Users and Teams that have access to Tracing Project
     """

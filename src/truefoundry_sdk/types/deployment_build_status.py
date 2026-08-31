@@ -8,6 +8,10 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class DeploymentBuildStatus(enum.StrEnum):
+    """
+    Current status of the build.
+    """
+
     STARTED = "STARTED"
     SUCCEEDED = "SUCCEEDED"
     FAILED = "FAILED"

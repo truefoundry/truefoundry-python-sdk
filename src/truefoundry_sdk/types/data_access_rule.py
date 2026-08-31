@@ -5,5 +5,8 @@ import typing
 from .all_data_access_rule import AllDataAccessRule
 from .own_data_access_rule import OwnDataAccessRule
 from .team_data_access_rule import TeamDataAccessRule
+from .team_virtual_account_data_access_rule import TeamVirtualAccountDataAccessRule
 
-DataAccessRule = typing.Union[OwnDataAccessRule, TeamDataAccessRule, AllDataAccessRule]
+DataAccessRule = typing.Union[
+    OwnDataAccessRule, TeamDataAccessRule, TeamVirtualAccountDataAccessRule, AllDataAccessRule
+]

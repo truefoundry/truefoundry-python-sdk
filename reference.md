@@ -26,7 +26,7 @@ Apply a manifest to create or update a resource.
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, MlRepoManifest, Collaborator
+from truefoundry_sdk import TrueFoundry, MlRepoManifest
 
 client = TrueFoundry(
     api_key="<token>",
@@ -38,12 +38,6 @@ client.apply(
         type="ml-repo",
         name="name",
         storage_integration_fqn="storage_integration_fqn",
-        collaborators=[
-            Collaborator(
-                subject="subject",
-                role_id="role_id",
-            )
-        ],
     ),
 )
 
@@ -70,6 +64,14 @@ client.apply(
 <dd>
 
 **dry_run:** `typing.Optional[bool]` — Dry run the apply operation without actually applying
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force:** `typing.Optional[bool]` — When `true`, acknowledges that updating this manifest may delete existing per-subject auth records. Currently used for MCP server apply.
     
 </dd>
 </dl>
@@ -116,7 +118,7 @@ Delete a resource identified by the provided manifest.
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, MlRepoManifest, Collaborator
+from truefoundry_sdk import TrueFoundry, MlRepoManifest
 
 client = TrueFoundry(
     api_key="<token>",
@@ -128,12 +130,6 @@ client.delete(
         type="ml-repo",
         name="name",
         storage_integration_fqn="storage_integration_fqn",
-        collaborators=[
-            Collaborator(
-                subject="subject",
-                role_id="role_id",
-            )
-        ],
     ),
 )
 
@@ -2101,7 +2097,7 @@ client.gateway_budgets.get_my_usage()
 <dl>
 <dd>
 
-Returns the budgets that would apply to a hypothetical user/team/model/metadata selection, with current usage.
+Returns the budgets that would apply to a hypothetical user/team/model/metadata selection, with current usage. Pass a virtual model id in `model` to preview virtual-model traffic.
 </dd>
 </dl>
 </dd>
@@ -2171,7 +2167,7 @@ client.gateway_budgets.simulate()
 <dl>
 <dd>
 
-**model:** `typing.Optional[str]` — Model to simulate.
+**model:** `typing.Optional[str]` — Model id to simulate (`account/model`). Use the virtual model id when previewing virtual-model traffic.
     
 </dd>
 </dl>
@@ -2527,7 +2523,7 @@ client.personal_access_tokens.list(
 <dl>
 <dd>
 
-Create a new personal access token for the current user.
+Create a new personal access token for the current user. Cannot be called while authenticated with a personal access token.
 </dd>
 </dl>
 </dd>
@@ -2600,6 +2596,103 @@ client.personal_access_tokens.create(
 <dd>
 
 **token_type:** `typing.Optional[CreatePersonalAccessTokenRequestTokenType]` — Format of the issued token. Leave empty to use the tenant override or platform default.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.personal_access_tokens.<a href="src/truefoundry_sdk/personal_access_tokens/client.py">create_for_user</a>(...) -> CreatePersonalAccessTokenResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a personal access token owned by another user in the current tenant. Requires tenant admin. Cannot be called while authenticated with a personal access token.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.personal_access_tokens.create_for_user(
+    name="my-ci-token",
+    user_email="alice@example.com",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `str` — Name for the personal access token. Must be 3-36 characters, start with a lowercase letter, end with a lowercase alphanumeric character, and contain only lowercase letters, numbers, and hyphens.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_email:** `str` — Email of the user in the current tenant who will own the personal access token.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**expiration_date:** `typing.Optional[str]` — Expiration date in ISO format. The token becomes invalid after this date.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**team_name:** `typing.Optional[str]` — Team to attribute this token cost to. The token owner must be a member of this team.
     
 </dd>
 </dl>
@@ -2775,7 +2868,7 @@ client.personal_access_tokens.delete(
 <dl>
 <dd>
 
-Get an existing personal access token by name. If none exists, a new one is created and returned with a fresh token.
+Get an existing personal access token by name. If none exists, a new one is created and returned with a fresh token. Creating a new token cannot be done while authenticated with a personal access token.
 </dd>
 </dl>
 </dd>
@@ -2971,7 +3064,7 @@ client.virtual_accounts.list(
 <dl>
 <dd>
 
-Create a new virtual account or update an existing one using the provided VirtualAccountManifest. Matching is by name — if the name matches an existing virtual account it is updated, otherwise a new one is created.
+Create a new virtual account or update an existing one using the provided VirtualAccountManifest. Matching is by name — if the name matches an existing virtual account it is updated, otherwise a new one is created. Omitting `permissions` leaves the existing access untouched; an empty list is rejected.
 </dd>
 </dl>
 </dd>
@@ -2986,7 +3079,7 @@ Create a new virtual account or update an existing one using the provided Virtua
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, VirtualAccountManifest, Permissions
+from truefoundry_sdk import TrueFoundry, VirtualAccountManifest
 
 client = TrueFoundry(
     api_key="<token>",
@@ -2997,13 +3090,6 @@ client.virtual_accounts.create_or_update(
     manifest=VirtualAccountManifest(
         name="name",
         type="virtual-account",
-        permissions=[
-            Permissions(
-                resource_fqn="resource_fqn",
-                resource_type="resource_type",
-                role_id="role_id",
-            )
-        ],
     ),
 )
 
@@ -3277,7 +3363,7 @@ client.virtual_accounts.get_token(
 <dl>
 <dd>
 
-Sync the virtual account token to the configured secret store. Returns the sync metadata including timestamp and error (if any).
+Sync the virtual account token to the configured secret store. By default the write is skipped when the active jwt already matches the last successful sync (used by the rotation cron). Pass force=true to rewrite unconditionally. Returns the sync metadata including timestamp and error (if any).
 </dd>
 </dl>
 </dd>
@@ -3325,6 +3411,14 @@ client.virtual_accounts.sync_to_secret_store(
 <dl>
 <dd>
 
+**force:** `typing.Optional[bool]` — When true, rewrite the token to the secret store even if the active jwt was already synced. Defaults to false so periodic syncs stay idempotent.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -3349,7 +3443,7 @@ client.virtual_accounts.sync_to_secret_store(
 <dl>
 <dd>
 
-Regenerate the authentication token for a virtual account. The old token remains valid for the specified grace period.
+Regenerate the authentication token for a virtual account. The old token remains valid for the specified grace period. Not allowed when the virtual account has identity provider mapping configured.
 </dd>
 </dl>
 </dd>
@@ -3373,7 +3467,7 @@ client = TrueFoundry(
 
 client.virtual_accounts.regenerate_token(
     id="jqfwg345gi25n5ju2yz5iz6m",
-    grace_period_in_days=30,
+    grace_period_in_minutes=30,
 )
 
 ```
@@ -3398,7 +3492,7 @@ client.virtual_accounts.regenerate_token(
 <dl>
 <dd>
 
-**grace_period_in_days:** `float` — Grace period in days for which the old token will remain valid after regeneration
+**grace_period_in_minutes:** `float` — Grace period in minutes for which the old token will remain valid after regeneration
     
 </dd>
 </dl>
@@ -3616,7 +3710,7 @@ Create a new cluster or update an existing one using the provided `ClusterManife
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, ClusterManifest, ClusterManifestClusterType, Collaborator
+from truefoundry_sdk import TrueFoundry, ClusterManifest, ClusterManifestClusterType
 
 client = TrueFoundry(
     api_key="<token>",
@@ -3630,12 +3724,6 @@ client.clusters.create_or_update(
         cluster_type=ClusterManifestClusterType.AWS_EKS,
         environment_names=[
             "environment_names"
-        ],
-        collaborators=[
-            Collaborator(
-                subject="subject",
-                role_id="role_id",
-            )
         ],
     ),
 )
@@ -4899,7 +4987,7 @@ client.application_versions.list(
 <dl>
 <dd>
 
-Get a single deployment by application ID and deployment ID.
+Get a single deployment by application ID and deployment ID, with its status history and builds. A status of DEPLOY_SUCCESS means the rollout was accepted, not that the workload is healthy: a pod that is crashlooping, out of memory or unable to pull its image still reports DEPLOY_SUCCESS. Confirm health with list_k8s_pods or get_application_state before reporting success. Read currentStatus.state.isTerminalState first — currentStatus.state.type says `success` while a deployment is still in progress, so it is only meaningful once the state is terminal.
 </dd>
 </dl>
 </dd>
@@ -6688,7 +6776,7 @@ Create a new secret group or update an existing one using the provided manifest.
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, SecretGroupManifest, Collaborator
+from truefoundry_sdk import TrueFoundry, SecretGroupManifest
 
 client = TrueFoundry(
     api_key="<token>",
@@ -6700,12 +6788,6 @@ client.secret_groups.create_or_update(
         type="secret-group",
         name="name",
         integration_fqn="integration_fqn",
-        collaborators=[
-            Collaborator(
-                subject="subject",
-                role_id="role_id",
-            )
-        ],
     ),
 )
 
@@ -7343,7 +7425,7 @@ Create or Update an Agent.
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, TrueFoundryAgentManifest, TrueFoundryAgentModel, Collaborator
+from truefoundry_sdk import TrueFoundry, TrueFoundryAgentManifest, TrueFoundryAgentModel
 
 client = TrueFoundry(
     api_key="<token>",
@@ -7358,12 +7440,6 @@ client.agents.create_or_update(
         model=TrueFoundryAgentModel(
             name="name",
         ),
-        collaborators=[
-            Collaborator(
-                subject="subject",
-                role_id="role_id",
-            )
-        ],
     ),
 )
 
@@ -7565,7 +7641,7 @@ client.agents.delete(
 <dl>
 <dd>
 
-Returns the TrueFoundry-backed token for the agent's linked identity, generating one on demand if none exists yet (or the stored one has expired). Only valid for agents whose identity is TrueFoundry-backed. Requires manage access on the agent since the token authenticates as it. 404s if the agent has no linked identity.
+Returns the stored TrueFoundry-backed token for the agent's linked identity. Only valid for agents whose identity is TrueFoundry-backed. Requires manage access on the agent since the token authenticates as it. Use the create-token endpoint to issue one.
 </dd>
 </dl>
 </dd>
@@ -7606,6 +7682,175 @@ client.agents.get_token(
 <dd>
 
 **id:** `str` — System-generated agent ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.<a href="src/truefoundry_sdk/agents/client.py">create_token</a>(...) -> GetAgentIdentityTokenResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Issues a new TrueFoundry-backed token for the agent's linked identity. Fails with 409 when a valid token already exists — use the get-token endpoint to retrieve it. An expired token is replaced by a new one. An optional expirationDate (yyyy-mm-dd) sets the token's expiry; the identity manifest is not modified. Requires manage access on the agent since the token authenticates as it.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.agents.create_token(
+    id="jqfwg345gi25n5ju2yz5iz6m",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — System-generated agent ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**expiration_date:** `typing.Optional[str]` — Token expiry as yyyy-mm-dd, applied to the issued token's own expiry only (the identity manifest is not modified). Defaults to a long-lived, effectively non-expiring token when omitted.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.<a href="src/truefoundry_sdk/agents/client.py">regenerate_token</a>(...) -> GetAgentIdentityTokenResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Regenerates the TrueFoundry-backed token for the agent's linked identity. The old token remains valid for the specified grace period. Fails when a previous token is still in its grace window. An optional expirationDate (yyyy-mm-dd) sets the new token's expiry; the identity manifest is not modified. Requires manage access on the agent since the token authenticates as it.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from truefoundry_sdk import TrueFoundry
+
+client = TrueFoundry(
+    api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.agents.regenerate_token(
+    id="jqfwg345gi25n5ju2yz5iz6m",
+    grace_period_in_minutes=60,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — System-generated agent ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**grace_period_in_minutes:** `float` — Grace period in minutes for which the old token will remain valid after regeneration
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**expiration_date:** `typing.Optional[str]` — Token expiry as yyyy-mm-dd, applied to the newly issued token's own expiry only (the identity manifest is not modified). Defaults to a long-lived, effectively non-expiring token when omitted.
     
 </dd>
 </dl>
@@ -9801,7 +10046,7 @@ Creates or updates an MLRepo entity based on the provided manifest.
 <dd>
 
 ```python
-from truefoundry_sdk import TrueFoundry, MlRepoManifest, Collaborator
+from truefoundry_sdk import TrueFoundry, MlRepoManifest
 
 client = TrueFoundry(
     api_key="<token>",
@@ -9813,12 +10058,6 @@ client.ml_repos.create_or_update(
         type="ml-repo",
         name="name",
         storage_integration_fqn="storage_integration_fqn",
-        collaborators=[
-            Collaborator(
-                subject="subject",
-                role_id="role_id",
-            )
-        ],
     ),
 )
 
@@ -14880,7 +15119,7 @@ client.internal.build_logs.get(
 <dl>
 <dd>
 
-**start_ts:** `typing.Optional[str]` — Start timestamp for querying logs, in nanoseconds from the Unix epoch.
+**start_ts:** `typing.Optional[str]` — Start timestamp for querying logs, in nanoseconds from the Unix epoch. Supply the `logsStartTs` of the build; omitting it searches from the epoch and matches nothing.
     
 </dd>
 </dl>
@@ -14904,7 +15143,7 @@ client.internal.build_logs.get(
 <dl>
 <dd>
 
-**direction:** `typing.Optional[str]` — Direction of sorting logs. Can be `asc` or `desc`
+**direction:** `typing.Optional[LogsSortingDirection]` — Direction of sorting logs by timestamp.
     
 </dd>
 </dl>

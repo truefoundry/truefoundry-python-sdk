@@ -84,7 +84,7 @@ class ClusterManifest(UniversalBaseModel):
     For more information, check out [this documentation](https://docs.truefoundry.com/docs/generic-control-plane#configuring-node-pools-for-truefoundry).
     """
 
-    collaborators: typing.List[Collaborator] = pydantic.Field()
+    collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
     Collaborators who can access this cluster
     """

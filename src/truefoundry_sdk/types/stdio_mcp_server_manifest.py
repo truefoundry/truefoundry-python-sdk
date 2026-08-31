@@ -8,6 +8,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
 from .collaborator import Collaborator
 from .mcp_server_env_auth import McpServerEnvAuth
+from .mcp_tool_metadata import McpToolMetadata
+from .mcp_tool_policy import McpToolPolicy
 from .mcp_tool_setting import McpToolSetting
 from .owned_by import OwnedBy
 
@@ -32,7 +34,7 @@ class StdioMcpServerManifest(UniversalBaseModel):
     Provide a brief description of the purpose of this MCP Server.
     """
 
-    collaborators: typing.List[Collaborator] = pydantic.Field()
+    collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
     Users and Teams that have access to this MCP Server
     """
@@ -56,6 +58,12 @@ class StdioMcpServerManifest(UniversalBaseModel):
     tool_settings: typing.Optional[typing.List[McpToolSetting]] = pydantic.Field(default=None)
     """
     Customize tool descriptions or enable/disable specific tools from the MCP Server.
+    """
+
+    tool_policy: typing.Optional[McpToolPolicy] = None
+    tool_metadata: typing.Optional[typing.Dict[str, McpToolMetadata]] = pydantic.Field(default=None)
+    """
+    Per-tool description and annotation overrides keyed by tool name.
     """
 
     auth_data: typing.Optional[McpServerEnvAuth] = None

@@ -6,12 +6,11 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .complexity_based_load_balance_target import ComplexityBasedLoadBalanceTarget
 from .complexity_based_load_balancing_classification_strategy import ComplexityBasedLoadBalancingClassificationStrategy
-from .complexity_sticky_routing import ComplexityStickyRouting
 
 
 class ComplexityBasedLoadBalancing(UniversalBaseModel):
     """
-    Complexity-based Load Balancing
+    Auto Routing
     """
 
     type: typing.Literal["complexity-based-routing"] = pydantic.Field(default="complexity-based-routing")
@@ -30,8 +29,6 @@ class ComplexityBasedLoadBalancing(UniversalBaseModel):
     """
     List of targets for complexity-based load balancing. Each target serves a single tier; a model must not appear under more than one tier.
     """
-
-    sticky_routing: typing.Optional[ComplexityStickyRouting] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

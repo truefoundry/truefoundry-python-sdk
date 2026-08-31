@@ -26,7 +26,7 @@ class SecretGroupManifest(UniversalBaseModel):
     Secret Store to be associated with the secret group
     """
 
-    collaborators: typing.List[Collaborator] = pydantic.Field()
+    collaborators: typing.Optional[typing.List[Collaborator]] = pydantic.Field(default=None)
     """
     Users and Teams that have access to Secret Group
     """

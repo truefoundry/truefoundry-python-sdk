@@ -41,6 +41,11 @@ class Agent(UniversalBaseModel):
     Copy of the agent manifest (v2).
     """
 
+    metadata: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    """
+    Server-owned bookkeeping, such as the outbound auth revision.
+    """
+
     agent_identity_id: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="agentIdentityId"),

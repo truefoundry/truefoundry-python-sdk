@@ -8,7 +8,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
 from .application_summary import ApplicationSummary
-from .build_info import BuildInfo
+from .deployment_build import DeploymentBuild
 from .deployment_manifest import DeploymentManifest
 from .deployment_status import DeploymentStatus
 from .recommendation import Recommendation
@@ -82,12 +82,15 @@ class Deployment(UniversalBaseModel):
     """
 
     deployment_builds: typing_extensions.Annotated[
-        typing.Optional[typing.List[BuildInfo]],
+        typing.Optional[typing.List[DeploymentBuild]],
         FieldMetadata(alias="deploymentBuilds"),
-        pydantic.Field(alias="deploymentBuilds", description="Build steps associated with this deployment"),
+        pydantic.Field(
+            alias="deploymentBuilds",
+            description="Builds associated with this deployment, one per component built from source",
+        ),
     ] = None
     """
-    Build steps associated with this deployment
+    Builds associated with this deployment, one per component built from source
     """
 
     deployment_statuses: typing_extensions.Annotated[

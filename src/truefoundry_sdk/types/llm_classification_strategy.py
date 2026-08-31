@@ -9,7 +9,7 @@ from .llm_classification_strategy_fallback_strategy import LlmClassificationStra
 
 class LlmClassificationStrategy(UniversalBaseModel):
     """
-    Classify each request by calling a fast chat model. On timeout or error the gateway applies the configured fallback strategy.
+    Classify request using chat model
     """
 
     type: typing.Literal["llm-classifier"] = pydantic.Field(default="llm-classifier")
@@ -27,9 +27,9 @@ class LlmClassificationStrategy(UniversalBaseModel):
     Maximum time to wait for the classifier response in milliseconds before applying the fallback strategy.
     """
 
-    fallback_strategy: typing.Optional[LlmClassificationStrategyFallbackStrategy] = pydantic.Field(default=None)
+    fallback_strategy: LlmClassificationStrategyFallbackStrategy = pydantic.Field()
     """
-    Fallback strategy applied when the classifier fails. Defaults to the heuristic classifier.
+    Fallback strategy applied when the classifier fails.
     """
 
     if IS_PYDANTIC_V2:
