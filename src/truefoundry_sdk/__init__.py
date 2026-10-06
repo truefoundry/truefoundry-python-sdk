@@ -1312,6 +1312,7 @@ if typing.TYPE_CHECKING:
     from .traces import QuerySpansRequestFiltersItem
     from .users import UpdateUserRolesRequestResourceType
     from .version import __version__
+    from .virtual_accounts import CheckExistsVirtualAccountsResponse
 _dynamic_imports: typing.Dict[str, str] = {
     "A2AAgentSkill": ".types",
     "A2AFramework": ".types",
@@ -1559,6 +1560,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ChatPromptManifestMcpServersItem": ".types",
     "ChatPromptManifestResponseFormat": ".types",
     "ChatPromptManifestRoutingConfig": ".types",
+    "CheckExistsVirtualAccountsResponse": ".virtual_accounts",
     "CiscoAiDefenseGuardrailConfig": ".types",
     "CiscoAiDefenseGuardrailConfigConfig": ".types",
     "CiscoAiDefenseGuardrailConfigConfigRegion": ".types",
@@ -2885,6 +2887,7 @@ __all__ = [
     "ChatPromptManifestMcpServersItem",
     "ChatPromptManifestResponseFormat",
     "ChatPromptManifestRoutingConfig",
+    "CheckExistsVirtualAccountsResponse",
     "CiscoAiDefenseGuardrailConfig",
     "CiscoAiDefenseGuardrailConfigConfig",
     "CiscoAiDefenseGuardrailConfigConfigRegion",

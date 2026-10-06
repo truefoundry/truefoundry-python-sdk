@@ -13,6 +13,7 @@ from ..types.sync_virtual_account_token_response import SyncVirtualAccountTokenR
 from ..types.virtual_account import VirtualAccount
 from ..types.virtual_account_manifest import VirtualAccountManifest
 from .raw_client import AsyncRawVirtualAccountsClient, RawVirtualAccountsClient
+from .types.check_exists_virtual_accounts_response import CheckExistsVirtualAccountsResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -148,6 +149,39 @@ class VirtualAccountsClient:
         _response = self._raw_client.create_or_update(
             manifest=manifest, dry_run=dry_run, request_options=request_options
         )
+        return _response.data
+
+    def check_exists(
+        self, *, name: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> CheckExistsVirtualAccountsResponse:
+        """
+        Check whether a virtual account with the given name exists in the current tenant.
+
+        Parameters
+        ----------
+        name : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CheckExistsVirtualAccountsResponse
+            Boolean indicating whether the virtual account exists.
+
+        Examples
+        --------
+        from truefoundry_sdk import TrueFoundry
+
+        client = TrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.virtual_accounts.check_exists(
+            name="name",
+        )
+        """
+        _response = self._raw_client.check_exists(name=name, request_options=request_options)
         return _response.data
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetVirtualAccountResponse:
@@ -510,6 +544,47 @@ class AsyncVirtualAccountsClient:
         _response = await self._raw_client.create_or_update(
             manifest=manifest, dry_run=dry_run, request_options=request_options
         )
+        return _response.data
+
+    async def check_exists(
+        self, *, name: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> CheckExistsVirtualAccountsResponse:
+        """
+        Check whether a virtual account with the given name exists in the current tenant.
+
+        Parameters
+        ----------
+        name : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CheckExistsVirtualAccountsResponse
+            Boolean indicating whether the virtual account exists.
+
+        Examples
+        --------
+        import asyncio
+
+        from truefoundry_sdk import AsyncTrueFoundry
+
+        client = AsyncTrueFoundry(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.virtual_accounts.check_exists(
+                name="name",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.check_exists(name=name, request_options=request_options)
         return _response.data
 
     async def get(

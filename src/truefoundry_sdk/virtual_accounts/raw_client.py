@@ -23,6 +23,7 @@ from ..types.list_virtual_account_response import ListVirtualAccountResponse
 from ..types.sync_virtual_account_token_response import SyncVirtualAccountTokenResponse
 from ..types.virtual_account import VirtualAccount
 from ..types.virtual_account_manifest import VirtualAccountManifest
+from .types.check_exists_virtual_accounts_response import CheckExistsVirtualAccountsResponse
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -193,6 +194,51 @@ class RawVirtualAccountsClient:
                         ),
                     ),
                 )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def check_exists(
+        self, *, name: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[CheckExistsVirtualAccountsResponse]:
+        """
+        Check whether a virtual account with the given name exists in the current tenant.
+
+        Parameters
+        ----------
+        name : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[CheckExistsVirtualAccountsResponse]
+            Boolean indicating whether the virtual account exists.
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/svc/v1/virtual-accounts/exists",
+            method="GET",
+            params={
+                "name": name,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    CheckExistsVirtualAccountsResponse,
+                    parse_obj_as(
+                        type_=CheckExistsVirtualAccountsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -716,6 +762,51 @@ class AsyncRawVirtualAccountsClient:
                         ),
                     ),
                 )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def check_exists(
+        self, *, name: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[CheckExistsVirtualAccountsResponse]:
+        """
+        Check whether a virtual account with the given name exists in the current tenant.
+
+        Parameters
+        ----------
+        name : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[CheckExistsVirtualAccountsResponse]
+            Boolean indicating whether the virtual account exists.
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/svc/v1/virtual-accounts/exists",
+            method="GET",
+            params={
+                "name": name,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    CheckExistsVirtualAccountsResponse,
+                    parse_obj_as(
+                        type_=CheckExistsVirtualAccountsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
