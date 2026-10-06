@@ -6,8 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import ExistsVirtualAccountsResponse
-_dynamic_imports: typing.Dict[str, str] = {"ExistsVirtualAccountsResponse": ".types"}
+    from .exists_virtual_accounts_response import ExistsVirtualAccountsResponse
+_dynamic_imports: typing.Dict[str, str] = {"ExistsVirtualAccountsResponse": ".exists_virtual_accounts_response"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
