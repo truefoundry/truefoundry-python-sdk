@@ -7,7 +7,6 @@ from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.create_personal_access_token_response import CreatePersonalAccessTokenResponse
 from ..types.delete_personal_access_token_response import DeletePersonalAccessTokenResponse
-from ..types.get_or_create_personal_access_token_response import GetOrCreatePersonalAccessTokenResponse
 from ..types.list_personal_access_token_response import ListPersonalAccessTokenResponse
 from ..types.revoke_all_personal_access_token_response import RevokeAllPersonalAccessTokenResponse
 from ..types.virtual_account import VirtualAccount
@@ -268,46 +267,6 @@ class PersonalAccessTokensClient:
         )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
-        return _response.data
-
-    def get(
-        self,
-        name: str,
-        *,
-        team_name: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetOrCreatePersonalAccessTokenResponse:
-        """
-        Get an existing personal access token by name. If none exists, a new one is created and returned with a fresh token. Creating a new token cannot be done while authenticated with a personal access token.
-
-        Parameters
-        ----------
-        name : str
-
-        team_name : typing.Optional[str]
-            Team name that owns this PAT when a new PAT is created
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetOrCreatePersonalAccessTokenResponse
-            The personal access token data and authentication token.
-
-        Examples
-        --------
-        from truefoundry_sdk import TrueFoundry
-
-        client = TrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.personal_access_tokens.get(
-            name="name",
-        )
-        """
-        _response = self._raw_client.get(name, team_name=team_name, request_options=request_options)
         return _response.data
 
 
@@ -602,52 +561,4 @@ class AsyncPersonalAccessTokensClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
-        return _response.data
-
-    async def get(
-        self,
-        name: str,
-        *,
-        team_name: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetOrCreatePersonalAccessTokenResponse:
-        """
-        Get an existing personal access token by name. If none exists, a new one is created and returned with a fresh token. Creating a new token cannot be done while authenticated with a personal access token.
-
-        Parameters
-        ----------
-        name : str
-
-        team_name : typing.Optional[str]
-            Team name that owns this PAT when a new PAT is created
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetOrCreatePersonalAccessTokenResponse
-            The personal access token data and authentication token.
-
-        Examples
-        --------
-        import asyncio
-
-        from truefoundry_sdk import AsyncTrueFoundry
-
-        client = AsyncTrueFoundry(
-            api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.personal_access_tokens.get(
-                name="name",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.get(name, team_name=team_name, request_options=request_options)
         return _response.data

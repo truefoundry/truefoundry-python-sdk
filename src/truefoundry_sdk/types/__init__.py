@@ -501,7 +501,6 @@ if typing.TYPE_CHECKING:
     from .get_ml_repo_response import GetMlRepoResponse
     from .get_model_response import GetModelResponse
     from .get_model_version_response import GetModelVersionResponse
-    from .get_or_create_personal_access_token_response import GetOrCreatePersonalAccessTokenResponse
     from .get_prompt_response import GetPromptResponse
     from .get_prompt_version_response import GetPromptVersionResponse
     from .get_run_response import GetRunResponse
@@ -1744,7 +1743,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetMlRepoResponse": ".get_ml_repo_response",
     "GetModelResponse": ".get_model_response",
     "GetModelVersionResponse": ".get_model_version_response",
-    "GetOrCreatePersonalAccessTokenResponse": ".get_or_create_personal_access_token_response",
     "GetPromptResponse": ".get_prompt_response",
     "GetPromptVersionResponse": ".get_prompt_version_response",
     "GetRunResponse": ".get_run_response",
@@ -3012,7 +3010,6 @@ __all__ = [
     "GetMlRepoResponse",
     "GetModelResponse",
     "GetModelVersionResponse",
-    "GetOrCreatePersonalAccessTokenResponse",
     "GetPromptResponse",
     "GetPromptVersionResponse",
     "GetRunResponse",
