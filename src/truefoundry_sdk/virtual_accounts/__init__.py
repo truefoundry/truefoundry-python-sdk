@@ -6,8 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import CheckExistsVirtualAccountsResponse
-_dynamic_imports: typing.Dict[str, str] = {"CheckExistsVirtualAccountsResponse": ".types"}
+    from .types import ExistsVirtualAccountsResponse
+_dynamic_imports: typing.Dict[str, str] = {"ExistsVirtualAccountsResponse": ".types"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["CheckExistsVirtualAccountsResponse"]
+__all__ = ["ExistsVirtualAccountsResponse"]

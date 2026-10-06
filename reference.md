@@ -3135,7 +3135,7 @@ client.virtual_accounts.create_or_update(
 </dl>
 </details>
 
-<details><summary><code>client.virtual_accounts.<a href="src/truefoundry_sdk/virtual_accounts/client.py">check_exists</a>(...) -> CheckExistsVirtualAccountsResponse</code></summary>
+<details><summary><code>client.virtual_accounts.<a href="src/truefoundry_sdk/virtual_accounts/client.py">exists</a>(...) -> ExistsVirtualAccountsResponse</code></summary>
 <dl>
 <dd>
 
@@ -3169,7 +3169,7 @@ client = TrueFoundry(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.virtual_accounts.check_exists(
+client.virtual_accounts.exists(
     name="name",
 )
 

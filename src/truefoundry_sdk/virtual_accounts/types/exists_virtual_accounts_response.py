@@ -6,7 +6,7 @@ import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class CheckExistsVirtualAccountsResponse(UniversalBaseModel):
+class ExistsVirtualAccountsResponse(UniversalBaseModel):
     exists: bool
 
     if IS_PYDANTIC_V2:

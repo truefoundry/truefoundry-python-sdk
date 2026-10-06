@@ -13,7 +13,7 @@ from ..types.sync_virtual_account_token_response import SyncVirtualAccountTokenR
 from ..types.virtual_account import VirtualAccount
 from ..types.virtual_account_manifest import VirtualAccountManifest
 from .raw_client import AsyncRawVirtualAccountsClient, RawVirtualAccountsClient
-from .types.check_exists_virtual_accounts_response import CheckExistsVirtualAccountsResponse
+from .types.exists_virtual_accounts_response import ExistsVirtualAccountsResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -151,9 +151,9 @@ class VirtualAccountsClient:
         )
         return _response.data
 
-    def check_exists(
+    def exists(
         self, *, name: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> CheckExistsVirtualAccountsResponse:
+    ) -> ExistsVirtualAccountsResponse:
         """
         Check whether a virtual account with the given name exists in the current tenant.
 
@@ -166,7 +166,7 @@ class VirtualAccountsClient:
 
         Returns
         -------
-        CheckExistsVirtualAccountsResponse
+        ExistsVirtualAccountsResponse
             Boolean indicating whether the virtual account exists.
 
         Examples
@@ -177,11 +177,11 @@ class VirtualAccountsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.virtual_accounts.check_exists(
+        client.virtual_accounts.exists(
             name="name",
         )
         """
-        _response = self._raw_client.check_exists(name=name, request_options=request_options)
+        _response = self._raw_client.exists(name=name, request_options=request_options)
         return _response.data
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetVirtualAccountResponse:
@@ -546,9 +546,9 @@ class AsyncVirtualAccountsClient:
         )
         return _response.data
 
-    async def check_exists(
+    async def exists(
         self, *, name: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> CheckExistsVirtualAccountsResponse:
+    ) -> ExistsVirtualAccountsResponse:
         """
         Check whether a virtual account with the given name exists in the current tenant.
 
@@ -561,7 +561,7 @@ class AsyncVirtualAccountsClient:
 
         Returns
         -------
-        CheckExistsVirtualAccountsResponse
+        ExistsVirtualAccountsResponse
             Boolean indicating whether the virtual account exists.
 
         Examples
@@ -577,14 +577,14 @@ class AsyncVirtualAccountsClient:
 
 
         async def main() -> None:
-            await client.virtual_accounts.check_exists(
+            await client.virtual_accounts.exists(
                 name="name",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.check_exists(name=name, request_options=request_options)
+        _response = await self._raw_client.exists(name=name, request_options=request_options)
         return _response.data
 
     async def get(

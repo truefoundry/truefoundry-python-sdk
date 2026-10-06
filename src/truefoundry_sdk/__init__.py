@@ -1312,7 +1312,7 @@ if typing.TYPE_CHECKING:
     from .traces import QuerySpansRequestFiltersItem
     from .users import UpdateUserRolesRequestResourceType
     from .version import __version__
-    from .virtual_accounts import CheckExistsVirtualAccountsResponse
+    from .virtual_accounts import ExistsVirtualAccountsResponse
 _dynamic_imports: typing.Dict[str, str] = {
     "A2AAgentSkill": ".types",
     "A2AFramework": ".types",
@@ -1560,7 +1560,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ChatPromptManifestMcpServersItem": ".types",
     "ChatPromptManifestResponseFormat": ".types",
     "ChatPromptManifestRoutingConfig": ".types",
-    "CheckExistsVirtualAccountsResponse": ".virtual_accounts",
     "CiscoAiDefenseGuardrailConfig": ".types",
     "CiscoAiDefenseGuardrailConfigConfig": ".types",
     "CiscoAiDefenseGuardrailConfigConfigRegion": ".types",
@@ -1710,6 +1709,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "EventChartCategory": ".types",
     "EventInvolvedObject": ".types",
     "ExactMatchCacheConfig": ".types",
+    "ExistsVirtualAccountsResponse": ".virtual_accounts",
     "ExpectationFailedError": ".errors",
     "ExternalBlobStorageSource": ".types",
     "ExternalIdentityProvider": ".types",
@@ -2887,7 +2887,6 @@ __all__ = [
     "ChatPromptManifestMcpServersItem",
     "ChatPromptManifestResponseFormat",
     "ChatPromptManifestRoutingConfig",
-    "CheckExistsVirtualAccountsResponse",
     "CiscoAiDefenseGuardrailConfig",
     "CiscoAiDefenseGuardrailConfigConfig",
     "CiscoAiDefenseGuardrailConfigConfigRegion",
@@ -3037,6 +3036,7 @@ __all__ = [
     "EventChartCategory",
     "EventInvolvedObject",
     "ExactMatchCacheConfig",
+    "ExistsVirtualAccountsResponse",
     "ExpectationFailedError",
     "ExternalBlobStorageSource",
     "ExternalIdentityProvider",

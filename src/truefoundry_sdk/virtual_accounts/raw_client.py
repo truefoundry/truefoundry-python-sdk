@@ -23,7 +23,7 @@ from ..types.list_virtual_account_response import ListVirtualAccountResponse
 from ..types.sync_virtual_account_token_response import SyncVirtualAccountTokenResponse
 from ..types.virtual_account import VirtualAccount
 from ..types.virtual_account_manifest import VirtualAccountManifest
-from .types.check_exists_virtual_accounts_response import CheckExistsVirtualAccountsResponse
+from .types.exists_virtual_accounts_response import ExistsVirtualAccountsResponse
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -203,9 +203,9 @@ class RawVirtualAccountsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def check_exists(
+    def exists(
         self, *, name: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[CheckExistsVirtualAccountsResponse]:
+    ) -> HttpResponse[ExistsVirtualAccountsResponse]:
         """
         Check whether a virtual account with the given name exists in the current tenant.
 
@@ -218,7 +218,7 @@ class RawVirtualAccountsClient:
 
         Returns
         -------
-        HttpResponse[CheckExistsVirtualAccountsResponse]
+        HttpResponse[ExistsVirtualAccountsResponse]
             Boolean indicating whether the virtual account exists.
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -232,9 +232,9 @@ class RawVirtualAccountsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    CheckExistsVirtualAccountsResponse,
+                    ExistsVirtualAccountsResponse,
                     parse_obj_as(
-                        type_=CheckExistsVirtualAccountsResponse,  # type: ignore
+                        type_=ExistsVirtualAccountsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -771,9 +771,9 @@ class AsyncRawVirtualAccountsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def check_exists(
+    async def exists(
         self, *, name: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[CheckExistsVirtualAccountsResponse]:
+    ) -> AsyncHttpResponse[ExistsVirtualAccountsResponse]:
         """
         Check whether a virtual account with the given name exists in the current tenant.
 
@@ -786,7 +786,7 @@ class AsyncRawVirtualAccountsClient:
 
         Returns
         -------
-        AsyncHttpResponse[CheckExistsVirtualAccountsResponse]
+        AsyncHttpResponse[ExistsVirtualAccountsResponse]
             Boolean indicating whether the virtual account exists.
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -800,9 +800,9 @@ class AsyncRawVirtualAccountsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    CheckExistsVirtualAccountsResponse,
+                    ExistsVirtualAccountsResponse,
                     parse_obj_as(
-                        type_=CheckExistsVirtualAccountsResponse,  # type: ignore
+                        type_=ExistsVirtualAccountsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
