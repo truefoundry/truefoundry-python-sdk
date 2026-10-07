@@ -17,7 +17,6 @@ from ..errors.forbidden_error import ForbiddenError
 from ..errors.not_found_error import NotFoundError
 from ..types.create_personal_access_token_response import CreatePersonalAccessTokenResponse
 from ..types.delete_personal_access_token_response import DeletePersonalAccessTokenResponse
-from ..types.get_or_create_personal_access_token_response import GetOrCreatePersonalAccessTokenResponse
 from ..types.http_error import HttpError
 from ..types.list_personal_access_token_response import ListPersonalAccessTokenResponse
 from ..types.revoke_all_personal_access_token_response import RevokeAllPersonalAccessTokenResponse
@@ -424,69 +423,6 @@ class RawPersonalAccessTokensClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get(
-        self,
-        name: str,
-        *,
-        team_name: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[GetOrCreatePersonalAccessTokenResponse]:
-        """
-        Get an existing personal access token by name. If none exists, a new one is created and returned with a fresh token. Creating a new token cannot be done while authenticated with a personal access token.
-
-        Parameters
-        ----------
-        name : str
-
-        team_name : typing.Optional[str]
-            Team name that owns this PAT when a new PAT is created
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[GetOrCreatePersonalAccessTokenResponse]
-            The personal access token data and authentication token.
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/personal-access-tokens/{encode_path_param(name)}",
-            method="GET",
-            params={
-                "teamName": team_name,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    GetOrCreatePersonalAccessTokenResponse,
-                    parse_obj_as(
-                        type_=GetOrCreatePersonalAccessTokenResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 400:
-                raise BadRequestError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
 
 class AsyncRawPersonalAccessTokensClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -868,69 +804,6 @@ class AsyncRawPersonalAccessTokensClient:
                 return AsyncHttpResponse(response=_response, data=_data)
             if _response.status_code == 404:
                 raise NotFoundError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        parse_obj_as(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def get(
-        self,
-        name: str,
-        *,
-        team_name: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[GetOrCreatePersonalAccessTokenResponse]:
-        """
-        Get an existing personal access token by name. If none exists, a new one is created and returned with a fresh token. Creating a new token cannot be done while authenticated with a personal access token.
-
-        Parameters
-        ----------
-        name : str
-
-        team_name : typing.Optional[str]
-            Team name that owns this PAT when a new PAT is created
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[GetOrCreatePersonalAccessTokenResponse]
-            The personal access token data and authentication token.
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/svc/v1/personal-access-tokens/{encode_path_param(name)}",
-            method="GET",
-            params={
-                "teamName": team_name,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    GetOrCreatePersonalAccessTokenResponse,
-                    parse_obj_as(
-                        type_=GetOrCreatePersonalAccessTokenResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 400:
-                raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
