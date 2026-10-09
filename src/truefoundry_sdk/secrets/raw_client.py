@@ -66,7 +66,7 @@ class RawSecretsClient:
         SyncPager[Secret, ListSecretsResponse]
             Paginated list of secrets.
         """
-        offset = offset if offset is not None else 0
+        offset = offset if offset is not None and offset is not OMIT else 0
 
         _response = self._client_wrapper.httpx_client.request(
             "api/svc/v1/secrets",
@@ -329,7 +329,7 @@ class AsyncRawSecretsClient:
         AsyncPager[Secret, ListSecretsResponse]
             Paginated list of secrets.
         """
-        offset = offset if offset is not None else 0
+        offset = offset if offset is not None and offset is not OMIT else 0
 
         _response = await self._client_wrapper.httpx_client.request(
             "api/svc/v1/secrets",
