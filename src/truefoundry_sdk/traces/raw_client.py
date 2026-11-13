@@ -43,7 +43,7 @@ class RawTracesClient:
         data_routing_destination: typing.Optional[str] = OMIT,
         filters: typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]] = OMIT,
         include_feedbacks: typing.Optional[bool] = False,
-        include_input_and_output: typing.Optional[bool] = True,
+        include_input_and_output: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[TraceSpan, QuerySpansResponse]:
         """
@@ -95,7 +95,7 @@ class RawTracesClient:
             When true, feedback data is included in the response. When false, feedback data is excluded (returns empty array).
 
         include_input_and_output : typing.Optional[bool]
-            When false, gateway input and output are omitted from the response so those columns are not read. Defaults to true.
+            When true, gateway input and output are included in the response. When false, those columns are not read. Defaults to false.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -205,7 +205,7 @@ class AsyncRawTracesClient:
         data_routing_destination: typing.Optional[str] = OMIT,
         filters: typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]] = OMIT,
         include_feedbacks: typing.Optional[bool] = False,
-        include_input_and_output: typing.Optional[bool] = True,
+        include_input_and_output: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[TraceSpan, QuerySpansResponse]:
         """
@@ -257,7 +257,7 @@ class AsyncRawTracesClient:
             When true, feedback data is included in the response. When false, feedback data is excluded (returns empty array).
 
         include_input_and_output : typing.Optional[bool]
-            When false, gateway input and output are omitted from the response so those columns are not read. Defaults to true.
+            When true, gateway input and output are included in the response. When false, those columns are not read. Defaults to false.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
