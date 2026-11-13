@@ -49,6 +49,7 @@ class TracesClient:
         data_routing_destination: typing.Optional[str] = OMIT,
         filters: typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]] = OMIT,
         include_feedbacks: typing.Optional[bool] = False,
+        include_input_and_output: typing.Optional[bool] = True,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[TraceSpan, QuerySpansResponse]:
         """
@@ -99,6 +100,9 @@ class TracesClient:
         include_feedbacks : typing.Optional[bool]
             When true, feedback data is included in the response. When false, feedback data is excluded (returns empty array).
 
+        include_input_and_output : typing.Optional[bool]
+            When false, gateway input and output are omitted from the response so those columns are not read. Defaults to true.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -140,6 +144,7 @@ class TracesClient:
             data_routing_destination=data_routing_destination,
             filters=filters,
             include_feedbacks=include_feedbacks,
+            include_input_and_output=include_input_and_output,
             request_options=request_options,
         )
 
@@ -177,6 +182,7 @@ class AsyncTracesClient:
         data_routing_destination: typing.Optional[str] = OMIT,
         filters: typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]] = OMIT,
         include_feedbacks: typing.Optional[bool] = False,
+        include_input_and_output: typing.Optional[bool] = True,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[TraceSpan, QuerySpansResponse]:
         """
@@ -226,6 +232,9 @@ class AsyncTracesClient:
 
         include_feedbacks : typing.Optional[bool]
             When true, feedback data is included in the response. When false, feedback data is excluded (returns empty array).
+
+        include_input_and_output : typing.Optional[bool]
+            When false, gateway input and output are omitted from the response so those columns are not read. Defaults to true.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -277,5 +286,6 @@ class AsyncTracesClient:
             data_routing_destination=data_routing_destination,
             filters=filters,
             include_feedbacks=include_feedbacks,
+            include_input_and_output=include_input_and_output,
             request_options=request_options,
         )

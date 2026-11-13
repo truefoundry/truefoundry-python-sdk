@@ -43,6 +43,7 @@ class RawTracesClient:
         data_routing_destination: typing.Optional[str] = OMIT,
         filters: typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]] = OMIT,
         include_feedbacks: typing.Optional[bool] = False,
+        include_input_and_output: typing.Optional[bool] = True,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[TraceSpan, QuerySpansResponse]:
         """
@@ -93,6 +94,9 @@ class RawTracesClient:
         include_feedbacks : typing.Optional[bool]
             When true, feedback data is included in the response. When false, feedback data is excluded (returns empty array).
 
+        include_input_and_output : typing.Optional[bool]
+            When false, gateway input and output are omitted from the response so those columns are not read. Defaults to true.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -104,6 +108,9 @@ class RawTracesClient:
         _response = self._client_wrapper.httpx_client.request(
             "api/svc/v1/spans/query",
             method="POST",
+            params={
+                "include_input_and_output": include_input_and_output,
+            },
             json={
                 "startTime": start_time,
                 "endTime": end_time,
@@ -162,6 +169,7 @@ class RawTracesClient:
                         data_routing_destination=data_routing_destination,
                         filters=filters,
                         include_feedbacks=include_feedbacks,
+                        include_input_and_output=include_input_and_output,
                         request_options=request_options,
                     )
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
@@ -197,6 +205,7 @@ class AsyncRawTracesClient:
         data_routing_destination: typing.Optional[str] = OMIT,
         filters: typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]] = OMIT,
         include_feedbacks: typing.Optional[bool] = False,
+        include_input_and_output: typing.Optional[bool] = True,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[TraceSpan, QuerySpansResponse]:
         """
@@ -247,6 +256,9 @@ class AsyncRawTracesClient:
         include_feedbacks : typing.Optional[bool]
             When true, feedback data is included in the response. When false, feedback data is excluded (returns empty array).
 
+        include_input_and_output : typing.Optional[bool]
+            When false, gateway input and output are omitted from the response so those columns are not read. Defaults to true.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -258,6 +270,9 @@ class AsyncRawTracesClient:
         _response = await self._client_wrapper.httpx_client.request(
             "api/svc/v1/spans/query",
             method="POST",
+            params={
+                "include_input_and_output": include_input_and_output,
+            },
             json={
                 "startTime": start_time,
                 "endTime": end_time,
@@ -318,6 +333,7 @@ class AsyncRawTracesClient:
                             data_routing_destination=data_routing_destination,
                             filters=filters,
                             include_feedbacks=include_feedbacks,
+                            include_input_and_output=include_input_and_output,
                             request_options=request_options,
                         )
 

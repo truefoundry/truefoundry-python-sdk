@@ -13567,6 +13567,7 @@ client.traces.query_spans(
 <dd>
 
 **include_feedbacks:** `typing.Optional[bool]` — When true, feedback data is included in the response. When false, feedback data is excluded (returns empty array).
+**include_input_and_output:** `typing.Optional[bool]` — When false, gateway input and output are omitted from the response so those columns are not read. Defaults to true.
     
 </dd>
 </dl>
