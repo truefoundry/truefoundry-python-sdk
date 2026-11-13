@@ -29,6 +29,7 @@ class RawTracesClient:
         self,
         *,
         start_time: str,
+        include_input_and_output: typing.Optional[bool] = None,
         end_time: typing.Optional[str] = OMIT,
         trace_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         span_ids: typing.Optional[typing.Sequence[str]] = OMIT,
@@ -43,7 +44,6 @@ class RawTracesClient:
         data_routing_destination: typing.Optional[str] = OMIT,
         filters: typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]] = OMIT,
         include_feedbacks: typing.Optional[bool] = False,
-        include_input_and_output: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[TraceSpan, QuerySpansResponse]:
         """
@@ -51,6 +51,9 @@ class RawTracesClient:
         ----------
         start_time : str
             Start time in ISO 8601 format (e.g., 2025-03-12T00:00:09.872Z)
+
+        include_input_and_output : typing.Optional[bool]
+            When false, gateway input and output are omitted from the response so those columns are not read. Defaults to true.
 
         end_time : typing.Optional[str]
             End time in ISO 8601 format (e.g., 2025-03-12T00:10:00.000Z). Defaults to current time if not provided.
@@ -93,9 +96,6 @@ class RawTracesClient:
 
         include_feedbacks : typing.Optional[bool]
             When true, feedback data is included in the response. When false, feedback data is excluded (returns empty array).
-
-        include_input_and_output : typing.Optional[bool]
-            When true, gateway input and output are included in the response. When false, those columns are not read. Defaults to false.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -155,6 +155,7 @@ class RawTracesClient:
                     _has_next = _parsed_next is not None and _parsed_next != ""
                     _get_next = lambda: self.query_spans(
                         start_time=start_time,
+                        include_input_and_output=include_input_and_output,
                         end_time=end_time,
                         trace_ids=trace_ids,
                         span_ids=span_ids,
@@ -169,7 +170,6 @@ class RawTracesClient:
                         data_routing_destination=data_routing_destination,
                         filters=filters,
                         include_feedbacks=include_feedbacks,
-                        include_input_and_output=include_input_and_output,
                         request_options=request_options,
                     )
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
@@ -191,6 +191,7 @@ class AsyncRawTracesClient:
         self,
         *,
         start_time: str,
+        include_input_and_output: typing.Optional[bool] = None,
         end_time: typing.Optional[str] = OMIT,
         trace_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         span_ids: typing.Optional[typing.Sequence[str]] = OMIT,
@@ -205,7 +206,6 @@ class AsyncRawTracesClient:
         data_routing_destination: typing.Optional[str] = OMIT,
         filters: typing.Optional[typing.Sequence[QuerySpansRequestFiltersItem]] = OMIT,
         include_feedbacks: typing.Optional[bool] = False,
-        include_input_and_output: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[TraceSpan, QuerySpansResponse]:
         """
@@ -213,6 +213,9 @@ class AsyncRawTracesClient:
         ----------
         start_time : str
             Start time in ISO 8601 format (e.g., 2025-03-12T00:00:09.872Z)
+
+        include_input_and_output : typing.Optional[bool]
+            When false, gateway input and output are omitted from the response so those columns are not read. Defaults to true.
 
         end_time : typing.Optional[str]
             End time in ISO 8601 format (e.g., 2025-03-12T00:10:00.000Z). Defaults to current time if not provided.
@@ -255,9 +258,6 @@ class AsyncRawTracesClient:
 
         include_feedbacks : typing.Optional[bool]
             When true, feedback data is included in the response. When false, feedback data is excluded (returns empty array).
-
-        include_input_and_output : typing.Optional[bool]
-            When true, gateway input and output are included in the response. When false, those columns are not read. Defaults to false.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -319,6 +319,7 @@ class AsyncRawTracesClient:
                     async def _get_next():
                         return await self.query_spans(
                             start_time=start_time,
+                            include_input_and_output=include_input_and_output,
                             end_time=end_time,
                             trace_ids=trace_ids,
                             span_ids=span_ids,
@@ -333,7 +334,6 @@ class AsyncRawTracesClient:
                             data_routing_destination=data_routing_destination,
                             filters=filters,
                             include_feedbacks=include_feedbacks,
-                            include_input_and_output=include_input_and_output,
                             request_options=request_options,
                         )
 

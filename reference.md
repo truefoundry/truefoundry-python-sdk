@@ -13462,6 +13462,14 @@ client.traces.query_spans(
 <dl>
 <dd>
 
+**include_input_and_output:** `typing.Optional[bool]` — When false, gateway input and output are omitted from the response so those columns are not read. Defaults to true.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **end_time:** `typing.Optional[str]` — End time in ISO 8601 format (e.g., 2025-03-12T00:10:00.000Z). Defaults to current time if not provided.
     
 </dd>
@@ -13567,7 +13575,6 @@ client.traces.query_spans(
 <dd>
 
 **include_feedbacks:** `typing.Optional[bool]` — When true, feedback data is included in the response. When false, feedback data is excluded (returns empty array).
-**include_input_and_output:** `typing.Optional[bool]` — When true, gateway input and output are included in the response. When false, those columns are not read. Defaults to false.
     
 </dd>
 </dl>
